@@ -1,0 +1,136 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    font-family: 'Roboto Mono', monospace;
+}
+#select {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.modal-content {
+    padding: 10px;
+}
+#routBAR{
+    display:grid;
+    grid-template-columns:repeat(6,auto);
+    text-align:center;
+    justify-content:center;
+}
+#Bar {
+    gap: 10px;
+    display: flex;
+}
+a{
+    text-decoration:none;
+    color:aliceblue;
+}
+    a:hover {
+        text-decoration: none;
+        color: aliceblue;
+    }
+#crud {
+    border: none;
+    background: none;
+    margin-left:50px;
+}
+#createColum{
+    margin-top:50px;
+    display:grid;
+    grid-template-columns:repeat(4,auto);
+    gap:50px;
+}
+#input {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+#Table{
+   display:grid;
+   grid-template-columns:repeat(10,150px);
+}
+
+#TableVorhangschloss {
+    display: grid;
+    grid-template-columns: repeat(6,200px);
+    max-width: 1200px;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+#konfigMenu{
+    display:grid;
+    grid-template-columns:repeat(3,450px);
+    text-align:center;
+    margin-top:50px;
+    /*max-width:1400px;*/
+}
+#InformBar {
+    display: flex;
+    margin-top: 50px;
+    font-size: 16px;
+    gap:50px;
+}
+#ItemBar {
+    background: lightgoldenrodyellow;
+    min-width:auto;
+    padding:15px;
+    border-radius:20px;
+}
+#konfigurator {
+    clear: both;
+    background: #F4F4F4;
+    border: 1px solid #D8D8D8;
+    padding: 15px;
+    overflow: auto;
+    min-width:1350px;
+    min-height:730px;
+}
+#menuPannel {
+    display: flex;
+    gap: 2px;
+}
+#key-konfig {
+    margin-top: 50px;
+    width: 614px;
+    min-width: 55px;
+    border: 1px solid #fff;
+    background: #4fa8cf;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-weight: bold;
+    color: #ffffff;
+    margin-left: 737px;
+}
+#konfiguratorItem_menu_1 {
+    background: #4fa8cf;
+}
+#konfiguratorItem_menu_2 {
+    background: #4fa8cf;
+}
+#konfiguratorItem_menu_3 {
+    background: #4fa8cf;
+}
+#konfiguratorItem_menu_4 {
+    background: #4fa8cf;
+}
+#konfiguratorItem_menu_5 {
+    background: #4fa8cf;
+}

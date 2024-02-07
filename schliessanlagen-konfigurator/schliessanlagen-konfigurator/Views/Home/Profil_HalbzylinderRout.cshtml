@@ -1,0 +1,122 @@
+﻿@model schliessanlagen_konfigurator.Models.Profil_Halbzylinder;
+@{
+    ViewData["Title"] = "Profil Halbzylinder";
+}
+
+<div class="text-center ">
+    <div id="myModal_NewSchliessanlagen" class="d-grid gap-3">
+        <div id="routBAR">
+            <div id="Bar">
+                <button class="btn btn-primary"><a href="@Url.Action("Index","Home")">Profil-Doppelzylinder</a></button>
+                <button class="btn btn-success"><a href="@Url.Action("Profil_KnaufzylinderRout","Home")">Profil-Knaufzylinder</a></button>
+                <button class="btn btn-danger"><a href="@Url.Action("HebelzylinderRout","Home")">Hebelzylinder</a></button>
+                <button class="btn btn-warning"><a href="@Url.Action("VorhangschlossRout","Home")">Vorhangschloss</a></button>
+                <button class="btn btn-info"><a href="@Url.Action("Aussenzylinder_RundzylinderRout","Home")">Aussenzylinder / Rundzylinder</a></button>
+            </div>
+        </div>
+        <div>
+            <h2>Add new Profil Halbzylinder</h2>
+            @using (Html.BeginForm("Create_Profil_Halbzylinder", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <label>Zylinder Typen</label>
+
+                @Html.DropDownListFor(model => model.schliessanlagenId,
+                        new List<SelectListItem> {
+                        new SelectListItem {  Value = "9",Text="Profil-Doppelzylinder" },
+                        new SelectListItem { Value = "10",Text="Profil-Halbzylinder" },
+                        new SelectListItem {  Value = "11",Text="Profil-Knaufzylinder" },
+                        new SelectListItem {  Value = "12",Text="Hebelzylinder" },
+                        new SelectListItem { Value = "13",Text="Vorhangschloss" },
+                        new SelectListItem {  Value = "14",Text="Aussenzylinder / Rundzylinder" }
+                        },
+                         new { @class = " form-select", @id = "select" })
+
+                <div id="createColum">
+                    <label> Artikelnummer</label>
+                    @Html.EditorFor(m => m.Artikelnummer)
+                    <label>Außen</label>
+                    @Html.EditorFor(m => m.Außen)
+                    
+                    <label>Count</label>
+                    @Html.EditorFor(m => m.Count)
+                    <label>Min</label>
+                    @Html.EditorFor(m => m.min)
+                    <label>Max</label>
+                    @Html.EditorFor(m => m.max)
+
+                    <label asp-for="ImageFile"  class="control-label"></label>
+                        <input asp-for="ImageFile" class="btn btn-success" accept="image/*" />
+                    <span asp-validation-for="ImageFile"  class="text-danger"></span>
+               
+                    @Html.ValidationMessageFor(m => m.ImageFile, "", new { @class = "error" })
+                
+                </div>
+                <input type="submit" class="btn btn-success" id="input" value="Create Profil Halbzylinder" />
+            <hr />
+            }
+        </div>
+
+    </div>
+    <div>
+        @using (Html.BeginForm("Profil_HalbzylinderRout", "Home", FormMethod.Get))
+        {
+            <table class="table table-bordered">
+                <tr>
+                    <th>Image</th>
+                    <th>Artikelnummer</th>
+                    <th>Außen</th>
+                    <th>min</th>
+                    <th>max</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+
+                @foreach (var item in ViewBag.item)
+                {
+                    <tr>
+                        <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
+                        <td id="rowTable" class="table-info">@item.Artikelnummer</td>
+                        <td id="rowTable" class="table-info">@item.Außen</td>
+                        <td id="rowTable" class="table-info">@item.min</td>
+                        <td id="rowTable" class="table-info">@item.max</td>
+                        <td id="rowTable" class="table-info"><a href="@Url.Action("Edit_Halbzylinder","Home", new { item.Id })"><img src="@("/Image/edit-tools.png")" height="30" width="30" /></a></td>
+                        <td id="rowTable" class="table-info"><a href="@Url.Action("Delete_Doppelzylinder","Home", new { item.Id })"><img src="@("/Image/entfernen.png")" height="30" width="30" /></a></td>
+                    </tr>
+                }
+               
+            </table>
+        }
+
+    </div>
+</div>
+
+<script>
+
+    let selectType = document.getElementById('select');
+
+    let textBox = document.querySelectorAll('.text-box single-line');
+
+    function start() {
+        for (let i = 0; i > selectType; i++)
+            selectType[i].classList.add("form-control");
+    }
+    start();
+    selectType.addEventListener('change', () => {
+
+    });
+
+
+
+    let myModal_NewSchliessanlagen = document.getElementById('myModal_NewSchliessanlagen');
+    document.addEventListener('keydown', (event) => {
+        if (event.code == 'F8') {
+            myModal_NewSchliessanlagen.style.display = 'block';
+        }
+    })
+    document.addEventListener('keyup', (event) => {
+        if (event.code == 'Esc') {
+            myModal_NewSchliessanlagen.style.display = 'none';
+        }
+    })
+
+</script>
