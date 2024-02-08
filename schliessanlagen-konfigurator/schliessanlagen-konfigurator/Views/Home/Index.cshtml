@@ -67,6 +67,9 @@
                
                     <label>Max</label>
                     @Html.EditorFor(m => m.max, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Cost</label>
+                    @Html.EditorFor(m => m.Cost, new { htmlAttributes = new { @class = "form-control" } })
             
                 <label asp-for="ImageFile"  class="control-label"></label>
                     <input asp-for="ImageFile" class="btn btn-success" accept="image/*" />
@@ -90,6 +93,7 @@
                     <tr id="Table">
                         <th>Name</th>
                         <th >Image</th>
+                        <th>Cost</th>
                         <th>Artikelnummer</th>
                         <th >Intern</th>
                         <th >Extern</th>
@@ -103,6 +107,7 @@
                     {
                             <td id="rowTable" class="table-info">@item.Name</td>
                             <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
+                            <td id="rowTable" class="table-info">@item.Cost</td>
                             <td id="rowTable" class="table-info">@item.Artikelnummer</td>
                             <td id="rowTable" class="table-info">@item.Intern</td>
                             <td id="rowTable" class="table-info">@item.Extern</td>

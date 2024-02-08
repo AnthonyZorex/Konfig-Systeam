@@ -1,14 +1,16 @@
-﻿ @model schliessanlagen_konfigurator.Models.Hebelzylinder;
+﻿@model schliessanlagen_konfigurator.Models.Profil_Halbzylinder;
 
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit Halbzylinder</h1>
+<h1>Edit</h1>
+
+<h4>@Model.Artikelnummer</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="SaveHalbzylinder">
+        <form asp-action="Save">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -27,29 +29,36 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Cost" class="control-label"></label>
-                <input asp-for="Cost" type="text" class="form-control" />
-                <span asp-validation-for="Cost" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Artikelnummer" class="control-label"></label>
                 <input asp-for="Artikelnummer" class="form-control" />
                 <span asp-validation-for="Artikelnummer" class="text-danger"></span>
             </div>
-            
+           
+            <div class="form-group">
+                <label asp-for="max" class="control-label"></label>
+                <input asp-for="max" class="form-control" />
+                <span asp-validation-for=" max" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="min" class="control-label"></label>
+                <input asp-for="min" class="form-control" />
+                <span asp-validation-for="min" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <label asp-for="ImageName" class="control-label"></label>
-                <input asp-for="ImageName" type="text" class="form-control" />
+                <input asp-for="ImageName" class="form-control" />
                 <span asp-validation-for="ImageName" class="text-danger"></span>
             </div>
-            <label asp-for="ImageFile"  class="control-label"></label>
+
+            <label asp-for="ImageFile" class="control-label"></label>
             <br />
-            <input asp-for="ImageFile"  accept="image/*" />
-            <span asp-validation-for="ImageFile"  class="text-danger"></span>
+            <input asp-for="ImageFile" accept="image/*" />
+            <span asp-validation-for="ImageFile" class="text-danger"></span>
             <br />
             @Html.ValidationMessageFor(m => m.ImageFile, "", new { @class = "error" })
             <hr />
-             <input type="submit" value="Save" class="btn btn-primary" />         
+            <input type="submit" value="Save" class="btn btn-primary" />
         </form>
     </div>
 </div>
@@ -59,7 +68,9 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
 
 

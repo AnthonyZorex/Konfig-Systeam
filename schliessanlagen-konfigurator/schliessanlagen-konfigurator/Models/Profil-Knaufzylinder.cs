@@ -14,7 +14,8 @@ namespace schliessanlagen_konfigurator.Models
         public string Name { get; set; }
         public double Extern { get; set; }= 30;
         public string? Artikelnummer { get; set; }
-        public int Count { get; set; }
+        public int? Count { get; set; }
+        public decimal? Cost { get; set; }
         public double Intern { get; set; } = 30;
         public double max { get; set; }
         public double min { get; set; }

@@ -13,7 +13,8 @@ namespace schliessanlagen_konfigurator.Models
         public IFormFile ImageFile { get; set; }
         public string Name { get; set; }
         public string? Artikelnummer { get; set; }
-        public int Count { get; set; }
+        public int? Count { get; set; }
+        public decimal? Сost { get; set; }
         public Schliessanlagen Schliessanlagen { get; set; }
         public ICollection<Options>? Options { get; set; }
         public Vorhangschloss()

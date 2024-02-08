@@ -85,7 +85,20 @@
                     <option>@item.Schließhebel</option>
                 }
             </select>
-
+            <dt>Modulbauweise</dt>
+            <select class="form-select">
+                @foreach (var item in ViewBag.c)
+                {
+                    <option>@item.Modulbauweise</option>
+                }
+            </select>
+            <dt>Zubehör</dt>
+            <select class="form-select">
+                @foreach (var item in ViewBag.c)
+                {
+                    <option>@item.Zubehör</option>
+                }
+            </select>
         </dl>
     </div>
 </div>

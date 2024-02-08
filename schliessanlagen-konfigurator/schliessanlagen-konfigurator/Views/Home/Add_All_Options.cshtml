@@ -69,6 +69,12 @@
 
                     <label>Schließhebel</label>
                     @Html.EditorFor(m => m.Schließhebel, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Modulbauweise</label>
+                    @Html.EditorFor(m => m.Modulbauweise, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Zubehör</label>
+                    @Html.EditorFor(m => m.Zubehör, new { htmlAttributes = new { @class = "form-control" } })
  
                 </div>
                 <input type="submit" class="btn btn-success" id="input" value="Create Options Doppelzylinder" />
@@ -149,51 +155,276 @@
             </details>
 
         <details>
+           
             <summary> Profil - Knaufzylinder</summary>
+            @using (Html.BeginForm("Add_All_Options", "Home", FormMethod.Get, new { enctype = "multipart/form-data" }))
+            {
+                <p>
+                    Find by name: @Html.TextBox("SearchString")
+                    <input type="submit" value="Search" />
+                </p>
+            }
                 @using (Html.BeginForm("Create_Profil_Doppelzylinder", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
-                    @foreach (var item in ViewBag.knayf)
-                    {
-                        <option>@item.Name </option>
-                    }
-                    <input type="submit" class="btn btn-success" id="input" value="OptionsAdd" />
+                int x = 0;
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr id="TableOptions">
+                            <th>Name </th>
+                            <th>Image</th>
+                            @foreach (var item in ViewBag.knayf)
+                            {
+                                x = item.Id;
+                                <td id="rowTable doppelZylinder" class="table-info ">@item.Name </td>
+                                <td id="rowTable" class="table-info "> <img decoding="async" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
+                            }
+                        </tr>
+                    </tbody>
+                </table>
+                <h1 id="dP">@x</h1>
+                <div id="createColum">
+
+                    <label>Id_Halbzylinder</label>
+                    @Html.EditorFor(m => m.IdProfil_Halbzylinder, new { htmlAttributes = new { @class = "form-control", @id = "Values" } })
+
+                    <label>NG Funktion</label>
+                    @Html.EditorFor(m => m.NG_Funktion, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Freilauf</label>
+                    @Html.EditorFor(m => m.Freilauf, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Zylinderfärbung</label>
+                    @Html.EditorFor(m => m.Zylinderfärbung, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Bohrschutz</label>
+                    @Html.EditorFor(m => m.Bohrschutz, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Witterungsschutz</label>
+                    @Html.EditorFor(m => m.Witterungsschutz, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Schließbart</label>
+                    @Html.EditorFor(m => m.Schließbart, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Bügelhöhe</label>
+                    @Html.EditorFor(m => m.Bügelhöhe, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Zylinderknauf</label>
+                    @Html.EditorFor(m => m.Zylinderknauf, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Schließweg</label>
+                    @Html.EditorFor(m => m.Schließweg, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Schließhebel</label>
+                    @Html.EditorFor(m => m.Schließhebel, new { htmlAttributes = new { @class = "form-control" } })
+
+                </div>
+                <hr />
+                <input type="submit" class="btn btn-success" id="input" value="OptionsAdd" />
                 }
         </details>
          
         <details>
             <summary> Profil - Hebelzylinder</summary>
-                @using (Html.BeginForm("Create_Profil_Doppelzylinder", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
-                    @foreach (var item in ViewBag.hebel)
-                    {
-                        <option>@item.Name</option>
-                    }
-                    <input type="submit" class="btn btn-success" id="input" value="OptionsAdd" />
-                }
+            @using (Html.BeginForm("Add_All_Options", "Home", FormMethod.Get, new { enctype = "multipart/form-data" }))
+            {
+                <p>
+                    Find by name: @Html.TextBox("SearchString")
+                    <input type="submit" value="Search" />
+                </p>
+            }
+            @using (Html.BeginForm("Create_Profil_Doppelzylinder", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                int x = 0;
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr id="TableOptions">
+                            <th>Name </th>
+                            <th>Image</th>
+                            @foreach (var item in ViewBag.hebel)
+                            {
+                                x = item.Id;
+                                <td id="rowTable doppelZylinder" class="table-info ">@item.Name </td>
+                                <td id="rowTable" class="table-info "> <img decoding="async" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
+                            }
+                        </tr>
+                    </tbody>
+                </table>
+                <h1 id="dP">@x</h1>
+                <div id="createColum">
+
+                    <label>Id_Halbzylinder</label>
+                    @Html.EditorFor(m => m.IdProfil_Halbzylinder, new { htmlAttributes = new { @class = "form-control", @id = "Values" } })
+
+                    <label>NG Funktion</label>
+                    @Html.EditorFor(m => m.NG_Funktion, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Freilauf</label>
+                    @Html.EditorFor(m => m.Freilauf, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Zylinderfärbung</label>
+                    @Html.EditorFor(m => m.Zylinderfärbung, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Bohrschutz</label>
+                    @Html.EditorFor(m => m.Bohrschutz, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Witterungsschutz</label>
+                    @Html.EditorFor(m => m.Witterungsschutz, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Schließbart</label>
+                    @Html.EditorFor(m => m.Schließbart, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Bügelhöhe</label>
+                    @Html.EditorFor(m => m.Bügelhöhe, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Zylinderknauf</label>
+                    @Html.EditorFor(m => m.Zylinderknauf, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Schließweg</label>
+                    @Html.EditorFor(m => m.Schließweg, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Schließhebel</label>
+                    @Html.EditorFor(m => m.Schließhebel, new { htmlAttributes = new { @class = "form-control" } })
+
+                </div>
+                <hr />
+                <input type="submit" class="btn btn-success" id="input" value="OptionsAdd" />
+            }
         </details>
 
         <details>
             <summary>Vorhangschloss</summary>
-                @using (Html.BeginForm("Create_Profil_Doppelzylinder", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
-                    @foreach (var item in ViewBag.vorhangschloos)
-                    {
-                        <option>@item.Name</option>
-                    }
-                    <input type="submit" class="btn btn-success" id="input" value="OptionsAdd" />
-                }
+            @using (Html.BeginForm("Add_All_Options", "Home", FormMethod.Get, new { enctype = "multipart/form-data" }))
+            {
+                <p>
+                    Find by name: @Html.TextBox("SearchString")
+                    <input type="submit" value="Search" />
+                </p>
+            }
+            @using (Html.BeginForm("Create_Profil_Doppelzylinder", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                int x = 0;
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr id="TableOptions">
+                            <th>Name </th>
+                            <th>Image</th>
+                            @foreach (var item in ViewBag.vorhangschloos)
+                            {
+                                x = item.Id;
+                                <td id="rowTable doppelZylinder" class="table-info ">@item.Name </td>
+                                <td id="rowTable" class="table-info "> <img decoding="async" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
+                            }
+                        </tr>
+                    </tbody>
+                </table>
+                <h1 id="dP">@x</h1>
+                <div id="createColum">
+
+                    <label>Id_Halbzylinder</label>
+                    @Html.EditorFor(m => m.IdProfil_Halbzylinder, new { htmlAttributes = new { @class = "form-control", @id = "Values" } })
+
+                    <label>NG Funktion</label>
+                    @Html.EditorFor(m => m.NG_Funktion, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Freilauf</label>
+                    @Html.EditorFor(m => m.Freilauf, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Zylinderfärbung</label>
+                    @Html.EditorFor(m => m.Zylinderfärbung, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Bohrschutz</label>
+                    @Html.EditorFor(m => m.Bohrschutz, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Witterungsschutz</label>
+                    @Html.EditorFor(m => m.Witterungsschutz, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Schließbart</label>
+                    @Html.EditorFor(m => m.Schließbart, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Bügelhöhe</label>
+                    @Html.EditorFor(m => m.Bügelhöhe, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Zylinderknauf</label>
+                    @Html.EditorFor(m => m.Zylinderknauf, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Schließweg</label>
+                    @Html.EditorFor(m => m.Schließweg, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Schließhebel</label>
+                    @Html.EditorFor(m => m.Schließhebel, new { htmlAttributes = new { @class = "form-control" } })
+
+                </div>
+                <hr />
+                <input type="submit" class="btn btn-success" id="input" value="OptionsAdd" />
+            }
         </details>
 
         <details>
             <summary>Aussenzylinder</summary>
-                @using (Html.BeginForm("Create_Profil_Doppelzylinder", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
-                    @foreach (var item in ViewBag.aussenzylinder)
-                    {
-                        <option>@item.Name</option>
-                    }
-                    <input type="submit" class="btn btn-success" id="input" value="OptionsAdd" />
-                }
+            @using (Html.BeginForm("Add_All_Options", "Home", FormMethod.Get, new { enctype = "multipart/form-data" }))
+            {
+                <p>
+                    Find by name: @Html.TextBox("SearchString")
+                    <input type="submit" value="Search" />
+                </p>
+            }
+            @using (Html.BeginForm("Create_Profil_Doppelzylinder", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                int x = 0;
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr id="TableOptions">
+                            <th>Name </th>
+                            <th>Image</th>
+                            @foreach (var item in ViewBag.aussenzylinder)
+                            {
+                                x = item.Id;
+                                <td id="rowTable doppelZylinder" class="table-info ">@item.Name </td>
+                                <td id="rowTable" class="table-info "> <img decoding="async" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
+                            }
+                        </tr>
+                    </tbody>
+                </table>
+                <h1 id="dP">@x</h1>
+                <div id="createColum">
+
+                    <label>Id_Halbzylinder</label>
+                    @Html.EditorFor(m => m.IdProfil_Halbzylinder, new { htmlAttributes = new { @class = "form-control", @id = "Values" } })
+
+                    <label>NG Funktion</label>
+                    @Html.EditorFor(m => m.NG_Funktion, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Freilauf</label>
+                    @Html.EditorFor(m => m.Freilauf, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Zylinderfärbung</label>
+                    @Html.EditorFor(m => m.Zylinderfärbung, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Bohrschutz</label>
+                    @Html.EditorFor(m => m.Bohrschutz, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Witterungsschutz</label>
+                    @Html.EditorFor(m => m.Witterungsschutz, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Schließbart</label>
+                    @Html.EditorFor(m => m.Schließbart, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Bügelhöhe</label>
+                    @Html.EditorFor(m => m.Bügelhöhe, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Zylinderknauf</label>
+                    @Html.EditorFor(m => m.Zylinderknauf, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Schließweg</label>
+                    @Html.EditorFor(m => m.Schließweg, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Schließhebel</label>
+                    @Html.EditorFor(m => m.Schließhebel, new { htmlAttributes = new { @class = "form-control" } })
+
+                </div>
+                <hr />
+                <input type="submit" class="btn btn-success" id="input" value="OptionsAdd" />
+            }
         </details>
    
     </div>

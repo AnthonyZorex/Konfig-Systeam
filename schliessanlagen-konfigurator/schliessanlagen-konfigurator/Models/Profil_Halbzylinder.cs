@@ -14,7 +14,8 @@ namespace schliessanlagen_konfigurator.Models
         public IFormFile ImageFile { get; set; }
         public double Außen { get; set; } = 25;
         public string? Artikelnummer { get; set; }
-        public int Count { get; set; }
+        public int? Count { get; set; }
+        public decimal? Cost { get; set; }
         public double max { get; set; }
         public double min { get; set; }
         public Schliessanlagen Schliessanlagen { get; set; }

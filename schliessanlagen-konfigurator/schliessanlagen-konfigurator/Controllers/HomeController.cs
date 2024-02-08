@@ -225,7 +225,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 return RedirectToAction("HebelzylinderRout");
             }
 
-           else  if (Vorhang != null)
+            else if (Vorhang != null)
             {
                 db.Vorhangschloss.Remove(Vorhang);
                 db.SaveChanges();
@@ -269,30 +269,51 @@ namespace schliessanlagen_konfigurator.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        public ActionResult SaveProfil_Knaufzylinder(Profil_Knaufzylinder profil_Doppelzylinder)
+        {
+            db.Profil_Knaufzylinder.Update(profil_Doppelzylinder);
+            db.SaveChanges();
+            return RedirectToAction("Profil_KnaufzylinderRout");
+        }
         [HttpGet]
         [Route("Home/Edit_Halbzylinder")]
         public async Task<IActionResult> Edit_Halbzylinder(Hebelzylinder profil_Halbzylinder)
         {
             var Halbzylinder = db.Hebelzylinder.Find(profil_Halbzylinder.Id);
-            
             return View(Halbzylinder);
         }
-        [HttpGet]
-        [Route("Home/Edit_Aussenzylinder_Rundzylinder")]
-        public async Task<IActionResult> Edit_Aussenzylinder_Rundzylinder(Aussenzylinder_Rundzylinder profil_Halbzylinder)
-        {
-            var Halbzylinder = db.Aussenzylinder_Rundzylinder.Find(profil_Halbzylinder.Id);
 
-            return View(Halbzylinder);
-        }
-        [HttpGet]
-        [Route("Home/Edit_Edit_Vorhangschloss")]
-        public async Task<IActionResult> Edit_Vorhangschloss(Vorhangschloss profil_Halbzylinder)
-        {
-            var Halbzylinder = db.Vorhangschloss.Find(profil_Halbzylinder.Id);
+            [HttpGet]
+            [Route("Home/Edit_Aussenzylinder_Rundzylinder")]
+            public async Task<IActionResult> Edit_Aussenzylinder_Rundzylinder(Aussenzylinder_Rundzylinder profil_Halbzylinder)
+            {
+                var Halbzylinder = db.Aussenzylinder_Rundzylinder.Find(profil_Halbzylinder.Id);
 
-            return View(Halbzylinder);
-        }
+                return View(Halbzylinder);
+            }
+            [HttpGet]
+            [Route("Home/Edit_Vorhangschloss")]
+            public async Task<IActionResult> Edit_Vorhangschloss(Vorhangschloss profil_Halbzylinder)
+            {
+                var Halbzylinder = db.Vorhangschloss.Find(profil_Halbzylinder.Id);
+
+                return View(Halbzylinder);
+            }
+            [HttpGet]
+            [Route("Home/Edit_Profil_Halbzylinder")]
+            public async Task<IActionResult> Edit_Profil_Halbzylinder(Profil_Halbzylinder profil_Halbzylinder)
+            {
+                var Halbzylinder = db.Profil_Halbzylinder.Find(profil_Halbzylinder.Id);
+                
+                return View(Halbzylinder);
+            }
+            [Route("Home/Edit_Profil_Knaufzylinder")]
+            public async Task<IActionResult> Edit_Profil_Knaufzylinder(Profil_Knaufzylinder profil_Halbzylinder)
+            {
+                var Halbzylinder = db.Profil_Knaufzylinder.Find(profil_Halbzylinder.Id);
+
+                return View(Halbzylinder);
+            }
 
         [HttpPost]
         public ActionResult SaveHalbzylinder(Profil_Halbzylinder profil_Halbzylinder)
@@ -331,6 +352,11 @@ namespace schliessanlagen_konfigurator.Controllers
             ViewBag.c = db.Options.Where(x => x.IdAussenzylinder_Rundzylinder == id).ToList();
             return View();
         }
+        public ActionResult DetailsProfil_Knaufzylinder(int id)
+        {
+            ViewBag.c = db.Options.Where(x => x.IdProfil_Knaufzylinder == id).ToList();
+            return View();
+        }
         public ActionResult DetailsVorhangschloss(int id)
         {
             ViewBag.c = db.Options.Where(x => x.IdVorhangschloss == id).ToList();
@@ -339,6 +365,11 @@ namespace schliessanlagen_konfigurator.Controllers
         public ActionResult DetailsHebelZylinder(int id)
         {
             ViewBag.c = db.Options.Where(x => x.IdHebelzylinder == id).ToList();
+            return View();
+        }
+        public ActionResult DetailsProfil_Halbzylinder(int id)
+        {
+            ViewBag.c = db.Options.Where(x => x.IdProfil_Halbzylinder == id).ToList();
             return View();
         }
         [HttpGet]

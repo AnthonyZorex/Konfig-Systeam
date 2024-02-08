@@ -63,7 +63,7 @@ a{
 }
 #Table{
    display:grid;
-   grid-template-columns:repeat(10,150px);
+   grid-template-columns:repeat(11,auto);
 }
 #TableOptions {
     display: grid;

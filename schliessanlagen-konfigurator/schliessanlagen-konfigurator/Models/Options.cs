@@ -14,6 +14,8 @@
         public string? Zylinderknauf { get; set; }
         public string? Schließweg { get; set; }
         public string? Schließhebel { get; set; }
+        public string? Modulbauweise { get; set; }
+        public string? Zubehör { get; set; }
         public int? IdProfil_Doppelzylinder { get; set; }
         public int? IdVorhangschloss { get; set; }
         public int? IdProfil_Knaufzylinder { get; set; }

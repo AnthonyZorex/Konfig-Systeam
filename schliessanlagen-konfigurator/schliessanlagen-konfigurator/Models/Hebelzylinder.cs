@@ -13,9 +13,9 @@ namespace schliessanlagen_konfigurator.Models
         [DisplayName("Upload your photo")]
         public IFormFile ImageFile { get; set; }
         public string? Artikelnummer { get; set; }
-        public int Count { get; set; }
-        public double max { get; set; }
-        public double min { get; set; }
+        public int? Count { get; set; }
+        public decimal? Cost { get; set; }
+
         public Schliessanlagen Schliessanlagen { get; set; }
         public ICollection<Options>? Options { get; set; }
         public Hebelzylinder()
