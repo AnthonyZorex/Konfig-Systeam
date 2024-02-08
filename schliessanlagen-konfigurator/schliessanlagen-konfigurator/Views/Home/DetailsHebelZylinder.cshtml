@@ -1,85 +1,89 @@
 ﻿@model schliessanlagen_konfigurator.Models.Options;
 <div class="modal-content" id="modalka">
-    @Html.HiddenFor(x=>x.Id)
+    @Html.HiddenFor(x => x.Id)
     <div class="modal-header">
         <button class=" btn btn-success close" id="close" data-dismiss="modal" area-hidden="true">X</button>
-        <button class=" btn btn-success " id="Add_options" data-dismiss="modal" area-hidden="true"><a href="@Url.Action("Add_All_Options","Home")">Add options</a></button>
         <h4></h4>
     </div>
     <div class="modal-body">
         <dl class="dl-horizontal">
 
-                <dt>N&G Funktion</dt>
-                <select class="form-select">
+            <dt>N&G Funktion</dt>
+
+            <select class="form-select">
                 @foreach (var item in ViewBag.c)
                 {
                     <option>@item.NG_Funktion</option>
-                } </select>
+                }
+            </select>
 
-                <dt>Freilauf</dt>
-                <select class="form-select">
+            <dt>Freilauf</dt>
+            <select class="form-select">
                 @foreach (var item in ViewBag.c)
                 {
                     <option>@item.Freilauf</option>
-                } </select>
+                }
+            </select>
 
-                <dt>Zylinderfärbung</dt>
-                <select class="form-select">
+            <dt>Zylinderfärbung</dt>
+            <select class="form-select">
                 @foreach (var item in ViewBag.c)
                 {
                     <option>@item.Zylinderfärbung</option>
-                } </select>
+                }
+            </select>
 
-                 <dt>Bohrschutz</dt>
+            <dt>Bohrschutz</dt>
 
-                <select class="form-select">
+            <select class="form-select">
                 @foreach (var item in ViewBag.c)
                 {
                     <option>@item.Bohrschutz</option>
-                    }
-                </select>
+                }
+            </select>
 
 
-                <dt>Witterungsschutz</dt>
-                <select class="form-select">
+            <dt>Witterungsschutz</dt>
+            <select class="form-select">
                 @foreach (var item in ViewBag.c)
                 {
                     <option>@item.Witterungsschutz</option>
-                    }
-                </select>
+                }
+            </select>
 
-                <dt>Schließbart</dt>
-                <select class="form-select">
+            <dt>Schließbart</dt>
+            <select class="form-select">
                 @foreach (var item in ViewBag.c)
                 {
                     <option>@item.Schließbart</option>
-                }</select>
+                }
+            </select>
 
-                <dt>Bügelhöhe</dt>
-                <select class="form-select">
+            <dt>Bügelhöhe</dt>
+            <select class="form-select">
                 @foreach (var item in ViewBag.c)
                 {
-                <option>@item.Bügelhöhe</option>
+                    <option>@item.Bügelhöhe</option>
                 }
-                </select>
-                <dt>Zylinderknauf</dt>
+            </select>
+            <dt>Zylinderknauf</dt>
 
-                <select class="form-select">
+            <select class="form-select">
                 @foreach (var item in ViewBag.c)
                 {
-                <option>@item.Zylinderknauf</option>
+                    <option>@item.Zylinderknauf</option>
                 }
-                </select>
-                <dt>Schließweg</dt>
+            </select>
+            <dt>Schließweg</dt>
 
-                <select class="form-select">
+            <select class="form-select">
                 @foreach (var item in ViewBag.c)
                 {
                     <option>@item.Schließweg</option>
-                } 
-                </select>
-                <dt>Schließhebel</dt>
-                <select class="form-select">
+                }
+            </select>
+            <dt>Schließhebel</dt>
+            <select class="form-select">
                 @foreach (var item in ViewBag.c)
                 {
                     <option>@item.Schließhebel</option>

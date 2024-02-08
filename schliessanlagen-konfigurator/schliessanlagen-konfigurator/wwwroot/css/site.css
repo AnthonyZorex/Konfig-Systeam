@@ -65,6 +65,10 @@ a{
    display:grid;
    grid-template-columns:repeat(10,150px);
 }
+#TableOptions {
+    display: grid;
+    grid-template-columns: repeat(2,150px);
+}
 
 #TableVorhangschloss {
     display: grid;

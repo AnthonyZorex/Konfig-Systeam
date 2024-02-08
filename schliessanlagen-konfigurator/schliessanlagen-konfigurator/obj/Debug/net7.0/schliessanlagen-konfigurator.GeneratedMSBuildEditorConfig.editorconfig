@@ -9,83 +9,91 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = schliessanlagen_konfigurator
 build_property.RootNamespace = schliessanlagen_konfigurator
-build_property.ProjectDir = C:\Users\JAKUB\source\repos\schliessanlagen-konfigurator\schliessanlagen-konfigurator\
+build_property.ProjectDir = D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 7.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\JAKUB\source\repos\schliessanlagen-konfigurator\schliessanlagen-konfigurator
+build_property.MSBuildProjectDirectory = D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/JAKUB/source/repos/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Aussenzylinder_RundzylinderRout.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Add_All_Options.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBZGRfQWxsX09wdGlvbnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Aussenzylinder_RundzylinderRout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBdXNzZW56eWxpbmRlcl9SdW5kenlsaW5kZXJSb3V0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/source/repos/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/DetailsAussenzylinder_Rundzylinder.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/DetailsAussenzylinder_Rundzylinder.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxEZXRhaWxzQXVzc2VuenlsaW5kZXJfUnVuZHp5bGluZGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/source/repos/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/DetailsProfil_Doppelzylinder.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/DetailsHebelZylinder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxEZXRhaWxzSGViZWxaeWxpbmRlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/DetailsProfil_Doppelzylinder.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxEZXRhaWxzUHJvZmlsX0RvcHBlbHp5bGluZGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/source/repos/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Edit_Aussenzylinder_Rundzylinder.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Edit_Aussenzylinder_Rundzylinder.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFZGl0X0F1c3Nlbnp5bGluZGVyX1J1bmR6eWxpbmRlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/source/repos/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Edit_Doppelzylinder.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Edit_Doppelzylinder.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFZGl0X0RvcHBlbHp5bGluZGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/source/repos/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Edit_Halbzylinder.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Edit_Halbzylinder.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFZGl0X0hhbGJ6eWxpbmRlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/source/repos/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Edit_Vorhangschloss.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Edit_Vorhangschloss.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFZGl0X1ZvcmhhbmdzY2hsb3NzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/source/repos/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/HebelzylinderRout.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/HebelzylinderRout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxIZWJlbHp5bGluZGVyUm91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/source/repos/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Index.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/source/repos/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Profil_HalbzylinderRout.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Profil_HalbzylinderRout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9maWxfSGFsYnp5bGluZGVyUm91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/source/repos/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Profil_KnaufzylinderRout.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Profil_KnaufzylinderRout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9maWxfS25hdWZ6eWxpbmRlclJvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/source/repos/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/VorhangschlossRout.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/VorhangschlossRout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxWb3JoYW5nc2NobG9zc1JvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/source/repos/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Konfigurator/IndexKonfigurator.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Konfigurator/IndexKonfigurator.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS29uZmlndXJhdG9yXEluZGV4S29uZmlndXJhdG9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/source/repos/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/Error.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/source/repos/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/_ValidationScriptsPartial.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/source/repos/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/_ViewImports.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/source/repos/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/_ViewStart.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/source/repos/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/_Layout.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-rlp7f96r37

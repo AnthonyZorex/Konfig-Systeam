@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "fg6SIVidt49nPu3r0V6U0VLtheMbCyq1CviOxxYj6L6+BkRFS7Cb/bnUuViZPjYiaSkt7VSTE6ZuMLoGfPX6Pw==",
+  "dgSpecHash": "uzJoNrhfOYC84JGQtb5NXMxfpU9LO+MITZB0gOB7YgB1/qK8g5FimpdeINU78nbWqOa2otHSMxKbC1XxZnvVOw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\JAKUB\\source\\repos\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj",
+  "projectFilePath": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\JAKUB\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\JAKUB\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

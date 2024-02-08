@@ -5,6 +5,11 @@ using schliessanlagen_konfigurator.Data;
 using Microsoft.Extensions.Hosting;
 using NuGet.Protocol.Plugins;
 using Microsoft.EntityFrameworkCore;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using NuGet.Protocol;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Numerics;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace schliessanlagen_konfigurator.Controllers
 {
@@ -266,9 +271,9 @@ namespace schliessanlagen_konfigurator.Controllers
         }
         [HttpGet]
         [Route("Home/Edit_Halbzylinder")]
-        public async Task<IActionResult> Edit_Halbzylinder(Profil_Halbzylinder profil_Halbzylinder)
+        public async Task<IActionResult> Edit_Halbzylinder(Hebelzylinder profil_Halbzylinder)
         {
-            var Halbzylinder = db.Profil_Halbzylinder.Find(profil_Halbzylinder.Id);
+            var Halbzylinder = db.Hebelzylinder.Find(profil_Halbzylinder.Id);
             
             return View(Halbzylinder);
         }
@@ -331,6 +336,67 @@ namespace schliessanlagen_konfigurator.Controllers
             ViewBag.c = db.Options.Where(x => x.IdVorhangschloss == id).ToList();
             return View();  
         }
+        public ActionResult DetailsHebelZylinder(int id)
+        {
+            ViewBag.c = db.Options.Where(x => x.IdHebelzylinder == id).ToList();
+            return View();
+        }
+        [HttpGet]
+        [Route("Home/Add_All_Options")]
+        public ActionResult Add_All_Options(string sortOrder, string searchString)
+        { 
+            var dopelzylinder = db.Profil_Doppelzylinder.ToList();
+            var halb = db.Profil_Halbzylinder.ToList();
+            var knayf = db.Profil_Knaufzylinder.ToList();
+            var hebel = db.Hebelzylinder.ToList();
+            var vorhangschloos = db.Vorhangschloss.ToList();
+            var aussenzylinder = db.Aussenzylinder_Rundzylinder.ToList();
+            var options = db.Options.ToList();
+
+            ViewBag.NameSortParm = System.String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            
+            if (!System.String.IsNullOrEmpty(searchString))
+            {
+                dopelzylinder = dopelzylinder.Where(s => s.Name == searchString).ToList();
+                if (dopelzylinder == null)
+                {
+
+                }
+                if (halb == null)
+                {
+
+                }
+            }
+
+            ViewBag.dop = dopelzylinder;
+            ViewBag.halb = halb;
+            ViewBag.knayf = knayf;
+            ViewBag.hebel = hebel;
+            ViewBag.vorhangschloos = vorhangschloos;
+            ViewBag.aussenzylinder = aussenzylinder;
+            ViewBag.options = options;
+
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create_Options(Options options)
+        {
+            if (options != null) {
+                db.Options.Add(options);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Add_All_Options");
+            }
+            return RedirectToAction("Add_All_Options");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create_DopOptions(int id)
+        {
+            var dopelOptions =db.Profil_Doppelzylinder.Where(x=>x.Id == id).ToList();
+            return View();
+        }
+
+       
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

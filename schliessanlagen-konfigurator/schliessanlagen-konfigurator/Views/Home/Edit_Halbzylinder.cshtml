@@ -1,11 +1,11 @@
-﻿ @model schliessanlagen_konfigurator.Models.Profil_Halbzylinder;
+﻿ @model schliessanlagen_konfigurator.Models.Hebelzylinder;
 
 @{
     ViewData["Title"] = "Edit";
 }
 
 <h1>Edit Halbzylinder</h1>
-<h4>@Model.Artikelnummer</h4>
+<h4>@Model.Name</h4> 
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -21,6 +21,11 @@
                 <label asp-for="schliessanlagenId" class="control-label"></label>
                 <input asp-for="schliessanlagenId" class="form-control" />
                 <span asp-validation-for="schliessanlagenId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Artikelnummer" class="control-label"></label>
