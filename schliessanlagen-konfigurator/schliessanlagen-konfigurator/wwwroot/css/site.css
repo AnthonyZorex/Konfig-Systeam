@@ -72,7 +72,7 @@ a{
 
 #TableVorhangschloss {
     display: grid;
-    grid-template-columns: repeat(6,200px);
+    grid-template-columns: repeat(7,auto);
     max-width: 1200px;
     justify-content: center;
     margin-left: auto;

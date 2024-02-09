@@ -10,6 +10,8 @@ using NuGet.Protocol;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Numerics;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using System.Configuration;
+using System.IO;
 
 namespace schliessanlagen_konfigurator.Controllers
 {
@@ -22,6 +24,7 @@ namespace schliessanlagen_konfigurator.Controllers
             db = context;
             Environment = _environment;
         }
+        #region ViewZylinder
         public async Task<IActionResult> Index()
         {
             ViewBag.item = db.Profil_Doppelzylinder;
@@ -65,136 +68,239 @@ namespace schliessanlagen_konfigurator.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
+        #endregion
+        #region CreateNewItemZylinder
         [HttpPost]
         public async Task<IActionResult> Create_Profil_Doppelzylinder(Profil_Doppelzylinder profil_Doppelzylinder)
         {
-            string wwwRootPath = Environment.WebRootPath;
+            try
+            {   
+                if(profil_Doppelzylinder.ImageFile!=null)
+                {
+                    string wwwRootPath = Environment.WebRootPath;
 
-            string fileName = Path.GetFileNameWithoutExtension(profil_Doppelzylinder.ImageFile.FileName);
+                    string fileName = Path.GetFileNameWithoutExtension(profil_Doppelzylinder.ImageFile.FileName);
 
-            string extension = Path.GetExtension(profil_Doppelzylinder.ImageFile.FileName);
+                    string extension = Path.GetExtension(profil_Doppelzylinder.ImageFile.FileName);
 
-            profil_Doppelzylinder.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                    profil_Doppelzylinder.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
 
-            string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                    string path = Path.Combine(wwwRootPath + "/Image/", fileName);
 
-            using (var fileStream = new FileStream(path, FileMode.Create))
-            {
-                await profil_Doppelzylinder.ImageFile.CopyToAsync(fileStream);
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await profil_Doppelzylinder.ImageFile.CopyToAsync(fileStream);
+                    }
+                }
+                
+                db.Profil_Doppelzylinder.Add(profil_Doppelzylinder);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
             }
-            db.Profil_Doppelzylinder.Add(profil_Doppelzylinder);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            catch (Exception ex)
+            {
+                    return new JsonResult(
+               new ErrorDto
+               {
+                   IsError = true,
+                   Message = ex.Message
+               });
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> Create_Profil_Knaufzylinder(Profil_Knaufzylinder Profil_Knaufzylinder)
         {
-                string wwwRootPath = Environment.WebRootPath;       
-                
-                 string fileName = Path.GetFileNameWithoutExtension(Profil_Knaufzylinder.ImageFile.FileName);
+            try
+            {
+                if (Profil_Knaufzylinder.ImageFile != null)
+                {
+                    string wwwRootPath = Environment.WebRootPath;
 
-                string extension = Path.GetExtension(Profil_Knaufzylinder.ImageFile.FileName);
+                    string fileName = Path.GetFileNameWithoutExtension(Profil_Knaufzylinder.ImageFile.FileName);
 
-                Profil_Knaufzylinder.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                    string extension = Path.GetExtension(Profil_Knaufzylinder.ImageFile.FileName);
 
-                 string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                    Profil_Knaufzylinder.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
 
-                 using (var fileStream = new FileStream(path, FileMode.Create))
-                 {
-                    await Profil_Knaufzylinder.ImageFile.CopyToAsync(fileStream);
-                 }
-                 db.Profil_Knaufzylinder.Add(Profil_Knaufzylinder);
-                 await db.SaveChangesAsync();
-                 return RedirectToAction("Profil_KnaufzylinderRout");
+                    string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await Profil_Knaufzylinder.ImageFile.CopyToAsync(fileStream);
+                    }
+                }
+
+                db.Profil_Knaufzylinder.Add(Profil_Knaufzylinder);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Profil_KnaufzylinderRout");
+            }
+            catch(Exception ex)
+            {
+                return new JsonResult(
+                   new ErrorDto
+                   {
+                       IsError = true,
+                       Message = ex.Message
+                   });
+            }
+
         }
 
         [HttpPost]
         public async Task<IActionResult> Create_Profil_Halbzylinder(Profil_Halbzylinder profil_Halbzylinder)
         {
-            string wwwRootPath = Environment.WebRootPath;
-
-            string fileName = Path.GetFileNameWithoutExtension(profil_Halbzylinder.ImageFile.FileName);
-
-            string extension = Path.GetExtension(profil_Halbzylinder.ImageFile.FileName);
-
-            profil_Halbzylinder.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-
-            string path = Path.Combine(wwwRootPath + "/Image/", fileName);
-
-            using (var fileStream = new FileStream(path, FileMode.Create))
+            try
             {
-                await profil_Halbzylinder.ImageFile.CopyToAsync(fileStream);
+                if (profil_Halbzylinder.ImageFile != null )
+                {
+                    string wwwRootPath = Environment.WebRootPath;
+
+                    string fileName = Path.GetFileNameWithoutExtension(profil_Halbzylinder.ImageFile.FileName);
+
+                    string extension = Path.GetExtension(profil_Halbzylinder.ImageFile.FileName);
+
+                    profil_Halbzylinder.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+
+                    string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                    
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await profil_Halbzylinder.ImageFile.CopyToAsync(fileStream);
+                    }
+                }
+                db.Profil_Halbzylinder.Add(profil_Halbzylinder);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Profil_HalbzylinderRout");
+
             }
-            db.Profil_Halbzylinder.Add(profil_Halbzylinder);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Profil_HalbzylinderRout");
+            catch (Exception ex)
+            {
+                return new JsonResult(
+                       new ErrorDto
+                       {
+                           IsError = true,
+                           Message = ex.Message
+                       });
+            }
         }
 
         public async Task<IActionResult> Create_Aussenzylinder_Rundzylinder(Aussenzylinder_Rundzylinder profil_Doppelzylinder)
         {
-            string wwwRootPath = Environment.WebRootPath;
-
-            string fileName = Path.GetFileNameWithoutExtension(profil_Doppelzylinder.ImageFile.FileName);
-
-            string extension = Path.GetExtension(profil_Doppelzylinder.ImageFile.FileName);
-
-            profil_Doppelzylinder.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-
-            string path = Path.Combine(wwwRootPath + "/Image/", fileName);
-
-            using (var fileStream = new FileStream(path, FileMode.Create))
+            try
             {
-                await profil_Doppelzylinder.ImageFile.CopyToAsync(fileStream);
+                if (profil_Doppelzylinder.ImageFile != null )
+                {
+                    string wwwRootPath = Environment.WebRootPath;
+
+                    string fileName = Path.GetFileNameWithoutExtension(profil_Doppelzylinder.ImageFile.FileName);
+
+                    string extension = Path.GetExtension(profil_Doppelzylinder.ImageFile.FileName);
+
+                    profil_Doppelzylinder.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+
+                    string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await profil_Doppelzylinder.ImageFile.CopyToAsync(fileStream);
+                    }  
+                }
+                db.Aussenzylinder_Rundzylinder.Add(profil_Doppelzylinder);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Aussenzylinder_RundzylinderRout");
             }
-            db.Aussenzylinder_Rundzylinder.Add(profil_Doppelzylinder);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Aussenzylinder_RundzylinderRout");
+            catch (Exception ex)
+            {
+                return new JsonResult(
+                      new ErrorDto
+                      {
+                          IsError = true,
+                          Message = ex.Message
+                      });
+            }
+               
         }
 
         [HttpPost]
         public async Task<IActionResult> Create_Vorhangschloss(Vorhangschloss profil_Doppelzylinder)
         {
-            string wwwRootPath = Environment.WebRootPath;
-
-            string fileName = Path.GetFileNameWithoutExtension(profil_Doppelzylinder.ImageFile.FileName);
-
-            string extension = Path.GetExtension(profil_Doppelzylinder.ImageFile.FileName);
-
-            profil_Doppelzylinder.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-
-            string path = Path.Combine(wwwRootPath + "/Image/", fileName);
-
-            using (var fileStream = new FileStream(path, FileMode.Create))
+            try 
             {
-                await profil_Doppelzylinder.ImageFile.CopyToAsync(fileStream);
+                if (profil_Doppelzylinder.ImageFile != null)
+                {
+                    string wwwRootPath = Environment.WebRootPath;
+
+                    string fileName = Path.GetFileNameWithoutExtension(profil_Doppelzylinder.ImageFile.FileName);
+
+                    string extension = Path.GetExtension(profil_Doppelzylinder.ImageFile.FileName);
+
+                    profil_Doppelzylinder.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+
+                    string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await profil_Doppelzylinder.ImageFile.CopyToAsync(fileStream);
+                    }
+                }
+                db.Vorhangschloss.Add(profil_Doppelzylinder);
+                await db.SaveChangesAsync();
+                return RedirectToAction("VorhangschlossRout");
             }
-            db.Vorhangschloss.Add(profil_Doppelzylinder);
-            await db.SaveChangesAsync();
-            return RedirectToAction("VorhangschlossRout");
+            catch (Exception ex)
+            {
+                return new JsonResult(
+                      new ErrorDto
+                      {
+                          IsError = true,
+                          Message = ex.Message
+                      });
+            }
+           
+          
         }
 
         [HttpPost]
         public async Task<IActionResult> Create_Hebelzylinder(Hebelzylinder profil_Doppelzylinder)
         {
-            string wwwRootPath = Environment.WebRootPath;
-
-            string fileName = Path.GetFileNameWithoutExtension(profil_Doppelzylinder.ImageFile.FileName);
-
-            string extension = Path.GetExtension(profil_Doppelzylinder.ImageFile.FileName);
-
-            profil_Doppelzylinder.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-
-            string path = Path.Combine(wwwRootPath + "/Image/", fileName);
-
-            using (var fileStream = new FileStream(path, FileMode.Create))
+            try
             {
-                await profil_Doppelzylinder.ImageFile.CopyToAsync(fileStream);
+                if (profil_Doppelzylinder.ImageFile != null )
+                {
+                    string wwwRootPath = Environment.WebRootPath;
+
+                    string fileName = Path.GetFileNameWithoutExtension(profil_Doppelzylinder.ImageFile.FileName);
+
+                    string extension = Path.GetExtension(profil_Doppelzylinder.ImageFile.FileName);
+
+                    profil_Doppelzylinder.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+
+                    string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await profil_Doppelzylinder.ImageFile.CopyToAsync(fileStream);
+                    }
+                }
+                db.Hebelzylinder.Add(profil_Doppelzylinder);
+                await db.SaveChangesAsync();
+                return RedirectToAction("HebelzylinderRout");
             }
-            db.Hebelzylinder.Add(profil_Doppelzylinder);
-            await db.SaveChangesAsync();
-            return RedirectToAction("HebelzylinderRout");
+            catch (Exception ex)
+            {
+                return new JsonResult(
+                     new ErrorDto
+                     {
+                         IsError = true,
+                         Message = ex.Message
+                     });
+            }
+           
+           
         }
+        #endregion
+        #region DelitZylinderItem
         [HttpGet]
         [Route("Home/Delete_Doppelzylinder")]
         
@@ -253,7 +359,8 @@ namespace schliessanlagen_konfigurator.Controllers
 
             return RedirectToAction("Index");
         }
-
+        #endregion
+        #region EditForm
         [HttpGet]
         [Route("Home/Edit_Doppelzylinder")]
         public async Task<IActionResult> Edit_Doppelzylinder(Profil_Doppelzylinder profil_Doppelzylinder)
@@ -262,19 +369,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             return View(doppelzylinder);
         }
-        [HttpPost]
-        public ActionResult Save(Profil_Doppelzylinder profil_Doppelzylinder)
-        {
-            db.Profil_Doppelzylinder.Update(profil_Doppelzylinder);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-        public ActionResult SaveProfil_Knaufzylinder(Profil_Knaufzylinder profil_Doppelzylinder)
-        {
-            db.Profil_Knaufzylinder.Update(profil_Doppelzylinder);
-            db.SaveChanges();
-            return RedirectToAction("Profil_KnaufzylinderRout");
-        }
+       
         [HttpGet]
         [Route("Home/Edit_Halbzylinder")]
         public async Task<IActionResult> Edit_Halbzylinder(Hebelzylinder profil_Halbzylinder)
@@ -314,11 +409,19 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 return View(Halbzylinder);
             }
-
+        #endregion
+        #region SaveEditForm
         [HttpPost]
         public ActionResult SaveHalbzylinder(Profil_Halbzylinder profil_Halbzylinder)
         {
             db.Profil_Halbzylinder.Update(profil_Halbzylinder);
+            db.SaveChanges();
+            return RedirectToAction("Profil_HalbzylinderRout");
+        }
+        [HttpPost]
+        public ActionResult SaveHebelzylinder(Hebelzylinder profil_Halbzylinder)
+        {
+            db.Hebelzylinder.Update(profil_Halbzylinder);
             db.SaveChanges();
             return RedirectToAction("Profil_HalbzylinderRout");
         }
@@ -336,6 +439,22 @@ namespace schliessanlagen_konfigurator.Controllers
             db.SaveChanges();
             return RedirectToAction("VorhangschlossRout");
         }
+        [HttpPost]
+        public ActionResult Save(Profil_Doppelzylinder profil_Doppelzylinder)
+        {
+            db.Profil_Doppelzylinder.Update(profil_Doppelzylinder);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public ActionResult SaveProfil_Knaufzylinder(Profil_Knaufzylinder profil_Doppelzylinder)
+        {
+            db.Profil_Knaufzylinder.Update(profil_Doppelzylinder);
+            db.SaveChanges();
+            return RedirectToAction("Profil_KnaufzylinderRout");
+        }
+        #endregion
+        #region DetailZylinder
         public ActionResult DetailsProfil_Doppelzylinder(int id)
         {
            //var c = db.Options.FirstOrDefault(com => com.Id == id);
@@ -372,9 +491,11 @@ namespace schliessanlagen_konfigurator.Controllers
             ViewBag.c = db.Options.Where(x => x.IdProfil_Halbzylinder == id).ToList();
             return View();
         }
+        #endregion
+        #region Options
         [HttpGet]
         [Route("Home/Add_All_Options")]
-        public ActionResult Add_All_Options(string sortOrder, string searchString)
+        public ActionResult Add_All_Options(string sortOrder, string SearchDopppelzylinder, string SearchHalbzylinder, string SearchKnaufzylinder, string SearchHebelzylinder, string SearchVorhangschloss, string SearchAussenzylinder_Rundzylinder)
         { 
             var dopelzylinder = db.Profil_Doppelzylinder.ToList();
             var halb = db.Profil_Halbzylinder.ToList();
@@ -386,17 +507,34 @@ namespace schliessanlagen_konfigurator.Controllers
 
             ViewBag.NameSortParm = System.String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             
-            if (!System.String.IsNullOrEmpty(searchString))
+            if (!System.String.IsNullOrEmpty(SearchDopppelzylinder))
             {
-                dopelzylinder = dopelzylinder.Where(s => s.Name == searchString).ToList();
-                if (dopelzylinder == null)
-                {
-
-                }
-                if (halb == null)
-                {
-
-                }
+                dopelzylinder = dopelzylinder.Where(s => s.Name == SearchDopppelzylinder).ToList(); 
+            }
+            
+            if (!System.String.IsNullOrEmpty(SearchHalbzylinder))
+            {
+                halb = halb.Where(s => s.Name == SearchHalbzylinder).ToList();
+            }
+            
+            if (!System.String.IsNullOrEmpty(SearchKnaufzylinder))
+            {
+                knayf = knayf.Where(s => s.Name == SearchKnaufzylinder).ToList();
+            }
+            
+            if (!System.String.IsNullOrEmpty(SearchHebelzylinder))
+            {
+                hebel = hebel.Where(s => s.Name == SearchHebelzylinder).ToList();
+            }
+            
+            if (!System.String.IsNullOrEmpty(SearchVorhangschloss))
+            {
+                vorhangschloos = vorhangschloos.Where(s => s.Name == SearchVorhangschloss).ToList();
+            }
+            
+            if (!System.String.IsNullOrEmpty(SearchAussenzylinder_Rundzylinder))
+            {
+                aussenzylinder = aussenzylinder.Where(s => s.Name == SearchAussenzylinder_Rundzylinder).ToList();
             }
 
             ViewBag.dop = dopelzylinder;
@@ -419,15 +557,7 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             return RedirectToAction("Add_All_Options");
         }
-
-        [HttpPost]
-        public async Task<IActionResult> Create_DopOptions(int id)
-        {
-            var dopelOptions =db.Profil_Doppelzylinder.Where(x=>x.Id == id).ToList();
-            return View();
-        }
-
-       
+        #endregion 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

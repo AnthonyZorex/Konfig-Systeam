@@ -29,8 +29,13 @@
                 <div id="createColum">
                 <label>Name</label>
                 @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control" } })
+               
+                    <label>Сost</label>
+                    @Html.EditorFor(m => m.Сost, new { htmlAttributes = new { @class = "form-control" } })
+               
                 <label> Artikelnummer</label>
-                @Html.EditorFor(m => m.Artikelnummer, new { htmlAttributes = new { @class = "form-control" } })              
+                @Html.EditorFor(m => m.Artikelnummer, new { htmlAttributes = new { @class = "form-control" } })
+                
                 <label>Count</label>
                 @Html.EditorFor(m => m.Count, new { htmlAttributes = new { @class = "form-control" } })
 
@@ -51,6 +56,7 @@
                 <tr id="TableVorhangschloss">
                     <th>Name</th>
                     <th>Image</th>
+                    <th>Cost</th>
                     <th>Artikelnummer</th>
                     <th>Edit</th>
                     <th>Options</th>
@@ -58,23 +64,25 @@
               
                 @foreach (var item in ViewBag.item)
                 {
-               
                         <td id="rowTable" class="table-info">@item.Name</td>
                         <td id="rowTable" class="table-info"><img decoding="async" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
+                        <td id="rowTable" class="table-info">@item.Сost</td>
                         <td id="rowTable" class="table-info">@item.Artikelnummer</td>
-
                         <td id="rowTable" class="table-info"><a href="@Url.Action("Edit_Vorhangschloss","Home", new { item.Id })"><img src="@("/Image/edit-tools.png")" height="30" width="30" /></a></td>
                         <td id="rowTable" class="table-info">
                         <a class="compItem" href="@Url.Action("DetailsVorhangschloss","Home", new { item.Id })">
                         <img src="@("/Image/options.png")" height="30" width="30" />
                         </a>
                         </td>
-                        <td id="rowTable" class="table-info"><a href="@Url.Action("Delete_Doppelzylinder","Home", new { item.Id })"><img src="@("/Image/entfernen.png")" height="30" width="30" /></a></td>
-                    
+                        <td id="rowTable" class="table-info"><a href="@Url.Action("Delete_Doppelzylinder","Home", new { item.Id })"><img src="@("/Image/entfernen.png")" height="30" width="30" /></a></td>  
                 }
                 </tr>
             </table>
         }
+        <div id="modDialog" class="modal fade">
+            <div id="dialogContent" class="modal-dialog">
+            </div>
+        </div>
     </div>
 </div>
 
