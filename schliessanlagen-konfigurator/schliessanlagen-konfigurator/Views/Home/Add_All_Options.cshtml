@@ -12,9 +12,9 @@
             <summary> Profil - Dopppelzylinder</summary>
             @using (Html.BeginForm("Add_All_Options", "Home", FormMethod.Get, new { enctype = "multipart/form-data" }))
             {
-                <p>
-                    Find by name: @Html.TextBox("SearchString")
-                    <input type="submit" value="Search" />
+                <p class="pb-3" style="display:flex">
+                    Find by name: @Html.TextBox("SearchDopppelzylinder", "", new { @class = "form-control" })
+                    <input type="submit" class="btn btn-success" value="Search" />
                 </p>
             }
             @using (Html.BeginForm("Create_Options", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -36,8 +36,7 @@
                 </table>
                 <h1 id="dP">@x</h1>
                 <div id="createColum">
-                  
-                    <label>Id_dopelZylínder</label>
+                   
                     @Html.EditorFor(m => m.IdProfil_Doppelzylinder, new { htmlAttributes = new { @class = "form-control", @id = "Values" } })
 
                     <label>NG Funktion</label>
@@ -79,8 +78,8 @@
                 </div>
                 <input type="submit" class="btn btn-success" id="input" value="Create Options Doppelzylinder" />
                 <hr />
-                 <input type="submit" class="btn btn-success" id="input" value="OptionsAdd" />
-                }
+                 
+            }
             </details>
               
 
@@ -89,9 +88,9 @@
             <summary> Profil - Halibzylinder</summary>
             @using (Html.BeginForm("Add_All_Options", "Home", FormMethod.Get, new { enctype = "multipart/form-data" }))
             {
-                <p>
-                    Find by name: @Html.TextBox("SearchString")
-                    <input type="submit" value="Search" />
+                <p class="pb-3" style="display:flex">
+                    Find by name: @Html.TextBox("SearchHalbzylinder", "", new { @class = "form-control" })
+                    <input type="submit" class="btn btn-success" value="Search" />
                 </p>
             }
             @using (Html.BeginForm("Create_Options", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -111,11 +110,10 @@
                         </tr>
                     </tbody>
                 </table>
-                <h1 id="dP">@x</h1>
+                <h1 id="HalbP">@x</h1>
                 <div id="createColum">
 
-                    <label>Id_Halbzylinder</label>
-                    @Html.EditorFor(m => m.IdProfil_Halbzylinder, new { htmlAttributes = new { @class = "form-control", @id = "Values" } })
+                    @Html.EditorFor(m => m.IdProfil_Halbzylinder, new { htmlAttributes = new { @class = "form-control", @id = "ValuesHalbP" } })
 
                     <label>NG Funktion</label>
                     @Html.EditorFor(m => m.NG_Funktion, new { htmlAttributes = new { @class = "form-control" } })
@@ -149,7 +147,7 @@
 
                 </div>
                 <hr />
-                <input type="submit" class="btn btn-success" id="input" value="OptionsAdd" />
+                <input type="submit" class="btn btn-success" id="input" value="Create Options Halbzylinder" />
             }
          
             </details>
@@ -159,12 +157,12 @@
             <summary> Profil - Knaufzylinder</summary>
             @using (Html.BeginForm("Add_All_Options", "Home", FormMethod.Get, new { enctype = "multipart/form-data" }))
             {
-                <p>
-                    Find by name: @Html.TextBox("SearchString")
-                    <input type="submit" value="Search" />
+                <p class="pb-3" style="display:flex">
+                    Find by name: @Html.TextBox("SearchKnaufzylinder", "", new { @class = "form-control" })
+                    <input type="submit" class="btn btn-success" value="Search" />
                 </p>
             }
-                @using (Html.BeginForm("Create_Profil_Doppelzylinder", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("Create_Options", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                 int x = 0;
                 <table class="table table-bordered">
@@ -181,11 +179,10 @@
                         </tr>
                     </tbody>
                 </table>
-                <h1 id="dP">@x</h1>
+                <h1 id="knayfP">@x</h1>
                 <div id="createColum">
 
-                    <label>Id_Halbzylinder</label>
-                    @Html.EditorFor(m => m.IdProfil_Halbzylinder, new { htmlAttributes = new { @class = "form-control", @id = "Values" } })
+                    @Html.EditorFor(m => m.IdProfil_Knaufzylinder, new { htmlAttributes = new { @class = "form-control", @id = "id_knayfP" } })
 
                     <label>NG Funktion</label>
                     @Html.EditorFor(m => m.NG_Funktion, new { htmlAttributes = new { @class = "form-control" } })
@@ -219,7 +216,7 @@
 
                 </div>
                 <hr />
-                <input type="submit" class="btn btn-success" id="input" value="OptionsAdd" />
+                <input type="submit" class="btn btn-success" id="input" value="Create Options Knayfzylinder" />
                 }
         </details>
          
@@ -227,12 +224,12 @@
             <summary> Profil - Hebelzylinder</summary>
             @using (Html.BeginForm("Add_All_Options", "Home", FormMethod.Get, new { enctype = "multipart/form-data" }))
             {
-                <p>
-                    Find by name: @Html.TextBox("SearchString")
-                    <input type="submit" value="Search" />
+                <p class="pb-3" style="display:flex">
+                    Find by name: @Html.TextBox("SearchHebelzylinder", "", new { @class = "form-control" })
+                    <input type="submit" class="btn btn-success" value="Search" />
                 </p>
             }
-            @using (Html.BeginForm("Create_Profil_Doppelzylinder", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("Create_Options", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 int x = 0;
                 <table class="table table-bordered">
@@ -249,11 +246,9 @@
                         </tr>
                     </tbody>
                 </table>
-                <h1 id="dP">@x</h1>
+                <h1 id="hebelzylinder">@x</h1>
                 <div id="createColum">
-
-                    <label>Id_Halbzylinder</label>
-                    @Html.EditorFor(m => m.IdProfil_Halbzylinder, new { htmlAttributes = new { @class = "form-control", @id = "Values" } })
+                    @Html.EditorFor(m => m.IdHebelzylinder, new { htmlAttributes = new { @class = "form-control", @id = "id_hebelzylinder" } })
 
                     <label>NG Funktion</label>
                     @Html.EditorFor(m => m.NG_Funktion, new { htmlAttributes = new { @class = "form-control" } })
@@ -287,7 +282,7 @@
 
                 </div>
                 <hr />
-                <input type="submit" class="btn btn-success" id="input" value="OptionsAdd" />
+                <input type="submit" class="btn btn-success" id="input" value="Create Options Hebelzylinder" />
             }
         </details>
 
@@ -295,12 +290,12 @@
             <summary>Vorhangschloss</summary>
             @using (Html.BeginForm("Add_All_Options", "Home", FormMethod.Get, new { enctype = "multipart/form-data" }))
             {
-                <p>
-                    Find by name: @Html.TextBox("SearchString")
-                    <input type="submit" value="Search" />
+                <p class="pb-3" style="display:flex">
+                    Find by name: @Html.TextBox("SearchVorhangschloss", "", new { @class = "form-control" })
+                    <input type="submit" class="btn btn-success" value="Search" />
                 </p>
             }
-            @using (Html.BeginForm("Create_Profil_Doppelzylinder", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("Create_Options", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 int x = 0;
                 <table class="table table-bordered">
@@ -317,11 +312,10 @@
                         </tr>
                     </tbody>
                 </table>
-                <h1 id="dP">@x</h1>
+                <h1 id="vorhangschloss">@x</h1>
                 <div id="createColum">
 
-                    <label>Id_Halbzylinder</label>
-                    @Html.EditorFor(m => m.IdProfil_Halbzylinder, new { htmlAttributes = new { @class = "form-control", @id = "Values" } })
+                    @Html.EditorFor(m => m.IdVorhangschloss, new { htmlAttributes = new { @class = "form-control", @id = "id_vorhangschloss" } })
 
                     <label>NG Funktion</label>
                     @Html.EditorFor(m => m.NG_Funktion, new { htmlAttributes = new { @class = "form-control" } })
@@ -355,7 +349,7 @@
 
                 </div>
                 <hr />
-                <input type="submit" class="btn btn-success" id="input" value="OptionsAdd" />
+                <input type="submit" class="btn btn-success" id="input" value="Create Options Vorhangschloss" />
             }
         </details>
 
@@ -363,12 +357,12 @@
             <summary>Aussenzylinder</summary>
             @using (Html.BeginForm("Add_All_Options", "Home", FormMethod.Get, new { enctype = "multipart/form-data" }))
             {
-                <p>
-                    Find by name: @Html.TextBox("SearchString")
-                    <input type="submit" value="Search" />
+                <p class="pb-3" style="display:flex">
+                    Find by name: @Html.TextBox("SearchAussenzylinder_Rundzylinder", "", new { @class = "form-control" })
+                    <input type="submit" class="btn btn-success" value="Search" />
                 </p>
             }
-            @using (Html.BeginForm("Create_Profil_Doppelzylinder", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("Create_Options", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 int x = 0;
                 <table class="table table-bordered">
@@ -385,11 +379,10 @@
                         </tr>
                     </tbody>
                 </table>
-                <h1 id="dP">@x</h1>
+                <h1 id="aussen">@x</h1>
                 <div id="createColum">
 
-                    <label>Id_Halbzylinder</label>
-                    @Html.EditorFor(m => m.IdProfil_Halbzylinder, new { htmlAttributes = new { @class = "form-control", @id = "Values" } })
+                    @Html.EditorFor(m => m.IdAussenzylinder_Rundzylinder, new { htmlAttributes = new { @class = "form-control", @id = "id_aussen" } })
 
                     <label>NG Funktion</label>
                     @Html.EditorFor(m => m.NG_Funktion, new { htmlAttributes = new { @class = "form-control" } })
@@ -423,7 +416,7 @@
 
                 </div>
                 <hr />
-                <input type="submit" class="btn btn-success" id="input" value="OptionsAdd" />
+                <input type="submit" class="btn btn-success" id="input" value="Create Options Aussenzylinder / Rundzylinder" />
             }
         </details>
    
@@ -435,13 +428,65 @@
 <script>
     let dP = document.getElementById('dP');
     let id_dopelzylinder = document.getElementById('Values');
-    function f() {
+
+    let HalbP = document.getElementById('HalbP');
+    let id_HalbP = document.getElementById('ValuesHalbP');
+
+    let knayfP = document.getElementById('knayfP');
+    let id_knayfP = document.getElementById('id_knayfP');
+
+    let hebelzylinder = document.getElementById('hebelzylinder');
+    let id_hebelzylinder = document.getElementById('id_hebelzylinder');
+
+    let vorhangschloss = document.getElementById('vorhangschloss');
+    let id_vorhangschloss = document.getElementById('id_vorhangschloss');
+
+    let aussen = document.getElementById('aussen');
+    let id_aussen = document.getElementById('id_aussen');
+
+    function hebelzylinderProfile() {
+        hebelzylinder.style.display = 'none';
+        id_hebelzylinder.value = hebelzylinder.innerHTML;
+        id_hebelzylinder.style.display = 'none';
+    }
+    hebelzylinderProfile();
+
+    function vorhangschlossProfile() {
+        vorhangschloss.style.display = 'none';
+        id_vorhangschloss.value = vorhangschloss.innerHTML;
+        id_vorhangschloss.style.display = 'none';
+    }
+    vorhangschlossProfile();
+
+    function aussenzylinderProfile() {
+        aussen.style.display = 'none';
+        id_aussen.value = aussen.innerHTML;
+        id_aussen.style.display = 'none';
+    }
+    aussenzylinderProfile();
+
+
+    function knayfProfile() {
+        knayfP.style.display = 'none';
+        id_knayfP.value = knayfP.innerHTML;
+        id_knayfP.style.display = 'none';
+    }
+    knayfProfile();
+
+    function Dp() {
         dP.style.display = 'none';
          id_dopelzylinder.value = dP.innerHTML;
-        console.log(dP.innerHTML);
-        console.log(id_dopelzylinder.value);
+        id_dopelzylinder.style.display = 'none';
     }
-    f();
+    Dp();
+
+    function HalbProfile() {
+        HalbP.style.display = 'none';
+        id_HalbP.value = HalbP.innerHTML;
+        id_HalbP.style.display = 'none';
+    }
+    HalbProfile();
+
 </script>
 @section Scripts {
     @{

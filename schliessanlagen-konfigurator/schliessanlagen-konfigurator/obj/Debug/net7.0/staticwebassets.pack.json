@@ -5,8 +5,16 @@
       "PackagePath": "staticwebassets\\schliessanlagen-konfigurator.bundle.scp.css"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\Knaufzylinder_AK_Nickel241256054.jpg",
+      "PackagePath": "staticwebassets\\Image\\Knaufzylinder_AK_Nickel241256054.jpg"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\SD_Logo.svg",
       "PackagePath": "staticwebassets\\Image\\SD_Logo.svg"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\abus_vitess_4000_VH241607681.png",
+      "PackagePath": "staticwebassets\\Image\\abus_vitess_4000_VH241607681.png"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\edit-tools.png",
@@ -15,6 +23,26 @@
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\entfernen.png",
       "PackagePath": "staticwebassets\\Image\\entfernen.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\evva_mcs_AZ243341266.png",
+      "PackagePath": "staticwebassets\\Image\\evva_mcs_AZ243341266.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\evva_mcs_BK_MB19_01241528544.jpg",
+      "PackagePath": "staticwebassets\\Image\\evva_mcs_BK_MB19_01241528544.jpg"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\evva_mcs_DZ241002103.png",
+      "PackagePath": "staticwebassets\\Image\\evva_mcs_DZ241002103.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\evva_mcs_HZ241209376.png",
+      "PackagePath": "staticwebassets\\Image\\evva_mcs_HZ241209376.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\kaba_AZ_AZ240738895.jpg",
+      "PackagePath": "staticwebassets\\Image\\kaba_AZ_AZ240738895.jpg"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\kaba_BK241324661.jpg",
@@ -31,6 +59,10 @@
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\kaba_KDZ244045496.jpg",
       "PackagePath": "staticwebassets\\Image\\kaba_KDZ244045496.jpg"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\kaba_VH_2001243554216.jpg",
+      "PackagePath": "staticwebassets\\Image\\kaba_VH_2001243554216.jpg"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\options.png",
