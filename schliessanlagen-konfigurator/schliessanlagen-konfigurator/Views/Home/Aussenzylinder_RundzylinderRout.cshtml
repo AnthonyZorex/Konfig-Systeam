@@ -91,6 +91,22 @@
 
 <script>
 
+    let sum = document.querySelectorAll('#cost');
+    function interfaice() {
+        sum.forEach((item) => {
+            if (String(item).length < 6) {
+                item.innerHTML = item.innerHTML.slice(0, 5) + '€';
+            }
+
+            if (String(item).length > 8) {
+                item.innerHTML = item.innerHTML.slice(0, 6) + '€';
+            }
+
+            console.log(String(item).length);
+        })
+    }
+    interfaice();
+
     let selectType = document.getElementById('select');
 
     let textBox = document.querySelectorAll('.text-box single-line');
@@ -103,7 +119,6 @@
     selectType.addEventListener('change', () => {
 
     });
-
 
 
     let myModal_NewSchliessanlagen = document.getElementById('myModal_NewSchliessanlagen');

@@ -12,6 +12,9 @@ using System.Numerics;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using System.Configuration;
 using System.IO;
+using System.Text.Json;
+using Humanizer;
+using System;
 
 namespace schliessanlagen_konfigurator.Controllers
 {
@@ -362,52 +365,46 @@ namespace schliessanlagen_konfigurator.Controllers
         #endregion
         #region EditForm
         [HttpGet]
-        [Route("Home/Edit_Doppelzylinder")]
         public async Task<IActionResult> Edit_Doppelzylinder(Profil_Doppelzylinder profil_Doppelzylinder)
         {
             var doppelzylinder = db.Profil_Doppelzylinder.Find(profil_Doppelzylinder.Id);
 
-            return View(doppelzylinder);
+            return View("../Edit/Edit_Doppelzylinder", doppelzylinder);
         }
        
         [HttpGet]
-        [Route("Home/Edit_Halbzylinder")]
         public async Task<IActionResult> Edit_Halbzylinder(Hebelzylinder profil_Halbzylinder)
         {
             var Halbzylinder = db.Hebelzylinder.Find(profil_Halbzylinder.Id);
-            return View(Halbzylinder);
+            return View("../Edit/Edit_Halbzylinder", Halbzylinder);
         }
 
             [HttpGet]
-            [Route("Home/Edit_Aussenzylinder_Rundzylinder")]
             public async Task<IActionResult> Edit_Aussenzylinder_Rundzylinder(Aussenzylinder_Rundzylinder profil_Halbzylinder)
             {
                 var Halbzylinder = db.Aussenzylinder_Rundzylinder.Find(profil_Halbzylinder.Id);
 
-                return View(Halbzylinder);
+                return View("../Edit/Edit_Aussenzylinder_Rundzylinder", Halbzylinder);
             }
             [HttpGet]
-            [Route("Home/Edit_Vorhangschloss")]
             public async Task<IActionResult> Edit_Vorhangschloss(Vorhangschloss profil_Halbzylinder)
             {
                 var Halbzylinder = db.Vorhangschloss.Find(profil_Halbzylinder.Id);
 
-                return View(Halbzylinder);
+                return View("../Edit/Edit_Vorhangschloss", Halbzylinder);
             }
             [HttpGet]
-            [Route("Home/Edit_Profil_Halbzylinder")]
             public async Task<IActionResult> Edit_Profil_Halbzylinder(Profil_Halbzylinder profil_Halbzylinder)
             {
                 var Halbzylinder = db.Profil_Halbzylinder.Find(profil_Halbzylinder.Id);
                 
-                return View(Halbzylinder);
+                return View("../Edit/Edit_Profil_Halbzylinder", Halbzylinder);
             }
-            [Route("Home/Edit_Profil_Knaufzylinder")]
             public async Task<IActionResult> Edit_Profil_Knaufzylinder(Profil_Knaufzylinder profil_Halbzylinder)
             {
                 var Halbzylinder = db.Profil_Knaufzylinder.Find(profil_Halbzylinder.Id);
 
-                return View(Halbzylinder);
+                return View("../Edit/Edit_Profil_Knaufzylinder", Halbzylinder);
             }
         #endregion
         #region SaveEditForm
@@ -457,39 +454,33 @@ namespace schliessanlagen_konfigurator.Controllers
         #region DetailZylinder
         public ActionResult DetailsProfil_Doppelzylinder(int id)
         {
-           //var c = db.Options.FirstOrDefault(com => com.Id == id);
-             
            ViewBag.c = db.Options.Where(x=>x.IdProfil_Doppelzylinder==id).ToList();
-           return View();
-            //if (c != null)
-            //    return PartialView(c);
-            ////return HttpNotFound();
-            //return PartialView(c);
+           return View("../Details/DetailsProfil_Doppelzylinder");
         }
         public ActionResult DetailsAussenzylinder_Rundzylinder(int id)
         {
             ViewBag.c = db.Options.Where(x => x.IdAussenzylinder_Rundzylinder == id).ToList();
-            return View();
+            return View("../Details/DetailsAussenzylinder_Rundzylinder");
         }
         public ActionResult DetailsProfil_Knaufzylinder(int id)
         {
             ViewBag.c = db.Options.Where(x => x.IdProfil_Knaufzylinder == id).ToList();
-            return View();
+            return View("../Details/DetailsProfil_Knaufzylinder");
         }
         public ActionResult DetailsVorhangschloss(int id)
         {
             ViewBag.c = db.Options.Where(x => x.IdVorhangschloss == id).ToList();
-            return View();  
+            return View("../Details/DetailsVorhangschloss");  
         }
         public ActionResult DetailsHebelZylinder(int id)
         {
             ViewBag.c = db.Options.Where(x => x.IdHebelzylinder == id).ToList();
-            return View();
+            return View("../Details/DetailsHebelZylinder");
         }
         public ActionResult DetailsProfil_Halbzylinder(int id)
         {
             ViewBag.c = db.Options.Where(x => x.IdProfil_Halbzylinder == id).ToList();
-            return View();
+            return View("../Details/DetailsProfil_Halbzylinder");
         }
         #endregion
         #region Options
@@ -558,6 +549,7 @@ namespace schliessanlagen_konfigurator.Controllers
             return RedirectToAction("Add_All_Options");
         }
         #endregion 
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

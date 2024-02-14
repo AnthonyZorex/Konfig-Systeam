@@ -505,3 +505,5 @@ D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Debug\net7.0\schliessanlagen-konfigurator.genruntimeconfig.cache
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Debug\net7.0\ref\schliessanlagen-konfigurator.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Debug\net7.0\schliessanlagen-konfigurator.sourcelink.json
+D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Debug\net7.0\Json.Net.dll
+D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Debug\net7.0\Spire.XLS.dll

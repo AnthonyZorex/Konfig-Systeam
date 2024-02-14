@@ -1,0 +1,91 @@
+﻿@model schliessanlagen_konfigurator.Models.Profil_Knaufzylinder;
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>@Model.Artikelnummer</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SaveProfil_Knaufzylinder">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="schliessanlagenId" class="control-label"></label>
+                <input asp-for="schliessanlagenId" class="form-control" />
+                <span asp-validation-for="schliessanlagenId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cost" class="control-label"></label>
+                <input asp-for="Cost" class="form-control" />
+                <span asp-validation-for="Cost" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Artikelnummer" class="control-label"></label>
+                <input asp-for="Artikelnummer" class="form-control" />
+                <span asp-validation-for="Artikelnummer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Extern" class="control-label"></label>
+                <input asp-for="Extern" class="form-control" />
+                <span asp-validation-for="Extern" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Intern" class="control-label"></label>
+                <input asp-for="Intern" class="form-control" />
+                <span asp-validation-for="Intern" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="max" class="control-label"></label>
+                <input asp-for="max" class="form-control" />
+                <span asp-validation-for=" max" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="min" class="control-label"></label>
+                <input asp-for="min" class="form-control" />
+                <span asp-validation-for="min" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ImageName" class="control-label"></label>
+                <input asp-for="ImageName" class="form-control" />
+                <span asp-validation-for="ImageName" class="text-danger"></span>
+            </div>
+
+            <label asp-for="ImageFile" class="control-label"></label>
+            <br />
+            <input asp-for="ImageFile" accept="image/*" />
+            <span asp-validation-for="ImageFile" class="text-danger"></span>
+            <br />
+            @Html.ValidationMessageFor(m => m.ImageFile, "", new { @class = "error" })
+            <hr />
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+

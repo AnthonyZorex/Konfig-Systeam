@@ -9,12 +9,48 @@
       "PackagePath": "staticwebassets\\Image\\Knaufzylinder_AK_Nickel241256054.jpg"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\KnfUdm240334550.png",
+      "PackagePath": "staticwebassets\\Image\\KnfUdm240334550.png"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\SD_Logo.svg",
       "PackagePath": "staticwebassets\\Image\\SD_Logo.svg"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\abus_VH_480245532489.jpg",
+      "PackagePath": "staticwebassets\\Image\\abus_VH_480245532489.jpg"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\abus_bravus_3000_AZ245844057.png",
+      "PackagePath": "staticwebassets\\Image\\abus_bravus_3000_AZ245844057.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\abus_bravus_3000_BK245426343.png",
+      "PackagePath": "staticwebassets\\Image\\abus_bravus_3000_BK245426343.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\abus_bravus_3000_DZ243322766.png",
+      "PackagePath": "staticwebassets\\Image\\abus_bravus_3000_DZ243322766.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\abus_bravus_3000_DZ243403095.png",
+      "PackagePath": "staticwebassets\\Image\\abus_bravus_3000_DZ243403095.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\abus_bravus_3000_HZ245309472.png",
+      "PackagePath": "staticwebassets\\Image\\abus_bravus_3000_HZ245309472.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\abus_bravus_3000_KDZ244025270.png",
+      "PackagePath": "staticwebassets\\Image\\abus_bravus_3000_KDZ244025270.png"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\abus_vitess_4000_VH241607681.png",
       "PackagePath": "staticwebassets\\Image\\abus_vitess_4000_VH241607681.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\ces245312777.png",
+      "PackagePath": "staticwebassets\\Image\\ces245312777.png"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\edit-tools.png",
@@ -41,6 +77,14 @@
       "PackagePath": "staticwebassets\\Image\\evva_mcs_HZ241209376.png"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\hebel Udm240640949.png",
+      "PackagePath": "staticwebassets\\Image\\hebel Udm240640949.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\hebelUdm240844115.png",
+      "PackagePath": "staticwebassets\\Image\\hebelUdm240844115.png"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\kaba_AZ_AZ240738895.jpg",
       "PackagePath": "staticwebassets\\Image\\kaba_AZ_AZ240738895.jpg"
     },
@@ -65,8 +109,20 @@
       "PackagePath": "staticwebassets\\Image\\kaba_VH_2001243554216.jpg"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\knf244014142.png",
+      "PackagePath": "staticwebassets\\Image\\knf244014142.png"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\options.png",
       "PackagePath": "staticwebassets\\Image\\options.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\vorhan241105735.png",
+      "PackagePath": "staticwebassets\\Image\\vorhan241105735.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\vorhan241140069.png",
+      "PackagePath": "staticwebassets\\Image\\vorhan241140069.png"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\css\\site.css",

@@ -1,5 +1,4 @@
-﻿ @* @model schliessanlagen_konfigurator.Models.Schliessanlagen;  *@
-  @model schliessanlagen_konfigurator.Models.Profil_Doppelzylinder;  
+﻿@model schliessanlagen_konfigurator.Models.Profil_Doppelzylinder;  
 @{
     ViewData["Title"] = "Profil Doppelzylinder";
 }
@@ -15,26 +14,7 @@
                 <button class="btn btn-info"><a href="@Url.Action("Aussenzylinder_RundzylinderRout","Home")">Aussenzylinder / Rundzylinder</a></button>
             </div>
         </div>
-        @* <h2>Add new Schliessanlagen</h2> *@
-        @* @using (Html.BeginForm("Create", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        { 
-                <div class="modal-content" style="text-align:center">
-                    <label>Zylinder Typen</label>
-                    @Html.DropDownListFor(model => model.nameType,
-                    new List<SelectListItem> {
-                    new SelectListItem {  Text = "Profil-Halbzylinder" },
-                    new SelectListItem { Text = "Profil-Knaufzylinder" },
-                    new SelectListItem {  Text = "Hebelzylinder" },
-                    new SelectListItem {  Text = "Profil-Doppelzylinder" },
-                    new SelectListItem { Text = "Vorhangschloss" },
-                    new SelectListItem {  Text = "Aussenzylinder / Rundzylinder" }
-                    },
-                   new { @class = " form-select", @id = "select"})
-                <h2>Add new Profil_Doppelzylinder</h2>
-                <br />
-                <input type="submit" class=" btn btn-outline-success " value="Add Item" />
-            </div>
-        }   *@
+      
          <div>
             <h2>New Profil Doppelzylinder</h2>
             @using (Html.BeginForm("Create_Profil_Doppelzylinder", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -105,9 +85,10 @@
 
                     @foreach (var item in ViewBag.item)
                     {
+
                             <td id="rowTable" class="table-info">@item.Name</td>
                             <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
-                            <td id="rowTable" class="table-info">@item.Cost</td>
+                            <td id="rowTable " class="table-info"><h6 id="cost">@item.Cost</h6></td>
                             <td id="rowTable" class="table-info">@item.Artikelnummer</td>
                             <td id="rowTable" class="table-info">@item.Intern</td>
                             <td id="rowTable" class="table-info">@item.Extern</td>
@@ -135,6 +116,24 @@
 @section scripts
 {
     <script type="text/javascript">
+
+        let sum = document.querySelectorAll('#cost');
+        function interfaice() 
+        {
+            sum.forEach((item) => {
+                if (String(item).length < 6) 
+                {
+                    item.innerHTML = item.innerHTML.slice(0, 5) +'€';
+                }
+
+                if (String(item).length > 8) {
+                    item.innerHTML = item.innerHTML.slice(0, 6) + '€';
+                }
+
+            })
+        }
+        interfaice();
+
 
         $(function () {
             $.ajaxSetup({ cache: false });
