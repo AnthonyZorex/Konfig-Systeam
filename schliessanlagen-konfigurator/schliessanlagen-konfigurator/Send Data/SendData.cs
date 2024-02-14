@@ -45,8 +45,27 @@ namespace schliessanlagen_konfigurator.Send_Data
                 context.Schliessanlagen.AddRange(
                    new Schliessanlagen
                    {
-                      nameType = "Profil-Doppelzylinder",
-                      
+                      nameType = "Profil-Doppelzylinder"
+                   },
+                   new Schliessanlagen
+                   {
+                       nameType = "Profil-Halbzylinder"
+                   },
+                   new Schliessanlagen
+                   {
+                       nameType = "Profil-Knaufzylinder"
+                   },
+                   new Schliessanlagen
+                   {
+                       nameType = "Hebelzylinder"
+                   },
+                   new Schliessanlagen
+                   {
+                       nameType = "Vorhangschloss"
+                   },
+                   new Schliessanlagen
+                   {
+                       nameType = "Aussenzylinder_Rundzylinder"
                    }
                 );         
                 context.SaveChanges();

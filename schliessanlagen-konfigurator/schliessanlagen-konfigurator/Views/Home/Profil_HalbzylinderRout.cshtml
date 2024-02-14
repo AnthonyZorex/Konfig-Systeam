@@ -81,7 +81,7 @@
                     <tr>
                         <td id="rowTable" class="table-info">@item.Name</td>
                         <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
-                        <td id="rowTable" class="table-info">@item.Cost</td>
+                        <td id="rowTable" class="table-info"><h6 id="cost">@item.Cost</h6></td>
                         <td id="rowTable" class="table-info">@item.Artikelnummer</td>
                         <td id="rowTable" class="table-info">@item.Außen</td>
                         <td id="rowTable" class="table-info">@item.min</td>
@@ -108,6 +108,21 @@
 @section scripts
 {
     <script type="text/javascript">
+        let sum = document.querySelectorAll('#cost');
+        function interfaice() {
+            sum.forEach((item) => {
+                if (String(item).length < 6) {
+                    item.innerHTML = item.innerHTML.slice(0, 5) + '€';
+                }
+
+                if (String(item).length > 8) {
+                    item.innerHTML = item.innerHTML.slice(0, 6) + '€';
+                }
+
+                console.log(String(item).length);
+            })
+        }
+        interfaice();
 
         $(function () {
             $.ajaxSetup({ cache: false });

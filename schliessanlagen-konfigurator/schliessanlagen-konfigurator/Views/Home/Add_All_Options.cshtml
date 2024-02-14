@@ -57,17 +57,6 @@
                     <label>Schließbart</label>
                     @Html.EditorFor(m => m.Schließbart, new { htmlAttributes = new { @class = "form-control" } })
 
-                    <label>Bügelhöhe</label>
-                    @Html.EditorFor(m => m.Bügelhöhe, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Zylinderknauf</label>
-                    @Html.EditorFor(m => m.Zylinderknauf, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Schließweg</label>
-                    @Html.EditorFor(m => m.Schließweg, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Schließhebel</label>
-                    @Html.EditorFor(m => m.Schließhebel, new { htmlAttributes = new { @class = "form-control" } })
 
                     <label>Modulbauweise</label>
                     @Html.EditorFor(m => m.Modulbauweise, new { htmlAttributes = new { @class = "form-control" } })
@@ -115,9 +104,6 @@
 
                     @Html.EditorFor(m => m.IdProfil_Halbzylinder, new { htmlAttributes = new { @class = "form-control", @id = "ValuesHalbP" } })
 
-                    <label>NG Funktion</label>
-                    @Html.EditorFor(m => m.NG_Funktion, new { htmlAttributes = new { @class = "form-control" } })
-
                     <label>Freilauf</label>
                     @Html.EditorFor(m => m.Freilauf, new { htmlAttributes = new { @class = "form-control" } })
 
@@ -133,17 +119,9 @@
                     <label>Schließbart</label>
                     @Html.EditorFor(m => m.Schließbart, new { htmlAttributes = new { @class = "form-control" } })
 
-                    <label>Bügelhöhe</label>
-                    @Html.EditorFor(m => m.Bügelhöhe, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Zylinderknauf</label>
-                    @Html.EditorFor(m => m.Zylinderknauf, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Schließweg</label>
-                    @Html.EditorFor(m => m.Schließweg, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Schließhebel</label>
-                    @Html.EditorFor(m => m.Schließhebel, new { htmlAttributes = new { @class = "form-control" } })
+                    <label>Modulbauweise</label>
+                    @Html.EditorFor(m => m.Modulbauweise, new { htmlAttributes = new { @class = "form-control" } })
+                   
 
                 </div>
                 <hr />
@@ -183,10 +161,7 @@
                 <div id="createColum">
 
                     @Html.EditorFor(m => m.IdProfil_Knaufzylinder, new { htmlAttributes = new { @class = "form-control", @id = "id_knayfP" } })
-
-                    <label>NG Funktion</label>
-                    @Html.EditorFor(m => m.NG_Funktion, new { htmlAttributes = new { @class = "form-control" } })
-
+ 
                     <label>Freilauf</label>
                     @Html.EditorFor(m => m.Freilauf, new { htmlAttributes = new { @class = "form-control" } })
 
@@ -201,19 +176,12 @@
 
                     <label>Schließbart</label>
                     @Html.EditorFor(m => m.Schließbart, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Bügelhöhe</label>
-                    @Html.EditorFor(m => m.Bügelhöhe, new { htmlAttributes = new { @class = "form-control" } })
-
+               
                     <label>Zylinderknauf</label>
                     @Html.EditorFor(m => m.Zylinderknauf, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Schließweg</label>
-                    @Html.EditorFor(m => m.Schließweg, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Schließhebel</label>
-                    @Html.EditorFor(m => m.Schließhebel, new { htmlAttributes = new { @class = "form-control" } })
-
+                    
+                    <label>Modulbauweise</label>
+                    @Html.EditorFor(m => m.Modulbauweise, new { htmlAttributes = new { @class = "form-control" } })
                 </div>
                 <hr />
                 <input type="submit" class="btn btn-success" id="input" value="Create Options Knayfzylinder" />
@@ -221,7 +189,7 @@
         </details>
          
         <details>
-            <summary> Profil - Hebelzylinder</summary>
+            <summary>Hebelzylinder</summary>
             @using (Html.BeginForm("Add_All_Options", "Home", FormMethod.Get, new { enctype = "multipart/form-data" }))
             {
                 <p class="pb-3" style="display:flex">
@@ -250,29 +218,11 @@
                 <div id="createColum">
                     @Html.EditorFor(m => m.IdHebelzylinder, new { htmlAttributes = new { @class = "form-control", @id = "id_hebelzylinder" } })
 
-                    <label>NG Funktion</label>
-                    @Html.EditorFor(m => m.NG_Funktion, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Freilauf</label>
-                    @Html.EditorFor(m => m.Freilauf, new { htmlAttributes = new { @class = "form-control" } })
-
                     <label>Zylinderfärbung</label>
                     @Html.EditorFor(m => m.Zylinderfärbung, new { htmlAttributes = new { @class = "form-control" } })
 
-                    <label>Bohrschutz</label>
-                    @Html.EditorFor(m => m.Bohrschutz, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Witterungsschutz</label>
-                    @Html.EditorFor(m => m.Witterungsschutz, new { htmlAttributes = new { @class = "form-control" } })
-
                     <label>Schließbart</label>
                     @Html.EditorFor(m => m.Schließbart, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Bügelhöhe</label>
-                    @Html.EditorFor(m => m.Bügelhöhe, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Zylinderknauf</label>
-                    @Html.EditorFor(m => m.Zylinderknauf, new { htmlAttributes = new { @class = "form-control" } })
 
                     <label>Schließweg</label>
                     @Html.EditorFor(m => m.Schließweg, new { htmlAttributes = new { @class = "form-control" } })
@@ -316,36 +266,8 @@
                 <div id="createColum">
 
                     @Html.EditorFor(m => m.IdVorhangschloss, new { htmlAttributes = new { @class = "form-control", @id = "id_vorhangschloss" } })
-
-                    <label>NG Funktion</label>
-                    @Html.EditorFor(m => m.NG_Funktion, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Freilauf</label>
-                    @Html.EditorFor(m => m.Freilauf, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Zylinderfärbung</label>
-                    @Html.EditorFor(m => m.Zylinderfärbung, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Bohrschutz</label>
-                    @Html.EditorFor(m => m.Bohrschutz, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Witterungsschutz</label>
-                    @Html.EditorFor(m => m.Witterungsschutz, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Schließbart</label>
-                    @Html.EditorFor(m => m.Schließbart, new { htmlAttributes = new { @class = "form-control" } })
-
                     <label>Bügelhöhe</label>
                     @Html.EditorFor(m => m.Bügelhöhe, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Zylinderknauf</label>
-                    @Html.EditorFor(m => m.Zylinderknauf, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Schließweg</label>
-                    @Html.EditorFor(m => m.Schließweg, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Schließhebel</label>
-                    @Html.EditorFor(m => m.Schließhebel, new { htmlAttributes = new { @class = "form-control" } })
 
                 </div>
                 <hr />
@@ -384,35 +306,8 @@
 
                     @Html.EditorFor(m => m.IdAussenzylinder_Rundzylinder, new { htmlAttributes = new { @class = "form-control", @id = "id_aussen" } })
 
-                    <label>NG Funktion</label>
-                    @Html.EditorFor(m => m.NG_Funktion, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Freilauf</label>
-                    @Html.EditorFor(m => m.Freilauf, new { htmlAttributes = new { @class = "form-control" } })
-
                     <label>Zylinderfärbung</label>
                     @Html.EditorFor(m => m.Zylinderfärbung, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Bohrschutz</label>
-                    @Html.EditorFor(m => m.Bohrschutz, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Witterungsschutz</label>
-                    @Html.EditorFor(m => m.Witterungsschutz, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Schließbart</label>
-                    @Html.EditorFor(m => m.Schließbart, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Bügelhöhe</label>
-                    @Html.EditorFor(m => m.Bügelhöhe, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Zylinderknauf</label>
-                    @Html.EditorFor(m => m.Zylinderknauf, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Schließweg</label>
-                    @Html.EditorFor(m => m.Schließweg, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Schließhebel</label>
-                    @Html.EditorFor(m => m.Schließhebel, new { htmlAttributes = new { @class = "form-control" } })
 
                 </div>
                 <hr />
@@ -426,6 +321,7 @@
     <a asp-action="Index" class="btn btn-success">Back to List</a>
 </div>
 <script>
+   
     let dP = document.getElementById('dP');
     let id_dopelzylinder = document.getElementById('Values');
 
@@ -443,6 +339,10 @@
 
     let aussen = document.getElementById('aussen');
     let id_aussen = document.getElementById('id_aussen');
+    const buttonFreilauf = document.createElement('div');
+    const div = document.createElement('div');
+
+   
 
     function hebelzylinderProfile() {
         hebelzylinder.style.display = 'none';
@@ -486,6 +386,16 @@
         id_HalbP.style.display = 'none';
     }
     HalbProfile();
+
+
+    function HalbProfile() {
+        HalbP.style.display = 'none';
+        id_HalbP.value = HalbP.innerHTML;
+        id_HalbP.style.display = 'none';
+    }
+    HalbProfile();
+
+  
 
 </script>
 @section Scripts {
