@@ -21,12 +21,12 @@
                 <label>Zylinder Typen</label>
 
                 @Html.DropDownListFor(model => model.schliessanlagenId,
-                        new List<SelectListItem> {
-                        new SelectListItem {  Value = "14",Text="Aussenzylinder / Rundzylinder" }
-                        },
+                         new List<SelectListItem> {
+            new SelectListItem {  Value = "14",Text="Aussenzylinder / Rundzylinder" }
+            },
                          new { @class = " form-select", @id = "select" })
-                
-                 <div id="createColum">
+
+                <div id="createColum">
 
                     <label>Name</label>
                     @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control" } })
@@ -36,18 +36,18 @@
 
                     <label> Artikelnummer</label>
                     @Html.EditorFor(m => m.Artikelnummer, new { htmlAttributes = new { @class = "form-control" } })
-               
+
                     <label>Count</label>
                     @Html.EditorFor(m => m.Count, new { htmlAttributes = new { @class = "form-control" } })
 
-                    <label asp-for="ImageFile"  class="control-label"></label>
+                    <label asp-for="ImageFile" class="control-label"></label>
 
                     <input asp-for="ImageFile" class="btn btn-success" accept="image/*" />
-                    <span asp-validation-for="ImageFile"  class="text-danger"></span>
-               
+                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+
                     @Html.ValidationMessageFor(m => m.ImageFile, "", new { @class = "error" })
 
-               </div>
+                </div>
                 <input type="submit" class="btn btn-success" id="input" value="Create Aussenzylinder \ Rundzylinder" />
                 <hr />
             }
@@ -78,8 +78,9 @@
                         <td id="rowTable" class="table-info"><a href="@Url.Action("Edit_Aussenzylinder_Rundzylinder","Home", new { item.Id })"><img src="@("/Image/edit-tools.png")" height="30" width="30" /></a></td>
                         <td id="rowTable" class="table-info">
                             <a class="compItem" href="@Url.Action("DetailsAussenzylinder_Rundzylinder","Home", new { item.Id })">
-                            <img src="@("/Image/options.png")" height="30" width="30" />
-                                </a></td>
+                                <img src="@("/Image/options.png")" height="30" width="30" />
+                            </a>
+                        </td>
                         <td id="rowTable" class="table-info"><a href="@Url.Action("Delete_Doppelzylinder","Home", new { item.Id })"><img src="@("/Image/entfernen.png")" height="30" width="30" /></a></td>
                     </tr>
                 }

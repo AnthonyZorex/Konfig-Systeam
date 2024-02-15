@@ -113,6 +113,7 @@ a {
 }
 
 #konfigurator {
+    display:flex;
     clear: both;
     background: #F4F4F4;
     border: 1px solid #D8D8D8;
@@ -121,7 +122,15 @@ a {
     min-width: 1350px;
     min-height: 730px;
 }
-
+#KeyName {
+    transform: rotate(90deg);
+    width: 150px;
+    margin-left: -58px
+}
+#nK {
+    padding-bottom: 40px;
+    display: block;
+}
 #menuPannel {
     display: flex;
     gap: 2px;
@@ -159,19 +168,58 @@ a {
 
 #konfiguratorItem_menu_5 {
     background: #4fa8cf;
+    max-width: 692px;
 }
 
 .line-name-header {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 41px 251px 192px 140px 70px;
     margin-bottom: 10px;
+    text-align: center;
+    height: 250px;
 }
 
     .line-name-header div {
-        width: 150px;
+        display: grid;
+        grid-template-columns: 20px 191px 176px 47px 54px 70px;
+        margin-bottom: 10px;
+        border: 3px solid white;
+        text-align: center;
     }
-
+    .turInput{
+        max-width:50px;
+    }
+#cheked {
+    width: 25px;
+    height: 25px;
+    margin-left: 5px;
+    padding-bottom: 10px;
+}
 .line-name-body {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 20px 230px 176px 47px 54px 45px;
+    margin-bottom: 10px;
+    text-align: center;
+    gap: 20px;
+}
+.length {
+    height: auto;
+   
+}
+#konfiguratorItemKey{
+    display:flex;
+}
+#key {
+    display: grid;
+    grid-template-columns: 20px;
+    gap: 20px;
+    text-align: center;
+}
+#counter {
+    padding: 0px 10px 0px 20px
+}
+#chekboxPanel {
+    margin-top: 55px;
+    display: grid;
+    gap: 25px
 }

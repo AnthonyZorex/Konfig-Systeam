@@ -27,6 +27,7 @@ namespace schliessanlagen_konfigurator.Controllers
             db = context;
             Environment = _environment;
         }
+
         #region ViewZylinder
         public async Task<IActionResult> Index()
         {
@@ -51,7 +52,7 @@ namespace schliessanlagen_konfigurator.Controllers
             ViewBag.item = db.Vorhangschloss;
             return View();
         }
-        [HttpGet] 
+        [HttpGet]
         public IActionResult Aussenzylinder_RundzylinderRout()
         {
             ViewBag.item = db.Aussenzylinder_Rundzylinder;
@@ -77,8 +78,8 @@ namespace schliessanlagen_konfigurator.Controllers
         public async Task<IActionResult> Create_Profil_Doppelzylinder(Profil_Doppelzylinder profil_Doppelzylinder)
         {
             try
-            {   
-                if(profil_Doppelzylinder.ImageFile!=null)
+            {
+                if (profil_Doppelzylinder.ImageFile != null)
                 {
                     string wwwRootPath = Environment.WebRootPath;
 
@@ -95,19 +96,19 @@ namespace schliessanlagen_konfigurator.Controllers
                         await profil_Doppelzylinder.ImageFile.CopyToAsync(fileStream);
                     }
                 }
-                
+
                 db.Profil_Doppelzylinder.Add(profil_Doppelzylinder);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                    return new JsonResult(
-               new ErrorDto
-               {
-                   IsError = true,
-                   Message = ex.Message
-               });
+                return new JsonResult(
+           new ErrorDto
+           {
+               IsError = true,
+               Message = ex.Message
+           });
             }
         }
 
@@ -138,7 +139,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Profil_KnaufzylinderRout");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new JsonResult(
                    new ErrorDto
@@ -155,7 +156,7 @@ namespace schliessanlagen_konfigurator.Controllers
         {
             try
             {
-                if (profil_Halbzylinder.ImageFile != null )
+                if (profil_Halbzylinder.ImageFile != null)
                 {
                     string wwwRootPath = Environment.WebRootPath;
 
@@ -166,7 +167,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     profil_Halbzylinder.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
 
                     string path = Path.Combine(wwwRootPath + "/Image/", fileName);
-                    
+
                     using (var fileStream = new FileStream(path, FileMode.Create))
                     {
                         await profil_Halbzylinder.ImageFile.CopyToAsync(fileStream);
@@ -192,7 +193,7 @@ namespace schliessanlagen_konfigurator.Controllers
         {
             try
             {
-                if (profil_Doppelzylinder.ImageFile != null )
+                if (profil_Doppelzylinder.ImageFile != null)
                 {
                     string wwwRootPath = Environment.WebRootPath;
 
@@ -207,7 +208,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     using (var fileStream = new FileStream(path, FileMode.Create))
                     {
                         await profil_Doppelzylinder.ImageFile.CopyToAsync(fileStream);
-                    }  
+                    }
                 }
                 db.Aussenzylinder_Rundzylinder.Add(profil_Doppelzylinder);
                 await db.SaveChangesAsync();
@@ -222,13 +223,13 @@ namespace schliessanlagen_konfigurator.Controllers
                           Message = ex.Message
                       });
             }
-               
+
         }
 
         [HttpPost]
         public async Task<IActionResult> Create_Vorhangschloss(Vorhangschloss profil_Doppelzylinder)
         {
-            try 
+            try
             {
                 if (profil_Doppelzylinder.ImageFile != null)
                 {
@@ -260,8 +261,8 @@ namespace schliessanlagen_konfigurator.Controllers
                           Message = ex.Message
                       });
             }
-           
-          
+
+
         }
 
         [HttpPost]
@@ -269,7 +270,7 @@ namespace schliessanlagen_konfigurator.Controllers
         {
             try
             {
-                if (profil_Doppelzylinder.ImageFile != null )
+                if (profil_Doppelzylinder.ImageFile != null)
                 {
                     string wwwRootPath = Environment.WebRootPath;
 
@@ -299,15 +300,15 @@ namespace schliessanlagen_konfigurator.Controllers
                          Message = ex.Message
                      });
             }
-           
-           
+
+
         }
         #endregion
         #region DelitZylinderItem
         [HttpGet]
         [Route("Home/Delete_Doppelzylinder")]
-        
-        public async Task<IActionResult> Delete_Doppelzylinder(Profil_Doppelzylinder profil_Doppelzylinder, Profil_Halbzylinder profil_Halbzylinder, Profil_Knaufzylinder Profil_Knaufzylinder, Vorhangschloss Vorhangschloss,Hebelzylinder hebelzylinder, Aussenzylinder_Rundzylinder aussenzylinder_Rundzylinder)
+
+        public async Task<IActionResult> Delete_Doppelzylinder(Profil_Doppelzylinder profil_Doppelzylinder, Profil_Halbzylinder profil_Halbzylinder, Profil_Knaufzylinder Profil_Knaufzylinder, Vorhangschloss Vorhangschloss, Hebelzylinder hebelzylinder, Aussenzylinder_Rundzylinder aussenzylinder_Rundzylinder)
         {
             var doppelzylinder = db.Profil_Doppelzylinder.Find(profil_Doppelzylinder.Id);
 
@@ -340,20 +341,20 @@ namespace schliessanlagen_konfigurator.Controllers
                 db.SaveChanges();
                 return RedirectToAction("VorhangschlossRout");
             }
-            else  if (Halbzylinder != null)
+            else if (Halbzylinder != null)
             {
                 db.Profil_Halbzylinder.Remove(Halbzylinder);
                 db.SaveChanges();
                 return RedirectToAction("Profil_HalbzylinderRout");
             }
 
-            else  if (doppelzylinder != null)
+            else if (doppelzylinder != null)
             {
                 db.Profil_Doppelzylinder.Remove(doppelzylinder);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            else  if (aussenzylinder != null)
+            else if (aussenzylinder != null)
             {
                 db.Aussenzylinder_Rundzylinder.Remove(aussenzylinder);
                 db.SaveChanges();
@@ -371,7 +372,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             return View("../Edit/Edit_Doppelzylinder", doppelzylinder);
         }
-       
+
         [HttpGet]
         public async Task<IActionResult> Edit_Halbzylinder(Hebelzylinder profil_Halbzylinder)
         {
@@ -379,33 +380,33 @@ namespace schliessanlagen_konfigurator.Controllers
             return View("../Edit/Edit_Halbzylinder", Halbzylinder);
         }
 
-            [HttpGet]
-            public async Task<IActionResult> Edit_Aussenzylinder_Rundzylinder(Aussenzylinder_Rundzylinder profil_Halbzylinder)
-            {
-                var Halbzylinder = db.Aussenzylinder_Rundzylinder.Find(profil_Halbzylinder.Id);
+        [HttpGet]
+        public async Task<IActionResult> Edit_Aussenzylinder_Rundzylinder(Aussenzylinder_Rundzylinder profil_Halbzylinder)
+        {
+            var Halbzylinder = db.Aussenzylinder_Rundzylinder.Find(profil_Halbzylinder.Id);
 
-                return View("../Edit/Edit_Aussenzylinder_Rundzylinder", Halbzylinder);
-            }
-            [HttpGet]
-            public async Task<IActionResult> Edit_Vorhangschloss(Vorhangschloss profil_Halbzylinder)
-            {
-                var Halbzylinder = db.Vorhangschloss.Find(profil_Halbzylinder.Id);
+            return View("../Edit/Edit_Aussenzylinder_Rundzylinder", Halbzylinder);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Edit_Vorhangschloss(Vorhangschloss profil_Halbzylinder)
+        {
+            var Halbzylinder = db.Vorhangschloss.Find(profil_Halbzylinder.Id);
 
-                return View("../Edit/Edit_Vorhangschloss", Halbzylinder);
-            }
-            [HttpGet]
-            public async Task<IActionResult> Edit_Profil_Halbzylinder(Profil_Halbzylinder profil_Halbzylinder)
-            {
-                var Halbzylinder = db.Profil_Halbzylinder.Find(profil_Halbzylinder.Id);
-                
-                return View("../Edit/Edit_Profil_Halbzylinder", Halbzylinder);
-            }
-            public async Task<IActionResult> Edit_Profil_Knaufzylinder(Profil_Knaufzylinder profil_Halbzylinder)
-            {
-                var Halbzylinder = db.Profil_Knaufzylinder.Find(profil_Halbzylinder.Id);
+            return View("../Edit/Edit_Vorhangschloss", Halbzylinder);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Edit_Profil_Halbzylinder(Profil_Halbzylinder profil_Halbzylinder)
+        {
+            var Halbzylinder = db.Profil_Halbzylinder.Find(profil_Halbzylinder.Id);
 
-                return View("../Edit/Edit_Profil_Knaufzylinder", Halbzylinder);
-            }
+            return View("../Edit/Edit_Profil_Halbzylinder", Halbzylinder);
+        }
+        public async Task<IActionResult> Edit_Profil_Knaufzylinder(Profil_Knaufzylinder profil_Halbzylinder)
+        {
+            var Halbzylinder = db.Profil_Knaufzylinder.Find(profil_Halbzylinder.Id);
+
+            return View("../Edit/Edit_Profil_Knaufzylinder", Halbzylinder);
+        }
         #endregion
         #region SaveEditForm
         [HttpPost]
@@ -454,8 +455,8 @@ namespace schliessanlagen_konfigurator.Controllers
         #region DetailZylinder
         public ActionResult DetailsProfil_Doppelzylinder(int id)
         {
-           ViewBag.c = db.Options.Where(x=>x.IdProfil_Doppelzylinder==id).ToList();
-           return View("../Details/DetailsProfil_Doppelzylinder");
+            ViewBag.c = db.Options.Where(x => x.IdProfil_Doppelzylinder == id).ToList();
+            return View("../Details/DetailsProfil_Doppelzylinder");
         }
         public ActionResult DetailsAussenzylinder_Rundzylinder(int id)
         {
@@ -470,7 +471,7 @@ namespace schliessanlagen_konfigurator.Controllers
         public ActionResult DetailsVorhangschloss(int id)
         {
             ViewBag.c = db.Options.Where(x => x.IdVorhangschloss == id).ToList();
-            return View("../Details/DetailsVorhangschloss");  
+            return View("../Details/DetailsVorhangschloss");
         }
         public ActionResult DetailsHebelZylinder(int id)
         {
@@ -487,7 +488,7 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpGet]
         [Route("Home/Add_All_Options")]
         public ActionResult Add_All_Options(string sortOrder, string SearchDopppelzylinder, string SearchHalbzylinder, string SearchKnaufzylinder, string SearchHebelzylinder, string SearchVorhangschloss, string SearchAussenzylinder_Rundzylinder)
-        { 
+        {
             var dopelzylinder = db.Profil_Doppelzylinder.ToList();
             var halb = db.Profil_Halbzylinder.ToList();
             var knayf = db.Profil_Knaufzylinder.ToList();
@@ -497,32 +498,32 @@ namespace schliessanlagen_konfigurator.Controllers
             var options = db.Options.ToList();
 
             ViewBag.NameSortParm = System.String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            
+
             if (!System.String.IsNullOrEmpty(SearchDopppelzylinder))
             {
-                dopelzylinder = dopelzylinder.Where(s => s.Name == SearchDopppelzylinder).ToList(); 
+                dopelzylinder = dopelzylinder.Where(s => s.Name == SearchDopppelzylinder).ToList();
             }
-            
+
             if (!System.String.IsNullOrEmpty(SearchHalbzylinder))
             {
                 halb = halb.Where(s => s.Name == SearchHalbzylinder).ToList();
             }
-            
+
             if (!System.String.IsNullOrEmpty(SearchKnaufzylinder))
             {
                 knayf = knayf.Where(s => s.Name == SearchKnaufzylinder).ToList();
             }
-            
+
             if (!System.String.IsNullOrEmpty(SearchHebelzylinder))
             {
                 hebel = hebel.Where(s => s.Name == SearchHebelzylinder).ToList();
             }
-            
+
             if (!System.String.IsNullOrEmpty(SearchVorhangschloss))
             {
                 vorhangschloos = vorhangschloos.Where(s => s.Name == SearchVorhangschloss).ToList();
             }
-            
+
             if (!System.String.IsNullOrEmpty(SearchAussenzylinder_Rundzylinder))
             {
                 aussenzylinder = aussenzylinder.Where(s => s.Name == SearchAussenzylinder_Rundzylinder).ToList();
@@ -541,7 +542,8 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpPost]
         public async Task<IActionResult> Create_Options(Options options)
         {
-            if (options != null) {
+            if (options != null)
+            {
                 db.Options.Add(options);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Add_All_Options");

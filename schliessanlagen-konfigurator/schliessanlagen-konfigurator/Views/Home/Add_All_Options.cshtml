@@ -1,14 +1,14 @@
-﻿ @model schliessanlagen_konfigurator.Models.Options; 
+﻿ @model schliessanlagen_konfigurator.Models.Options;
 
 @{
     ViewData["Title"] = "Edit";
 }
-    
+
 <h1>Add Options</h1>
 
 <div>
     <div>
-            <details>
+        <details>
             <summary> Profil - Dopppelzylinder</summary>
             @using (Html.BeginForm("Add_All_Options", "Home", FormMethod.Get, new { enctype = "multipart/form-data" }))
             {
@@ -19,24 +19,24 @@
             }
             @using (Html.BeginForm("Create_Options", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
-                int x=0;
+                int x = 0;
                 <table class="table table-bordered">
-                <tbody>
+                    <tbody>
                         <tr id="TableOptions">
-                        <th>Name </th>
-                        <th>Image</th>
-                        @foreach (var item in ViewBag.dop)
-                        {
-                           x = item.Id;
-                           <td id="rowTable doppelZylinder" class="table-info ">@item.Name </td>
-                           <td id="rowTable" class="table-info "> <img decoding="async" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
-                        }
+                            <th>Name </th>
+                            <th>Image</th>
+                            @foreach (var item in ViewBag.dop)
+                            {
+                                x = item.Id;
+                                <td id="rowTable doppelZylinder" class="table-info ">@item.Name </td>
+                                <td id="rowTable" class="table-info "> <img decoding="async" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
+                            }
                         </tr>
                     </tbody>
                 </table>
                 <h1 id="dP">@x</h1>
                 <div id="createColum">
-                   
+
                     @Html.EditorFor(m => m.IdProfil_Doppelzylinder, new { htmlAttributes = new { @class = "form-control", @id = "Values" } })
 
                     <label>NG Funktion</label>
@@ -63,17 +63,17 @@
 
                     <label>Zubehör</label>
                     @Html.EditorFor(m => m.Zubehör, new { htmlAttributes = new { @class = "form-control" } })
- 
+
                 </div>
                 <input type="submit" class="btn btn-success" id="input" value="Create Options Doppelzylinder" />
                 <hr />
-                 
+
             }
-            </details>
-              
+        </details>
 
 
-             <details>
+
+        <details>
             <summary> Profil - Halibzylinder</summary>
             @using (Html.BeginForm("Add_All_Options", "Home", FormMethod.Get, new { enctype = "multipart/form-data" }))
             {
@@ -121,17 +121,17 @@
 
                     <label>Modulbauweise</label>
                     @Html.EditorFor(m => m.Modulbauweise, new { htmlAttributes = new { @class = "form-control" } })
-                   
+
 
                 </div>
                 <hr />
                 <input type="submit" class="btn btn-success" id="input" value="Create Options Halbzylinder" />
             }
-         
-            </details>
+
+        </details>
 
         <details>
-           
+
             <summary> Profil - Knaufzylinder</summary>
             @using (Html.BeginForm("Add_All_Options", "Home", FormMethod.Get, new { enctype = "multipart/form-data" }))
             {
@@ -141,7 +141,7 @@
                 </p>
             }
             @using (Html.BeginForm("Create_Options", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
+            {
                 int x = 0;
                 <table class="table table-bordered">
                     <tbody>
@@ -161,7 +161,7 @@
                 <div id="createColum">
 
                     @Html.EditorFor(m => m.IdProfil_Knaufzylinder, new { htmlAttributes = new { @class = "form-control", @id = "id_knayfP" } })
- 
+
                     <label>Freilauf</label>
                     @Html.EditorFor(m => m.Freilauf, new { htmlAttributes = new { @class = "form-control" } })
 
@@ -176,18 +176,18 @@
 
                     <label>Schließbart</label>
                     @Html.EditorFor(m => m.Schließbart, new { htmlAttributes = new { @class = "form-control" } })
-               
+
                     <label>Zylinderknauf</label>
                     @Html.EditorFor(m => m.Zylinderknauf, new { htmlAttributes = new { @class = "form-control" } })
-                    
+
                     <label>Modulbauweise</label>
                     @Html.EditorFor(m => m.Modulbauweise, new { htmlAttributes = new { @class = "form-control" } })
                 </div>
                 <hr />
                 <input type="submit" class="btn btn-success" id="input" value="Create Options Knayfzylinder" />
-                }
+            }
         </details>
-         
+
         <details>
             <summary>Hebelzylinder</summary>
             @using (Html.BeginForm("Add_All_Options", "Home", FormMethod.Get, new { enctype = "multipart/form-data" }))
@@ -314,14 +314,14 @@
                 <input type="submit" class="btn btn-success" id="input" value="Create Options Aussenzylinder / Rundzylinder" />
             }
         </details>
-   
+
     </div>
 </div>
 <div>
     <a asp-action="Index" class="btn btn-success">Back to List</a>
 </div>
 <script>
-   
+
     let dP = document.getElementById('dP');
     let id_dopelzylinder = document.getElementById('Values');
 
@@ -342,7 +342,7 @@
     const buttonFreilauf = document.createElement('div');
     const div = document.createElement('div');
 
-   
+
 
     function hebelzylinderProfile() {
         hebelzylinder.style.display = 'none';
@@ -375,7 +375,7 @@
 
     function Dp() {
         dP.style.display = 'none';
-         id_dopelzylinder.value = dP.innerHTML;
+        id_dopelzylinder.value = dP.innerHTML;
         id_dopelzylinder.style.display = 'none';
     }
     Dp();
@@ -395,7 +395,7 @@
     }
     HalbProfile();
 
-  
+
 
 </script>
 @section Scripts {

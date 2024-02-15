@@ -125,6 +125,18 @@
       "PackagePath": "staticwebassets\\Image\\vorhan241140069.png"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\css\\Scss\\StyleSheet.scss",
+      "PackagePath": "staticwebassets\\css\\Scss\\StyleSheet.scss"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\css\\Scss\\gulpfile.js",
+      "PackagePath": "staticwebassets\\css\\Scss\\gulpfile.js"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\css\\Scss\\package.json",
+      "PackagePath": "staticwebassets\\css\\Scss\\package.json"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },

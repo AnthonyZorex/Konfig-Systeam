@@ -21,9 +21,9 @@
                 <label>Zylinder Typen</label>
 
                 @Html.DropDownListFor(model => model.schliessanlagenId,
-                        new List<SelectListItem> {
-                        new SelectListItem { Value = "10",Text="Profil-Halbzylinder" }  
-                        },
+                         new List<SelectListItem> {
+            new SelectListItem { Value = "10",Text="Profil-Halbzylinder" }
+            },
                          new { @class = " form-select", @id = "select" })
 
                 <div id="createColum">
@@ -31,14 +31,14 @@
                     <label>Name</label>
                     @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control" } })
 
-                     <label>Cost</label>
+                    <label>Cost</label>
                     @Html.EditorFor(m => m.Cost, new { htmlAttributes = new { @class = "form-control" } })
 
                     <label> Artikelnummer</label>
                     @Html.EditorFor(m => m.Artikelnummer, new { htmlAttributes = new { @class = "form-control" } })
                     <label>Außen</label>
                     @Html.EditorFor(m => m.Außen, new { htmlAttributes = new { @class = "form-control" } })
-                    
+
                     <label>Count</label>
                     @Html.EditorFor(m => m.Count, new { htmlAttributes = new { @class = "form-control" } })
                     <label>Min</label>
@@ -46,15 +46,15 @@
                     <label>Max</label>
                     @Html.EditorFor(m => m.max, new { htmlAttributes = new { @class = "form-control" } })
 
-                    <label asp-for="ImageFile"  class="control-label"></label>
-                        <input asp-for="ImageFile" class="btn btn-success" accept="image/*" />
-                    <span asp-validation-for="ImageFile"  class="text-danger"></span>
-               
+                    <label asp-for="ImageFile" class="control-label"></label>
+                    <input asp-for="ImageFile" class="btn btn-success" accept="image/*" />
+                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+
                     @Html.ValidationMessageFor(m => m.ImageFile, "", new { @class = "error" })
-                
+
                 </div>
                 <input type="submit" class="btn btn-success" id="input" value="Create Profil Halbzylinder" />
-            <hr />
+                <hr />
             }
         </div>
 
@@ -95,7 +95,7 @@
                         <td id="rowTable" class="table-info"><a href="@Url.Action("Delete_Doppelzylinder","Home", new { item.Id })"><img src="@("/Image/entfernen.png")" height="30" width="30" /></a></td>
                     </tr>
                 }
-               
+
             </table>
         }
         <div id="modDialog" class="modal fade">

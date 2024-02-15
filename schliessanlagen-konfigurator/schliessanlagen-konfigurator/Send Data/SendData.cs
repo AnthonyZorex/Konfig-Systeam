@@ -42,6 +42,11 @@ namespace schliessanlagen_konfigurator.Send_Data
                 {
                     return;
                 }
+               
+                if (context.Orders.Any())
+                {
+                    return;
+                }
                 context.Schliessanlagen.AddRange(
                    new Schliessanlagen
                    {
