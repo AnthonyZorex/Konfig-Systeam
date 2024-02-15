@@ -21,28 +21,28 @@
                 <label>Zylinder Typen</label>
 
                 @Html.DropDownListFor(model => model.schliessanlagenId,
-                        new List<SelectListItem> {
-                        new SelectListItem { Value = "13",Text="Vorhangschloss" }
-                        },
+                         new List<SelectListItem> {
+            new SelectListItem { Value = "13",Text="Vorhangschloss" }
+            },
                          new { @class = " form-select", @id = "select" })
 
                 <div id="createColum">
-                <label>Name</label>
-                @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control" } })
-               
+                    <label>Name</label>
+                    @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control" } })
+
                     <label>Сost</label>
                     @Html.EditorFor(m => m.Сost, new { htmlAttributes = new { @class = "form-control" } })
-               
-                <label> Artikelnummer</label>
-                @Html.EditorFor(m => m.Artikelnummer, new { htmlAttributes = new { @class = "form-control" } })
-                
-                <label>Count</label>
-                @Html.EditorFor(m => m.Count, new { htmlAttributes = new { @class = "form-control" } })
 
-                <label asp-for="ImageFile" class="control-label"></label>
-                <input asp-for="ImageFile" class="btn btn-success" accept="image/*" />
-                <span asp-validation-for="ImageFile" class="text-danger"></span>
-                @Html.ValidationMessageFor(m => m.ImageFile, "", new { @class = "error" })
+                    <label> Artikelnummer</label>
+                    @Html.EditorFor(m => m.Artikelnummer, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Count</label>
+                    @Html.EditorFor(m => m.Count, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label asp-for="ImageFile" class="control-label"></label>
+                    <input asp-for="ImageFile" class="btn btn-success" accept="image/*" />
+                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+                    @Html.ValidationMessageFor(m => m.ImageFile, "", new { @class = "error" })
                 </div>
                 <input type="submit" class="btn btn-success" id="input" value="Create Vorhangschloss" />
                 <hr />
@@ -61,21 +61,21 @@
                     <th>Edit</th>
                     <th>Options</th>
                     <th>Delete</th>
-              
-                @foreach (var item in ViewBag.item)
-                {
+
+                    @foreach (var item in ViewBag.item)
+                    {
                         <td id="rowTable" class="table-info">@item.Name</td>
                         <td id="rowTable" class="table-info"><img decoding="async" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
                         <td id="rowTable" class="table-info"><h6 id="cost">@item.Сost</h6></td>
                         <td id="rowTable" class="table-info">@item.Artikelnummer</td>
                         <td id="rowTable" class="table-info"><a href="@Url.Action("Edit_Vorhangschloss","Home", new { item.Id })"><img src="@("/Image/edit-tools.png")" height="30" width="30" /></a></td>
                         <td id="rowTable" class="table-info">
-                        <a class="compItem" href="@Url.Action("DetailsVorhangschloss","Home", new { item.Id })">
-                        <img src="@("/Image/options.png")" height="30" width="30" />
-                        </a>
+                            <a class="compItem" href="@Url.Action("DetailsVorhangschloss","Home", new { item.Id })">
+                                <img src="@("/Image/options.png")" height="30" width="30" />
+                            </a>
                         </td>
-                        <td id="rowTable" class="table-info"><a href="@Url.Action("Delete_Doppelzylinder","Home", new { item.Id })"><img src="@("/Image/entfernen.png")" height="30" width="30" /></a></td>  
-                }
+                        <td id="rowTable" class="table-info"><a href="@Url.Action("Delete_Doppelzylinder","Home", new { item.Id })"><img src="@("/Image/entfernen.png")" height="30" width="30" /></a></td>
+                    }
                 </tr>
             </table>
         }

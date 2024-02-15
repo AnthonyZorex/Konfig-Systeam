@@ -9,6 +9,14 @@ builder.Services.AddDbContext<schliessanlagen_konfiguratorContext>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession(options =>
+{
+    options.Cookie.Name = ".AdventureWorks.Session";
+    options.IdleTimeout = TimeSpan.FromSeconds(10);
+    options.Cookie.IsEssential = true;
+});
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -21,7 +29,6 @@ using (var scope = app.Services.CreateScope())
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -35,5 +42,5 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Konfigurator}/{action=IndexKonfigurator}/{id?}");
-
+app.UseSession();
 app.Run();

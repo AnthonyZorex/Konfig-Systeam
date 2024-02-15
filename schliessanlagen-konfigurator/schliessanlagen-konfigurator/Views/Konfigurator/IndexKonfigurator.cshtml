@@ -1,213 +1,330 @@
-﻿@{
+﻿@model schliessanlagen_konfigurator.Models.Orders;
+@using Microsoft.AspNetCore.Http;
+@{
     ViewData["Title"] = "Konfigurator";
 }
-
 
 <div>
     <h1>Konfigurator</h1>
     <div id="konfigMenu">
         <button type="button" class="btn btn-danger">1. Schließplan erstellen</button>
-        <button type="button" class="btn btn-secondary">2. System auswählen</button>
+     <button type="button" class="btn btn-secondary"><a href="@Url.Action("System_Auswählen","Konfigurator")">2. System auswählen</a></button> 
         <button type="button" class="btn btn-secondary">3. Parameter einstellen</button>
     </div>
 
     <div id="InformBar">
-        <div id="ItemBar">
-            <h4>Vorlage</h4>
-            <h4>Gleichschließung</h4>
-        </div>
-        <div id="ItemBar">
-            <h4>Vorlage</h4>
-            <h4>Einfamilienhaus</h4>
-        </div>
-        <div id="ItemBar">
-            <h4>Vorlage</h4>
-            <h4>Mehrfamilienhaus</h4>
-        </div>
-        <div id="ItemBar">
-            <h4>Vorlage</h4>
-            <h4>Unternehmen</h4>
-        </div>
-        <div id="ItemBar">
-            <h4>Vorlage</h4>
-            <h4>Firmenkomplex</h4>
-        </div>
-
     </div>
     <div id="key-konfig">
         <h6 style="margin-top: 10px;"> key</h6>
     </div>
+    <form asp-action="SaveOrder" >
     <div id="konfigurator">
+     
+        <div id="konfiguratorItem_menu_5">
+            <div class="line-name-header ">
+                <div class="pos">
+                    <span>Pos</span>
+                </div>
 
-        <div id="menuPannel">
- 
-                @foreach (var list in @ViewBag.dopel)
+                <div class="turname">
+                    <span>Türbezeichnung</span>
+                </div>
+
+                <div class="type">
+                    <span>
+                        Typzelinder
+                    </span>
+                </div>
+
+                <div class="length" style="display: block;">
+                    <span>Zylinderläng </span>
+
+                    <span>außen|innen</span>
+                </div>
+
+                <div class="pieces">
+                    <span>Stuck</span>
+                </div>
+
+            </div>
+
+            @{
+                    int position_current = 3;
+                int b = 1;
+                int position = position_current;
+                @for (int a = 0; position_current > a; a++)
                 {
-                    <div id="dopel">
-                    <h3>DoppelZylinder</h3>
-                    <td id="rowTable" class="table-info">@list.Name</td>
-                    <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@list.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
-                    <td id="rowTable " class="table-info"><h6 id="cost">@list.Cost</h6></td>
-                    </div>
-                    
-                }
-           
+                    <div class="line-name-body">
+                        <div class="pos-body">
+                            <span>@b</span>
+                        </div>
 
-            @foreach (var list in @ViewBag.a)
-            {
-                    <div id="halb">
-                        <h3>Halbzylinder</h3>
-                        <td id="rowTable" class="table-info">@list.Name</td>
-                        <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@list.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
-                        <td id="rowTable " class="table-info"><h6 id="cost">@list.Cost</h6></td>
-                    </div>
+                        <div class="turname-body">
+                                <input asp-for="Tur" name="Turname" type="text" style="max-width:250px" />
+                        </div>
+
+                        <div class="type-body">
+                            <span>
+                                    <select asp-for="ZylinderId" name="ZylinderId" class="form-select">
+                                        <option>9</option>
+                                     <option>10</option>
+                                      <option>11</option>
+                                        <option>12</option>
+                                        <option>13</option>
+                                        <option>14</option>
+                                </select>
+                            </span>
+                        </div>
+
+                        <div class="length-body">
+                                <input asp-for="aussen" name="aussen" type="text" class="turInput" />
+                        </div>
+
+                        <div class="length-body">
+                                <input asp-for="innen" name="innen" type="text" class="turInput" />
+                        </div>
+
+                        <div class="pieces-body">
+                                <input asp-for="Count" name="Count" type="text" class="turInput" />
+
+                        </div>
                       
+                    </div>
+                    b++;
+                }
             }
-
             
-            @foreach (var list in @ViewBag.b)
-            {
-                    <div id="Knayf">
-                        <h3>KnayfZylinder</h3>
-                        <td id="rowTable" class="table-info">@list.Name</td>
-                        <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@list.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
-                        <td id="rowTable " class="table-info"><h6 id="cost">@list.Cost</h6></td>
-                    </div>
-                   
-            }
-          
-            @foreach (var list in @ViewBag.c)
-            {
-                    <div id="Hebel">
-                        <h3>HebelZylinder</h3>
-                        <td id="rowTable" class="table-info">@list.Name</td>
-                        <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@list.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
-                        <td id="rowTable " class="table-info"><h6 id="cost">@list.Cost</h6></td>
-                    </div>
-                   
-            }
+        </div>
+        <div id="konfiguratorItemKey">
 
-           
-            @foreach (var list in @ViewBag.d)
-            {
-                    <div id="vorhang">
-                        <h3>VorhonshlossZylinder</h3>
-                        <td id="rowTable" class="table-info">@list.Name</td>
-                        <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@list.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
-                        <td id="rowTable " class="table-info"><h6 id="cost">@list.Сost</h6></td>
+            @{
+                int d = 1;
+                int position2 = position_current;
+                @for (int a = 0; position_current > a; a++)
+                {
+                    <div style="display: block;">
+                        <div id="key">
+                            <h6 id='nK'><span>S</span>@a</h6>
+                                <input asp-for="NameKey" name="NameKey" type="text" id="KeyName" />
+                            <br>
+                                <input asp-for="CountKey" name="CountKey" type="text" id="counter" />
+                        </div>
+                        <div id="chekboxPanel">
+                                @for (int c = 0; position_current > c; c++)
+                                {
+                                    if (c == 0)
+                                    {
+                                        <input type="checkbox" asp-for="IsOppen" name="IsOppen" class="turInput" id="cheked" />
+                                    }
+                                    if (c == 1)
+                                    {
+                                        <input type="checkbox" asp-for="IsOppen2" name="IsOppen2" class="turInput" id="cheked" />
+                                    }
+                                    if (c == 2)
+                                    {
+                                        <input type="checkbox" asp-for="IsOppen3" name="IsOppen3" class="turInput" id="cheked" />
+                                    }
+                                    if (c == 3)
+                                    {
+                                        <input type="checkbox" asp-for="IsOppen4" class="turInput" id="cheked" />
+                                    }
+                                    if (c == 4)
+                                    {
+                                        <input type="checkbox" asp-for="IsOppen5" class="turInput" id="cheked" />
+                                    }
+                                    if (c == 5)
+                                    {
+                                        <input type="checkbox" asp-for="IsOppen6" class="turInput" id="cheked" />
+                                    }
+                                    if (c == 6)
+                                    {
+                                        <input type="checkbox" asp-for="IsOppen7" class="turInput" id="cheked" />
+                                    }
+                                    if (c == 7)
+                                    {
+                                        <input type="checkbox" asp-for="IsOppen8" class="turInput" id="cheked" />
+                                    }
+                                    if (c == 8)
+                                    {
+                                        <input type="checkbox" asp-for="IsOppen9" class="turInput" id="cheked" />
+                                    }
+                                    if (c == 9)
+                                    {
+                                        <input type="checkbox" asp-for="IsOppen10" class="turInput" id="cheked" />
+                                    }
+                                    if (c == 10)
+                                    {
+                                        <input type="checkbox" asp-for="IsOppen11" class="turInput" id="cheked" />
+                                    }
+                                    if (c == 11)
+                                    {
+                                        <input type="checkbox" asp-for="IsOppen12" class="turInput" id="cheked" />
+                                    }
+                                    if (c == 12)
+                                    {
+                                        <input type="checkbox" asp-for="IsOppen13" class="turInput" id="cheked" />
+                                    }
+                                    if (c == 13)
+                                    {
+                                        <input type="checkbox" asp-for="IsOppen14" class="turInput" id="cheked" />
+                                    }
+                                    if (c == 14)
+                                    {
+                                        <input type="checkbox" asp-for="IsOppen15" class="turInput" id="cheked" />
+                                    }
+                                    if (c == 15)
+                                    {
+                                        <input type="checkbox" asp-for="IsOppen16" class="turInput" id="cheked" />
+                                    }
+                                    if (c == 16)
+                                    {
+                                        <input type="checkbox" asp-for="IsOppen17" class="turInput" id="cheked" />
+                                    }
+                                    if (c == 17)
+                                    {
+                                        <input type="checkbox" asp-for="IsOppen18" class="turInput" id="cheked" />
+                                    }
+                                    if (c == 18)
+                                    {
+                                        <input type="checkbox" asp-for="IsOppen19" class="turInput" id="cheked" />
+                                    }
+                                    if (c == 19)
+                                    {
+                                        <input type="checkbox" asp-for="IsOppen20" class="turInput" id="cheked" />
+                                    }
+                                }
+
+                        </div>
                     </div>
-                    
-
+                    b++;
+                }
             }
- 
-            @foreach (var list in @ViewBag.f)
-            {
-               
-                    <div id="aussen">
-                        <h3>AussenzylinderZylinder</h3>
-                        <td id="rowTable" class="table-info">@list.Name</td>
-                        <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@list.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
-                        <td id="rowTable " class="table-info"><h6 id="cost">@list.Cost</h6></td>
-                    </div>
-                    
-            }
-
-            <form asp-action="Create_Exel">
-                <input type="submit" value="Create Exel" class="btn btn-primary" />
-        </form>
-         <div id="generics">
-
-        </div> 
+        </div>
+            <input type="submit" style="margin-left: 20px;" value="Save" class="btn btn-primary" />
+       
     </div>
+    </form>
+    <div>
+
+        @{
+            int i = 21;
+
+            int j = 21;
+            <select id="size">
+                @for (int a = 1; i > a; a++)
+                {
+                    <h2>
+
+                    <option>
+                            @a
+                    </option>
+
+                    </h2>
+                }
+            </select>
+
+            <select id="Row">
+                @for (int a = 1; j > a; a++)
+                {
+                    <h2>
+
+                    <option>
+                            @a
+                    </option>
+
+                    </h2>
+                }
+            </select>
+
+        }
+        
+    </div>
+    
+</div>
 
 <script>
-            let generics = document.getElementById('generations');
-            let generic = document.getElementById('generic');
-            let dopel = document.querySelectorAll('#dopel');
-            let halb = document.querySelectorAll('#halb');
-            let Knayf = document.querySelectorAll('#Knayf');
-            let Hebel = document.querySelectorAll('#Hebel');
-            let vorhang = document.querySelectorAll('#vorhang');
-            let aussen = document.querySelectorAll('#aussen');
-  
-    let sum;
-    function render() 
-    {
-                 
 
-            for (var i = 0; i <= dopel.length; i++) 
-            {
-                  sum = 0;
+    let konfigMenu = document.getElementById('konfiguratorItem_menu_5');
+    let siz = document.getElementById('size');
+    let arraySize = 0;
+    siz.addEventListener('change', () => {
 
-                    if (dopel.length > i) {
-                        document.getElementById('generics').append(dopel[i]);
-                        let res = dopel[i].children[2].innerHTML.replace(/,/, '.');
-                             sum += parseFloat(res);
-                    
-                    }
-                    if (halb.length > i) {
+        let allItem = document.querySelectorAll('.line-name-body');
 
-                        dopel[i].append(halb[i]);
+        if (allItem.length != 0) {
+            arraySize = siz.value - allItem.length;
+        }
+        else {
+            arraySize = siz.value;
+        }
 
-                        let res = halb[i].children[2].innerHTML.replace(/,/, '.');
-                            sum += parseFloat(res);
+        if (allItem.length > siz.value) {
+            arraySize = allItem.length - siz.value;
 
-                    }
-
-
-                    if (Knayf.length > i) 
-                    {
-                            dopel[i].append(Knayf[i]);
-
-                        let res = Knayf[i].children[2].innerHTML.replace(/,/, '.');
-                            sum += parseFloat(res);
-
-                       
-                    }
-
-
-                    if (Hebel.length > i) 
-                    {
-                            dopel[i].append(Hebel[i]);
-
-                        let res = Hebel[i].children[2].innerHTML.replace(/,/, '.');
-                            sum += parseFloat(res);
-
-                       
-                    }
-
-                    if (vorhang.length > i) {
-                            dopel[i].append(vorhang[i]);
-                        let res = vorhang[i].children[2].innerHTML.replace(/,/, '.');
-                            sum += parseFloat(res);
-
-                      
-                    }
-
-
-                if (aussen.length > i) 
-                {
-                    dopel[i].append(aussen[i]);
-                        let res = aussen[i].children[2].innerHTML.replace(/,/, '.');
-                    sum += parseFloat(res);
-                }
-                    let paddingUp = document.createElement('hr');
-                    dopel[i].append(paddingUp);
-                    let paddingDown = document.createElement('hr');
-                    let cost = document.createElement('h1');
-                    cost.innerHTML = `${sum}€`;
-                    dopel[i].append(cost);
-                    dopel[i].append(paddingDown);
-               
+            for (let d = 0; d < arraySize; d++) {
+                allItem[d].remove();
+                console.log(allItem[d]);
             }
-                    
-        
-             
 
-    }
-    render();
-            // generic.remove(dopel, halb, Knayf, Hebel, vorhang, aussen);
-            
+        }
+        else {
+            for (let i = 0; i < arraySize; i++) {
+
+                let div = document.createElement('div');
+                div.classList.add('line-name-body');
+
+                let pos = document.createElement('h6');
+                // pos.innerHTML = String(b+i);
+                div.append(pos);
+
+                let inputTür = document.createElement('input');
+                div.append(inputTür);
+
+                let selectroSlyssel = document.createElement('select');
+
+                for (let s = 0; s < 6; s++) {
+                    let options = document.createElement('option');
+                    options.classList.add('.form-select');
+
+                    if (s == 0)
+                        options.innerHTML = 'Profil-Doppelzylinder';
+                    if (s == 1)
+                        options.innerHTML = 'Profil-Halbzylinder';
+                    if (s == 2)
+                        options.innerHTML = 'Profil-Knaufzylinder';
+                    if (s == 3)
+                        options.innerHTML = 'Hebelzylinder';
+                    if (s == 4)
+                        options.innerHTML = 'Vorhangschloss';
+                    if (s == 5)
+                        options.innerHTML = 'Aussenzylinder / Rundzylinder';
+
+                    selectroSlyssel.append(options);
+                }
+                div.append(selectroSlyssel);
+
+
+
+                let Zylinderlänge = document.createElement('input');
+                div.append(Zylinderlänge);
+
+                let aussen = document.createElement('input');
+                div.append(aussen);
+
+                let innen = document.createElement('input');
+                div.append(innen);
+
+                konfigMenu.append(div);
+            }
+        }
+
+
+        // if (allItem.length != siz.value)
+        //     konfigMenu.remove(allItem);
+
+
+    })
+
 
 
 </script>

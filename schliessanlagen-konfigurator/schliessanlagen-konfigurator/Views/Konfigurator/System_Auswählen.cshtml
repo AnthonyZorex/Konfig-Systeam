@@ -1,0 +1,202 @@
+﻿<div>
+    <h1>Konfigurator</h1>
+    <div id="konfigMenu">
+        <button type="button" class="btn btn-danger">1. Schließplan erstellen</button>
+        <button type="button" class="btn btn-secondary">2. System auswählen</button>
+        <button type="button" class="btn btn-secondary">3. Parameter einstellen</button>
+    </div>
+
+    <div id="InformBar">
+        <div id="ItemBar">
+            <h4>Vorlage</h4>
+            <h4>Gleichschließung</h4>
+        </div>
+        <div id="ItemBar">
+            <h4>Vorlage</h4>
+            <h4>Einfamilienhaus</h4>
+        </div>
+        <div id="ItemBar">
+            <h4>Vorlage</h4>
+            <h4>Mehrfamilienhaus</h4>
+        </div>
+        <div id="ItemBar">
+            <h4>Vorlage</h4>
+            <h4>Unternehmen</h4>
+        </div>
+        <div id="ItemBar">
+            <h4>Vorlage</h4>
+            <h4>Firmenkomplex</h4>
+        </div>
+
+    </div>
+    <div id="key-konfig">
+        <h6 style="margin-top: 10px;"> key</h6>
+    </div>
+    <div id="konfigurator">
+
+        <div id="menuPannel">
+
+            @foreach (var list in @ViewBag.dopel)
+            {
+                <div id="dopel">
+                    <h3>DoppelZylinder</h3>
+                    <td id="rowTable" class="table-info">@list.Name</td>
+                    <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@list.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
+                    <td id="rowTable " class="table-info"><h6 id="cost">@list.Cost</h6></td>
+                </div>
+
+            }
+
+
+            @foreach (var list in @ViewBag.a)
+            {
+                <div id="halb">
+                    <h3>Halbzylinder</h3>
+                    <td id="rowTable" class="table-info">@list.Name</td>
+                    <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@list.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
+                    <td id="rowTable " class="table-info"><h6 id="cost">@list.Cost</h6></td>
+                </div>
+
+            }
+
+
+            @foreach (var list in @ViewBag.b)
+            {
+                <div id="Knayf">
+                    <h3>KnayfZylinder</h3>
+                    <td id="rowTable" class="table-info">@list.Name</td>
+                    <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@list.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
+                    <td id="rowTable " class="table-info"><h6 id="cost">@list.Cost</h6></td>
+                </div>
+
+            }
+
+            @foreach (var list in @ViewBag.c)
+            {
+                <div id="Hebel">
+                    <h3>HebelZylinder</h3>
+                    <td id="rowTable" class="table-info">@list.Name</td>
+                    <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@list.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
+                    <td id="rowTable " class="table-info"><h6 id="cost">@list.Cost</h6></td>
+                </div>
+
+            }
+
+
+            @foreach (var list in @ViewBag.d)
+            {
+                <div id="vorhang">
+                    <h3>VorhonshlossZylinder</h3>
+                    <td id="rowTable" class="table-info">@list.Name</td>
+                    <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@list.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
+                    <td id="rowTable " class="table-info"><h6 id="cost">@list.Сost</h6></td>
+                </div>
+
+
+            }
+
+            @foreach (var list in @ViewBag.f)
+            {
+
+                <div id="aussen">
+                    <h3>AussenzylinderZylinder</h3>
+                    <td id="rowTable" class="table-info">@list.Name</td>
+                    <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@list.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
+                    <td id="rowTable " class="table-info"><h6 id="cost">@list.Cost</h6></td>
+                </div>
+
+            }
+
+            <form asp-action="Create_Exel">
+                <input type="submit" value="Create Exel" class="btn btn-primary" />
+            </form>
+            <div id="generics">
+            </div>
+        </div>
+
+        <script>
+            let generics = document.getElementById('generations');
+            let generic = document.getElementById('generic');
+            let dopel = document.querySelectorAll('#dopel');
+            let halb = document.querySelectorAll('#halb');
+            let Knayf = document.querySelectorAll('#Knayf');
+            let Hebel = document.querySelectorAll('#Hebel');
+            let vorhang = document.querySelectorAll('#vorhang');
+            let aussen = document.querySelectorAll('#aussen');
+
+            let sum;
+            function render() {
+
+
+                for (var i = 0; i <= dopel.length; i++) {
+                    sum = 0;
+
+                    if (dopel.length > i) {
+                        document.getElementById('generics').append(dopel[i]);
+                        let res = dopel[i].children[2].innerHTML.replace(/,/, '.');
+                        sum += parseFloat(res);
+
+                    }
+                    if (halb.length > i) {
+
+                        dopel[i].append(halb[i]);
+
+                        let res = halb[i].children[2].innerHTML.replace(/,/, '.');
+                        sum += parseFloat(res);
+
+                    }
+
+
+                    if (Knayf.length > i) {
+                        dopel[i].append(Knayf[i]);
+
+                        let res = Knayf[i].children[2].innerHTML.replace(/,/, '.');
+                        sum += parseFloat(res);
+
+
+                    }
+
+
+                    if (Hebel.length > i) {
+                        dopel[i].append(Hebel[i]);
+
+                        let res = Hebel[i].children[2].innerHTML.replace(/,/, '.');
+                        sum += parseFloat(res);
+
+
+                    }
+
+                    if (vorhang.length > i) {
+                        dopel[i].append(vorhang[i]);
+                        let res = vorhang[i].children[2].innerHTML.replace(/,/, '.');
+                        sum += parseFloat(res);
+
+
+                    }
+
+
+                    if (aussen.length > i) {
+                        dopel[i].append(aussen[i]);
+                        let res = aussen[i].children[2].innerHTML.replace(/,/, '.');
+                        sum += parseFloat(res);
+                    }
+                    let paddingUp = document.createElement('hr');
+                    dopel[i].append(paddingUp);
+                    let paddingDown = document.createElement('hr');
+                    let cost = document.createElement('h1');
+                    cost.innerHTML = `${sum}€`;
+                    dopel[i].append(cost);
+                    dopel[i].append(paddingDown);
+
+                }
+
+
+
+
+            }
+            render();
+            // generic.remove(dopel, halb, Knayf, Hebel, vorhang, aussen);
+
+
+
+        </script>

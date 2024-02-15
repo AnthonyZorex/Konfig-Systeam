@@ -40,9 +40,17 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "Aspose.Cells": {
+              "target": "Package",
+              "version": "[24.2.0, )"
+            },
             "Json.Net": {
               "target": "Package",
               "version": "[1.0.33, )"
+            },
+            "LibSassHost.Native.win-x64": {
+              "target": "Package",
+              "version": "[1.4.0, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
