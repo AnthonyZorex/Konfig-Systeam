@@ -1,5 +1,6 @@
 ﻿@model schliessanlagen_konfigurator.Models.Orders;
 @using Microsoft.AspNetCore.Http;
+
 @{
     ViewData["Title"] = "Konfigurator";
 }
@@ -11,11 +12,12 @@
      <button type="button" class="btn btn-secondary"><a href="@Url.Action("System_Auswählen","Konfigurator")">2. System auswählen</a></button> 
         <button type="button" class="btn btn-secondary">3. Parameter einstellen</button>
     </div>
-
+    <p>@Model.userKey</p>
     <div id="InformBar">
     </div>
     <div id="key-konfig">
         <h6 style="margin-top: 10px;"> key</h6>
+        
     </div>
     <form asp-action="SaveOrder" >
     <div id="konfigurator">

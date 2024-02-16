@@ -1,29 +1,35 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
 using schliessanlagen_konfigurator.Data;
 using schliessanlagen_konfigurator.Models;
-using System.Web;
+using System.Threading.Tasks;
 using Spire.Xls;
-
+using System.Web;
+using Microsoft.AspNetCore.Http;
+using schliessanlagenkonfigurator.Migrations;
 namespace schliessanlagen_konfigurator.Controllers
 {
     public class KonfiguratorController : Controller
     {
         schliessanlagen_konfiguratorContext db;
         private IWebHostEnvironment Environment;
-        public KonfiguratorController(schliessanlagen_konfiguratorContext context, IWebHostEnvironment _environment)
+        private readonly IHttpContextAccessor _contextAccessor;
+
+        public KonfiguratorController(schliessanlagen_konfiguratorContext context, IWebHostEnvironment _environment
+        , IHttpContextAccessor httpContextAccessor)
         {
             db = context;
             Environment = _environment;
-            
+            _contextAccessor = httpContextAccessor;
         }
-       
+      
         public IActionResult IndexKonfigurator()
         {
-          
             ViewBag.Zylinder_Typ = db.Schliessanlagen.ToList();
-
-            return View();
+            var session = _contextAccessor.HttpContext.Session;
+            var UserKey = session.Id;
+            Orders user = new Orders();
+            user.userKey = UserKey;
+            return View(user);
         }
 
         public IActionResult System_Auswählen()
@@ -96,27 +102,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             Worksheet worksheet = workbook.Worksheets[0];
 
-            //Header
-            //worksheet.Range[1, 1].Value = "Pos.";
-            //worksheet.Range[1, 2].Value = "Tür- oder\r\nRaumbezeichnung";
-            //worksheet.Range[1, 3].Value = "Zyl.\r\n Nr.";
-            //worksheet.Range[1, 4].Value = "Zylindertyp*\r\n";
-            //worksheet.Range[1, 5].Value = "Länge in mm\r\n außen |  innen";
-            //worksheet.Range[1, 6].Value = "Stück.";
-            //worksheet.Range[1, 7].Value = $"Key{1}";
-            //worksheet.Range[1, 8].Value = $"Key{2}";
-            //worksheet.Range[1, 9].Value = $"Key{3}";
-            //worksheet.Range[1, 10].Value = $"Key{4}";
-            //worksheet.Range[1, 11].Value = $"Key{5}";
-            //worksheet.Range[1, 12].Value = $"Key{6}";
-            //worksheet.Range[1, 13].Value = $"Key{7}";
-            //worksheet.Range[1, 14].Value = $"Key{8}";
-            //worksheet.Range[1, 15].Value = $"Key{9}";
-            //worksheet.Range[1, 16].Value = $"Key{10}";
-            //worksheet.Range[1, 17].Value = $"Key{11}";
-            //worksheet.Range[1, 18].Value = $"Key{12}";
-
-            //Data
+            
             int count = 0;
             int Row = 18;
             for (int i = 0; i < profilD.Count(); i++)
