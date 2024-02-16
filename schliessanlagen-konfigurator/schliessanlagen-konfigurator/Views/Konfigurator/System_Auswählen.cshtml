@@ -1,4 +1,12 @@
-﻿<div>
+﻿@model schliessanlagen_konfigurator.Models.Orders;
+@using Microsoft.AspNetCore.Http;
+﻿@using System.Text.RegularExpressions;
+@{
+    ViewData["Title"] = $"System_Auswählen/{Model.userKey}";
+}
+@Html.HiddenFor(m => m.userKey)
+
+<div>
     <h1>Konfigurator</h1>
     <div id="konfigMenu">
         <button type="button" class="btn btn-danger">1. Schließplan erstellen</button>
@@ -47,65 +55,6 @@
 
             }
 
-
-            @foreach (var list in @ViewBag.a)
-            {
-                <div id="halb">
-                    <h3>Halbzylinder</h3>
-                    <td id="rowTable" class="table-info">@list.Name</td>
-                    <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@list.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
-                    <td id="rowTable " class="table-info"><h6 id="cost">@list.Cost</h6></td>
-                </div>
-
-            }
-
-
-            @foreach (var list in @ViewBag.b)
-            {
-                <div id="Knayf">
-                    <h3>KnayfZylinder</h3>
-                    <td id="rowTable" class="table-info">@list.Name</td>
-                    <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@list.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
-                    <td id="rowTable " class="table-info"><h6 id="cost">@list.Cost</h6></td>
-                </div>
-
-            }
-
-            @foreach (var list in @ViewBag.c)
-            {
-                <div id="Hebel">
-                    <h3>HebelZylinder</h3>
-                    <td id="rowTable" class="table-info">@list.Name</td>
-                    <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@list.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
-                    <td id="rowTable " class="table-info"><h6 id="cost">@list.Cost</h6></td>
-                </div>
-
-            }
-
-
-            @foreach (var list in @ViewBag.d)
-            {
-                <div id="vorhang">
-                    <h3>VorhonshlossZylinder</h3>
-                    <td id="rowTable" class="table-info">@list.Name</td>
-                    <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@list.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
-                    <td id="rowTable " class="table-info"><h6 id="cost">@list.Сost</h6></td>
-                </div>
-
-
-            }
-
-            @foreach (var list in @ViewBag.f)
-            {
-
-                <div id="aussen">
-                    <h3>AussenzylinderZylinder</h3>
-                    <td id="rowTable" class="table-info">@list.Name</td>
-                    <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@list.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
-                    <td id="rowTable " class="table-info"><h6 id="cost">@list.Cost</h6></td>
-                </div>
-
-            }
 
             <form asp-action="Create_Exel">
                 <input type="submit" value="Create Exel" class="btn btn-primary" />
