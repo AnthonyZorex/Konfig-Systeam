@@ -22,16 +22,19 @@ namespace schliessanlagen_konfigurator.Controllers
     {
         schliessanlagen_konfiguratorContext db;
         private IWebHostEnvironment Environment;
+
         public HomeController(schliessanlagen_konfiguratorContext context, IWebHostEnvironment _environment)
         {
             db = context;
             Environment = _environment;
+           
         }
 
         #region ViewZylinder
         public async Task<IActionResult> Index()
         {
             ViewBag.item = db.Profil_Doppelzylinder;
+           
             return View();
         }
 
