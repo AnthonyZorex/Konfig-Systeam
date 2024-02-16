@@ -14,16 +14,16 @@
         public bool IsOppen { get; set; }
         public bool IsOppen2 { get; set; }
         public bool IsOppen3 { get; set; }
-        public bool IsOppen4 { get; set; }=false;
-        public bool IsOppen5 { get; set; } = false;
-        public bool IsOppen6 { get; set; } = false;
-        public bool IsOppen7 { get; set; } = false;
-        public bool IsOppen8 { get; set; } = false;
-        public bool IsOppen9 { get; set; } = false;
-        public bool IsOppen10 { get; set; } = false;
-        public bool IsOppen11 { get; set; } = false;
-        public bool IsOppen12 { get; set; } = false;
-        public bool IsOppen13 { get; set; } = false;
+        public bool IsOppen4 { get; set; }
+        public bool IsOppen5 { get; set; } 
+        public bool IsOppen6 { get; set; } 
+        public bool IsOppen7 { get; set; } 
+        public bool IsOppen8 { get; set; } 
+        public bool IsOppen9 { get; set; }
+        public bool IsOppen10 { get; set; }
+        public bool IsOppen11 { get; set; }
+        public bool IsOppen12 { get; set; }
+        public bool IsOppen13 { get; set; }
         public bool IsOppen14 { get; set; } = false;
         public bool IsOppen15 { get; set; } = false;
         public bool IsOppen16 { get; set; } = false;

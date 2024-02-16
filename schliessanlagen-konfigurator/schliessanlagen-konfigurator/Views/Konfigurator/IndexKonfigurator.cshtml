@@ -9,10 +9,9 @@
     <h1>Konfigurator</h1>
     <div id="konfigMenu">
         <button type="button" class="btn btn-danger">1. Schließplan erstellen</button>
-     <button type="button" class="btn btn-secondary"><a href="@Url.Action("System_Auswählen","Konfigurator")">2. System auswählen</a></button> 
+        <button type="button" class="btn btn-secondary"><a href="@Url.Action("System_Auswählen","Konfigurator",new{Model.userKey})">2. System auswählen</a></button>
         <button type="button" class="btn btn-secondary">3. Parameter einstellen</button>
     </div>
-    <p>@Model.userKey</p>
     <div id="InformBar">
     </div>
     <div id="key-konfig">
@@ -21,7 +20,7 @@
     </div>
     <form asp-action="SaveOrder" >
     <div id="konfigurator">
-     
+     @Html.HiddenFor(x => x.userKey) 
         <div id="konfiguratorItem_menu_5">
             <div class="line-name-header ">
                 <div class="pos">
@@ -54,44 +53,46 @@
                     int position_current = 3;
                 int b = 1;
                 int position = position_current;
-                @for (int a = 0; position_current > a; a++)
+                                                @for (int a = 0; position_current > a; a++)
                 {
-                    <div class="line-name-body">
-                        <div class="pos-body">
-                            <span>@b</span>
-                        </div>
+                                                    <div class="line-name-body">
+                                                        <div class="pos-body">
+                                                            <span>@b</span>
+                                                        </div>
 
-                        <div class="turname-body">
-                                <input asp-for="Tur" name="Turname" type="text" style="max-width:250px" />
-                        </div>
+                                                        <div class="turname-body">
+                                                                <input asp-for="Tur" name="Turname" type="text" style="max-width:250px" />
+                                                        </div>
 
-                        <div class="type-body">
-                            <span>
-                                    <select asp-for="ZylinderId" name="ZylinderId" class="form-select">
-                                        <option>9</option>
-                                     <option>10</option>
-                                      <option>11</option>
-                                        <option>12</option>
-                                        <option>13</option>
-                                        <option>14</option>
-                                </select>
-                            </span>
-                        </div>
+                                                        <div class="type-body">
+                                                            <span>
+                                                                @Html.DropDownListFor(model => model.ZylinderId,
+                                                                 new List<SelectListItem> {
+                                                                    new SelectListItem {  Value = "9",Text="Profil-Doppelzylinder" },
+                                                                    new SelectListItem {  Value = "10",Text="Profil-Halbzylinder" },
+                                                                    new SelectListItem {  Value = "11",Text="Profil-Knaufzylinder" },
+                                                                    new SelectListItem {  Value = "12",Text="Hebelzylinder" },
+                                                                    new SelectListItem {  Value = "13",Text="Vorhangschloss" },
+                                                                    new SelectListItem {  Value = "14",Text="Aussenzylinder / Rundzylinder" }
+                                                                    },
+                                                                 new { @class = "form-select", @id = "select" })
+                                                            </span>
+                                                        </div>
 
-                        <div class="length-body">
-                                <input asp-for="aussen" name="aussen" type="text" class="turInput" />
-                        </div>
+                                                        <div class="length-body">
+                                                                <input asp-for="aussen" name="aussen" type="text" class="turInput" />
+                                                        </div>
 
-                        <div class="length-body">
-                                <input asp-for="innen" name="innen" type="text" class="turInput" />
-                        </div>
+                                                        <div class="length-body">
+                                                                <input asp-for="innen" name="innen" type="text" class="turInput" />
+                                                        </div>
 
-                        <div class="pieces-body">
-                                <input asp-for="Count" name="Count" type="text" class="turInput" />
+                                                        <div class="pieces-body">
+                                                                <input asp-for="Count" name="Count" type="text" class="turInput" />
 
-                        </div>
-                      
-                    </div>
+                                                        </div>
+                                                      
+                                                    </div>
                     b++;
                 }
             }
@@ -102,103 +103,103 @@
             @{
                 int d = 1;
                 int position2 = position_current;
-                @for (int a = 0; position_current > a; a++)
+                                                @for (int a = 0; position_current > a; a++)
                 {
-                    <div style="display: block;">
-                        <div id="key">
-                            <h6 id='nK'><span>S</span>@a</h6>
-                                <input asp-for="NameKey" name="NameKey" type="text" id="KeyName" />
-                            <br>
-                                <input asp-for="CountKey" name="CountKey" type="text" id="counter" />
-                        </div>
-                        <div id="chekboxPanel">
-                                @for (int c = 0; position_current > c; c++)
+                        <div style="display: block;margin-right: 10px ">
+                                                        <div id="key">
+                                                            <h6 id='nK'><span>S</span>@d</h6>
+                                                                <input asp-for="NameKey" name="NameKey" type="text" id="KeyName" />
+                                                            <br>
+                                                                <input asp-for="CountKey" name="CountKey" type="text" id="counter" />
+                                                        </div>
+                                                        <div id="chekboxPanel">
+                                                                @for (int c = 0; position_current > c; c++)
                                 {
                                     if (c == 0)
                                     {
-                                        <input type="checkbox" asp-for="IsOppen" name="IsOppen" class="turInput" id="cheked" />
+                                                                        <input type="checkbox" asp-for="IsOppen" name="IsOppen" class="turInput" id="cheked" />
                                     }
                                     if (c == 1)
                                     {
-                                        <input type="checkbox" asp-for="IsOppen2" name="IsOppen2" class="turInput" id="cheked" />
+                                                                        <input type="checkbox" asp-for="IsOppen2" name="IsOppen2" class="turInput" id="cheked" />
                                     }
                                     if (c == 2)
                                     {
-                                        <input type="checkbox" asp-for="IsOppen3" name="IsOppen3" class="turInput" id="cheked" />
+                                                                        <input type="checkbox" asp-for="IsOppen3" name="IsOppen3" class="turInput" id="cheked" />
                                     }
                                     if (c == 3)
                                     {
-                                        <input type="checkbox" asp-for="IsOppen4" class="turInput" id="cheked" />
+                                                                        <input type="checkbox" asp-for="IsOppen4" class="turInput" id="cheked" />
                                     }
                                     if (c == 4)
                                     {
-                                        <input type="checkbox" asp-for="IsOppen5" class="turInput" id="cheked" />
+                                                                        <input type="checkbox" asp-for="IsOppen5" class="turInput" id="cheked" />
                                     }
                                     if (c == 5)
                                     {
-                                        <input type="checkbox" asp-for="IsOppen6" class="turInput" id="cheked" />
+                                                                        <input type="checkbox" asp-for="IsOppen6" class="turInput" id="cheked" />
                                     }
                                     if (c == 6)
                                     {
-                                        <input type="checkbox" asp-for="IsOppen7" class="turInput" id="cheked" />
+                                                                        <input type="checkbox" asp-for="IsOppen7" class="turInput" id="cheked" />
                                     }
                                     if (c == 7)
                                     {
-                                        <input type="checkbox" asp-for="IsOppen8" class="turInput" id="cheked" />
+                                                                        <input type="checkbox" asp-for="IsOppen8" class="turInput" id="cheked" />
                                     }
                                     if (c == 8)
                                     {
-                                        <input type="checkbox" asp-for="IsOppen9" class="turInput" id="cheked" />
+                                                                        <input type="checkbox" asp-for="IsOppen9" class="turInput" id="cheked" />
                                     }
                                     if (c == 9)
                                     {
-                                        <input type="checkbox" asp-for="IsOppen10" class="turInput" id="cheked" />
+                                                                        <input type="checkbox" asp-for="IsOppen10" class="turInput" id="cheked" />
                                     }
                                     if (c == 10)
                                     {
-                                        <input type="checkbox" asp-for="IsOppen11" class="turInput" id="cheked" />
+                                                                        <input type="checkbox" asp-for="IsOppen11" class="turInput" id="cheked" />
                                     }
                                     if (c == 11)
                                     {
-                                        <input type="checkbox" asp-for="IsOppen12" class="turInput" id="cheked" />
+                                                                        <input type="checkbox" asp-for="IsOppen12" class="turInput" id="cheked" />
                                     }
                                     if (c == 12)
                                     {
-                                        <input type="checkbox" asp-for="IsOppen13" class="turInput" id="cheked" />
+                                                                        <input type="checkbox" asp-for="IsOppen13" class="turInput" id="cheked" />
                                     }
                                     if (c == 13)
                                     {
-                                        <input type="checkbox" asp-for="IsOppen14" class="turInput" id="cheked" />
+                                                                        <input type="checkbox" asp-for="IsOppen14" class="turInput" id="cheked" />
                                     }
                                     if (c == 14)
                                     {
-                                        <input type="checkbox" asp-for="IsOppen15" class="turInput" id="cheked" />
+                                                                        <input type="checkbox" asp-for="IsOppen15" class="turInput" id="cheked" />
                                     }
                                     if (c == 15)
                                     {
-                                        <input type="checkbox" asp-for="IsOppen16" class="turInput" id="cheked" />
+                                                                        <input type="checkbox" asp-for="IsOppen16" class="turInput" id="cheked" />
                                     }
                                     if (c == 16)
                                     {
-                                        <input type="checkbox" asp-for="IsOppen17" class="turInput" id="cheked" />
+                                                                        <input type="checkbox" asp-for="IsOppen17" class="turInput" id="cheked" />
                                     }
                                     if (c == 17)
                                     {
-                                        <input type="checkbox" asp-for="IsOppen18" class="turInput" id="cheked" />
+                                                                        <input type="checkbox" asp-for="IsOppen18" class="turInput" id="cheked" />
                                     }
                                     if (c == 18)
                                     {
-                                        <input type="checkbox" asp-for="IsOppen19" class="turInput" id="cheked" />
+                                                                        <input type="checkbox" asp-for="IsOppen19" class="turInput" id="cheked" />
                                     }
                                     if (c == 19)
                                     {
-                                        <input type="checkbox" asp-for="IsOppen20" class="turInput" id="cheked" />
+                                                                        <input type="checkbox" asp-for="IsOppen20" class="turInput" id="cheked" />
                                     }
                                 }
 
-                        </div>
-                    </div>
-                    b++;
+                                                        </div>
+                                                    </div>
+                        d++;
                 }
             }
         </div>
@@ -212,31 +213,31 @@
             int i = 21;
 
             int j = 21;
-            <select id="size">
-                @for (int a = 1; i > a; a++)
+                                            <select id="size">
+                                                @for (int a = 1; i > a; a++)
                 {
-                    <h2>
+                                                    <h2>
 
-                    <option>
-                            @a
-                    </option>
+                                                    <option>
+                                                            @a
+                                                    </option>
 
-                    </h2>
+                                                    </h2>
                 }
-            </select>
+                                            </select>
 
-            <select id="Row">
-                @for (int a = 1; j > a; a++)
+                                            <select id="Row">
+                                                @for (int a = 1; j > a; a++)
                 {
-                    <h2>
+                                                    <h2>
 
-                    <option>
-                            @a
-                    </option>
+                                                    <option>
+                                                            @a
+                                                    </option>
 
-                    </h2>
+                                                    </h2>
                 }
-            </select>
+                                            </select>
 
         }
         
@@ -248,6 +249,7 @@
 
     let konfigMenu = document.getElementById('konfiguratorItem_menu_5');
     let siz = document.getElementById('size');
+    let keyOptions = document.getElementById('konfiguratorItemKey');
     let arraySize = 0;
     siz.addEventListener('change', () => {
 
@@ -280,6 +282,7 @@
                 div.append(pos);
 
                 let inputTür = document.createElement('input');
+                inputTür.setAttribute('name', 'Turname');
                 div.append(inputTür);
 
                 let selectroSlyssel = document.createElement('select');
@@ -301,32 +304,67 @@
                     if (s == 5)
                         options.innerHTML = 'Aussenzylinder / Rundzylinder';
 
+                    options.setAttribute('name', 'ZylinderId');
                     selectroSlyssel.append(options);
                 }
                 div.append(selectroSlyssel);
 
-
-
                 let Zylinderlänge = document.createElement('input');
+                Zylinderlänge.setAttribute('name', 'aussen');
                 div.append(Zylinderlänge);
 
                 let aussen = document.createElement('input');
+                aussen.setAttribute('name', 'innen');
                 div.append(aussen);
 
                 let innen = document.createElement('input');
+                innen.setAttribute('name', 'Count');
                 div.append(innen);
 
                 konfigMenu.append(div);
+
+                let chekbox = document.createElement('input');
+                chekbox.setAttribute('type', 'checkbox');
+
+                keyOptions.append(chekbox);
             }
         }
-
 
         // if (allItem.length != siz.value)
         //     konfigMenu.remove(allItem);
 
-
     })
+    let aussenObject = document.querySelectorAll('[name*="aussen"]');
+    let innenObject = document.querySelectorAll('[name*="innen"]');
+    
+    function cheked() {
+        aussenObject.forEach((item) => {
 
+            item.addEventListener('change', () => {
+                if (item.value > 85) {
+                    item.value = 85;
+                    alert('Cilinder syzi min 25mm - max 81mm');
+                }
+                if (item.value < 25) {
+                    item.value = 25;
+                    alert('Cilinder syzi min 25mm - max 81mm');
+                }
+            })
+        });
 
+        innenObject.forEach((item) => {
+            item.addEventListener('change', () => {
+                if (item.value > 85) {
+                    item.value = 85;
+                    alert('Cilinder syzi min 25mm - max 81mm');
+                }
+                if (item.value < 25) {
+                    item.value = 25;
+                    alert('Cilinder syzi min 25mm - max 81mm');
+                }
+            })
+        });
+    }
+    cheked();
 
 </script>
