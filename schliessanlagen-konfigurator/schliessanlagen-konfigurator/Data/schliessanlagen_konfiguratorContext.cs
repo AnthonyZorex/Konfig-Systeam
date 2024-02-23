@@ -17,7 +17,7 @@ namespace schliessanlagen_konfigurator.Data
         public DbSet<Hebelzylinder> Hebelzylinder { get; set; }
         public DbSet<Vorhangschloss> Vorhangschloss { get; set; }
         public DbSet<Aussenzylinder_Rundzylinder> Aussenzylinder_Rundzylinder { get; set; }
-        public DbSet<Options> Options { get; set; }
+        public DbSet<Profil_Doppelzylinder_Options> Options { get; set; }
         public DbSet<Orders> Orders { get; set; }
     }
 }

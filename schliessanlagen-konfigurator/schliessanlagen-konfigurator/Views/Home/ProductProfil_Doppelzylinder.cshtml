@@ -1,0 +1,400 @@
+﻿ @model schliessanlagen_konfigurator.Models.Profil_Doppelzylinder;
+
+@{
+    ViewData["Title"] = $"ProductProfil_Doppelzylinder/{Model.Id}";
+}
+@Html.HiddenFor(m => m.Id)
+
+
+<div>
+    <div id="productMenu" >
+        <div >
+            <img decoding="async" src="@("~/image/"+@Model.ImageName)" asp-append-version="true" width="400px" height="400px" />
+        </div>
+
+        <div id="product_desciptions">
+            <div>
+                <h3>@Model.Name</h3>
+                <h2><strong id="cost" style="line-height: 200%;">@Model.Cost</strong></h2>
+                <h6 style="line-height: 200%; max-width: 400px;">@Model.description</h6>
+            </div>
+            <div id="cardOptions">
+               
+                <h6>
+                    Zylinderlänge A (Außenlänge)
+                    Bitte wählen Sie zunächst die Außenlänge des Zylinders
+                </h6>
+           
+                <select class = "form-select" id = "select aussen">
+                    @foreach (var listItem in ViewBag.aussen)
+                    {
+                        <option id="auss">@listItem mm</option>
+                    }
+                </select>
+   
+                <h6>
+                    Zylinderlänge B (Innenlänge)
+                    Bitte wählen Sie jetzt die Innenlänge des Zylinders
+                </h6>
+
+                <select class="form-select" id="select innen">
+                    @foreach (var listItem in ViewBag.innen)
+                    {
+                        <option id="innen">@listItem mm</option>
+                    }
+                </select>
+            </div>
+            <div id="cardOptions">
+
+                <h6>Not- und Gefahrenfunktion</h6>
+
+                @Html.DropDownList("DoppelZylinderNGF", ViewBag.EnumList as SelectList,
+                         new { @class = "form-select", @id = "select" })
+
+                <h6>Freilauffunktion</h6>
+                @Html.DropDownList("DoppelZylinder_Freilauffunktion", ViewBag.EnumList as SelectList,
+                         new { @class = "form-select", @id = "select" })
+
+                <h6>Staubkappe</h6>
+                @Html.DropDownList("Staubkappe", ViewBag.Staubkappe as SelectList,
+                         new { @class = "form-select", @id = "select" }) 
+
+            </div>
+        </div>      
+    </div>
+</div>
+<div>
+    <a asp-action="Index" class="btn btn-success">Back to List</a>
+</div>
+
+<script>
+
+
+    let selectAussen = document.getElementById('select aussen');
+    let selectInnen = document.getElementById('select innen');
+    let SystemName = `${"@Model.NameSystem"}`;
+    let optionsAuss = document.querySelectorAll('#auss');
+    let optionsinnen = document.querySelectorAll('#innen');
+    let cost = document.getElementById('cost');
+
+    let x = parseFloat(cost.innerHTML);
+    localStorage.setItem("cost", x);
+    function Bravus_2000_Schließzylinder() {
+        if (SystemName == 'Bravus.2000') {
+            selectAussen.addEventListener('change', () => {
+
+                let selectValue = Number(selectAussen.value.slice(0, 2));
+                let i = 30;
+
+                if (selectAussen.value == '80 mm') 
+                {
+                    i += 50;
+                    if (x > localStorage.getItem("cost"))
+                        cost.innerHTML = String(x += 40);
+                    else {
+                        let s = parseFloat(localStorage.getItem("cost")) + 40;
+                        cost.innerHTML = s;
+                    }
+                    optionsinnen[optionsinnen.length - 1].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 2].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 3].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 4].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 5].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 6].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 7].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 8].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 9].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 10].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 1].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 2].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 3].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 4].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 5].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 6].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 7].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 8].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 9].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 10].setAttribute("style", "display: none;");
+
+                }
+                else if (selectAussen.value == '75 mm') 
+                {
+                    i += 45;
+                    if (x > localStorage.getItem("cost"))
+                        cost.innerHTML = String(x += 36);
+                    else {
+                        let s = parseFloat(localStorage.getItem("cost")) + 36;
+                        cost.innerHTML = s;
+                    }
+
+                    optionsinnen[optionsinnen.length - 1].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 2].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 3].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 4].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 5].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 6].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 7].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 8].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 9].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 10].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 1].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 2].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 3].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 4].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 5].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 6].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 7].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 8].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 9].setAttribute("style", "display: none;");
+
+                }
+                else if (selectAussen.value == '70 mm') 
+                {
+                    i += 40;
+
+                    if (x > localStorage.getItem("cost"))
+                        cost.innerHTML = String(x += 32);
+                    else {
+                        let s = parseFloat(localStorage.getItem("cost")) + 32;
+                        cost.innerHTML = s;
+                    }
+                    optionsinnen[optionsinnen.length - 1].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 2].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 3].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 4].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 5].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 6].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 7].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 8].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 9].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 10].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 1].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 2].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 3].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 4].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 5].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 6].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 7].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 8].setAttribute("style", "display: none;");
+
+                }
+                else if (selectAussen.value == '65 mm') 
+                {
+
+                    i += 35;
+                    if (x > localStorage.getItem("cost"))
+                        cost.innerHTML = String(x += 28);
+                    else {
+                        let s = parseFloat(localStorage.getItem("cost")) + 28;
+                        cost.innerHTML = s;
+                    }
+                    optionsinnen[optionsinnen.length - 1].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 2].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 3].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 4].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 5].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 6].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 7].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 8].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 9].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 10].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 1].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 2].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 3].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 4].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 5].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 6].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 7].setAttribute("style", "display: none;");
+                }
+                else if (selectAussen.value == '60 mm') 
+                {
+                    i += 30;
+                    if (x > localStorage.getItem("cost"))
+                        cost.innerHTML = String(x += 24);
+                    else {
+                        let s = parseFloat(localStorage.getItem("cost")) + 24;
+                        cost.innerHTML = s;
+                    }
+                    optionsinnen[optionsinnen.length - 1].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 2].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 3].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 4].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 5].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 6].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 7].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 8].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 9].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 10].setAttribute("style", "display: block;");
+                    optionsinnen[optionsinnen.length - 1].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 2].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 3].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 4].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 5].setAttribute("style", "display: none;");
+                    optionsinnen[optionsinnen.length - 6].setAttribute("style", "display: none;");
+                }
+                else if (selectAussen.value == '55 mm') 
+                {
+                    i += 25;
+
+                    if (x > localStorage.getItem("cost"))
+                        cost.innerHTML = String(x += 20);
+                    else {
+                        let s = parseFloat(localStorage.getItem("cost")) + 20;
+                        cost.innerHTML = s;
+                        optionsinnen[optionsinnen.length - 1].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 2].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 3].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 4].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 5].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 6].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 7].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 8].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 9].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 10].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 1].setAttribute("style", "display: none;");
+                        optionsinnen[optionsinnen.length - 2].setAttribute("style", "display: none;");
+                        optionsinnen[optionsinnen.length - 3].setAttribute("style", "display: none;");
+                        optionsinnen[optionsinnen.length - 4].setAttribute("style", "display: none;");
+                        optionsinnen[optionsinnen.length - 5].setAttribute("style", "display: none;");
+                    }
+                    
+                }
+                    if (selectAussen.value == '50 mm') 
+                    {
+                        i += 20;
+                        if (x > localStorage.getItem("cost"))
+                            cost.innerHTML = String(x += 16);
+                        else {
+                            let s = parseFloat(localStorage.getItem("cost")) + 16;
+                            cost.innerHTML = s;
+                        }
+                        optionsinnen[optionsinnen.length - 1].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 2].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 3].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 4].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 5].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 6].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 7].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 8].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 9].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 10].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 1].setAttribute("style", "display: none;");
+                        optionsinnen[optionsinnen.length - 2].setAttribute("style", "display: none;");
+                        optionsinnen[optionsinnen.length - 3].setAttribute("style", "display: none;");
+                        optionsinnen[optionsinnen.length - 4].setAttribute("style", "display: none;");
+                    }
+                    if (selectAussen.value == '45 mm') 
+                    {
+                        i += 15;
+                        optionsinnen[optionsinnen.length - 1].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 2].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 3].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 4].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 5].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 6].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 7].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 8].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 9].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 10].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 1].setAttribute("style", "display: none;");
+                        optionsinnen[optionsinnen.length - 2].setAttribute("style", "display: none;");
+                        optionsinnen[optionsinnen.length - 3].setAttribute("style", "display: none;");
+                        if (x > localStorage.getItem("cost")) 
+                        {
+                            cost.innerHTML = String(x += 12);
+                        }
+
+                        else {
+                            let s = parseFloat(localStorage.getItem("cost")) + 12;
+                            cost.innerHTML = s;
+                        }
+                    }
+
+                    if (selectAussen.value == '40 mm') 
+                    {
+                        i += 10;
+                        optionsinnen[optionsinnen.length - 1].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 2].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 3].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 4].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 5].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 6].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 7].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 8].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 9].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 10].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 1].setAttribute("style", "display: none;");
+                        optionsinnen[optionsinnen.length - 2].setAttribute("style", "display: none;");
+
+                        if (x > localStorage.getItem("cost"))
+                            cost.innerHTML = String(x += 8);
+                        else {
+                            let s = parseFloat(localStorage.getItem("cost")) + 8;
+                            cost.innerHTML = s;
+                        }
+                    }
+
+                    if (selectAussen.value == '35 mm') 
+                    {
+                        i += 5;
+                        if (x > localStorage.getItem("cost"))
+                            cost.innerHTML = String(x += 4);
+                        else {
+                            let s = parseFloat(localStorage.getItem("cost")) + 4;
+                            cost.innerHTML = s;
+                        }
+
+                        optionsinnen[optionsinnen.length - 1].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 2].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 3].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 4].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 5].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 6].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 7].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 8].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 9].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 10].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 1].setAttribute("style", "display: none;");
+                    }
+
+                    if (selectAussen.value == '30 mm') {
+                        cost.innerHTML = localStorage.getItem("cost");
+
+                        optionsinnen[optionsinnen.length - 1].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 2].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 3].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 4].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 5].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 6].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 7].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 8].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 9].setAttribute("style", "display: block;");
+                        optionsinnen[optionsinnen.length - 10].setAttribute("style", "display: block;");
+                    }
+
+
+
+
+
+
+
+                
+
+            });
+        };
+        if (SystemName == 'Bravus.3000') {
+            // if (!optionsinnen[optionsinnen.length - 1].hasAttribute("style", "display: none;"))
+        }
+    }
+
+    Bravus_2000_Schließzylinder()
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+

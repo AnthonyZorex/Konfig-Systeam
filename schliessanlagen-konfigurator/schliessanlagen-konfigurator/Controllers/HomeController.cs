@@ -2,19 +2,12 @@
 using schliessanlagen_konfigurator.Models;
 using System.Diagnostics;
 using schliessanlagen_konfigurator.Data;
-using Microsoft.Extensions.Hosting;
-using NuGet.Protocol.Plugins;
 using Microsoft.EntityFrameworkCore;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using NuGet.Protocol;
+using System.Net;
+using System.Net.Mail;
+using schliessanlagen_konfigurator.IEnumerable.DoppelZylinder;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Numerics;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-using System.Configuration;
-using System.IO;
-using System.Text.Json;
-using Humanizer;
-using System;
+using System.Reflection;
 
 namespace schliessanlagen_konfigurator.Controllers
 {
@@ -29,15 +22,44 @@ namespace schliessanlagen_konfigurator.Controllers
             Environment = _environment;
            
         }
+        public async Task<IActionResult> AdminConnect()
+        {
+            //MailAddress from = new MailAddress("bonettaanthony466@gmail.com", "Anthony");
+            //MailAddress to = new MailAddress("anthonybonetta@icloud.com");
+            //MailMessage m = new MailMessage(from, to);
+            //m.Subject = "Тест";
+            //m.Body = "Письмо-тест 2 работы smtp-клиента";
+            //SmtpClient smtp = new SmtpClient("localhost", 25);
+            //smtp.Credentials = new NetworkCredential("bonettaanthony466@gmail.com", "Anthony_2001");
+            //smtp.EnableSsl = true;
+            //await smtp.SendMailAsync(m);
 
+            SmtpClient Smtp = new SmtpClient("sslin.de", 993);
+            Smtp.UseDefaultCredentials = false;
+            Smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+            Smtp.EnableSsl = true;
+            Smtp.Credentials = new NetworkCredential("account@sicher.discount", "64tSf&ecJ6q62U");
+            MailMessage email = new MailMessage();
+            email.From = new MailAddress("account@sicher.discount");
+            email.Subject = "subject";
+            email.Body = "text Hello Body";
+            //Attachment attach = new Attachment("filename"); ;
+            //email.Attachments.Add(attach);
+            email.To.Add("bonettaanthony466@gmail.com");
+            await Smtp.SendMailAsync(email);
+
+            return View();
+        }
+       
         #region ViewZylinder
         public async Task<IActionResult> Index()
         {
-            ViewBag.item = db.Profil_Doppelzylinder;
+            ViewBag.item = await db.Profil_Doppelzylinder.ToListAsync();
            
             return View();
         }
 
+       
         public async Task<IActionResult> Profil_KnaufzylinderRout()
         {
             ViewBag.item = db.Profil_Knaufzylinder;
@@ -455,37 +477,213 @@ namespace schliessanlagen_konfigurator.Controllers
             return RedirectToAction("Profil_KnaufzylinderRout");
         }
         #endregion
-        #region DetailZylinder
-        public ActionResult DetailsProfil_Doppelzylinder(int id)
+        #region Product
+      
+
+        [HttpGet]
+        [Route("Home/ProductProfil_Doppelzylinder")]
+        public ActionResult ProductProfil_Doppelzylinder(Profil_Doppelzylinder profil)
         {
-            ViewBag.c = db.Options.Where(x => x.IdProfil_Doppelzylinder == id).ToList();
-            return View("../Details/DetailsProfil_Doppelzylinder");
+            var profilInfo = db.Profil_Doppelzylinder.FirstOrDefault(x => x.Id == profil.Id);
+            
+            if(profilInfo.companyName == "ABUS")
+            {
+                if(profilInfo.NameSystem == "Bravus.2000")
+                {
+
+                    var aussen = new List<float>();
+                    aussen.Add(profilInfo.aussen);
+
+                    var innen = new List<float>();
+                    innen.Add(profilInfo.Intern);
+
+                    for (; aussen.Last() < profilInfo.maxSizeAussen;)
+                    {
+                        aussen.Add(aussen.Last() + 5);
+                    }
+                    for (;  innen.Last() < profilInfo.maxSizeIntern;)
+                    {
+                        innen.Add(innen.Last() + 5);
+                    }
+                    var DoppelZylinderNGF = from OptionDoppelZylinderNGF e in Enum.GetValues(typeof(OptionDoppelZylinderNGF))
+                                            select new
+                                            {
+                                                ID = (int)e,
+                                                Name = e.ToString()
+                                            };
+
+                    var DoppelZylinder_Freilauffunktion = from Option_DoppelZylinder_Freilauffunktion e in Enum.GetValues(typeof(Option_DoppelZylinder_Freilauffunktion))
+                                                          select new
+                                                          {
+                                                              ID = (int)e,
+                                                              Name = e.ToString()
+                                                          };
+
+
+                    var Staubkappe = from OptionDoppelZylinderStaubkappe e in Enum.GetValues(typeof(OptionDoppelZylinderStaubkappe))
+                                     select new
+                                     {
+                                         ID = (int)e,
+                                         Name = e.ToString()
+                                     };
+
+                    ViewBag.DoppelZylinderNGF = new SelectList(DoppelZylinderNGF, "ID", "Name");
+                    ViewBag.DoppelZylinder_Freilauffunktion = new SelectList(DoppelZylinder_Freilauffunktion, "ID", "Name");
+                    ViewBag.Staubkappe = new SelectList(Staubkappe, "ID", "Name");
+                    ViewBag.aussen = aussen;
+                    ViewBag.innen = innen;
+                }
+                if (profilInfo.NameSystem == "Bravus.3000")
+                {
+
+                    var aussen = new List<float>();
+                    aussen.Add(profilInfo.aussen);
+
+                    var innen = new List<float>();
+                    innen.Add(profilInfo.Intern);
+
+                    for (; aussen.Last() < profilInfo.maxSizeAussen;)
+                    {
+                        aussen.Add(aussen.Last() + 5);
+                    }
+                    for (; innen.Last() < profilInfo.maxSizeIntern;)
+                    {
+                        innen.Add(innen.Last() + 5);
+                    }
+                    var DoppelZylinderNGF = from OptionDoppelZylinderNGF e in Enum.GetValues(typeof(OptionDoppelZylinderNGF))
+                                            select new
+                                            {
+                                                ID = (int)e,
+                                                Name = e.ToString()
+                                            };
+
+                    var DoppelZylinder_Freilauffunktion = from Option_DoppelZylinder_Freilauffunktion e in Enum.GetValues(typeof(Option_DoppelZylinder_Freilauffunktion))
+                                                          select new
+                                                          {
+                                                              ID = (int)e,
+                                                              Name = e.ToString()
+                                                          };
+
+
+                    var Staubkappe = from OptionDoppelZylinderStaubkappe e in Enum.GetValues(typeof(OptionDoppelZylinderStaubkappe))
+                                     select new
+                                     {
+                                         ID = (int)e,
+                                         Name = e.ToString()
+                                     };
+
+                    ViewBag.DoppelZylinderNGF = new SelectList(DoppelZylinderNGF, "ID", "Name");
+                    ViewBag.DoppelZylinder_Freilauffunktion = new SelectList(DoppelZylinder_Freilauffunktion, "ID", "Name");
+                    ViewBag.Staubkappe = new SelectList(Staubkappe, "ID", "Name");
+                    ViewBag.aussen = aussen;
+                    ViewBag.innen = innen;
+                }
+            }    
+            if (profilInfo.companyName == "CES")
+            {
+                if (profilInfo.NameSystem == "WO")
+                {
+                    var aussen = new List<int>();
+                    aussen.Add(27);
+                    aussen.Add(31);
+                    aussen.Add(35);
+
+                    var innen = new List<int>();
+                    innen.Add(27);
+                    innen.Add(31);
+                    innen.Add(35);
+
+                    for (; aussen.Last() < profilInfo.maxSizeAussen;)
+                    {
+                        aussen.Add(aussen.Last() + 5);
+                    }
+                    for (; innen.Last() < profilInfo.maxSizeIntern;)
+                    {
+                        innen.Add(innen.Last() + 5);
+                    }
+                    var DoppelZylinderNGF = from OptionDoppelZylinderNGF e in Enum.GetValues(typeof(OptionDoppelZylinderNGF))
+                                            select new
+                                            {
+                                                ID = (int)e,
+                                                Name = e.ToString()
+                                            };
+
+                    var DoppelZylinder_Freilauffunktion = from Option_DoppelZylinder_Freilauffunktion e in Enum.GetValues(typeof(Option_DoppelZylinder_Freilauffunktion))
+                                                          select new
+                                                          {
+                                                              ID = (int)e,
+                                                              Name = e.ToString()
+                                                          };
+
+
+                    var Staubkappe = from OptionDoppelZylinderStaubkappe e in Enum.GetValues(typeof(OptionDoppelZylinderStaubkappe))
+                                     select new
+                                     {
+                                         ID = (int)e,
+                                         Name = e.ToString()
+                                     };
+
+                    ViewBag.DoppelZylinderNGF = new SelectList(DoppelZylinderNGF, "ID", "Name");
+                    ViewBag.DoppelZylinder_Freilauffunktion = new SelectList(DoppelZylinder_Freilauffunktion, "ID", "Name");
+                    ViewBag.Staubkappe = new SelectList(Staubkappe, "ID", "Name");
+                    ViewBag.aussen = aussen;
+                    ViewBag.innen = innen;
+                }
+
+                if (profilInfo.NameSystem == "UDM ")
+                {
+                    var aussen = new List<int>();
+                    aussen.Add(27);
+                    aussen.Add(31);
+                    aussen.Add(35);
+
+                    var innen = new List<int>();
+                    innen.Add(27);
+                    innen.Add(31);
+                    innen.Add(35);
+
+                    for (; aussen.Last() < profilInfo.maxSizeAussen;)
+                    {
+                        aussen.Add(aussen.Last() + 5);
+                    }
+                    for (; innen.Last() < profilInfo.maxSizeIntern;)
+                    {
+                        innen.Add(innen.Last() + 5);
+                    }
+                    var DoppelZylinderNGF = from OptionDoppelZylinderNGF e in Enum.GetValues(typeof(OptionDoppelZylinderNGF))
+                                            select new
+                                            {
+                                                ID = (int)e,
+                                                Name = e.ToString()
+                                            };
+
+                    var DoppelZylinder_Freilauffunktion = from Option_DoppelZylinder_Freilauffunktion e in Enum.GetValues(typeof(Option_DoppelZylinder_Freilauffunktion))
+                                                          select new
+                                                          {
+                                                              ID = (int)e,
+                                                              Name = e.ToString()
+                                                          };
+
+
+                    var Staubkappe = from OptionDoppelZylinderStaubkappe e in Enum.GetValues(typeof(OptionDoppelZylinderStaubkappe))
+                                     select new
+                                     {
+                                         ID = (int)e,
+                                         Name = e.ToString()
+                                     };
+
+                    ViewBag.DoppelZylinderNGF = new SelectList(DoppelZylinderNGF, "ID", "Name");
+                    ViewBag.DoppelZylinder_Freilauffunktion = new SelectList(DoppelZylinder_Freilauffunktion, "ID", "Name");
+                    ViewBag.Staubkappe = new SelectList(Staubkappe, "ID", "Name");
+                    ViewBag.aussen = aussen;
+                    ViewBag.innen = innen;
+                }
+                   
+            }
+
+            return View("ProductProfil_Doppelzylinder",profilInfo);
         }
-        public ActionResult DetailsAussenzylinder_Rundzylinder(int id)
-        {
-            ViewBag.c = db.Options.Where(x => x.IdAussenzylinder_Rundzylinder == id).ToList();
-            return View("../Details/DetailsAussenzylinder_Rundzylinder");
-        }
-        public ActionResult DetailsProfil_Knaufzylinder(int id)
-        {
-            ViewBag.c = db.Options.Where(x => x.IdProfil_Knaufzylinder == id).ToList();
-            return View("../Details/DetailsProfil_Knaufzylinder");
-        }
-        public ActionResult DetailsVorhangschloss(int id)
-        {
-            ViewBag.c = db.Options.Where(x => x.IdVorhangschloss == id).ToList();
-            return View("../Details/DetailsVorhangschloss");
-        }
-        public ActionResult DetailsHebelZylinder(int id)
-        {
-            ViewBag.c = db.Options.Where(x => x.IdHebelzylinder == id).ToList();
-            return View("../Details/DetailsHebelZylinder");
-        }
-        public ActionResult DetailsProfil_Halbzylinder(int id)
-        {
-            ViewBag.c = db.Options.Where(x => x.IdProfil_Halbzylinder == id).ToList();
-            return View("../Details/DetailsProfil_Halbzylinder");
-        }
+
         #endregion
         #region Options
         [HttpGet]
@@ -543,11 +741,16 @@ namespace schliessanlagen_konfigurator.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create_Options(Options options)
+        public async Task<IActionResult> Create_Options(Profil_Doppelzylinder_Options options)
         {
+            
             if (options != null)
             {
-                db.Options.Add(options);
+                var optionsItem = new Profil_Doppelzylinder_Options
+                {
+
+                };
+                db.Options.Add(optionsItem);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Add_All_Options");
             }

@@ -52,26 +52,25 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 if (allUserListOrder[d].ZylinderId == profilD[0].schliessanlagenId)
                 {
-                   profilD.Where(x=>x.min <= allUserListOrder[d].aussen && x.max >= allUserListOrder[d].aussen && 
-                   x.min <= allUserListOrder[d].innen && x.max >= allUserListOrder[d].innen).ToList();
+                
 
                     if (profilD.Count() > d)
                     {
                         var pramaetrInnen = profilD[d].Intern;
-                        var pramaetrAussen = profilD[d].Extern;
+                        var pramaetrAussen = profilD[d].aussen;
                         var sum = profilD[d].Cost;
                         for (; pramaetrInnen <= allUserListOrder[d].innen;)
                         {
                             if (pramaetrInnen < allUserListOrder[d].innen)
                             {
-                                pramaetrInnen = pramaetrInnen + 5.0;
+                                pramaetrInnen = pramaetrInnen + 5.0f;
                                 sum = sum + 4;
                             }
 
                             if (pramaetrAussen != allUserListOrder[d].aussen)
                             {
                                 sum = sum + 4;
-                                pramaetrAussen = pramaetrAussen + 5.0;
+                                pramaetrAussen = pramaetrAussen + 5.0f;
 
                             }
                             if (allUserListOrder[d].innen == pramaetrInnen && allUserListOrder[d].aussen == pramaetrAussen)
@@ -83,9 +82,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                     Name = profilD[d].Name,
                                     ImageName = profilD[d].ImageName,
                                     ImageFile = profilD[d].ImageFile,
-                                    Extern = pramaetrAussen,
+                                    aussen = pramaetrAussen,
                                     Artikelnummer = profilD[d].Artikelnummer,
-                                    Count = allUserListOrder[d].Count,
                                     Cost = sum,
                                     Intern = pramaetrAussen
 
@@ -196,7 +194,7 @@ namespace schliessanlagen_konfigurator.Controllers
             for (int i = 0; i < profilD.Count(); i++)
             {
                 var TypeSylinder = Zylinder_Typ.Where(x => x.Id == profilD[count].schliessanlagenId).Select(x => x.nameType).ToList().First();
-                var Extern = profilD.Where(x => x.Id == profilD[count].Id).Select(d => d.Extern).ToList().First();
+                var Extern = profilD.Where(x => x.Id == profilD[count].Id).Select(d => d.aussen).ToList().First();
                 var NameZ = profilD.Where(x => x.Id == profilD[count].Id).Select(d => d.Name).ToList().First();
                 var Intern = profilD.Where(x => x.Id == profilD[count].Id).Select(d => d.Intern).ToList().First();
                 var TurName = Orders.Where(x => x.ZylinderId == profilD[count].schliessanlagenId).Select(x=>x.Tur).ToList();

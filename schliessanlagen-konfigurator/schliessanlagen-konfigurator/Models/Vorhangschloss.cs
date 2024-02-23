@@ -16,10 +16,6 @@ namespace schliessanlagen_konfigurator.Models
         public int? Count { get; set; }
         public decimal? Сost { get; set; }
         public Schliessanlagen Schliessanlagen { get; set; }
-        public ICollection<Options>? Options { get; set; }
-        public Vorhangschloss()
-        {
-            Options = new List<Options>();
-        }
+       
     }
 }

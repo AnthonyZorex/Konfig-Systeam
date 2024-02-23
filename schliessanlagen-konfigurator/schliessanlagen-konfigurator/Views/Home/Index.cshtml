@@ -12,6 +12,7 @@
                 <button class="btn btn-danger"><a href="@Url.Action("HebelzylinderRout","Home")">Hebelzylinder</a></button>
                 <button class="btn btn-warning"><a href="@Url.Action("VorhangschlossRout","Home")">Vorhangschloss</a></button>
                 <button class="btn btn-info"><a href="@Url.Action("Aussenzylinder_RundzylinderRout","Home")">Aussenzylinder / Rundzylinder</a></button>
+          @*       <a href="@Url.Action("AdminConnect","Home")">ChekMail</a> *@
             </div>
         </div>
 
@@ -23,30 +24,41 @@
 
                 @Html.DropDownListFor(model => model.schliessanlagenId,
                          new List<SelectListItem> {
-            new SelectListItem {  Value = "9",Text="Profil-Doppelzylinder" }
+            new SelectListItem {  Value = "1",Text="Profil-Doppelzylinder" }
             },
                          new { @class = "form-select", @id = "select" })
                 <div id="createColum">
 
                     <label>Name</label>
-                    @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control", @id = "exampleFormControlTextarea1" } })
+
+                    <label>Company Name</label>
+                    @Html.EditorFor(m => m.companyName, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Name System</label>
+                    @Html.EditorFor(m => m.NameSystem, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <label>Descriptions</label>
+                    @Html.EditorFor(m => m.description, new { htmlAttributes = new { @class = "form-control" } })
 
                     <label> Artikelnummer</label>
                     @Html.EditorFor(m => m.Artikelnummer, new { htmlAttributes = new { @class = "form-control" } })
 
                     <label>Extern</label>
-                    @Html.EditorFor(m => m.Extern, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(m => m.aussen, new { htmlAttributes = new { @class = "form-control" } })
 
                     <label>Intern</label>
                     @Html.EditorFor(m => m.Intern, new { htmlAttributes = new { @class = "form-control" } })
 
-                    <label>Count</label>
-                    @Html.EditorFor(m => m.Count, new { htmlAttributes = new { @class = "form-control" } })
-                    <label>Min</label>
-                    @Html.EditorFor(m => m.min, new { htmlAttributes = new { @class = "form-control" } })
+                    <label>MinIntern</label>
+                    @Html.EditorFor(m => m.minSizeIntern, new { htmlAttributes = new { @class = "form-control" } })
+                    <label>MinAussen</label>
+                    @Html.EditorFor(m => m.minSizeAussen, new { htmlAttributes = new { @class = "form-control" } })
 
-                    <label>Max</label>
-                    @Html.EditorFor(m => m.max, new { htmlAttributes = new { @class = "form-control" } })
+                    <label>MaxIntern</label>
+                    @Html.EditorFor(m => m.maxSizeIntern, new { htmlAttributes = new { @class = "form-control" } })
+                    <label>MaxAussen</label>
+                    @Html.EditorFor(m => m.maxSizeAussen, new { htmlAttributes = new { @class = "form-control" } })
 
                     <label>Cost</label>
                     @Html.EditorFor(m => m.Cost, new { htmlAttributes = new { @class = "form-control" } })
@@ -57,7 +69,7 @@
 
                     @Html.ValidationMessageFor(m => m.ImageFile, "", new { @class = "error" })
                 </div>
-                <input type="submit" class="btn btn-success" id="input" value="Create Profil Doppelzylinder" />
+                <input type="submit"  class="btn btn-success" id="input" value="Create Profil Doppelzylinder" />
                 <hr />
             }
         </div>
@@ -76,40 +88,43 @@
                         <th>Cost</th>
                         <th>Artikelnummer</th>
                         <th>Intern</th>
-                        <th>Extern</th>
-                        <th>min</th>
-                        <th>max</th>
+                        <th>aussen</th>
+                        <th>minSizeIntern</th>
+                        <th>minSizeAussen</th>
+                        <th>maxSizeIntern</th>
+                        <th>maxSizeAussen</th>
                         <th>Edit</th>
                         <th>Options</th>
                         <th>Delete</th>
-
+                    
                         @foreach (var item in ViewBag.item)
                         {
-
+                            
                             <td id="rowTable" class="table-info">@item.Name</td>
                             <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
                             <td id="rowTable " class="table-info"><h6 id="cost">@item.Cost</h6></td>
                             <td id="rowTable" class="table-info">@item.Artikelnummer</td>
                             <td id="rowTable" class="table-info">@item.Intern</td>
-                            <td id="rowTable" class="table-info">@item.Extern</td>
-                            <td id="rowTable" class="table-info">@item.min</td>
-                            <td id="rowTable" class="table-info">@item.max</td>
+                            <td id="rowTable" class="table-info">@item.aussen</td>
+                            <td id="rowTable" class="table-info">@item.minSizeIntern</td>
+                            <td id="rowTable" class="table-info">@item.minSizeAussen</td>
+                            <td id="rowTable" class="table-info">@item.maxSizeIntern</td>
+                            <td id="rowTable" class="table-info">@item.maxSizeAussen </td>
+
                             <td id="rowTable" class="table-info"><a href="@Url.Action("Edit_Doppelzylinder","Home", new { item.Id })"><img src="@("/Image/edit-tools.png")" height="30" width="30" /></a></td>
                             <td id="rowTable" class="table-info">
-                                <a class="compItem" href="@Url.Action("DetailsProfil_Doppelzylinder","Home", new { item.Id })">
+                                <a class="compItem" href="@Url.Action("ProductProfil_Doppelzylinder","Home", new { item.Id })">
                                     <img src="@("/Image/options.png")" height="30" width="30" />
                                 </a>
                             </td>
                             <td id="rowTable" class="table-info"><a href="@Url.Action("Delete_Doppelzylinder","Home", new { item.Id })"><img src="@("/Image/entfernen.png")" height="30" width="30" /></a></td>
-                        }
+                            }
+            
                     </tr>
                 </tbody>
             </table>
         }
-        <div id="modDialog" class="modal fade">
-            <div id="dialogContent" class="modal-dialog">
-            </div>
-        </div>
+        
     </div>
 </div>
 
@@ -133,16 +148,5 @@
         interfaice();
 
 
-        $(function () {
-            $.ajaxSetup({ cache: false });
-            $(".compItem").click(function (e) {
-
-                e.preventDefault();
-                $.get(this.href, function (data) {
-                    $('#dialogContent').html(data);
-                    $('#modDialog').modal('show');
-                });
-            });
-        })
     </script>
 }

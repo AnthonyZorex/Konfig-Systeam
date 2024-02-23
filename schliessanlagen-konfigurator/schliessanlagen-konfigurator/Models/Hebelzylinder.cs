@@ -17,10 +17,6 @@ namespace schliessanlagen_konfigurator.Models
         public decimal? Cost { get; set; }
 
         public Schliessanlagen Schliessanlagen { get; set; }
-        public ICollection<Options>? Options { get; set; }
-        public Hebelzylinder()
-        {
-            Options = new List<Options>();
-        }
+       
     }
 }

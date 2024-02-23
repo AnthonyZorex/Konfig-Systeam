@@ -28,6 +28,18 @@
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="companyName" class="control-label"></label>
+                <input asp-for="companyName" class="form-control" />
+                <span asp-validation-for="companyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="description" class="control-label"></label>
+                <input asp-for="description" class="form-control" />
+                <span asp-validation-for="description" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <label asp-for="Cost" class="control-label"></label>
                 <input asp-for="Cost" class="form-control" />
@@ -39,24 +51,35 @@
                <span asp-validation-for="Artikelnummer" class="text-danger"></span> 
             </div>
              <div class="form-group">
-                <label asp-for="Extern" class="control-label"></label>
-                <input asp-for="Extern" class="form-control" />
-               <span asp-validation-for="Extern" class="text-danger"></span> 
+                <label asp-for="aussen" class="control-label"></label>
+                <input asp-for="aussen" class="form-control" />
+                <span asp-validation-for="aussen" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Intern" class="control-label"></label>
                 <input asp-for="Intern" class="form-control" />
                <span asp-validation-for="Intern" class="text-danger"></span> 
             </div>
-            <div class="form-group">
-                <label asp-for="max" class="control-label"></label>
-                <input asp-for="max" class="form-control" />
-               <span asp-validation-for=" max" class="text-danger"></span> 
+           <div class="form-group">
+                <label asp-for="minSizeIntern" class="control-label"></label>
+                <input asp-for="minSizeIntern" class="form-control" />
+                <span asp-validation-for=" minSizeIntern" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="min" class="control-label"></label>
-                 <input asp-for="min" class="form-control" />
-                <span asp-validation-for="min" class="text-danger"></span>  
+                <label asp-for="maxSizeIntern" class="control-label"></label>
+                <input asp-for="maxSizeIntern" class="form-control" />
+                <span asp-validation-for="maxSizeIntern" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="minSizeAussen" class="control-label"></label>
+                <input asp-for="minSizeAussen" class="form-control" />
+                <span asp-validation-for=" minSizeAussen" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="maxSizeAussen" class="control-label"></label>
+                <input asp-for="maxSizeAussen" class="form-control" />
+                <span asp-validation-for="maxSizeAussen" class="text-danger"></span>
             </div>
 
             <div class="form-group">
@@ -73,10 +96,10 @@
             @Html.ValidationMessageFor(m => m.ImageFile, "", new { @class = "error" })
             <hr />
              <input type="submit" value="Save" class="btn btn-primary" />         
-        </form>
+        </form>          
     </div>
+    
 </div>
-
 <div>
     <a asp-action="Index">Back to List</a>
 </div>

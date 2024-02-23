@@ -19,7 +19,10 @@ html {
 
 body {
     margin-bottom: 60px;
-    font-family: 'Roboto Mono', monospace;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-variation-settings: "slnt" 0;
 }
 
 
@@ -60,6 +63,12 @@ a {
     margin-top: 50px;
     display: grid;
     grid-template-columns: repeat(4,auto);
+    gap: 30px;
+}
+#createColumDopppelzylinder {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: repeat(6,auto);
     gap: 50px;
 }
 
@@ -70,7 +79,7 @@ a {
 
 #Table {
     display: grid;
-    grid-template-columns: repeat(11,auto);
+    grid-template-columns: repeat(13,auto);
 }
 
 #TableOptions {
@@ -219,4 +228,19 @@ a {
     margin-top: 55px;
     display: grid;
     gap: 25px
+}
+#product_desciptions {
+    margin-top: 100px;
+   
+
+}
+#productMenu {
+    gap: 150px;
+    display: flex;
+}
+#cardOptions {
+    padding: 10px;
+    background: #efefef;
+    margin-top: 50px;
+    display: block;
 }
