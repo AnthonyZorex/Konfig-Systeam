@@ -68,7 +68,7 @@ a {
 #createColumDopppelzylinder {
     margin-top: 50px;
     display: grid;
-    grid-template-columns: repeat(6,auto);
+    grid-template-columns: repeat(2,auto);
     gap: 50px;
 }
 
@@ -79,7 +79,7 @@ a {
 
 #Table {
     display: grid;
-    grid-template-columns: repeat(13,auto);
+    grid-template-columns: repeat(9,auto);
 }
 
 #TableOptions {
@@ -231,8 +231,7 @@ a {
 }
 #product_desciptions {
     margin-top: 100px;
-   
-
+/*    max-width: 600px;*/
 }
 #productMenu {
     gap: 150px;
@@ -243,4 +242,26 @@ a {
     background: #efefef;
     margin-top: 50px;
     display: block;
+}
+
+#Aussen_Innen_ProfilDopel {
+    display: flex;
+    justify-content: center;
+    margin-bottom:50px;
+}
+#AussenProfilDopel {
+    display: block;
+    width: 136px;
+}
+#InnenProfilDopel {
+    display: block;
+    width: 400px;
+}
+#valueNGF {
+    display: block;
+    width: 136px
+}
+#costNGF {
+    display: block;
+    width: 400px;
 }

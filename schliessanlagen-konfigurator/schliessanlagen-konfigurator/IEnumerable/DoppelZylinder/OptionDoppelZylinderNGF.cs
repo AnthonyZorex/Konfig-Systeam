@@ -2,7 +2,7 @@
 {
     public enum OptionDoppelZylinderNGF : int
     {
-        Ja = 1,
-        Nein = 2
+        Ja = 8,
+        Nein = 0
     }
 }

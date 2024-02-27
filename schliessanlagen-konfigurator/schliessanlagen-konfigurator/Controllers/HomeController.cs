@@ -3,11 +3,13 @@ using schliessanlagen_konfigurator.Models;
 using System.Diagnostics;
 using schliessanlagen_konfigurator.Data;
 using Microsoft.EntityFrameworkCore;
-using System.Net;
-using System.Net.Mail;
+
 using schliessanlagen_konfigurator.IEnumerable.DoppelZylinder;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Reflection;
+using schliessanlagen_konfigurator.Models.ProfilDopelZylinder;
+using schliessanlagen_konfigurator.Models.ProfilDopelZylinder.ValueOptions;
+using Newtonsoft.Json.Linq;
+using Microsoft.Extensions.Hosting;
 
 namespace schliessanlagen_konfigurator.Controllers
 {
@@ -22,34 +24,7 @@ namespace schliessanlagen_konfigurator.Controllers
             Environment = _environment;
            
         }
-        public async Task<IActionResult> AdminConnect()
-        {
-            //MailAddress from = new MailAddress("bonettaanthony466@gmail.com", "Anthony");
-            //MailAddress to = new MailAddress("anthonybonetta@icloud.com");
-            //MailMessage m = new MailMessage(from, to);
-            //m.Subject = "Тест";
-            //m.Body = "Письмо-тест 2 работы smtp-клиента";
-            //SmtpClient smtp = new SmtpClient("localhost", 25);
-            //smtp.Credentials = new NetworkCredential("bonettaanthony466@gmail.com", "Anthony_2001");
-            //smtp.EnableSsl = true;
-            //await smtp.SendMailAsync(m);
-
-            SmtpClient Smtp = new SmtpClient("sslin.de", 993);
-            Smtp.UseDefaultCredentials = false;
-            Smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-            Smtp.EnableSsl = true;
-            Smtp.Credentials = new NetworkCredential("account@sicher.discount", "64tSf&ecJ6q62U");
-            MailMessage email = new MailMessage();
-            email.From = new MailAddress("account@sicher.discount");
-            email.Subject = "subject";
-            email.Body = "text Hello Body";
-            //Attachment attach = new Attachment("filename"); ;
-            //email.Attachments.Add(attach);
-            email.To.Add("bonettaanthony466@gmail.com");
-            await Smtp.SendMailAsync(email);
-
-            return View();
-        }
+       
        
         #region ViewZylinder
         public async Task<IActionResult> Index()
@@ -99,42 +74,102 @@ namespace schliessanlagen_konfigurator.Controllers
         }
         #endregion
         #region CreateNewItemZylinder
+
         [HttpPost]
-        public async Task<IActionResult> Create_Profil_Doppelzylinder(Profil_Doppelzylinder profil_Doppelzylinder)
+        public async Task<IActionResult> Create_Profil_Doppelzylinder(Profil_Doppelzylinder Profil_Doppelzylinder, float Cost_Options,
+            string DescriptionOptions, string NGF,string NGFDescriptions, IFormFile postedFile, List<float> aussen, List<float> innen,
+            List<string> valueNGF, List<float> costNGF)
         {
-            try
+
+            if (Profil_Doppelzylinder.ImageFile != null)
             {
-                if (profil_Doppelzylinder.ImageFile != null)
+                string wwwRootPath = Environment.WebRootPath;
+
+                string fileName = Path.GetFileNameWithoutExtension(Profil_Doppelzylinder.ImageFile.FileName);
+
+                string extension = Path.GetExtension(Profil_Doppelzylinder.ImageFile.FileName);
+
+                Profil_Doppelzylinder.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+
+                string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+
+                using (var fileStream = new FileStream(path, FileMode.Create))
                 {
-                    string wwwRootPath = Environment.WebRootPath;
-
-                    string fileName = Path.GetFileNameWithoutExtension(profil_Doppelzylinder.ImageFile.FileName);
-
-                    string extension = Path.GetExtension(profil_Doppelzylinder.ImageFile.FileName);
-
-                    profil_Doppelzylinder.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-
-                    string path = Path.Combine(wwwRootPath + "/Image/", fileName);
-
-                    using (var fileStream = new FileStream(path, FileMode.Create))
-                    {
-                        await profil_Doppelzylinder.ImageFile.CopyToAsync(fileStream);
-                    }
+                    await Profil_Doppelzylinder.ImageFile.CopyToAsync(fileStream);
                 }
+            }
 
-                db.Profil_Doppelzylinder.Add(profil_Doppelzylinder);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            catch (Exception ex)
+            db.Profil_Doppelzylinder.Add(Profil_Doppelzylinder);
+            db.SaveChanges();
+
+            var s = db.Profil_Doppelzylinder.Select(x => x.Id).ToList();
+
+            for (int i = 0; i < aussen.Count(); i++)
             {
-                return new JsonResult(
-           new ErrorDto
-           {
-               IsError = true,
-               Message = ex.Message
-           });
+                var ausse_innen = new Aussen_Innen
+                {
+                    Profil_DoppelzylinderId = s.Last(),
+                    aussen = aussen[i],
+                    Intern = innen[i]
+                };
+                db.Aussen_Innen.Add(ausse_innen);
+                db.SaveChanges();
             }
+
+            var dopOptions = new Profil_Doppelzylinder_Options
+                {
+                    DoppelzylinderId = s.First(),
+
+                };
+                db.Profil_Doppelzylinder_Options.Add(dopOptions);
+                db.SaveChanges();
+
+            var x = db.Profil_Doppelzylinder_Options.Select(x => x.Id).ToList();
+
+            var ngf = new NGF
+            {
+                OptionsId = x.Last(),
+                Name = NGF,
+                Description = NGFDescriptions,
+                ImageFile = postedFile
+            };
+
+
+            if (ngf.ImageFile != null)
+            {
+                string wwwRootPath = Environment.WebRootPath;
+
+                string fileName = Path.GetFileNameWithoutExtension(ngf.ImageFile.FileName);
+
+                string extension = Path.GetExtension(ngf.ImageFile.FileName);
+
+                ngf.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+
+                string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    await ngf.ImageFile.CopyToAsync(fileStream);
+                }
+            }
+
+            db.NGF.Add(ngf);
+            db.SaveChanges();
+
+            var ng = db.NGF.Select(x => x.Id).ToList();
+           for(int i = 0; i < valueNGF.Count(); i++)
+            {
+                var ngfValue = new NGF_Value
+                {
+                    NGFId = ng.Last(),
+                    Value = valueNGF[i],
+                    Cost = costNGF[i]
+                };
+                db.NGF_Value.Add(ngfValue);
+                db.SaveChanges();
+            } 
+            
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -492,19 +527,19 @@ namespace schliessanlagen_konfigurator.Controllers
                 {
 
                     var aussen = new List<float>();
-                    aussen.Add(profilInfo.aussen);
+                    //aussen.Add(profilInfo.aussen);
 
-                    var innen = new List<float>();
-                    innen.Add(profilInfo.Intern);
+                    //var innen = new List<float>();
+                    //innen.Add(profilInfo.Intern);
 
-                    for (; aussen.Last() < profilInfo.maxSizeAussen;)
-                    {
-                        aussen.Add(aussen.Last() + 5);
-                    }
-                    for (;  innen.Last() < profilInfo.maxSizeIntern;)
-                    {
-                        innen.Add(innen.Last() + 5);
-                    }
+                    //for (; aussen.Last() < profilInfo.maxSizeAussen;)
+                    //{
+                    //    aussen.Add(aussen.Last() + 5);
+                    //}
+                    //for (;  innen.Last() < profilInfo.maxSizeIntern;)
+                    //{
+                    //    innen.Add(innen.Last() + 5);
+                    //}
                     var DoppelZylinderNGF = from OptionDoppelZylinderNGF e in Enum.GetValues(typeof(OptionDoppelZylinderNGF))
                                             select new
                                             {
@@ -531,25 +566,25 @@ namespace schliessanlagen_konfigurator.Controllers
                     ViewBag.DoppelZylinder_Freilauffunktion = new SelectList(DoppelZylinder_Freilauffunktion, "ID", "Name");
                     ViewBag.Staubkappe = new SelectList(Staubkappe, "ID", "Name");
                     ViewBag.aussen = aussen;
-                    ViewBag.innen = innen;
+                    //ViewBag.innen = innen;
                 }
                 if (profilInfo.NameSystem == "Bravus.3000")
                 {
 
                     var aussen = new List<float>();
-                    aussen.Add(profilInfo.aussen);
+                    //aussen.Add(profilInfo.aussen);
 
                     var innen = new List<float>();
-                    innen.Add(profilInfo.Intern);
+                    //innen.Add(profilInfo.Intern);
 
-                    for (; aussen.Last() < profilInfo.maxSizeAussen;)
-                    {
-                        aussen.Add(aussen.Last() + 5);
-                    }
-                    for (; innen.Last() < profilInfo.maxSizeIntern;)
-                    {
-                        innen.Add(innen.Last() + 5);
-                    }
+                    //for (; aussen.Last() < profilInfo.maxSizeAussen;)
+                    //{
+                    //    aussen.Add(aussen.Last() + 5);
+                    //}
+                    //for (; innen.Last() < profilInfo.maxSizeIntern;)
+                    //{
+                    //    innen.Add(innen.Last() + 5);
+                    //}
                     var DoppelZylinderNGF = from OptionDoppelZylinderNGF e in Enum.GetValues(typeof(OptionDoppelZylinderNGF))
                                             select new
                                             {
@@ -572,6 +607,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                          Name = e.ToString()
                                      };
 
+                  
                     ViewBag.DoppelZylinderNGF = new SelectList(DoppelZylinderNGF, "ID", "Name");
                     ViewBag.DoppelZylinder_Freilauffunktion = new SelectList(DoppelZylinder_Freilauffunktion, "ID", "Name");
                     ViewBag.Staubkappe = new SelectList(Staubkappe, "ID", "Name");
@@ -593,14 +629,14 @@ namespace schliessanlagen_konfigurator.Controllers
                     innen.Add(31);
                     innen.Add(35);
 
-                    for (; aussen.Last() < profilInfo.maxSizeAussen;)
-                    {
-                        aussen.Add(aussen.Last() + 5);
-                    }
-                    for (; innen.Last() < profilInfo.maxSizeIntern;)
-                    {
-                        innen.Add(innen.Last() + 5);
-                    }
+                    //for (; aussen.Last() < profilInfo.maxSizeAussen;)
+                    //{
+                    //    aussen.Add(aussen.Last() + 5);
+                    //}
+                    //for (; innen.Last() < profilInfo.maxSizeIntern;)
+                    //{
+                    //    innen.Add(innen.Last() + 5);
+                    //}
                     var DoppelZylinderNGF = from OptionDoppelZylinderNGF e in Enum.GetValues(typeof(OptionDoppelZylinderNGF))
                                             select new
                                             {
@@ -623,6 +659,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                          Name = e.ToString()
                                      };
 
+                   
                     ViewBag.DoppelZylinderNGF = new SelectList(DoppelZylinderNGF, "ID", "Name");
                     ViewBag.DoppelZylinder_Freilauffunktion = new SelectList(DoppelZylinder_Freilauffunktion, "ID", "Name");
                     ViewBag.Staubkappe = new SelectList(Staubkappe, "ID", "Name");
@@ -642,14 +679,14 @@ namespace schliessanlagen_konfigurator.Controllers
                     innen.Add(31);
                     innen.Add(35);
 
-                    for (; aussen.Last() < profilInfo.maxSizeAussen;)
-                    {
-                        aussen.Add(aussen.Last() + 5);
-                    }
-                    for (; innen.Last() < profilInfo.maxSizeIntern;)
-                    {
-                        innen.Add(innen.Last() + 5);
-                    }
+                    //for (; aussen.Last() < profilInfo.maxSizeAussen;)
+                    //{
+                    //    aussen.Add(aussen.Last() + 5);
+                    //}
+                    //for (; innen.Last() < profilInfo.maxSizeIntern;)
+                    //{
+                    //    innen.Add(innen.Last() + 5);
+                    //}
                     var DoppelZylinderNGF = from OptionDoppelZylinderNGF e in Enum.GetValues(typeof(OptionDoppelZylinderNGF))
                                             select new
                                             {
@@ -672,9 +709,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                          Name = e.ToString()
                                      };
 
+                  
                     ViewBag.DoppelZylinderNGF = new SelectList(DoppelZylinderNGF, "ID", "Name");
                     ViewBag.DoppelZylinder_Freilauffunktion = new SelectList(DoppelZylinder_Freilauffunktion, "ID", "Name");
                     ViewBag.Staubkappe = new SelectList(Staubkappe, "ID", "Name");
+
                     ViewBag.aussen = aussen;
                     ViewBag.innen = innen;
                 }

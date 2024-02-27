@@ -5,24 +5,32 @@
       "PackagePath": "staticwebassets\\schliessanlagen-konfigurator.bundle.scp.css"
     },
     {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\ABUS Bravus.3000 Schließzylinder241010591.png",
-      "PackagePath": "staticwebassets\\Image\\ABUS Bravus.3000 Schließzylinder241010591.png"
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\ABUS Bravus.3000 Schließzylinder243505020.png",
+      "PackagePath": "staticwebassets\\Image\\ABUS Bravus.3000 Schließzylinder243505020.png"
     },
     {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\Bravus.2000 Schließzylinder244127227.png",
-      "PackagePath": "staticwebassets\\Image\\Bravus.2000 Schließzylinder244127227.png"
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\ABUS Bravus.3000 Schließzylinder243944609.png",
+      "PackagePath": "staticwebassets\\Image\\ABUS Bravus.3000 Schließzylinder243944609.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\ABUS Bravus.3000 Schließzylinder244947742.png",
+      "PackagePath": "staticwebassets\\Image\\ABUS Bravus.3000 Schließzylinder244947742.png"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\SD_Logo.svg",
       "PackagePath": "staticwebassets\\Image\\SD_Logo.svg"
     },
     {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\System Wo245509365.png",
-      "PackagePath": "staticwebassets\\Image\\System Wo245509365.png"
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\System Wo243944843.png",
+      "PackagePath": "staticwebassets\\Image\\System Wo243944843.png"
     },
     {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\ces240955977.png",
-      "PackagePath": "staticwebassets\\Image\\ces240955977.png"
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\System Wo244947977.png",
+      "PackagePath": "staticwebassets\\Image\\System Wo244947977.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\ces244255645.png",
+      "PackagePath": "staticwebassets\\Image\\ces244255645.png"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\edit-tools.png",
@@ -33,8 +41,16 @@
       "PackagePath": "staticwebassets\\Image\\entfernen.png"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\hebelUdm243535647.png",
+      "PackagePath": "staticwebassets\\Image\\hebelUdm243535647.png"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\options.png",
       "PackagePath": "staticwebassets\\Image\\options.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\vorhan244335390.png",
+      "PackagePath": "staticwebassets\\Image\\vorhan244335390.png"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\CES_schliessplan_DE_schliessanlagen.xltx",

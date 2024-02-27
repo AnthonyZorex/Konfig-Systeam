@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using schliessanlagen_konfigurator.Data;
 using schliessanlagen_konfigurator.Models;
+using schliessanlagen_konfigurator.Models.ProfilDopelZylinder;
 using Spire.Xls;
 
 namespace schliessanlagen_konfigurator.Controllers
@@ -50,58 +51,58 @@ namespace schliessanlagen_konfigurator.Controllers
 
             for (var d = 0; d < allUserListOrder.Count(); d++)
             {
-                if (allUserListOrder[d].ZylinderId == profilD[0].schliessanlagenId)
-                {
+                //if (allUserListOrder[d].ZylinderId == profilD[0].schliessanlagenId)
+                //{
                 
 
-                    if (profilD.Count() > d)
-                    {
-                        var pramaetrInnen = profilD[d].Intern;
-                        var pramaetrAussen = profilD[d].aussen;
-                        var sum = profilD[d].Cost;
-                        for (; pramaetrInnen <= allUserListOrder[d].innen;)
-                        {
-                            if (pramaetrInnen < allUserListOrder[d].innen)
-                            {
-                                pramaetrInnen = pramaetrInnen + 5.0f;
-                                sum = sum + 4;
-                            }
+                //    if (profilD.Count() > d)
+                //    {
+                //        var pramaetrInnen = profilD[d].Intern;
+                //        var pramaetrAussen = profilD[d].aussen;
+                //        var sum = profilD[d].Cost;
+                //        for (; pramaetrInnen <= allUserListOrder[d].innen;)
+                //        {
+                //            if (pramaetrInnen < allUserListOrder[d].innen)
+                //            {
+                //                pramaetrInnen = pramaetrInnen + 5.0f;
+                //                sum = sum + 4;
+                //            }
 
-                            if (pramaetrAussen != allUserListOrder[d].aussen)
-                            {
-                                sum = sum + 4;
-                                pramaetrAussen = pramaetrAussen + 5.0f;
+                //            if (pramaetrAussen != allUserListOrder[d].aussen)
+                //            {
+                //                sum = sum + 4;
+                //                pramaetrAussen = pramaetrAussen + 5.0f;
 
-                            }
-                            if (allUserListOrder[d].innen == pramaetrInnen && allUserListOrder[d].aussen == pramaetrAussen)
-                            {
-                                var id = profilD[d].Id;
-                                var listDopel = new Profil_Doppelzylinder
-                                {
-                                    schliessanlagenId = profilD[d].schliessanlagenId,
-                                    Name = profilD[d].Name,
-                                    ImageName = profilD[d].ImageName,
-                                    ImageFile = profilD[d].ImageFile,
-                                    aussen = pramaetrAussen,
-                                    Artikelnummer = profilD[d].Artikelnummer,
-                                    Cost = sum,
-                                    Intern = pramaetrAussen
+                //            }
+                //            if (allUserListOrder[d].innen == pramaetrInnen && allUserListOrder[d].aussen == pramaetrAussen)
+                //            {
+                //                var id = profilD[d].Id;
+                //                var listDopel = new Profil_Doppelzylinder
+                //                {
+                //                    schliessanlagenId = profilD[d].schliessanlagenId,
+                //                    Name = profilD[d].Name,
+                //                    ImageName = profilD[d].ImageName,
+                //                    ImageFile = profilD[d].ImageFile,
+                //                    aussen = pramaetrAussen,
+                //                    Artikelnummer = profilD[d].Artikelnummer,
+                //                    Cost = sum,
+                //                    Intern = pramaetrAussen
 
-                                };
+                //                };
 
-                                var allList = new List<Profil_Doppelzylinder>();
-                                allList.Add(listDopel);
-                                ViewBag.dopel = allList;
-                                break;
-                            }
-                        }
-                    }
+                //                var allList = new List<Profil_Doppelzylinder>();
+                //                allList.Add(listDopel);
+                //                ViewBag.dopel = allList;
+                //                break;
+                //            }
+                //        }
+                //    }
                     
                    
                    
                        
                     
-                }
+                //}
                 if (allUserListOrder[d].ZylinderId == profilH[0].schliessanlagenId)
                 {
                     profilH.Where(x => x.min >= allUserListOrder[d].aussen && x.max <= allUserListOrder[d].aussen).ToList();
@@ -193,18 +194,18 @@ namespace schliessanlagen_konfigurator.Controllers
             int Row = 18;
             for (int i = 0; i < profilD.Count(); i++)
             {
-                var TypeSylinder = Zylinder_Typ.Where(x => x.Id == profilD[count].schliessanlagenId).Select(x => x.nameType).ToList().First();
-                var Extern = profilD.Where(x => x.Id == profilD[count].Id).Select(d => d.aussen).ToList().First();
-                var NameZ = profilD.Where(x => x.Id == profilD[count].Id).Select(d => d.Name).ToList().First();
-                var Intern = profilD.Where(x => x.Id == profilD[count].Id).Select(d => d.Intern).ToList().First();
-                var TurName = Orders.Where(x => x.ZylinderId == profilD[count].schliessanlagenId).Select(x=>x.Tur).ToList();
+                //var TypeSylinder = Zylinder_Typ.Where(x => x.Id == profilD[count].schliessanlagenId).Select(x => x.nameType).ToList().First();
+                //var Extern = profilD.Where(x => x.Id == profilD[count].Id).Select(d => d.aussen).ToList().First();
+                //var NameZ = profilD.Where(x => x.Id == profilD[count].Id).Select(d => d.Name).ToList().First();
+                //var Intern = profilD.Where(x => x.Id == profilD[count].Id).Select(d => d.Intern).ToList().First();
+                //var TurName = Orders.Where(x => x.ZylinderId == profilD[count].schliessanlagenId).Select(x=>x.Tur).ToList();
                
-                worksheet.Range[Row, 1].Value = $"{Row - 1}";
-                worksheet.Range[Row, 2].Value = $"{TurName}";
-                worksheet.Range[Row, 3].Value = $"{NameZ}";
-                worksheet.Range[Row, 4].Value = $"{TypeSylinder}";
-                worksheet.Range[Row, 5].Value = $"{Extern}\t|\t{Intern}";
-                worksheet.Range[Row, 6].Value = $"";
+                //worksheet.Range[Row, 1].Value = $"{Row - 1}";
+                //worksheet.Range[Row, 2].Value = $"{TurName}";
+                //worksheet.Range[Row, 3].Value = $"{NameZ}";
+                //worksheet.Range[Row, 4].Value = $"{TypeSylinder}";
+                //worksheet.Range[Row, 5].Value = $"{Extern}\t|\t{Intern}";
+                //worksheet.Range[Row, 6].Value = $"";
                 count++;
                 Row++;
             }
