@@ -259,9 +259,17 @@ a {
 }
 #valueNGF {
     display: block;
-    width: 136px
+    width: 136px;
 }
 #costNGF {
+    display: block;
+    width: 400px;
+}
+#valueBohrschutz {
+    display: block;
+    width: 136px;
+}
+#costBohrschutz {
     display: block;
     width: 400px;
 }

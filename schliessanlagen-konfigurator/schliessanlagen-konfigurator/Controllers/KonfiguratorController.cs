@@ -31,8 +31,7 @@ namespace schliessanlagen_konfigurator.Controllers
             return View(user);
         }
         [HttpGet]
-        [Route("System_Auswählen/{userKey}")]
-        public async Task<ActionResult>  System_Auswählen(int? userKey)
+        public async Task<ActionResult>  System_Auswählen(Orders userKey)
         {
 
             var orders = await db.Orders.ToListAsync();
@@ -165,7 +164,7 @@ namespace schliessanlagen_konfigurator.Controllers
             //    }
             //}
             //userKey = allUserListOrder.GroupBy(x=>x.userKey).;
-            return View();/* System_Auswählen*/
+            return View("System_Auswählen", userKey);
         }
        
         [HttpPost]

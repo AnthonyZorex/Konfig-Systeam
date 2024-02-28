@@ -24,16 +24,8 @@ namespace schliessanlagen_konfigurator.Data
         public DbSet<Orders> Orders { get; set; }
         public DbSet<Aussen_Innen> Aussen_Innen { get; set; }
         public DbSet<NGF> NGF { get; set; }
-        public DbSet<Freilauf> Freilauf { get; set; }
-        public DbSet<Bohrschutz> Bohrschutz { get; set; }
-        public DbSet<Schliessbart> Schliessbart { get; set; }
-        public DbSet<Witterungsschutz> Witterungsschutz { get; set; }
-        public DbSet<Zylinderfaerbung> Zylinderfaerbung { get; set; }
-        public DbSet<Bohrschutz_Value> Bohrschutz_Value { get; set; }
-        public DbSet<Freilauf_Value> Freilauf_Value { get; set; }
+       
         public DbSet<NGF_Value> NGF_Value { get; set; }
-        public DbSet<Schliessbart_value> Schliessbart_value { get; set; }
-        public DbSet<Witterungsschutz_Value> Witterungsschutz_Value { get; set; }
-        public DbSet<Zylinderfaerbung_Value> Zylinderfaerbung_Value { get; set; }
+       
     }
 }

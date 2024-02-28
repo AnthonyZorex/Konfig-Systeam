@@ -17,9 +17,9 @@ namespace schliessanlagen_konfigurator.Models.ProfilDopelZylinder
         public string Description { get; set; }
         
         public ICollection<NGF_Value> NGF_Value { get; set; }
-        public NGF()
-        {
-            NGF_Value = new List<NGF_Value>();
-        }
+        //public NGF()
+        //{
+        //    NGF_Value = new List<NGF_Value>();
+        //}
     }
 }
