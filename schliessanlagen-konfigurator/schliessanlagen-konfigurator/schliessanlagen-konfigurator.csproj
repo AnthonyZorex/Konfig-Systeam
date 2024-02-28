@@ -27,7 +27,10 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="wwwroot\Orders\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Orders\CES_schliessplan_DE_schliessanlagen.xltx" />
   </ItemGroup>
 
 </Project>

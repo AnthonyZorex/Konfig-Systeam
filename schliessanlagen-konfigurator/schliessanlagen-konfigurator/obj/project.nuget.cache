@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "6hqXNqhJ7L6lCQ8Z3G/9bp9fRb2Lpjqy4QjGNMhkF1tge6gKpVdVIeS3cXetZ7V+K+3IYaMezUlI1ZVVpZN3pw==",
+  "dgSpecHash": "elHpT3zVQ26yKMd+WSLDnZzHx6GMGU2NiZORPFMZ2fvzk6m2+8pMcAr1tFmTNXvicPQzGseEpqWesumS0shsPA==",
   "success": true,
   "projectFilePath": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj",
   "expectedPackageFiles": [
@@ -234,8 +234,7 @@
     "C:\\Users\\JAKUB\\.nuget\\packages\\system.threading.timer\\4.3.0\\system.threading.timer.4.3.0.nupkg.sha512",
     "C:\\Users\\JAKUB\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512",
     "C:\\Users\\JAKUB\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
-    "C:\\Users\\JAKUB\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
-    "C:\\Users\\JAKUB\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.15\\microsoft.windowsdesktop.app.ref.7.0.15.nupkg.sha512"
+    "C:\\Users\\JAKUB\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512"
   ],
   "logs": []
 }

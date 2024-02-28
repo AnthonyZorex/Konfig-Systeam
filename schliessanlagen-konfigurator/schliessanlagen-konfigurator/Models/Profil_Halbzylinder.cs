@@ -19,10 +19,6 @@ namespace schliessanlagen_konfigurator.Models
         public double max { get; set; }
         public double min { get; set; }
         public Schliessanlagen Schliessanlagen { get; set; }
-        public ICollection<Options>? Options { get; set; }
-        public Profil_Halbzylinder()
-        {
-            Options = new List<Options>();
-        }
+       
     }
 }

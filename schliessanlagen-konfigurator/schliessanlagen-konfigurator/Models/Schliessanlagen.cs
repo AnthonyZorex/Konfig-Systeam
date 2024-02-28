@@ -1,4 +1,6 @@
-﻿namespace schliessanlagen_konfigurator.Models
+﻿using schliessanlagen_konfigurator.Models.ProfilDopelZylinder;
+
+namespace schliessanlagen_konfigurator.Models
 {
     public class Schliessanlagen
     {

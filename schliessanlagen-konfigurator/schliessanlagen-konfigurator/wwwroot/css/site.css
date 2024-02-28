@@ -19,7 +19,10 @@ html {
 
 body {
     margin-bottom: 60px;
-    font-family: 'Roboto Mono', monospace;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-variation-settings: "slnt" 0;
 }
 
 
@@ -60,6 +63,12 @@ a {
     margin-top: 50px;
     display: grid;
     grid-template-columns: repeat(4,auto);
+    gap: 30px;
+}
+#createColumDopppelzylinder {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: repeat(2,auto);
     gap: 50px;
 }
 
@@ -70,7 +79,7 @@ a {
 
 #Table {
     display: grid;
-    grid-template-columns: repeat(11,auto);
+    grid-template-columns: repeat(9,auto);
 }
 
 #TableOptions {
@@ -219,4 +228,48 @@ a {
     margin-top: 55px;
     display: grid;
     gap: 25px
+}
+#product_desciptions {
+    margin-top: 100px;
+/*    max-width: 600px;*/
+}
+#productMenu {
+    gap: 150px;
+    display: flex;
+}
+#cardOptions {
+    padding: 10px;
+    background: #efefef;
+    margin-top: 50px;
+    display: block;
+}
+
+#Aussen_Innen_ProfilDopel {
+    display: flex;
+    justify-content: center;
+    margin-bottom:50px;
+}
+#AussenProfilDopel {
+    display: block;
+    width: 136px;
+}
+#InnenProfilDopel {
+    display: block;
+    width: 400px;
+}
+#valueNGF {
+    display: block;
+    width: 136px;
+}
+#costNGF {
+    display: block;
+    width: 400px;
+}
+#valueBohrschutz {
+    display: block;
+    width: 136px;
+}
+#costBohrschutz {
+    display: block;
+    width: 400px;
 }

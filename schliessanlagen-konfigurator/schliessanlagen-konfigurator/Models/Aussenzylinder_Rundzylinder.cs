@@ -16,10 +16,6 @@ namespace schliessanlagen_konfigurator.Models
         public int? Count { get; set; }
         public decimal? Cost { get; set; }
         public Schliessanlagen Schliessanlagen { get; set; }
-        public ICollection<Options>? Options { get; set; }
-        public Aussenzylinder_Rundzylinder()
-        {
-            Options = new List<Options>();
-        }
+      
     }
 }

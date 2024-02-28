@@ -22,6 +22,10 @@ namespace schliessanlagen_konfigurator.Send_Data
                 {
                     return;
                 }
+                if (context.Profil_Doppelzylinder_Options.Any())
+                {
+                    return;
+                }
                 if (context.Hebelzylinder.Any())
                 {
                     return;

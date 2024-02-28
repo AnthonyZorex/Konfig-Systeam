@@ -28,6 +28,11 @@ using (var scope = app.Services.CreateScope())
 
     SendData.Initialize(services);
 }
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
+// Configure the HTTP request pipeline.
+
 
 if (!app.Environment.IsDevelopment())
 {
