@@ -1,4 +1,5 @@
-﻿@model schliessanlagen_konfigurator.Models.Hebelzylinder;
+﻿ @model Hebelzylinder;
+
 @{
     ViewData["Title"] = "Hebelzylinder";
 }
@@ -36,8 +37,6 @@
                     <label> Artikelnummer</label>
                     @Html.EditorFor(m => m.Artikelnummer, new { htmlAttributes = new { @class = "form-control" } })
 
-                    <label>Count</label>
-                    @Html.EditorFor(m => m.Count, new { htmlAttributes = new { @class = "form-control" } })
 
                     <label asp-for="ImageFile" class="control-label"></label>
 

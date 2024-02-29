@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using schliessanlagen_konfigurator.Models.ProfilDopelZylinder.ValueOptions;
 
 namespace schliessanlagen_konfigurator.Models.ProfilDopelZylinder
 {

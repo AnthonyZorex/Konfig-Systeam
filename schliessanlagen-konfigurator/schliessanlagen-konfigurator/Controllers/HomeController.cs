@@ -10,6 +10,11 @@ using schliessanlagen_konfigurator.Models.ProfilDopelZylinder;
 using schliessanlagen_konfigurator.Models.ProfilDopelZylinder.ValueOptions;
 using Newtonsoft.Json.Linq;
 using Microsoft.Extensions.Hosting;
+using schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder;
+using Microsoft.Extensions.Options;
+using NuGet.ContentModel;
+using schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.ValueOptions;
+using schliessanlagen_konfigurator.Models.Halbzylinder;
 
 namespace schliessanlagen_konfigurator.Controllers
 {
@@ -175,44 +180,106 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             return RedirectToAction("Index");
         }
-
+        //Create_Profil_Knaufzylinder
         [HttpPost]
-        public async Task<IActionResult> Create_Profil_Knaufzylinder(Profil_Knaufzylinder Profil_Knaufzylinder)
+        public async Task<IActionResult> Create_Profil_Knaufzylinder(Profil_Knaufzylinder Profil_Doppelzylinder,
+        List<string> Options, List<string> NGFDescriptions, IFormFile postedFile, List<float> aussen,
+        List<float> innen, List<string> valueNGF, List<float> costNGF)
         {
-            try
+
+            if (Profil_Doppelzylinder.ImageFile != null)
             {
-                if (Profil_Knaufzylinder.ImageFile != null)
+                string wwwRootPath = Environment.WebRootPath;
+
+                string fileName = Path.GetFileNameWithoutExtension(Profil_Doppelzylinder.ImageFile.FileName);
+
+                string extension = Path.GetExtension(Profil_Doppelzylinder.ImageFile.FileName);
+
+                Profil_Doppelzylinder.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+
+                string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    await Profil_Doppelzylinder.ImageFile.CopyToAsync(fileStream);
+                }
+            }
+
+            db.Profil_Knaufzylinder.Add(Profil_Doppelzylinder);
+            db.SaveChanges();
+
+            var s = db.Profil_Knaufzylinder.Select(x => x.Id).ToList();
+
+            for (int i = 0; i < aussen.Count(); i++)
+            {
+                var ausse_innen = new Aussen_Innen_Knauf
+                {
+                    Profil_KnaufzylinderId = s.Last(),
+                    aussen = aussen[i],
+                    Intern = innen[i]
+                };
+                db.Aussen_Innen_Knauf.Add(ausse_innen);
+                db.SaveChanges();
+            }
+
+            var dopOptions = new Profil_Knaufzylinder_Options
+            {
+                Profil_KnaufzylinderId = s.Last(),
+
+            };
+            db.Profil_Knaufzylinder_Options.Add(dopOptions);
+            db.SaveChanges();
+
+            var x = db.Profil_Doppelzylinder_Options.Select(x => x.Id).ToList();
+
+            for (var i = 0; i < Options.Count(); i++)
+            {
+                var ngf = new Knayf_Options
+                {
+                    OptionsId = x.Last(),
+                    Name = Options[i],
+                    Description = NGFDescriptions[i],
+                    ImageFile = postedFile
+                };
+
+
+                if (ngf.ImageFile != null)
                 {
                     string wwwRootPath = Environment.WebRootPath;
 
-                    string fileName = Path.GetFileNameWithoutExtension(Profil_Knaufzylinder.ImageFile.FileName);
+                    string fileName = Path.GetFileNameWithoutExtension(ngf.ImageFile.FileName);
 
-                    string extension = Path.GetExtension(Profil_Knaufzylinder.ImageFile.FileName);
+                    string extension = Path.GetExtension(ngf.ImageFile.FileName);
 
-                    Profil_Knaufzylinder.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                    ngf.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
 
                     string path = Path.Combine(wwwRootPath + "/Image/", fileName);
 
                     using (var fileStream = new FileStream(path, FileMode.Create))
                     {
-                        await Profil_Knaufzylinder.ImageFile.CopyToAsync(fileStream);
+                        await ngf.ImageFile.CopyToAsync(fileStream);
                     }
                 }
 
-                db.Profil_Knaufzylinder.Add(Profil_Knaufzylinder);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Profil_KnaufzylinderRout");
-            }
-            catch (Exception ex)
-            {
-                return new JsonResult(
-                   new ErrorDto
-                   {
-                       IsError = true,
-                       Message = ex.Message
-                   });
-            }
+                db.Knayf_Options.Add(ngf);
+                db.SaveChanges();
 
+                var ng = db.Knayf_Options.Select(x => x.Id).ToList();
+                for (var j = 0; j < valueNGF.Count(); j++)
+                {
+                    var ngfValue = new Knayf_Options_value
+                    {
+                        Knayf_OptionsId = ng.Last(),
+                        Value = valueNGF[j],
+                        Cost = costNGF[j]
+                    };
+                    db.Knayf_Options_value.Add(ngfValue);
+                }
+
+                db.SaveChanges();
+
+            }
+            return RedirectToAction("Profil_KnaufzylinderRout");
         }
 
         [HttpPost]
@@ -574,7 +641,7 @@ namespace schliessanlagen_konfigurator.Controllers
             var hebel = db.Hebelzylinder.ToList();
             var vorhangschloos = db.Vorhangschloss.ToList();
             var aussenzylinder = db.Aussenzylinder_Rundzylinder.ToList();
-            var options = db.Options.ToList();
+            var options = db.Profil_Doppelzylinder_Options.ToList();
 
             ViewBag.NameSortParm = System.String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
 
@@ -628,7 +695,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 {
 
                 };
-                db.Options.Add(optionsItem);
+                db.Profil_Doppelzylinder_Options.Add(optionsItem);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Add_All_Options");
             }

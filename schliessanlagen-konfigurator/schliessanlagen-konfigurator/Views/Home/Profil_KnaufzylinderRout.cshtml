@@ -1,4 +1,4 @@
-﻿@model schliessanlagen_konfigurator.Models.Profil_Knaufzylinder;
+﻿@model schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Profil_Knaufzylinder;
 @{
     ViewData["Title"] = "Profil Knaufzylinder";
 }
@@ -35,20 +35,7 @@
                     <label> Artikelnummer</label>
                     @Html.EditorFor(m => m.Artikelnummer, new { htmlAttributes = new { @class = "form-control" } })
 
-                    <label>Extern</label>
-                    @Html.EditorFor(m => m.Extern, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Intern</label>
-                    @Html.EditorFor(m => m.Intern, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Count</label>
-                    @Html.EditorFor(m => m.Count, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Min</label>
-                    @Html.EditorFor(m => m.min, new { htmlAttributes = new { @class = "form-control" } })
-
-                    <label>Max</label>
-                    @Html.EditorFor(m => m.max, new { htmlAttributes = new { @class = "form-control" } })
+                 
 
                     <label asp-for="ImageFile" class="control-label"></label>
                     <input asp-for="ImageFile" class="btn btn-success" accept="image/*" />
@@ -66,28 +53,26 @@
         {
             <table class="table table-bordered">
                 <tr id="Table">
+                    <th>CompanyName</th>
+                    <th>Systeam</th>
                     <th>Name</th>
                     <th>Image</th>
                     <th>Cost</th>
                     <th>Artikelnummer</th>
-                    <th>Intern</th>
-                    <th>Extern</th>
-                    <th>min</th>
-                    <th>max</th>
+
                     <th>Edit</th>
                     <th>Options</th>
                     <th>Delete</th>
 
                     @foreach (var item in ViewBag.item)
                     {
+                        <td id="rowTable" class="table-info">@item.companyName</td>
+                        <td id="rowTable" class="table-info">@item.NameSystem</td>
                         <td id="rowTable" class="table-info">@item.Name</td>
                         <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
-                        <td id="rowTable" class="table-info"><h6 id="cost">@item.Cost</h6></td>
+                        <td id="rowTable " class="table-info"><h6 id="cost">@item.Cost</h6></td>
                         <td id="rowTable" class="table-info">@item.Artikelnummer</td>
-                        <td id="rowTable" class="table-info">@item.Intern</td>
-                        <td id="rowTable" class="table-info">@item.Extern</td>
-                        <td id="rowTable" class="table-info">@item.min</td>
-                        <td id="rowTable" class="table-info">@item.max</td>
+                    
                         <td id="rowTable" class="table-info"><a href="@Url.Action("Edit_Profil_Knaufzylinder","Home", new { item.Id })"><img src="@("/Image/edit-tools.png")" height="30" width="30" /></a></td>
                         <td id="rowTable" class="table-info">
                             <a class="compItem" href="@Url.Action("DetailsProfil_Knaufzylinder","Home", new { item.Id })">
