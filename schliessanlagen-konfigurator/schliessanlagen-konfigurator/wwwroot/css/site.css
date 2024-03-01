@@ -273,3 +273,6 @@ a {
     display: block;
     width: 400px;
 }
+.input-counter{
+    display:none;
+}

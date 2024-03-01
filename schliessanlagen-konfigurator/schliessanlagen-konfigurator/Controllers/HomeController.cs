@@ -4,17 +4,15 @@ using System.Diagnostics;
 using schliessanlagen_konfigurator.Data;
 using Microsoft.EntityFrameworkCore;
 
-using schliessanlagen_konfigurator.IEnumerable.DoppelZylinder;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using schliessanlagen_konfigurator.Models.ProfilDopelZylinder;
 using schliessanlagen_konfigurator.Models.ProfilDopelZylinder.ValueOptions;
-using Newtonsoft.Json.Linq;
-using Microsoft.Extensions.Hosting;
+
 using schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder;
-using Microsoft.Extensions.Options;
-using NuGet.ContentModel;
+
 using schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.ValueOptions;
 using schliessanlagen_konfigurator.Models.Halbzylinder;
+using System.Diagnostics.Metrics;
+using Newtonsoft.Json.Linq;
 
 namespace schliessanlagen_konfigurator.Controllers
 {
@@ -83,7 +81,7 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpPost]
         public async Task<IActionResult> Create_Profil_Doppelzylinder(Profil_Doppelzylinder Profil_Doppelzylinder,
         List<string> Options, List<string> NGFDescriptions, IFormFile  postedFile, List<float> aussen,
-        List<float> innen,List<string> valueNGF, List<float> costNGF)
+        List<float> innen,List<string> valueNGF, List<float> costNGF,List<int> input_counter)
         {
 
             if (Profil_Doppelzylinder.ImageFile != null)
@@ -131,6 +129,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var x = db.Profil_Doppelzylinder_Options.Select(x => x.Id).ToList();
 
+            int counter = 0;
             for (var i=0; i< Options.Count(); i++)
             {
                     var ngf = new NGF
@@ -164,16 +163,20 @@ namespace schliessanlagen_konfigurator.Controllers
                     db.SaveChanges();
 
                     var ng = db.NGF.Select(x => x.Id).ToList();
-                 for(var j=0; j<valueNGF.Count(); j++)
+              
+                 for (var j=0; j< input_counter[i]; j++)
                  {
-                    var ngfValue = new NGF_Value
-                    {
-                        NGFId = ng.Last(),
-                        Value = valueNGF[j],
-                        Cost = costNGF[j]
-                    };
-                    db.NGF_Value.Add(ngfValue);
-                  }
+                        var ngfValue = new NGF_Value
+                        {
+                            NGFId = ng.Last(),
+                            Value = valueNGF[counter],
+                            Cost = costNGF[counter]
+                        };
+                        db.NGF_Value.Add(ngfValue);
+                  
+                    counter++;
+
+                 }
                        
                         db.SaveChanges();
                    
@@ -609,22 +612,37 @@ namespace schliessanlagen_konfigurator.Controllers
                     var aussen = db.Aussen_Innen.Where(x=>x.Profil_DoppelzylinderId==profil.Id).Select(x => x.aussen).ToList();
                     var innen = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == profil.Id).Select(x => x.Intern).ToList();
 
+                    var queryableOptions = db.Profil_Doppelzylinder_Options.Where(x=>x.DoppelzylinderId== profil.Id).ToList();
                     
                     var dopelOptions = db.Profil_Doppelzylinder_Options.Where(x=>x.DoppelzylinderId == profil.Id).Select(x=>x.Id).First();
 
                     var allOptions = db.NGF.Where(x => x.OptionsId == dopelOptions).ToList();        
 
-                    ViewBag.optionsName = allOptions.Select(x=>x.Name);
+                    ViewBag.optionsName = allOptions.Select(x=>x.Name).ToList();
 
-                    var opValue = db.NGF_Value.Where(x => x.NGFId == allOptions.First().Id).ToList();
-                    
-                    ViewBag.optionsValue = opValue.Select(x=>x.Value).ToList();
+             List<NGF_Value> ngfList = new List<NGF_Value>();
 
-                     ViewBag.optionsPrise = opValue.Select(x => x.Cost).ToList();
-                    
-                    ViewBag.aussen = aussen;
-                    ViewBag.innen = innen;
-            
+            for (int s = 0; s < allOptions.Count(); s++)
+            {
+                var opValue = db.NGF_Value.Where(x => x.NGFId == allOptions[s].Id).ToList();
+
+                for (int i = 0; i<opValue.Count(); i++)
+                {
+                    ngfList.Add(opValue[i]);
+                }
+              
+            }
+
+            ViewBag.countOptions = allOptions.Count();
+
+            ViewBag.optionsValue = ngfList.Select(x => x.Value).ToList();
+
+            ViewBag.optionsPrise = ngfList.Select(x => x.Cost).ToList();
+
+            ViewBag.aussen = aussen;
+            ViewBag.innen = innen;
+
+
 
             return View("ProductProfil_Doppelzylinder",profilInfo);
         }
