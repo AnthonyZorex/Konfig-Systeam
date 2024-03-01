@@ -47,27 +47,29 @@
 
             </div>
             <div id="cardOptions">
-
-               @*  <h6>Not- und Gefahrenfunktion</h6>
-                @Html.DropDownList("DoppelZylinderNGF", ViewBag.EnumList as SelectList,
-                         new { @class = "form-select", @id = "select DoppelZylinderNGF" })
-                
-                    <h6>Freilauffunktion</h6>
-                    @Html.DropDownList("DoppelZylinder_Freilauffunktion", ViewBag.EnumList as SelectList,
-                             new { @class = "form-select", @id = "select" }) *@
-
-                @foreach (var listItem in ViewBag.optionsName)
-                {
-                    <h6>@listItem</h6>
+               
+                <ul>
                     
-                }
-                
-                <select class="form-select" id="select innen">
-                    @foreach (var listItem in ViewBag.optionsValue)
+                    @for (int i = 0; i < ViewBag.optionsName.Count; i++)
                     {
-                        <option id="innen">@listItem</option>
+                        <li>@ViewBag.optionsName[i]</li>
                     }
-                </select>
+                       
+                        @for (int j = 0; j < ViewBag.optionsValue.Count; j++)
+                        {
+                            <li>@ViewBag.optionsValue[j]</li>
+                        }
+                    
+                    </ul>
+
+                    <!-- Отображение списка цен -->
+                    <ul>
+                        @for (int i = 0; i < ViewBag.optionsPrise.Count; i++)
+                        {
+                            <li>@ViewBag.optionsPrise[i]</li>
+                        }
+                    </ul>
+
             </div>
         </div>      
     </div>
