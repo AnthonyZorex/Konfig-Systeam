@@ -1,9 +1,9 @@
-﻿@model schliessanlagen_konfigurator.Models.Profil_Knaufzylinder;
+﻿@model schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Profil_Knaufzylinder;
 
 @{
     ViewData["Title"] = "Edit";
 }
-
+       
 <h1>Edit</h1>
 
 <h4>@Model.Artikelnummer</h4>
@@ -37,26 +37,6 @@
                 <label asp-for="Artikelnummer" class="control-label"></label>
                 <input asp-for="Artikelnummer" class="form-control" />
                 <span asp-validation-for="Artikelnummer" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Extern" class="control-label"></label>
-                <input asp-for="Extern" class="form-control" />
-                <span asp-validation-for="Extern" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Intern" class="control-label"></label>
-                <input asp-for="Intern" class="form-control" />
-                <span asp-validation-for="Intern" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="max" class="control-label"></label>
-                <input asp-for="max" class="form-control" />
-                <span asp-validation-for=" max" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="min" class="control-label"></label>
-                <input asp-for="min" class="form-control" />
-                <span asp-validation-for="min" class="text-danger"></span>
             </div>
 
             <div class="form-group">

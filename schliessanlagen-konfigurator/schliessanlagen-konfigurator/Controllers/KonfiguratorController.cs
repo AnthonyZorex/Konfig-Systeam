@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using schliessanlagen_konfigurator.Data;
 using schliessanlagen_konfigurator.Models;
+using schliessanlagen_konfigurator.Models.Halbzylinder;
+using schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder;
 using schliessanlagen_konfigurator.Models.ProfilDopelZylinder;
 using Spire.Xls;
 
@@ -104,7 +106,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 //}
                 if (allUserListOrder[d].ZylinderId == profilH[0].schliessanlagenId)
                 {
-                    profilH.Where(x => x.min >= allUserListOrder[d].aussen && x.max <= allUserListOrder[d].aussen).ToList();
+                 
 
                     var HalbzylinderId = profilH[d].Id;
                     ViewBag.a = await db.Profil_Halbzylinder.Where(x => x.Id == HalbzylinderId || x.Id < HalbzylinderId).ToListAsync();
@@ -168,7 +170,7 @@ namespace schliessanlagen_konfigurator.Controllers
         }
        
         [HttpPost]
-        public async Task<IActionResult> Create_Exel(List<string> tur, Profil_Doppelzylinder profil_Doppelzylinder, Profil_Halbzylinder profil_Halbzylinder, Profil_Knaufzylinder Profil_Knaufzylinder, Vorhangschloss Vorhang, Hebelzylinder hebelzylinder, Aussenzylinder_Rundzylinder aussenzylinder_Rundzylinder)
+        public async Task<IActionResult> Create_Exel(List<string> tur, Profil_Doppelzylinder profil_Doppelzylinder, Profil_Halbzylinder profil_Halbzylinder, Profil_Knaufzylinder Profil_Knaufzylinder, Vorhangschloss Vorhang, Hebel hebelzylinder, Aussenzylinder_Rundzylinder aussenzylinder_Rundzylinder)
         {
             var Zylinder_Typ = await db.Schliessanlagen.ToListAsync();
             var profilD = db.Profil_Doppelzylinder.ToList();
@@ -213,14 +215,14 @@ namespace schliessanlagen_konfigurator.Controllers
             {
 
                 var TypeSylinder = Zylinder_Typ.Where(x => x.Id == profilH[count].schliessanlagenId).Select(x => x.nameType).ToList().First();
-                var Extern = profilH.Where(x => x.Id == profilH[count].Id).Select(d => d.Außen).ToList().First();
+    
                 var NameZ = profilH.Where(x => x.Id == profilH[count].Id).Select(d => d.Name).ToList().First();
              
 
                 worksheet.Range[Row, 1].Value = $"{Row - 1}";
                 worksheet.Range[Row, 3].Value = $"{Row - 1}";
                 worksheet.Range[Row, 4].Value = $"{TypeSylinder}";
-                worksheet.Range[Row, 5].Value = $"{Extern}";
+                //worksheet.Range[Row, 5].Value = $"{Extern}";
                 worksheet.Range[Row, 6].Value = $"";
                 count++;
                 Row++;
@@ -229,15 +231,14 @@ namespace schliessanlagen_konfigurator.Controllers
             for (int i = 0; i < profilK.Count(); i++)
             {
                 var TypeSylinder = Zylinder_Typ.Where(x => x.Id == profilK[count].schliessanlagenId).Select(x => x.nameType).ToList().First();
-                var Extern = profilK.Where(x => x.Id == profilK[count].Id).Select(d => d.Extern).ToList().First();
-                var Intern = profilK.Where(x => x.Id == profilK[count].Id).Select(d => d.Intern).ToList().First();
+   
                 var NameZ = profilK.Where(x => x.Id == profilK[count].Id).Select(d => d.Name).ToList().Last();
 
                 worksheet.Range[Row, 1].Value = $"{Row - 1}";
                 worksheet.Range[Row, 2].Value = $"{Row - 1}";
                 worksheet.Range[Row, 3].Value = $"{NameZ}";
                 worksheet.Range[Row, 4].Value = $"{TypeSylinder}";
-                worksheet.Range[Row, 5].Value = $"{Extern}\t|\t{Intern}";
+                //worksheet.Range[Row, 5].Value = $"{Extern}\t|\t{Intern}";
                 worksheet.Range[Row, 6].Value = $"";
                 Row++;
             }
@@ -309,14 +310,12 @@ namespace schliessanlagen_konfigurator.Controllers
                     Tur = Turname[i],
                     userKey = Key.userKey,
                     ZylinderId = ZylinderId[i],
-                    IsOppen3 = IsOppen3[i],
                     aussen = aussen[i],
                     innen = innen[i],
                     Count = Count[i],
                     NameKey = NameKey[i],
                     CountKey = CountKey[i],
-                    IsOppen = IsOppen[i],
-                    IsOppen2 = IsOppen2[i]
+                   
                 };
                 db.Orders.Add(orders); 
             }

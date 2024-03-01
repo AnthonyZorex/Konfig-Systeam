@@ -1,4 +1,4 @@
-﻿@model schliessanlagen_konfigurator.Models.Profil_Halbzylinder;
+﻿@model schliessanlagen_konfigurator.Models.Halbzylinder.Profil_Halbzylinder;
 
 @{
     ViewData["Title"] = "Edit";
@@ -34,16 +34,7 @@
                 <span asp-validation-for="Artikelnummer" class="text-danger"></span>
             </div>
            
-            <div class="form-group">
-                <label asp-for="max" class="control-label"></label>
-                <input asp-for="max" class="form-control" />
-                <span asp-validation-for=" max" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="min" class="control-label"></label>
-                <input asp-for="min" class="form-control" />
-                <span asp-validation-for="min" class="text-danger"></span>
-            </div>
+           
 
             <div class="form-group">
                 <label asp-for="ImageName" class="control-label"></label>

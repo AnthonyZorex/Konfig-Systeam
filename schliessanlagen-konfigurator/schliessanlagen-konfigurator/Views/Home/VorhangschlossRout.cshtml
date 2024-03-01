@@ -31,13 +31,12 @@
                     @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control" } })
 
                     <label>Сost</label>
-                    @Html.EditorFor(m => m.Сost, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(m => m.Cost, new { htmlAttributes = new { @class = "form-control" } })
 
                     <label> Artikelnummer</label>
                     @Html.EditorFor(m => m.Artikelnummer, new { htmlAttributes = new { @class = "form-control" } })
 
-                    <label>Count</label>
-                    @Html.EditorFor(m => m.Count, new { htmlAttributes = new { @class = "form-control" } })
+                   
 
                     <label asp-for="ImageFile" class="control-label"></label>
                     <input asp-for="ImageFile" class="btn btn-success" accept="image/*" />

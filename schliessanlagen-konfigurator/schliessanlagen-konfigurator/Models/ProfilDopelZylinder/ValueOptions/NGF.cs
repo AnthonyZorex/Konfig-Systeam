@@ -1,8 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel;
 using schliessanlagen_konfigurator.IEnumerable;
-using schliessanlagen_konfigurator.Models.ProfilDopelZylinder.ValueOptions;
-namespace schliessanlagen_konfigurator.Models.ProfilDopelZylinder
+namespace schliessanlagen_konfigurator.Models.ProfilDopelZylinder.ValueOptions
 {
     public class NGF
     {
@@ -15,11 +14,11 @@ namespace schliessanlagen_konfigurator.Models.ProfilDopelZylinder
         [DisplayName("Upload your photo")]
         public IFormFile? ImageFile { get; set; }
         public string Description { get; set; }
-        
+
         public ICollection<NGF_Value> NGF_Value { get; set; }
-        //public NGF()
-        //{
-        //    NGF_Value = new List<NGF_Value>();
-        //}
+        public NGF()
+        {
+            NGF_Value = new List<NGF_Value>();
+        }
     }
 }
