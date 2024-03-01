@@ -170,7 +170,7 @@ namespace schliessanlagen_konfigurator.Controllers
         }
        
         [HttpPost]
-        public async Task<IActionResult> Create_Exel(List<string> tur, Profil_Doppelzylinder profil_Doppelzylinder, Profil_Halbzylinder profil_Halbzylinder, Profil_Knaufzylinder Profil_Knaufzylinder, Vorhangschloss Vorhang, Hebelzylinder hebelzylinder, Aussenzylinder_Rundzylinder aussenzylinder_Rundzylinder)
+        public async Task<IActionResult> Create_Exel(List<string> tur, Profil_Doppelzylinder profil_Doppelzylinder, Profil_Halbzylinder profil_Halbzylinder, Profil_Knaufzylinder Profil_Knaufzylinder, Vorhangschloss Vorhang, Hebel hebelzylinder, Aussenzylinder_Rundzylinder aussenzylinder_Rundzylinder)
         {
             var Zylinder_Typ = await db.Schliessanlagen.ToListAsync();
             var profilD = db.Profil_Doppelzylinder.ToList();
@@ -310,14 +310,12 @@ namespace schliessanlagen_konfigurator.Controllers
                     Tur = Turname[i],
                     userKey = Key.userKey,
                     ZylinderId = ZylinderId[i],
-                    IsOppen3 = IsOppen3[i],
                     aussen = aussen[i],
                     innen = innen[i],
                     Count = Count[i],
                     NameKey = NameKey[i],
                     CountKey = CountKey[i],
-                    IsOppen = IsOppen[i],
-                    IsOppen2 = IsOppen2[i]
+                   
                 };
                 db.Orders.Add(orders); 
             }

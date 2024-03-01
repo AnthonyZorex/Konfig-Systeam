@@ -17,10 +17,10 @@ namespace schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Value
         public IFormFile? ImageFile { get; set; }
         public string Description { get; set; }
 
-        public ICollection<NGF_Value> NGF_Value { get; set; }
+        public ICollection<Knayf_Options_value> Knayf_Options_value { get; set; }
         public Knayf_Options()
         {
-            NGF_Value = new List<NGF_Value>();
+            Knayf_Options_value = new List<Knayf_Options_value>();
         }
     }
 }

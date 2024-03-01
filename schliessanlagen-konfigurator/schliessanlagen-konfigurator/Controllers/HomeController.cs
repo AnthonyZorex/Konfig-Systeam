@@ -397,7 +397,7 @@ namespace schliessanlagen_konfigurator.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create_Hebelzylinder(Hebelzylinder profil_Doppelzylinder)
+        public async Task<IActionResult> Create_Hebelzylinder(Hebel profil_Doppelzylinder)
         {
             try
             {
@@ -439,7 +439,7 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpGet]
         [Route("Home/Delete_Doppelzylinder")]
 
-        public async Task<IActionResult> Delete_Doppelzylinder(Profil_Doppelzylinder profil_Doppelzylinder, Profil_Halbzylinder profil_Halbzylinder, Profil_Knaufzylinder Profil_Knaufzylinder, Vorhangschloss Vorhangschloss, Hebelzylinder hebelzylinder, Aussenzylinder_Rundzylinder aussenzylinder_Rundzylinder)
+        public async Task<IActionResult> Delete_Doppelzylinder(Profil_Doppelzylinder profil_Doppelzylinder, Profil_Halbzylinder profil_Halbzylinder, Profil_Knaufzylinder Profil_Knaufzylinder, Vorhangschloss Vorhangschloss, Hebel hebelzylinder, Aussenzylinder_Rundzylinder aussenzylinder_Rundzylinder)
         {
             var doppelzylinder = db.Profil_Doppelzylinder.Find(profil_Doppelzylinder.Id);
 
@@ -519,7 +519,7 @@ namespace schliessanlagen_konfigurator.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit_Halbzylinder(Hebelzylinder profil_Halbzylinder)
+        public async Task<IActionResult> Edit_Halbzylinder(Hebel profil_Halbzylinder)
         {
             var Halbzylinder = db.Hebelzylinder.Find(profil_Halbzylinder.Id);
             return View("../Edit/Edit_Halbzylinder", Halbzylinder);
@@ -562,7 +562,7 @@ namespace schliessanlagen_konfigurator.Controllers
             return RedirectToAction("Profil_HalbzylinderRout");
         }
         [HttpPost]
-        public ActionResult SaveHebelzylinder(Hebelzylinder profil_Halbzylinder)
+        public ActionResult SaveHebelzylinder(Hebel profil_Halbzylinder)
         {
             db.Hebelzylinder.Update(profil_Halbzylinder);
             db.SaveChanges();

@@ -9,7 +9,7 @@ namespace schliessanlagen_konfigurator.Models.Halbzylinder.ValueOptions
     {
         public int Id { get; set; }
         public int? OptionsId { get; set; }
-        public Profil_Knaufzylinder_Options Options { get; set; }
+        public Profil_Halbzylinder_Options Options { get; set; }
         public string Name { get; set; }
         public string? ImageName { get; set; }
         [NotMapped]
