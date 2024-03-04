@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel;
+using schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder;
+using schliessanlagen_konfigurator.Models.Vorhan;
 
 namespace schliessanlagen_konfigurator.Models
 {
@@ -18,6 +20,13 @@ namespace schliessanlagen_konfigurator.Models
         [DisplayName("Upload your photo")]
         public IFormFile ImageFile { get; set; }
         public Schliessanlagen Schliessanlagen { get; set; }
+        public ICollection<Vorhan_Options> Vorhan_Options { get; set; }
+        public ICollection<Size> Size { get; set; }
 
+        public Vorhangschloss()
+        {
+            Vorhan_Options = new List<Vorhan_Options>();
+            Size = new List<Size>();
+        }
     }
 }

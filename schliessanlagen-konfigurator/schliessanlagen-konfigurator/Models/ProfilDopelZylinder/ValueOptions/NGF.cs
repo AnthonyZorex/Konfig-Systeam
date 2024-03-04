@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel;
-using schliessanlagen_konfigurator.IEnumerable;
 namespace schliessanlagen_konfigurator.Models.ProfilDopelZylinder.ValueOptions
 {
     public class NGF

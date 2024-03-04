@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel;
 using schliessanlagen_konfigurator.Models;
+using schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder;
+using schliessanlagen_konfigurator.Models.Hebelzylinder;
 namespace schliessanlagen_konfigurator.Models
 {
     public class Hebel
@@ -18,6 +20,12 @@ namespace schliessanlagen_konfigurator.Models
         [DisplayName("Upload your photo")]
         public IFormFile ImageFile { get; set; }
         public Schliessanlagen Schliessanlagen { get; set; }
+        public ICollection<Hebelzylinder_Options> Hebelzylinder_Options { get; set; }
+        public Hebel()
+        {
+            Hebelzylinder_Options = new List<Hebelzylinder_Options>();
+           
+        }
 
     }
 }
