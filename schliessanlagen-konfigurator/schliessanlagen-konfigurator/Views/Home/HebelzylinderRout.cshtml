@@ -16,12 +16,12 @@
             </div>
         </div>
         <div>
-            <h2>New Vorhangschloss</h2>
+            <h2>New Hebelzylinder</h2>
 
-            <form asp-action="Create_Vorhangschloss" enctype="multipart/form-data" asp-controller="Home">
+            <form asp-action="Create_Hebelzylinder" enctype="multipart/form-data" asp-controller="Home">
 
                 <div id="productMenu">
-                    <input style="display:none" asp-for="schliessanlagenId" class="form-control" type="text" value="5" />
+                    <input style="display:none" asp-for="schliessanlagenId" class="form-control" type="text" value="4" />
                     <div>
                         <label asp-for="ImageFile" class="control-label"></label>
                         <input asp-for="ImageFile" class="btn btn-success" accept="image/*" />
@@ -67,7 +67,7 @@
 
                 </div>
 
-                <input type="submit" class="btn btn-success" id="input" value="Create Vorhangschloss" />
+                <input type="submit" class="btn btn-success" id="input" value="Create Hebelzylinder" />
             </form>
 
             <button id="createBlockBtn" class="btn btn-success">Add Options</button>
@@ -111,7 +111,7 @@
                                     <img src="@("/Image/options.png")" height="30" width="30" />
                                 </a>
                             </td>
-                            <td id="rowTable" class="table-info"><a href="@Url.Action("Delete_Doppelzylinder","Home", new { item.Id })"><img src="@("/Image/entfernen.png")" height="30" width="30" /></a></td>
+                            <td id="rowTable" class="table-info"><a href="@Url.Action("Delete_Hebel","Home", new { item.Id })"><img src="@("/Image/entfernen.png")" height="30" width="30" /></a></td>
                         }
 
                     </tr>

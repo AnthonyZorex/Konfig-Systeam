@@ -8,7 +8,7 @@ namespace schliessanlagen_konfigurator.Models.Hebelzylinder
     public class Options
     {
         public int Id { get; set; }
-        public int? OptioId { get; set; }
+        public int? OptionId { get; set; }
         public Hebelzylinder_Options Option { get; set; }
         public string? Name { get; set; }
         public string? ImageName { get; set; }

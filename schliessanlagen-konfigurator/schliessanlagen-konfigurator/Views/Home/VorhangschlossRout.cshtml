@@ -60,7 +60,14 @@
                         <label>Cost</label>
                         <input asp-for="Cost" class="form-control" />
                     </div>
+                    <h1>Size <input id="addAussen_Innen" class="btn btn-success" type="button" value="+" /></h1>
+                    <div id="Aussen_Innen_ProfilDopel">
 
+                        <div id="AussenProfilDopel">
+                            <input type="number" placeholder="Size" step="0.01" name="aussen" />
+                        </div>
+
+                    </div>
                     <div id="productOptions">
                     </div>
 
@@ -78,7 +85,7 @@
     <div>
 
         <h4 id="input">ALL Profil Doppelzylinder</h4>
-        @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+        @using (Html.BeginForm("VorhangschlossRout", "Home", FormMethod.Get))
         {
             <table class="table table-bordered">
                 <tbody>
@@ -110,7 +117,7 @@
                                     <img src="@("/Image/options.png")" height="30" width="30" />
                                 </a>
                             </td>
-                            <td id="rowTable" class="table-info"><a href="@Url.Action("Delete_Doppelzylinder","Home", new { item.Id })"><img src="@("/Image/entfernen.png")" height="30" width="30" /></a></td>
+                            <td id="rowTable" class="table-info"><a href="@Url.Action("Delete_Vorhan","Home", new { item.Id })"><img src="@("/Image/entfernen.png")" height="30" width="30" /></a></td>
                         }
 
                     </tr>
@@ -134,6 +141,9 @@
         let productOptions = document.getElementById('productOptions');
         let addOptions = document.getElementById('addOptions');
 
+        let docAussen = document.getElementById('AussenProfilDopel');
+        let Aussen_Innen_ProfilDopel = document.getElementById('Aussen_Innen_ProfilDopel');
+        let plusAussen_Innen = document.getElementById('addAussen_Innen');
 
         document.addEventListener("DOMContentLoaded", function () {
             const container = document.getElementById('productOptions');
@@ -157,6 +167,14 @@
                 }
             });
 
+            plusAussen_Innen.addEventListener('click', () => {
+                let d = document.createElement('input');
+                d.setAttribute('name', 'aussen');
+                d.setAttribute('placeholder', 'Size');
+
+                docAussen.append(d);
+          
+            });
             function createBlock() {
                 const block = document.createElement('div');
                 block.classList.add('input-block');

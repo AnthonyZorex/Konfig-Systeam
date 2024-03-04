@@ -34,7 +34,6 @@ namespace schliessanlagen_konfigurator.Data
         public DbSet<Halbzylinder_Options_value> Halbzylinder_Options_value { get; set; }
         public DbSet<Aussen_Innen_Halbzylinder> Aussen_Innen_Halbzylinder { get; set; }
 
-
         
         public DbSet<Hebel> Hebelzylinder { get; set; }
         public DbSet<Hebelzylinder_Options> Hebelzylinder_Options { get; set; }
@@ -43,10 +42,10 @@ namespace schliessanlagen_konfigurator.Data
 
 
         public DbSet<Vorhangschloss> Vorhangschloss { get; set; }
+        public DbSet<Size> Size { get; set; }
         public DbSet<Vorhan_Options> Vorhan_Options { get; set; }
         public DbSet<OptionsVorhan> OptionsVorhan { get; set; }
         public DbSet<OptionsVorhan_value> OptionsVorhan_value { get; set; }
-
 
 
         public DbSet<Aussenzylinder_Rundzylinder> Aussenzylinder_Rundzylinder { get; set; }

@@ -8,11 +8,11 @@ namespace schliessanlagen_konfigurator.Models.Hebelzylinder
         public int Id { get; set; }
         public int? HebelzylinderId { get; set; }
         public Hebel Hebelzylinder { get; set; }
-        public ICollection<Halbzylinder_Options> Halbzylinder_Options { get; set; }
+        public ICollection<Options> Options { get; set; }
 
         public Hebelzylinder_Options()
         {
-            Halbzylinder_Options = new List<Halbzylinder_Options>();
+            Options = new List<Options>();
         }
     }
 }
