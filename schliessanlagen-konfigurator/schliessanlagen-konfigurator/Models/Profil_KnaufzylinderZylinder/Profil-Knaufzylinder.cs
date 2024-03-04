@@ -14,10 +14,10 @@ namespace schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder
         public string? NameSystem { get; set; }
         public string? Artikelnummer { get; set; }
         public float Cost { get; set; }
-        public string ImageName { get; set; }
+        public string? ImageName { get; set; }
         [NotMapped]
         [DisplayName("Upload your photo")]
-        public IFormFile ImageFile { get; set; }
+        public IFormFile? ImageFile { get; set; }
         public Schliessanlagen Schliessanlagen { get; set; }
         public ICollection<Profil_Knaufzylinder_Options> Profil_Knaufzylinder_Options { get; set; }
         public ICollection<Aussen_Innen_Knauf> Aussen_Innen_Knauf { get; set; }
