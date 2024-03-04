@@ -7,7 +7,7 @@ namespace schliessanlagen_konfigurator.Models.Aussen_Rund
         public int Id { get; set; }
         public int? Aussen_Rund_allId { get; set; }
         public Aussen_Rund_all Aussen_Rund_all { get; set; }
-        public string Value { get; set; }
+        public string? Value { get; set; }
         public float? Cost { get; set; }
     }
 }
