@@ -221,9 +221,7 @@ a {
     gap: 20px;
     text-align: center;
 }
-#counter {
-    padding: 0px 10px 0px 20px
-}
+
 #chekboxPanel {
     margin-top: 55px;
     display: grid;

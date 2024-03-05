@@ -3,8 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using schliessanlagen_konfigurator.Data;
 using schliessanlagen_konfigurator.Models;
 using schliessanlagen_konfigurator.Models.Halbzylinder;
+using schliessanlagen_konfigurator.Models.OrdersOpen;
 using schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder;
 using schliessanlagen_konfigurator.Models.ProfilDopelZylinder;
+using schliessanlagenkonfigurator.Migrations;
 using Spire.Xls;
 
 namespace schliessanlagen_konfigurator.Controllers
@@ -30,6 +32,7 @@ namespace schliessanlagen_konfigurator.Controllers
             var UserKey = session.Id;
             Orders user = new Orders();
             user.userKey = UserKey;
+            ViewBag.isOpen = db.isOpen_value.Select(x=>x.isOpen);
             return View(user);
         }
         [HttpGet]
@@ -41,6 +44,7 @@ namespace schliessanlagen_konfigurator.Controllers
             var allUserListOrder = await db.Orders.Where(x => x.userKey == keyUser).ToListAsync();
 
             ViewBag.Zylinder_Typ = await db.Schliessanlagen.ToListAsync();
+
             var profilD = await db.Profil_Doppelzylinder.ToListAsync();
             var profilH = await db.Profil_Halbzylinder.ToListAsync();
             var profilK = await db.Profil_Knaufzylinder.ToListAsync();
@@ -52,120 +56,137 @@ namespace schliessanlagen_konfigurator.Controllers
 
             for (var d = 0; d < allUserListOrder.Count(); d++)
             {
-                //if (allUserListOrder[d].ZylinderId == profilD[0].schliessanlagenId)
-                //{
-                
+                if (allUserListOrder[d].ZylinderId == profilD[0].schliessanlagenId)
+                {
+                    var dopelId = profilD[d].Id;
 
-                //    if (profilD.Count() > d)
-                //    {
-                //        var pramaetrInnen = profilD[d].Intern;
-                //        var pramaetrAussen = profilD[d].aussen;
-                //        var sum = profilD[d].Cost;
-                //        for (; pramaetrInnen <= allUserListOrder[d].innen;)
-                //        {
-                //            if (pramaetrInnen < allUserListOrder[d].innen)
-                //            {
-                //                pramaetrInnen = pramaetrInnen + 5.0f;
-                //                sum = sum + 4;
-                //            }
+                    var dopelProduct = new List<Profil_Doppelzylinder>();
 
-                //            if (pramaetrAussen != allUserListOrder[d].aussen)
-                //            {
-                //                sum = sum + 4;
-                //                pramaetrAussen = pramaetrAussen + 5.0f;
+                    var products = await db.Aussen_Innen.ToListAsync();
 
-                //            }
-                //            if (allUserListOrder[d].innen == pramaetrInnen && allUserListOrder[d].aussen == pramaetrAussen)
-                //            {
-                //                var id = profilD[d].Id;
-                //                var listDopel = new Profil_Doppelzylinder
-                //                {
-                //                    schliessanlagenId = profilD[d].schliessanlagenId,
-                //                    Name = profilD[d].Name,
-                //                    ImageName = profilD[d].ImageName,
-                //                    ImageFile = profilD[d].ImageFile,
-                //                    aussen = pramaetrAussen,
-                //                    Artikelnummer = profilD[d].Artikelnummer,
-                //                    Cost = sum,
-                //                    Intern = pramaetrAussen
+                    var item = products.Where(x => x.aussen >= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).ToList();
+                    var itemCount = products.Where(x => x.aussen >= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).Select(x => x.Profil_DoppelzylinderId).Max();
 
-                //                };
+                    for (int i = 0; i < itemCount; i++)
+                    {
+                        var f = db.Profil_Doppelzylinder.Where(x => x.Id == item[i].Profil_DoppelzylinderId).Select(x => x).First();
+                        dopelProduct.Add(f);
+                    }
+                     
+                    ViewBag.a = dopelProduct;
+                }
 
-                //                var allList = new List<Profil_Doppelzylinder>();
-                //                allList.Add(listDopel);
-                //                ViewBag.dopel = allList;
-                //                break;
-                //            }
-                //        }
-                //    }
-                    
-                   
-                   
-                       
-                    
-                //}
+                if (allUserListOrder[d].ZylinderId == profilK[0].schliessanlagenId)
+                {
+                    var dopelId = profilK[d].Id;
+
+                    var dopelProduct = new List<Profil_Knaufzylinder>();
+
+                    var products = await db.Aussen_Innen_Knauf.ToListAsync();
+
+                    var item = products.Where(x => x.aussen >= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).ToList();
+
+                    var itemCount = products.Where(x => x.aussen >= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).Select(x => x.Profil_KnaufzylinderId).Max();
+
+                    for (int i = 0; i < itemCount; i++)
+                    {
+                        var f = db.Profil_Knaufzylinder.Where(x => x.Id == item[i].Profil_KnaufzylinderId).Select(x => x).First();
+                        dopelProduct.Add(f);
+                    }
+
+                    ViewBag.b = dopelProduct;
+                }
+
                 if (allUserListOrder[d].ZylinderId == profilH[0].schliessanlagenId)
                 {
-                 
+                    var dopelId = profilH[d].Id;
 
-                    var HalbzylinderId = profilH[d].Id;
-                    ViewBag.a = await db.Profil_Halbzylinder.Where(x => x.Id == HalbzylinderId || x.Id < HalbzylinderId).ToListAsync();
-                }
-                if (allUserListOrder[d].ZylinderId == Zylinder_Typ[2].Id)
-                {
+                    var dopelProduct = new List<Profil_Halbzylinder>();
 
-                }
-                if (allUserListOrder[d].ZylinderId == Zylinder_Typ[3].Id)
-                {
+                    var products = await db.Aussen_Innen_Halbzylinder.ToListAsync();
 
-                }
-                if (allUserListOrder[d].ZylinderId == Zylinder_Typ[4].Id)
-                {
+                    var itemD = products.Where(x => x.aussen >= allUserListOrder[d].aussen).GroupBy(x=>x.Profil_HalbzylinderId).ToList();
 
-                }
-                if (allUserListOrder[d].ZylinderId == Zylinder_Typ[5].Id)
-                {
+                    var itemCount = products.Where(x => x.aussen >= allUserListOrder[d].aussen).Select(x => x.Profil_HalbzylinderId).Max();
 
+                    for (int i = 0; i < itemCount; i++)
+                    {
+                        var f = db.Profil_Halbzylinder.Where(x => x.Id == itemD[i].Key).Select(x => x).First();
+
+                        dopelProduct.Add(f);
+                    }
+
+                    ViewBag.c = dopelProduct;
                 }
+
+                //if (allUserListOrder[d].ZylinderId == profilD[0].schliessanlagenId)
+                //{
+                //    var dopelId = profilD[d].Id;
+
+                //    var dopelProduct = new List<Profil_Doppelzylinder>();
+
+                //    var products = await db.Aussen_Innen.ToListAsync();
+
+                //    var item = products.Where(x => x.aussen >= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).ToList();
+                //    var itemCount = products.Where(x => x.aussen >= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).Select(x => x.Profil_DoppelzylinderId).Max();
+
+
+
+                //    for (int i = 0; i < itemCount; i++)
+                //    {
+                //        var f = db.Profil_Doppelzylinder.Where(x => x.Id == item[i].Profil_DoppelzylinderId).Select(x => x).First();
+                //        dopelProduct.Add(f);
+                //    }
+
+                //    ViewBag.a = dopelProduct;
+                //}
+
+                //if (allUserListOrder[d].ZylinderId == profilD[0].schliessanlagenId)
+                //{
+                //    var dopelId = profilD[d].Id;
+
+                //    var dopelProduct = new List<Profil_Doppelzylinder>();
+
+                //    var products = await db.Aussen_Innen.ToListAsync();
+
+                //    var item = products.Where(x => x.aussen >= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).ToList();
+                //    var itemCount = products.Where(x => x.aussen >= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).Select(x => x.Profil_DoppelzylinderId).Max();
+
+
+
+                //    for (int i = 0; i < itemCount; i++)
+                //    {
+                //        var f = db.Profil_Doppelzylinder.Where(x => x.Id == item[i].Profil_DoppelzylinderId).Select(x => x).First();
+                //        dopelProduct.Add(f);
+                //    }
+
+                //    ViewBag.a = dopelProduct;
+                //}
+
+                //if (allUserListOrder[d].ZylinderId == profilD[0].schliessanlagenId)
+                //{
+                //    var dopelId = profilD[d].Id;
+
+                //    var dopelProduct = new List<Profil_Doppelzylinder>();
+
+                //    var products = await db.Aussen_Innen.ToListAsync();
+
+                //    var item = products.Where(x => x.aussen >= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).ToList();
+                //    var itemCount = products.Where(x => x.aussen >= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).Select(x => x.Profil_DoppelzylinderId).Max();
+
+
+
+                //    for (int i = 0; i < itemCount; i++)
+                //    {
+                //        var f = db.Profil_Doppelzylinder.Where(x => x.Id == item[i].Profil_DoppelzylinderId).Select(x => x).First();
+                //        dopelProduct.Add(f);
+                //    }
+
+                //    ViewBag.a = dopelProduct;
+                //}
+
             }
 
-            //for (int j = 0; j < profilD.Count(); j++)
-            //{
-            //    for (int i = 0; i < profilD.Count(); i++)
-            //    {
-            //        var id = profilD[j].Id;
-
-            //        ViewBag.dopel = db.Profil_Doppelzylinder.Where(x => x.Id == id || x.Id < id).ToList();
-
-            //        if (profilH.Count() > i)
-            //        {
-            //            var HalbzylinderId = profilH[i].Id;
-            //            ViewBag.a = db.Profil_Halbzylinder.Where(x => x.Id == HalbzylinderId || x.Id < HalbzylinderId).ToList();
-            //        }
-            //        if (profilK.Count() > i)
-            //        {
-            //            var HalbzylinderId = profilK[i].Id;
-            //            ViewBag.b = db.Profil_Knaufzylinder.Where(x => x.Id == HalbzylinderId || x.Id < HalbzylinderId).ToList();
-            //        }
-            //        if (hebel.Count() > i)
-            //        {
-            //            var HalbzylinderId = hebel[i].Id;
-            //            ViewBag.c = db.Hebelzylinder.Where(x => x.Id == HalbzylinderId || x.Id < HalbzylinderId).ToList();
-            //        }
-            //        if (Vorhangschloss.Count() > i)
-            //        {
-            //            var HalbzylinderId = Vorhangschloss[i].Id;
-            //            ViewBag.d = db.Vorhangschloss.Where(x => x.Id == HalbzylinderId || x.Id < HalbzylinderId);
-            //        }
-            //        if (Aussenzylinder.Count() > i)
-            //        {
-            //            var HalbzylinderId = Aussenzylinder[i].Id;
-            //            ViewBag.f = db.Aussenzylinder_Rundzylinder.Where(x => x.Id == HalbzylinderId || x.Id < HalbzylinderId).ToList();
-            //        }
-
-            //    }
-            //}
-            //userKey = allUserListOrder.GroupBy(x=>x.userKey).;
             return View("System_Auswählen", userKey);
         }
        
@@ -302,28 +323,55 @@ namespace schliessanlagen_konfigurator.Controllers
             return View("Finisher");
         }
         [HttpPost]
-        public ActionResult SaveOrder(Orders Key, List<string> Turname, List<int> ZylinderId, List<float> aussen, List<float> innen, List<int> Count, List<string> NameKey, List<int> CountKey, List<bool> IsOppen, List<bool> IsOppen2, List<bool> IsOppen3)
+        public ActionResult SaveOrder(Orders Key, List<string> Turname, List<int> ZylinderId, List<float> aussen, List<float> innen, List<int> Count, List<string> NameKey, List<int> CountKey, List<bool>  IsOppen)
         {
+          
             for (int i = 0; i < Turname.Count(); i++)
             {
                 var orders = new Orders{
-                    Tur = Turname[i],
                     userKey = Key.userKey,
+                    DorName = Turname[i],
                     ZylinderId = ZylinderId[i],
-                    aussen = aussen[i],
-                    innen = innen[i],
                     Count = Count[i],
                     NameKey = NameKey[i],
                     CountKey = CountKey[i],
                    
                 };
-                db.Orders.Add(orders); 
+                if (innen.Count() > 0)
+                {
+                    orders.innen = innen[i];
+                }
+                if (aussen.Count() > 0)
+                {
+                    orders.aussen = aussen[i];
+                }
+                db.Orders.Add(orders);
+                db.SaveChanges();
+
+                var x = db.Orders.Select(x => x.id).ToList();
+
+                var Open = new isOpen_Order
+                {
+                    OrdersId = x.Last()
+                };
+                db.isOpen_Order.Add(Open);
+                db.SaveChanges();
+
+                var order_open = db.isOpen_Order.Select(x => x.Id).ToList();
+
+                for (var s = 0; s < 3; s++)
+                {
+                        var Open_value = new isOpen_value
+                        {
+                            isOpen_OrderId = order_open.Last(),
+                            isOpen = true,
+                        };
+                        db.isOpen_value.Add(Open_value);
+                }
+                db.SaveChanges();
             }
-            db.SaveChanges();
-
-
-
-            return RedirectToAction("System_Auswählen");
+              
+            return RedirectToAction("System_Auswählen", Key);
         }
         
     }

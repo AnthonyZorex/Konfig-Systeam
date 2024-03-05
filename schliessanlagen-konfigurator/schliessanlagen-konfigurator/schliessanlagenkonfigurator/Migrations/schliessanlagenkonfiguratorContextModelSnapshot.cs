@@ -388,10 +388,10 @@ namespace schliessanlagenkonfigurator.Migrations
                     b.Property<int>("CountKey")
                         .HasColumnType("int");
 
-                    b.Property<string>("NameKey")
+                    b.Property<string>("DorName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Tur")
+                    b.Property<string>("NameKey")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ZylinderId")

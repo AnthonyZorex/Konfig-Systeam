@@ -53,78 +53,81 @@
                     int position_current = 3;
                 int b = 1;
                 int position = position_current;
-                                                                    @for (int a = 0; position_current > a; a++)
+                                                                                                    @for (int a = 2; position_current > a; a++)
                 {
-                                                                        <div class="line-name-body">
-                                                                            <div class="pos-body">
-                                                                                <span>@b</span>
-                                                                            </div>
+                                                                                                        <div class="line-name-body">
+                                                                                                            <div class="pos-body">
+                                                                                                                <span>@b</span>
+                                                                                                            </div>
 
-                                                                            <div class="turname-body">
-                                                                                    <input asp-for="Tur" name="Turname" type="text" style="max-width:250px" />
-                                                                            </div>
+                                                                                                            <div class="turname-body">
+                                                                                                                    <input  name="Turname" type="text" style="max-width:250px" />
+                                                                                                            </div>
 
-                                                                            <div class="type-body">
-                                                                                <span>
-                                                                                    @Html.DropDownListFor(model => model.ZylinderId,
-                                                                 new List<SelectListItem> {
-                                                                    new SelectListItem {  Value = "9",Text="Profil-Doppelzylinder" },
-                                                                    new SelectListItem {  Value = "10",Text="Profil-Halbzylinder" },
-                                                                    new SelectListItem {  Value = "11",Text="Profil-Knaufzylinder" },
-                                                                    new SelectListItem {  Value = "12",Text="Hebelzylinder" },
-                                                                    new SelectListItem {  Value = "13",Text="Vorhangschloss" },
-                                                                    new SelectListItem {  Value = "14",Text="Aussenzylinder / Rundzylinder" }
-                                                                    },
-                                                                 new { @class = "form-select", @id = "select" })
-                                                                                </span>
-                                                                            </div>
+                                                                                                            <div class="type-body">
+                                                                                                                <span>
+                                                                                                                    @Html.DropDownListFor(model => model.ZylinderId,
+                                                                                                                     new List<SelectListItem> {
+                                                                                                                        new SelectListItem {  Value = "1",Text="Profil-Doppelzylinder" },
+                                                                                                                        new SelectListItem {  Value = "2",Text="Profil-Halbzylinder" },
+                                                                                                                        new SelectListItem {  Value = "3",Text="Profil-Knaufzylinder" },
+                                                                                                                        new SelectListItem {  Value = "4",Text="Hebelzylinder" },
+                                                                                                                        new SelectListItem {  Value = "5",Text="Vorhangschloss" },
+                                                                                                                        new SelectListItem {  Value = "6",Text="Aussenzylinder / Rundzylinder" }
+                                                                                                                        },
+                                                                                                                     new { @class = "form-select", @id = "select" })
+                                                                                                                </span>
+                                                                                                            </div>
 
-                                                                            <div class="length-body">
-                                                                                    <input asp-for="aussen" name="aussen" type="text" class="turInput" />
-                                                                            </div>
+                                                                                                            <div class="length-body">
+                                                                                                                    <input asp-for="aussen" name="aussen" type="text" class="turInput" />
+                                                                                                            </div>
 
-                                                                            <div class="length-body">
-                                                                                    <input asp-for="innen" name="innen" type="text" class="turInput" />
-                                                                            </div>
+                                                                                                            <div class="length-body">
+                                                                                                                    <input asp-for="innen" name="innen" type="text" class="turInput" />
+                                                                                                            </div>
 
-                                                                            <div class="pieces-body">
-                                                                                    <input asp-for="Count" name="Count" type="text" class="turInput" />
+                                                                                                            <div class="pieces-body">
+                                                                                                                    <input asp-for="Count" name="Count" type="text" class="turInput" />
 
-                                                                            </div>
-                                                                          
-                                                                        </div>
-                    b++;
-                }
-            }
+                                                                                                            </div>
+                                                                                                          
+                                                                                                        </div>
+                                                                                                                b++;
+                                                                                                            }
+                                                                                                        }
             
-        </div>
-        <div id="konfiguratorItemKey">
+                                                                                                    </div>
+                                                                                                    <div id="konfiguratorItemKey">
 
-            @{
-                int d = 1;
-                int position2 = position_current;
-                                                                    @for (int a = 0; position_current > a; a++)
-                {
-                                            <div style="display: block;margin-right: 10px ">
-                                                                            <div id="key">
-                                                                                <h6 id='nK'><span>S</span>@d</h6>
-                                                                                    <input asp-for="NameKey" name="NameKey" type="text" id="KeyName" />
-                                                                                <br>
-                                                                                    <input asp-for="CountKey" name="CountKey" type="text" id="counter" />
-                                                                            </div>
-                                                                            <div id="chekboxPanel">
-                                                                                    @for (int c = 0; position_current > c; c++)
-                                                                                    {
-                                  
-                                                                                    }
+                                                                                                        @{
+                                                                                                            int d = 1;
+                                                                                                            int position2 = position_current;
+                                                                                                    @for (int a = 2; position_current > a; a++)
+                                                                                                                          {
+                                                                                                            <div style="display: block;margin-right: 10px ">
+                                                                                                            <div id="key">
+                                                                                                                <h6 id='nK'><span>S</span>@d</h6>
+                                                                                                                    <input asp-for="NameKey" name="NameKey" type="text" id="KeyName" />
+                                                                                                                <br>
+                                                                                                                    <input asp-for="CountKey" name="CountKey" type="text" id="counter" />
+                                                                                                            </div>
+                                                                                                            <div id="chekboxPanel">
 
-                                                                            </div>
-                                                                        </div>
+
+                                                                                                                    @for (int c = 0; position_current > c; c++)
+                                                                                                                    {
+                                                                                                                           <input type="checkbox" id="myCheckbox" name="IsOppen" >
+                                   
+                                                                                                                    }
+
+                                                                                                            </div>
+                                                                                                        </div>
                         d++;
                 }
             }
         </div>
-            <input type="submit" style="margin-left: 20px;" value="Save" class="btn btn-primary" />
+            <input type="submit" style="margin-left: 20px;" value="Save" class="btn btn-primary" id="respons" />
        
     </div>
     </form>
@@ -134,31 +137,31 @@
             int i = 21;
 
             int j = 21;
-                                                                <select id="size">
-                                                                    @for (int a = 1; i > a; a++)
+                                                                                                <select id="size">
+                                                                                                    @for (int a = 1; i > a; a++)
                 {
-                                                                        <h2>
+                                                                                                        <h2>
 
-                                                                        <option>
-                                                                                @a
-                                                                        </option>
+                                                                                                        <option>
+                                                                                                                @a
+                                                                                                        </option>
 
-                                                                        </h2>
+                                                                                                        </h2>
                 }
-                                                                </select>
+                                                                                                </select>
 
-                                                                <select id="Row">
-                                                                    @for (int a = 1; j > a; a++)
+                                                                                                <select id="Row">
+                                                                                                    @for (int a = 1; j > a; a++)
                 {
-                                                                        <h2>
+                                                                                                        <h2>
 
-                                                                        <option>
-                                                                                @a
-                                                                        </option>
+                                                                                                        <option>
+                                                                                                                @a
+                                                                                                        </option>
 
-                                                                        </h2>
+                                                                                                        </h2>
                 }
-                                                                </select>
+                                                                                                </select>
 
         }
         
@@ -173,7 +176,12 @@
     let keyOptions = document.getElementById('konfiguratorItemKey');
     let arraySize = 0;
     let sylinderType = document.querySelectorAll('#select');
+    
+  
+    
 
+    
+    
     siz.addEventListener('change', () => {
 
         let allItem = document.querySelectorAll('.line-name-body');
