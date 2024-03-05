@@ -43,9 +43,45 @@
     <div id="konfigurator">
 
         <div id="menuPannel">
-
-
             <form asp-action="Create_Exel">
+                @if (ViewBag.a != null )
+                {
+                    @foreach (var item in ViewBag.a)
+                    {
+                        @item.companyName
+                        @item.NameSystem
+                        @item.Name
+                        <img decoding="async" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="50px" height="50px" />
+                        <h6 id="cost">@item.Cost</h6>
+                        @item.Artikelnummer
+                    }
+                }
+      
+                @if (ViewBag.b != null)
+                {
+                    @foreach (var item in ViewBag.b)
+                    {
+                        @item.companyName
+                        @item.NameSystem
+                        @item.Name
+                        <img decoding="async" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="50px" height="50px" />
+                        <h6 id="cost">@item.Cost</h6>
+                        @item.Artikelnummer
+                    }
+                } 
+                @if (ViewBag.c != null)
+                {
+                    @foreach (var item in ViewBag.c)
+                    {
+                        @item.companyName
+                        @item.NameSystem
+                        @item.Name
+                        <img decoding="async" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="50px" height="50px" />
+                        <h6 id="cost">@item.Cost</h6>
+                        @item.Artikelnummer
+                    }
+                }
+
                 <input type="submit" value="Create Exel" class="btn btn-primary" />
             </form>
             <div id="generics">

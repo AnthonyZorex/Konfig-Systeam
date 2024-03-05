@@ -849,9 +849,6 @@ namespace schliessanlagen_konfigurator.Controllers
                     db.SaveChanges();
                 }
               
-           
-
-           
 
             db.Aussenzylinder_Rundzylinder.Remove(aussenzylinder);
             db.SaveChanges();
