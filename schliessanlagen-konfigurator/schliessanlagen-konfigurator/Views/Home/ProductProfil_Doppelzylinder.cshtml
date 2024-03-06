@@ -42,33 +42,28 @@
                         <option id="innen">@listItem mm</option>
                     }
                 </select>
-
-               
-
             </div>
+
             <div id="cardOptions">
-               
-                <ul>
-                    
+                @{
+                    int valueCount =  0;
+                }
+                @if (ViewBag.countOptions > 0)
+                {
                     @for (int i = 0; i < ViewBag.optionsName.Count; i++)
                     {
-                        <li>@ViewBag.optionsName[i]</li>
-                    }
-                       
-                        @for (int j = 0; j < ViewBag.optionsValue.Count; j++)
-                        {
-                            <li>@ViewBag.optionsValue[j]</li>
-                        }
-                    
-                    </ul>
+                        <h6>@ViewBag.optionsName[i]</h6>
 
-                    <!-- Отображение списка цен -->
-                    <ul>
-                        @for (int i = 0; i < ViewBag.optionsPrise.Count; i++)
-                        {
-                            <li>@ViewBag.optionsPrise[i]</li>
-                        }
-                    </ul>
+                        <select class="form-select" id="ProductOptionsSelector">
+                            @for (int j = 0; j < ViewBag.optionValueCount; j++)
+                            {
+                                valueCount++;
+                                <option id="@valueCount">@ViewBag.optionsValue[j]</option>
+                            }
+                        </select>
+                    }
+                }
+                   
 
             </div>
         </div>      
@@ -85,32 +80,63 @@
     let optionsAuss = document.querySelectorAll('#auss');
     let optionsinnen = document.querySelectorAll('#innen');
     let cost = document.getElementById('cost');
-    let NotOfnung = document.getElementById('select DoppelZylinderNGF');
+   
+    var parentElement = document.querySelectorAll('#ProductOptionsSelector');
+    var ids = [];
     let Schließung = document.getElementById('select Schließung');
+    
     let x = cost.innerHTML;
+    let fx = @ViewBag.optionsPrise;
+
     localStorage.setItem("cost", x);
     localStorage.sInnen = 0;
     localStorage.sAussen = 0;
     localStorage.options = 0;
 
+    
+    function serchOptions() {
 
+        for (let i=0; i < parentElement.length; i++) 
+        {
+            parentElement.forEach(function (element) 
+            {
+                ids.push(element.children[i]);
+                
+            });
+        } 
+    }
+    serchOptions()
 
     function Vitess_4000() {
 
+        let f = ids.length % parentElement.length; 
+        parentElement.forEach((item) => {
+           for(let fs =0;fs < ids. 
+            item.addEventListener('change', (event) => 
+            {
+                console.log(f);
+                // console.log(event.target.children);
+                // localStorage.options = Number(fx[ids[].id]);
 
-        // if (SystemName == 'Vitess.4000') {
+            })
+        });
+      
+       
+            // NotOfnung.addEventListener('change', () => 
+            // {
 
-            // NotOfnung.addEventListener('change', () => {
-              
-            //     if (NotOfnung.value == "8") {
-            //         localStorage.options = Number(localStorage.options)+ 8;
+
+            //     if (NotOfnung.value == "8") 
+            //     {
+            //         localStorage.options = Number(localStorage.options) + fx[0];
             //         let a = Number(localStorage.sInnen);
             //         let b = Number(localStorage.sAussen);
             //         let c = Number(localStorage.options);
             //         let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a+ b + c;
             //         cost.innerHTML = String(sum);
             //     }
-            //     else {
+            //     else 
+            //     {
             //         localStorage.options = localStorage.options - 8;
             //         let a = Number(localStorage.sInnen);
             //         let b = Number(localStorage.sAussen);
@@ -121,8 +147,10 @@
             // });
 
 
-            selectInnen.addEventListener('change', () => {
+            selectInnen.addEventListener('change', () => 
+            {
 
+            
                 let selectValue = Number(selectAussen.value.slice(0, 2));
 
                 if (selectInnen.value == '80 mm') 
@@ -547,7 +575,7 @@
                     optionsinnen[optionsinnen.length - 10].setAttribute("style", "display: block;");
                 }
             });
-        // };
+        
 
     }
 

@@ -119,27 +119,27 @@ namespace schliessanlagen_konfigurator.Controllers
                     ViewBag.c = dopelProduct;
                 }
 
-                //if (allUserListOrder[d].ZylinderId == profilD[0].schliessanlagenId)
-                //{
-                //    var dopelId = profilD[d].Id;
+                if (allUserListOrder[d].ZylinderId == profilD[0].schliessanlagenId)
+                {
+                    var dopelId = profilD[d].Id;
 
-                //    var dopelProduct = new List<Profil_Doppelzylinder>();
+                    var dopelProduct = new List<Profil_Doppelzylinder>();
 
-                //    var products = await db.Aussen_Innen.ToListAsync();
+                    var products = await db.Aussen_Innen.ToListAsync();
 
-                //    var item = products.Where(x => x.aussen >= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).ToList();
-                //    var itemCount = products.Where(x => x.aussen >= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).Select(x => x.Profil_DoppelzylinderId).Max();
+                    var item = products.Where(x => x.aussen >= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).ToList();
+                    var itemCount = products.Where(x => x.aussen >= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).Select(x => x.Profil_DoppelzylinderId).Max();
 
 
 
-                //    for (int i = 0; i < itemCount; i++)
-                //    {
-                //        var f = db.Profil_Doppelzylinder.Where(x => x.Id == item[i].Profil_DoppelzylinderId).Select(x => x).First();
-                //        dopelProduct.Add(f);
-                //    }
+                    for (int i = 0; i < itemCount; i++)
+                    {
+                        var f = db.Profil_Doppelzylinder.Where(x => x.Id == item[i].Profil_DoppelzylinderId).Select(x => x).First();
+                        dopelProduct.Add(f);
+                    }
 
-                //    ViewBag.a = dopelProduct;
-                //}
+                    ViewBag.a = dopelProduct;
+                }
 
                 //if (allUserListOrder[d].ZylinderId == profilD[0].schliessanlagenId)
                 //{
