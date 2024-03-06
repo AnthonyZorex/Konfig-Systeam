@@ -3,7 +3,7 @@ using schliessanlagen_konfigurator.Models;
 using System.Diagnostics;
 using schliessanlagen_konfigurator.Data;
 using Microsoft.EntityFrameworkCore;
-
+using System.Text.Json;
 using schliessanlagen_konfigurator.Models.ProfilDopelZylinder;
 using schliessanlagen_konfigurator.Models.ProfilDopelZylinder.ValueOptions;
 
@@ -19,6 +19,7 @@ using schliessanlagen_konfigurator.Models.Aussen_Rund;
 using schliessanlagen_konfigurator.Models.Vorhan;
 using schliessanlagen_konfigurator.Models.Hebelzylinder;
 using System.Drawing;
+using Humanizer;
 
 
 namespace schliessanlagen_konfigurator.Controllers
@@ -986,36 +987,47 @@ namespace schliessanlagen_konfigurator.Controllers
 
                     var innen = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == profil.Id).Select(x => x.Intern).ToList();
 
-                    var queryableOptions = db.Profil_Doppelzylinder_Options.Where(x=>x.DoppelzylinderId== profil.Id).ToList();
-                    
-                    var dopelOptions = db.Profil_Doppelzylinder_Options.Where(x=>x.DoppelzylinderId == profil.Id).Select(x=>x.Id).First();
+                    var queryableOptions = db.Profil_Doppelzylinder_Options.Where(x=>x.DoppelzylinderId== profil.Id).Select(x=>x.Id).ToList();
 
-                    var allOptions = db.NGF.Where(x => x.OptionsId == dopelOptions).ToList();        
+                    ViewBag.aussen = aussen;
 
-                    ViewBag.optionsName = allOptions.Select(x=>x.Name).ToList();
+                    ViewBag.innen = innen;
+                    ViewBag.countOptions = queryableOptions.Count();
 
-             List<NGF_Value> ngfList = new List<NGF_Value>();
-
-            for (int s = 0; s < allOptions.Count(); s++)
+            if (queryableOptions.Count() > 0)
             {
-                var opValue = db.NGF_Value.Where(x => x.NGFId == allOptions[s].Id).ToList();
 
-                for (int i = 0; i<opValue.Count(); i++)
+                List<NGF> ngf = new List<NGF>();
+
+                for (int z = 0; z < queryableOptions.Count(); z++)
                 {
-                    ngfList.Add(opValue[i]);
+                    var allOptions = db.NGF.Where(x => x.OptionsId == queryableOptions[z]).ToList();
+                    ngf.Add(allOptions.First());
                 }
-              
+
+
+
+                ViewBag.optionsName = ngf.Select(x => x.Name).ToList();
+
+                List<NGF_Value> ngfList = new List<NGF_Value>();
+
+                for (int s = 0; s < ngf.Count(); s++)
+                {
+                    var opValue = db.NGF_Value.Where(x => x.NGFId == ngf[s].Id).ToList();
+
+                    for (int i = 0; i < opValue.Count(); i++)
+                    {
+                        ngfList.Add(opValue[i]);
+                    }
+                    ViewBag.optionValueCount = opValue.Count();
+                }
+
+                ViewBag.optionsValue = ngfList.Select(x => x.Value).ToList();
+
+                ViewBag.optionsPrise = JsonSerializer.Serialize(ngfList.Select(x => x.Cost).ToList());
+
             }
-
-            ViewBag.countOptions = allOptions.Count();
-
-            ViewBag.optionsValue = ngfList.Select(x => x.Value).ToList();
-
-            ViewBag.optionsPrise = ngfList.Select(x => x.Cost).ToList();
-
-            ViewBag.aussen = aussen;
-
-            ViewBag.innen = innen;
+            
 
 
 
