@@ -96,16 +96,9 @@ a {
     margin-right: auto;
 }
 
-#konfigMenu {
-    display: grid;
-    grid-template-columns: repeat(3,auto);
-    text-align: center;
-    margin-top: 50px;
-    /*max-width:1400px;*/
-}
+
 
 #InformBar {
-    display: flex;
     margin-top: 50px;
     font-size: 16px;
     gap: 50px;
@@ -273,4 +266,217 @@ a {
 }
 .input-counter{
     display:none;
+}
+#ExelItem {
+    grid-template-columns: repeat(2,auto);
+    display: grid;
+    margin-top: 50px;
+    max-width: 1250px;
+    background: white;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px;
+}
+#ExelMenu {
+    background-color: #EDEDED;
+    padding: 5px;
+}
+#productImage {
+    padding: 20px;
+}
+#ProductNameUndCost {
+    margin-top: 20px;
+    display: flex;
+}
+#cost{
+   color:red;
+}
+#product_desciptions{
+    margin-top:20px;
+}
+#closeMenu {
+    margin: 20px;
+    padding: 20px 150px 20px 150px;
+}
+#chekProduct {
+    padding: 20px 150px 20px 150px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+#productMenuInfo {
+    margin-left: 20px;
+   
+    margin-right: 20px;
+}
+#productChek{
+    text-align:end;
+}
+#sclusselInfo {
+    margin-left: 300px;
+    padding: 5px;
+    background: red;
+    color: white;
+    align-items: center;
+    display: flex;
+}
+#removeButton {
+    height: 30px;
+    width: 30px;
+    border-radius: 55px;
+    background: white;
+    font-size: 16px;
+    font-weight: bold;
+    color: red;
+    border: none;
+    margin-left: 10px;
+}
+#removeButtonTur {
+    height: 30px;
+    width: 30px;
+    border-radius: 55px;
+    background: white;
+    font-size: 16px;
+    font-weight: bold;
+    color: red;
+    border: none;
+    margin-left: 10px;
+}
+#addButtonTur {
+    height: 30px;
+    width: 30px;
+    border-radius: 55px;
+    background: white;
+    font-size: 16px;
+    font-weight: bold;
+    color: red;
+    border: none;
+    margin-left: 10px;
+}
+#addButton {
+    height: 30px;
+    width: 30px;
+    border-radius: 55px;
+    background: white;
+    font-size: 16px;
+    font-weight: bold;
+    color: red;
+    border: none;
+    margin-left: 10px;
+}
+#schlussel {
+    margin-top: 5px;
+}
+#schlussel2 {
+    margin-left: 520px;
+    margin-top: 5px;
+}
+#TexInputKey {
+    margin-top: 70px;
+    margin-left: -100px;
+    height: 140px;
+}
+#inputS {
+    margin-top: 30px;
+    padding: 4px ;
+    transform: rotate(270deg);
+}
+#inputCount {
+    text-align: center;
+    margin-top: 25px;
+    max-width: 30px;
+}
+.TexCount {
+    max-width: 42px;
+    text-align: center;
+    display: grid;
+    grid-template-columns: 30px;
+    background-color: #EDEDED;
+    padding: 5px;
+}
+#itemKeyBlock {
+    margin-left: 300px;
+    display: flex;
+    width: 996px;
+    max-width: 996px;
+    overflow-x: scroll;
+}
+#blockSclussel {
+   
+}
+#sclusselInfo2 {
+    padding: 5px;
+    background: red;
+    color: white;
+    align-items: center;
+    display: flex;
+}
+#schlussel3 {
+    margin-left: 800px;
+    margin-top: 5px;
+}
+#ItemTur {
+    gap: 10px;
+    display: flex;
+}
+.TexCountTur {
+    max-width: 290px;
+    text-align: center;
+    gap: 10px ;
+    display: grid;
+    grid-template-columns: 30px;
+    background-color: #EDEDED;
+    padding: 5px;
+}
+#inputTur{
+    padding:5px;
+}
+#counterTur {
+    margin-top: 10px
+}
+#infoButten {
+    width: 20px;
+    padding: 5px;
+}
+#TypeSelectTurItem {
+    margin-left: -10px;
+    height: 30px;
+    width: 235px
+}
+#SelectTurItem {
+    width: 280px
+}
+.custom-checkbox {
+    display: block;
+    margin-bottom: 10px;
+    padding-bottom: 200px;
+}
+
+    .custom-checkbox input {
+        display: none;
+    }
+
+.checkmark {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    cursor: pointer;
+}
+
+.custom-checkbox input:checked + .checkmark {
+    background-color: #2196F3;
+}
+
+.checkbox-label {
+    margin-left: 10px;
+    cursor: pointer;
+}
+#blockInfo {
+    width: 300px
+}
+#turInfo {
+    display: flex;
+}
+#valueCheket {
+    display: flex
 }
