@@ -6,319 +6,372 @@
 }
 
 <div>
-    <h1>Konfigurator</h1>
     <div id="konfigMenu">
         <button type="button" class="btn btn-danger">1. Schließplan erstellen</button>
         <button type="button" class="btn btn-secondary"><a href="@Url.Action("System_Auswählen","Konfigurator")">2. System auswählen</a></button>
         <button type="button" class="btn btn-secondary">3. Parameter einstellen</button>
     </div>
+    <form asp-action="SaveOrder" enctype="multipart/form-data" asp-controller="Konfigurator">
+  
+        @Html.HiddenFor(m => m.userKey)
+
+        <input name="ItemCount" id="itemcountOptions" />
+
     <div id="InformBar">
-    </div>
-    <div id="key-konfig">
-        <h6 style="margin-top: 10px;"> key</h6>
-        
-    </div>
-    <form asp-action="SaveOrder" >
-    <div id="konfigurator">
-     @Html.HiddenFor(x => x.userKey) 
-        <div id="konfiguratorItem_menu_5">
-            <div class="line-name-header ">
-                <div class="pos">
-                    <span>Pos</span>
+        <div id="blockSclussel" >
+            <div id="sclusselInfo">
+                <div id="schlussel">
+                    <h3>Schlüssel</h3>
                 </div>
-
-                <div class="turname">
-                    <span>Türbezeichnung</span>
+               
+                <div id="schlussel2">
+                    <h4>Schlüssel hinzufügen</h4>
                 </div>
-
-                <div class="type">
-                    <span>
-                        Typzelinder
-                    </span>
+                
+                <div>
+                        <input id="removeButton" type="button" value="-">
+                        <input id="addButton" type="button" value="+">
                 </div>
-
-                <div class="length" style="display: block;">
-                    <span>Zylinderläng </span>
-
-                    <span>außen|innen</span>
-                </div>
-
-                <div class="pieces">
-                    <span>Stuck</span>
-                </div>
-
             </div>
-
-            @{
-                    int position_current = 3;
-                int b = 1;
-                int position = position_current;
-                                                                                                    @for (int a = 2; position_current > a; a++)
-                {
-                                                                                                        <div class="line-name-body">
-                                                                                                            <div class="pos-body">
-                                                                                                                <span>@b</span>
-                                                                                                            </div>
-
-                                                                                                            <div class="turname-body">
-                                                                                                                    <input  name="Turname" type="text" style="max-width:250px" />
-                                                                                                            </div>
-
-                                                                                                            <div class="type-body">
-                                                                                                                <span>
-                                                                                                                    @Html.DropDownListFor(model => model.ZylinderId,
-                                                                                                                     new List<SelectListItem> {
-                                                                                                                        new SelectListItem {  Value = "1",Text="Profil-Doppelzylinder" },
-                                                                                                                        new SelectListItem {  Value = "2",Text="Profil-Halbzylinder" },
-                                                                                                                        new SelectListItem {  Value = "3",Text="Profil-Knaufzylinder" },
-                                                                                                                        new SelectListItem {  Value = "4",Text="Hebelzylinder" },
-                                                                                                                        new SelectListItem {  Value = "5",Text="Vorhangschloss" },
-                                                                                                                        new SelectListItem {  Value = "6",Text="Aussenzylinder / Rundzylinder" }
-                                                                                                                        },
-                                                                                                                     new { @class = "form-select", @id = "select" })
-                                                                                                                </span>
-                                                                                                            </div>
-
-                                                                                                            <div class="length-body">
-                                                                                                                    <input asp-for="aussen" name="aussen" type="text" class="turInput" />
-                                                                                                            </div>
-
-                                                                                                            <div class="length-body">
-                                                                                                                    <input asp-for="innen" name="innen" type="text" class="turInput" />
-                                                                                                            </div>
-
-                                                                                                            <div class="pieces-body">
-                                                                                                                    <input asp-for="Count" name="Count" type="text" class="turInput" />
-
-                                                                                                            </div>
-                                                                                                          
-                                                                                                        </div>
-                                                                                                                b++;
-                                                                                                            }
-                                                                                                        }
-            
-                                                                                                    </div>
-                                                                                                    <div id="konfiguratorItemKey">
-
-                                                                                                        @{
-                                                                                                            int d = 1;
-                                                                                                            int position2 = position_current;
-                                                                                                    @for (int a = 2; position_current > a; a++)
-                                                                                                                          {
-                                                                                                            <div style="display: block;margin-right: 10px ">
-                                                                                                            <div id="key">
-                                                                                                                <h6 id='nK'><span>S</span>@d</h6>
-                                                                                                                    <input asp-for="NameKey" name="NameKey" type="text" id="KeyName" />
-                                                                                                                <br>
-                                                                                                                    <input asp-for="CountKey" name="CountKey" type="text" id="counter" />
-                                                                                                            </div>
-                                                                                                            <div id="chekboxPanel">
-
-
-                                                                                                                    @for (int c = 0; position_current > c; c++)
-                                                                                                                    {
-                                                                                                                           <input type="checkbox" id="myCheckbox" name="IsOppen" >
-                                   
-                                                                                                                    }
-
-                                                                                                            </div>
-                                                                                                        </div>
-                        d++;
-                }
-            }
+            <div id="itemKeyBlock">
+                <div  class="TexCount">
+                    <h6>1</h6>
+                    <div id="TexInputKey">
+                            <input id="inputS" name="NameKey" placeholder="Name des Schlüssels" type="text" />
+                    </div>
+                    <div>
+                            <input id="inputCount" name="CountKey" value="1" type="text" />
+                    </div>
+                </div>
+             
+            </div>
         </div>
-            <input type="submit" style="margin-left: 20px;" value="Save" class="btn btn-primary" id="respons" />
-       
+        <div>
+            <div id="sclusselInfo2">
+                <div id="schlussel">
+                    <h3>Türen (Zugänge)</h3>
+                </div>
+
+                <div id="schlussel3">
+                    <h4>Tür hinzufügen</h4>
+                </div>
+
+                <div>
+                    <input id="removeButtonTur" type="button" value="-">
+                    <input id="addButtonTur" type="button" value="+">
+                </div>
+            </div>
+            <div>
+                <div id="turInfo">
+                    <div id="blockInfo">
+                        <div class="TexCountTur">
+                            <div id="ItemTur">
+                                <div>
+                                    <h6 id="counterTur">1</h6>
+                                </div>
+
+                                            <div>
+                                                <input id="inputTur" name="Turname" placeholder="Name der Tür" />
+                                            </div>
+                                <div>
+                                    <button id="infoButten">i</button>
+                                </div>
+                            </div>
+                                <details>
+                                    <summary>  </summary>
+                            <div id="SelectTurItem">
+                                    <select id="TypeSelectTurItem" name="ZylinderId">
+                                    @foreach (var list in ViewBag.Zylinder_Typ)
+                                    {
+                                        <option>@list.nameType</option>
+                                    }
+                                </select>
+                            </div>
+                            <div id="SelectTurItem">
+                                    <select id="TypeSelectTurItem" name="aussen">
+                                    <option>Außenlänge</option>
+                                    @foreach (var list in ViewBag.Aussen)
+                                    {
+                                        <option>@list</option>
+                                    }
+                                </select>
+                            </div>
+                            <div id="SelectTurItem">
+                                    <select id="TypeSelectTurItem" name="innen">
+                                    <option>Innenlänge</option>
+                                    @foreach (var list in ViewBag.Innen)
+                                    {
+                                        <option>@list</option>
+                                    }
+                                </select>
+                            </div>
+                           
+                            <div id="SelectTurItem">
+                                        <select id="TypeSelectTurItem" name="Options">
+                                    <option>Options</option>
+                                    @foreach (var list in ViewBag.OptionsName)
+                                    {
+                                        <option>@list</option>
+                                    }
+                                </select>
+                            </div>
+                                </details>
+                        </div>
+@* 
+                            horizontal *@
+
+                    </div>
+                <div id="InfoValue">
+                    <div id="horizontal">
+                                <div id="checkboxContainer">
+                                    <input type="checkbox" style="" id="checkbox1">
+                                    <input type="hidden" name="IsOppen" value="false" id="I1.checkbox1">
+                                </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
     </div>
+     
+        <input type="submit" class="btn btn-success" id="input" value="Weiter" />
     </form>
-    <div>
-
-        @{
-            int i = 21;
-
-            int j = 21;
-                                                                                                <select id="size">
-                                                                                                    @for (int a = 1; i > a; a++)
-                {
-                                                                                                        <h2>
-
-                                                                                                        <option>
-                                                                                                                @a
-                                                                                                        </option>
-
-                                                                                                        </h2>
-                }
-                                                                                                </select>
-
-                                                                                                <select id="Row">
-                                                                                                    @for (int a = 1; j > a; a++)
-                {
-                                                                                                        <h2>
-
-                                                                                                        <option>
-                                                                                                                @a
-                                                                                                        </option>
-
-                                                                                                        </h2>
-                }
-                                                                                                </select>
-
-        }
-        
-    </div>
-    
 </div>
-
 <script>
 
-    let konfigMenu = document.getElementById('konfiguratorItem_menu_5');
-    let siz = document.getElementById('size');
-    let keyOptions = document.getElementById('konfiguratorItemKey');
-    let arraySize = 0;
-    let sylinderType = document.querySelectorAll('#select');
-    
-  
-    
+        let blockCount = 1;
+        
+        let blockTur = 1;
+   
+    var data = JSON.parse(localStorage.getItem(`checkbox${blockCount}`));
 
-    
-    
-    siz.addEventListener('change', () => {
+   
 
-        let allItem = document.querySelectorAll('.line-name-body');
+    function createCustomCheckbox(id) {
+        var checkbox = document.getElementById(id);
+        var checkboxValue = false;
 
-        if (allItem.length != 0) {
-            arraySize = siz.value - allItem.length;
+        if (!localStorage.getItem(id)) {
+            localStorage.setItem(id, 'false');
         }
-        else {
-            arraySize = siz.value;
-        }
+        // Проверяем, есть ли уже сохраненное значение в локальном хранилище
+        var savedValue = localStorage.getItem(id);
 
-        if (allItem.length > siz.value) {
-            arraySize = allItem.length - siz.value;
-
-            for (let d = 0; d < arraySize; d++) {
-                allItem[d].remove();
-                console.log(allItem[d]);
-            }
+        // Если есть сохраненное значение, устанавливаем его в чекбоксе
+        if (savedValue !== null) {
+            checkbox.checked = (savedValue === 'true'); // преобразуем строку в булево значение
+            checkboxValue = checkbox.checked;
 
         }
-        else {
-            for (let i = 0; i < arraySize; i++) {
 
-                let div = document.createElement('div');
-                div.classList.add('line-name-body');
+        // Обработчик события изменения состояния чекбокса
+        checkbox.addEventListener('change', function () {
+            // Сохраняем состояние чекбокса в локальное хранилище
+            localStorage.setItem(id, this.checked);
+            // Записываем значение чекбокса в переменную
+            checkboxValue = this.checked;
 
-                let pos = document.createElement('h6');
-                // pos.innerHTML = String(b+i);
-                div.append(pos);
+            let switches = document.getElementById(`I${blockTur}.${id}`);
+            if (switches !== null)
+                switches.value = String(this.checked);
 
-                let inputTür = document.createElement('input');
-                inputTür.setAttribute('name', 'Turname');
-                div.append(inputTür);
-
-                let selectroSlyssel = document.createElement('select');
-
-                for (let s = 0; s < 6; s++) {
-                    let options = document.createElement('option');
-                    options.classList.add('.form-select');
-
-                    if (s == 0)
-                        options.innerHTML = 'Profil-Doppelzylinder';
-                    if (s == 1)
-                        options.innerHTML = 'Profil-Halbzylinder';
-                    if (s == 2)
-                        options.innerHTML = 'Profil-Knaufzylinder';
-                    if (s == 3)
-                        options.innerHTML = 'Hebelzylinder';
-                    if (s == 4)
-                        options.innerHTML = 'Vorhangschloss';
-                    if (s == 5)
-                        options.innerHTML = 'Aussenzylinder / Rundzylinder';
-
-                    options.setAttribute('name', 'ZylinderId');
-                    selectroSlyssel.append(options);
-                }
-                div.append(selectroSlyssel);
-
-                let Zylinderlänge = document.createElement('input');
-                Zylinderlänge.setAttribute('name', 'aussen');
-                div.append(Zylinderlänge);
-
-                let aussen = document.createElement('input');
-                aussen.setAttribute('name', 'innen');
-                div.append(aussen);
-
-                let innen = document.createElement('input');
-                innen.setAttribute('name', 'Count');
-                div.append(innen);
-
-                konfigMenu.append(div);
-
-                let chekbox = document.createElement('input');
-                chekbox.setAttribute('type', 'checkbox');
-
-                keyOptions.append(chekbox);
-            }
-        }
-
-        // if (allItem.length != siz.value)
-        //     konfigMenu.remove(allItem);
-
-    })
-
-    let aussenObject = document.querySelectorAll('[name*="aussen"]');
-    let innenObject = document.querySelectorAll('[name*="innen"]');
-    
-    function cheked() {
-        aussenObject.forEach((item) => {
-
-            for (let i = 0; i < sylinderType.length;i++) 
-            {
-
-                if (sylinderType[i].value == '9' || sylinderType[i].value == '10' || sylinderType[i].value == '11') {
-                    item.addEventListener('change', () => {
-                        if (item.value > 85) {
-                            item.value = 85;
-                            alert('Cilinder syzi min 25mm - max 81mm');
-                        }
-                        if (item.value < 25) {
-                            item.value = 25;
-                            alert('Cilinder syzi min 25mm - max 81mm');
-                        }
-                    })
-                }
-                if (sylinderType[i].value == '14') 
-                {
-                    item.addEventListener('change', () => {
-                    item.value = '';
-           
-                    })
-                }
-            }
-           
-        });
-
-        innenObject.forEach((item) => {
-            item.addEventListener('change', () => {
-
-                for (let i = 0; i < sylinderType.length; i++) 
-                {
-                    if (sylinderType[i].value == '9' || sylinderType[i].value == '10') {
-                        item.addEventListener('change', () => {
-                            if (item.value > 85) {
-                                item.value = 85;
-                                alert('Cilinder syzi min 25mm - max 81mm');
-                            }
-                            if (item.value < 25) {
-                                item.value = 25;
-                                alert('Cilinder syzi min 25mm - max 81mm');
-                            }
-                        })
-                    }
-                }
-            })
+        
         });
     }
-    cheked();
 
+    function foo() {
+        localStorage.clear();
+        createCustomCheckbox(`checkbox${blockCount}`);
+    }
+
+    window.onload = foo()
+
+    // Создаем кастомные чекбоксы
+    createCustomCheckbox('checkbox1');
+
+
+    function removeBlockTur() {
+                let blockToRemove = document.getElementById('BlockTur-' + blockTur);
+                    if (blockToRemove) {
+                        blockToRemove.remove();
+          
+                        for (let s = 0; s < blockCount; s++) 
+                        {
+                            let blockToRemoveTurValue = document.getElementById(`${blockTur}.checkbox${s}`);
+                            blockToRemoveTurValue.remove();
+                        }
+
+                    blockTur--;
+                    }
+                }
+
+        function addBlockTur() {
+        blockTur++;
+
+        // Создаем новый блок
+        let newBlock = document.createElement('div');
+        newBlock.id = 'BlockTur-' + blockTur;
+        newBlock.innerHTML = `  <div class="TexCountTur">
+                                <div id="ItemTur">
+                                    <div>
+                                       <h6 id="counterTur">${blockTur}</h6>
+                                    </div>
+
+                                    <div>
+                                            <input id="inputTur" name="Turname" placeholder="Name der Tür" />
+                                    </div>
+
+                                    <div>
+                                        <button id="infoButten">i</button>
+                                    </div>
+                                </div>
+                                      <details>
+                                        <summary>  </summary>
+                                <div id="SelectTurItem">
+                                        <select id="TypeSelectTurItem" name="ZylinderId">
+                                    @foreach (var list in ViewBag.Zylinder_Typ)
+                                    {
+                                      <option>@list.nameType</option>
+                                    }
+                                    </select>
+                                </div>
+                                <div id="SelectTurItem">
+                                        <select id="TypeSelectTurItem" name="aussen">
+                                        <option>Außenlänge</option>
+                                        @foreach (var list in ViewBag.Aussen)
+                                        {
+                                            <option>@list</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div id="SelectTurItem">
+                                        <select id="TypeSelectTurItem" name="innen">
+                                        <option>Options</option>
+                                        @foreach (var list in ViewBag.Innen)
+                                        {
+                                          <option>@list</option>
+                                        }
+                                    </select>
+                                </div>
+                               
+                                <div id="SelectTurItem">
+                                             <select id="TypeSelectTurItem" name="Options">
+                                        <option>Options</option>
+                                         @foreach (var list in ViewBag.OptionsName)
+                                         {
+                                            <option>@list</option>
+                                         }
+                                    </select>
+                                </div>
+                            </div>
+                                     </details>
+                `;
+
+            document.getElementById('blockInfo').appendChild(newBlock);
+
+            let horizont = document.createElement('div');
+            horizont.id = 'horizontal';
+          
+
+            for (let i = 0; i < blockCount; i++) 
+            {
+
+                let newBlockTur = document.createElement('div');
+                newBlockTur.innerHTML = ` <div id="checkboxContainer">
+                            <input type="checkbox" id=${blockTur}.checkbox${i}>
+                   <input type="hidden" name="IsOppen" value="false" id="I${blockTur}.checkbox${i}">
+                     </div>`;
+
+                horizont.appendChild(newBlockTur);
+
+                document.getElementById('InfoValue').appendChild(horizont);
+
+                createCustomCheckbox(`${blockTur}.checkbox${i}`);
+            }
+    }
+        function removeBlock() 
+        {
+            let blockToRemove = document.getElementById('TexCount-' + blockCount);
+        
+            if (blockToRemove) 
+            {
+                blockToRemove.remove();
+                if (blockTur > 1) 
+                {
+                    for (let f = 1; f <= blockTur;) {
+                           
+                            let blockToRemoveTurValue = document.getElementById(`${f}.checkbox${blockCount}`);
+                            blockToRemoveTurValue.remove();
+                            
+                            console.log(blockCount);
+                            console.log(f);
+                            console.log(blockToRemoveTurValue);
+                            if(f==1)
+                            blockCount--;
+                        f++;
+                        
+                    }
+                       
+                }
+
+                    else 
+                    {
+                        let blockToRemoveTurValue = document.getElementById(`${blockTur}.checkbox${blockCount}`);
+                        blockToRemoveTurValue.remove();
+                        console.log(blockCount);
+                    }
+
+            lockCount--;
+            }
+              
+        }
+
+        // Функция для добавления блока
+    function addBlock() {
+        blockCount++;
+        
+        let item = document.getElementById('itemcountOptions');
+        item.value = blockCount;
+        // Создаем новый блок
+        let newBlock = document.createElement('div');
+        newBlock.id = 'TexCount-' + blockCount;
+        newBlock.innerHTML = `
+                                    <div  class="TexCount">
+                         <h6>${blockCount}</h6>
+                            <div id="TexInputKey">
+                                    <input id="inputS" name="NameKey" placeholder="Name des Schlüssels" type="text" />
+                            </div>
+                            <div>
+                                     <input id="inputCount" name="CountKey" value="1" type="text" />
+                            </div>
+                        </div>
+
+            `;
+
+            let newBlockTur = document.createElement('div');
+            newBlockTur.innerHTML = ` <div id="checkboxContainer">
+                                                    <input type="checkbox" id=${blockTur}.checkbox${blockCount}>
+                                            <input type="hidden" name="IsOppen" value="false" id="I${blockTur}.checkbox${blockCount}">
+                                    </div>`;
+            
+            document.getElementById('itemKeyBlock').appendChild(newBlock);
+            document.getElementById('horizontal').appendChild(newBlockTur);
+
+            createCustomCheckbox(`${blockTur}.checkbox${blockCount}`);
+
+            var hiddenInput = document.createElement('input');
+             hiddenInput.setAttribute('type', 'hidden');
+            hiddenInput.setAttribute('id', `I${blockTur}.checkbox${blockCount}`);
+            hiddenInput.setAttribute('name', 'IsOppen');
+            hiddenInput.setAttribute('value', JSON.stringify(data));
+
+            document.getElementById('checkboxContainer').append(hiddenInput);
+    }
+
+        document.getElementById('removeButton').addEventListener('click', removeBlock);
+        document.getElementById('addButton').addEventListener('click', addBlock);
+
+    document.getElementById('removeButtonTur').addEventListener('click', removeBlockTur);
+    document.getElementById('addButtonTur').addEventListener('click', addBlockTur);
+    
 </script>

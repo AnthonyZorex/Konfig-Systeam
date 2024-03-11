@@ -11,8 +11,9 @@ namespace schliessanlagen_konfigurator.Models
         public int ZylinderId { get; set; }
         public float? aussen { get; set; }
         public float? innen { get; set; }
-        public int Count { get; set; }
+        public int? Count { get; set; }
         public int CountKey { get; set; }
+        public string? Options { get; set; }
         public string? NameKey { get; set; }
         public ICollection<isOpen_Order> isOpen_Order { get; set; }
         public Orders()

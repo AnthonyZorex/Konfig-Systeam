@@ -7,53 +7,52 @@
 @Html.HiddenFor(m => m.userKey)
 
 <div>
-    <h1>Konfigurator</h1>
-    <div id="konfigMenu">
-        <button type="button" class="btn btn-danger">1. Schließplan erstellen</button>
-        <button type="button" class="btn btn-secondary">2. System auswählen</button>
-        <button type="button" class="btn btn-secondary">3. Parameter einstellen</button>
-    </div>
+    <div>
+        <h3>
+            System auswählen
+        </h3>
 
-    <div id="InformBar">
-        <div id="ItemBar">
-            <h4>Vorlage</h4>
-            <h4>Gleichschließung</h4>
-        </div>
-        <div id="ItemBar">
-            <h4>Vorlage</h4>
-            <h4>Einfamilienhaus</h4>
-        </div>
-        <div id="ItemBar">
-            <h4>Vorlage</h4>
-            <h4>Mehrfamilienhaus</h4>
-        </div>
-        <div id="ItemBar">
-            <h4>Vorlage</h4>
-            <h4>Unternehmen</h4>
-        </div>
-        <div id="ItemBar">
-            <h4>Vorlage</h4>
-            <h4>Firmenkomplex</h4>
-        </div>
-
+        <p>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
+            ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim
+            justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.
+        </p>
     </div>
-    <div id="key-konfig">
-        <h6 style="margin-top: 10px;"> key</h6>
-    </div>
-    <div id="konfigurator">
+    <div >
 
-        <div id="menuPannel">
+        <div id="ExelMenu">
             <form asp-action="Create_Exel">
                 @if (ViewBag.a != null )
                 {
                     @foreach (var item in ViewBag.a)
                     {
-                        @item.companyName
-                        @item.NameSystem
-                        @item.Name
-                        <img decoding="async" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="50px" height="50px" />
-                        <h6 id="cost">@item.Cost</h6>
-                        @item.Artikelnummer
+                        <div id="ExelItem">
+                            <div id="productImage">
+                                <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                            </div>
+                            <div id="productMenuInfo">
+                                <div id="ProductNameUndCost">
+
+                                    <div>
+                                        <h3>@item.Name</h3>
+                                    </div>
+
+                                    <div style="margin-left: auto;">
+                                        <h4 id="cost">ab @item.Cost €</h4>
+                                    </div>
+                                   
+                                </div>
+
+                                <div id="product_desciptions">
+                                    <h5>@item.description</h5>
+                                </div>
+                                <div id="productChek">
+                                    <button class="btn btn-danger" id="chekProduct">WÄHLEN</button>
+                                </div>
+                            </div>
+
+                           
+                        </div>
                     }
                 }
       
@@ -61,28 +60,72 @@
                 {
                     @foreach (var item in ViewBag.b)
                     {
-                        @item.companyName
-                        @item.NameSystem
-                        @item.Name
-                        <img decoding="async" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="50px" height="50px" />
-                        <h6 id="cost">@item.Cost</h6>
-                        @item.Artikelnummer
+                        <div id="ExelItem">
+                            <div id="productImage">
+                                <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                            </div>
+                            <div id="productMenuInfo">
+                                <div id="ProductNameUndCost">
+
+                                    <div>
+                                        <h3>@item.Name</h3>
+                                    </div>
+
+                                    <div style="margin-left: auto;">
+                                        <h4 id="cost">ab @item.Cost €</h4>
+                                    </div>
+
+                                </div>
+
+                                <div id="product_desciptions">
+                                    <h5>@item.description</h5>
+                                </div>
+                                <div id="productChek">
+                                    <button class="btn btn-danger" id="chekProduct">WÄHLEN</button>
+                                </div>
+                            </div>
+
+
+                        </div>
                     }
                 } 
                 @if (ViewBag.c != null)
                 {
+
                     @foreach (var item in ViewBag.c)
                     {
-                        @item.companyName
-                        @item.NameSystem
-                        @item.Name
-                        <img decoding="async" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="50px" height="50px" />
-                        <h6 id="cost">@item.Cost</h6>
-                        @item.Artikelnummer
+                        <div id="ExelItem">
+                            <div id="productImage">
+                                <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                            </div>
+                            <div id="productMenuInfo">
+                                <div id="ProductNameUndCost">
+
+                                    <div>
+                                        <h3>@item.Name</h3>
+                                    </div>
+
+                                    <div style="margin-left: auto;">
+                                        <h4 id="cost">ab @item.Cost €</h4>
+                                    </div>
+
+                                </div>
+
+                                <div id="product_desciptions">
+                                    <h5>@item.description</h5>
+                                </div>
+                                <div id="productChek">
+                                    <button class="btn btn-danger" id="chekProduct">WÄHLEN</button>
+                                </div>
+                            </div>
+
+
+                        </div>
                     }
+                    
                 }
 
-                <input type="submit" value="Create Exel" class="btn btn-primary" />
+                <input type="submit" value="Create Exel" id="closeMenu" class="btn btn-dark" />
             </form>
             <div id="generics">
             </div>
@@ -90,86 +133,86 @@
     </div>
 </div>
         <script>
-            let generics = document.getElementById('generations');
-            let generic = document.getElementById('generic');
-            let dopel = document.querySelectorAll('#dopel');
-            let halb = document.querySelectorAll('#halb');
-            let Knayf = document.querySelectorAll('#Knayf');
-            let Hebel = document.querySelectorAll('#Hebel');
-            let vorhang = document.querySelectorAll('#vorhang');
-            let aussen = document.querySelectorAll('#aussen');
+            // let generics = document.getElementById('generations');
+            // let generic = document.getElementById('generic');
+            // let dopel = document.querySelectorAll('#dopel');
+            // let halb = document.querySelectorAll('#halb');
+            // let Knayf = document.querySelectorAll('#Knayf');
+            // let Hebel = document.querySelectorAll('#Hebel');
+            // let vorhang = document.querySelectorAll('#vorhang');
+            // let aussen = document.querySelectorAll('#aussen');
 
-            let sum;
-            function render() {
-
-
-                for (var i = 0; i <= dopel.length; i++) {
-                    sum = 0;
-
-                    if (dopel.length > i) {
-                        document.getElementById('generics').append(dopel[i]);
-                        let res = dopel[i].children[2].innerHTML.replace(/,/, '.');
-                        sum += parseFloat(res);
-
-                    }
-                    if (halb.length > i) {
-
-                        dopel[i].append(halb[i]);
-
-                        let res = halb[i].children[2].innerHTML.replace(/,/, '.');
-                        sum += parseFloat(res);
-
-                    }
+            // let sum;
+            // function render() {
 
 
-                    if (Knayf.length > i) {
-                        dopel[i].append(Knayf[i]);
+            //     for (var i = 0; i <= dopel.length; i++) {
+            //         sum = 0;
 
-                        let res = Knayf[i].children[2].innerHTML.replace(/,/, '.');
-                        sum += parseFloat(res);
+            //         if (dopel.length > i) {
+            //             document.getElementById('generics').append(dopel[i]);
+            //             let res = dopel[i].children[2].innerHTML.replace(/,/, '.');
+            //             sum += parseFloat(res);
 
+            //         }
+            //         if (halb.length > i) {
 
-                    }
+            //             dopel[i].append(halb[i]);
 
+            //             let res = halb[i].children[2].innerHTML.replace(/,/, '.');
+            //             sum += parseFloat(res);
 
-                    if (Hebel.length > i) {
-                        dopel[i].append(Hebel[i]);
-
-                        let res = Hebel[i].children[2].innerHTML.replace(/,/, '.');
-                        sum += parseFloat(res);
-
-
-                    }
-
-                    if (vorhang.length > i) {
-                        dopel[i].append(vorhang[i]);
-                        let res = vorhang[i].children[2].innerHTML.replace(/,/, '.');
-                        sum += parseFloat(res);
+            //         }
 
 
-                    }
+            //         if (Knayf.length > i) {
+            //             dopel[i].append(Knayf[i]);
+
+            //             let res = Knayf[i].children[2].innerHTML.replace(/,/, '.');
+            //             sum += parseFloat(res);
 
 
-                    if (aussen.length > i) {
-                        dopel[i].append(aussen[i]);
-                        let res = aussen[i].children[2].innerHTML.replace(/,/, '.');
-                        sum += parseFloat(res);
-                    }
-                    let paddingUp = document.createElement('hr');
-                    dopel[i].append(paddingUp);
-                    let paddingDown = document.createElement('hr');
-                    let cost = document.createElement('h1');
-                    cost.innerHTML = `${sum}€`;
-                    dopel[i].append(cost);
-                    dopel[i].append(paddingDown);
-
-                }
+            //         }
 
 
+            //         if (Hebel.length > i) {
+            //             dopel[i].append(Hebel[i]);
+
+            //             let res = Hebel[i].children[2].innerHTML.replace(/,/, '.');
+            //             sum += parseFloat(res);
 
 
-            }
-            render();
+            //         }
+
+            //         if (vorhang.length > i) {
+            //             dopel[i].append(vorhang[i]);
+            //             let res = vorhang[i].children[2].innerHTML.replace(/,/, '.');
+            //             sum += parseFloat(res);
+
+
+            //         }
+
+
+            //         if (aussen.length > i) {
+            //             dopel[i].append(aussen[i]);
+            //             let res = aussen[i].children[2].innerHTML.replace(/,/, '.');
+            //             sum += parseFloat(res);
+            //         }
+            //         let paddingUp = document.createElement('hr');
+            //         dopel[i].append(paddingUp);
+            //         let paddingDown = document.createElement('hr');
+            //         let cost = document.createElement('h1');
+            //         cost.innerHTML = `${sum}€`;
+            //         dopel[i].append(cost);
+            //         dopel[i].append(paddingDown);
+
+            //     }
+
+
+
+
+            // }
+            // render();
             // generic.remove(dopel, halb, Knayf, Hebel, vorhang, aussen);
 
 

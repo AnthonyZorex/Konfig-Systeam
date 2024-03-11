@@ -28,15 +28,66 @@ namespace schliessanlagen_konfigurator.Controllers
         public async Task<ActionResult> IndexKonfigurator()
         {
             ViewBag.Zylinder_Typ = await db.Schliessanlagen.ToListAsync();
+
+            var a = await db.Aussen_Innen.Select(x=>x.aussen).ToListAsync();
+            var b = await db.Aussen_Innen_Knauf.Select(x => x.aussen).ToListAsync();
+            var c = await db.Aussen_Innen_Halbzylinder.Select(x => x.aussen).ToListAsync();
+
+            var d = await db.Aussen_Innen.Select(x => x.Intern).ToListAsync();
+            var e = await db.Aussen_Innen_Knauf.Select(x => x.Intern).ToListAsync();
+
+            var optionsName = db.NGF.Select(x => x.Name).ToList();
+
+
+            var listAllInnen = new List<float>();
+            var listAllAussen = new List<float>();
+            var ListOptions = new List<string>();
+
+            for (int i = 0; i < optionsName.Count; i++)
+                ListOptions.Add(optionsName[i]);
+
+
+            for (int i = 0; i < d.Count; i++)
+                listAllInnen.Add(d[i]);
+            for (int i = 0; i < e.Count; i++)
+                listAllInnen.Add(e[i]);
+
+
+
+            for (int i = 0; i < a.Count; i++)
+                listAllAussen.Add(a[i]);
+            for (int i = 0; i < b.Count; i++)
+                listAllAussen.Add(b[i]);
+            for (int i = 0; i < c.Count; i++)
+                listAllAussen.Add(c[i]);
+
+            var orderedNumbers = from i in listAllAussen
+                                 orderby i
+                                 select i;
+
+            var orderedInnen = from i in listAllInnen
+                               orderby i
+                                 select i;
+
+
+
+            ViewBag.Innen = orderedInnen.Distinct();
+
+            ViewBag.Aussen = orderedNumbers.Distinct();
+
+            ViewBag.OptionsName = ListOptions.Distinct();
+
             var session = _contextAccessor.HttpContext.Session;
+
             var UserKey = session.Id;
             Orders user = new Orders();
             user.userKey = UserKey;
             ViewBag.isOpen = db.isOpen_value.Select(x=>x.isOpen);
+
             return View(user);
         }
         [HttpGet]
-        public async Task<ActionResult>  System_Auswählen(Orders userKey)
+        public async Task<ActionResult>System_Auswählen(Orders userKey)
         {
 
             var orders = await db.Orders.ToListAsync();
@@ -119,26 +170,26 @@ namespace schliessanlagen_konfigurator.Controllers
                     ViewBag.c = dopelProduct;
                 }
 
-                if (allUserListOrder[d].ZylinderId == profilD[0].schliessanlagenId)
+                if (allUserListOrder[d].ZylinderId == Vorhangschloss[0].schliessanlagenId)
                 {
-                    var dopelId = profilD[d].Id;
+                    var dopelId = Vorhangschloss[d].Id;
 
-                    var dopelProduct = new List<Profil_Doppelzylinder>();
+                    var dopelProduct = new List<Vorhangschloss>();
 
-                    var products = await db.Aussen_Innen.ToListAsync();
+                    var products = await db.Size.ToListAsync();
 
-                    var item = products.Where(x => x.aussen >= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).ToList();
-                    var itemCount = products.Where(x => x.aussen >= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).Select(x => x.Profil_DoppelzylinderId).Max();
+                    var item = products.Where(x => x.sizeVorhangschloss >= allUserListOrder[d].aussen ).ToList();
+                    var itemCount = products.Where(x => x.sizeVorhangschloss >= allUserListOrder[d].aussen).Max();
 
 
 
-                    for (int i = 0; i < itemCount; i++)
-                    {
-                        var f = db.Profil_Doppelzylinder.Where(x => x.Id == item[i].Profil_DoppelzylinderId).Select(x => x).First();
-                        dopelProduct.Add(f);
-                    }
+                    //for (int i = 0; i < itemCount; i++)
+                    //{
+                    //    var f = db.Vorhangschloss.Where(x => x.Id == item[i].Profil_DoppelzylinderId).Select(x => x).First();
+                    //    dopelProduct.Add(f);
+                    //}
 
-                    ViewBag.a = dopelProduct;
+                    ViewBag.d = dopelProduct;
                 }
 
                 //if (allUserListOrder[d].ZylinderId == profilD[0].schliessanlagenId)
@@ -323,19 +374,47 @@ namespace schliessanlagen_konfigurator.Controllers
             return View("Finisher");
         }
         [HttpPost]
-        public ActionResult SaveOrder(Orders Key, List<string> Turname, List<int> ZylinderId, List<float> aussen, List<float> innen, List<int> Count, List<string> NameKey, List<int> CountKey, List<bool>  IsOppen)
+        public ActionResult SaveOrder(Orders Key, List<string> Turname, List<string> ZylinderId, List<float> aussen, List<float> innen, List<int> Count, List<string> NameKey, List<int> CountKey, List<string> IsOppen, List<string> Options, List<int> ItemCount)
         {
-          
+
+
             for (int i = 0; i < Turname.Count(); i++)
             {
-                var orders = new Orders{
+                int idZylinder = 0;
+
+                if (ZylinderId[i] == "Profil-Doppelzylinder")
+                {
+                    idZylinder = 1;
+                }
+                if (ZylinderId[i] == "Profil-Halbzylinder")
+                {
+                    idZylinder = 2;
+                }
+                if (ZylinderId[i] == "Profil-Knaufzylinder")
+                {
+                    idZylinder = 3;
+                }
+                if (ZylinderId[i] == "Hebelzylinder")
+                {
+                    idZylinder = 4;
+                }
+                if (ZylinderId[i] == "Vorhangschloss")
+                {
+                    idZylinder = 5;
+                }
+                if (ZylinderId[i] == "Aussenzylinder_Rundzylinder")
+                {
+                    idZylinder = 6;
+                }
+
+                var orders = new Orders {
                     userKey = Key.userKey,
                     DorName = Turname[i],
-                    ZylinderId = ZylinderId[i],
-                    Count = Count[i],
+                    ZylinderId = idZylinder,
+                    //Count = Count[i],
                     NameKey = NameKey[i],
                     CountKey = CountKey[i],
-                   
+                    Options = Options[i]
                 };
                 if (innen.Count() > 0)
                 {
@@ -359,19 +438,33 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var order_open = db.isOpen_Order.Select(x => x.Id).ToList();
 
-                for (var s = 0; s < 3; s++)
+                for (var s = 0; s < ItemCount.Count(); s++)
                 {
+                    for (var f = 0; f < ItemCount[s]; f++)
+                    {
+                        bool valueOppen = false;
+
+                        if (IsOppen[f] == "true")
+                        {
+                            valueOppen = true;
+                        }
+                        if (IsOppen[f] == "true")
+                        {
+                            valueOppen = false;
+                        }
                         var Open_value = new isOpen_value
                         {
                             isOpen_OrderId = order_open.Last(),
-                            isOpen = true,
+                            isOpen = valueOppen,
                         };
                         db.isOpen_value.Add(Open_value);
+                    }
+
                 }
                 db.SaveChanges();
             }
-              
-            return RedirectToAction("System_Auswählen", Key);
+
+            return RedirectToAction("System_Auswählen", "Konfigurator", new { Key } );
         }
         
     }

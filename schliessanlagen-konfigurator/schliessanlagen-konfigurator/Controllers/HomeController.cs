@@ -3,23 +3,21 @@ using schliessanlagen_konfigurator.Models;
 using System.Diagnostics;
 using schliessanlagen_konfigurator.Data;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json;
+
 using schliessanlagen_konfigurator.Models.ProfilDopelZylinder;
 using schliessanlagen_konfigurator.Models.ProfilDopelZylinder.ValueOptions;
-
 using schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder;
-
 using schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.ValueOptions;
 using schliessanlagen_konfigurator.Models.Halbzylinder;
-using System.Diagnostics.Metrics;
-using Newtonsoft.Json.Linq;
-using NuGet.ContentModel;
+
 using schliessanlagen_konfigurator.Models.Halbzylinder.ValueOptions;
 using schliessanlagen_konfigurator.Models.Aussen_Rund;
 using schliessanlagen_konfigurator.Models.Vorhan;
 using schliessanlagen_konfigurator.Models.Hebelzylinder;
-using System.Drawing;
-using Humanizer;
+using System.Text.Json;
+using Newtonsoft.Json;
+
+
 
 
 namespace schliessanlagen_konfigurator.Controllers
@@ -124,6 +122,15 @@ namespace schliessanlagen_konfigurator.Controllers
                     Intern = innen[i]
                 };
                 db.Aussen_Innen.Add(ausse_innen);
+
+                string json = JsonConvert.SerializeObject(ausse_innen);
+               
+                using (FileStream fs = new FileStream("user.json", FileMode.OpenOrCreate))
+                {
+                    await System.Text.Json.JsonSerializer.SerializeAsync<Aussen_Innen>(fs, ausse_innen);
+                    Console.WriteLine("Data has been saved to file");
+                }
+
                 db.SaveChanges();
             }
 
@@ -892,6 +899,43 @@ namespace schliessanlagen_konfigurator.Controllers
         {
             var doppelzylinder = db.Profil_Doppelzylinder.Find(profil_Doppelzylinder.Id);
 
+            ViewBag.AussenProduct = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == profil_Doppelzylinder.Id).Select(x => x.aussen).ToList();
+            ViewBag.InternProduct = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == profil_Doppelzylinder.Id).Select(x => x.Intern).ToList();
+
+
+            var dopelOptions = db.Profil_Doppelzylinder_Options.Where(x=>x.DoppelzylinderId == profil_Doppelzylinder.Id).Select(x => x.Id).ToList();
+
+            var options = new List<NGF>();
+            var value = new List<NGF_Value>();
+          
+
+            for (int i = 0; i < dopelOptions.Count(); i++)
+            {
+                var s = db.NGF.Where(x => x.OptionsId == dopelOptions[i]).ToList();
+                for (int j = 0; j < s.Count(); j++)
+                {
+                    options.Add(s[j]);
+
+                    var valueItem = db.NGF_Value.Where(x => x.NGFId == s[j].Id).ToList();
+                   
+                    ViewBag.countValue = valueItem.Count();
+
+                    for (int d = 0; d < valueItem.Count(); d++)
+                    {
+                        value.Add(valueItem[d]);
+                    }
+                }
+  
+            }
+
+            ViewBag.countOptions = options.Count();
+
+            ViewBag.DopelOptionsName = options.Select(x=>x.Name).ToList();
+
+            ViewBag.DopelOptionsValue = value.Select(x=>x.Value).ToList();
+
+            ViewBag.DopelOptionsCost = value.Select(x => x.Cost).ToList();
+
             return View("../Edit/Edit_Doppelzylinder", doppelzylinder);
         }
 
@@ -960,10 +1004,114 @@ namespace schliessanlagen_konfigurator.Controllers
             return RedirectToAction("VorhangschlossRout");
         }
         [HttpPost]
-        public ActionResult Save(Profil_Doppelzylinder profil_Doppelzylinder)
+        //Update
+        public async Task<IActionResult> Save (Profil_Doppelzylinder Profil_Doppelzylinder,
+        List<string> Options, List<string> NGFDescriptions, IFormFile postedFile, List<float> aussen,
+        List<float> innen, List<string> valueNGF, List<float> costNGF, List<int> input_counter)
         {
-            db.Profil_Doppelzylinder.Update(profil_Doppelzylinder);
+
+            if (Profil_Doppelzylinder.ImageFile != null)
+            {
+                string wwwRootPath = Environment.WebRootPath;
+
+                string fileName = Path.GetFileNameWithoutExtension(Profil_Doppelzylinder.ImageFile.FileName);
+
+                string extension = Path.GetExtension(Profil_Doppelzylinder.ImageFile.FileName);
+
+                Profil_Doppelzylinder.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+
+                string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    await Profil_Doppelzylinder.ImageFile.CopyToAsync(fileStream);
+                }
+            }
+
+            db.Profil_Doppelzylinder.Update(Profil_Doppelzylinder);
             db.SaveChanges();
+
+            var s = db.Profil_Doppelzylinder.Select(x => x.Id).ToList();
+
+            
+
+
+            for (int i = 0; i < aussen.Count(); i++)
+            {
+                var ausse_innen = new Aussen_Innen
+                {
+                    Profil_DoppelzylinderId = s.Last(),
+                    aussen = aussen[i],
+                    Intern = innen[i]
+                };
+                db.Aussen_Innen.Update(ausse_innen);
+                db.SaveChanges();
+            }
+
+
+            int counter = 0;
+            for (var i = 0; i < Options.Count(); i++)
+            {
+
+                var dopOptions = new Profil_Doppelzylinder_Options
+                {
+                    DoppelzylinderId = s.Last(),
+
+                };
+                db.Profil_Doppelzylinder_Options.Update(dopOptions);
+                db.SaveChanges();
+
+                var x = db.Profil_Doppelzylinder_Options.Select(x => x.Id).ToList();
+
+                var ngf = new NGF
+                {
+                    OptionsId = x.Last(),
+                    Name = Options[i],
+                    Description = NGFDescriptions[i],
+                    ImageFile = postedFile
+                };
+
+
+                if (ngf.ImageFile != null)
+                {
+                    string wwwRootPath = Environment.WebRootPath;
+
+                    string fileName = Path.GetFileNameWithoutExtension(ngf.ImageFile.FileName);
+
+                    string extension = Path.GetExtension(ngf.ImageFile.FileName);
+
+                    ngf.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+
+                    string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await ngf.ImageFile.CopyToAsync(fileStream);
+                    }
+                }
+
+                db.NGF.Update(ngf);
+                db.SaveChanges();
+
+                var ng = db.NGF.Select(x => x.Id).ToList();
+
+                for (var j = 0; j < input_counter[i]; j++)
+                {
+                    var ngfValue = new NGF_Value
+                    {
+                        NGFId = ng.Last(),
+                        Value = valueNGF[counter],
+                        Cost = costNGF[counter]
+                    };
+                    db.NGF_Value.Update(ngfValue);
+
+                    counter++;
+
+                }
+
+                db.SaveChanges();
+
+            }
             return RedirectToAction("Index");
         }
         [HttpPost]
@@ -1024,95 +1172,16 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 ViewBag.optionsValue = ngfList.Select(x => x.Value).ToList();
 
-                ViewBag.optionsPrise = JsonSerializer.Serialize(ngfList.Select(x => x.Cost).ToList());
+                ViewBag.optionsPrise = JsonConvert.SerializeObject(ngfList.Select(x => x.Cost).ToList());
 
             }
             
-
-
 
             return View("ProductProfil_Doppelzylinder",profilInfo);
         }
 
         #endregion
-        #region Options
-        [HttpGet]
-        [Route("Home/Add_All_Options")]
-        public ActionResult Add_All_Options(string sortOrder, string SearchDopppelzylinder, string SearchHalbzylinder, string SearchKnaufzylinder, string SearchHebelzylinder, string SearchVorhangschloss, string SearchAussenzylinder_Rundzylinder)
-        {
-            var dopelzylinder = db.Profil_Doppelzylinder.ToList();
-
-            var halb = db.Profil_Halbzylinder.ToList();
-
-            var knayf = db.Profil_Knaufzylinder.ToList();
-            
-            var hebel = db.Hebelzylinder.ToList();
-            
-            var vorhangschloos = db.Vorhangschloss.ToList();
-            
-            var aussenzylinder = db.Aussenzylinder_Rundzylinder.ToList();
-            
-            var options = db.Profil_Doppelzylinder_Options.ToList();
-
-            ViewBag.NameSortParm = System.String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-
-            if (!System.String.IsNullOrEmpty(SearchDopppelzylinder))
-            {
-                dopelzylinder = dopelzylinder.Where(s => s.Name == SearchDopppelzylinder).ToList();
-            }
-
-            if (!System.String.IsNullOrEmpty(SearchHalbzylinder))
-            {
-                halb = halb.Where(s => s.Name == SearchHalbzylinder).ToList();
-            }
-
-            if (!System.String.IsNullOrEmpty(SearchKnaufzylinder))
-            {
-                knayf = knayf.Where(s => s.Name == SearchKnaufzylinder).ToList();
-            }
-
-            if (!System.String.IsNullOrEmpty(SearchHebelzylinder))
-            {
-                hebel = hebel.Where(s => s.Name == SearchHebelzylinder).ToList();
-            }
-
-            if (!System.String.IsNullOrEmpty(SearchVorhangschloss))
-            {
-                vorhangschloos = vorhangschloos.Where(s => s.Name == SearchVorhangschloss).ToList();
-            }
-
-            if (!System.String.IsNullOrEmpty(SearchAussenzylinder_Rundzylinder))
-            {
-                aussenzylinder = aussenzylinder.Where(s => s.Name == SearchAussenzylinder_Rundzylinder).ToList();
-            }
-
-            ViewBag.dop = dopelzylinder;
-            ViewBag.halb = halb;
-            ViewBag.knayf = knayf;
-            ViewBag.hebel = hebel;
-            ViewBag.vorhangschloos = vorhangschloos;
-            ViewBag.aussenzylinder = aussenzylinder;
-            ViewBag.options = options;
-
-            return View();
-        }
-        [HttpPost]
-        public async Task<IActionResult> Create_Options(Profil_Doppelzylinder_Options options)
-        {
-            
-            if (options != null)
-            {
-                var optionsItem = new Profil_Doppelzylinder_Options
-                {
-
-                };
-                db.Profil_Doppelzylinder_Options.Add(optionsItem);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Add_All_Options");
-            }
-            return RedirectToAction("Add_All_Options");
-        }
-        #endregion 
+ 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

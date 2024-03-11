@@ -1,16 +1,107 @@
 ﻿@model schliessanlagen_konfigurator.Models.ProfilDopelZylinder.Profil_Doppelzylinder;
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = $"Edit/{Model.Id}";
 }
 
-<h1>Edit</h1>
+@Html.HiddenFor(m => m.Id)
 
-<h4>@Model.Artikelnummer</h4>
+<h1>Edit</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        
+        <form asp-action="Save" enctype="multipart/form-data" asp-controller="Home">
+
+            <div id="productMenu">
+                <input style="display:none" asp-for="schliessanlagenId" class="form-control" type="text" value="1" />
+                <div>
+                    <label asp-for="ImageFile" class="control-label"></label>
+                    <input asp-for="ImageFile" class="btn btn-success" accept="image/*" />
+                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+                    @Html.ValidationMessageFor(m => m.ImageFile, "", new { @class = "error" })
+                </div>
+            </div>
+
+            <div id="product_desciptions">
+
+                <div style="margin-bottom: 50px;">
+                    <label>Name</label>
+                    <input asp-for="Name" class="form-control" type="text" name="Name" />
+                </div>
+
+                <div style="margin-bottom: 50px;">
+                    <label> Company Name</label>
+                    <input asp-for="companyName" class="form-control" type="text" />
+                </div>
+
+                <div style="margin-bottom: 50px;">
+                    <label>Name System</label>
+                    <input asp-for="NameSystem" class="form-control" type="text" />
+                </div>
+
+                <div style="margin-bottom: 50px;">
+                    <label>Descriptions</label>
+                    <textarea asp-for="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+
+                <div style="margin-bottom: 50px;">
+                    <label> Artikelnummer</label>
+                    <input asp-for="Artikelnummer" class="form-control" type="text" name="Artikelnummer" />
+                </div>
+
+                <div style="margin-bottom: 50px;">
+                    <label>Cost</label>
+                    <input asp-for="Cost" class="form-control" />
+                </div>
+
+                <h1>Aussen & Innen <input id="addAussen_Innen" class="btn btn-success" type="button" value="+" /></h1>
+                <div id="Aussen_Innen_ProfilDopel">
+
+                    <div id="AussenProfilDopel">
+                        @{
+                            foreach (var list in ViewBag.AussenProduct)
+                            {
+                                <input type="number" placeholder="Aussen" step="0.01" value="@list" name="aussen" />
+                            }
+                        }
+                    </div>
+
+                    <div id="InnenProfilDopel">
+                        @{
+                            foreach (var list in ViewBag.InternProduct)
+                            {
+                                <input type="number" placeholder="innen" step="0.01" value="@list" name="innen" />
+                            }
+                        }
+                        
+                    </div>
+                </div>
+                <div id="productOptions">
+                    @{
+                        int valueCount = 0;
+                    }
+                    @if (ViewBag.countOptions > 0)
+                    {
+                        @for (int i = 0; i < ViewBag.countOptions; i++)
+                        {
+                            <h6>@ViewBag.DopelOptionsName[i]</h6>
+
+                            <select class="form-select" id="ProductOptionsSelector">
+
+                                @for (int j = 0; j < ViewBag.countValue; j++)
+                                {
+                                    valueCount++;
+                                    <option id="@valueCount">@ViewBag.DopelOptionsValue[j]</option>
+                                }
+                            </select>
+                        }
+                    }
+                </div>
+
+            </div>
+
+            <input type="submit" class="btn btn-success" id="input" value="Create Profil Doppelzylinder" />
+        </form>
     </div>
     
 </div>
@@ -20,7 +111,141 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+
+        let plusAussen_Innen = document.getElementById('addAussen_Innen');
+        let docInnen = document.getElementById('InnenProfilDopel');
+        let docAussen = document.getElementById('AussenProfilDopel');
+        let sum = document.querySelectorAll('#cost');
+        let Aussen_Innen_ProfilDopel = document.getElementById('Aussen_Innen_ProfilDopel');
+
+        let costNGF = document.getElementById('costNGF');
+        let valueNGF = document.getElementById('valueNGF');
+
+        let productOptions = document.getElementById('productOptions');
+        let addOptions = document.getElementById('addOptions');
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const container = document.getElementById('productOptions');
+            const createBlockBtn = document.getElementById('createBlockBtn');
+            const addInputBtn = document.getElementById('addInputBtn');
+            let blockCounter = 1;
+
+            createBlockBtn.addEventListener('click', function () {
+                const block = createBlock();
+                container.appendChild(block);
+            });
+
+            addInputBtn.addEventListener('click', function () {
+                const blocks = document.querySelectorAll('.input-block');
+                const lastBlock = blocks[blocks.length - 1];
+
+                if (lastBlock) {
+                    addInputs(lastBlock);
+                } else {
+                    alert('Сначала создайте блок');
+                }
+            });
+
+            function createBlock() {
+                const block = document.createElement('div');
+                block.classList.add('input-block');
+                block.id = `block-${blockCounter}`;
+                block.innerHTML = `<div>
+                                                <h1>Options</h1>
+                                                <label>Name</label>
+                                                <input class="form-control" type="text" name="Options" />
+                                                <div>
+                                                    <p></p>
+                                                    <input name="postedFile" type="file" class="btn btn-success" />
+                                                    <p></p>
+                                                </div>
+                                                <label>Descriptions</label>
+                                                <input class="form-control" type="text" name="NGFDescriptions" />
+                                                <h1>Value & Cost </h1>
+                                                <div id="Aussen_Innen_ProfilDopel">
+                                                    <div id="valueNGF">
+                                                        <input type="text" placeholder="valueNGF" step="0.01" name="valueNGF" />
+                                                        <span class="input-counter">0</span>
+                                                    </div>
+                                                    <div id="costNGF">
+                                                        <input type="number" id='cost' placeholder="costNGF" step="0.01" name="costNGF" />
+                                                    </div>
+
+                                                </div>
+                                            </div>`;
+                blockCounter++;
+                return block;
+            }
+
+            function addInputs(block) {
+                let d = document.createElement('input');
+                d.setAttribute('name', 'costNGF');
+                d.setAttribute('placeholder', 'costNGF');
+
+                let x = document.createElement('input');
+                x.setAttribute('name', 'valueNGF');
+                x.setAttribute('placeholder', 'valueNGF');
+
+                const div1 = block.querySelector('#valueNGF');
+                const div2 = block.querySelector('#costNGF');
+
+                div1.appendChild(x);
+
+                // Создаем счетчик и добавляем его рядом с инпутом
+                const counterSpan = document.createElement('input');
+                counterSpan.value = '0';
+                counterSpan.classList.add('input-counter');
+                counterSpan.setAttribute('name', 'input_counter');
+                div1.appendChild(counterSpan);
+
+                div2.appendChild(d);
+
+                // Обновляем счетчик инпутов
+                updateInputCounter(block);
+            }
+
+            function updateInputCounter(block) {
+                const inputCounter = block.querySelectorAll('.input-counter').length;
+                const counters = block.querySelectorAll('.input-counter');
+                counters.forEach(counter => {
+                    counter.value = inputCounter;
+                });
+            }
+        });
+
+
+        plusAussen_Innen.addEventListener('click', () => {
+            let d = document.createElement('input');
+            d.setAttribute('name', 'aussen');
+            d.setAttribute('placeholder', 'aussen');
+
+            let x = document.createElement('input');
+            x.setAttribute('name', 'innen');
+            x.setAttribute('placeholder', 'innen');
+
+            docAussen.append(d);
+            docInnen.append(x);
+
+        });
+
+        function interfaice() {
+            sum.forEach((item) => {
+                if (String(item).length < 6) {
+                    item.innerHTML = item.innerHTML.slice(0, 5) + '€';
+                }
+
+                if (String(item).length > 8) {
+                    item.innerHTML = item.innerHTML.slice(0, 6) + '€';
+                }
+
+            })
+        }
+        interfaice();
+
+
+    </script>
 }
-
-
 
