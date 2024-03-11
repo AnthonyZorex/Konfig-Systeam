@@ -1177,8 +1177,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             
 
-
-
             return View("ProductProfil_Doppelzylinder",profilInfo);
         }
 

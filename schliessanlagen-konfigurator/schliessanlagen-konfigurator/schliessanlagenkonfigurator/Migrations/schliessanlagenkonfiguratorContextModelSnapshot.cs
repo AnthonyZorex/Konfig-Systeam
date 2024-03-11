@@ -382,7 +382,7 @@ namespace schliessanlagenkonfigurator.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<int>("Count")
+                    b.Property<int?>("Count")
                         .HasColumnType("int");
 
                     b.Property<int>("CountKey")
@@ -392,6 +392,9 @@ namespace schliessanlagenkonfigurator.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NameKey")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Options")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ZylinderId")
