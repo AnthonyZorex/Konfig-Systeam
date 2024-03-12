@@ -204,8 +204,9 @@
                 blockCounter++;
                 return block;
             }
-
-            function addInputs(block) {
+           
+            function addInputs(block) 
+            {
                 let d = document.createElement('input');
                 d.setAttribute('name', 'costNGF');
                 d.setAttribute('placeholder', 'costNGF');
@@ -213,7 +214,7 @@
                 let x = document.createElement('input');
                 x.setAttribute('name', 'valueNGF');
                 x.setAttribute('placeholder', 'valueNGF');
-
+               
                 const div1 = block.querySelector('#valueNGF');
                 const div2 = block.querySelector('#costNGF');
 
@@ -221,6 +222,7 @@
 
                 // Создаем счетчик и добавляем его рядом с инпутом
                 const counterSpan = document.createElement('input');
+
                 counterSpan.value = '0';
                 counterSpan.classList.add('input-counter');
                 counterSpan.setAttribute('name', 'input_counter');

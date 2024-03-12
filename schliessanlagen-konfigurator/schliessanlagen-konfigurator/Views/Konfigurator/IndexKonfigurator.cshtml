@@ -15,7 +15,7 @@
   
         @Html.HiddenFor(m => m.userKey)
 
-        <input name="ItemCount" id="itemcountOptions" />
+        <input name="ItemCount" type="hidden" id="itemcountOptions" />
 
     <div id="InformBar">
         <div id="blockSclussel" >
@@ -74,7 +74,7 @@
                                                 <input id="inputTur" name="Turname" placeholder="Name der Tür" />
                                             </div>
                                 <div>
-                                    <button id="infoButten">i</button>
+                                        <input id="infoButten" type='button' value="i" />
                                 </div>
                             </div>
                                 <details>
@@ -95,6 +95,7 @@
                                         <option>@list</option>
                                     }
                                 </select>
+
                             </div>
                             <div id="SelectTurItem">
                                     <select id="TypeSelectTurItem" name="innen">
@@ -117,9 +118,6 @@
                             </div>
                                 </details>
                         </div>
-@* 
-                            horizontal *@
-
                     </div>
                 <div id="InfoValue">
                             <div class="horizontal" id="1horizontal">
@@ -145,7 +143,7 @@
    
     var data = JSON.parse(localStorage.getItem(`checkbox${blockCount}`));
 
-   
+  
 
     function createCustomCheckbox(id) 
     {
@@ -228,7 +226,7 @@
                                     </div>
 
                                     <div>
-                                        <button id="infoButten">i</button>
+                                     <input id="infoButten" type='button' value="i"/>
                                     </div>
                                 </div>
                                       <details>
@@ -252,7 +250,7 @@
                                 </div>
                                 <div id="SelectTurItem">
                                         <select id="TypeSelectTurItem" name="innen">
-                                        <option>Options</option>
+                                           <option>Innenlänge</option>
                                         @foreach (var list in ViewBag.Innen)
                                         {
                                           <option>@list</option>
@@ -309,17 +307,11 @@
                 {
                     for (let f = 1; f <= blockTur;) 
                     {
-
                             let blockToRemoveTurValue = document.getElementById(`${f}.checkboxContainer${blockCount}`);
                             blockToRemoveTurValue.remove();
-                            
-                            console.log(blockCount);
-
-                            // if(f==1)
-                            // blockCount--;
-
+  
                         f++;
-                        
+ 
                     }
                        
                 }

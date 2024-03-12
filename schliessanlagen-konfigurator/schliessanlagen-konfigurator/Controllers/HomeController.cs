@@ -16,6 +16,7 @@ using schliessanlagen_konfigurator.Models.Vorhan;
 using schliessanlagen_konfigurator.Models.Hebelzylinder;
 using System.Text.Json;
 using Newtonsoft.Json;
+using Microsoft.CodeAnalysis.Options;
 
 
 
@@ -123,13 +124,6 @@ namespace schliessanlagen_konfigurator.Controllers
                 };
                 db.Aussen_Innen.Add(ausse_innen);
 
-                string json = JsonConvert.SerializeObject(ausse_innen);
-               
-                using (FileStream fs = new FileStream("user.json", FileMode.OpenOrCreate))
-                {
-                    await System.Text.Json.JsonSerializer.SerializeAsync<Aussen_Innen>(fs, ausse_innen);
-                    Console.WriteLine("Data has been saved to file");
-                }
 
                 db.SaveChanges();
             }
@@ -868,27 +862,51 @@ namespace schliessanlagen_konfigurator.Controllers
         {
             var doppelzylinder = db.Profil_Doppelzylinder.Find(id);
 
-                var a = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == doppelzylinder.Id).First();
-                var option = db.NGF.Where(x => x.OptionsId == a.Id).First();
-                var Size = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == doppelzylinder.Id).First();
-                var optionV = db.NGF_Value.Where(x => x.NGFId == option.Id).ToList();
+                var a = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == doppelzylinder.Id).ToList();
 
-                db.Profil_Doppelzylinder.Remove(doppelzylinder);
-                db.SaveChanges();
-                db.Aussen_Innen.Remove(Size);
-                db.SaveChanges();
-             
-                for (int i =0; i<optionV.Count(); i++)
+                var option = new List<NGF>()
+
+;               for (int i = 0; i < a.Count(); i++)
                 {
-                    db.NGF_Value.Remove(optionV[i]);
+                    var of = db.NGF.Where(x => x.OptionsId == a[i].Id).ToList();
+                    
+                    for (int j = 0; j < of.Count(); j++)
+                    {
+                        option.Add(of[j]);
+                    }
+                    
+                }
+           
+
+            var Size = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == doppelzylinder.Id).ToList();
+
+            for (int i = 0; i < a.Count(); i++)
+            {
+                db.Aussen_Innen.Remove(Size[i]);
+                db.SaveChanges();
+            }
+
+                for (int i = 0; i < option.Count(); i++)
+                {
+                    var optionV = db.NGF_Value.Where(x => x.NGFId == option[i].Id).ToList();
+                    for (int j = 0; j < optionV.Count(); j++)
+                    {
+                        db.NGF_Value.Remove(optionV[j]);
+                        db.SaveChanges();
+                    }
+                    db.NGF.Remove(option[i]);
                     db.SaveChanges();
                 }
-               
-                db.NGF.Remove(option);
+            for (int i = 0; i < a.Count(); i++)
+            {
+                db.Profil_Doppelzylinder_Options.Remove(a[i]);
                 db.SaveChanges();
-                db.Profil_Doppelzylinder_Options.Remove(a);
-                db.SaveChanges();
-              
+            }
+                
+
+            db.Profil_Doppelzylinder.Remove(doppelzylinder);
+            db.SaveChanges();
+
             return RedirectToAction("Index");
          
         }
