@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using schliessanlagen_konfigurator.Data;
 using schliessanlagen_konfigurator.Models;
+using schliessanlagen_konfigurator.Models.Aussen_Rund;
 using schliessanlagen_konfigurator.Models.Halbzylinder;
 using schliessanlagen_konfigurator.Models.OrdersOpen;
 using schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder;
@@ -115,16 +116,15 @@ namespace schliessanlagen_konfigurator.Controllers
 
                     var products = await db.Aussen_Innen.ToListAsync();
 
-                    var item = products.Where(x => x.aussen >= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).ToList();
-                    var itemCount = products.Where(x => x.aussen >= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).Select(x => x.Profil_DoppelzylinderId).Max();
+                    var item = products.Where(x => x.aussen <= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).ToList();
 
-                    for (int i = 0; i < itemCount; i++)
+                    for (int i = 0; i < item.Count(); i++)
                     {
                         var f = db.Profil_Doppelzylinder.Where(x => x.Id == item[i].Profil_DoppelzylinderId).Select(x => x).First();
                         dopelProduct.Add(f);
                     }
                      
-                    ViewBag.a = dopelProduct;
+                    ViewBag.a = dopelProduct.ToList();
                 }
 
                 if (allUserListOrder[d].ZylinderId == profilK[0].schliessanlagenId)
@@ -137,15 +137,13 @@ namespace schliessanlagen_konfigurator.Controllers
 
                     var item = products.Where(x => x.aussen >= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).ToList();
 
-                    var itemCount = products.Where(x => x.aussen >= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).Select(x => x.Profil_KnaufzylinderId).Max();
-
-                    for (int i = 0; i < itemCount; i++)
+                    for (int i = 0; i < item.Count(); i++)
                     {
                         var f = db.Profil_Knaufzylinder.Where(x => x.Id == item[i].Profil_KnaufzylinderId).Select(x => x).First();
                         dopelProduct.Add(f);
                     }
 
-                    ViewBag.b = dopelProduct;
+                    ViewBag.b = dopelProduct.ToList();
                 }
 
                 if (allUserListOrder[d].ZylinderId == profilH[0].schliessanlagenId)
@@ -167,7 +165,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         dopelProduct.Add(f);
                     }
 
-                    ViewBag.c = dopelProduct;
+                    ViewBag.c = dopelProduct.ToList();
                 }
 
                 if (allUserListOrder[d].ZylinderId == Vorhangschloss[0].schliessanlagenId)
@@ -179,62 +177,70 @@ namespace schliessanlagen_konfigurator.Controllers
                     var products = await db.Size.ToListAsync();
 
                     var item = products.Where(x => x.sizeVorhangschloss >= allUserListOrder[d].aussen ).ToList();
-                    var itemCount = products.Where(x => x.sizeVorhangschloss >= allUserListOrder[d].aussen).Max();
 
 
+                    for (int i = 0; i < item.Count(); i++)
+                    {
+                        var f = db.Vorhangschloss.Where(x => x.Id == item[i].VorhangschlossId).Select(x => x).First();
+                        dopelProduct.Add(f);
+                    }
 
-                    //for (int i = 0; i < itemCount; i++)
+                    ViewBag.d = dopelProduct.ToList();
+                }
+
+                if (allUserListOrder[d].ZylinderId == hebel[0].schliessanlagenId)
+                {
+                    var dopelId = hebel[d].Id;
+
+                    var hebl = hebel.Where(x => x.Id == dopelId).ToList();
+
+                    //var products = await db.Size.ToListAsync();
+
+                    //var item = products.Where(x => x.sizeVorhangschloss >= allUserListOrder[d].aussen).ToList();
+
+                    //for (int i = 0; i < item.Count(); i++)
                     //{
-                    //    var f = db.Vorhangschloss.Where(x => x.Id == item[i].Profil_DoppelzylinderId).Select(x => x).First();
+                    //    var f = db.Hebelzylinder.Where(x => x.Id == item[i].Id).Select(x => x).First();
                     //    dopelProduct.Add(f);
                     //}
 
-                    ViewBag.d = dopelProduct;
+                    ViewBag.f = hebl.ToList();
+                }
+                if (allUserListOrder[d].ZylinderId == Aussenzylinder[0].schliessanlagenId)
+                {
+                    var dopelId = Aussenzylinder[d].Id;
+
+                    var aussen = Aussenzylinder.Where(x => x.Id == dopelId).ToList();
+
+                    //var options = await db.Aussen_Rund_options.Where(x => x.Aussenzylinder_RundzylinderId == Aussenzylinder[d].Id).Select(x => x.Id).ToListAsync();
+
+                    //if (options.Count() > 0)
+                    //{
+                        
+
+                    //    var s = new List<Aussen_Rund_all>();
+                    //    for (int i = 0; i < options.Count(); i++)
+                    //    {
+                    //        var option = await db.Aussen_Rund_all.Where(x => x.Aussen_Rund_optionsId == options[i]).ToListAsync();
+                    //        s.Add(option.First());
+                    //    }
+
+                    //    for (int i = 0; i < s.Count(); i++)
+                    //    {
+                    //        var f = db.Aussen_Rund_all.Where(x => x.Name == allUserListOrder[d].Options).Select(x => x).First();
+
+                    //        var fs = await db.Aussen_Rund_options.Where(x => x.Aussenzylinder_RundzylinderId == f.Id).Select(x => x.Id).ToListAsync();
+
+                    //        //var info =  Aussenzylinder.Where(x=>x.Aussen_Rund_options==fs).ToListAsync();
+
+                    //        // dopelProduct.Add(info);
+                    //    }
+                    //}
+                   
+
+                    ViewBag.e = aussen.ToList();
                 }
 
-                //if (allUserListOrder[d].ZylinderId == profilD[0].schliessanlagenId)
-                //{
-                //    var dopelId = profilD[d].Id;
-
-                //    var dopelProduct = new List<Profil_Doppelzylinder>();
-
-                //    var products = await db.Aussen_Innen.ToListAsync();
-
-                //    var item = products.Where(x => x.aussen >= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).ToList();
-                //    var itemCount = products.Where(x => x.aussen >= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).Select(x => x.Profil_DoppelzylinderId).Max();
-
-
-
-                //    for (int i = 0; i < itemCount; i++)
-                //    {
-                //        var f = db.Profil_Doppelzylinder.Where(x => x.Id == item[i].Profil_DoppelzylinderId).Select(x => x).First();
-                //        dopelProduct.Add(f);
-                //    }
-
-                //    ViewBag.a = dopelProduct;
-                //}
-
-                //if (allUserListOrder[d].ZylinderId == profilD[0].schliessanlagenId)
-                //{
-                //    var dopelId = profilD[d].Id;
-
-                //    var dopelProduct = new List<Profil_Doppelzylinder>();
-
-                //    var products = await db.Aussen_Innen.ToListAsync();
-
-                //    var item = products.Where(x => x.aussen >= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).ToList();
-                //    var itemCount = products.Where(x => x.aussen >= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).Select(x => x.Profil_DoppelzylinderId).Max();
-
-
-
-                //    for (int i = 0; i < itemCount; i++)
-                //    {
-                //        var f = db.Profil_Doppelzylinder.Where(x => x.Id == item[i].Profil_DoppelzylinderId).Select(x => x).First();
-                //        dopelProduct.Add(f);
-                //    }
-
-                //    ViewBag.a = dopelProduct;
-                //}
 
             }
 
