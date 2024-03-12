@@ -478,17 +478,17 @@ a {
 #turInfo {
     display: flex;
 }
-#checkboxContainer {
+.checkboxContainer {
     display: grid;
     gap: 200px;
     margin-top: 15px;
 }
-#horizontal {
+.horizontal {
     display: flex;
     gap: 20px;
     margin-left: 10px;
 }
-#checkboxContainer > input[type="checkbox"] {
+.checkboxContainer > input[type="checkbox"] {
     width: 20px;
     height: 20px;
 }

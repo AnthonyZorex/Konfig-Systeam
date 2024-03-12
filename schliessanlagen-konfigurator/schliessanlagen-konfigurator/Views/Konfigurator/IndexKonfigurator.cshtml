@@ -122,8 +122,8 @@
 
                     </div>
                 <div id="InfoValue">
-                    <div id="horizontal">
-                                <div id="checkboxContainer">
+                            <div class="horizontal" id="1horizontal">
+                                <div class="checkboxContainer">
                                     <input type="checkbox" style="" id="checkbox1">
                                     <input type="hidden" name="IsOppen" value="false" id="I1.checkbox1">
                                 </div>
@@ -147,7 +147,8 @@
 
    
 
-    function createCustomCheckbox(id) {
+    function createCustomCheckbox(id) 
+    {
         var checkbox = document.getElementById(id);
         var checkboxValue = false;
 
@@ -158,7 +159,9 @@
         var savedValue = localStorage.getItem(id);
 
         // Если есть сохраненное значение, устанавливаем его в чекбоксе
-        if (savedValue !== null) {
+        if (savedValue !== null) 
+        {
+
             checkbox.checked = (savedValue === 'true'); // преобразуем строку в булево значение
             checkboxValue = checkbox.checked;
 
@@ -192,13 +195,16 @@
 
     function removeBlockTur() {
                 let blockToRemove = document.getElementById('BlockTur-' + blockTur);
-                    if (blockToRemove) {
+                    if (blockToRemove) 
+                    {
                         blockToRemove.remove();
-          
+
                         for (let s = 0; s < blockCount; s++) 
                         {
-                            let blockToRemoveTurValue = document.getElementById(`${blockTur}.checkbox${s}`);
+                            let blockToRemoveTurValue = document.getElementById(`${blockTur}.checkboxContainer${s}`);
+                            let Horizontal = document.getElementById(`${blockTur}horizontal`);
                             blockToRemoveTurValue.remove();
+                            Horizontal.remove();
                         }
 
                     blockTur--;
@@ -270,17 +276,20 @@
             document.getElementById('blockInfo').appendChild(newBlock);
 
             let horizont = document.createElement('div');
-            horizont.id = 'horizontal';
-          
+            horizont.id = `${blockTur}horizontal`;
+            horizont.classList.add('horizontal');
 
-            for (let i = 0; i < blockCount; i++) 
+            for (let i = 1; i <= blockCount; i++) 
             {
 
                 let newBlockTur = document.createElement('div');
-                newBlockTur.innerHTML = ` <div id="checkboxContainer">
-                            <input type="checkbox" id=${blockTur}.checkbox${i}>
-                   <input type="hidden" name="IsOppen" value="false" id="I${blockTur}.checkbox${i}">
-                     </div>`;
+               
+                newBlockTur.innerHTML = ` <input type="checkbox" id=${blockTur}.checkbox${i}>
+                <input type="hidden" name="IsOppen" value="false" id="I${blockTur}.checkbox${i}">`;
+
+                newBlockTur.id = `${blockTur}.checkboxContainer${i}`;
+
+                newBlockTur.classList.add('checkboxContainer');
 
                 horizont.appendChild(newBlockTur);
 
@@ -298,16 +307,17 @@
                 blockToRemove.remove();
                 if (blockTur > 1) 
                 {
-                    for (let f = 1; f <= blockTur;) {
-                           
-                            let blockToRemoveTurValue = document.getElementById(`${f}.checkbox${blockCount}`);
+                    for (let f = 1; f <= blockTur;) 
+                    {
+
+                            let blockToRemoveTurValue = document.getElementById(`${f}.checkboxContainer${blockCount}`);
                             blockToRemoveTurValue.remove();
                             
                             console.log(blockCount);
-                            console.log(f);
-                            console.log(blockToRemoveTurValue);
-                            if(f==1)
-                            blockCount--;
+
+                            // if(f==1)
+                            // blockCount--;
+
                         f++;
                         
                     }
@@ -316,20 +326,20 @@
 
                     else 
                     {
-                        let blockToRemoveTurValue = document.getElementById(`${blockTur}.checkbox${blockCount}`);
+                        let blockToRemoveTurValue = document.getElementById(`${blockTur}.checkboxContainer${blockCount}`);
                         blockToRemoveTurValue.remove();
-                        console.log(blockCount);
                     }
 
-            lockCount--;
+            blockCount--;
             }
               
         }
 
         // Функция для добавления блока
-    function addBlock() {
+    function addBlock() 
+    {
         blockCount++;
-        
+    
         let item = document.getElementById('itemcountOptions');
         item.value = blockCount;
         // Создаем новый блок
@@ -347,25 +357,29 @@
                         </div>
 
             `;
+        document.getElementById('itemKeyBlock').appendChild(newBlock);
+      
+        let horizont = document.getElementById(`${blockTur}horizontal`);
 
+        for (let i = 1; i <= blockTur; i++) 
+        {
+          
             let newBlockTur = document.createElement('div');
-            newBlockTur.innerHTML = ` <div id="checkboxContainer">
-                                                    <input type="checkbox" id=${blockTur}.checkbox${blockCount}>
-                                            <input type="hidden" name="IsOppen" value="false" id="I${blockTur}.checkbox${blockCount}">
-                                    </div>`;
-            
-            document.getElementById('itemKeyBlock').appendChild(newBlock);
-            document.getElementById('horizontal').appendChild(newBlockTur);
 
-            createCustomCheckbox(`${blockTur}.checkbox${blockCount}`);
+            newBlockTur.innerHTML = ` <input type="checkbox" id=${i}.checkbox${blockCount}>
+                                    <input type="hidden" name="IsOppen" value="false" id="I${i}.checkbox${blockCount}">`;
 
-            var hiddenInput = document.createElement('input');
-             hiddenInput.setAttribute('type', 'hidden');
-            hiddenInput.setAttribute('id', `I${blockTur}.checkbox${blockCount}`);
-            hiddenInput.setAttribute('name', 'IsOppen');
-            hiddenInput.setAttribute('value', JSON.stringify(data));
+            newBlockTur.id = `${i}.checkboxContainer${blockCount}`;
 
-            document.getElementById('checkboxContainer').append(hiddenInput);
+            newBlockTur.classList.add('checkboxContainer');
+
+            document.getElementById(`${i}horizontal`).appendChild(newBlockTur);
+
+            document.getElementById('InfoValue').appendChild(horizont);
+
+            createCustomCheckbox(`${i}.checkbox${blockCount}`);
+        }
+
     }
 
         document.getElementById('removeButton').addEventListener('click', removeBlock);
