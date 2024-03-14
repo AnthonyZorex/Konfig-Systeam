@@ -17,6 +17,7 @@ using schliessanlagen_konfigurator.Models.Hebelzylinder;
 using System.Text.Json;
 using Newtonsoft.Json;
 using Microsoft.CodeAnalysis.Options;
+using NuGet.ContentModel;
 
 
 
@@ -920,39 +921,60 @@ namespace schliessanlagen_konfigurator.Controllers
             ViewBag.AussenProduct = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == profil_Doppelzylinder.Id).Select(x => x.aussen).ToList();
             ViewBag.InternProduct = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == profil_Doppelzylinder.Id).Select(x => x.Intern).ToList();
 
+            var queryableOptions = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == profil_Doppelzylinder.Id).Select(x => x.Id).ToList();
 
-            var dopelOptions = db.Profil_Doppelzylinder_Options.Where(x=>x.DoppelzylinderId == profil_Doppelzylinder.Id).Select(x => x.Id).ToList();
+            ViewBag.countOptionsQuery = queryableOptions.Count();
 
-            var options = new List<NGF>();
-            var value = new List<NGF_Value>();
-          
-
-            for (int i = 0; i < dopelOptions.Count(); i++)
+            if (queryableOptions.Count() > 0)
             {
-                var s = db.NGF.Where(x => x.OptionsId == dopelOptions[i]).ToList();
-                for (int j = 0; j < s.Count(); j++)
+
+                List<NGF> ngf = new List<NGF>();
+
+                for (int z = 0; z < queryableOptions.Count(); z++)
                 {
-                    options.Add(s[j]);
-
-                    var valueItem = db.NGF_Value.Where(x => x.NGFId == s[j].Id).ToList();
-                   
-                    ViewBag.countValue = valueItem.Count();
-
-                    for (int d = 0; d < valueItem.Count(); d++)
+                    var allOptions = db.NGF.Where(x => x.OptionsId == queryableOptions[z]).ToList();
+                    foreach (var option in allOptions)
                     {
-                        value.Add(valueItem[d]);
+                        ngf.Add(option);
                     }
+
                 }
-  
+
+                ViewBag.optionsName = ngf.Select(x => x.Name).ToList();
+
+                List<NGF_Value> ngfList = new List<NGF_Value>();
+
+                for (int s = 0; s < ngf.Count(); s++)
+                {
+                    var opValue = db.NGF_Value.Where(x => x.NGFId == ngf[s].Id).ToList();
+
+                    for (int i = 0; i < opValue.Count(); i++)
+                    {
+                        ngfList.Add(opValue[i]);
+
+                    }
+                    ViewBag.optionValueCount = opValue.Count();
+                }
+
+                var list = new List<int>();
+
+                foreach (var fs in ngf)
+                {
+                    list.Add(fs.NGF_Value.Count());
+                }
+
+
+                ViewBag.countOptionsList = list;
+
+                ViewBag.optionsValue = ngfList.Select(x => x.Value).ToList();
+                ViewBag.optionsCost = ngfList.Select(x => x.Cost).ToList();
+                ViewBag.DopelOptionsCost = ngfList.Select(x => x.Value).ToList();
+
+                ViewBag.optionsPrise = JsonConvert.SerializeObject(ngfList.Select(x => x.Cost).ToList());
+
             }
 
-            ViewBag.countOptions = options.Count();
-
-            ViewBag.DopelOptionsName = options.Select(x=>x.Name).ToList();
-
-            ViewBag.DopelOptionsValue = value.Select(x=>x.Value).ToList();
-
-            ViewBag.DopelOptionsCost = value.Select(x => x.Cost).ToList();
+          
 
             return View("../Edit/Edit_Doppelzylinder", doppelzylinder);
         }
@@ -1047,7 +1069,7 @@ namespace schliessanlagen_konfigurator.Controllers
             }
 
             db.Profil_Doppelzylinder.Update(Profil_Doppelzylinder);
-            db.SaveChanges();
+          
 
             var s = db.Profil_Doppelzylinder.Select(x => x.Id).ToList();
 
@@ -1063,7 +1085,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     Intern = innen[i]
                 };
                 db.Aussen_Innen.Update(ausse_innen);
-                db.SaveChanges();
+               
             }
 
 
@@ -1077,7 +1099,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 };
                 db.Profil_Doppelzylinder_Options.Update(dopOptions);
-                db.SaveChanges();
+             
 
                 var x = db.Profil_Doppelzylinder_Options.Select(x => x.Id).ToList();
 
@@ -1109,7 +1131,8 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
 
                 db.NGF.Update(ngf);
-                db.SaveChanges();
+
+                var queryableOptions = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == Profil_Doppelzylinder.Id).Select(x => x.Id).ToList();
 
                 var ng = db.NGF.Select(x => x.Id).ToList();
 
@@ -1126,9 +1149,6 @@ namespace schliessanlagen_konfigurator.Controllers
                     counter++;
 
                 }
-
-                db.SaveChanges();
-
             }
             return RedirectToAction("Index");
         }
@@ -1153,12 +1173,12 @@ namespace schliessanlagen_konfigurator.Controllers
 
                     var innen = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == profil.Id).Select(x => x.Intern).ToList();
 
-                    var queryableOptions = db.Profil_Doppelzylinder_Options.Where(x=>x.DoppelzylinderId== profil.Id).Select(x=>x.Id).ToList();
+          var queryableOptions = db.Profil_Doppelzylinder_Options.Where(x=>x.DoppelzylinderId== profil.Id).Select(x=>x.Id).ToList();
 
                     ViewBag.aussen = aussen;
 
                     ViewBag.innen = innen;
-                    ViewBag.countOptions = queryableOptions.Count();
+                    ViewBag.countOptionsQuery = queryableOptions.Count();
 
             if (queryableOptions.Count() > 0)
             {
@@ -1168,11 +1188,13 @@ namespace schliessanlagen_konfigurator.Controllers
                 for (int z = 0; z < queryableOptions.Count(); z++)
                 {
                     var allOptions = db.NGF.Where(x => x.OptionsId == queryableOptions[z]).ToList();
-                    ngf.Add(allOptions.First());
+                    foreach (var option in allOptions)
+                    {
+                        ngf.Add(option);
+                    }
+                    
                 }
-
-
-
+               
                 ViewBag.optionsName = ngf.Select(x => x.Name).ToList();
 
                 List<NGF_Value> ngfList = new List<NGF_Value>();
@@ -1184,9 +1206,20 @@ namespace schliessanlagen_konfigurator.Controllers
                     for (int i = 0; i < opValue.Count(); i++)
                     {
                         ngfList.Add(opValue[i]);
+
                     }
                     ViewBag.optionValueCount = opValue.Count();
                 }
+
+                var list = new List<int>();
+              
+                foreach(var fs in ngf)
+                {
+                    list.Add(fs.NGF_Value.Count());
+                }
+
+
+                ViewBag.countOptionsList = list;
 
                 ViewBag.optionsValue = ngfList.Select(x => x.Value).ToList();
 

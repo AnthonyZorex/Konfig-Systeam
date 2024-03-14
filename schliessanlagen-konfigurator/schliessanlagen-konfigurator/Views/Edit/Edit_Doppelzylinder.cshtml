@@ -80,20 +80,21 @@
                     @{
                         int valueCount = 0;
                     }
-                    @if (ViewBag.countOptions > 0)
+                    @if (ViewBag.countOptionsQuery > 0)
                     {
-                        @for (int i = 0; i < ViewBag.countOptions; i++)
+                        @for (int i = 0; i < ViewBag.optionsName.Count; i++)
                         {
-                            <h6>@ViewBag.DopelOptionsName[i]</h6>
-
-                            <select class="form-select" id="ProductOptionsSelector">
-
-                                @for (int j = 0; j < ViewBag.countValue; j++)
+                            <hr/>
+                            <input type="text" name="Options" value="@ViewBag.optionsName[i]" />
+                            <h6>Value</h6>
+                            <hr />
+                                @for (int j = 0; j < ViewBag.countOptionsList[i]; j++)
                                 {
+                                <input type="text" name="valueNGF" id="@valueCount" value="@ViewBag.optionsValue[valueCount]" />
+                                <input type="text" name="costNGF" id="@valueCount" value="@ViewBag.optionsCost[valueCount]" />
                                     valueCount++;
-                                    <option id="@valueCount">@ViewBag.DopelOptionsValue[j]</option>
                                 }
-                            </select>
+                          
                         }
                     }
                 </div>
@@ -102,6 +103,8 @@
 
             <input type="submit" class="btn btn-success" id="input" value="Create Profil Doppelzylinder" />
         </form>
+        <button id="createBlockBtn" class="btn btn-success">Add Options</button>
+        <button id="addInputBtn" class="btn btn-success">+</button>
     </div>
     
 </div>
@@ -126,7 +129,6 @@
         let productOptions = document.getElementById('productOptions');
         let addOptions = document.getElementById('addOptions');
 
-
         document.addEventListener("DOMContentLoaded", function () {
             const container = document.getElementById('productOptions');
             const createBlockBtn = document.getElementById('createBlockBtn');
@@ -149,38 +151,48 @@
                 }
             });
 
+            let z = @ViewBag.countOptionsList.Count +2;
+            let counterOptions = z;
             function createBlock() {
+
+                counterOptions = z;
                 const block = document.createElement('div');
                 block.classList.add('input-block');
                 block.id = `block-${blockCounter}`;
                 block.innerHTML = `<div>
-                                                <h1>Options</h1>
-                                                <label>Name</label>
-                                                <input class="form-control" type="text" name="Options" />
-                                                <div>
-                                                    <p></p>
-                                                    <input name="postedFile" type="file" class="btn btn-success" />
-                                                    <p></p>
-                                                </div>
-                                                <label>Descriptions</label>
-                                                <input class="form-control" type="text" name="NGFDescriptions" />
-                                                <h1>Value & Cost </h1>
-                                                <div id="Aussen_Innen_ProfilDopel">
-                                                    <div id="valueNGF">
-                                                        <input type="text" placeholder="valueNGF" step="0.01" name="valueNGF" />
-                                                        <span class="input-counter">0</span>
-                                                    </div>
-                                                    <div id="costNGF">
-                                                        <input type="number" id='cost' placeholder="costNGF" step="0.01" name="costNGF" />
-                                                    </div>
+                                                        <h1>Options</h1>
+                                                        <label>Name</label>
+                                                        <input class="form-control" type="text" name="Options" />
+                                                        <div>
+                                                            <p></p>
+                                                            <input name="postedFile" type="file" class="btn btn-success" />
+                                                            <p></p>
+                                                        </div>
+                                                        <label>Descriptions</label>
+                                                        <input class="form-control" type="text" name="NGFDescriptions" />
+                                                        <h1>Value & Cost </h1>
+                                                        <div id="Aussen_Innen_ProfilDopel">
+                                                            <div id="valueNGF">
+                                                                <input type="text" placeholder="valueNGF" step="0.01" name="valueNGF" />
 
-                                                </div>
-                                            </div>`;
+                                                            </div>
+                                                            <div id="costNGF">
+                                                                        <input type="number" id='cost' placeholder="costNGF" id="cost" step="0.01" name="costNGF" />
+                                                            </div>
+                                                                        <input type="hidden" id="counter" name="input_counter" />
+                                                        </div>
+                                                    </div>`;
+
                 blockCounter++;
+
                 return block;
             }
 
-            function addInputs(block) {
+
+
+            function addInputs(block) 
+            {
+
                 let d = document.createElement('input');
                 d.setAttribute('name', 'costNGF');
                 d.setAttribute('placeholder', 'costNGF');
@@ -194,42 +206,32 @@
 
                 div1.appendChild(x);
 
-                // Создаем счетчик и добавляем его рядом с инпутом
-                const counterSpan = document.createElement('input');
-                counterSpan.value = '0';
-                counterSpan.classList.add('input-counter');
-                counterSpan.setAttribute('name', 'input_counter');
-                div1.appendChild(counterSpan);
-
                 div2.appendChild(d);
 
-                // Обновляем счетчик инпутов
-                updateInputCounter(block);
-            }
+                var counter = document.querySelectorAll('#counter');
+                counter[counter.length - 1].value = counterOptions;
 
-            function updateInputCounter(block) {
-                const inputCounter = block.querySelectorAll('.input-counter').length;
-                const counters = block.querySelectorAll('.input-counter');
-                counters.forEach(counter => {
-                    counter.value = inputCounter;
-                });
-            }
-        });
+                counterOptions++;
 
+                console.log(counterOptions);
 
-        plusAussen_Innen.addEventListener('click', () => {
-            let d = document.createElement('input');
-            d.setAttribute('name', 'aussen');
-            d.setAttribute('placeholder', 'aussen');
+            };
 
-            let x = document.createElement('input');
-            x.setAttribute('name', 'innen');
-            x.setAttribute('placeholder', 'innen');
+            plusAussen_Innen.addEventListener('click', () => {
+                let d = document.createElement('input');
+                d.setAttribute('name', 'aussen');
+                d.setAttribute('placeholder', 'aussen');
 
-            docAussen.append(d);
-            docInnen.append(x);
+                let x = document.createElement('input');
+                x.setAttribute('name', 'innen');
+                x.setAttribute('placeholder', 'innen');
 
-        });
+                docAussen.append(d);
+                docInnen.append(x);
+
+            });
+
+        })
 
         function interfaice() {
             sum.forEach((item) => {
@@ -243,7 +245,9 @@
 
             })
         }
+
         interfaice();
+
 
 
     </script>

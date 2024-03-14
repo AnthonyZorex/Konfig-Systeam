@@ -5,6 +5,14 @@
       "PackagePath": "staticwebassets\\schliessanlagen-konfigurator.bundle.scp.css"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\ABUS Bravus.3000 Schließzylinder242035072.png",
+      "PackagePath": "staticwebassets\\Image\\ABUS Bravus.3000 Schließzylinder242035072.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\ABUS Zolit.1000 Schließzylinder242245185.png",
+      "PackagePath": "staticwebassets\\Image\\ABUS Zolit.1000 Schließzylinder242245185.png"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\ABUS Zolit.1000 Schließzylinder242502616.png",
       "PackagePath": "staticwebassets\\Image\\ABUS Zolit.1000 Schließzylinder242502616.png"
     },
@@ -21,6 +29,10 @@
       "PackagePath": "staticwebassets\\Image\\Bravus.2000 Schließzylinder241115930.png"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\EVVA EPS Schließzylinder241353517.png",
+      "PackagePath": "staticwebassets\\Image\\EVVA EPS Schließzylinder241353517.png"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\SD_Logo.svg",
       "PackagePath": "staticwebassets\\Image\\SD_Logo.svg"
     },
@@ -29,8 +41,24 @@
       "PackagePath": "staticwebassets\\Image\\System Wo240403564.png"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\System Wo241511526.png",
+      "PackagePath": "staticwebassets\\Image\\System Wo241511526.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\System Wo242531952.png",
+      "PackagePath": "staticwebassets\\Image\\System Wo242531952.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\System Wo244156678.png",
+      "PackagePath": "staticwebassets\\Image\\System Wo244156678.png"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\Vitess.4000 Schließzylinder240853235.png",
       "PackagePath": "staticwebassets\\Image\\Vitess.4000 Schließzylinder240853235.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\cecaldnlggchngia240713850.png",
+      "PackagePath": "staticwebassets\\Image\\cecaldnlggchngia240713850.png"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\edit-tools.png",

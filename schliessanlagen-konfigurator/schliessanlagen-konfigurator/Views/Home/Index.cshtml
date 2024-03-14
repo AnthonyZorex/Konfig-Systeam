@@ -118,7 +118,7 @@
                             <td id="rowTable" class="table-info">@item.Artikelnummer</td>
 
 
-                            <td id="rowTable" class="table-info"><a href="@Url.Action("SaveOrder","Home", new { item.Id })"><img src="@("/Image/edit-tools.png")" height="30" width="30" /></a></td>
+                            <td id="rowTable" class="table-info"><a href="@Url.Action("Edit_Doppelzylinder","Home", new { item.Id })"><img src="@("/Image/edit-tools.png")" height="30" width="30" /></a></td>
                             <td id="rowTable" class="table-info">
                                 <a class="compItem" href="@Url.Action("ProductProfil_Doppelzylinder","Home", new { item.Id })">
                                     <img src="@("/Image/options.png")" height="30" width="30" />
@@ -152,6 +152,9 @@
         let addOptions = document.getElementById('addOptions');
 
 
+        
+
+
         document.addEventListener("DOMContentLoaded", function () {
             const container = document.getElementById('productOptions');
             const createBlockBtn = document.getElementById('createBlockBtn');
@@ -174,39 +177,48 @@
                 }
             });
 
-            function createBlock() {
+            let counterOptions = 2;
+            function createBlock() 
+            {
+
+                counterOptions = 2;
                 const block = document.createElement('div');
                 block.classList.add('input-block');
                 block.id = `block-${blockCounter}`;
                 block.innerHTML = `<div>
-                                        <h1>Options</h1>
-                                        <label>Name</label>
-                                        <input class="form-control" type="text" name="Options" />
-                                        <div>
-                                            <p></p>
-                                            <input name="postedFile" type="file" class="btn btn-success" />
-                                            <p></p>
-                                        </div>
-                                        <label>Descriptions</label>
-                                        <input class="form-control" type="text" name="NGFDescriptions" />
-                                        <h1>Value & Cost </h1>
-                                        <div id="Aussen_Innen_ProfilDopel">
-                                            <div id="valueNGF">
-                                                <input type="text" placeholder="valueNGF" step="0.01" name="valueNGF" />
-                                                <span class="input-counter">0</span>
-                                            </div>
-                                            <div id="costNGF">
-                                                <input type="number" id='cost' placeholder="costNGF" step="0.01" name="costNGF" />
-                                            </div>
-                                        
-                                        </div>
-                                    </div>`;
+                                                <h1>Options</h1>
+                                                <label>Name</label>
+                                                <input class="form-control" type="text" name="Options" />
+                                                <div>
+                                                    <p></p>
+                                                    <input name="postedFile" type="file" class="btn btn-success" />
+                                                    <p></p>
+                                                </div>
+                                                <label>Descriptions</label>
+                                                <input class="form-control" type="text" name="NGFDescriptions" />
+                                                <h1>Value & Cost </h1>
+                                                <div id="Aussen_Innen_ProfilDopel">
+                                                    <div id="valueNGF">
+                                                        <input type="text" placeholder="valueNGF" step="0.01" name="valueNGF" />
+
+                                                    </div>
+                                                    <div id="costNGF">
+                                                                <input type="number" id='cost' placeholder="costNGF" id="cost" step="0.01" name="costNGF" />
+                                                    </div>
+                                                                <input type="hidden" id="counter" name="input_counter" />
+                                                </div>
+                                            </div>`;
+
                 blockCounter++;
+             
                 return block;
             }
-           
+
+
+          
             function addInputs(block) 
             {
+
                 let d = document.createElement('input');
                 d.setAttribute('name', 'costNGF');
                 d.setAttribute('placeholder', 'costNGF');
@@ -214,49 +226,41 @@
                 let x = document.createElement('input');
                 x.setAttribute('name', 'valueNGF');
                 x.setAttribute('placeholder', 'valueNGF');
-               
+
                 const div1 = block.querySelector('#valueNGF');
                 const div2 = block.querySelector('#costNGF');
 
                 div1.appendChild(x);
 
-                // Создаем счетчик и добавляем его рядом с инпутом
-                const counterSpan = document.createElement('input');
-
-                counterSpan.value = '0';
-                counterSpan.classList.add('input-counter');
-                counterSpan.setAttribute('name', 'input_counter');
-                div1.appendChild(counterSpan);
-
                 div2.appendChild(d);
 
-                // Обновляем счетчик инпутов
-                updateInputCounter(block);
-            }
+                var counter = document.querySelectorAll('#counter');
+                counter[counter.length - 1].value = counterOptions;
 
-            function updateInputCounter(block) {
-                const inputCounter = block.querySelectorAll('.input-counter').length;
-                const counters = block.querySelectorAll('.input-counter');
-                counters.forEach(counter => {
-                    counter.value = inputCounter;
-                });
-            }
-        });
+                counterOptions++;
+
+                console.log(counterOptions);
+
+            };
 
 
-        plusAussen_Innen.addEventListener('click', () => {
-            let d = document.createElement('input');
-            d.setAttribute('name', 'aussen');
-            d.setAttribute('placeholder', 'aussen');
 
-            let x = document.createElement('input');
-            x.setAttribute('name', 'innen');
-            x.setAttribute('placeholder', 'innen');
 
-            docAussen.append(d);
-            docInnen.append(x);
+            plusAussen_Innen.addEventListener('click', () => {
+                let d = document.createElement('input');
+                d.setAttribute('name', 'aussen');
+                d.setAttribute('placeholder', 'aussen');
 
-        });
+                let x = document.createElement('input');
+                x.setAttribute('name', 'innen');
+                x.setAttribute('placeholder', 'innen');
+
+                docAussen.append(d);
+                docInnen.append(x);
+
+            });
+
+        })
 
         function interfaice() {
             sum.forEach((item) => {
@@ -270,6 +274,7 @@
 
             })
         }
+
         interfaice();
 
 
