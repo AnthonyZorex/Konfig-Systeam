@@ -1,10 +1,37 @@
-﻿
+﻿@model schliessanlagen_konfigurator.Models.Orders;
+@using Microsoft.AspNetCore.Http;
+
 @{
-    ViewData["Title"] = "Finisher";
+    ViewData["Title"] = $"Finisher/{Model.userKey}";
 }
 
-<h1 class="text-danger">Order 1</h1>
+@Html.HiddenFor(m => m.userKey)  
 
+<div id="FinisherPage">
+    <h1>Schlüssel konfigurieren</h1>
+    <p>
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
+        ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim
+        justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.
+    </p>
 
-<h2 class="text-danger">Thanks for Order</h2>
-<a class="btn btn-success" href="@Url.Action("IndexKonfigurator", "Konfigurator")">First Page</a>
+<div>
+     @foreach (var item in ViewBag.Order)
+    { 
+        <div id="finisherItem">
+            <div id="ItemCounterOrders">
+            <button>-</button>
+        <h4>@item.CountKey</h4>
+                <button>+</button>
+            </div>
+            <div id="nameItem">
+        <h2>@item.NameKey</h2>
+        </div>
+            <div id="numerKey">
+        <h3>Schlüssel Nr. </h3>
+         </div>
+        </div>
+    } 
+</div>
+</div>
+@* <a class="btn btn-success" href="@Url.Action("IndexKonfigurator", "Konfigurator")">First Page</a> *@

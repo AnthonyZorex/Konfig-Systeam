@@ -499,3 +499,26 @@ summary {
     margin-top: -25px;
     padding: 0px;
 }
+#finisherItem {
+    padding: 10px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+#ItemCounterOrders {
+    display: flex;
+    gap: 20px;
+}
+#nameItem{
+    margin-left:200px;
+}
+#numerKey{
+    margin-left:500px;
+}
+.container {
+    background-color: #e4e4e4;
+}
+#FinisherPage{
+    background-color:#e4e4e4;
+}

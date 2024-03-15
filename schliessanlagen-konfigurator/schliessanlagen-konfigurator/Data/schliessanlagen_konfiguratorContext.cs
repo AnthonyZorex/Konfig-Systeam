@@ -10,6 +10,7 @@ using schliessanlagen_konfigurator.Models.Hebelzylinder;
 using schliessanlagen_konfigurator.Models.Vorhan;
 using schliessanlagen_konfigurator.Models.Aussen_Rund;
 using schliessanlagen_konfigurator.Models.OrdersOpen;
+
 namespace schliessanlagen_konfigurator.Data
 {
     public class schliessanlagen_konfiguratorContext : DbContext
@@ -64,5 +65,8 @@ namespace schliessanlagen_konfigurator.Data
         public DbSet<Knayf_Options> Knayf_Options { get; set; }
         public DbSet<Knayf_Options_value> Knayf_Options_value { get; set; }
         public DbSet<Profil_Knaufzylinder_Options> Profil_Knaufzylinder_Options { get; set; }
+
+        
     }
 }
+

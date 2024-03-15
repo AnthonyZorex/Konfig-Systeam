@@ -6,7 +6,7 @@
 }
 @Html.HiddenFor(m => m.userKey)
 
-<div>
+@* <div>
     <div>
         <h3>
             System auswählen
@@ -18,13 +18,14 @@
             justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.
         </p>
     </div>
-    <div >
+    <div > *@
 
         <div id="ExelMenu">
-            <form asp-action="Create_Exel">
+    <form asp-action="System_Auswählen" method="post" enctype="multipart/form-data" asp-controller="Konfigurator">
+
                 @if (ViewBag.a != null )
                 {
-                    @foreach (var item in ViewBag.a)
+                    foreach (var item in ViewBag.a)
                     {
                         <div id="ExelItem">
                             <div id="productImage">
@@ -47,7 +48,7 @@
                                     <h5>@item.description</h5>
                                 </div>
                                 <div id="productChek">
-                                    <button class="btn btn-danger" id="chekProduct">WÄHLEN</button>
+                                <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new { param1 = item.Id, param2 = item.userKey.userKey })">WÄHLEN</a>"
                                 </div>
                             </div>
 
@@ -55,183 +56,13 @@
                         </div>
                     }
                 }
-      
-                @if (ViewBag.b != null)
-                {
-                    @foreach (var item in ViewBag.b)
-                    {
-                        <div id="ExelItem">
-                            <div id="productImage">
-                                <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                            </div>
-                            <div id="productMenuInfo">
-                                <div id="ProductNameUndCost">
 
-                                    <div>
-                                        <h3>@item.Name</h3>
-                                    </div>
-
-                                    <div style="margin-left: auto;">
-                                        <h4 id="cost">ab @item.Cost €</h4>
-                                    </div>
-
-                                </div>
-
-                                <div id="product_desciptions">
-                                    <h5>@item.description</h5>
-                                </div>
-                                <div id="productChek">
-                                    <button class="btn btn-danger" id="chekProduct">WÄHLEN</button>
-                                </div>
-                            </div>
-
-
-                        </div>
-                    }
-                } 
-                @if (ViewBag.c != null)
-                {
-
-                    @foreach (var item in ViewBag.c)
-                    {
-                        <div id="ExelItem">
-                            <div id="productImage">
-                                <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                            </div>
-                            <div id="productMenuInfo">
-                                <div id="ProductNameUndCost">
-
-                                    <div>
-                                        <h3>@item.Name</h3>
-                                    </div>
-
-                                    <div style="margin-left: auto;">
-                                        <h4 id="cost">ab @item.Cost €</h4>
-                                    </div>
-
-                                </div>
-
-                                <div id="product_desciptions">
-                                    <h5>@item.description</h5>
-                                </div>
-                                <div id="productChek">
-                                    <button class="btn btn-danger" id="chekProduct">WÄHLEN</button>
-                                </div>
-                            </div>
-
-
-                        </div>
-                    }
-                    
-                }
-                @if (ViewBag.d != null)
-                {
-                    @foreach (var item in ViewBag.d)
-                    {
-                        <div id="ExelItem">
-                            <div id="productImage">
-                                <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                            </div>
-                            <div id="productMenuInfo">
-                                <div id="ProductNameUndCost">
-
-                                    <div>
-                                        <h3>@item.Name</h3>
-                                    </div>
-
-                                    <div style="margin-left: auto;">
-                                        <h4 id="cost">ab @item.Cost €</h4>
-                                    </div>
-
-                                </div>
-
-                                <div id="product_desciptions">
-                                    <h5>@item.description</h5>
-                                </div>
-                                <div id="productChek">
-                                    <button class="btn btn-danger" id="chekProduct">WÄHLEN</button>
-                                </div>
-                            </div>
-
-
-                        </div>
-                    }
-                }
-                @if (ViewBag.f != null)
-                {
-                    @foreach (var item in ViewBag.f)
-                    {
-                        <div id="ExelItem">
-                            <div id="productImage">
-                                <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                            </div>
-                            <div id="productMenuInfo">
-                                <div id="ProductNameUndCost">
-
-                                    <div>
-                                        <h3>@item.Name</h3>
-                                    </div>
-
-                                    <div style="margin-left: auto;">
-                                        <h4 id="cost">ab @item.Cost €</h4>
-                                    </div>
-
-                                </div>
-
-                                <div id="product_desciptions">
-                                    <h5>@item.description</h5>
-                                </div>
-                                <div id="productChek">
-                                    <button class="btn btn-danger" id="chekProduct">WÄHLEN</button>
-                                </div>
-                            </div>
-
-
-                        </div>
-                    }
-                }
-                @if (ViewBag.e != null)
-                {
-                    @foreach (var item in ViewBag.e)
-                    {
-                        <div id="ExelItem">
-                            <div id="productImage">
-                                <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                            </div>
-                            <div id="productMenuInfo">
-                                <div id="ProductNameUndCost">
-
-                                    <div>
-                                        <h3>@item.Name</h3>
-                                    </div>
-
-                                    <div style="margin-left: auto;">
-                                        <h4 id="cost">ab @item.Cost €</h4>
-                                    </div>
-
-                                </div>
-
-                                <div id="product_desciptions">
-                                    <h5>@item.description</h5>
-                                </div>
-                                <div id="productChek">
-                                    <button class="btn btn-danger" id="chekProduct">WÄHLEN</button>
-                                </div>
-                            </div>
-
-
-                        </div>
-                    }
-                }
-
-                <input type="submit" value="Create Exel" id="closeMenu" class="btn btn-dark" />
             </form>
-            <div id="generics">
-            </div>
+                <input type="submit" value="Create Exel" id="closeMenu" class="btn btn-dark" />
+         
         </div>
-    </div>
-</div>
-        <script>
+
+ <script>
             // let generics = document.getElementById('generations');
             // let generic = document.getElementById('generic');
             // let dopel = document.querySelectorAll('#dopel');

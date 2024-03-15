@@ -10,7 +10,10 @@ using schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder;
 using schliessanlagen_konfigurator.Models.ProfilDopelZylinder;
 using schliessanlagen_konfigurator.Models.ProfilDopelZylinder.ValueOptions;
 using schliessanlagenkonfigurator.Migrations;
+using SkiaSharp;
 using Spire.Xls;
+using System.Collections;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Reflection.PortableExecutable;
 
@@ -96,8 +99,8 @@ namespace schliessanlagen_konfigurator.Controllers
         {
 
             var orders = await db.Orders.ToListAsync();
-            var keyUser = orders.Last().userKey;
-            var allUserListOrder = await db.Orders.Where(x => x.userKey == keyUser).ToListAsync();
+            var keyUser = orders.Last();
+            var allUserListOrder = await db.Orders.Where(x => x.userKey == keyUser.userKey).ToListAsync();
 
             ViewBag.Zylinder_Typ = await db.Schliessanlagen.ToListAsync();
 
@@ -108,21 +111,30 @@ namespace schliessanlagen_konfigurator.Controllers
             var Vorhangschloss = await db.Vorhangschloss.ToListAsync();
             var Aussenzylinder = await db.Aussenzylinder_Rundzylinder.ToListAsync();
             var Zylinder_Typ = await db.Schliessanlagen.ToListAsync();
-
+            var cheked = new List<Profil_Doppelzylinder>();
 
             for (var d = 0; d < allUserListOrder.Count(); d++)
             {
-                if (allUserListOrder[d].ZylinderId == profilD[d].schliessanlagenId)
-                {
-                    var dopelId = profilD[d].Id;
+                int dopelType = 0;
 
+                if (d >= profilD.Count())
+                {
+                    dopelType = profilD.Last().schliessanlagenId;
+                }
+                else
+                {
+                    dopelType = profilD[d].schliessanlagenId;
+                }
+                if (allUserListOrder[d].ZylinderId == dopelType)
+                {
+                   
                     var dopelProduct = new List<Profil_Doppelzylinder>();
 
                     var products = await db.Aussen_Innen.ToListAsync();
 
                     var item = products.Where(x => x.aussen <= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).ToList();
                     
-                    var cheked = new List<Profil_Doppelzylinder>();
+                   
 
                     var safeDoppelItem = new List<Profil_Doppelzylinder>();
 
@@ -205,9 +217,25 @@ namespace schliessanlagen_konfigurator.Controllers
                         ViewBag.a = dopelProduct.ToList();
                 }
                     
-                    ViewBag.a = cheked.ToList();
             }
+                var query = from t1 in cheked
+                            join t2 in allUserListOrder
+                            on t1.schliessanlagenId equals t2.ZylinderId
+                            select new
+                            {
+                                Id = t1.Id,
+                                userKey = keyUser,
+                                Name = t1.Name,
+                                companyName = t1.companyName,
+                                description = t1.description,
+                                NameSystem = t1.NameSystem,
+                                Cost = t1.Cost,
+                                ImageName = t1.ImageName
+                                // Здесь можно указать другие поля, которые вы хотите получить
+                            };
+                var rl = query.ToList();
 
+                ViewBag.a = rl;
                 //    if (allUserListOrder[d].ZylinderId == profilK[d].schliessanlagenId)
                 //    {
                 //        var dopelId = profilK[d].Id;
@@ -327,7 +355,28 @@ namespace schliessanlagen_konfigurator.Controllers
 
             return View("System_Auswählen", userKey);
         }
-       
+
+        //[HttpPost]
+        //public async Task<IActionResult> System_Auswählen(string key)
+        //{
+        //    var order = db.Orders.Where(x=>x.userKey ==  key).ToList();
+
+        //    return RedirectToAction("Finisher",order);
+        //}
+        [HttpGet]
+        public async Task<IActionResult> OrdersKey(string param1, string param2)
+        {
+            var key = db.Orders.Where(x => x.userKey == param2).ToList();
+            //var OrderList = db.Profil_Doppelzylinder.Where(x => x.Id == profilD.Id).ToList();
+
+            //var allOrder = db.Orders.Where(x => x.userKey == key.use).Last();
+
+            //var ordersDople = allOrder.Where(x => x.ZylinderId == profilD.schliessanlagenId).Last();
+
+           ViewBag.Order = key;
+
+            return View("Finisher", key.Last() );
+        }
         [HttpPost]
         public async Task<IActionResult> Create_Exel(List<string> tur, Profil_Doppelzylinder profil_Doppelzylinder, Profil_Halbzylinder profil_Halbzylinder, Profil_Knaufzylinder Profil_Knaufzylinder, Vorhangschloss Vorhang, Hebel hebelzylinder, Aussenzylinder_Rundzylinder aussenzylinder_Rundzylinder)
         {
@@ -463,53 +512,158 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpPost]
         public ActionResult SaveOrder(Orders Key, List<string> Turname, List<string> ZylinderId, List<float> aussen, List<float> innen, List<int> Count, List<string> NameKey, List<int> CountKey, List<string> IsOppen, List<string> Options, List<int> ItemCount)
         {
+            int CountOrders;
+           
+            string zylinderTyp;
 
-
-            for (int i = 0; i < Turname.Count(); i++)
+            if (Turname.Count >= NameKey.Count())
             {
-                int idZylinder = 0;
+                CountOrders = Turname.Count();
+            }
+            else
+            {
+                CountOrders = NameKey.Count();
+            }
 
-                if (ZylinderId[i] == "Profil-Doppelzylinder")
+            for (int i = 0; i < CountOrders; i++)
+            {
+
+                int idZylinder=0;
+
+                if (ZylinderId.Count() <= i)
                 {
-                    idZylinder = 1;
+                    zylinderTyp = ZylinderId.Last();
+
+                    if (zylinderTyp == "Profil-Doppelzylinder")
+                    {
+                        idZylinder = 1;
+                    }
+                    if (zylinderTyp == "Profil-Halbzylinder")
+                    {
+                        idZylinder = 2;
+                    }
+                    if (zylinderTyp == "Profil-Knaufzylinder")
+                    {
+                        idZylinder = 3;
+                    }
+                    if (zylinderTyp == "Hebelzylinder")
+                    {
+                        idZylinder = 4;
+                    }
+                    if (zylinderTyp == "Vorhangschloss")
+                    {
+                        idZylinder = 5;
+                    }
+                    if (zylinderTyp == "Aussenzylinder_Rundzylinder")
+                    {
+                        idZylinder = 6;
+                    }
                 }
-                if (ZylinderId[i] == "Profil-Halbzylinder")
+                else
                 {
-                    idZylinder = 2;
-                }
-                if (ZylinderId[i] == "Profil-Knaufzylinder")
-                {
-                    idZylinder = 3;
-                }
-                if (ZylinderId[i] == "Hebelzylinder")
-                {
-                    idZylinder = 4;
-                }
-                if (ZylinderId[i] == "Vorhangschloss")
-                {
-                    idZylinder = 5;
-                }
-                if (ZylinderId[i] == "Aussenzylinder_Rundzylinder")
-                {
-                    idZylinder = 6;
+                    zylinderTyp = ZylinderId[i];
+
+                    if (zylinderTyp == "Profil-Doppelzylinder")
+                    {
+                        idZylinder = 1;
+                    }
+                    if (zylinderTyp == "Profil-Halbzylinder")
+                    {
+                        idZylinder = 2;
+                    }
+                    if (zylinderTyp == "Profil-Knaufzylinder")
+                    {
+                        idZylinder = 3;
+                    }
+                    if (zylinderTyp == "Hebelzylinder")
+                    {
+                        idZylinder = 4;
+                    }
+                    if (zylinderTyp == "Vorhangschloss")
+                    {
+                        idZylinder = 5;
+                    }
+                    if (zylinderTyp == "Aussenzylinder_Rundzylinder")
+                    {
+                        idZylinder = 6;
+                    }
                 }
 
-                var orders = new Orders {
+                string TurnameValue;
+                string NameKeyValue;
+                int CountkeyOrders;
+                string optionValue;
+
+                if (i >= CountKey.Count())
+                {
+                    CountkeyOrders = CountKey.Last();
+                }
+                else
+                {
+                    CountkeyOrders = CountKey[i];
+                }
+
+                if (i >= Options.Count())
+                {
+                    optionValue = Options.Last();
+                }
+                else
+                {
+                    optionValue = Options[i];
+                }
+
+                if (i >= Turname.Count())
+                {
+                    TurnameValue= Turname.Last();
+                }
+                else
+                {
+                    TurnameValue = Turname[i];
+                }
+
+                if (i >= NameKey.Count())
+                {
+                    NameKeyValue = NameKey.Last();
+                }
+                else
+                {
+                    NameKeyValue = NameKey[i];
+                }
+
+                var orders = new Orders 
+                {
                     userKey = Key.userKey,
-                    DorName = Turname[i],
+                    DorName = TurnameValue,
                     ZylinderId = idZylinder,
-                    //Count = Count[i],
-                    NameKey = NameKey[i],
-                    CountKey = CountKey[i],
-                    Options = Options[i]
+                    
+                    NameKey = NameKeyValue,
+                    CountKey = CountkeyOrders,
+                    Options = optionValue
                 };
                 if (innen.Count() > 0)
                 {
-                    orders.innen = innen[i];
+                    if (i >= innen.Count())
+                    {
+                        orders.innen = innen.Last();
+                    }
+                    else
+                    {
+                        orders.innen = innen[i];
+                    }
+
+                    
                 }
                 if (aussen.Count() > 0)
                 {
-                    orders.aussen = aussen[i];
+                    if (i >= innen.Count())
+                    {
+                        orders.aussen = aussen.Last();
+                    }
+                    else
+                    {
+                        orders.aussen = aussen[i];
+                    }
+                  
                 }
                 db.Orders.Add(orders);
                 db.SaveChanges();
@@ -550,7 +704,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
                 db.SaveChanges();
             }
-
+           
             return RedirectToAction("System_Auswählen", "Konfigurator", new { Key } );
         }
         

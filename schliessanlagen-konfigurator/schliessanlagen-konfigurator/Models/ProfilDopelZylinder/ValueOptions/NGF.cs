@@ -13,7 +13,6 @@ namespace schliessanlagen_konfigurator.Models.ProfilDopelZylinder.ValueOptions
         [DisplayName("Upload your photo")]
         public IFormFile? ImageFile { get; set; }
         public string? Description { get; set; }
-
         public ICollection<NGF_Value> NGF_Value { get; set; }
         public NGF()
         {
