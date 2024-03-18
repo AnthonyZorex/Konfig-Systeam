@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = $"Finisher/{Model.userKey}";
+    int z = 0;
 }
 
 @Html.HiddenFor(m => m.userKey)  
@@ -17,21 +18,89 @@
 
 <div>
      @foreach (var item in ViewBag.Order)
-    { 
-        <div id="finisherItem">
+        {
+            z++;
+            <div id="finisherItem">
             <div id="ItemCounterOrders">
-            <button>-</button>
-        <h4>@item.CountKey</h4>
-                <button>+</button>
+                    
+                    <div id="counterKey">
+                        <button class="btn btn-success">-</button>
+                        <h4>@item.CountKey</h4>
+                        <button class="btn btn-success">+</button>
+                    </div>
+       
+                  
             </div>
             <div id="nameItem">
         <h2>@item.NameKey</h2>
         </div>
             <div id="numerKey">
-        <h3>Schlüssel Nr. </h3>
+        <h3>Schlüssel Nr.@z </h3>
          </div>
-        </div>
+            </div>
     } 
+    <div>
+    </div>
+            <button>Schliessplan bearbeiten</button>
+            <h1>Türen konfigurieren</h1>
+            <p>
+                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
+                ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim
+                justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.
+            </p>
+    </div>
+    <div>
+            @if (ViewBag.Dopelzylinder != null)
+            {
+                foreach (var item in ViewBag.Dopelzylinder)
+                {
+                    <div id="ExelItem">
+                        <div id="productImage">
+                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                        </div>
+                        <div id="productMenuInfo">
+                            <div id="ProductNameUndCost">
+
+                                <div>
+                                    <h3>@item.Name</h3>
+                                </div>
+
+                            </div>
+                            <div>
+                                <select>
+                                    <option>Doppelzylinder</option>
+                                </select>
+                            </div>
+                            <div id="product_desciptions">
+                                <h5>Zylinder Länge</h5>
+                            </div>
+                           <div>
+                                <select>
+                                    <option>Außenlänge (A)</option>
+                                    @for (int i = 0; i < ViewBag.aussen.Count; i++)
+                                    {
+                                        <option>@ViewBag.aussen[i]</option>
+                                    }
+                                </select>
+                           </div>
+                            <div>
+                                <select>
+                                    <option>Innenlänge (B)</option>
+                                    @for (int i = 0; i < ViewBag.Intern.Count; i++)
+                                    {
+                                        <option>@ViewBag.Intern[i]</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+
+                    </div>
+                }
+            }
+        <h1>@ViewBag.Cost €</h1>
+        <button>Schliessplan bearbeiten</button>
+    </div>
 </div>
-</div>
+
 @* <a class="btn btn-success" href="@Url.Action("IndexKonfigurator", "Konfigurator")">First Page</a> *@

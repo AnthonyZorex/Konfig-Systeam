@@ -500,6 +500,8 @@ summary {
     padding: 0px;
 }
 #finisherItem {
+    border-radius: 10px;
+    margin-top: 20px;
     padding: 10px;
     background-color: white;
     display: flex;
@@ -510,15 +512,19 @@ summary {
     display: flex;
     gap: 20px;
 }
-#nameItem{
-    margin-left:200px;
+#nameItem {
+    margin-left: 50px;
 }
-#numerKey{
-    margin-left:500px;
+#numerKey {
+    margin-left: auto;
 }
 .container {
     background-color: #e4e4e4;
 }
 #FinisherPage{
     background-color:#e4e4e4;
+}
+#counterKey {
+    display: flex;
+    gap: 20px;
 }

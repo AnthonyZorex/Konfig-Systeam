@@ -10,7 +10,8 @@ namespace schliessanlagen_konfigurator.Models.OrdersOpen
         public int Id { get; set; }
         public int? isOpen_OrderId { get; set; }
         public isOpen_Order isOpen_Order { get; set; }
-       
+        public int CountKey { get; set; }
+        public string? NameKey { get; set; }
         public bool isOpen {  get; set; } 
 
     }

@@ -233,7 +233,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                 ImageName = t1.ImageName
                                 // Здесь можно указать другие поля, которые вы хотите получить
                             };
-                var rl = query.ToList();
+                var rl = query.Distinct().ToList();
 
                 ViewBag.a = rl;
                 //    if (allUserListOrder[d].ZylinderId == profilK[d].schliessanlagenId)
@@ -367,14 +367,48 @@ namespace schliessanlagen_konfigurator.Controllers
         public async Task<IActionResult> OrdersKey(string param1, string param2)
         {
             var key = db.Orders.Where(x => x.userKey == param2).ToList();
-            //var OrderList = db.Profil_Doppelzylinder.Where(x => x.Id == profilD.Id).ToList();
 
+            var keyOpenOrder = new List<isOpen_Order>();
+
+            foreach(var list in key)
+            {
+                var keyOpen = db.isOpen_Order.Where(x => x.OrdersId == list.id).ToList();
+                foreach (var listOpen in keyOpen)
+                    keyOpenOrder.Add(listOpen);
+            }
+
+            var keyOpenOrderValue = new List<isOpen_value>();
+            
+            foreach (var listOpenOrder in keyOpenOrder)
+            {
+                var keyOpen = db.isOpen_value.Where(x => x.isOpen_OrderId == listOpenOrder.OrdersId).ToList();
+
+                foreach (var chek in keyOpen)
+                    keyOpenOrderValue.Add(chek);
+                break;
+            }
+
+            //var xf = db.isOpen_value.Where(x=>x.isOpen_OrderId == keyOpen).ToList();
+
+            var OrderList = db.Profil_Doppelzylinder.Where(x => x.Id == Convert.ToInt32(param1)).ToList();
+
+           var AussenInen = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == Convert.ToInt32(param1)).ToList();
+
+            var DopelOrderlist = new List<Profil_Doppelzylinder>();
+            
+            for(var i = 0;i< key.Count; i++)
+            {
+                DopelOrderlist.Add(OrderList.Last());
+            }
+            
             //var allOrder = db.Orders.Where(x => x.userKey == key.use).Last();
 
             //var ordersDople = allOrder.Where(x => x.ZylinderId == profilD.schliessanlagenId).Last();
-
-           ViewBag.Order = key;
-
+            ViewBag.aussen = AussenInen.Select(x=>x.aussen).ToList();
+            ViewBag.Intern = AussenInen.Select(x => x.Intern).ToList();
+            ViewBag.Dopelzylinder = DopelOrderlist.ToList();
+            ViewBag.Order = keyOpenOrderValue.Distinct();
+            ViewBag.Cost = DopelOrderlist.Select(x => x.Cost).Sum();
             return View("Finisher", key.Last() );
         }
         [HttpPost]
@@ -512,18 +546,10 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpPost]
         public ActionResult SaveOrder(Orders Key, List<string> Turname, List<string> ZylinderId, List<float> aussen, List<float> innen, List<int> Count, List<string> NameKey, List<int> CountKey, List<string> IsOppen, List<string> Options, List<int> ItemCount)
         {
-            int CountOrders;
-           
+            int CountOrders = Turname.Count();
+
             string zylinderTyp;
 
-            if (Turname.Count >= NameKey.Count())
-            {
-                CountOrders = Turname.Count();
-            }
-            else
-            {
-                CountOrders = NameKey.Count();
-            }
 
             for (int i = 0; i < CountOrders; i++)
             {
@@ -590,18 +616,17 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
 
                 string TurnameValue;
-                string NameKeyValue;
-                int CountkeyOrders;
-                string optionValue;
-
-                if (i >= CountKey.Count())
+                if (i >= Turname.Count())
                 {
-                    CountkeyOrders = CountKey.Last();
+                    TurnameValue = Turname.Last();
                 }
                 else
                 {
-                    CountkeyOrders = CountKey[i];
+                    TurnameValue = Turname[i];
                 }
+
+           
+                string optionValue;
 
                 if (i >= Options.Count())
                 {
@@ -612,34 +637,15 @@ namespace schliessanlagen_konfigurator.Controllers
                     optionValue = Options[i];
                 }
 
-                if (i >= Turname.Count())
-                {
-                    TurnameValue= Turname.Last();
-                }
-                else
-                {
-                    TurnameValue = Turname[i];
-                }
-
-                if (i >= NameKey.Count())
-                {
-                    NameKeyValue = NameKey.Last();
-                }
-                else
-                {
-                    NameKeyValue = NameKey[i];
-                }
-
-                var orders = new Orders 
+                var orders = new Orders
                 {
                     userKey = Key.userKey,
                     DorName = TurnameValue,
                     ZylinderId = idZylinder,
-                    
-                    NameKey = NameKeyValue,
-                    CountKey = CountkeyOrders,
                     Options = optionValue
                 };
+
+
                 if (innen.Count() > 0)
                 {
                     if (i >= innen.Count())
@@ -681,15 +687,38 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 for (var s = 0; s < ItemCount.Count(); s++)
                 {
-                    for (var f = 0; f < ItemCount[s]; f++)
+                    for (var f = 0; f < ItemCount.Max(); f++)
                     {
                         bool valueOppen = false;
+                        string NameKeyValue;
+                        int CountkeyOrders;
+
+                        if (f > CountKey.Count())
+                        {
+                            CountkeyOrders = CountKey.Last();
+                        }
+                        else
+                        {
+                            CountkeyOrders = CountKey[f];
+                        }
+
+                       
+
+
+                        if (f > NameKey.Count())
+                        {
+                            NameKeyValue = NameKey.Last();
+                        }
+                        else
+                        {
+                            NameKeyValue = NameKey[f];
+                        }
 
                         if (IsOppen[f] == "true")
                         {
                             valueOppen = true;
                         }
-                        if (IsOppen[f] == "true")
+                        if (IsOppen[f] == "false")
                         {
                             valueOppen = false;
                         }
@@ -697,6 +726,8 @@ namespace schliessanlagen_konfigurator.Controllers
                         {
                             isOpen_OrderId = order_open.Last(),
                             isOpen = valueOppen,
+                            NameKey = NameKeyValue,
+                            CountKey = CountkeyOrders,
                         };
                         db.isOpen_value.Add(Open_value);
                     }

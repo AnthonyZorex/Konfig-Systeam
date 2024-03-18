@@ -6,7 +6,7 @@
 }
 @Html.HiddenFor(m => m.userKey)
 
-@* <div>
+ 
     <div>
         <h3>
             System auswählen
@@ -18,7 +18,7 @@
             justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.
         </p>
     </div>
-    <div > *@
+     
 
         <div id="ExelMenu">
     <form asp-action="System_Auswählen" method="post" enctype="multipart/form-data" asp-controller="Konfigurator">
@@ -48,7 +48,7 @@
                                     <h5>@item.description</h5>
                                 </div>
                                 <div id="productChek">
-                                <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new { param1 = item.Id, param2 = item.userKey.userKey })">WÄHLEN</a>"
+                                <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new { param1 = item.Id, param2 = item.userKey.userKey })">WÄHLEN</a>
                                 </div>
                             </div>
 
