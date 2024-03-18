@@ -48,17 +48,18 @@
                 @{
                     int valueCount =  0;
                 }
-                @if (ViewBag.countOptions > 0)
+                @if (ViewBag.countOptionsQuery > 0)
                 {
                     @for (int i = 0; i < ViewBag.optionsName.Count; i++)
                     {
                         <h6>@ViewBag.optionsName[i]</h6>
 
                         <select class="form-select" id="ProductOptionsSelector">
-                            @for (int j = 0; j < ViewBag.optionValueCount; j++)
+
+                            @for (int j = 0; j < ViewBag.countOptionsList[i]; j++)
                             {
+                                <option id="@valueCount">@ViewBag.optionsValue[valueCount]</option>
                                 valueCount++;
-                                <option id="@valueCount">@ViewBag.optionsValue[j]</option>
                             }
                         </select>
                     }

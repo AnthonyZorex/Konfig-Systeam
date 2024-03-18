@@ -122,8 +122,8 @@
                 <div id="InfoValue">
                             <div class="horizontal" id="1horizontal">
                                 <div class="checkboxContainer">
-                                    <input type="checkbox" style="" id="checkbox1">
-                                    <input type="hidden" name="IsOppen" value="false" id="I1.checkbox1">
+                                    <input type="checkbox" style="" id="1checkbox1">
+                                    <input type="hidden" name="IsOppen" value="false" id="I1checkbox1">
                                 </div>
                     </div>
                 </div>
@@ -141,7 +141,7 @@
         
         let blockTur = 1;
    
-    var data = JSON.parse(localStorage.getItem(`checkbox${blockCount}`));
+    var data = JSON.parse(localStorage.getItem(`${blockTur}checkbox${blockCount}`));
 
   
 
@@ -159,7 +159,7 @@
         // Если есть сохраненное значение, устанавливаем его в чекбоксе
         if (savedValue !== null) 
         {
-
+            console.log(checkbox);
             checkbox.checked = (savedValue === 'true'); // преобразуем строку в булево значение
             checkboxValue = checkbox.checked;
 
@@ -172,23 +172,26 @@
             // Записываем значение чекбокса в переменную
             checkboxValue = this.checked;
 
-            let switches = document.getElementById(`I${blockTur}.${id}`);
+            console.log(checkbox);
+            console.log(checkboxValue);
+
+            let switches = document.getElementById(`I${id}`);
+            console.log(switches);
             if (switches !== null)
                 switches.value = String(this.checked);
 
-        
         });
     }
 
     function foo() {
         localStorage.clear();
-        createCustomCheckbox(`checkbox${blockCount}`);
+        createCustomCheckbox(`${blockTur}checkbox${blockCount}`);
     }
 
     window.onload = foo()
 
     // Создаем кастомные чекбоксы
-    createCustomCheckbox('checkbox1');
+    // createCustomCheckbox('checkbox1');
 
 
     function removeBlockTur() {
@@ -282,8 +285,8 @@
 
                 let newBlockTur = document.createElement('div');
                
-                newBlockTur.innerHTML = ` <input type="checkbox" id=${blockTur}.checkbox${i}>
-                <input type="hidden" name="IsOppen" value="false" id="I${blockTur}.checkbox${i}">`;
+                newBlockTur.innerHTML = ` <input type="checkbox" id=${blockTur}checkbox${i}>
+                <input type="hidden" name="IsOppen" value="false" id="I${blockTur}checkbox${i}">`;
 
                 newBlockTur.id = `${blockTur}.checkboxContainer${i}`;
 
@@ -293,7 +296,7 @@
 
                 document.getElementById('InfoValue').appendChild(horizont);
 
-                createCustomCheckbox(`${blockTur}.checkbox${i}`);
+                createCustomCheckbox(`${blockTur}checkbox${i}`);
             }
     }
         function removeBlock() 
@@ -358,8 +361,8 @@
           
             let newBlockTur = document.createElement('div');
 
-            newBlockTur.innerHTML = ` <input type="checkbox" id=${i}.checkbox${blockCount}>
-                                    <input type="hidden" name="IsOppen" value="false" id="I${i}.checkbox${blockCount}">`;
+            newBlockTur.innerHTML = ` <input type="checkbox" id=${i}checkbox${blockCount}>
+                                    <input type="hidden" name="IsOppen" value="false" id="I${i}checkbox${blockCount}">`;
 
             newBlockTur.id = `${i}.checkboxContainer${blockCount}`;
 
@@ -369,7 +372,7 @@
 
             document.getElementById('InfoValue').appendChild(horizont);
 
-            createCustomCheckbox(`${i}.checkbox${blockCount}`);
+            createCustomCheckbox(`${i}checkbox${blockCount}`);
         }
 
     }

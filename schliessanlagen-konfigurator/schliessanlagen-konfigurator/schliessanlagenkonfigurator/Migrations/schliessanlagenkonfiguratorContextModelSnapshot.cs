@@ -385,13 +385,7 @@ namespace schliessanlagenkonfigurator.Migrations
                     b.Property<int?>("Count")
                         .HasColumnType("int");
 
-                    b.Property<int>("CountKey")
-                        .HasColumnType("int");
-
                     b.Property<string>("DorName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NameKey")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Options")
@@ -440,6 +434,12 @@ namespace schliessanlagenkonfigurator.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CountKey")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NameKey")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("isOpen")
                         .HasColumnType("bit");

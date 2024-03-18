@@ -1,10 +1,12 @@
-﻿@model schliessanlagen_konfigurator.Models.ProfilDopelZylinder.Profil_Doppelzylinder;
+﻿@model schliessanlagen_konfigurator.Models.EditMultipleModelsDopelViewModel;
 
 @{
-    ViewData["Title"] = $"Edit/{Model.Id}";
+    ViewData["Title"] = $"Edit/{Model.Profil_Doppelzylinder.Id}";
 }
-
-@Html.HiddenFor(m => m.Id)
+@Html.HiddenFor(m => m.Profil_Doppelzylinder)
+@Html.HiddenFor(m => m.Aussen_Innen)
+@Html.HiddenFor(m => m.NGF)
+@Html.HiddenFor(m => m.NGF_Value)
 
 <h1>Edit</h1>
 <hr />
@@ -13,12 +15,12 @@
         <form asp-action="Save" enctype="multipart/form-data" asp-controller="Home">
 
             <div id="productMenu">
-                <input style="display:none" asp-for="schliessanlagenId" class="form-control" type="text" value="1" />
+                <input style="display:none" asp-for="Profil_Doppelzylinder.schliessanlagenId" class="form-control" type="text" value="1" />
                 <div>
-                    <label asp-for="ImageFile" class="control-label"></label>
-                    <input asp-for="ImageFile" class="btn btn-success" accept="image/*" />
-                    <span asp-validation-for="ImageFile" class="text-danger"></span>
-                    @Html.ValidationMessageFor(m => m.ImageFile, "", new { @class = "error" })
+                    <label asp-for="Profil_Doppelzylinder.ImageFile" class="control-label"></label>
+                    <input asp-for="Profil_Doppelzylinder.ImageFile" class="btn btn-success" accept="image/*" />
+                    <span asp-validation-for="Profil_Doppelzylinder.ImageFile" class="text-danger"></span>
+                    @Html.ValidationMessageFor(m => m.Profil_Doppelzylinder.ImageFile, "", new { @class = "error" })
                 </div>
             </div>
 
@@ -26,53 +28,56 @@
 
                 <div style="margin-bottom: 50px;">
                     <label>Name</label>
-                    <input asp-for="Name" class="form-control" type="text" name="Name" />
+                    <input asp-for="Profil_Doppelzylinder.Name" class="form-control" type="text" />
                 </div>
 
                 <div style="margin-bottom: 50px;">
                     <label> Company Name</label>
-                    <input asp-for="companyName" class="form-control" type="text" />
+                    <input asp-for="Profil_Doppelzylinder.companyName" class="form-control" type="text" />
                 </div>
 
                 <div style="margin-bottom: 50px;">
                     <label>Name System</label>
-                    <input asp-for="NameSystem" class="form-control" type="text" />
+                    <input asp-for="Profil_Doppelzylinder.NameSystem" class="form-control" type="text" />
                 </div>
 
                 <div style="margin-bottom: 50px;">
                     <label>Descriptions</label>
-                    <textarea asp-for="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <textarea asp-for="Profil_Doppelzylinder.description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                 </div>
 
                 <div style="margin-bottom: 50px;">
                     <label> Artikelnummer</label>
-                    <input asp-for="Artikelnummer" class="form-control" type="text" name="Artikelnummer" />
+                    <input asp-for="Profil_Doppelzylinder.Artikelnummer" class="form-control" type="text" name="Artikelnummer" />
                 </div>
 
                 <div style="margin-bottom: 50px;">
                     <label>Cost</label>
-                    <input asp-for="Cost" class="form-control" />
+                    <input asp-for="Profil_Doppelzylinder.Cost" class="form-control" />
                 </div>
 
-                <h1>Aussen & Innen <input id="addAussen_Innen" class="btn btn-success" type="button" value="+" /></h1>
+               <h1>Aussen & Innen <input id="addAussen_Innen" class="btn btn-success" type="button" value="+" /></h1>
                 <div id="Aussen_Innen_ProfilDopel">
 
                     <div id="AussenProfilDopel">
+
                         @{
-                            foreach (var list in ViewBag.AussenProduct)
+                            for (var list=0;list < Model.Aussen_Innen.Count;list++)
                             {
-                                <input type="number" placeholder="Aussen" step="0.01" value="@list" name="aussen" />
+                                @Html.EditorFor(m => m.Aussen_Innen[list].aussen)
+                               
                             }
                         }
                     </div>
 
                     <div id="InnenProfilDopel">
                         @{
-                            foreach (var list in ViewBag.InternProduct)
+                            for (var list = 0; list < Model.Aussen_Innen.Count; list++)
                             {
-                                <input type="number" placeholder="innen" step="0.01" value="@list" name="innen" />
+                                @Html.EditorFor(m => m.Aussen_Innen[list].Intern)
+                             
                             }
-                        }
+                        } 
                         
                     </div>
                 </div>
@@ -80,28 +85,33 @@
                     @{
                         int valueCount = 0;
                     }
-                    @if (ViewBag.countOptions > 0)
+                    @if (ViewBag.countOptionsQuery > 0)
                     {
-                        @for (int i = 0; i < ViewBag.countOptions; i++)
+                        @for (int i = 0; i < ViewBag.optionsName.Count; i++)
                         {
-                            <h6>@ViewBag.DopelOptionsName[i]</h6>
-
-                            <select class="form-select" id="ProductOptionsSelector">
-
-                                @for (int j = 0; j < ViewBag.countValue; j++)
+                            <hr/>
+                            @Html.EditorFor(m => m.NGF[i].Name)
+                            <h6>Value</h6>
+                            <hr />
+                                @for (int j = 0; j < ViewBag.countOptionsList[i]; j++)
                                 {
+                                     @Html.EditorFor(m => m.NGF_Value[i].Value)
+                                    @Html.EditorFor(m => m.NGF_Value[i].Cost)
+
                                     valueCount++;
-                                    <option id="@valueCount">@ViewBag.DopelOptionsValue[j]</option>
                                 }
-                            </select>
+                            <input type="hidden" id="counter" name="input_counter" value="@ViewBag.countOptionsList[i]" />
                         }
                     }
+                    
                 </div>
 
             </div>
 
             <input type="submit" class="btn btn-success" id="input" value="Create Profil Doppelzylinder" />
         </form>
+        <button id="createBlockBtn" class="btn btn-success">Add Options</button>
+        <button id="addInputBtn" class="btn btn-success">+</button>
     </div>
     
 </div>
@@ -126,7 +136,6 @@
         let productOptions = document.getElementById('productOptions');
         let addOptions = document.getElementById('addOptions');
 
-
         document.addEventListener("DOMContentLoaded", function () {
             const container = document.getElementById('productOptions');
             const createBlockBtn = document.getElementById('createBlockBtn');
@@ -149,38 +158,48 @@
                 }
             });
 
+            let z = ViewBag.countOptionsList.Count +2;
+            let counterOptions = z;
             function createBlock() {
+
+                counterOptions = z;
                 const block = document.createElement('div');
                 block.classList.add('input-block');
                 block.id = `block-${blockCounter}`;
                 block.innerHTML = `<div>
-                                                <h1>Options</h1>
-                                                <label>Name</label>
-                                                <input class="form-control" type="text" name="Options" />
-                                                <div>
-                                                    <p></p>
-                                                    <input name="postedFile" type="file" class="btn btn-success" />
-                                                    <p></p>
-                                                </div>
-                                                <label>Descriptions</label>
-                                                <input class="form-control" type="text" name="NGFDescriptions" />
-                                                <h1>Value & Cost </h1>
-                                                <div id="Aussen_Innen_ProfilDopel">
-                                                    <div id="valueNGF">
-                                                        <input type="text" placeholder="valueNGF" step="0.01" name="valueNGF" />
-                                                        <span class="input-counter">0</span>
-                                                    </div>
-                                                    <div id="costNGF">
-                                                        <input type="number" id='cost' placeholder="costNGF" step="0.01" name="costNGF" />
-                                                    </div>
+                                                        <h1>Options</h1>
+                                                        <label>Name</label>
+                                                        <input class="form-control" type="text" name="Options" />
+                                                        <div>
+                                                            <p></p>
+                                                            <input name="postedFile" type="file" class="btn btn-success" />
+                                                            <p></p>
+                                                        </div>
+                                                        <label>Descriptions</label>
+                                                        <input class="form-control" type="text" name="NGFDescriptions" />
+                                                        <h1>Value & Cost </h1>
+                                                        <div id="Aussen_Innen_ProfilDopel">
+                                                            <div id="valueNGF">
+                                                                <input type="text" placeholder="valueNGF" step="0.01" name="valueNGF" />
 
-                                                </div>
-                                            </div>`;
+                                                            </div>
+                                                            <div id="costNGF">
+                                                                        <input type="number" id='cost' placeholder="costNGF" id="cost" step="0.01" name="costNGF" />
+                                                            </div>
+                                                                        <input type="hidden" id="counter" name="input_counter" />
+                                                        </div>
+                                                    </div>`;
+
                 blockCounter++;
+
                 return block;
             }
 
-            function addInputs(block) {
+
+
+            function addInputs(block) 
+            {
+
                 let d = document.createElement('input');
                 d.setAttribute('name', 'costNGF');
                 d.setAttribute('placeholder', 'costNGF');
@@ -194,42 +213,32 @@
 
                 div1.appendChild(x);
 
-                // Создаем счетчик и добавляем его рядом с инпутом
-                const counterSpan = document.createElement('input');
-                counterSpan.value = '0';
-                counterSpan.classList.add('input-counter');
-                counterSpan.setAttribute('name', 'input_counter');
-                div1.appendChild(counterSpan);
-
                 div2.appendChild(d);
 
-                // Обновляем счетчик инпутов
-                updateInputCounter(block);
-            }
+                var counter = document.querySelectorAll('#counter');
+                counter[counter.length - 1].value = counterOptions;
 
-            function updateInputCounter(block) {
-                const inputCounter = block.querySelectorAll('.input-counter').length;
-                const counters = block.querySelectorAll('.input-counter');
-                counters.forEach(counter => {
-                    counter.value = inputCounter;
-                });
-            }
-        });
+                counterOptions++;
 
+                console.log(counterOptions);
 
-        plusAussen_Innen.addEventListener('click', () => {
-            let d = document.createElement('input');
-            d.setAttribute('name', 'aussen');
-            d.setAttribute('placeholder', 'aussen');
+            };
 
-            let x = document.createElement('input');
-            x.setAttribute('name', 'innen');
-            x.setAttribute('placeholder', 'innen');
+            plusAussen_Innen.addEventListener('click', () => {
+                let d = document.createElement('input');
+                d.setAttribute('name', 'aussen');
+                d.setAttribute('placeholder', 'aussen');
 
-            docAussen.append(d);
-            docInnen.append(x);
+                let x = document.createElement('input');
+                x.setAttribute('name', 'innen');
+                x.setAttribute('placeholder', 'innen');
 
-        });
+                docAussen.append(d);
+                docInnen.append(x);
+
+            });
+
+        })
 
         function interfaice() {
             sum.forEach((item) => {
@@ -243,7 +252,9 @@
 
             })
         }
+
         interfaice();
+
 
 
     </script>
