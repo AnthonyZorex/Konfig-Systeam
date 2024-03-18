@@ -915,86 +915,126 @@ namespace schliessanlagen_konfigurator.Controllers
         #endregion
         #region EditForm
         [HttpGet]
-        public async Task<IActionResult> Edit_Doppelzylinder(Profil_Doppelzylinder profil_Doppelzylinder,EditMultipleModelsDopelViewModel Edit_doppelzylinder,List<Aussen_Innen> aussen_Innen)
+        public async Task<IActionResult> Edit_Doppelzylinder(Profil_Doppelzylinder profil_Doppelzylinder)
         {
-            var doppelzylinder = db.Profil_Doppelzylinder.Find(profil_Doppelzylinder.Id);
+            Profil_Doppelzylinder? Profil_Doppelzylinder = await db.Profil_Doppelzylinder.FirstOrDefaultAsync(p => p.Id == profil_Doppelzylinder.Id);   
 
-            Edit_doppelzylinder.Profil_Doppelzylinder = doppelzylinder;
+            
+            //Edit_doppelzylinder.Profil_Doppelzylinder = Profil_Doppelzylinder;
 
-            aussen_Innen = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == profil_Doppelzylinder.Id).ToList();
+            //aussen_Innen = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == profil_Doppelzylinder.Id).ToList();
 
-            Edit_doppelzylinder.Aussen_Innen = aussen_Innen;
+            //Edit_doppelzylinder.Aussen_Innen = aussen_Innen;
 
 
 
-            ViewBag.AussenProduct = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == profil_Doppelzylinder.Id).Select(x => x.aussen).ToList();
-            ViewBag.InternProduct = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == profil_Doppelzylinder.Id).Select(x => x.Intern).ToList();
+            //ViewBag.AussenProduct = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == profil_Doppelzylinder.Id).Select(x => x.aussen).ToList();
+            //ViewBag.InternProduct = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == profil_Doppelzylinder.Id).Select(x => x.Intern).ToList();
 
-            var queryableOptions = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == profil_Doppelzylinder.Id).Select(x => x.Id).ToList();
+            //var queryableOptions = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == profil_Doppelzylinder.Id).Select(x => x.Id).ToList();
 
            
-            ViewBag.countOptionsQuery = queryableOptions.Count();
+            //ViewBag.countOptionsQuery = queryableOptions.Count();
 
-            if (queryableOptions.Count() > 0)
-            {
+            //if (queryableOptions.Count() > 0)
+            //{
 
-                List<NGF> ngf = new List<NGF>();
+            //    List<NGF> ngf = new List<NGF>();
 
-                for (int z = 0; z < queryableOptions.Count(); z++)
-                {
-                    var allOptions = db.NGF.Where(x => x.OptionsId == queryableOptions[z]).ToList();
-                    foreach (var option in allOptions)
-                    {
-                        ngf.Add(option);
-                    }
+            //    for (int z = 0; z < queryableOptions.Count(); z++)
+            //    {
+            //        var allOptions = db.NGF.Where(x => x.OptionsId == queryableOptions[z]).ToList();
+            //        foreach (var option in allOptions)
+            //        {
+            //            ngf.Add(option);
+            //        }
 
-                }
-                var ngfName = ngf.ToList();
+            //    }
+            //    var ngfName = ngf.ToList();
 
-                Edit_doppelzylinder.NGF = ngfName;
+            //    //Edit_doppelzylinder.NGF = ngfName;
 
-                ViewBag.optionsName = ngf.Select(x => x.Name).ToList();
+            //    ViewBag.optionsName = ngf.Select(x => x.Name).ToList();
 
-                List<NGF_Value> ngfList = new List<NGF_Value>();
+            //    List<NGF_Value> ngfList = new List<NGF_Value>();
 
-                for (int s = 0; s < ngf.Count(); s++)
-                {
-                    var opValue = db.NGF_Value.Where(x => x.NGFId == ngf[s].Id).ToList();
+            //    for (int s = 0; s < ngf.Count(); s++)
+            //    {
+            //        var opValue = db.NGF_Value.Where(x => x.NGFId == ngf[s].Id).ToList();
 
-                    for (int i = 0; i < opValue.Count(); i++)
-                    {
-                        ngfList.Add(opValue[i]);
+            //        for (int i = 0; i < opValue.Count(); i++)
+            //        {
+            //            ngfList.Add(opValue[i]);
 
-                    }
-                    ViewBag.optionValueCount = opValue.Count();
-                }
+            //        }
+            //        ViewBag.optionValueCount = opValue.Count();
+            //    }
 
-                var list = new List<int>();
+            //    var list = new List<int>();
 
-                foreach (var fs in ngf)
-                {
-                    list.Add(fs.NGF_Value.Count());
-                }
-
-
-                Edit_doppelzylinder.NGF_Value = ngfList.ToList();
+            //    foreach (var fs in ngf)
+            //    {
+            //        list.Add(fs.NGF_Value.Count());
+            //    }
 
 
-                ViewBag.countOptionsList = list;
-
-                ViewBag.optionsValue = ngfList.Select(x => x.Value).ToList();
-                ViewBag.optionsCost = ngfList.Select(x => x.Cost).ToList();
-                ViewBag.DopelOptionsCost = ngfList.Select(x => x.Value).ToList();
-
-                ViewBag.optionsPrise = JsonConvert.SerializeObject(ngfList.Select(x => x.Cost).ToList());
-
-            }
+            //    //Edit_doppelzylinder.NGF_Value = ngfList.ToList();
 
 
+            //    ViewBag.countOptionsList = list;
 
-            return View("../Edit/Edit_Doppelzylinder", Edit_doppelzylinder/* doppelzylinder*/);
+            //    ViewBag.optionsValue = ngfList.Select(x => x.Value).ToList();
+            //    ViewBag.optionsCost = ngfList.Select(x => x.Cost).ToList();
+            //    ViewBag.DopelOptionsCost = ngfList.Select(x => x.Value).ToList();
+
+            //    ViewBag.optionsPrise = JsonConvert.SerializeObject(ngfList.Select(x => x.Cost).ToList());
+
+            //}
+
+
+
+            return View("../Edit/Edit_Doppelzylinder", Profil_Doppelzylinder);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Save(Profil_Doppelzylinder profil_Doppelzylinder,int? Id)
+        {
+            var itemToUpdate = await db.Profil_Doppelzylinder.FirstOrDefaultAsync(e => e.Id == Id);
+           
+            if (profil_Doppelzylinder.ImageFile != null)
+            {
+                string wwwRootPath = Environment.WebRootPath;
+
+                string fileName = Path.GetFileNameWithoutExtension(profil_Doppelzylinder.ImageFile.FileName);
+
+                string extension = Path.GetExtension(profil_Doppelzylinder.ImageFile.FileName);
+
+                profil_Doppelzylinder.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+
+                string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    await profil_Doppelzylinder.ImageFile.CopyToAsync(fileStream);
+                }
+            }
+
+            //if (itemToUpdate != null)
+            //{
+            //    // Обновляем поля записи
+            //    itemToUpdate = profil_Doppelzylinder;
+                
+
+               db.Profil_Doppelzylinder.Attach(profil_Doppelzylinder);
+
+                // Сохраняем изменения в базе данных
+                await db.SaveChangesAsync();
+            //}
+
+           
+
+            return RedirectToAction("Index");
+        }
         [HttpGet]
         public async Task<IActionResult> Edit_Halbzylinder(Hebel profil_Halbzylinder)
         {
@@ -1059,75 +1099,7 @@ namespace schliessanlagen_konfigurator.Controllers
             db.SaveChanges();
             return RedirectToAction("VorhangschlossRout");
         }
-        [HttpPost]
-
-        public async Task<IActionResult> Save (EditMultipleModelsDopelViewModel viewModel)
-        {
-            if (viewModel.Profil_Doppelzylinder.ImageFile != null)
-            {
-                string wwwRootPath = Environment.WebRootPath;
-
-                string fileName = Path.GetFileNameWithoutExtension(viewModel.Profil_Doppelzylinder.ImageFile.FileName);
-
-                string extension = Path.GetExtension(viewModel.Profil_Doppelzylinder.ImageFile.FileName);
-
-                viewModel.Profil_Doppelzylinder.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-
-                string path = Path.Combine(wwwRootPath + "/Image/", fileName);
-
-                using (var fileStream = new FileStream(path, FileMode.Create))
-                {
-                    await viewModel.Profil_Doppelzylinder.ImageFile.CopyToAsync(fileStream);
-                }
-            }
-
-            //db.Profil_Doppelzylinder.Update(viewModel.Profil_Doppelzylinder);
-            db.Entry(viewModel).State = EntityState.Modified;
-            db.SaveChanges();
-
-            db.Entry(viewModel.Profil_Doppelzylinder_Options).State = EntityState.Modified;
-            //db.Profil_Doppelzylinder_Options.Update(viewModel.Profil_Doppelzylinder_Options);
-            db.SaveChanges();
-            foreach (var list in viewModel.Aussen_Innen)
-            {
-                list.Profil_DoppelzylinderId = viewModel.Profil_Doppelzylinder.Id;
-                //db.Aussen_Innen.Update(list);
-                db.Entry(list).State = EntityState.Modified;
-                db.SaveChanges();
-            }
-               
-            var options = db.Profil_Doppelzylinder_Options.Where(x=>x.DoppelzylinderId== viewModel.Profil_Doppelzylinder.Id).ToList();
-
-
-            var ngdList = new List<NGF>();
-
-            foreach (var list in viewModel.NGF)
-            {
-                for (int z =0;z<options.Count;z++)
-                {
-                    list.OptionsId = options[z].Id;
-                    ngdList.Add(list);
-                    //db.NGF.Update(list);
-                    db.Entry(list).State = EntityState.Modified;
-                    db.SaveChanges();
-                }
-               
-               
-            }
-
-            foreach (var list in viewModel.NGF_Value)
-            {
-                for (int z = 0; z < ngdList.Count; z++)
-                {
-                    list.NGFId = viewModel.NGF[z].Id;
-                    //db.NGF_Value.Update(list);
-                    db.Entry(list).State = EntityState.Modified;
-                    db.SaveChanges();
-                }
-            }
- 
-            return RedirectToAction("Index");
-        }
+        
         [HttpPost]
         public ActionResult SaveProfil_Knaufzylinder(Profil_Knaufzylinder profil_Doppelzylinder)
         {

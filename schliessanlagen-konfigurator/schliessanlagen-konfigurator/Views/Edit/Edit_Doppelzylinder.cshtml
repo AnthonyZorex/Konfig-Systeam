@@ -1,109 +1,56 @@
-﻿@model schliessanlagen_konfigurator.Models.EditMultipleModelsDopelViewModel;
+﻿@model schliessanlagen_konfigurator.Models.ProfilDopelZylinder.Profil_Doppelzylinder;
 
 @{
-    ViewData["Title"] = $"Edit/{Model.Profil_Doppelzylinder.Id}";
+    ViewData["Title"] = $"Edit/{Model.Id}";
 }
-@Html.HiddenFor(m => m.Profil_Doppelzylinder)
-@Html.HiddenFor(m => m.Aussen_Innen)
-@Html.HiddenFor(m => m.NGF)
-@Html.HiddenFor(m => m.NGF_Value)
+
 
 <h1>Edit</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Save" enctype="multipart/form-data" asp-controller="Home">
-
+            @Html.HiddenFor(m => m.Id)
             <div id="productMenu">
-                <input style="display:none" asp-for="Profil_Doppelzylinder.schliessanlagenId" class="form-control" type="text" value="1" />
+                <input style="display:none" asp-for="schliessanlagenId" class="form-control" type="text" value="1" />
                 <div>
-                    <label asp-for="Profil_Doppelzylinder.ImageFile" class="control-label"></label>
-                    <input asp-for="Profil_Doppelzylinder.ImageFile" class="btn btn-success" accept="image/*" />
-                    <span asp-validation-for="Profil_Doppelzylinder.ImageFile" class="text-danger"></span>
-                    @Html.ValidationMessageFor(m => m.Profil_Doppelzylinder.ImageFile, "", new { @class = "error" })
+                    <label asp-for="ImageFile" class="control-label"></label>
+                    <input asp-for="ImageFile" class="btn btn-success" accept="image/*" />
+                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+                    @Html.ValidationMessageFor(m => m.ImageFile, "", new { @class = "error" })
                 </div>
-            </div>
+            </div> 
 
             <div id="product_desciptions">
 
                 <div style="margin-bottom: 50px;">
                     <label>Name</label>
-                    <input asp-for="Profil_Doppelzylinder.Name" class="form-control" type="text" />
+                    <input asp-for="Name" class="form-control" type="text" />
                 </div>
 
                 <div style="margin-bottom: 50px;">
                     <label> Company Name</label>
-                    <input asp-for="Profil_Doppelzylinder.companyName" class="form-control" type="text" />
+                    <input asp-for="companyName" class="form-control" type="text" />
                 </div>
 
                 <div style="margin-bottom: 50px;">
                     <label>Name System</label>
-                    <input asp-for="Profil_Doppelzylinder.NameSystem" class="form-control" type="text" />
+                    <input asp-for="NameSystem" class="form-control" type="text" />
                 </div>
 
                 <div style="margin-bottom: 50px;">
                     <label>Descriptions</label>
-                    <textarea asp-for="Profil_Doppelzylinder.description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <textarea asp-for="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                 </div>
 
                 <div style="margin-bottom: 50px;">
                     <label> Artikelnummer</label>
-                    <input asp-for="Profil_Doppelzylinder.Artikelnummer" class="form-control" type="text" name="Artikelnummer" />
+                    <input asp-for="Artikelnummer" class="form-control" type="text" name="Artikelnummer" />
                 </div>
 
                 <div style="margin-bottom: 50px;">
                     <label>Cost</label>
-                    <input asp-for="Profil_Doppelzylinder.Cost" class="form-control" />
-                </div>
-
-               <h1>Aussen & Innen <input id="addAussen_Innen" class="btn btn-success" type="button" value="+" /></h1>
-                <div id="Aussen_Innen_ProfilDopel">
-
-                    <div id="AussenProfilDopel">
-
-                        @{
-                            for (var list=0;list < Model.Aussen_Innen.Count;list++)
-                            {
-                                @Html.EditorFor(m => m.Aussen_Innen[list].aussen)
-                               
-                            }
-                        }
-                    </div>
-
-                    <div id="InnenProfilDopel">
-                        @{
-                            for (var list = 0; list < Model.Aussen_Innen.Count; list++)
-                            {
-                                @Html.EditorFor(m => m.Aussen_Innen[list].Intern)
-                             
-                            }
-                        } 
-                        
-                    </div>
-                </div>
-                <div id="productOptions">
-                    @{
-                        int valueCount = 0;
-                    }
-                    @if (ViewBag.countOptionsQuery > 0)
-                    {
-                        @for (int i = 0; i < ViewBag.optionsName.Count; i++)
-                        {
-                            <hr/>
-                            @Html.EditorFor(m => m.NGF[i].Name)
-                            <h6>Value</h6>
-                            <hr />
-                                @for (int j = 0; j < ViewBag.countOptionsList[i]; j++)
-                                {
-                                     @Html.EditorFor(m => m.NGF_Value[i].Value)
-                                    @Html.EditorFor(m => m.NGF_Value[i].Cost)
-
-                                    valueCount++;
-                                }
-                            <input type="hidden" id="counter" name="input_counter" value="@ViewBag.countOptionsList[i]" />
-                        }
-                    }
-                    
+                    <input asp-for="Cost" class="form-control" />
                 </div>
 
             </div>
