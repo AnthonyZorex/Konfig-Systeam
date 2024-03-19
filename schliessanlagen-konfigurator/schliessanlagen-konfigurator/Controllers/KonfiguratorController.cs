@@ -236,6 +236,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 var rl = query.Distinct().ToList();
 
                 ViewBag.a = rl;
+
                 //    if (allUserListOrder[d].ZylinderId == profilK[d].schliessanlagenId)
                 //    {
                 //        var dopelId = profilK[d].Id;
@@ -356,13 +357,7 @@ namespace schliessanlagen_konfigurator.Controllers
             return View("System_Auswählen", userKey);
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> System_Auswählen(string key)
-        //{
-        //    var order = db.Orders.Where(x=>x.userKey ==  key).ToList();
-
-        //    return RedirectToAction("Finisher",order);
-        //}
+       
         [HttpGet]
         public async Task<IActionResult> OrdersKey(string param1, string param2)
         {
@@ -370,9 +365,26 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var keyOpenOrder = new List<isOpen_Order>();
 
-            foreach(var list in key)
+            var OrderList = db.Profil_Doppelzylinder.Where(x => x.Id == Convert.ToInt32(param1)).ToList();
+
+            var AussenInen = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == Convert.ToInt32(param1)).ToList();
+
+            var DopelOrderlist = new List<Profil_Doppelzylinder>();
+
+            for (var i = 0; i < key.Count; i++)
+            {
+                DopelOrderlist.Add(OrderList.Last());
+            }
+
+            foreach (var list in key)
             {
                 var keyOpen = db.isOpen_Order.Where(x => x.OrdersId == list.id).ToList();
+                //var chekedAussen = AussenInen.Where(x => x.aussen == list.aussen).Select(x=>x.aussen).ToList();
+                //var chekedIntern = AussenInen.Where(x => x.aussen == list.aussen).Select(x => x.Intern).ToList();
+
+                //ViewBag.AussenSelect = chekedAussen;
+                //ViewBag.InternSelect = chekedIntern;
+
                 foreach (var listOpen in keyOpen)
                     keyOpenOrder.Add(listOpen);
             }
@@ -388,22 +400,6 @@ namespace schliessanlagen_konfigurator.Controllers
                 break;
             }
 
-            //var xf = db.isOpen_value.Where(x=>x.isOpen_OrderId == keyOpen).ToList();
-
-            var OrderList = db.Profil_Doppelzylinder.Where(x => x.Id == Convert.ToInt32(param1)).ToList();
-
-           var AussenInen = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == Convert.ToInt32(param1)).ToList();
-
-            var DopelOrderlist = new List<Profil_Doppelzylinder>();
-            
-            for(var i = 0;i< key.Count; i++)
-            {
-                DopelOrderlist.Add(OrderList.Last());
-            }
-            
-            //var allOrder = db.Orders.Where(x => x.userKey == key.use).Last();
-
-            //var ordersDople = allOrder.Where(x => x.ZylinderId == profilD.schliessanlagenId).Last();
             ViewBag.aussen = AussenInen.Select(x=>x.aussen).ToList();
             ViewBag.Intern = AussenInen.Select(x => x.Intern).ToList();
             ViewBag.Dopelzylinder = DopelOrderlist.ToList();

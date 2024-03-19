@@ -62,15 +62,15 @@
                         <input asp-for="Cost" class="form-control" />
                     </div> 
 
-                    <h1>Aussen & Innen <input id="addAussen_Innen" class="btn btn-success" type="button" value="+" /></h1>
+                    <h1>Aussen & Innen <input id="addAussen_Innen" class="btn btn-success" type="button" value="+" /><input id="addAussen_Innen_remove" class="btn btn-danger" type="button" value="-" /></h1>
                     <div id="Aussen_Innen_ProfilDopel">
 
                     <div id="AussenProfilDopel">
-                       <input type="number" placeholder="Aussen" step="0.01" name="aussen" />
+                            <input type="number" class="form-control" placeholder="Aussen" id="aus" step="0.01" name="aussen" />
                         </div>
 
                         <div id="InnenProfilDopel" >
-                            <input type="number" placeholder="innen" step="0.01" name="innen" />
+                            <input type="number" class="form-control" placeholder="innen" id="inter" step="0.01" name="innen" />
                         </div>
                     </div> 
                     <div id="productOptions">
@@ -85,7 +85,7 @@
 
             <button id="createBlockBtn" class="btn btn-success">Add Options</button>
             <button id="addInputBtn" class="btn btn-success">+</button>
-            @* <div id="container"></div> *@
+            <button id="RemoveInputBtn" class="btn btn-danger">-</button>
         </div>
 
     </div>
@@ -151,14 +151,15 @@
         let productOptions = document.getElementById('productOptions');
         let addOptions = document.getElementById('addOptions');
 
+        let removeAussen_Innen = document.getElementById('addAussen_Innen_remove');
 
-        
-
-
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function () 
+        {
             const container = document.getElementById('productOptions');
             const createBlockBtn = document.getElementById('createBlockBtn');
             const addInputBtn = document.getElementById('addInputBtn');
+            const RemoveInputBtn = document.getElementById('RemoveInputBtn');
+
             let blockCounter = 1;
 
             createBlockBtn.addEventListener('click', function () {
@@ -166,13 +167,29 @@
                 container.appendChild(block);
             });
 
-            addInputBtn.addEventListener('click', function () {
+            addInputBtn.addEventListener('click', function () 
+            {
                 const blocks = document.querySelectorAll('.input-block');
                 const lastBlock = blocks[blocks.length - 1];
 
                 if (lastBlock) {
                     addInputs(lastBlock);
                 } else {
+                    alert('Сначала создайте блок');
+                }
+            });
+
+            RemoveInputBtn.addEventListener('click', function () 
+            {
+                const blocks = document.querySelectorAll('.input-block');
+                const lastBlock = blocks[blocks.length - 1];
+
+                if (lastBlock) 
+                {
+                    productOptions.removeChild(lastBlock);
+                } 
+                else 
+                {
                     alert('Сначала создайте блок');
                 }
             });
@@ -250,14 +267,26 @@
                 let d = document.createElement('input');
                 d.setAttribute('name', 'aussen');
                 d.setAttribute('placeholder', 'aussen');
+                d.setAttribute('class', 'form-control');
+                d.id = 'aus';
 
                 let x = document.createElement('input');
                 x.setAttribute('name', 'innen');
                 x.setAttribute('placeholder', 'innen');
-
+                x.id = 'inter';
+                x.setAttribute('class', 'form-control');
                 docAussen.append(d);
                 docInnen.append(x);
 
+            });
+            removeAussen_Innen.addEventListener('click', () => 
+            {
+                let d = document.querySelectorAll('#aus');
+                let x = document.querySelectorAll('#inter');
+
+
+                docAussen.removeChild(d[d.length-1]);
+                docInnen.removeChild(x[x.length - 1]);
             });
 
         })

@@ -65,7 +65,7 @@
                     <div id="Aussen_Innen_ProfilDopel">
 
                         <div id="AussenProfilDopel">
-                            <input type="number" placeholder="Aussen" step="0.01" name="aussen" />
+                            <input class="form-control" type="number" placeholder="Aussen" step="0.01" name="aussen" />
                         </div>
 
                     </div>
@@ -113,7 +113,7 @@
 
                             <td id="rowTable" class="table-info"><a href="@Url.Action("Edit_Doppelzylinder","Home", new { item.Id })"><img src="@("/Image/edit-tools.png")" height="30" width="30" /></a></td>
                             <td id="rowTable" class="table-info">
-                                <a class="compItem" href="@Url.Action("ProductProfil_Doppelzylinder","Home", new { item.Id })">
+                                <a class="compItem" href="@Url.Action("ProductProfil_Halb","Home", new { item.Id })">
                                     <img src="@("/Image/options.png")" height="30" width="30" />
                                 </a>
                             </td>
@@ -174,22 +174,22 @@
                 block.innerHTML = `<div>
                                                         <h1>Options</h1>
                                                         <label>Name</label>
-                                                        <input class="form-control" type="text" name="Options" />
+                                                                <input class="form-control" class="form-control" type="text" name="Options" />
                                                         <div>
                                                             <p></p>
                                                             <input name="postedFile" type="file" class="btn btn-success" />
                                                             <p></p>
                                                         </div>
                                                         <label>Descriptions</label>
-                                                        <input class="form-control" type="text" name="NGFDescriptions" />
+                                                                <input class="form-control" class="form-control" type="text" name="NGFDescriptions" />
                                                         <h1>Value & Cost </h1>
                                                         <div id="Aussen_Innen_ProfilDopel">
                                                             <div id="valueNGF">
-                                                                <input type="text" placeholder="valueNGF" step="0.01" name="valueNGF" />
+                                                                        <input type="text" class="form-control" placeholder="valueNGF" step="0.01" name="valueNGF" />
                                                                 <span class="input-counter">0</span>
                                                             </div>
                                                             <div id="costNGF">
-                                                                <input type="number" id='cost' placeholder="costNGF" step="0.01" name="costNGF" />
+                                                                        <input type="number" class="form-control" id='cost' placeholder="costNGF" step="0.01" name="costNGF" />
                                                             </div>
 
                                                         </div>
@@ -202,10 +202,12 @@
                 let d = document.createElement('input');
                 d.setAttribute('name', 'costNGF');
                 d.setAttribute('placeholder', 'costNGF');
+                d.setAttribute('class', 'form-control');
 
                 let x = document.createElement('input');
                 x.setAttribute('name', 'valueNGF');
                 x.setAttribute('placeholder', 'valueNGF');
+                x.setAttribute('class', 'form-control');
 
                 const div1 = block.querySelector('#valueNGF');
                 const div2 = block.querySelector('#costNGF');
@@ -239,6 +241,8 @@
             let d = document.createElement('input');
             d.setAttribute('name', 'aussen');
             d.setAttribute('placeholder', 'aussen');
+            d.setAttribute('class', 'form-control');
+            d.id = 'aus';
 
             docAussen.append(d);
 
