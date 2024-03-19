@@ -50,15 +50,58 @@
 
                 <div style="margin-bottom: 50px;">
                     <label>Cost</label>
-                    <input asp-for="Cost" class="form-control" />
+                    <input asp-for="Cost" type="number" class="form-control" />
                 </div>
 
             </div>
+            <h1>Aussen & Innen <input id="addAussen_Innen" class="btn btn-success" type="button" value="+" /><input id="addAussen_Innen_remove" class="btn btn-danger" type="button" value="-" /></h1>
+            <div id="Aussen_Innen_ProfilDopel">
 
-            <input type="submit" class="btn btn-success" id="input" value="Create Profil Doppelzylinder" />
+                <div id="AussenProfilDopel">
+                    @foreach (var list in ViewBag.AussenProduct)
+                    {
+                        <input type="number" class="form-control" placeholder="Aussen" id="aus" value="@list" step="0.01" name="aussen" />
+                    }
+                   
+                </div>
+
+                <div id="InnenProfilDopel">
+                    @foreach (var list in ViewBag.InternProduct)
+                    {
+                        <input type="number" class="form-control" placeholder="innen" id="inter" value="@list" step="0.01" name="innen" />
+                    }
+                   
+                </div>
+            </div>
+            <div id="productOptions">
+                @{
+                    int valueCount = 0;
+                }
+                @if (ViewBag.countOptionsQuery > 0)
+                {
+                    @for (int i = 0; i < ViewBag.optionsName.Count; i++)
+                    {
+                        <hr />
+                        <input class="form-control" name="optionsName" value="@ViewBag.optionsName[i]" />
+                        <hr />
+
+                            @for (int j = 0; j < ViewBag.countOptionsList[i]; j++)
+                            {
+                            <input class="form-control" name="optionsValue" id="@valueCount" value="@ViewBag.optionsValue[valueCount]" />
+                            <input class="form-control" name="optionsCost" id="@valueCount" value="@ViewBag.optionsCost[valueCount]" />
+
+                                <input type="hidden" id="counter" name="input_counter" />
+                                valueCount++;
+                            }
+                   
+                    }
+                }
+            </div>
+            <input type="submit" class="btn btn-success" id="input" value="Update Profil Doppelzylinder" />
         </form>
         <button id="createBlockBtn" class="btn btn-success">Add Options</button>
         <button id="addInputBtn" class="btn btn-success">+</button>
+        <button id="RemoveInputBtn" class="btn btn-danger">-</button>
     </div>
     
 </div>
@@ -83,10 +126,14 @@
         let productOptions = document.getElementById('productOptions');
         let addOptions = document.getElementById('addOptions');
 
+        let removeAussen_Innen = document.getElementById('addAussen_Innen_remove');
+
         document.addEventListener("DOMContentLoaded", function () {
             const container = document.getElementById('productOptions');
             const createBlockBtn = document.getElementById('createBlockBtn');
             const addInputBtn = document.getElementById('addInputBtn');
+            const RemoveInputBtn = document.getElementById('RemoveInputBtn');
+
             let blockCounter = 1;
 
             createBlockBtn.addEventListener('click', function () {
@@ -105,11 +152,22 @@
                 }
             });
 
-            let z = ViewBag.countOptionsList.Count +2;
-            let counterOptions = z;
+            RemoveInputBtn.addEventListener('click', function () {
+                const blocks = document.querySelectorAll('.input-block');
+                const lastBlock = blocks[blocks.length - 1];
+
+                if (lastBlock) {
+                    productOptions.removeChild(lastBlock);
+                }
+                else {
+                    alert('Сначала создайте блок');
+                }
+            });
+
+            let counterOptions = 2;
             function createBlock() {
 
-                counterOptions = z;
+                counterOptions = 2;
                 const block = document.createElement('div');
                 block.classList.add('input-block');
                 block.id = `block-${blockCounter}`;
@@ -144,8 +202,7 @@
 
 
 
-            function addInputs(block) 
-            {
+            function addInputs(block) {
 
                 let d = document.createElement('input');
                 d.setAttribute('name', 'costNGF');
@@ -171,18 +228,30 @@
 
             };
 
+
+
+
             plusAussen_Innen.addEventListener('click', () => {
                 let d = document.createElement('input');
                 d.setAttribute('name', 'aussen');
                 d.setAttribute('placeholder', 'aussen');
+                d.id = 'aus';
 
                 let x = document.createElement('input');
                 x.setAttribute('name', 'innen');
                 x.setAttribute('placeholder', 'innen');
-
+                x.id = 'inter'
                 docAussen.append(d);
                 docInnen.append(x);
 
+            });
+            removeAussen_Innen.addEventListener('click', () => {
+                let d = document.querySelectorAll('#aus');
+                let x = document.querySelectorAll('#inter');
+
+           
+                docAussen.removeChild(d[d.length - 1]);
+                docInnen.removeChild(x[x.length - 1]);
             });
 
         })
@@ -201,7 +270,6 @@
         }
 
         interfaice();
-
 
 
     </script>

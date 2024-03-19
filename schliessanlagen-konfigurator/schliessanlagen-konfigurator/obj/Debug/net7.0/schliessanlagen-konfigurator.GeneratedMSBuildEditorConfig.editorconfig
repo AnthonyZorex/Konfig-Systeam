@@ -58,8 +58,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductHebel.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9kdWN0SGViZWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductProfil_Doppelzylinder.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9kdWN0UHJvZmlsX0RvcHBlbHp5bGluZGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductProfil_Halb.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9kdWN0UHJvZmlsX0hhbGIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductProfil_Knayf.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9kdWN0UHJvZmlsX0tuYXlmLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Profil_HalbzylinderRout.cshtml]
