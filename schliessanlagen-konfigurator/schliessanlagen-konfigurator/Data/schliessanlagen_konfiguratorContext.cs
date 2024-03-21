@@ -6,10 +6,11 @@ using schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder;
 using schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.ValueOptions;
 using schliessanlagen_konfigurator.Models.ProfilDopelZylinder;
 using schliessanlagen_konfigurator.Models.ProfilDopelZylinder.ValueOptions;
-using schliessanlagen_konfigurator.Models.Hebelzylinder;
+using schliessanlagen_konfigurator.Models.Hebel;
 using schliessanlagen_konfigurator.Models.Vorhan;
 using schliessanlagen_konfigurator.Models.Aussen_Rund;
 using schliessanlagen_konfigurator.Models.OrdersOpen;
+using schliessanlagen_konfigurator.Models.Hebelzylinder;
 
 namespace schliessanlagen_konfigurator.Data
 {
@@ -36,10 +37,10 @@ namespace schliessanlagen_konfigurator.Data
         public DbSet<Aussen_Innen_Halbzylinder> Aussen_Innen_Halbzylinder { get; set; }
 
         
-        public DbSet<Hebel> Hebelzylinder { get; set; }
+        public DbSet<Hebelzylinder> Hebelzylinder { get; set; }
         public DbSet<Hebelzylinder_Options> Hebelzylinder_Options { get; set; }
-        public DbSet<Options> Options { get; set; }
-        public DbSet<Options_value> Options_value { get; set; }
+        public DbSet<Models.Hebelzylinder.Options> Options { get; set; }
+        public DbSet<Models.Hebelzylinder.Options_value> Options_value { get; set; }
 
 
         public DbSet<Vorhangschloss> Vorhangschloss { get; set; }

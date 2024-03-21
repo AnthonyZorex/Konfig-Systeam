@@ -614,7 +614,7 @@ namespace schliessanlagen_konfigurator.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create_Hebelzylinder(Hebel Profil_Doppelzylinder,
+        public async Task<IActionResult> Create_Hebelzylinder(Models.Hebelzylinder.Hebelzylinder Profil_Doppelzylinder,
         List<string> Options, List<string> NGFDescriptions, IFormFile postedFile, List<string> valueNGF, List<float> costNGF, List<int> input_counter)
         {
 
@@ -646,7 +646,7 @@ namespace schliessanlagen_konfigurator.Controllers
             for (var i = 0; i < Options.Count(); i++)
             {
 
-                var dopOptions = new Hebelzylinder_Options
+                var dopOptions = new Models.Hebel.Hebelzylinder_Options
                 {
                     HebelzylinderId = s.Last(),
                 };
@@ -1097,7 +1097,7 @@ namespace schliessanlagen_konfigurator.Controllers
             return RedirectToAction("Index");
         }
         [HttpGet]
-        public async Task<IActionResult> Edit_Halbzylinder(Hebel profil_Halbzylinder)
+        public async Task<IActionResult> Edit_Halbzylinder(Models.Hebelzylinder.Hebelzylinder profil_Halbzylinder)
         {
             var Halbzylinder = db.Hebelzylinder.Find(profil_Halbzylinder.Id);
             return View("../Edit/Edit_Halbzylinder", Halbzylinder);
@@ -1140,7 +1140,7 @@ namespace schliessanlagen_konfigurator.Controllers
             return RedirectToAction("Profil_HalbzylinderRout");
         }
         [HttpPost]
-        public ActionResult SaveHebelzylinder(Hebel profil_Halbzylinder)
+        public ActionResult SaveHebelzylinder(Models.Hebelzylinder.Hebelzylinder profil_Halbzylinder)
         {
             db.Hebelzylinder.Update(profil_Halbzylinder);
             db.SaveChanges();
@@ -1372,7 +1372,7 @@ namespace schliessanlagen_konfigurator.Controllers
         }
         [HttpGet]
         [Route("Home/ProductHebel")]
-        public ActionResult ProductHebel(Hebel profil)
+        public ActionResult ProductHebel(Models.Hebelzylinder.Hebelzylinder profil)
         {
             var profilInfo = db.Hebelzylinder.FirstOrDefault(x => x.Id == profil.Id);
 

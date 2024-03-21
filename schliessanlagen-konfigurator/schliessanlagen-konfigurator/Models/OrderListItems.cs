@@ -10,6 +10,7 @@ using schliessanlagen_konfigurator.Models.Hebelzylinder;
 using schliessanlagen_konfigurator.Models.Vorhan;
 using schliessanlagen_konfigurator.Models.Aussen_Rund;
 using schliessanlagen_konfigurator.Models.OrdersOpen;
+using schliessanlagen_konfigurator.Models.Hebel;
 
 namespace schliessanlagen_konfigurator.Models
 {
@@ -34,10 +35,10 @@ namespace schliessanlagen_konfigurator.Models
         public Knayf_Options Knayf_Options { get; set; }
         public Knayf_Options_value Knayf_Options_value { get; set; }
 
-        public Hebelzylinder hebel { get; set; }
+        public Models.Hebelzylinder.Hebelzylinder hebel { get; set; }
         public Hebelzylinder_Options Hebelzylinder_Options { get; set; }
-        public Options options { get; set; }
-        public Options_value options_Value { get; set; }
+        public Models.Hebelzylinder.Options options { get; set; }
+        public Models.Hebelzylinder.Options_value options_Value { get; set; }
 
         public Vorhangschloss vorhangschloss { get; set; }
         public List<Size> size { get; set; }
