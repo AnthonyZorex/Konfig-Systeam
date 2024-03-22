@@ -529,3 +529,11 @@ summary {
     display: flex;
     gap: 20px;
 }
+#SizeProduct{
+    display:flex;
+}
+#orderCost {
+    text-align: end;
+    margin-top: 20px;
+    color: red;
+}

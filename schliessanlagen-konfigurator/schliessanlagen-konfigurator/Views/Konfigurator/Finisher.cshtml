@@ -17,8 +17,9 @@
     </p>
 
 <div>
-     @foreach (var item in ViewBag.Order)
-        {
+
+    @foreach (var item in ViewBag.Order)
+    {
             z++;
             <div id="finisherItem">
             <div id="ItemCounterOrders">
@@ -28,8 +29,7 @@
                         <h4>@item.CountKey</h4>
                         <button class="btn btn-success">+</button>
                     </div>
-       
-                  
+                            
             </div>
             <div id="nameItem">
         <h2>@item.NameKey</h2>
@@ -56,7 +56,7 @@
                 {
                     <div id="ExelItem">
                         <div id="productImage">
-                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
                         </div>
                         <div id="productMenuInfo">
                             <div id="ProductNameUndCost">
@@ -67,40 +67,425 @@
 
                             </div>
                             <div>
-                                <select>
+                            <select class="form-select">
                                     <option>Doppelzylinder</option>
                                 </select>
                             </div>
                             <div id="product_desciptions">
                                 <h5>Zylinder Länge</h5>
                             </div>
+                        <div id="SizeProduct">
                            <div>
-                                <select >
+                                <select class="form-select" id="Aussen">
+                                    <option style="display:none" selected>@ViewBag.DopelAussen</option>
                                     <option>Außenlänge (A)</option>
-                                    @for (int i = 0; i < ViewBag.aussen.Count; i++)
+                                    @for (int i = 0; i < ViewBag.Dopelzylinderaussen.Count; i++)
                                     {
-                                        <option>@ViewBag.aussen[i]</option>
+                                        <option>@ViewBag.Dopelzylinderaussen[i]</option>
                                     }
                                 </select>
                            </div>
                             <div>
-                                <select>
+                                <select class="form-select"  id="Intern">
+                                    <option style="display:none" selected>@ViewBag.DopelInter</option>
                                     <option>Innenlänge (B)</option>
-                                    @for (int i = 0; i < ViewBag.Intern.Count; i++)
+                                    @for (int i = 0; i < ViewBag.DopelzylinderIntern.Count; i++)
                                     {
-                                        <option>@ViewBag.Intern[i]</option>
+                                        <option>@ViewBag.DopelzylinderIntern[i]</option>
                                     }
                                 </select>
                             </div>
                         </div>
+                        <div>
+                            <h3>Weitere Optionen</h3>
+                            <div >
+                                @{
+                                    int valueCount = 0;
+                                }
+                                @if (ViewBag.countOptionsQuery > 0)
+                                {
+                                    @for (int i = 0; i < ViewBag.optionsName.Count; i++)
+                                    {
+
+                                        <select class="form-select" id="ProductOptionsSelector">
+                                            <option>@ViewBag.optionsName[i]</option>
+                                            @for (int j = 0; j < ViewBag.countOptionsList[i]; j++)
+                                            {
+                                                
+                                                <option id="@valueCount">@ViewBag.optionsValue[valueCount]</option>
+                                                valueCount++;
+                                            }
+                                        </select>
+                                    }
+                                }
+
+
+                            </div>
+                        </div>
+                    </div>
 
 
                     </div>
                 }
+        }
+        @if (ViewBag.KnayfZelinder != null)
+        {
+            foreach (var item in ViewBag.KnayfZelinder)
+            {
+                <div id="ExelItem">
+                    <div id="productImage">
+                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
+                    </div>
+                    <div id="productMenuInfo">
+                        <div id="ProductNameUndCost">
+
+                            <div>
+                                <h3>@item.Name</h3>
+                            </div>
+
+                        </div>
+                        <div>
+                            <select class="form-select">
+                                <option>KnayfZelinder</option>
+                            </select>
+                        </div>
+                        <div id="product_desciptions">
+                            <h5>Zylinder Länge</h5>
+                        </div>
+                        <div id="SizeProduct">
+                            <div>
+                                <select class="form-select">
+                                    <option style="display:none" selected>@ViewBag.KnayfAussen</option>
+                                    <option>Außenlänge (A)</option>
+                                    @for (int i = 0; i < ViewBag.KnayfZelinderAussen.Count; i++)
+                                    {
+                                        <option>@ViewBag.KnayfZelinderAussen[i]</option>
+                                    }
+                                </select>
+                            </div>
+                            <div >
+                                <select class="form-select">
+                                    <option style="display:none" selected>@ViewBag.KnayfInter</option>
+                                    <option>Innenlänge (B)</option>
+                                    @for (int i = 0; i < ViewBag.KnayfZelinderIntern.Count; i++)
+                                    {
+                                        <option>@ViewBag.KnayfZelinderIntern[i]</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <h3>Weitere Optionen</h3>
+                            <div >
+                                @{
+                                    int valueCount = 0;
+                                }
+                                @if (ViewBag.countOptionsQueryKnayf > 0)
+                                {
+                                    @for (int i = 0; i < ViewBag.optionsNameKnayf.Count; i++)
+                                    {
+
+                                        <select class="form-select" id="ProductOptionsSelector">
+                                            <option>@ViewBag.optionsNameKnayf[i]</option>
+                                            @for (int j = 0; j < ViewBag.countOptionsListKnayf[i]; j++)
+                                            {
+
+                                                <option id="@valueCount">@ViewBag.optionsValueKnayf[valueCount]</option>
+                                                valueCount++;
+                                            }
+                                        </select>
+                                    }
+                                }
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
             }
-        <h1>@ViewBag.Cost €</h1>
+        }
+        @if (ViewBag.Halb != null)
+        {
+            foreach (var item in ViewBag.Halb)
+            {
+                <div id="ExelItem">
+                    <div id="productImage">
+                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
+                    </div>
+                    <div id="productMenuInfo">
+                        <div id="ProductNameUndCost">
+
+                            <div>
+                                <h3>@item.Name</h3>
+                            </div>
+
+                        </div>
+                        <div>
+                            <select class="form-select">
+                                <option>KnayfZelinder</option>
+                            </select>
+                        </div>
+                        <div id="product_desciptions">
+                            <h5>Zylinder Länge</h5>
+                        </div>
+                        <div >
+                            <div>
+                                <select class="form-select">
+                                    <option>Außenlänge (A)</option>
+                                    @for (int i = 0; i < ViewBag.KnayfZelinderAussen.Count; i++)
+                                    {
+                                        <option>@ViewBag.KnayfZelinderAussen[i]</option>
+                                    }
+                                </select>
+                            </div>
+                            
+                        </div>
+                        <div>
+                            <h3>Weitere Optionen</h3>
+                            @* <div>
+                                @{
+                                    int valueCount = 0;
+                                }
+                                @if (ViewBag.countOptionsQueryKnayf > 0)
+                                {
+                                    @for (int i = 0; i < ViewBag.optionsNameKnayf.Count; i++)
+                                    {
+
+                                        <select class="form-select" id="ProductOptionsSelector">
+                                            <option>@ViewBag.optionsNameKnayf[i]</option>
+                                            @for (int j = 0; j < ViewBag.countOptionsListKnayf[i]; j++)
+                                            {
+
+                                                <option id="@valueCount">@ViewBag.optionsValueKnayf[valueCount]</option>
+                                                valueCount++;
+                                            }
+                                        </select>
+                                    }
+                                }
+
+
+                            </div> *@
+                        </div>
+                    </div>
+
+
+                </div>
+            }
+        }
+        @if (ViewBag.HelbZ != null)
+        {
+            foreach (var item in ViewBag.HelbZ)
+            {
+                <div id="ExelItem">
+                    <div id="productImage">
+                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
+                    </div>
+                    <div id="productMenuInfo">
+                        <div id="ProductNameUndCost">
+
+                            <div>
+                                <h3>@item.Name</h3>
+                            </div>
+
+                        </div>
+                        <div>
+                            <select class="form-select">
+                                <option>KnayfZelinder</option>
+                            </select>
+                        </div>
+                        <div id="product_desciptions">
+                            <h5>Zylinder Länge</h5>
+                        </div>
+                     
+                        <div>
+                            <h3>Weitere Optionen</h3>
+                            @* <div>
+                    @{
+                    int valueCount = 0;
+                    }
+                    @if (ViewBag.countOptionsQueryKnayf > 0)
+                    {
+                    @for (int i = 0; i < ViewBag.optionsNameKnayf.Count; i++)
+                    {
+
+                    <select class="form-select" id="ProductOptionsSelector">
+                    <option>@ViewBag.optionsNameKnayf[i]</option>
+                    @for (int j = 0; j < ViewBag.countOptionsListKnayf[i]; j++)
+                    {
+
+                    <option id="@valueCount">@ViewBag.optionsValueKnayf[valueCount]</option>
+                    valueCount++;
+                    }
+                    </select>
+                    }
+                    }
+
+
+                    </div> *@
+                        </div>
+                    </div>
+
+
+                </div>
+            }
+        }
+        @if (ViewBag.Vorhanschlos != null)
+        {
+            foreach (var item in ViewBag.Vorhanschlos)
+            {
+                <div id="ExelItem">
+                    <div id="productImage">
+                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
+                    </div>
+                    <div id="productMenuInfo">
+                        <div id="ProductNameUndCost">
+
+                            <div>
+                                <h3>@item.Name</h3>
+                            </div>
+
+                        </div>
+                        <div>
+                            <select class="form-select">
+                                <option>KnayfZelinder</option>
+                            </select>
+                        </div>
+                        <div id="product_desciptions">
+                            <h5>Zylinder Länge</h5>
+                        </div>
+                        <div>
+                            <div>
+                                <select class="form-select">
+                                    <option>Außenlänge (A)</option>
+                                    @for (int i = 0; i < ViewBag.KnayfZelinderAussen.Count; i++)
+                                    {
+                                        <option>@ViewBag.KnayfZelinderAussen[i]</option>
+                                    }
+                                </select>
+                            </div>
+
+                        </div>
+                        <div>
+                            <h3>Weitere Optionen</h3>
+                            @* <div>
+                    @{
+                    int valueCount = 0;
+                    }
+                    @if (ViewBag.countOptionsQueryKnayf > 0)
+                    {
+                    @for (int i = 0; i < ViewBag.optionsNameKnayf.Count; i++)
+                    {
+
+                    <select class="form-select" id="ProductOptionsSelector">
+                    <option>@ViewBag.optionsNameKnayf[i]</option>
+                    @for (int j = 0; j < ViewBag.countOptionsListKnayf[i]; j++)
+                    {
+
+                    <option id="@valueCount">@ViewBag.optionsValueKnayf[valueCount]</option>
+                    valueCount++;
+                    }
+                    </select>
+                    }
+                    }
+
+
+                    </div> *@
+                        </div>
+                    </div>
+
+
+                </div>
+            }
+        }
+        @if (ViewBag.Aussenzylinder != null)
+        {
+            foreach (var item in ViewBag.Aussenzylinder)
+            {
+                <div id="ExelItem">
+                    <div id="productImage">
+                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
+                    </div>
+                    <div id="productMenuInfo">
+                        <div id="ProductNameUndCost">
+
+                            <div>
+                                <h3>@item.Name</h3>
+                            </div>
+
+                        </div>
+                        <div>
+                            <select class="form-select">
+                                <option>KnayfZelinder</option>
+                            </select>
+                        </div>
+                        <div id="product_desciptions">
+                            <h5>Zylinder Länge</h5>
+                        </div>
+                       
+                        <div>
+                            <h3>Weitere Optionen</h3>
+                            @* <div>
+                                @{
+                                    int valueCount = 0;
+                                }
+                                @if (ViewBag.countOptionsQueryKnayf > 0)
+                                {
+                                    @for (int i = 0; i < ViewBag.optionsNameKnayf.Count; i++)
+                                    {
+
+                                        <select class="form-select" id="ProductOptionsSelector">
+                                            <option>@ViewBag.optionsNameKnayf[i]</option>
+                                            @for (int j = 0; j < ViewBag.countOptionsListKnayf[i]; j++)
+                                            {
+
+                                                <option id="@valueCount">@ViewBag.optionsValueKnayf[valueCount]</option>
+                                                valueCount++;
+                                            }
+                                        </select>
+                                    }
+                                }
+
+
+                            </div> *@
+                        </div>
+                    </div>
+
+
+                </div>
+            }
+        }
+        <div id="orderCost">
+            <h1>@ViewBag.Cost €</h1>
+        </div>
+        
         <button>Schliessplan bearbeiten</button>
     </div>
 </div>
+<script>
+ 
+    let selectorAussen = document.getElementById('Aussen').childNodes;
 
+    // let optionsAussen = selectorAussen.childNodes
+
+    let selectInen = document.getElementById('Intern').childNodes;
+   
+    // console.log(selectorAussen);
+    // console.log(selectInen);
+    
+    function ChekedDopel() 
+    {
+        selectorAussen.forEach((item) => 
+        {
+            console.log(item.value);
+
+        });
+        // for (let i; i < optionAussen.length; i++) {
+
+        // }
+
+    }
+    ChekedDopel()
+</script>
 @* <a class="btn btn-success" href="@Url.Action("IndexKonfigurator", "Konfigurator")">First Page</a> *@

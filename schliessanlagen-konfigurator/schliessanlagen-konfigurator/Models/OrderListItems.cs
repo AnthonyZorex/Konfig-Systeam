@@ -34,7 +34,7 @@ namespace schliessanlagen_konfigurator.Models
         public Knayf_Options Knayf_Options { get; set; }
         public Knayf_Options_value Knayf_Options_value { get; set; }
 
-        public Hebelzylinder hebel { get; set; }
+        public Hebel hebel { get; set; }
         public Hebelzylinder_Options Hebelzylinder_Options { get; set; }
         public Options options { get; set; }
         public Options_value options_Value { get; set; }

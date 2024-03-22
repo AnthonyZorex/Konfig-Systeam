@@ -61,7 +61,7 @@
                         <input asp-for="Cost" class="form-control" />
                     </div>
 
-                    <h1>Aussen & Innen <input id="addAussen_Innen" class="btn btn-success" type="button" value="+" /></h1>
+                    <h1>Aussen & Innen <input id="addAussen_Innen" class="btn btn-success" type="button" value="+" /><input id="addAussen_Innen_remove" class="btn btn-danger" type="button" value="-" /></h1>
                     <div id="Aussen_Innen_ProfilDopel">
 
                         <div id="AussenProfilDopel">
@@ -76,9 +76,9 @@
 
                 <input type="submit" class="btn btn-success" id="input" value="Create Halbzylinder" />
             </form>
-
             <button id="createBlockBtn" class="btn btn-success">Add Options</button>
             <button id="addInputBtn" class="btn btn-success">+</button>
+            <button id="RemoveInputBtn" class="btn btn-danger">-</button>
         </div>
 
     </div>
@@ -133,7 +133,7 @@
     <script type="text/javascript">
 
         let plusAussen_Innen = document.getElementById('addAussen_Innen');
-    
+        let docInnen = document.getElementById('InnenProfilDopel');
         let docAussen = document.getElementById('AussenProfilDopel');
         let sum = document.querySelectorAll('#cost');
         let Aussen_Innen_ProfilDopel = document.getElementById('Aussen_Innen_ProfilDopel');
@@ -144,11 +144,14 @@
         let productOptions = document.getElementById('productOptions');
         let addOptions = document.getElementById('addOptions');
 
+        let removeAussen_Innen = document.getElementById('addAussen_Innen_remove');
 
         document.addEventListener("DOMContentLoaded", function () {
             const container = document.getElementById('productOptions');
             const createBlockBtn = document.getElementById('createBlockBtn');
             const addInputBtn = document.getElementById('addInputBtn');
+            const RemoveInputBtn = document.getElementById('RemoveInputBtn');
+
             let blockCounter = 1;
 
             createBlockBtn.addEventListener('click', function () {
@@ -167,86 +170,101 @@
                 }
             });
 
+            RemoveInputBtn.addEventListener('click', function () {
+                const blocks = document.querySelectorAll('.input-block');
+                const lastBlock = blocks[blocks.length - 1];
+
+                if (lastBlock) {
+                    productOptions.removeChild(lastBlock);
+                }
+                else {
+                    alert('Сначала создайте блок');
+                }
+            });
+
+            let counterOptions = 2;
             function createBlock() {
+
+                counterOptions = 2;
                 const block = document.createElement('div');
                 block.classList.add('input-block');
                 block.id = `block-${blockCounter}`;
                 block.innerHTML = `<div>
                                                         <h1>Options</h1>
                                                         <label>Name</label>
-                                                                <input class="form-control" class="form-control" type="text" name="Options" />
+                                                        <input class="form-control" type="text" name="Options" />
                                                         <div>
                                                             <p></p>
                                                             <input name="postedFile" type="file" class="btn btn-success" />
                                                             <p></p>
                                                         </div>
                                                         <label>Descriptions</label>
-                                                                <input class="form-control" class="form-control" type="text" name="NGFDescriptions" />
+                                                        <input class="form-control" type="text" name="NGFDescriptions" />
                                                         <h1>Value & Cost </h1>
                                                         <div id="Aussen_Innen_ProfilDopel">
                                                             <div id="valueNGF">
-                                                                        <input type="text" class="form-control" placeholder="valueNGF" step="0.01" name="valueNGF" />
-                                                                <span class="input-counter">0</span>
+                                                                <input type="text" placeholder="valueNGF" step="0.01" name="valueNGF" />
+
                                                             </div>
                                                             <div id="costNGF">
-                                                                        <input type="number" class="form-control" id='cost' placeholder="costNGF" step="0.01" name="costNGF" />
+                                                                        <input type="number" id='cost' placeholder="costNGF" id="cost" step="0.01" name="costNGF" />
                                                             </div>
-
+                                                                        <input type="hidden" id="counter" name="input_counter" />
                                                         </div>
                                                     </div>`;
+
                 blockCounter++;
+
                 return block;
             }
 
+
+
             function addInputs(block) {
+
                 let d = document.createElement('input');
                 d.setAttribute('name', 'costNGF');
                 d.setAttribute('placeholder', 'costNGF');
-                d.setAttribute('class', 'form-control');
 
                 let x = document.createElement('input');
                 x.setAttribute('name', 'valueNGF');
                 x.setAttribute('placeholder', 'valueNGF');
-                x.setAttribute('class', 'form-control');
 
                 const div1 = block.querySelector('#valueNGF');
                 const div2 = block.querySelector('#costNGF');
 
                 div1.appendChild(x);
 
-                // Создаем счетчик и добавляем его рядом с инпутом
-                const counterSpan = document.createElement('input');
-                counterSpan.value = '0';
-                counterSpan.classList.add('input-counter');
-                counterSpan.setAttribute('name', 'input_counter');
-                div1.appendChild(counterSpan);
-
                 div2.appendChild(d);
 
-                // Обновляем счетчик инпутов
-                updateInputCounter(block);
-            }
+                var counter = document.querySelectorAll('#counter');
+                counter[counter.length - 1].value = counterOptions;
 
-            function updateInputCounter(block) {
-                const inputCounter = block.querySelectorAll('.input-counter').length;
-                const counters = block.querySelectorAll('.input-counter');
-                counters.forEach(counter => {
-                    counter.value = inputCounter;
-                });
-            }
-        });
+                counterOptions++;
+
+                console.log(counterOptions);
+
+            };
 
 
-        plusAussen_Innen.addEventListener('click', () => {
-            let d = document.createElement('input');
-            d.setAttribute('name', 'aussen');
-            d.setAttribute('placeholder', 'aussen');
-            d.setAttribute('class', 'form-control');
-            d.id = 'aus';
 
-            docAussen.append(d);
 
-        });
+            plusAussen_Innen.addEventListener('click', () => 
+            {
+                let d = document.createElement('input');
+                d.setAttribute('name', 'aussen');
+                d.setAttribute('placeholder', 'aussen');
+                d.setAttribute('class', 'form-control');
+                d.id = 'aus';
+                docAussen.append(d);
+
+            });
+            removeAussen_Innen.addEventListener('click', () => {
+                let d = document.querySelectorAll('#aus');
+                docAussen.removeChild(d[d.length - 1]);
+            });
+
+        })
 
         function interfaice() {
             sum.forEach((item) => {
@@ -260,6 +278,7 @@
 
             })
         }
+
         interfaice();
 
 

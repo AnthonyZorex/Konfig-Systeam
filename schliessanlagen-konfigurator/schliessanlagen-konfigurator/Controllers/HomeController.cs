@@ -1431,6 +1431,129 @@ namespace schliessanlagen_konfigurator.Controllers
 
             return View("ProductHebel", profilInfo);
         }
+
+        [HttpGet]
+        [Route("Home/ProductVorhan")]
+        public ActionResult ProductVorhan(Vorhangschloss profil)
+        {
+            var profilInfo = db.Vorhangschloss.FirstOrDefault(x => x.Id == profil.Id);
+
+            var queryableOptions = db.Vorhan_Options.Where(x => x.VorhangschlossId == profil.Id).Select(x => x.Id).ToList();
+
+            var Size = db.Size.Where(x => x.VorhangschlossId == profilInfo.Id).Select(x=>x.sizeVorhangschloss).ToList();
+            ViewBag.Size = Size.ToList();
+            ViewBag.countOptionsQuery = queryableOptions.Count();
+
+            if (queryableOptions.Count() > 0)
+            {
+
+                List<OptionsVorhan> ngf = new List<OptionsVorhan>();
+
+                for (int z = 0; z < queryableOptions.Count(); z++)
+                {
+                    var allOptions = db.OptionsVorhan.Where(x => x.OptioId == queryableOptions[z]).ToList();
+                    foreach (var option in allOptions)
+                    {
+                        ngf.Add(option);
+                    }
+
+                }
+
+                ViewBag.optionsName = ngf.Select(x => x.Name).ToList();
+
+                List<OptionsVorhan_value> ngfList = new List<OptionsVorhan_value>();
+
+                for (int s = 0; s < ngf.Count(); s++)
+                {
+                    var opValue = db.OptionsVorhan_value.Where(x => x.OptionsId == ngf[s].Id).ToList();
+
+                    for (int i = 0; i < opValue.Count(); i++)
+                    {
+                        ngfList.Add(opValue[i]);
+
+                    }
+                    ViewBag.optionValueCount = opValue.Count();
+                }
+
+                var list = new List<int>();
+
+                foreach (var fs in ngf)
+                {
+                    list.Add(fs.Options_value.Count());
+                }
+
+                ViewBag.countOptionsList = list;
+
+                ViewBag.optionsValue = ngfList.Select(x => x.Value).ToList();
+
+                ViewBag.optionsPrise = JsonConvert.SerializeObject(ngfList.Select(x => x.Cost).ToList());
+
+            }
+
+
+            return View("ProductVorhan", profilInfo);
+        }
+        [HttpGet]
+        [Route("Home/ProductAussenzylinder")]
+        public ActionResult ProductAussenzylinder(Aussenzylinder_Rundzylinder profil)
+        {
+            var profilInfo = db.Aussenzylinder_Rundzylinder.FirstOrDefault(x => x.Id == profil.Id);
+
+            var queryableOptions = db.Aussen_Rund_options.Where(x => x.Aussenzylinder_RundzylinderId == profil.Id).Select(x => x.Id).ToList();
+
+
+            ViewBag.countOptionsQuery = queryableOptions.Count();
+
+            if (queryableOptions.Count() > 0)
+            {
+
+                List<Aussen_Rund_all> ngf = new List<Aussen_Rund_all>();
+
+                for (int z = 0; z < queryableOptions.Count(); z++)
+                {
+                    var allOptions = db.Aussen_Rund_all.Where(x => x.Aussen_Rund_optionsId == queryableOptions[z]).ToList();
+                    foreach (var option in allOptions)
+                    {
+                        ngf.Add(option);
+                    }
+
+                }
+
+                ViewBag.optionsName = ngf.Select(x => x.Name).ToList();
+
+                List<Aussen_Rouns_all_value> ngfList = new List<Aussen_Rouns_all_value>();
+
+                for (int s = 0; s < ngf.Count(); s++)
+                {
+                    var opValue = db.Aussen_Rouns_all_value.Where(x => x.Aussen_Rund_allId == ngf[s].Id).ToList();
+
+                    for (int i = 0; i < opValue.Count(); i++)
+                    {
+                        ngfList.Add(opValue[i]);
+
+                    }
+                    ViewBag.optionValueCount = opValue.Count();
+                }
+
+                var list = new List<int>();
+
+                foreach (var fs in ngf)
+                {
+                    list.Add(fs.Aussen_Rouns_all_value.Count());
+                }
+
+
+                ViewBag.countOptionsList = list;
+
+                ViewBag.optionsValue = ngfList.Select(x => x.Value).ToList();
+
+                ViewBag.optionsPrise = JsonConvert.SerializeObject(ngfList.Select(x => x.Cost).ToList());
+
+            }
+
+
+            return View("ProductAussenzylinder", profilInfo);
+        }
         #endregion
 
 
