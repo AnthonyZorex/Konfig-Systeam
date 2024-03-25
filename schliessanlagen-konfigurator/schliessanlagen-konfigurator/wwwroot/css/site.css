@@ -429,6 +429,14 @@ a {
     background-color: #EDEDED;
     padding: 5px;
 }
+.TexCountTurFinisher {
+    max-width: 290px;
+    text-align: center;
+    gap: 10px;
+    display: grid;
+    background-color: #EDEDED;
+    padding: 5px;
+}
 #inputTur{
     padding:5px;
 }
@@ -536,4 +544,17 @@ summary {
     text-align: end;
     margin-top: 20px;
     color: red;
+}
+#buttonActionFinishBlock {
+    display: flex;
+}
+#FinisherRight {
+    margin-left: auto;
+}
+#FinisherLeft {
+    margin-right: auto;
+}
+#FinisherAnderes {
+    text-align: end;
+    margin-top: 20px;
 }

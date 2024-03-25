@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Dh/rB5N2+Cvm4G+Lu7X0GAmd93kUfVWy+H4D6WV4GUmZepHEBOSWNjOTNkIQ4TXIODJP6+bksBPhvT/NVoUq3w==",
+  "dgSpecHash": "CUChQoez4DXLooKAKXlpY3bPZZuIezCDAnnQbzKF+Dm+SGNDjF5c9fzVf+YZC7PJtOh7LNuJ/0+vDPBYPnDe+A==",
   "success": true,
-  "projectFilePath": "D:\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj",
+  "projectFilePath": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\JAKUB\\.nuget\\packages\\aspose.cells\\24.2.0\\aspose.cells.24.2.0.nupkg.sha512",
     "C:\\Users\\JAKUB\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",

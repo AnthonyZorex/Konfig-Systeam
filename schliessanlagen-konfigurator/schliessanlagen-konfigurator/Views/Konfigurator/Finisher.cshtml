@@ -41,7 +41,9 @@
     } 
     <div>
     </div>
-            <button>Schliessplan bearbeiten</button>
+        <div id="FinisherAnderes">
+            <input type="button" class="btn btn-danger" value="SCHLIESSPLAN BEARBEITEN" />
+        </div>
             <h1>Türen konfigurieren</h1>
             <p>
                 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
@@ -456,11 +458,22 @@
                 </div>
             }
         }
+        <div id="FinisherAnderes">
+            <input type="button" class="btn btn-danger" value="ANDERES SYSTEM WÄHLEN" />
+        </div>
         <div id="orderCost">
             <h1>@ViewBag.Cost €</h1>
         </div>
         
-        <button>Schliessplan bearbeiten</button>
+      <div id="buttonActionFinishBlock">
+          <div id="FinisherLeft">
+                <input type="button" id="chekProduct" class="btn btn-dark" value="ZURÜCK" />
+            </div>
+            <div id="FinisherRight">
+               
+                <button id="chekProduct" class="btn btn-danger"> <a href=" @Url.Action("FinischerProductSelect", "Konfigurator", new {cost = @ViewBag.Cost,DopelItem = @ViewBag.DopelzylinderIdList,DAussen = @ViewBag.DAussen,DIntern=@ViewBag.DInter, Knayf=@ViewBag.KnayfZelinder,user = @ViewBag.User})">WEITER</a></button>
+            </div>
+      </div>
     </div>
 </div>
 <script>
@@ -488,4 +501,3 @@
     }
     ChekedDopel()
 </script>
-@* <a class="btn btn-success" href="@Url.Action("IndexKonfigurator", "Konfigurator")">First Page</a> *@

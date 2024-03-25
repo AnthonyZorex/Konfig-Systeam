@@ -96,7 +96,7 @@ namespace schliessanlagen_konfigurator.Controllers
             var UserKey = session.Id;
             Orders user = new Orders();
             user.userKey = UserKey;
-            ViewBag.isOpen = db.isOpen_value.Select(x=>x.isOpen);
+            ViewBag.isOpen = db.KeyValue.Select(x => x.isOpen);
 
             return View(user);
         }
@@ -1182,9 +1182,6 @@ namespace schliessanlagen_konfigurator.Controllers
             float halbAussenCost = 0f;
             float VorhangschlossCost = 0f;
 
-           
-            //ViewBag.Order = key.ToList();
-
             var Aussenzylinder = new List<Aussenzylinder_Rundzylinder>();
 
             var SelectAussenzylinder = db.Aussenzylinder_Rundzylinder.Where(x => x.Id == Aussen).ToList();
@@ -1369,9 +1366,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 if (order.ZylinderId == 1)
                 {
-                    
                     ViewBag.DopelAussen = order.aussen;
                     ViewBag.DopelInter = order.innen;
+
                     for (var i = 30; i < order.aussen;)
                     {
                         DoppelAussenCost = DoppelAussenCost + 5;
@@ -1492,10 +1489,17 @@ namespace schliessanlagen_konfigurator.Controllers
             ViewBag.KnayfZelinderAussen = Kanyf_AussenInen.Select(x => x.aussen).ToList();
             ViewBag.KnayfZelinderIntern = Kanyf_AussenInen.Select(x => x.Intern).ToList();
 
+            ViewBag.DAussen = key.Select(x => x.aussen).ToList();
+            ViewBag.DInter = key.Select(x => x.innen).ToList();
+
+
+
 
             ViewBag.Dopelzylinderaussen = AussenInen.Select(x=>x.aussen).ToList();
             ViewBag.DopelzylinderIntern = AussenInen.Select(x => x.Intern).ToList();
             ViewBag.Dopelzylinder = DopelOrderlist.ToList();
+
+            ViewBag.DopelzylinderIdList = DopelOrderlist.Select(x => x.Id).ToList();
 
             ViewBag.Vorhanschlos = Vorhanschlos.ToList();
             ViewBag.Aussenzylinder = Aussenzylinder.ToList();
@@ -1506,11 +1510,16 @@ namespace schliessanlagen_konfigurator.Controllers
                 var f = IsOpenValue.Where(x => x.NameKey == lis.NameKey).ToList();
                 
             }
-                ViewBag.Order = keyOpenOrderValue;
+                ViewBag.Order = keyOpenOrderValue.Distinct();
+
+            ViewBag.User = key.Select(x => x.userKey).ToList();
 
             ViewBag.Cost = DopelOrderlist.Select(x => x.Cost).Sum() + KnaufZelinder.Select(x => x.Cost).Sum() + Halbzylinder.Select(x => x.Cost).Sum()+ 
                 HelbZ.Select(x => x.Cost).Sum() + Vorhanschlos.Select(x => x.Cost).Sum() + Aussenzylinder.Select(x => x.Cost).Sum() + DoppelAussenCost 
                 + KhaufAussenCost + halbAussenCost + VorhangschlossCost;
+
+
+
             return View("Finisher", key.Last() );
         }
         [HttpPost]
@@ -1644,6 +1653,69 @@ namespace schliessanlagen_konfigurator.Controllers
 
 
             return View("Finisher");
+        }
+        [HttpGet]
+        public ActionResult FinischerProductSelect(int cost,List<int> DopelItem, List<float> DAussen, List<float> DIntern,List<Profil_Knaufzylinder> Knayf,string user)
+        {
+            var UserOrder = db.Orders.FirstOrDefault(x => x.userKey == user);
+            var DoppelSylinder = new List<Profil_Doppelzylinder>();
+            var OpenLis = new List<isOpen_value>();
+            var Order = db.Orders.Where(x => x.userKey == user).ToList();
+            var KeyValue = new List<KeyValue>();
+            var isopen = new List<isOpen_Order>();
+            
+            foreach(var list in Order)
+            {
+                var IsOpen = db.isOpen_Order.Where(x => x.OrdersId == list.id).Distinct().ToList();
+                foreach (var OpenList in IsOpen)
+                {
+                    isopen.Add(OpenList);
+                   
+                }
+               
+            }
+            foreach (var OpenList in isopen.Distinct())
+            {
+                var OpenValue = db.isOpen_value.Where(x => x.isOpen_OrderId == OpenList.Id).Distinct().ToList();
+
+                foreach (var allList in OpenValue.Distinct())
+                    OpenLis.Add(allList);
+            }
+            foreach (var OpenList in OpenLis.Distinct())
+            {
+                var opened = db.KeyValue.Where(x => x.OpenKeyId == OpenList.Id).ToList();
+                foreach (var allList in opened.Distinct())
+                    KeyValue.Add(allList);
+               
+            }
+
+
+
+
+            if (DopelItem.Count() > 0)
+            {
+                for (int i =0;i< DopelItem.Count();i++)
+                {
+                    var DopelZylinder = db.Profil_Doppelzylinder.Where(x => x.Id == DopelItem.First()).ToList();
+                     foreach(var list in DopelZylinder)
+                        DoppelSylinder.Add(list);
+                }
+                
+            }
+            ViewBag.Tur = Order.Select(x => x.DorName).ToList();
+            
+            ViewBag.DoppelAussen = DAussen.ToList();
+            ViewBag.DoppelIntern = DIntern.ToList();
+
+            ViewBag.Key = OpenLis.Distinct().ToList();
+            ViewBag.KeyValue = KeyValue.Select(x=>x.isOpen).ToList();
+
+
+            var Doppelname = DoppelSylinder.Select(x => x.Name).ToList(); 
+
+            ViewBag.Item = DoppelSylinder.Count();
+            ViewBag.DopelZylinder = Doppelname.ToList();
+            return View("FinischerProductSelect", UserOrder );
         }
         [HttpPost]
         public ActionResult SaveOrder(Orders Key, List<string> Turname, List<string> ZylinderId, List<float> aussen, List<float> innen, List<int> Count, List<string> NameKey, List<int> CountKey, List<string> IsOppen, List<string> Options, List<int> ItemCount)
@@ -1786,55 +1858,125 @@ namespace schliessanlagen_konfigurator.Controllers
                 db.SaveChanges();
 
                 var order_open = db.isOpen_Order.Select(x => x.Id).ToList();
-
-                for (var s = 0; s < ItemCount.Count(); s++)
+                var d = 0;
+                if (ItemCount.Count() > 0)
                 {
-                    for (var f = 0; f < ItemCount.Max(); f++)
+                    var itemsCount = IsOppen.Count() / ItemCount.First();
+                    for (var s = 0; s < ItemCount.First(); s++)
                     {
-                        bool valueOppen = false;
                         string NameKeyValue;
                         int CountkeyOrders;
 
-                        if (f > CountKey.Count())
+
+                        if (s > CountKey.Count())
                         {
                             CountkeyOrders = CountKey.Last();
                         }
                         else
                         {
-                            CountkeyOrders = CountKey[f];
+                            CountkeyOrders = CountKey[s];
                         }
-
-                       
-
-
-                        if (f > NameKey.Count())
+                        if (s > NameKey.Count())
                         {
                             NameKeyValue = NameKey.Last();
                         }
                         else
                         {
-                            NameKeyValue = NameKey[f];
-                        }
-
-                        if (IsOppen[f] == "true")
-                        {
-                            valueOppen = true;
-                        }
-                        if (IsOppen[f] == "false")
-                        {
-                            valueOppen = false;
+                            NameKeyValue = NameKey[s];
                         }
                         var Open_value = new isOpen_value
                         {
                             isOpen_OrderId = order_open.Last(),
-                            isOpen = valueOppen,
                             NameKey = NameKeyValue,
                             CountKey = CountkeyOrders,
                         };
                         db.isOpen_value.Add(Open_value);
-                    }
+                        db.SaveChanges();
 
+                        for (var f = 0; f < itemsCount; f++)
+                        {
+
+                            bool valueOppen = false;
+
+                            if (IsOppen[d] == "true")
+                            {
+                                valueOppen = true;
+                            }
+                            if (IsOppen[d] == "false")
+                            {
+                                valueOppen = false;
+                            }
+                            var KeyValueC = new KeyValue
+                            {
+                                OpenKeyId = Open_value.Id,
+                                isOpen = valueOppen
+                            };
+                            db.KeyValue.Add(KeyValueC);
+                            db.SaveChanges();
+                            d++;
+                        }
+
+                    }
                 }
+                else
+                {
+                    for (var s = 0; s < Turname.Count(); s++)
+                    {
+                        string NameKeyValue;
+                        int CountkeyOrders;
+
+
+                        if (s > CountKey.Count())
+                        {
+                            CountkeyOrders = CountKey.Last();
+                        }
+                        else
+                        {
+                            CountkeyOrders = CountKey[s];
+                        }
+                        if (s > NameKey.Count())
+                        {
+                            NameKeyValue = NameKey.Last();
+                        }
+                        else
+                        {
+                            NameKeyValue = NameKey[s];
+                        }
+                        var Open_value = new isOpen_value
+                        {
+                            isOpen_OrderId = order_open.Last(),
+                            NameKey = NameKeyValue,
+                            CountKey = CountkeyOrders,
+                        };
+                        db.isOpen_value.Add(Open_value);
+                        db.SaveChanges();
+
+                        for (var f = 0; f < IsOppen.Count(); f++)
+                        {
+                            bool valueOppen = false;
+
+                            if (IsOppen[d] == "true")
+                            {
+                                valueOppen = true;
+                            }
+                            if (IsOppen[d] == "false")
+                            {
+                                valueOppen = false;
+                            }
+                            var KeyValueC = new KeyValue
+                            {
+                                OpenKeyId = Open_value.Id,
+                                isOpen = valueOppen
+                            };
+                            db.KeyValue.Add(KeyValueC);
+                            db.SaveChanges();
+                            d++;
+                        }
+
+                    }
+                }
+                
+               
                 db.SaveChanges();
             }
            

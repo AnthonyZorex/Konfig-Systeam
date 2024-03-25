@@ -409,6 +409,27 @@ namespace schliessanlagenkonfigurator.Migrations
                     b.ToTable("Orders");
                 });
 
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.OrdersOpen.KeyValue", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("OpenKeyId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("isOpen")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OpenKeyId");
+
+                    b.ToTable("KeyValue");
+                });
+
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.OrdersOpen.isOpen_Order", b =>
                 {
                     b.Property<int>("Id")
@@ -440,9 +461,6 @@ namespace schliessanlagenkonfigurator.Migrations
 
                     b.Property<string>("NameKey")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("isOpen")
-                        .HasColumnType("bit");
 
                     b.Property<int?>("isOpen_OrderId")
                         .HasColumnType("int");
@@ -1001,6 +1019,15 @@ namespace schliessanlagenkonfigurator.Migrations
                     b.Navigation("Options");
                 });
 
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.OrdersOpen.KeyValue", b =>
+                {
+                    b.HasOne("schliessanlagen_konfigurator.Models.OrdersOpen.isOpen_value", "OpenKey")
+                        .WithMany("KeyValue")
+                        .HasForeignKey("OpenKeyId");
+
+                    b.Navigation("OpenKey");
+                });
+
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.OrdersOpen.isOpen_Order", b =>
                 {
                     b.HasOne("schliessanlagen_konfigurator.Models.Orders", "Orders")
@@ -1223,6 +1250,11 @@ namespace schliessanlagenkonfigurator.Migrations
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.OrdersOpen.isOpen_Order", b =>
                 {
                     b.Navigation("isOpen_value");
+                });
+
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.OrdersOpen.isOpen_value", b =>
+                {
+                    b.Navigation("KeyValue");
                 });
 
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.Profil_Doppelzylinder", b =>

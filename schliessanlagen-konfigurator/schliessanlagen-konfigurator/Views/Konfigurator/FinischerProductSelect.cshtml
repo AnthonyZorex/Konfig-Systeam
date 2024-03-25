@@ -1,0 +1,129 @@
+﻿@model schliessanlagen_konfigurator.Models.Orders;
+@using Microsoft.AspNetCore.Http;
+
+@{
+    ViewData["Title"] = $"FinisherProduct/{Model.userKey}";
+}
+
+<div>
+    <div id="konfigMenu">
+        <button type="button" class="btn btn-danger">1. Schließplan erstellen</button>
+        <button type="button" class="btn btn-secondary"><a href="@Url.Action("System_Auswählen","Konfigurator")">2. System auswählen</a></button>
+        <button type="button" class="btn btn-secondary">3. Parameter einstellen</button>
+    </div>
+    <form asp-action="SaveOrder" enctype="multipart/form-data" asp-controller="Konfigurator">
+
+        @Html.HiddenFor(m => m.userKey)
+
+        <input name="ItemCount" type="hidden" id="itemcountOptions" />
+
+        <div id="InformBar">
+            <div id="blockSclussel">
+                <div id="sclusselInfo">
+                    <div id="schlussel">
+                        <h3>Schlüssel</h3>
+                    </div>
+
+                    <div id="schlussel2">
+                        <h4>Schlüssel hinzufügen</h4>
+                    </div>
+
+                </div>
+                <div id="itemKeyBlock">
+                    @{
+                        int counterKey = 1;
+                        foreach (var list in ViewBag.Key)
+                        {
+                            <div class="TexCount">
+                                <h6>@counterKey</h6>
+                                <div id="TexInputKey">
+                                    <input id="inputS" name="NameKey" value='@list.NameKey' type="text" />
+                                </div>
+                                <div>
+                                    <input id="inputCount" name="CountKey" value="@list.CountKey" type="text" />
+                                </div>
+                            </div>
+
+                            counterKey++;
+                        }
+                      
+                    }
+                    
+
+                </div>
+            </div>
+            <div>
+                <div id="sclusselInfo2">
+                    <div id="schlussel">
+                        <h3>Türen (Zugänge)</h3>
+                    </div>
+
+                    <div id="schlussel3">
+                        <h4>Tür hinzufügen</h4>
+                    </div>
+                </div>
+                <div>
+                    <div id="turInfo">
+                        <div id="blockInfo">
+                            @{
+                                int counter = 1;
+                                for(var list=0;list<ViewBag.Item;list++)
+                                {
+                                    <div class="TexCountTurFinisher">
+
+                                        <div id="ItemTur">
+                                            <div>
+                                                <h5 id="counterTur"><strong>@counter @ViewBag.Tur[list]</strong></h5>
+                                            </div>
+
+                                        </div>
+                                        <h5><strong> @ViewBag.DopelZylinder[list]</strong></h5>
+                                        <h6><strong>Außenlänge (A):@ViewBag.DoppelAussen[list] </strong></h6>
+                                        <h6><strong>Außenlänge (B):@ViewBag.DoppelIntern[list] </strong></h6>
+                                        
+                                    </div>
+                                    counter++;
+                                }
+                            }
+
+                        </div>
+                        <div id="InfoValue">
+                            @{
+                                
+                                for (int i = 0; i < ViewBag.Tur.Count; i++)
+                                {
+                                    <div class="horizontal" id="1horizontal">
+                                        @foreach (var list in ViewBag.KeyValue)
+                                        {
+                                            <div class="checkboxContainer">
+                                            @if (list == true)
+                                            {
+                                                    <input type="checkbox" value="@list" checked id="1checkbox1">
+                                                    <input type="hidden" name="IsOppen" value="@list" id="I1checkbox1">
+                                            }
+                                            else
+                                            {
+                                                    <input type="checkbox" value="@list"  id="1checkbox1">
+                                                    <input type="hidden" name="IsOppen" value="@list" id="I1checkbox1">
+                                            }
+                                            
+                                               
+                                            </div>
+                                        }
+                                       
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <input type="submit" class="btn btn-success" id="input" value="Weiter" />
+    </form>
+</div>
+<script>
+
+
+</script>

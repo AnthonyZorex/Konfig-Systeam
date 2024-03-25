@@ -58,7 +58,7 @@ namespace schliessanlagen_konfigurator.Data
         public DbSet<Orders> Orders { get; set; }
         public DbSet<isOpen_Order> isOpen_Order { get; set; }
         public DbSet<isOpen_value> isOpen_value { get; set; }
-
+        public DbSet<KeyValue> KeyValue { get; set; }
 
         public DbSet<Profil_Knaufzylinder> Profil_Knaufzylinder { get; set; }
         public DbSet<Aussen_Innen_Knauf> Aussen_Innen_Knauf {  get; set; }

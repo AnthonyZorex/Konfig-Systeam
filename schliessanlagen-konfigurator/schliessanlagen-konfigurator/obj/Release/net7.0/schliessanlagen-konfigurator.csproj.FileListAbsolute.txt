@@ -511,6 +511,6 @@ D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net7.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net7.0\scopedcss\bundle\schliessanlagen-konfigurator.styles.css
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net7.0\scopedcss\projectbundle\schliessanlagen-konfigurator.bundle.scp.css
-D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net7.0\schliessanlagen-konfigurator.csproj.CopyComplete
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net7.0\schliessanlagen-konfigurator.genruntimeconfig.cache
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net7.0\ref\schliessanlagen-konfigurator.dll
+D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net7.0\schliess.1BEA3511.Up2Date

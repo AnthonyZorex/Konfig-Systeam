@@ -831,28 +831,37 @@ namespace schliessanlagen_konfigurator.Controllers
         {
             var aussenzylinder = db.Aussenzylinder_Rundzylinder.Find(id);
 
-           
-                var a = db.Aussen_Rund_options.Where(x => x.Aussenzylinder_RundzylinderId == aussenzylinder.Id).First();
+            var a = db.Aussen_Rund_options.Where(x => x.Aussenzylinder_RundzylinderId == aussenzylinder.Id).ToList();
 
-                var option = db.Aussen_Rund_all.Where(x => x.Aussen_Rund_optionsId == a.Id).First();
+            var option = new List<Aussen_Rund_all>();            
+            
+            for (int i = 0; i < a.Count(); i++)
+            {
+                var of = db.Aussen_Rund_all.Where(x => x.Aussen_Rund_optionsId  == a[i].Id).ToList();
 
-                var optionV = db.Aussen_Rouns_all_value.Where(x => x.Aussen_Rund_allId == option.Id).ToList();
+                for (int j = 0; j < of.Count(); j++)
+                {
+                    option.Add(of[j]);
+                }
 
-                db.Aussen_Rund_options.Remove(a);
+            }
+            for (int i = 0; i < option.Count(); i++)
+            {
+                var optionV = db.Aussen_Rouns_all_value.Where(x => x.Aussen_Rund_allId == option[i].Id).ToList();
+                for (int j = 0; j < optionV.Count(); j++)
+                {
+                    db.Aussen_Rouns_all_value.Remove(optionV[j]);
+                    db.SaveChanges();
+                }
+                db.Aussen_Rund_all.Remove(option[i]);
                 db.SaveChanges();
-                for (int i = 0; i < optionV.Count(); i++)
-                {
-                    db.Aussen_Rouns_all_value.Remove(optionV[i]);
-                    db.SaveChanges();
-                }
-                if (option != null)
-                {
-                    db.Aussen_Rund_all.Remove(option);
-                    db.SaveChanges();
-                    db.Aussen_Rund_options.Remove(a);
-                    db.SaveChanges();
-                }
-              
+            }
+            for (int i = 0; i < a.Count(); i++)
+            {
+                db.Aussen_Rund_options.Remove(a[i]);
+                db.SaveChanges();
+            }
+
 
             db.Aussenzylinder_Rundzylinder.Remove(aussenzylinder);
             db.SaveChanges();
