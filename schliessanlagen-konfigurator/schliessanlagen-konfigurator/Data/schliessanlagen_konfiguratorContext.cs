@@ -10,6 +10,7 @@ using schliessanlagen_konfigurator.Models.Hebelzylinder;
 using schliessanlagen_konfigurator.Models.Vorhan;
 using schliessanlagen_konfigurator.Models.Aussen_Rund;
 using schliessanlagen_konfigurator.Models.OrdersOpen;
+using schliessanlagen_konfigurator.Models.Users;
 
 namespace schliessanlagen_konfigurator.Data
 {
@@ -21,7 +22,7 @@ namespace schliessanlagen_konfigurator.Data
              
         }
         public DbSet<Schliessanlagen> Schliessanlagen { get; set; }
-        
+        public DbSet<User> User { get; set; }
         public DbSet<Profil_Doppelzylinder> Profil_Doppelzylinder { get; set; }
         public DbSet<Profil_Doppelzylinder_Options> Profil_Doppelzylinder_Options { get; set; }
         public DbSet<Aussen_Innen> Aussen_Innen { get; set; }

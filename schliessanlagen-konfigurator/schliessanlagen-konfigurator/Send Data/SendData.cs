@@ -3,7 +3,7 @@ using schliessanlagen_konfigurator.Data;
 using schliessanlagen_konfigurator.Models;
 using System.Diagnostics.Metrics;
 using System.Security.AccessControl;
-
+using schliessanlagen_konfigurator.Models.Users;
 namespace schliessanlagen_konfigurator.Send_Data
 {
     public class SendData
@@ -76,7 +76,17 @@ namespace schliessanlagen_konfigurator.Send_Data
                    {
                        nameType = "Aussenzylinder_Rundzylinder"
                    }
-                );         
+                );
+                context.User.AddRange(
+                    new User
+                    {
+                        Name= "Schlüssel",
+                        Sername= "Discount",
+                        Status="Admin",
+                        Password="brunnenqwe",
+                        PhoneNumber= "+4930 4508 7619"
+                    }
+                );
                 context.SaveChanges();
             }
         }
