@@ -52,11 +52,6 @@
                     </div>
 
                     <div style="margin-bottom: 50px;">
-                        <label> Artikelnummer</label>
-                        <input asp-for="Artikelnummer" class="form-control" type="text" name="Artikelnummer" />
-                    </div>
-
-                    <div style="margin-bottom: 50px;">
                         <label>Cost</label>
                         <input asp-for="Cost" class="form-control" />
                     </div>
@@ -95,8 +90,7 @@
                         <th>Name</th>
                         <th>Image</th>
                         <th>Cost</th>
-                        <th>Artikelnummer</th>
-
+                        
                         <th>Edit</th>
                         <th>Options</th>
                         <th>Delete</th>
@@ -108,9 +102,7 @@
                             <td id="rowTable" class="table-info">@item.Name</td>
                             <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
                             <td id="rowTable " class="table-info"><h6 id="cost">@item.Cost</h6></td>
-                            <td id="rowTable" class="table-info">@item.Artikelnummer</td>
-
-
+                          
                             <td id="rowTable" class="table-info"><a href="@Url.Action("Edit_Doppelzylinder","Home", new { item.Id })"><img src="@("/Image/edit-tools.png")" height="30" width="30" /></a></td>
                             <td id="rowTable" class="table-info">
                                 <a class="compItem" href="@Url.Action("ProductProfil_Halb","Home", new { item.Id })">

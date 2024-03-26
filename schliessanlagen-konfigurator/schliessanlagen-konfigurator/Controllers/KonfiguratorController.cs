@@ -79,13 +79,13 @@ namespace schliessanlagen_konfigurator.Controllers
             for (int i = 0; i < a.Count(); i++)
                 ListAussenDopple.Add(a[i]);
 
-            ViewBag.DoppelAussen = ListAussenDopple;
+            ViewBag.DoppelAussen = ListAussenDopple.Distinct();
 
             var ListInternDopple = new List<float>();
             for (int i = 0; i < d.Count(); i++)
                 ListInternDopple.Add(d[i]);
 
-            ViewBag.DoppelIntern = ListInternDopple;
+            ViewBag.DoppelIntern = ListInternDopple.Distinct();
 
             var DoppelListOptions = new List<string>();
 
@@ -108,17 +108,17 @@ namespace schliessanlagen_konfigurator.Controllers
             for (int i = 0; i < b.Count(); i++)
                 listKnayfAussen.Add(b[i]);
 
-            ViewBag.KnayfAussen = listKnayfAussen;
+            ViewBag.KnayfAussen = listKnayfAussen.Distinct();
 
             for (int i = 0; i < ba.Count(); i++)
                 listKnayfIntern.Add(ba[i]);
 
-            ViewBag.KnayfIntern = listKnayfIntern;
+            ViewBag.KnayfIntern = listKnayfIntern.Distinct();
 
             for (int i = 0; i < KnayfOptions.Count(); i++)
                 KnayfListOptions.Add(KnayfOptions[i]);
 
-            ViewBag.KnayfOptions = KnayfOptions;
+            ViewBag.KnayfOptions = KnayfOptions.Distinct();
 
             #endregion
             #region allPrametrsHalbzylinder
@@ -129,7 +129,7 @@ namespace schliessanlagen_konfigurator.Controllers
             for(int i =0;i<c.Count();i++)
                 HalbzylinderAussen.Add(c[i]);
 
-            ViewBag.HalbzylinderAllAussen = HalbzylinderAussen;
+            ViewBag.HalbzylinderAllAussen = HalbzylinderAussen.Distinct();
 
             var HalbzylinderOptions = db.Halbzylinder_Options.Select(x=>x.Name).ToList();
             var HalbzylunderAllOptions = new List<string>();
@@ -137,7 +137,7 @@ namespace schliessanlagen_konfigurator.Controllers
             for (int i = 0; i < HalbzylinderOptions.Count(); i++)
                 HalbzylunderAllOptions.Add(HalbzylinderOptions[i]);
             
-            ViewBag.Halbzylunder_All_Options = HalbzylunderAllOptions;
+            ViewBag.Halbzylunder_All_Options = HalbzylunderAllOptions.Distinct();
             #endregion
             #region VorhanSchloss
 
@@ -966,7 +966,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                          companyName = t1.companyName,
                                          description = t1.description,
                                          NameSystem = t1.NameSystem,
-                                         Cost = t1.Cost,
+                                         Cost = t1.Cost + t2.Cost,
                                          ImageName = t1.ImageName,
                                      };
 
@@ -990,7 +990,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                          companyName = t1.companyName,
                                          description = t1.description,
                                          NameSystem = t1.NameSystem,
-                                         Cost = t1.Cost,
+                                         Cost = t1.Cost + t2.Cost,
                                          ImageName = t1.ImageName,
                                      };
                     var Join = queryOrder.Distinct().ToList();
@@ -1011,7 +1011,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                          companyName = t1.companyName,
                                          description = t1.description,
                                          NameSystem = t1.NameSystem,
-                                         Cost = t1.Cost,
+                                         Cost = t1.Cost + t2.Cost,
                                          ImageName = t1.ImageName,
                                      };
                     var Join = queryOrder.Distinct().ToList();
@@ -1032,7 +1032,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                          companyName = t1.companyName,
                                          description = t1.description,
                                          NameSystem = t1.NameSystem,
-                                         Cost = t1.Cost,
+                                         Cost = t1.Cost + t2.Cost,
                                          ImageName = t1.ImageName,
                                      };
                     var Join = queryOrder.Distinct().ToList();
@@ -1054,7 +1054,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                          companyName = t1.companyName,
                                          description = t1.description,
                                          NameSystem = t1.NameSystem,
-                                         Cost = t1.Cost,
+                                         Cost = t1.Cost + t2.Cost,
                                          ImageName = t1.ImageName,
                                      };
                     var Join = queryOrder.Distinct().ToList();
@@ -1078,7 +1078,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                          companyName = t1.companyName,
                                          description = t1.description,
                                          NameSystem = t1.NameSystem,
-                                         Cost = t1.Cost,
+                                         Cost = t1.Cost + t2.Cost,
                                          ImageName = t1.ImageName,
                                      };
 
@@ -1582,13 +1582,19 @@ namespace schliessanlagen_konfigurator.Controllers
 
             ViewBag.Vorhanschlos = Vorhanschlos.ToList();
             ViewBag.Aussenzylinder = Aussenzylinder.ToList();
-
-            foreach (var lis in keyOpenOrderValue)
+            var ValueKeyOpen = new List<bool>();
+            var isOpenList = new List<isOpen_value>();
+          
+            
+            foreach (var tl in keyOpenOrderValue)
             {
-
-                var f = IsOpenValue.Where(x => x.NameKey == lis.NameKey).ToList();
-                
+                var listValueOpen = db.KeyValue.Where(x => x.OpenKeyId == tl.Id).Select(x=>x.isOpen).ToList();
+                foreach (var tlr in listValueOpen)
+                    ValueKeyOpen.Add(tlr);
             }
+           
+
+            ViewBag.KeyValue = ValueKeyOpen.Distinct();
                 ViewBag.Order = keyOpenOrderValue.Distinct();
 
             ViewBag.User = key.Select(x => x.userKey).ToList();
@@ -1797,7 +1803,7 @@ namespace schliessanlagen_konfigurator.Controllers
             return View("FinischerProductSelect", UserOrder );
         }
         [HttpPost]
-        public ActionResult SaveOrder(Orders Key, List<string> Turname, List<string> ZylinderId, List<float> aussen, List<float> innen, List<int> Count, List<string> NameKey, List<int> CountKey, List<string> IsOppen, List<string> Options, List<int> ItemCount)
+        public ActionResult SaveOrder(Orders Key, List<string> Turname, List<string> ZylinderId, List<float> aussen, List<float> innen, List<int> Count, List<string> NameKey, List<int> CountKey, List<string> IsOppen, List<string> Options, List<int> ItemCount,List<string>Ssl)
         {
             int CountOrders = Turname.Count();
 
@@ -1878,7 +1884,17 @@ namespace schliessanlagen_konfigurator.Controllers
                     TurnameValue = Turname[i];
                 }
 
-           
+                string artikul = "";
+        
+                if (i >= Ssl.Count())
+                {
+                    artikul = Ssl.Last();
+                }
+                else
+                {
+                    artikul = Ssl[i];
+                }
+
                 string optionValue;
 
                 if (i >= Options.Count())
@@ -1895,7 +1911,8 @@ namespace schliessanlagen_konfigurator.Controllers
                     userKey = Key.userKey,
                     DorName = TurnameValue,
                     ZylinderId = idZylinder,
-                    Options = optionValue
+                    Options = optionValue,
+                    Artikelnummer = artikul
                 };
 
 

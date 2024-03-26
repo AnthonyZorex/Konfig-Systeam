@@ -79,7 +79,7 @@ a {
 
 #Table {
     display: grid;
-    grid-template-columns: repeat(9,auto);
+    grid-template-columns: repeat(8,auto);
 }
 
 #TableOptions {
@@ -89,7 +89,7 @@ a {
 
 #TableVorhangschloss {
     display: grid;
-    grid-template-columns: repeat(7,auto);
+    grid-template-columns: repeat(6,auto);
     max-width: 1200px;
     justify-content: center;
     margin-left: auto;
