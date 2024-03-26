@@ -15,6 +15,7 @@ using schliessanlagen_konfigurator.Models.ProfilDopelZylinder;
 using schliessanlagen_konfigurator.Models.ProfilDopelZylinder.ValueOptions;
 using schliessanlagen_konfigurator.Models.Vorhan;
 using schliessanlagenkonfigurator.Migrations;
+using schliessanlagen_konfigurator.Models.Users;
 using SkiaSharp;
 using Spire.Xls;
 using System.Collections;
@@ -38,61 +39,139 @@ namespace schliessanlagen_konfigurator.Controllers
             Environment = _environment;
             _contextAccessor = httpContextAccessor;
         }
-
-        public async Task<ActionResult> IndexKonfigurator()
+        public async Task<ActionResult> UserSave(string Name, string VorName, string Login,string Password,string Email,string Telefonnumer,string Status)
         {
-            ViewBag.Zylinder_Typ = await db.Schliessanlagen.ToListAsync();
+            var newUser = new Models.Users.User
+            {
+               Name = Name,
+               Email = Email,
+               Password = Password,
+               Login = Login,
+               Status = Status,
+               Sername = VorName,
+               PhoneNumber = Telefonnumer
+            };
+            
+            db.User.Add(newUser);
+            db.SaveChanges();
 
-            var a = await db.Aussen_Innen.Select(x=>x.aussen).ToListAsync();
-            var b = await db.Aussen_Innen_Knauf.Select(x => x.aussen).ToListAsync();
-            var c = await db.Aussen_Innen_Halbzylinder.Select(x => x.aussen).ToListAsync();
+            return View();
+        }
+        public async Task<ActionResult> LoginPerson(string Login,string Password)
+        {
+            var UserLogin = db.User.Where(x => x.Login == Login && x.Password == Password);
+            return View("IndexKonfigurator",UserLogin);
+        }
+        public ActionResult IndexKonfigurator(string Status)
+        {
+            ViewBag.Zylinder_Typ = db.Schliessanlagen.ToList();
 
-            var d = await db.Aussen_Innen.Select(x => x.Intern).ToListAsync();
-            var e = await db.Aussen_Innen_Knauf.Select(x => x.Intern).ToListAsync();
+            #region knayf allParametrsDoppel
+            var a =  db.Aussen_Innen.Select(x=>x.aussen).ToList();
+            var d =  db.Aussen_Innen.Select(x => x.Intern).ToList();
 
-            var optionsName = db.NGF.Select(x => x.Name).ToList();
-
+            var DoppeloptionsName = db.NGF.Select(x => x.Name).ToList();
 
             var listAllInnen = new List<float>();
-            var listAllAussen = new List<float>();
-            var ListOptions = new List<string>();
 
-            for (int i = 0; i < optionsName.Count; i++)
-                ListOptions.Add(optionsName[i]);
+            var ListAussenDopple = new List<float>();
 
+            for (int i = 0; i < a.Count(); i++)
+                ListAussenDopple.Add(a[i]);
 
-            for (int i = 0; i < d.Count; i++)
-                listAllInnen.Add(d[i]);
-            for (int i = 0; i < e.Count; i++)
-                listAllInnen.Add(e[i]);
+            ViewBag.DoppelAussen = ListAussenDopple;
 
+            var ListInternDopple = new List<float>();
+            for (int i = 0; i < d.Count(); i++)
+                ListInternDopple.Add(d[i]);
 
+            ViewBag.DoppelIntern = ListInternDopple;
 
-            for (int i = 0; i < a.Count; i++)
-                listAllAussen.Add(a[i]);
-            for (int i = 0; i < b.Count; i++)
-                listAllAussen.Add(b[i]);
-            for (int i = 0; i < c.Count; i++)
-                listAllAussen.Add(c[i]);
+            var DoppelListOptions = new List<string>();
 
-            var orderedNumbers = from i in listAllAussen
-                                 orderby i
-                                 select i;
+            for (int i = 0; i < DoppeloptionsName.Count; i++)
+                DoppelListOptions.Add(DoppeloptionsName[i]);
 
-            var orderedInnen = from i in listAllInnen
-                               orderby i
-                                 select i;
+            ViewBag.OptionsName = DoppelListOptions.Distinct();
 
+            #endregion
+            #region knayf allParametrsKnayf
 
+            var b =  db.Aussen_Innen_Knauf.Select(x => x.aussen).ToList();
+            var ba = db.Aussen_Innen_Knauf.Select(x => x.Intern).ToList();
+            var KnayfOptions = db.Knayf_Options.Select(x => x.Name).ToList();
 
-            ViewBag.Innen = orderedInnen.Distinct();
+            var listKnayfAussen = new List<float>();
+            var listKnayfIntern = new List<float>();
+            var KnayfListOptions = new List<string>();
 
-            ViewBag.Aussen = orderedNumbers.Distinct();
+            for (int i = 0; i < b.Count(); i++)
+                listKnayfAussen.Add(b[i]);
 
-            ViewBag.OptionsName = ListOptions.Distinct();
+            ViewBag.KnayfAussen = listKnayfAussen;
+
+            for (int i = 0; i < ba.Count(); i++)
+                listKnayfIntern.Add(ba[i]);
+
+            ViewBag.KnayfIntern = listKnayfIntern;
+
+            for (int i = 0; i < KnayfOptions.Count(); i++)
+                KnayfListOptions.Add(KnayfOptions[i]);
+
+            ViewBag.KnayfOptions = KnayfOptions;
+
+            #endregion
+            #region allPrametrsHalbzylinder
+            var c =  db.Aussen_Innen_Halbzylinder.Select(x => x.aussen).ToList();
+            
+            var HalbzylinderAussen = new List<float>();
+
+            for(int i =0;i<c.Count();i++)
+                HalbzylinderAussen.Add(c[i]);
+
+            ViewBag.HalbzylinderAllAussen = HalbzylinderAussen;
+
+            var HalbzylinderOptions = db.Halbzylinder_Options.Select(x=>x.Name).ToList();
+            var HalbzylunderAllOptions = new List<string>();
+
+            for (int i = 0; i < HalbzylinderOptions.Count(); i++)
+                HalbzylunderAllOptions.Add(HalbzylinderOptions[i]);
+            
+            ViewBag.Halbzylunder_All_Options = HalbzylunderAllOptions;
+            #endregion
+            #region VorhanSchloss
+
+            var size =  db.Size.Select(x => x.sizeVorhangschloss).ToList();
+            var VorhanSchlossSize = new List<float>();
+
+            for (int i = 0; i < size.Count(); i++)
+                VorhanSchlossSize.Add(size[i]);
+
+            var VorhanSchloss = db.OptionsVorhan.Select(x => x.Name).ToList();
+            var VorhanSchlossOptions = new List<string>();
+
+            #endregion
+
+            #region Hebel
+           
+            var HebelOptions =  db.Options.Select(x => x.Name).ToList();
+            var HebelAllOptions = new List<string>();
+            
+            for(int i = 0; i < HebelOptions.Count(); i++)
+            HebelAllOptions.Add(HebelOptions[i]);
+            
+            #endregion
+
+            #region Aussen
+            
+            var AussenOptions =  db.Aussen_Rund_all.Select(x => x.Name).ToList();
+            var AussenAllOptions = new List<string>();
+            for (int i = 0; i < AussenOptions.Count(); i++)
+            AussenAllOptions.Add(AussenOptions[i]);
+           
+            #endregion
 
             var session = _contextAccessor.HttpContext.Session;
-
             var UserKey = session.Id;
             Orders user = new Orders();
             user.userKey = UserKey;

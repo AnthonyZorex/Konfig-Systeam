@@ -73,13 +73,18 @@
                                             <div>
                                                 <input id="inputTur" name="Turname" placeholder="Name der Tür" />
                                             </div>
+                                   
                                 <div>
                                         <input id="infoButten" type='button' value="i" />
                                 </div>
+                                   
                             </div>
                                 <details>
-                                    <summary>  </summary>
-                            <div id="SelectTurItem">
+                                 <summary>  </summary>
+                                    <div id="SelectTurItem">
+                                        <input id="TypeSelectTurItem" name="Artikl" placeholder="Ssl" />
+                                    </div>
+                                <div id="SelectTurItem">
                                     <select id="TypeSelectTurItem" name="ZylinderId">
                                     @foreach (var list in ViewBag.Zylinder_Typ)
                                     {
@@ -87,10 +92,11 @@
                                     }
                                 </select>
                             </div>
+                                   
                             <div id="SelectTurItem">
                                     <select id="TypeSelectTurItem" name="aussen">
                                     <option>Außenlänge</option>
-                                    @foreach (var list in ViewBag.Aussen)
+                                    @foreach (var list in ViewBag.DoppelAussen)
                                     {
                                         <option>@list</option>
                                     }
@@ -100,7 +106,7 @@
                             <div id="SelectTurItem">
                                     <select id="TypeSelectTurItem" name="innen">
                                     <option>Innenlänge</option>
-                                    @foreach (var list in ViewBag.Innen)
+                                    @foreach (var list in ViewBag.DoppelIntern)
                                     {
                                         <option>@list</option>
                                     }
@@ -108,7 +114,7 @@
                             </div>
                            
                             <div id="SelectTurItem">
-                                        <select id="TypeSelectTurItem" name="Options">
+                               <select id="TypeSelectTurItem" name="Options">
                                     <option>Options</option>
                                     @foreach (var list in ViewBag.OptionsName)
                                     {
@@ -190,27 +196,21 @@
 
     window.onload = foo()
 
-    // Создаем кастомные чекбоксы
-    // createCustomCheckbox('checkbox1');
-
-
-    function removeBlockTur() {
+    function removeBlockTur() 
+    {
                 let blockToRemove = document.getElementById('BlockTur-' + blockTur);
-                    if (blockToRemove) 
-                    {
-                        blockToRemove.remove();
+                    
+                if (blockToRemove) 
+                {
+                       blockToRemove.remove();
 
-                        for (let s = 0; s < blockCount; s++) 
-                        {
-                            let blockToRemoveTurValue = document.getElementById(`${blockTur}.checkboxContainer${s}`);
-                            let Horizontal = document.getElementById(`${blockTur}horizontal`);
-                            blockToRemoveTurValue.remove();
-                            Horizontal.remove();
-                        }
+                       let Horizontal = document.getElementById(`${blockTur}horizontal`);
+                            
+                       Horizontal.remove();
 
-                    blockTur--;
-                    }
+                       blockTur--;
                 }
+    }
 
         function addBlockTur() {
         blockTur++;
@@ -234,6 +234,9 @@
                                 </div>
                                       <details>
                                         <summary>  </summary>
+                                             <div id ="SelectTurItem">
+                                                <input id="TypeSelectTurItem" name="Artikl" placeholder="Ssl" />
+                                            </div>
                                 <div id="SelectTurItem">
                                         <select id="TypeSelectTurItem" name="ZylinderId">
                                     @foreach (var list in ViewBag.Zylinder_Typ)
@@ -242,10 +245,11 @@
                                     }
                                     </select>
                                 </div>
+                                     
                                 <div id="SelectTurItem">
                                         <select id="TypeSelectTurItem" name="aussen">
                                         <option>Außenlänge</option>
-                                        @foreach (var list in ViewBag.Aussen)
+                                        @foreach (var list in ViewBag.DoppelAussen)
                                         {
                                             <option>@list</option>
                                         }
@@ -254,10 +258,10 @@
                                 <div id="SelectTurItem">
                                         <select id="TypeSelectTurItem" name="innen">
                                            <option>Innenlänge</option>
-                                        @foreach (var list in ViewBag.Innen)
-                                        {
-                                          <option>@list</option>
-                                        }
+                                         @foreach (var list in ViewBag.DoppelIntern)
+                                         {
+                                           <option>@list</option>
+                                         }
                                     </select>
                                 </div>
                                

@@ -1,4 +1,4 @@
-html {
+﻿html {
     font-size: 14px;
 }
 
@@ -558,3 +558,49 @@ summary {
     text-align: end;
     margin-top: 20px;
 }
+#schopIcons {
+    margin-left: 200px;
+    height: 40px;
+    max-width: 40px;
+    background: #e4e4e4;
+    border: 3px solid grey;
+    border-radius: 30px;
+}
+
+.modal {
+    display: none; /* По умолчанию модальное окно скрыто */
+    position: fixed; /* Фиксированное положение */
+    z-index: 1; /* Поверх всех остальных элементов */
+    left: 0;
+    top: 0;
+    width: 100%; /* Полная ширина */
+    height: 100%; /* Полная высота */
+    overflow: auto; /* Добавление прокрутки, если содержимое слишком большое */
+    background-color: rgba(0,0,0,0.4); /* Полупрозрачный фон */
+    padding-top: 60px; /* Отступ сверху */
+}
+
+/* Стили для содержимого модального окна */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%;
+}
+
+/* Стили для кнопки закрытия модального окна */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    margin-left: 500px;
+}
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }

@@ -22,9 +22,17 @@
                 </button>
                 <div style="margin-left:400px" class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Data</a>
-                        </li>
+                       @*  @{
+                            if (Model.Status == "Admin")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Data</a>
+                                </li>
+                            }
+                        } *@
+                           
+                        
+                        
                         <li class="nav-item">
                             <a class="nav-link text-dark" href=" @Url.Action("IndexKonfigurator", "Konfigurator")">Konfigurator</a>
                         </li>
@@ -36,29 +44,51 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" href=" @Url.Action("System_Auswählen", "Konfigurator")">SCHRITT 2</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item">   
                             <a class="nav-link text-dark" href=" @Url.Action("OrdersKey", "Konfigurator")">SCHRITT 3</a>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link text-dark" type="button" id="schopIcons" data-toggle="modal" data-target="#myModal"><img id="openModalBtn" src="~/Image/shopping-cart.png" width="20" height="20" style="margin-left:-2px;margin-top:-12px" /></button>
                         </li>
                     </ul>
                     
                 </div>
             </div>
         </nav>
+        <div id="myModal" class="modal">
+            @Html.Partial("_ModalShop")
+        </div>
     </header>
     <div class="container">
         <main role="main" >
             @RenderBody()
         </main>
     </div>
-
-  @*   <footer >
-         <div class="container">
-            &copy; 2024 - schliessanlagen_konfigurator - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div> 
-    </footer> *@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+<script>
+    $(document).ready(function () {
+        var modal = $("#myModal");
+        var btn = $("#openModalBtn");
+        var closeBtn = $(".close");
+
+        btn.on("click", function () {
+            modal.show();
+        });
+
+        closeBtn.on("click", function () {
+            modal.hide();
+        });
+
+        $(window).on("click", function (event) {
+            if (event.target == modal[0]) {
+                modal.hide();
+            }
+        });
+    });
+</script>

@@ -1,0 +1,58 @@
+﻿<div class="modal-content">
+    <span class="close">&times;</span>
+    <div>
+        <input class="btn btn-danger" type="button" id="registration" value="Anmeldung" />
+        <input class="btn btn-dark" type="button" id="login" value="Eintrag" />
+   </div>
+    <form asp-action="UserSave" asp-controller="Konfigurator">
+    <div id="registrationForm">
+
+            <label>Name</label>
+            <input class="form-control" type="text" name="Name" />
+            
+            <label>VorName</label>
+            <input class="form-control" type="text" name="VorName" />
+            
+            <label>Login</label>
+            <input class="form-control" type="text" name="Login" />
+            
+            <label>Password</label>
+            <input class="form-control" type="password" name="Password" />
+            
+            <label>Telefonnumer</label>
+            <input class="form-control" type="tel" name="Telefonnumer" />
+            
+            <label>Email</label>
+            <input class="form-control" type="email" name="Email" />
+
+            <input class ="form-control" type="hidden" name="status" value="User" />
+            <input class="btn btn-success" type="submit" value="Einchecken" />
+   </div>
+    </form>
+
+    <form asp-action="LoginPerson" asp-controller="Konfigurator">
+   <div id="LoginForm" style="display:none">
+        <label>Login</label>
+            <input class="form-control" type="text" name="Login" />
+            <label>Password</label>
+            <input class="form-control" type="text" name="Password" />
+            <input class="btn btn-success" type="submit"  value="Eintrag" />
+   </div>
+   </form>
+</div>
+<script>
+
+    let login = document.getElementById("login");
+    let registrations = document.getElementById("registration");
+    let registrationsForm = document.getElementById("registrationForm");
+    let LoginForm = document.getElementById("LoginForm");
+
+    login.addEventListener("click", () => {
+        registrationsForm.style.display = "none";
+        LoginForm.style.display = "block";
+    });
+    registrations.addEventListener("click", () => {
+        registrationsForm.style.display = "block";
+        LoginForm.style.display = "none";
+    });
+</script>

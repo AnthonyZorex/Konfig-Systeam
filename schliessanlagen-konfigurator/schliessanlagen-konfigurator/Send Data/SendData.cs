@@ -83,8 +83,10 @@ namespace schliessanlagen_konfigurator.Send_Data
                         Name= "Schlüssel",
                         Sername= "Discount",
                         Status="Admin",
+                        Login= "Schlüssel",
                         Password="brunnenqwe",
-                        PhoneNumber= "+4930 4508 7619"
+                        PhoneNumber= "+4930 4508 7619",
+                        Email ="info@schluessel.discount"
                     }
                 );
                 context.SaveChanges();

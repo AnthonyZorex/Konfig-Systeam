@@ -22,6 +22,21 @@ namespace schliessanlagenkonfigurator.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("OrdersUser", b =>
+                {
+                    b.Property<int>("Ordersid")
+                        .HasColumnType("int");
+
+                    b.Property<int>("userId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Ordersid", "userId");
+
+                    b.HasIndex("userId");
+
+                    b.ToTable("OrdersUser");
+                });
+
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Aussen_Rund.Aussen_Rouns_all_value", b =>
                 {
                     b.Property<int>("Id")
@@ -98,9 +113,6 @@ namespace schliessanlagenkonfigurator.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Artikelnummer")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<float>("Cost")
                         .HasColumnType("real");
@@ -272,9 +284,6 @@ namespace schliessanlagenkonfigurator.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Artikelnummer")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<float>("Cost")
                         .HasColumnType("real");
 
@@ -381,6 +390,9 @@ namespace schliessanlagenkonfigurator.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("Artikelnummer")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Count")
                         .HasColumnType("int");
@@ -503,9 +515,6 @@ namespace schliessanlagenkonfigurator.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Artikelnummer")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<float>("Cost")
                         .HasColumnType("real");
@@ -639,9 +648,6 @@ namespace schliessanlagenkonfigurator.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Artikelnummer")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<float>("Cost")
                         .HasColumnType("real");
 
@@ -757,6 +763,50 @@ namespace schliessanlagenkonfigurator.Migrations
                     b.ToTable("Schliessanlagen");
                 });
 
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Users.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Login")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("OrdersId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sername")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User");
+                });
+
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Vorhan.OptionsVorhan", b =>
                 {
                     b.Property<int>("Id")
@@ -861,9 +911,6 @@ namespace schliessanlagenkonfigurator.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Artikelnummer")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<float>("Cost")
                         .HasColumnType("real");
 
@@ -892,6 +939,21 @@ namespace schliessanlagenkonfigurator.Migrations
                     b.HasIndex("schliessanlagenId");
 
                     b.ToTable("Vorhangschloss");
+                });
+
+            modelBuilder.Entity("OrdersUser", b =>
+                {
+                    b.HasOne("schliessanlagen_konfigurator.Models.Orders", null)
+                        .WithMany()
+                        .HasForeignKey("Ordersid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("schliessanlagen_konfigurator.Models.Users.User", null)
+                        .WithMany()
+                        .HasForeignKey("userId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Aussen_Rund.Aussen_Rouns_all_value", b =>

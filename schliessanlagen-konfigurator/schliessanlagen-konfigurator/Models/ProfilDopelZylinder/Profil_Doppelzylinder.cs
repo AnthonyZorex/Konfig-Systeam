@@ -13,7 +13,6 @@ namespace schliessanlagen_konfigurator.Models.ProfilDopelZylinder
         public string? companyName { get; set; }
         public string? description { get; set; }
         public string? NameSystem { get; set; }
-        public string? Artikelnummer { get; set; }
         public float Cost { get; set; }
         public string ImageName { get; set; }
         [NotMapped]

@@ -1024,7 +1024,6 @@ namespace schliessanlagen_konfigurator.Controllers
             itemToUpdate.companyName = profil_Doppelzylinder.companyName;
             itemToUpdate.description = profil_Doppelzylinder.description;
             itemToUpdate.NameSystem = profil_Doppelzylinder.NameSystem;
-            itemToUpdate.Artikelnummer = profil_Doppelzylinder.Artikelnummer;
             itemToUpdate.ImageName = profil_Doppelzylinder.ImageName;
 
             for(int i=0;i<aussen.Count();i++)
