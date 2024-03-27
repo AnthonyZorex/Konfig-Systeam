@@ -22,9 +22,9 @@
     <form asp-action="System_Auswählen" method="post" enctype="multipart/form-data" asp-controller="Konfigurator">
         @Html.HiddenFor(m => m.userKey)
        
-        @if (ViewBag.a != null && ViewBag.b == null && ViewBag.DK == null && ViewBag.DH == null)
+        @if (ViewBag.Doppel != null && ViewBag.Knaufzylinder == null && ViewBag.Halb == null && ViewBag.Hebel == null && ViewBag.VorhanSchloss == null && ViewBag.Aussen == null)
         {
-            foreach (var item in ViewBag.a)
+            foreach (var item in ViewBag.Doppel)
             {
 
                 <div id="ExelItem">
@@ -58,9 +58,189 @@
                 </div>
             }
         }
-        @if (ViewBag.a != null && ViewBag.DH != null)
+        @if (ViewBag.Knaufzylinder != null && ViewBag.Doppel == null && ViewBag.Halb == null && ViewBag.Hebel == null && ViewBag.VorhanSchloss == null && ViewBag.Aussen == null)
         {
-            foreach (var item in ViewBag.a)
+            foreach (var item in ViewBag.Knaufzylinder)
+            {
+
+                <div id="ExelItem">
+                    <div id="productImage">
+                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                    </div>
+                    <div id="productMenuInfo">
+                        <div id="ProductNameUndCost">
+
+                            <div>
+                                <h3>@item.Name</h3>
+                            </div>
+
+                            <div style="margin-left: auto;">
+                                <h4 id="cost">ab @item.Cost €</h4>
+                            </div>
+
+                        </div>
+
+                        <div id="product_desciptions">
+                            <h5>@item.description</h5>
+                        </div>
+                        <div id="productChek">
+
+                            <a class="btn btn-danger" id="chekProduct" name="KnayfID" href=" @Url.Action("OrdersKey", "Konfigurator", new { KnayfID = item.Id , param2 = item.userKey})">WÄHLEN</a>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            }
+        }
+        @if (ViewBag.Halb != null && ViewBag.Doppel == null && ViewBag.Knaufzylinder == null && ViewBag.Hebel == null && ViewBag.VorhanSchloss == null && ViewBag.Aussen == null)
+        {
+            foreach (var item in ViewBag.Halb )
+            {
+
+                <div id="ExelItem">
+                    <div id="productImage">
+                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                    </div>
+                    <div id="productMenuInfo">
+                        <div id="ProductNameUndCost">
+
+                            <div>
+                                <h3>@item.Name</h3>
+                            </div>
+
+                            <div style="margin-left: auto;">
+                                <h4 id="cost">ab @item.Cost €</h4>
+                            </div>
+
+                        </div>
+
+                        <div id="product_desciptions">
+                            <h5>@item.description</h5>
+                        </div>
+                        <div id="productChek">
+
+                            <a class="btn btn-danger" id="chekProduct" name="Halb" href=" @Url.Action("OrdersKey", "Konfigurator", new { Halb = item.Id , param2 = item.userKey})">WÄHLEN</a>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            }
+        }
+        @if (ViewBag.Hebel != null && ViewBag.Doppel == null && ViewBag.Knaufzylinder == null && ViewBag.Halb == null && ViewBag.VorhanSchloss == null && ViewBag.Aussen == null)
+        {
+            foreach (var item in ViewBag.Hebel)
+            {
+
+                <div id="ExelItem">
+                    <div id="productImage">
+                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                    </div>
+                    <div id="productMenuInfo">
+                        <div id="ProductNameUndCost">
+
+                            <div>
+                                <h3>@item.Name</h3>
+                            </div>
+
+                            <div style="margin-left: auto;">
+                                <h4 id="cost">ab @item.Cost €</h4>
+                            </div>
+
+                        </div>
+
+                        <div id="product_desciptions">
+                            <h5>@item.description</h5>
+                        </div>
+                        <div id="productChek">
+
+                            <a class="btn btn-danger" id="chekProduct" name="Hebel" href=" @Url.Action("OrdersKey", "Konfigurator", new { Hebel = item.Id , param2 = item.userKey})">WÄHLEN</a>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            }
+        }
+        @if (ViewBag.VorhanSchloss != null && ViewBag.Doppel == null && ViewBag.Knaufzylinder == null && ViewBag.Halb == null && ViewBag.Hebel == null && ViewBag.Aussen == null)
+        {
+            foreach (var item in ViewBag.VorhanSchloss)
+            {
+
+                <div id="ExelItem">
+                    <div id="productImage">
+                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                    </div>
+                    <div id="productMenuInfo">
+                        <div id="ProductNameUndCost">
+
+                            <div>
+                                <h3>@item.Name</h3>
+                            </div>
+
+                            <div style="margin-left: auto;">
+                                <h4 id="cost">ab @item.Cost €</h4>
+                            </div>
+
+                        </div>
+
+                        <div id="product_desciptions">
+                            <h5>@item.description</h5>
+                        </div>
+                        <div id="productChek">
+
+                            <a class="btn btn-danger" id="chekProduct" name="Vorhan" href=" @Url.Action("OrdersKey", "Konfigurator", new { Vorhan = item.Id , param2 = item.userKey})">WÄHLEN</a>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            }
+        }
+        @if (ViewBag.Aussen != null && ViewBag.Doppel == null && ViewBag.Knaufzylinder == null && ViewBag.Halb == null && ViewBag.Hebel == null && ViewBag.VorhanSchloss == null)
+        {
+            foreach (var item in ViewBag.Aussen)
+            {
+
+                <div id="ExelItem">
+                    <div id="productImage">
+                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                    </div>
+                    <div id="productMenuInfo">
+                        <div id="ProductNameUndCost">
+
+                            <div>
+                                <h3>@item.Name</h3>
+                            </div>
+
+                            <div style="margin-left: auto;">
+                                <h4 id="cost">ab @item.Cost €</h4>
+                            </div>
+
+                        </div>
+
+                        <div id="product_desciptions">
+                            <h5>@item.description</h5>
+                        </div>
+                        <div id="productChek">
+
+                            <a class="btn btn-danger" id="chekProduct" name="Aussen" href=" @Url.Action("OrdersKey", "Konfigurator", new { Aussen = item.Id , param2 = item.userKey})">WÄHLEN</a>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            }
+        }
+    @*     @if (ViewBag.Doppel != null && ViewBag.Halb != null)
+        {
+            foreach (var item in ViewBag.Doppel)
             {
 
                 <div id="ExelItem">
@@ -93,10 +273,10 @@
 
                 </div>
             }
-        }
-        @if (ViewBag.a != null && ViewBag.DK!= null)
+        }*@
+        @if (ViewBag.Doppel != null && ViewBag.Knaufzylinder != null)
         {
-            foreach (var item in ViewBag.a)
+            foreach (var item in ViewBag.Doppel)
             {
 
                 <div id="ExelItem">
@@ -129,10 +309,11 @@
 
                 </div>
             }
-        }
-        @if (ViewBag.a != null && ViewBag.b != null)
+        } 
+        @if (ViewBag.Doppel != null && ViewBag.Knaufzylinder != null && ViewBag.Halb != null && ViewBag.Hebel != null && ViewBag.VorhanSchloss != null && ViewBag.Aussen != null)
         {
-            foreach (var item in ViewBag.a)
+            var s = @ViewBag.Doppel.Count;
+            foreach (var item in ViewBag.Doppel)
             {
 
                 <div id="ExelItem">
@@ -167,94 +348,9 @@
             }
         }
     </form>
-                <input type="submit" value="Create Exel" id="closeMenu" class="btn btn-dark" />
-         
+
         </div>
 
  <script>
   
-            // let generics = document.getElementById('generations');
-            // let generic = document.getElementById('generic');
-            // let dopel = document.querySelectorAll('#dopel');
-            // let halb = document.querySelectorAll('#halb');
-            // let Knayf = document.querySelectorAll('#Knayf');
-            // let Hebel = document.querySelectorAll('#Hebel');
-            // let vorhang = document.querySelectorAll('#vorhang');
-            // let aussen = document.querySelectorAll('#aussen');
-
-            // let sum;
-            // function render() {
-
-
-            //     for (var i = 0; i <= dopel.length; i++) {
-            //         sum = 0;
-
-            //         if (dopel.length > i) {
-            //             document.getElementById('generics').append(dopel[i]);
-            //             let res = dopel[i].children[2].innerHTML.replace(/,/, '.');
-            //             sum += parseFloat(res);
-
-            //         }
-            //         if (halb.length > i) {
-
-            //             dopel[i].append(halb[i]);
-
-            //             let res = halb[i].children[2].innerHTML.replace(/,/, '.');
-            //             sum += parseFloat(res);
-
-            //         }
-
-
-            //         if (Knayf.length > i) {
-            //             dopel[i].append(Knayf[i]);
-
-            //             let res = Knayf[i].children[2].innerHTML.replace(/,/, '.');
-            //             sum += parseFloat(res);
-
-
-            //         }
-
-
-            //         if (Hebel.length > i) {
-            //             dopel[i].append(Hebel[i]);
-
-            //             let res = Hebel[i].children[2].innerHTML.replace(/,/, '.');
-            //             sum += parseFloat(res);
-
-
-            //         }
-
-            //         if (vorhang.length > i) {
-            //             dopel[i].append(vorhang[i]);
-            //             let res = vorhang[i].children[2].innerHTML.replace(/,/, '.');
-            //             sum += parseFloat(res);
-
-
-            //         }
-
-
-            //         if (aussen.length > i) {
-            //             dopel[i].append(aussen[i]);
-            //             let res = aussen[i].children[2].innerHTML.replace(/,/, '.');
-            //             sum += parseFloat(res);
-            //         }
-            //         let paddingUp = document.createElement('hr');
-            //         dopel[i].append(paddingUp);
-            //         let paddingDown = document.createElement('hr');
-            //         let cost = document.createElement('h1');
-            //         cost.innerHTML = `${sum}€`;
-            //         dopel[i].append(cost);
-            //         dopel[i].append(paddingDown);
-
-            //     }
-
-
-
-
-            // }
-            // render();
-            // generic.remove(dopel, halb, Knayf, Hebel, vorhang, aussen);
-
-
-
-        </script>
+</script>

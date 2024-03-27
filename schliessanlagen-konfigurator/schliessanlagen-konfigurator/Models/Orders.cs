@@ -15,13 +15,11 @@ namespace schliessanlagen_konfigurator.Models
         public int? Count { get; set; }
         public string? Artikelnummer { get; set; }
         public string? Options { get; set; }
-      
         public ICollection<isOpen_Order> isOpen_Order { get; set; }
-        public ICollection<User> user { get; set; }
         public Orders()
         {
             isOpen_Order = new List<isOpen_Order>();
-            user = new List<User>();
+    
         }
 
     }

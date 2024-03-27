@@ -1,4 +1,6 @@
-﻿namespace schliessanlagen_konfigurator.Models.Users
+﻿using schliessanlagen_konfigurator.Models.OrdersOpen;
+
+namespace schliessanlagen_konfigurator.Models.Users
 {
     public class User
     {
@@ -10,7 +12,10 @@
         public string Login { get; set; }
         public string Password { get; set; }
         public string Status { get; set; }
-        public int? OrdersId { get; set; }
-        public List<Orders> Orders { get; set; }
+        public ICollection<UserOrdersShop> UserOrdersShop { get; set; }
+        public User()
+        {
+            UserOrdersShop= new List<UserOrdersShop>(); 
+        }
     }
 }

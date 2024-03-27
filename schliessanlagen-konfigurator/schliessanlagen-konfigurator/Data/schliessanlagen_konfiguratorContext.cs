@@ -23,6 +23,11 @@ namespace schliessanlagen_konfigurator.Data
         }
         public DbSet<Schliessanlagen> Schliessanlagen { get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<UserOrdersShop> UserOrdersShop { get; set; }
+
+
+
+
         public DbSet<Profil_Doppelzylinder> Profil_Doppelzylinder { get; set; }
         public DbSet<Profil_Doppelzylinder_Options> Profil_Doppelzylinder_Options { get; set; }
         public DbSet<Aussen_Innen> Aussen_Innen { get; set; }

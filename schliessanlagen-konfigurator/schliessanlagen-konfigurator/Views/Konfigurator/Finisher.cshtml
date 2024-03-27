@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = $"Finisher/{Model.userKey}";
     int z = 0;
+    int countValueKey = 0;
 }
 
 @Html.HiddenFor(m => m.userKey)  
@@ -18,8 +19,8 @@
 
 <div>
 
-    @foreach (var item in ViewBag.Order)
-    {
+        @foreach (var item in ViewBag.Order)
+        {
             z++;
             <div id="finisherItem">
             <div id="ItemCounterOrders">
@@ -34,10 +35,26 @@
             <div id="nameItem">
         <h2>@item.NameKey</h2>
         </div>
+        
             <div id="numerKey">
         <h3>Schlüssel Nr.@z </h3>
          </div>
+                <div id="OpenValue">
+                    @{
+                        int valueKeyBool = ViewBag.KeyValue.Count / ViewBag.Order.Count;
+
+                        @for (int f = 0; f < valueKeyBool; f++)
+                        {
+                            @if (ViewBag.KeyValue[countValueKey].isOpen == true)
+                            {
+                                <h5>@ViewBag.DorName[f]</h5>
+                            }
+                            countValueKey++;
+                        }
+                    }
+                </div>
             </div>
+            
     } 
     <div>
     </div>
@@ -148,7 +165,7 @@
                         </div>
                         <div>
                             <select class="form-select">
-                                <option>KnayfZelinder</option>
+                                <option>KnayfZylinder</option>
                             </select>
                         </div>
                         <div id="product_desciptions">
@@ -226,7 +243,7 @@
                         </div>
                         <div>
                             <select class="form-select">
-                                <option>KnayfZelinder</option>
+                                <option>Halbzylinder</option>
                             </select>
                         </div>
                         <div id="product_desciptions">
@@ -236,9 +253,9 @@
                             <div>
                                 <select class="form-select">
                                     <option>Außenlänge (A)</option>
-                                    @for (int i = 0; i < ViewBag.KnayfZelinderAussen.Count; i++)
+                                    @for (int i = 0; i < ViewBag.AussenHalb.Count; i++)
                                     {
-                                        <option>@ViewBag.KnayfZelinderAussen[i]</option>
+                                        <option>@ViewBag.AussenHalb[i]</option>
                                     }
                                 </select>
                             </div>
@@ -246,21 +263,20 @@
                         </div>
                         <div>
                             <h3>Weitere Optionen</h3>
-                            @* <div>
+                            <div>
                                 @{
                                     int valueCount = 0;
                                 }
-                                @if (ViewBag.countOptionsQueryKnayf > 0)
+                                @if (ViewBag.countOptionsQueryHalb > 0)
                                 {
-                                    @for (int i = 0; i < ViewBag.optionsNameKnayf.Count; i++)
+                                    @for (int i = 0; i < ViewBag.HalbOptionsName.Count; i++)
                                     {
-
                                         <select class="form-select" id="ProductOptionsSelector">
-                                            <option>@ViewBag.optionsNameKnayf[i]</option>
-                                            @for (int j = 0; j < ViewBag.countOptionsListKnayf[i]; j++)
-                                            {
+                                            <option>@ViewBag.HalbOptionsName[i]</option>
 
-                                                <option id="@valueCount">@ViewBag.optionsValueKnayf[valueCount]</option>
+                                            @for (int j = 0; j < ViewBag.HalbOptionsValueCount[i]; j++)
+                                            {
+                                                <option id="@valueCount">@ViewBag.HalbOptionsValue[valueCount]</option>
                                                 valueCount++;
                                             }
                                         </select>
@@ -268,7 +284,7 @@
                                 }
 
 
-                            </div> *@
+                            </div> 
                         </div>
                     </div>
 
@@ -294,7 +310,7 @@
                         </div>
                         <div>
                             <select class="form-select">
-                                <option>KnayfZelinder</option>
+                                <option>Hebelzylinder</option>
                             </select>
                         </div>
                         <div id="product_desciptions">
@@ -303,29 +319,27 @@
                      
                         <div>
                             <h3>Weitere Optionen</h3>
-                            @* <div>
-                    @{
-                    int valueCount = 0;
-                    }
-                    @if (ViewBag.countOptionsQueryKnayf > 0)
+                         <div>
+                            @{
+                            int valueCount = 0;
+                            }
+                    @if (ViewBag.CountOptionsHebel > 0)
                     {
-                    @for (int i = 0; i < ViewBag.optionsNameKnayf.Count; i++)
-                    {
-
-                    <select class="form-select" id="ProductOptionsSelector">
-                    <option>@ViewBag.optionsNameKnayf[i]</option>
-                    @for (int j = 0; j < ViewBag.countOptionsListKnayf[i]; j++)
-                    {
-
-                    <option id="@valueCount">@ViewBag.optionsValueKnayf[valueCount]</option>
-                    valueCount++;
-                    }
-                    </select>
-                    }
+                        @for (int i = 0; i < ViewBag.OptionHebelName.Count; i++)
+                        {
+                            <select class="form-select" id="ProductOptionsSelector">
+                           <option>@ViewBag.OptionHebelName[i]</option>
+                                            @for (int j = 0; j < ViewBag.CountValueHebel[i]; j++)
+                            {
+                            <option id="@valueCount">@ViewBag.ValueHebel[valueCount]</option>
+                            valueCount++;
+                            }
+                            </select>
+                        }
                     }
 
 
-                    </div> *@
+                    </div> 
                         </div>
                     </div>
 
@@ -351,7 +365,7 @@
                         </div>
                         <div>
                             <select class="form-select">
-                                <option>KnayfZelinder</option>
+                                <option>Vorhangschloss</option>
                             </select>
                         </div>
                         <div id="product_desciptions">
@@ -361,9 +375,9 @@
                             <div>
                                 <select class="form-select">
                                     <option>Außenlänge (A)</option>
-                                    @for (int i = 0; i < ViewBag.KnayfZelinderAussen.Count; i++)
+                                    @for (int i = 0; i < ViewBag.VorhanSize.Count; i++)
                                     {
-                                        <option>@ViewBag.KnayfZelinderAussen[i]</option>
+                                        <option>@ViewBag.VorhanSize[i]</option>
                                     }
                                 </select>
                             </div>
@@ -371,29 +385,29 @@
                         </div>
                         <div>
                             <h3>Weitere Optionen</h3>
-                            @* <div>
-                    @{
-                    int valueCount = 0;
-                    }
-                    @if (ViewBag.countOptionsQueryKnayf > 0)
-                    {
-                    @for (int i = 0; i < ViewBag.optionsNameKnayf.Count; i++)
-                    {
+                            <div>
+                        @{
+                        int valueCount = 0;
+                        }
 
-                    <select class="form-select" id="ProductOptionsSelector">
-                    <option>@ViewBag.optionsNameKnayf[i]</option>
-                    @for (int j = 0; j < ViewBag.countOptionsListKnayf[i]; j++)
-                    {
+                        @if (ViewBag.VorhanschlossCount > 0)
+                        {
+                            @for (int i = 0; i < ViewBag.VorhanschlossOptionCount; i++)
+                            {
+                                <select class="form-select" id="ProductOptionsSelector">
+                                <option>@ViewBag.VorhanschlossOptionName[i]</option>
 
-                    <option id="@valueCount">@ViewBag.optionsValueKnayf[valueCount]</option>
-                    valueCount++;
-                    }
-                    </select>
-                    }
-                    }
+                                @for (int j = 0; j < ViewBag.VorhanOptionCount[i]; j++)
+                                {
+                                    <option id="@valueCount">@ViewBag.optionsValueKnayf[valueCount]</option>
+                                    valueCount++;
 
+                                }
 
-                    </div> *@
+                                </select>
+                            }
+                        }
+                    </div> 
                         </div>
                     </div>
 
@@ -419,7 +433,7 @@
                         </div>
                         <div>
                             <select class="form-select">
-                                <option>KnayfZelinder</option>
+                                <option>Aussenzylinder_Rundzylinder</option>
                             </select>
                         </div>
                         <div id="product_desciptions">
@@ -428,7 +442,7 @@
                        
                         <div>
                             <h3>Weitere Optionen</h3>
-                            @* <div>
+                             <div>
                                 @{
                                     int valueCount = 0;
                                 }
@@ -450,7 +464,7 @@
                                 }
 
 
-                            </div> *@
+                            </div> 
                         </div>
                     </div>
 
@@ -467,11 +481,10 @@
         
       <div id="buttonActionFinishBlock">
           <div id="FinisherLeft">
-                <input type="button" id="chekProduct" class="btn btn-dark" value="ZURÜCK" />
+                <button id="chekProduct" class="btn btn-dark"> <a href="@Url.Action("System_Auswählen", "Konfigurator")">ZURÜCK</a></button>
             </div>
             <div id="FinisherRight">
-               
-                <button id="chekProduct" class="btn btn-danger"> <a href=" @Url.Action("FinischerProductSelect", "Konfigurator", new {cost = @ViewBag.Cost,DopelItem = @ViewBag.DopelzylinderIdList,DAussen = @ViewBag.DAussen,DIntern=@ViewBag.DInter, Knayf=@ViewBag.KnayfZelinder,user = @ViewBag.User})">WEITER</a></button>
+                <button id="chekProduct" class="btn btn-danger"> <a href="@Url.Action("FinischerProductSelect", "Konfigurator", new {SumCosted = @ViewBag.Cost,DopelItem = @ViewBag.DopelzylinderIdList,DAussen = @ViewBag.DAussen,DIntern=@ViewBag.DInter, Knayf=@ViewBag.KnayfZelinder,user = @ViewBag.User, Halb = @ViewBag.HalbList,})">WEITER</a></button>
             </div>
       </div>
     </div>

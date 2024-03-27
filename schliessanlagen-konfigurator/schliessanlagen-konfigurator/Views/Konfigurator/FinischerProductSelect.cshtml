@@ -70,13 +70,7 @@
                                 for(var list=0;list<ViewBag.Item;list++)
                                 {
                                     <div class="TexCountTurFinisher">
-
-                                        <div id="ItemTur">
-                                            <div>
-                                                <h5 id="counterTur"><strong>@counter @ViewBag.Tur[list]</strong></h5>
-                                            </div>
-
-                                        </div>
+                                        <h5 id="counterTur"><strong>@counter @ViewBag.Tur[list]</strong></h5>
                                         <h5><strong> @ViewBag.DopelZylinder[list]</strong></h5>
                                         <h6><strong>Außenlänge (A):@ViewBag.DoppelAussen[list] </strong></h6>
                                         <h6><strong>Außenlänge (B):@ViewBag.DoppelIntern[list] </strong></h6>
@@ -119,9 +113,26 @@
                 </div>
             </div>
         </div>
-
-        <input type="submit" class="btn btn-success" id="input" value="Weiter" />
     </form>
+    <div id="FinihserCostInfo">
+        <div style="max-width: 700px;">
+            <p>
+                Lieferzeit: ca. 14 Werktage<br/>
+                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.
+                Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
+            </p>
+        </div>
+        <div style="margin-top: 40px;">
+            <h2>@ViewBag.SumCosted</h2>
+            <h6>inkl. MwSt.</h6>
+        </div>
+       
+    </div>
+    <div id="finisherButton">
+        <button class="btn btn-dark">ALS ANGEBOT PER EMAIL</button>
+        <button class="btn btn-danger">IN DEN WARENKORB</button>
+    </div>
 </div>
 <script>
 
