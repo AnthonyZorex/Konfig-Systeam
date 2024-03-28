@@ -143,9 +143,9 @@
 </div>
 <script>
 
-        let blockCount = 1;
+   let blockCount = 1;
         
-        let blockTur = 1;
+    let blockTur = 1;
    
     var data = JSON.parse(localStorage.getItem(`${blockTur}checkbox${blockCount}`));
 
@@ -153,10 +153,12 @@
 
     function createCustomCheckbox(id) 
     {
+        
         var checkbox = document.getElementById(id);
         var checkboxValue = false;
 
-        if (!localStorage.getItem(id)) {
+        if (!localStorage.getItem(id)) 
+        {
             localStorage.setItem(id, 'false');
         }
         // Проверяем, есть ли уже сохраненное значение в локальном хранилище

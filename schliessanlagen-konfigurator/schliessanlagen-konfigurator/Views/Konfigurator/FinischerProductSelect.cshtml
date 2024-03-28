@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = $"FinisherProduct/{Model.userKey}";
+    int countFalse = 0;
 }
 
 <div>
@@ -30,7 +31,7 @@
 
                 </div>
                 <div id="itemKeyBlock">
-                    @{
+                  @{
                         int counterKey = 1;
                         foreach (var list in ViewBag.Key)
                         {
@@ -65,49 +66,62 @@
                 <div>
                     <div id="turInfo">
                         <div id="blockInfo">
-                            @{
-                                int counter = 1;
-                                for(var list=0;list<ViewBag.Item;list++)
-                                {
-                                    <div class="TexCountTurFinisher">
-                                        <h5 id="counterTur"><strong>@counter @ViewBag.Tur[list]</strong></h5>
-                                        <h5><strong> @ViewBag.DopelZylinder[list]</strong></h5>
-                                        <h6><strong>Außenlänge (A):@ViewBag.DoppelAussen[list] </strong></h6>
-                                        <h6><strong>Außenlänge (B):@ViewBag.DoppelIntern[list] </strong></h6>
-                                        
-                                    </div>
-                                    counter++;
-                                }
-                            }
+                           @*  @{
+                                int DoorCount = 1;
+                                
+                                <div class="TexCountTurFinisher">
 
+                                    @for (int item = 0; item < ViewBag.Tur.Count; item++)
+                                    {
+                                        <h5 id="counterTur"><strong>@DoorCount @ViewBag.Tur[item]</strong></h5>
+                                        
+                                        if (ViewBag.DoppelItem > 0)
+                                        {
+
+                                            <h5><strong> @ViewBag.DopelZylinder[item]</strong></h5>
+                                            <h6><strong>Außenlänge (A):@ViewBag.DoppelAussen[item] </strong></h6>
+                                            <h6><strong>Außenlänge (B):@ViewBag.DoppelIntern[item] </strong></h6>
+                                           
+                                        }
+                                        if (ViewBag.KnayfItem > 0)
+                                        {
+                                            <h5><strong> @ViewBag.KnayfName[item]</strong></h5>
+                                            <h6><strong>Außenlänge (A):@ViewBag.KnayfAussen[item] </strong></h6>
+                                            <h6><strong>Außenlänge (B):@ViewBag.KnayflIntern[item] </strong></h6>
+                                            
+                                        }
+                                        DoorCount++;
+                                    }
+                                </div>
+                            } *@
                         </div>
                         <div id="InfoValue">
                             @{
-                                
+                              
                                 for (int i = 0; i < ViewBag.Tur.Count; i++)
                                 {
                                     <div class="horizontal" id="1horizontal">
-                                        @foreach (var list in ViewBag.KeyValue)
+
+                                        @for (var list = 0; list < @ViewBag.Key.Count; list++)
                                         {
-                                            <div class="checkboxContainer">
-                                            @if (list == true)
+                                            @if (@ViewBag.KeyValueFT[countFalse].isOpen == true)
                                             {
-                                                    <input type="checkbox" value="@list" checked id="1checkbox1">
-                                                    <input type="hidden" name="IsOppen" value="@list" id="I1checkbox1">
+                                                <input type="checkbox" checked id="1checkbox1">
+                                                <input type="hidden" name="IsOppen" id="I1checkbox1">
+                                                countFalse++;
                                             }
                                             else
                                             {
-                                                    <input type="checkbox" value="@list"  id="1checkbox1">
-                                                    <input type="hidden" name="IsOppen" value="@list" id="I1checkbox1">
+                                                <input type="checkbox" id="1checkbox1">
+                                                <input type="hidden" name="IsOppen" id="I1checkbox1">
+                                                countFalse++;
                                             }
-                                            
-                                               
-                                            </div>
                                         }
                                        
                                     </div>
                                 }
                             }
+                          
                         </div>
                     </div>
                 </div>

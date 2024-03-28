@@ -399,7 +399,7 @@
 
                                 @for (int j = 0; j < ViewBag.VorhanOptionCount[i]; j++)
                                 {
-                                    <option id="@valueCount">@ViewBag.optionsValueKnayf[valueCount]</option>
+                                                <option id="@valueCount">@ViewBag.VorhanValue[valueCount]</option>
                                     valueCount++;
 
                                 }
@@ -446,17 +446,16 @@
                                 @{
                                     int valueCount = 0;
                                 }
-                                @if (ViewBag.countOptionsQueryKnayf > 0)
+                                @if (ViewBag.AussenCountOption > 0)
                                 {
-                                    @for (int i = 0; i < ViewBag.optionsNameKnayf.Count; i++)
+                                    @for (int i = 0; i < ViewBag.AussenName.Count; i++)
                                     {
 
                                         <select class="form-select" id="ProductOptionsSelector">
-                                            <option>@ViewBag.optionsNameKnayf[i]</option>
-                                            @for (int j = 0; j < ViewBag.countOptionsListKnayf[i]; j++)
+                                            <option>@ViewBag.AussenName[i]</option>
+                                            @for (int j = 0; j < ViewBag.AussenValue[i]; j++)
                                             {
-
-                                                <option id="@valueCount">@ViewBag.optionsValueKnayf[valueCount]</option>
+                                                <option id="@valueCount">@ViewBag.AussenValue[valueCount]</option>
                                                 valueCount++;
                                             }
                                         </select>
@@ -484,7 +483,7 @@
                 <button id="chekProduct" class="btn btn-dark"> <a href="@Url.Action("System_Auswählen", "Konfigurator")">ZURÜCK</a></button>
             </div>
             <div id="FinisherRight">
-                <button id="chekProduct" class="btn btn-danger"> <a href="@Url.Action("FinischerProductSelect", "Konfigurator", new {SumCosted = @ViewBag.Cost,DopelItem = @ViewBag.DopelzylinderIdList,DAussen = @ViewBag.DAussen,DIntern=@ViewBag.DInter, Knayf=@ViewBag.KnayfZelinder,user = @ViewBag.User, Halb = @ViewBag.HalbList,})">WEITER</a></button>
+                <button id="chekProduct" class="btn btn-danger"> <a href="@Url.Action("FinischerProductSelect", "Konfigurator", new {SumCosted = @ViewBag.Cost,DopelItem = @ViewBag.DopelzylinderIdList,DAussen = @ViewBag.DAussen,DIntern=@ViewBag.DInter, Knayf=@ViewBag.KnayfItemId,user = @ViewBag.User, Halb = @ViewBag.HalbList,KnayfAusse = @ViewBag.KnayfAussen,KnayfIntern = @ViewBag.KnayfInter})">WEITER</a></button>
             </div>
       </div>
     </div>
