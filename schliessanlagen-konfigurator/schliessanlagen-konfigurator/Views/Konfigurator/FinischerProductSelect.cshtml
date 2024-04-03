@@ -298,8 +298,8 @@
        
     </div>
     <div id="finisherButton">
-        <button class="btn btn-dark">ALS ANGEBOT PER EMAIL</button>
-        <button class="btn btn-danger">IN DEN WARENKORB</button>
+            <a class="btn btn-dark" href=" @Url.Action("OrdersKey", "Konfigurator", new { })">ALS ANGEBOT PER EMAIL</a>
+            <a class="btn btn-danger" href=" @Url.Action("SaveUserOrders", "Konfigurator", new {TurName = @ViewBag.Tur,userInfo = @ViewBag.UserNameItem,nameKey = @ViewBag.Key, DopelName = @ViewBag.DopelZylinder,DoppelAussen=@ViewBag.DoppelAussen,DoppelIntern=@ViewBag.DoppelIntern,DoppelOption = @ViewBag.DoppelOption,KnayfName = @ViewBag.KnayfName,KnayfAussen = @ViewBag.KnayfAussen,KnayfIntern = @ViewBag.KnayflIntern,HalbName = @ViewBag.HalbName,HalbAussen = @ViewBag.HalbAussen,HelbName = @ViewBag.HelbName, VorhanName=@ViewBag.VorhanName, VorhanAussen = @ViewBag.VorhanAussen, AussenName = @ViewBag.AussenName})">IN DEN WARENKORB</a>
     </div>
     </form>
 </div>

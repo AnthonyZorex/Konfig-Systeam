@@ -447,7 +447,6 @@ namespace schliessanlagen_konfigurator.Controllers
 
                             }
 
-
                             for (int s = 0; s < resultList.Count(); s++)
                             {
                                 var ItemList = db.Profil_Knaufzylinder_Options.Where(x => x.Id == resultList[s].OptionsId).ToList();
@@ -474,7 +473,6 @@ namespace schliessanlagen_konfigurator.Controllers
                     }
 
                 }
-                
 
                 int HalbType = 0;
 
@@ -489,15 +487,11 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 if (allUserListOrder[d].ZylinderId == HalbType)
                 {
-
-
                         var dopelProduct = new List<Profil_Halbzylinder>();
 
                         var products = await db.Aussen_Innen_Halbzylinder.ToListAsync();
 
                         var item = products.Where(x => x.aussen <= allUserListOrder[d].aussen).Select(x=>x.Profil_HalbzylinderId).Distinct().ToList();
-
-
 
                         var safeDoppelItem = new List<Profil_Halbzylinder>();
 
@@ -696,6 +690,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     var dopelProduct = new List<Vorhangschloss>();
 
                     var safeDoppelItem = new List<Vorhangschloss>();
+
                     if (allUserListOrder[d].aussen!=null)
                     {
                         var item = db.Size.Where(x => x.sizeVorhangschloss <= allUserListOrder[d].aussen).Select(x => x.VorhangschlossId).Distinct().ToList();
@@ -1796,28 +1791,28 @@ namespace schliessanlagen_konfigurator.Controllers
             ViewBag.Halb = Halbzylinder.ToList();
             ViewBag.HalbItem = Halbzylinder.Select(x => x.Id).ToList();
             ViewBag.HalbAussenList = HablAussen.Distinct().ToList();
-            ViewBag.HalbOrderAussen = key.Where(x => x.ZylinderId == 2).Select(x => x.aussen).Distinct().ToList();
+            ViewBag.HalbOrderAussen = key.Where(x => x.ZylinderId == 2).Select(x => x.aussen).ToList();
 
             ViewBag.KnayfZelinder = KnayfOrderlist.ToList();
             ViewBag.KnayfItemId = KnayfOrderlist.Select(x => x.Id).ToList();
             ViewBag.KnayfZelinderAussen = Kanyf_AussenInen.Select(x => x.aussen).Distinct().ToList();
             ViewBag.KnayfZelinderIntern = Kanyf_AussenInen.Select(x => x.Intern).Distinct().ToList();
-            ViewBag.KAussen = key.Where(x => x.ZylinderId == 3).Select(x => x.aussen).Distinct().ToList();
-            ViewBag.KInter = key.Where(x => x.ZylinderId == 3).Select(x => x.innen).Distinct().ToList();
+            ViewBag.KAussen = key.Where(x => x.ZylinderId == 3).Select(x => x.aussen).ToList();
+            ViewBag.KInter = key.Where(x => x.ZylinderId == 3).Select(x => x.innen).ToList();
 
             ViewBag.DopelzylinderIdList = DopelOrderlist.Select(x => x.Id).ToList();
             ViewBag.Dopelzylinderaussen = AussenInen.Select(x => x.aussen).ToList();
             ViewBag.DopelzylinderIntern = AussenInen.Select(x => x.Intern).ToList();
             ViewBag.Dopelzylinder = DopelOrderlist.ToList();
-            ViewBag.DAussen = key.Where(x => x.ZylinderId == 1).Select(x => x.aussen).Distinct().ToList();
-            ViewBag.DInter = key.Where(x => x.ZylinderId == 1).Select(x => x.innen).Distinct().ToList();
+            ViewBag.DAussen = key.Where(x => x.ZylinderId == 1).Select(x => x.aussen).ToList();
+            ViewBag.DInter = key.Where(x => x.ZylinderId == 1).Select(x => x.innen).ToList();
 
             ViewBag.HelbZ = HelbZ.ToList();
             ViewBag.HalbItem = HelbZ.Select(x => x.Id).ToList();
 
             ViewBag.Vorhanschlos = Vorhanschlos.ToList();
             ViewBag.VorhanschlosItem = Vorhanschlos.Select(x=>x.Id).ToList();
-            ViewBag.VorhanOrderAussen = key.Where(x => x.ZylinderId == 5).Select(x => x.aussen).Distinct().ToList();
+            ViewBag.VorhanOrderAussen = key.Where(x => x.ZylinderId == 5).Select(x => x.aussen).ToList();
 
             ViewBag.Aussenzylinder = Aussenzylinder.ToList();
             ViewBag.AussenzylinderItem = Aussenzylinder.Select(x=>x.Id).ToList();
@@ -1970,9 +1965,28 @@ namespace schliessanlagen_konfigurator.Controllers
             return View("Finisher");
         }
         [HttpGet]
-        public ActionResult SaveUserOrders()
+        public ActionResult SaveUserOrders(string userInfo,List<string> nameKey, List<string> TurName,List<string> DopelName,List<float> DoppelAussen,List<float> DoppelIntern
+            , List<string> DoppelOption, List<string> KnayfName, List<float> KnayfAussen, List<float> KnayfIntern, List<string> HalbName, List<float> HalbAussen, List<string> HelbName,
+           List<string> VorhanName, List<float> VorhanAussen, List<string> AussenName)
         {
-            return View();
+            char[] separators = { ' ', '\n', '\t', '\r' };
+
+            if (userInfo != null)
+            {
+                string[] words = userInfo.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+
+                var UserLogin = db.User.Where(x => x.Name == words[0] & x.Sername == words[1]).ToList();
+
+                var UserName_UserSername = UserLogin.Select(x => x.Name).First() + " " + UserLogin.Select(x => x.Sername).First();
+
+                ViewBag.UserInformStatus = UserLogin.Select(x => x.Status).First();
+                ViewBag.UserId = UserLogin.Select(x => x.Id).First();
+                ViewBag.UserNameItem = UserName_UserSername;
+            }
+
+            
+
+            return View("AdminConnect");
         }
         [HttpGet]
         public ActionResult FinischerProductSelect(string userInfo, float SumCosted,List<string> DopelOption, List<int> DopelItem,  List<float> DAussen, List<float> DIntern,List<int> Knayf, string user, List<int> Halb,
@@ -2389,7 +2403,6 @@ namespace schliessanlagen_konfigurator.Controllers
                 {
                     string NameKeyValue;
                     int CountkeyOrders;
-
 
                     if (s >= CountKey.Count())
                     {
