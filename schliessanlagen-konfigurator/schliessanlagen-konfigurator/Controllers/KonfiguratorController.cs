@@ -24,6 +24,7 @@ using System.Linq;
 using System.Reflection.PortableExecutable;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace schliessanlagen_konfigurator.Controllers
 {
@@ -55,21 +56,41 @@ namespace schliessanlagen_konfigurator.Controllers
             
             db.User.Add(newUser);
             db.SaveChanges();
-            ViewBag.UserInfo = newUser;
-            return View();
+            return RedirectToAction("AdminConnect", newUser);
+        }
+        public async Task<ActionResult>AdminConnect(int User)
+        {
+            var UserItem = db.User.FirstOrDefault(x => x.Id == User);
+            return View(UserItem);
         }
         public async Task<ActionResult> LoginPerson(string Login,string Password)
         {
-            var UserLogin = db.User.Where(x => x.Login == Login && x.Password == Password);
-            return View("IndexKonfigurator",UserLogin);
+            var UserLogin = db.User.FirstOrDefault(x => x.Login == Login && x.Password == Password);
+            
+            if(UserLogin != null)
+            {
+               
+                return RedirectToAction("IndexKonfigurator", UserLogin);
+            }
+            else
+            {
+                TempData["AlertMessage"] = "Sie haben einen falschen Benutzernamen oder ein falsches Passwort eingegeben!";
+                return RedirectToAction("IndexKonfigurator");
+            }
+            
         }
-        public ActionResult IndexKonfigurator(string Status)
+        public ActionResult IndexKonfigurator(string Status, Models.Users.User UserLogin)
         {
             ViewBag.Zylinder_Typ = db.Schliessanlagen.ToList();
-
+            var UserName_UserSername = UserLogin.Name + " " + UserLogin.Sername;
+            ViewBag.UserInformStatus = UserLogin.Status;
+            ViewBag.UserId = UserLogin.Id;
+            ViewBag.UserNameItem = UserName_UserSername;
+           
             #region knayf allParametrsDoppel
-            var a =  db.Aussen_Innen.Select(x=>x.aussen).ToList();
-            var d =  db.Aussen_Innen.Select(x => x.Intern).ToList();
+
+            var a = db.Aussen_Innen.Select(x => x.aussen).ToList();
+            var d = db.Aussen_Innen.Select(x => x.Intern).ToList();
 
             var DoppeloptionsName = db.NGF.Select(x => x.Name).ToList();
 
@@ -94,11 +115,11 @@ namespace schliessanlagen_konfigurator.Controllers
                 DoppelListOptions.Add(DoppeloptionsName[i]);
 
             ViewBag.OptionsName = DoppelListOptions.Distinct();
-
+ 
             #endregion
             #region knayf allParametrsKnayf
 
-            var b =  db.Aussen_Innen_Knauf.Select(x => x.aussen).ToList();
+            var b = db.Aussen_Innen_Knauf.Select(x => x.aussen).ToList();
             var ba = db.Aussen_Innen_Knauf.Select(x => x.Intern).ToList();
             var KnayfOptions = db.Knayf_Options.Select(x => x.Name).ToList();
 
@@ -109,40 +130,32 @@ namespace schliessanlagen_konfigurator.Controllers
             for (int i = 0; i < b.Count(); i++)
                 listKnayfAussen.Add(b[i]);
 
-            ViewBag.KnayfAussen = listKnayfAussen.Distinct();
-
             for (int i = 0; i < ba.Count(); i++)
                 listKnayfIntern.Add(ba[i]);
-
-            ViewBag.KnayfIntern = listKnayfIntern.Distinct();
 
             for (int i = 0; i < KnayfOptions.Count(); i++)
                 KnayfListOptions.Add(KnayfOptions[i]);
 
-            ViewBag.KnayfOptions = KnayfOptions.Distinct();
-
             #endregion
             #region allPrametrsHalbzylinder
-            var c =  db.Aussen_Innen_Halbzylinder.Select(x => x.aussen).ToList();
-            
+            var c = db.Aussen_Innen_Halbzylinder.Select(x => x.aussen).ToList();
+
             var HalbzylinderAussen = new List<float>();
 
-            for(int i =0;i<c.Count();i++)
+            for (int i = 0; i < c.Count(); i++)
                 HalbzylinderAussen.Add(c[i]);
 
-            ViewBag.HalbzylinderAllAussen = HalbzylinderAussen.Distinct();
-
-            var HalbzylinderOptions = db.Halbzylinder_Options.Select(x=>x.Name).ToList();
+            var HalbzylinderOptions = db.Halbzylinder_Options.Select(x => x.Name).ToList();
             var HalbzylunderAllOptions = new List<string>();
 
             for (int i = 0; i < HalbzylinderOptions.Count(); i++)
                 HalbzylunderAllOptions.Add(HalbzylinderOptions[i]);
-            
-            ViewBag.Halbzylunder_All_Options = HalbzylunderAllOptions.Distinct();
+
+          
             #endregion
             #region VorhanSchloss
 
-            var size =  db.Size.Select(x => x.sizeVorhangschloss).ToList();
+            var size = db.Size.Select(x => x.sizeVorhangschloss).ToList();
             var VorhanSchlossSize = new List<float>();
 
             for (int i = 0; i < size.Count(); i++)
@@ -151,25 +164,27 @@ namespace schliessanlagen_konfigurator.Controllers
             var VorhanSchloss = db.OptionsVorhan.Select(x => x.Name).ToList();
             var VorhanSchlossOptions = new List<string>();
 
+            for (int i = 0; i < VorhanSchloss.Count(); i++)
+                VorhanSchlossOptions.Add(VorhanSchloss[i]);
             #endregion
 
             #region Hebel
-           
-            var HebelOptions =  db.Options.Select(x => x.Name).ToList();
+
+            var HebelOptions = db.Options.Select(x => x.Name).ToList();
             var HebelAllOptions = new List<string>();
-            
-            for(int i = 0; i < HebelOptions.Count(); i++)
-            HebelAllOptions.Add(HebelOptions[i]);
-            
+
+            for (int i = 0; i < HebelOptions.Count(); i++)
+                HebelAllOptions.Add(HebelOptions[i]);
+
             #endregion
 
             #region Aussen
-            
-            var AussenOptions =  db.Aussen_Rund_all.Select(x => x.Name).ToList();
+
+            var AussenOptions = db.Aussen_Rund_all.Select(x => x.Name).ToList();
             var AussenAllOptions = new List<string>();
             for (int i = 0; i < AussenOptions.Count(); i++)
-            AussenAllOptions.Add(AussenOptions[i]);
-           
+                AussenAllOptions.Add(AussenOptions[i]);
+
             #endregion
 
             var session = _contextAccessor.HttpContext.Session;
@@ -178,11 +193,46 @@ namespace schliessanlagen_konfigurator.Controllers
             user.userKey = UserKey;
             ViewBag.isOpen = db.KeyValue.Select(x => x.isOpen);
 
+
+
+            ViewBag.KnayfAussen = listKnayfAussen.Distinct();
+            ViewBag.KnayfInter = listKnayfIntern.Distinct();
+
+            ViewBag.JsonDoppelOption = JsonConvert.SerializeObject((DoppelListOptions.Distinct()));
+            ViewBag.JsonKnayf = JsonConvert.SerializeObject(KnayfOptions.Distinct());
+            ViewBag.JsonHabl = JsonConvert.SerializeObject(HalbzylunderAllOptions.Distinct());
+            ViewBag.JsonHebel = JsonConvert.SerializeObject(HebelAllOptions);
+            ViewBag.JsonVorhan = JsonConvert.SerializeObject(VorhanSchlossOptions.Distinct());
+            ViewBag.JsonAussen = JsonConvert.SerializeObject(AussenAllOptions.Distinct());
+
+            ViewBag.SizeDoppelAussen = JsonConvert.SerializeObject(ListAussenDopple.Distinct());
+            ViewBag.SizeDoppelIntern = JsonConvert.SerializeObject(ListInternDopple.Distinct());
+
+
+            ViewBag.SizeKnayfAussen = JsonConvert.SerializeObject(listKnayfAussen.Distinct());
+            ViewBag.SizeKnayfIntern = JsonConvert.SerializeObject(listKnayfIntern.Distinct());
+
+            ViewBag.SizeHalb = JsonConvert.SerializeObject(HalbzylinderAussen.Distinct());
+
+            ViewBag.SizeVorhan = JsonConvert.SerializeObject(VorhanSchlossSize.Distinct());
+
             return View(user);
         }
         [HttpGet]
-        public async Task<ActionResult> System_Auswählen(Orders userKey)
+        public async Task<ActionResult> System_Auswählen(Orders userKey, string userName)
         {
+            char[] separators = { ' ', '\n', '\t', '\r' };
+            
+            if (userName != null)
+            {
+                string[] words = userName.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+                var UserLogin = db.User.FirstOrDefault(x => x.Name == words[0] & x.Sername == words[1]);
+                var UserName_UserSername = UserLogin.Name + " " + UserLogin.Sername;
+                ViewBag.UserInform = UserLogin.Status;
+                ViewBag.UserId = UserLogin.Id;
+                ViewBag.UserNameItem = UserName_UserSername;
+            }
+
 
             var orders = await db.Orders.ToListAsync();
             var keyUser = orders.Last();
@@ -204,6 +254,7 @@ namespace schliessanlagen_konfigurator.Controllers
             var cheked4 = new List<Hebel>(); 
             var cheked5 = new List<Vorhangschloss>();
             var cheked6 = new List<Aussenzylinder_Rundzylinder>();
+
             for (var d = 0; d < allUserListOrder.Count(); d++)
             {
                 
@@ -224,22 +275,20 @@ namespace schliessanlagen_konfigurator.Controllers
 
                     var products = await db.Aussen_Innen.ToListAsync();
 
-                    var item = products.Where(x => x.aussen <= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).ToList();
-
-
+                    var item = products.Where(x => x.aussen <= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).Select(x=>x.Profil_DoppelzylinderId).Distinct().ToList();
 
                     var safeDoppelItem = new List<Profil_Doppelzylinder>();
 
                     for (int i = 0; i < item.Count(); i++)
                     {
-                        var chekedItem = db.Profil_Doppelzylinder.Where(x => x.Id == item[i].Profil_DoppelzylinderId).ToList();
+                        var chekedItem = db.Profil_Doppelzylinder.Where(x => x.Id == item[i]).ToList();
 
                         for (int g = 0; g < chekedItem.Count(); g++)
                             safeDoppelItem.Add(chekedItem[g]);
 
                     }
 
-                    for (int j = 0; j < safeDoppelItem.Count(); j++)
+                    for (int j = 0; j < safeDoppelItem.Distinct().Count(); j++)
                     {
                         cheked.Add(safeDoppelItem[j]);
                     }
@@ -324,9 +373,6 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 if (allUserListOrder[d].ZylinderId == KnayfType)
                 {
-
-
-
                     if (d >= profilK.Count())
                     {
                         KnayfType = profilK.Last().schliessanlagenId;
@@ -342,22 +388,20 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         var products = await db.Aussen_Innen_Knauf.ToListAsync();
 
-                        var item = products.Where(x => x.aussen <= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).ToList();
-
-
+                        var Knayfitem = products.Where(x => x.aussen <= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).Select(x=>x.Profil_KnaufzylinderId).Distinct().ToList();
 
                         var safeDoppelItem = new List<Profil_Knaufzylinder>();
 
-                        for (int i = 0; i < item.Count(); i++)
+                        for (int i = 0; i < Knayfitem.Count(); i++)
                         {
-                            var chekedItem = db.Profil_Knaufzylinder.Where(x => x.Id == item[i].Profil_KnaufzylinderId).ToList();
+                            var chekedItem = db.Profil_Knaufzylinder.Where(x => x.Id == Knayfitem[i]).ToList();
 
                             for (int g = 0; g < chekedItem.Count(); g++)
                                 safeDoppelItem.Add(chekedItem[g]);
 
                         }
 
-                        for (int j = 0; j < safeDoppelItem.Count(); j++)
+                        for (int j = 0; j < safeDoppelItem.Distinct().Count(); j++)
                         {
                             cheked2.Add(safeDoppelItem[j]);
                         }
@@ -451,7 +495,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         var products = await db.Aussen_Innen_Halbzylinder.ToListAsync();
 
-                        var item = products.Where(x => x.aussen <= allUserListOrder[d].aussen).ToList();
+                        var item = products.Where(x => x.aussen <= allUserListOrder[d].aussen).Select(x=>x.Profil_HalbzylinderId).Distinct().ToList();
 
 
 
@@ -459,14 +503,14 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         for (int i = 0; i < item.Count(); i++)
                         {
-                            var chekedItem = db.Profil_Halbzylinder.Where(x => x.Id == item[i].Profil_HalbzylinderId).ToList();
+                            var chekedItem = db.Profil_Halbzylinder.Where(x => x.Id == item[i]).ToList();
 
                             for (int g = 0; g < chekedItem.Count(); g++)
                                 safeDoppelItem.Add(chekedItem[g]);
 
                         }
 
-                        for (int j = 0; j < safeDoppelItem.Count(); j++)
+                        for (int j = 0; j < safeDoppelItem.Distinct().Count(); j++)
                         {
                             cheked3.Add(safeDoppelItem[j]);
                         }
@@ -567,7 +611,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         }
 
-                        for (int j = 0; j < safeDoppelItem.Count(); j++)
+                        for (int j = 0; j < safeDoppelItem.Distinct().Count(); j++)
                         {
                             cheked4.Add(safeDoppelItem[j]);
                         }
@@ -651,21 +695,33 @@ namespace schliessanlagen_konfigurator.Controllers
 
                     var dopelProduct = new List<Vorhangschloss>();
 
-
                     var safeDoppelItem = new List<Vorhangschloss>();
-
-                    var chekedItem = db.Vorhangschloss.ToList();
-
-                    for (int i = 0; i < chekedItem.Count(); i++)
+                    if (allUserListOrder[d].aussen!=null)
                     {
-                        safeDoppelItem.Add(chekedItem[i]);
+                        var item = db.Size.Where(x => x.sizeVorhangschloss <= allUserListOrder[d].aussen).Select(x => x.VorhangschlossId).Distinct().ToList();
+                        for (int i = 0; i < item.Count(); i++)
+                        {
+                            var ItemV = db.Vorhangschloss.Where(x => x.Id == item[i]).Distinct().ToList();
+                            foreach (var list in ItemV)
+                            {
+                                safeDoppelItem.Add(list);
+                            }
 
+                        }
+                        for (int j = 0; j < safeDoppelItem.Distinct().Count(); j++)
+                        {
+                            cheked5.Add(safeDoppelItem[j]);
+                        }
                     }
-
-                    for (int j = 0; j < safeDoppelItem.Count(); j++)
+                    else
                     {
-                        cheked5.Add(safeDoppelItem[j]);
+                        var item = db.Vorhangschloss.ToList();
+                        cheked5 = item;
+                       
                     }
+                    
+
+                    
 
                     var OptionsList = new List<Vorhan_Options>();
 
@@ -757,7 +813,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                     }
 
-                    for (int j = 0; j < safeDoppelItem.Count(); j++)
+                    for (int j = 0; j < safeDoppelItem.Distinct().Count(); j++)
                     {
                         cheked6.Add(safeDoppelItem[j]);
                     }
@@ -825,401 +881,413 @@ namespace schliessanlagen_konfigurator.Controllers
 
 
                 }
-
-                if (cheked.Count() > 0)
-                {
-                    var query = from t1 in cheked
-                                join t2 in allUserListOrder
-                                on t1.schliessanlagenId equals t2.ZylinderId
-                                select new
-                                {
-                                    Id = t1.Id,
-                                    userKey = keyUser.userKey,
-                                    Name = t1.Name,
-                                    companyName = t1.companyName,
-                                    description = t1.description,
-                                    NameSystem = t1.NameSystem,
-                                    Cost = t1.Cost,
-                                    ImageName = t1.ImageName
-
-                                };
-                    var rl = query.Distinct().ToList();
-
-                    ViewBag.Doppel = rl.ToList();
-                }
-
-                if (cheked2.Count() > 0)
-                {
-                    var queryOrder = from t1 in cheked2
-                                     join t2 in allUserListOrder
-                                    on t1.schliessanlagenId equals t2.ZylinderId
-                                     select new
-                                     {
-                                         userKey = keyUser.userKey,
-                                         Id = t1.Id,
-                                         Name = t1.Name,
-                                         companyName = t1.companyName,
-                                         description = t1.description,
-                                         NameSystem = t1.NameSystem,
-                                         Cost = t1.Cost,
-                                         ImageName = t1.ImageName,
-                                     };
-
-                    var Knaufzylinder = queryOrder.Distinct().ToList();
-
-                    ViewBag.Knaufzylinder = Knaufzylinder;
-                }
-                if (cheked3.Count() > 0)
-                {
-                    var query = from t1 in cheked3
-                                join t2 in allUserListOrder
-                                on t1.schliessanlagenId equals t2.ZylinderId
-                                select new
-                                {
-                                    Id = t1.Id,
-                                    userKey = keyUser.userKey,
-                                    Name = t1.Name,
-                                    companyName = t1.companyName,
-                                    description = t1.description,
-                                    NameSystem = t1.NameSystem,
-                                    Cost = t1.Cost,
-                                    ImageName = t1.ImageName
-
-                                };
-                    var rl = query.Distinct().ToList();
-
-                    ViewBag.Halb = rl.ToList();
-                }
-                if (cheked4.Count() > 0)
-                {
-                    var query = from t1 in cheked4
-                                join t2 in allUserListOrder
-                                on t1.schliessanlagenId equals t2.ZylinderId
-                                select new
-                                {
-                                    Id = t1.Id,
-                                    userKey = keyUser.userKey,
-                                    Name = t1.Name,
-                                    companyName = t1.companyName,
-                                    description = t1.description,
-                                    NameSystem = t1.NameSystem,
-                                    Cost = t1.Cost,
-                                    ImageName = t1.ImageName
-
-                                };
-                    var rl = query.Distinct().ToList();
-
-                    ViewBag.Hebel = rl.ToList();
-                }
-                if (cheked5.Count() > 0)
-                {
-                    var query = from t1 in cheked5
-                                join t2 in allUserListOrder
-                                on t1.schliessanlagenId equals t2.ZylinderId
-                                select new
-                                {
-                                    Id = t1.Id,
-                                    userKey = keyUser.userKey,
-                                    Name = t1.Name,
-                                    companyName = t1.companyName,
-                                    description = t1.description,
-                                    NameSystem = t1.NameSystem,
-                                    Cost = t1.Cost,
-                                    ImageName = t1.ImageName
-
-                                };
-                    var rl = query.Distinct().ToList();
-
-                    ViewBag.VorhanSchloss = rl.ToList();
-                }
-                if (cheked6.Count() > 0)
-                {
-                    var query = from t1 in cheked5
-                                join t2 in allUserListOrder
-                                on t1.schliessanlagenId equals t2.ZylinderId
-                                select new
-                                {
-                                    Id = t1.Id,
-                                    userKey = keyUser.userKey,
-                                    Name = t1.Name,
-                                    companyName = t1.companyName,
-                                    description = t1.description,
-                                    NameSystem = t1.NameSystem,
-                                    Cost = t1.Cost,
-                                    ImageName = t1.ImageName
-
-                                };
-                    var rl = query.Distinct().ToList();
-
-                    ViewBag.Aussen = rl.ToList();
-                }
-                if (cheked2.Count() > 0 && cheked.Count() > 0)
-                {
-                    var queryOrder = from t1 in cheked
-                                     join t2 in cheked2
-                                     on t1.NameSystem equals t2.NameSystem
-                                     select new
-                                     {
-                                         cheked2 = t2.Id,
-                                         userKey = keyUser.userKey,
-                                         Id = t1.Id,
-                                         Name = t1.Name,
-                                         companyName = t1.companyName,
-                                         description = t1.description,
-                                         NameSystem = t1.NameSystem,
-                                         Cost = t1.Cost + t2.Cost,
-                                         ImageName = t1.ImageName,
-                                     };
-
-                    var Join = queryOrder.Distinct().ToList();
-
-                    ViewBag.Doppel = Join;
-                    ViewBag.Knaufzylinder = Join;
-                }
-
-                if (cheked.Count() > 0 && cheked3.Count() > 0)
-                {
-                    var queryOrder = from t1 in cheked
-                                     join t2 in cheked3
-                                     on t1.NameSystem equals t2.NameSystem
-                                     select new
-                                     {
-                                         cheked3 = t2.Id,
-                                         userKey = keyUser.userKey,
-                                         Id = t1.Id,
-                                         Name = t1.Name,
-                                         companyName = t1.companyName,
-                                         description = t1.description,
-                                         NameSystem = t1.NameSystem,
-                                         Cost = t1.Cost + t2.Cost,
-                                         ImageName = t1.ImageName,
-                                     };
-                    var Join = queryOrder.Distinct().ToList();
-                    ViewBag.a = Join;
-                    ViewBag.DH = Join;
-                }
-                if (cheked.Count() > 0 && cheked4.Count() > 0)
-                {
-                    var queryOrder = from t1 in cheked
-                                     join t2 in cheked4
-                                     on t1.NameSystem equals t2.NameSystem
-                                     select new
-                                     {
-                                         cheked4 = t2.Id,
-                                         userKey = keyUser.userKey,
-                                         Id = t1.Id,
-                                         Name = t1.Name,
-                                         companyName = t1.companyName,
-                                         description = t1.description,
-                                         NameSystem = t1.NameSystem,
-                                         Cost = t1.Cost + t2.Cost,
-                                         ImageName = t1.ImageName,
-                                     };
-                    var Join = queryOrder.Distinct().ToList();
-                    ViewBag.a = Join;
-                    ViewBag.DHE = Join;
-                }
-                if (cheked.Count() > 0 && cheked5.Count() > 0)
-                {
-                    var queryOrder = from t1 in cheked
-                                     join t2 in cheked5
-                                     on t1.NameSystem equals t2.NameSystem
-                                     select new
-                                     {
-                                         cheked5 = t2.Id,
-                                         userKey = keyUser.userKey,
-                                         Id = t1.Id,
-                                         Name = t1.Name,
-                                         companyName = t1.companyName,
-                                         description = t1.description,
-                                         NameSystem = t1.NameSystem,
-                                         Cost = t1.Cost + t2.Cost,
-                                         ImageName = t1.ImageName,
-                                     };
-                    var Join = queryOrder.Distinct().ToList();
-                    ViewBag.a = Join;
-                    ViewBag.DV = Join;
-                }
-
-                if (cheked.Count() > 0 && cheked6.Count() > 0)
-                {
-                    var queryOrder = from t1 in cheked
-                                     join t2 in cheked6
-                                     on t1.NameSystem equals t2.NameSystem
-                                     select new
-                                     {
-                                         cheked6 = t2.Id,
-                                         userKey = keyUser.userKey,
-                                         Id = t1.Id,
-                                         Name = t1.Name,
-                                         companyName = t1.companyName,
-                                         description = t1.description,
-                                         NameSystem = t1.NameSystem,
-                                         Cost = t1.Cost + t2.Cost,
-                                         ImageName = t1.ImageName,
-                                     };
-                    var Join = queryOrder.Distinct().ToList();
-                    ViewBag.a = Join;
-                    ViewBag.DA = Join;
-                }
-
-//xxxxxxxxxxxxxxxxxxxxxxx
-
-                if (cheked2.Count() > 0 && cheked3.Count() > 0)
-                {
-                    var queryOrder = from t1 in cheked2
-                                     join t2 in cheked3
-                                     on t1.NameSystem equals t2.NameSystem
-                                     select new
-                                     {
-                                         cheked2 = t2.Id,
-                                         userKey = keyUser.userKey,
-                                         Id = t1.Id,
-                                         Name = t1.Name,
-                                         companyName = t1.companyName,
-                                         description = t1.description,
-                                         NameSystem = t1.NameSystem,
-                                         Cost = t1.Cost + t2.Cost,
-                                         ImageName = t1.ImageName,
-                                     };
-
-                    var Join = queryOrder.Distinct().ToList();
-                    ViewBag.b = Join;
-                    ViewBag.KH = Join;
-                }
-              
-                if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked3.Count() > 0 )
-                {
-                    var queryOrder = from t1 in cheked
-                                     join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
-                                     join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
-                                     select new
-                                     {
-                                         cheked2 = t2.Id,
-                                         cheked3 = t3.Id,
-                                         userKey = keyUser.userKey,
-                                         Id = t1.Id,
-                                         Name = t1.Name,
-                                         companyName = t1.companyName,
-                                         description = t1.description,
-                                         NameSystem = t1.NameSystem,
-                                         Cost = t1.Cost + t2.Cost + t3.Cost,
-                                         ImageName = t1.ImageName,
-                                     };
-
-                    var Join = queryOrder.Distinct().ToList();
-
-
-                    ViewBag.a = Join;
-                    ViewBag.b = Join;
-                }
-                if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked3.Count() > 0 && cheked4.Count() > 0)
-                {
-                    var queryOrder = from t1 in cheked
-                                     join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
-                                     join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
-                                     join t4 in cheked4 on t3.NameSystem equals t4.NameSystem
-                                  
-
-                                     select new
-                                     {
-                                         cheked2 = t2.Id,
-                                         cheked3 = t3.Id,
-                                         cheked4 = t4.Id,
-                                         userKey = keyUser.userKey,
-                                         Id = t1.Id,
-                                         Name = t1.Name,
-                                         companyName = t1.companyName,
-                                         description = t1.description,
-                                         NameSystem = t1.NameSystem,
-                                         Cost = t1.Cost + t2.Cost + t3.Cost + t4.Cost,
-                                         ImageName = t1.ImageName,
-                                     };
-
-                    var Join = queryOrder.Distinct().ToList();
-
-
-                    ViewBag.a = Join;
-                    ViewBag.b = Join;
-                }
-                if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked3.Count() > 0 && cheked4.Count() > 0 && cheked5.Count() > 0 )
-                {
-
-
-                    var queryOrder = from t1 in cheked
-                                     join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
-                                     join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
-                                     join t4 in cheked4 on t3.NameSystem equals t4.NameSystem
-                                     join t5 in cheked5 on t4.NameSystem equals t5.NameSystem
-                                   
-                                     select new
-                                     {
-                                         cheked2 = t2.Id,
-                                         cheked3 = t3.Id,
-                                         cheked4 = t4.Id,
-                                         cheked5 = t5.Id,
-                                         userKey = keyUser.userKey,
-                                         Id = t1.Id,
-                                         Name = t1.Name,
-                                         companyName = t1.companyName,
-                                         description = t1.description,
-                                         NameSystem = t1.NameSystem,
-                                         Cost = t1.Cost + t2.Cost + t3.Cost + t4.Cost + t5.Cost,
-                                         ImageName = t1.ImageName,
-                                     };
-
-                    var Join = queryOrder.Distinct().ToList();
-
-
-                    ViewBag.a = Join;
-                    ViewBag.b = Join;
-                }
-                if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked3.Count() > 0 && cheked4.Count() > 0 && cheked5.Count() > 0 && cheked6.Count() > 0)
-                {
-
-        
-                    var queryOrder = from t1 in cheked
-                                     join t2 in cheked2.Distinct() on t1.NameSystem equals t2.NameSystem
-                                     join t3 in cheked3.Distinct() on t2.NameSystem equals t3.NameSystem
-                                     join t4 in cheked4.Distinct() on t3.NameSystem equals t4.NameSystem
-                                     join t5 in cheked5.Distinct() on t4.NameSystem equals t5.NameSystem
-                                     join t6 in cheked6.Distinct() on t5.NameSystem equals t6.NameSystem
-                                     select new
-                                     {
-                                         cheked2 = t2.Id,
-                                         cheked3 = t3.Id,
-                                         cheked4 = t4.Id,
-                                         cheked5 = t5.Id,
-                                         cheked6 = t6.Id,
-                                         userKey = keyUser.userKey,
-                                         Id = t1.Id,
-                                         Name = t1.Name,
-                                         companyName = t1.companyName,
-                                         description = t1.description,
-                                         NameSystem = t1.NameSystem,
-                                         Cost =  t1.Cost + t2.Cost+ t3.Cost + t4.Cost + t5.Cost + t6.Cost,
-                                         ImageName = t1.ImageName,
-                                     };
-
-                    var Join = queryOrder.Distinct().ToList();
-
-
-                    ViewBag.Doppel = Join.Distinct().OrderBy(x=>x.Cost).ToList();
-                    ViewBag.Knaufzylinder = "";
-                    ViewBag.Halb = "";
-                    ViewBag.Hebel = "";
-                    ViewBag.VorhanSchloss = "";
-                    ViewBag.Aussen = "";
-                }
               
             }
+            if (cheked.Count() > 0)
+            {
+                var query = from t1 in cheked
+                            join t2 in allUserListOrder
+                            on t1.schliessanlagenId equals t2.ZylinderId
+                            select new
+                            {
+                                Id = t1.Id,
+                                userKey = keyUser.userKey,
+                                Name = t1.Name,
+                                companyName = t1.companyName,
+                                description = t1.description,
+                                NameSystem = t1.NameSystem,
+                                Cost = t1.Cost,
+                                ImageName = t1.ImageName
+
+                            };
+                var rl = query.Distinct().ToList();
+
+                ViewBag.Doppel = rl.ToList();
+            }
+
+            if (cheked2.Count() > 0)
+            {
+                var queryOrder = from t1 in cheked2
+                                 join t2 in allUserListOrder
+                                on t1.schliessanlagenId equals t2.ZylinderId
+                                 select new
+                                 {
+                                     userKey = keyUser.userKey,
+                                     Id = t1.Id,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = t1.Cost,
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Knaufzylinder = queryOrder.Distinct().ToList();
+
+                ViewBag.Knaufzylinder = Knaufzylinder;
+            }
+            if (cheked3.Count() > 0)
+            {
+                var query = from t1 in cheked3
+                            join t2 in allUserListOrder
+                            on t1.schliessanlagenId equals t2.ZylinderId
+                            select new
+                            {
+                                Id = t1.Id,
+                                userKey = keyUser.userKey,
+                                Name = t1.Name,
+                                companyName = t1.companyName,
+                                description = t1.description,
+                                NameSystem = t1.NameSystem,
+                                Cost = t1.Cost,
+                                ImageName = t1.ImageName
+
+                            };
+                var rl = query.Distinct().ToList();
+
+                ViewBag.Halb = rl.ToList();
+            }
+            if (cheked4.Count() > 0)
+            {
+                var query = from t1 in cheked4
+                            join t2 in allUserListOrder
+                            on t1.schliessanlagenId equals t2.ZylinderId
+                            select new
+                            {
+                                Id = t1.Id,
+                                userKey = keyUser.userKey,
+                                Name = t1.Name,
+                                companyName = t1.companyName,
+                                description = t1.description,
+                                NameSystem = t1.NameSystem,
+                                Cost = t1.Cost,
+                                ImageName = t1.ImageName
+
+                            };
+                var rl = query.Distinct().ToList();
+
+                ViewBag.Hebel = rl.ToList();
+            }
+            if (cheked5.Count() > 0)
+            {
+                var query = from t1 in cheked5
+                            join t2 in allUserListOrder
+                            on t1.schliessanlagenId equals t2.ZylinderId
+                            select new
+                            {
+                                Id = t1.Id,
+                                userKey = keyUser.userKey,
+                                Name = t1.Name,
+                                companyName = t1.companyName,
+                                description = t1.description,
+                                NameSystem = t1.NameSystem,
+                                Cost = t1.Cost,
+                                ImageName = t1.ImageName
+
+                            };
+                var rl = query.Distinct().ToList();
+
+                ViewBag.VorhanSchloss = rl.ToList();
+            }
+            if (cheked6.Count() > 0)
+            {
+                var query = from t1 in cheked5
+                            join t2 in allUserListOrder
+                            on t1.schliessanlagenId equals t2.ZylinderId
+                            select new
+                            {
+                                Id = t1.Id,
+                                userKey = keyUser.userKey,
+                                Name = t1.Name,
+                                companyName = t1.companyName,
+                                description = t1.description,
+                                NameSystem = t1.NameSystem,
+                                Cost = t1.Cost,
+                                ImageName = t1.ImageName
+
+                            };
+                var rl = query.Distinct().ToList();
+
+                ViewBag.Aussen = rl.ToList();
+            }
+            if (cheked2.Count() > 0 && cheked.Count() > 0)
+            {
+                var queryOrder = from t1 in cheked
+                                 join t2 in cheked2
+                                 on t1.NameSystem equals t2.NameSystem
+                                 select new
+                                 {
+                                     cheked2 = t2.Id,
+                                     userKey = keyUser.userKey,
+                                     Id = t1.Id,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = t1.Cost + t2.Cost,
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Doppel = Join;
+                ViewBag.Knaufzylinder = Join;
+            }
+
+            if (cheked.Count() > 0 && cheked3.Count() > 0)
+            {
+                var queryOrder = from t1 in cheked
+                                 join t2 in cheked3
+                                 on t1.NameSystem equals t2.NameSystem
+                                 select new
+                                 {
+                                     cheked3 = t2.Id,
+                                     userKey = keyUser.userKey,
+                                     Id = t1.Id,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = t1.Cost + t2.Cost,
+                                     ImageName = t1.ImageName,
+                                 };
+                var Join = queryOrder.Distinct().ToList();
+                ViewBag.a = Join;
+                ViewBag.DH = Join;
+            }
+            if (cheked.Count() > 0 && cheked4.Count() > 0)
+            {
+                var queryOrder = from t1 in cheked
+                                 join t2 in cheked4
+                                 on t1.NameSystem equals t2.NameSystem
+                                 select new
+                                 {
+                                     cheked4 = t2.Id,
+                                     userKey = keyUser.userKey,
+                                     Id = t1.Id,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = t1.Cost + t2.Cost,
+                                     ImageName = t1.ImageName,
+                                 };
+                var Join = queryOrder.Distinct().ToList();
+                ViewBag.a = Join;
+                ViewBag.DHE = Join;
+            }
+            if (cheked.Count() > 0 && cheked5.Count() > 0)
+            {
+                var queryOrder = from t1 in cheked
+                                 join t2 in cheked5
+                                 on t1.NameSystem equals t2.NameSystem
+                                 select new
+                                 {
+                                     cheked5 = t2.Id,
+                                     userKey = keyUser.userKey,
+                                     Id = t1.Id,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = t1.Cost + t2.Cost,
+                                     ImageName = t1.ImageName,
+                                 };
+                var Join = queryOrder.Distinct().ToList();
+                ViewBag.a = Join;
+                ViewBag.DV = Join;
+            }
+
+            if (cheked.Count() > 0 && cheked6.Count() > 0)
+            {
+                var queryOrder = from t1 in cheked
+                                 join t2 in cheked6
+                                 on t1.NameSystem equals t2.NameSystem
+                                 select new
+                                 {
+                                     cheked6 = t2.Id,
+                                     userKey = keyUser.userKey,
+                                     Id = t1.Id,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = t1.Cost + t2.Cost,
+                                     ImageName = t1.ImageName,
+                                 };
+                var Join = queryOrder.Distinct().ToList();
+                ViewBag.a = Join;
+                ViewBag.DA = Join;
+            }
+
+            if (cheked2.Count() > 0 && cheked3.Count() > 0)
+            {
+                var queryOrder = from t1 in cheked2
+                                 join t2 in cheked3
+                                 on t1.NameSystem equals t2.NameSystem
+                                 select new
+                                 {
+                                     cheked2 = t2.Id,
+                                     userKey = keyUser.userKey,
+                                     Id = t1.Id,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = t1.Cost + t2.Cost,
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+                ViewBag.b = Join;
+                ViewBag.KH = Join;
+            }
+
+            if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked3.Count() > 0)
+            {
+                var queryOrder = from t1 in cheked
+                                 join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
+                                 select new
+                                 {
+                                     cheked2 = t2.Id,
+                                     cheked3 = t3.Id,
+                                     userKey = keyUser.userKey,
+                                     Id = t1.Id,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = t1.Cost + t2.Cost + t3.Cost,
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+
+                ViewBag.a = Join;
+                ViewBag.b = Join;
+            }
+            if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked3.Count() > 0 && cheked4.Count() > 0)
+            {
+                var queryOrder = from t1 in cheked
+                                 join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in cheked4 on t3.NameSystem equals t4.NameSystem
+
+
+                                 select new
+                                 {
+                                     cheked2 = t2.Id,
+                                     cheked3 = t3.Id,
+                                     cheked4 = t4.Id,
+                                     userKey = keyUser.userKey,
+                                     Id = t1.Id,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = t1.Cost + t2.Cost + t3.Cost + t4.Cost,
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+
+                ViewBag.a = Join;
+                ViewBag.b = Join;
+            }
+            if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked3.Count() > 0 && cheked4.Count() > 0 && cheked5.Count() > 0)
+            {
+
+
+                var queryOrder = from t1 in cheked
+                                 join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in cheked4 on t3.NameSystem equals t4.NameSystem
+                                 join t5 in cheked5 on t4.NameSystem equals t5.NameSystem
+
+                                 select new
+                                 {
+                                     cheked2 = t2.Id,
+                                     cheked3 = t3.Id,
+                                     cheked4 = t4.Id,
+                                     cheked5 = t5.Id,
+                                     userKey = keyUser.userKey,
+                                     Id = t1.Id,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = t1.Cost + t2.Cost + t3.Cost + t4.Cost + t5.Cost,
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+
+                ViewBag.a = Join;
+                ViewBag.b = Join;
+            }
+            if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked3.Count() > 0 && cheked4.Count() > 0 && cheked5.Count() > 0 && cheked6.Count() > 0)
+            {
+
+
+                var queryOrder = from t1 in cheked.Distinct()
+                                 join t2 in cheked2.Distinct() on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked3.Distinct() on t2.NameSystem equals t3.NameSystem
+                                 join t4 in cheked4.Distinct() on t3.NameSystem equals t4.NameSystem
+                                 join t5 in cheked5.Distinct() on t4.NameSystem equals t5.NameSystem
+                                 join t6 in cheked6.Distinct() on t5.NameSystem equals t6.NameSystem
+                                 select new
+                                 {
+                                     cheked2 = t2.Id,
+                                     cheked3 = t3.Id,
+                                     cheked4 = t4.Id,
+                                     cheked5 = t5.Id,
+                                     cheked6 = t6.Id,
+                                     userKey = keyUser.userKey,
+                                     Id = t1.Id,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = t1.Cost + t2.Cost + t3.Cost + t4.Cost + t5.Cost + t6.Cost,
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+
+                ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
+                ViewBag.Knaufzylinder = "";
+                ViewBag.Halb = "";
+                ViewBag.Hebel = "";
+                ViewBag.VorhanSchloss = "";
+                ViewBag.Aussen = "";
+            }
+
 
             return View("System_Auswählen", keyUser);
         }
        
         [HttpGet]
-        public async Task<IActionResult> OrdersKey(int DopelId, string param2,int KnayfID, int Halb,int Hebel,int Aussen,int Vorhan)
+        public async Task<IActionResult> OrdersKey(int DopelId, string param2,int KnayfID, int Halb,int Hebel,int Aussen,int Vorhan,string userInfo)
         {
+            char[] separators = { ' ', '\n', '\t', '\r' };
+
+            if (userInfo != null)
+            {
+                string[] words = userInfo.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+
+                var UserLogin = db.User.Where(x => x.Name == words[0] & x.Sername == words[1]).ToList();
+
+                var UserName_UserSername = UserLogin.Select(x=>x.Name).First() + " " + UserLogin.Select(x => x.Sername).First();
+
+                ViewBag.UserInformStatus = UserLogin.Select(x=>x.Status).First();
+                ViewBag.UserId = UserLogin.Select(x => x.Id).First();
+                ViewBag.UserNameItem = UserName_UserSername; 
+            }
 
             var key = db.Orders.Where(x => x.userKey == param2).Distinct().ToList();
 
@@ -1240,6 +1308,8 @@ namespace schliessanlagen_konfigurator.Controllers
             var KnaufZelinder = db.Profil_Knaufzylinder.Where(x => x.Id == KnayfID).ToList();
 
             var Kanyf_AussenInen = db.Aussen_Innen_Knauf.Where(x => x.Profil_KnaufzylinderId == Convert.ToInt32(KnayfID)).ToList();
+
+
 
             var Vorhanschlos = new List<Vorhangschloss>();
 
@@ -1394,11 +1464,13 @@ namespace schliessanlagen_konfigurator.Controllers
             ViewBag.ValueHebel = HebelOptionValueList.Select(x=>x.Value).Distinct().ToList();
 
             var queryableOptionsHalb = db.Profil_Halbzylinder_Options.Where(x => x.Profil_HalbzylinderId == Convert.ToInt32(Halb)).Select(x => x.Id).ToList();
+
             var OptionsHalb = new List<Halbzylinder_Options>();
             
                 for(int f =0;f< queryableOptionsHalb.Count(); f++)
                 {
                     var optionsHabel = db.Halbzylinder_Options.Where(x => x.OptionsId == queryableOptionsHalb[f]).ToList();
+                   
                     foreach(var listHalb in optionsHabel)
                     {
                         OptionsHalb.Add(listHalb);
@@ -1596,7 +1668,8 @@ namespace schliessanlagen_konfigurator.Controllers
 
             foreach (var tl in IsOpenValue)
             {
-                var listValueOpen = db.KeyValue.Where(x => x.OpenKeyId == tl.Id).ToList();
+                var listValueOpen = db.KeyValue.Where(x => x.OpenKeyId == tl.Id).OrderBy(x=>x.OpenKeyId).ToList();
+                var id = listValueOpen.Select(x => x.OpenKeyId).ToList();
                 foreach (var tlr in listValueOpen)
                     ValueKeyOpen.Add(tlr);
             }
@@ -1606,9 +1679,7 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 if (order.ZylinderId == 1)
                 {
-                    ViewBag.DopelAussen = order.aussen;
-                    ViewBag.DopelInter = order.innen;
-
+                  
                     for (var i = 30; i < order.aussen;)
                     {
                         DoppelAussenCost = DoppelAussenCost + 5;
@@ -1636,8 +1707,6 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
                 if (order.ZylinderId == 3)
                 {
-                    ViewBag.KnayfAussen = order.aussen;
-                    ViewBag.KnayfInter = order.innen;
 
                     for (var i = 30; i < order.aussen;)
                     {
@@ -1720,35 +1789,41 @@ namespace schliessanlagen_konfigurator.Controllers
 
             }
 
+            var HablAussen = db.Aussen_Innen_Halbzylinder.Where(x => x.Profil_HalbzylinderId == Convert.ToInt32(Halb)).Select(x=>x.aussen).ToList();
 
-            ViewBag.KnayfZelinder = KnayfOrderlist.ToList();
-
-            ViewBag.KnayfItemId = KnayfOrderlist.Select(x => x.Id).ToList();
+            ViewBag.SelectHalb = key.Where(x => x.ZylinderId == 2).Select(x => x.aussen).Distinct().ToList();
 
             ViewBag.Halb = Halbzylinder.ToList();
-            ViewBag.HelbZ = HelbZ.ToList();
+            ViewBag.HalbItem = Halbzylinder.Select(x => x.Id).ToList();
+            ViewBag.HalbAussenList = HablAussen.Distinct().ToList();
+            ViewBag.HalbOrderAussen = key.Where(x => x.ZylinderId == 2).Select(x => x.aussen).Distinct().ToList();
 
-            ViewBag.KnayfZelinderAussen = Kanyf_AussenInen.Select(x => x.aussen).ToList();
-            ViewBag.KnayfZelinderIntern = Kanyf_AussenInen.Select(x => x.Intern).ToList();
-
-            ViewBag.DAussen = key.Select(x => x.aussen).Distinct().ToList();
-            ViewBag.DInter = key.Select(x => x.innen).Distinct().ToList();
-
-            ViewBag.HalbList = Halbzylinder.Select(x => x.Id).ToList();
-
-
-            ViewBag.Dopelzylinderaussen = AussenInen.Select(x=>x.aussen).ToList();
-            ViewBag.DopelzylinderIntern = AussenInen.Select(x => x.Intern).ToList();
-            ViewBag.Dopelzylinder = DopelOrderlist.ToList();
+            ViewBag.KnayfZelinder = KnayfOrderlist.ToList();
+            ViewBag.KnayfItemId = KnayfOrderlist.Select(x => x.Id).ToList();
+            ViewBag.KnayfZelinderAussen = Kanyf_AussenInen.Select(x => x.aussen).Distinct().ToList();
+            ViewBag.KnayfZelinderIntern = Kanyf_AussenInen.Select(x => x.Intern).Distinct().ToList();
+            ViewBag.KAussen = key.Where(x => x.ZylinderId == 3).Select(x => x.aussen).Distinct().ToList();
+            ViewBag.KInter = key.Where(x => x.ZylinderId == 3).Select(x => x.innen).Distinct().ToList();
 
             ViewBag.DopelzylinderIdList = DopelOrderlist.Select(x => x.Id).ToList();
+            ViewBag.Dopelzylinderaussen = AussenInen.Select(x => x.aussen).ToList();
+            ViewBag.DopelzylinderIntern = AussenInen.Select(x => x.Intern).ToList();
+            ViewBag.Dopelzylinder = DopelOrderlist.ToList();
+            ViewBag.DAussen = key.Where(x => x.ZylinderId == 1).Select(x => x.aussen).Distinct().ToList();
+            ViewBag.DInter = key.Where(x => x.ZylinderId == 1).Select(x => x.innen).Distinct().ToList();
+
+            ViewBag.HelbZ = HelbZ.ToList();
+            ViewBag.HalbItem = HelbZ.Select(x => x.Id).ToList();
 
             ViewBag.Vorhanschlos = Vorhanschlos.ToList();
-            ViewBag.Aussenzylinder = Aussenzylinder.ToList();
-          
+            ViewBag.VorhanschlosItem = Vorhanschlos.Select(x=>x.Id).ToList();
+            ViewBag.VorhanOrderAussen = key.Where(x => x.ZylinderId == 5).Select(x => x.aussen).Distinct().ToList();
 
-            ViewBag.KeyValue = ValueKeyOpen.Distinct().ToList();
-          
+            ViewBag.Aussenzylinder = Aussenzylinder.ToList();
+            ViewBag.AussenzylinderItem = Aussenzylinder.Select(x=>x.Id).ToList();
+
+
+            ViewBag.KeyValue = ValueKeyOpen.Select(x=>x.isOpen).ToList();
             ViewBag.DorName = key.Select(x => x.DorName).Distinct().ToList();
             ViewBag.User = key.Select(x => x.userKey).Distinct().ToList();
             
@@ -1895,11 +1970,40 @@ namespace schliessanlagen_konfigurator.Controllers
             return View("Finisher");
         }
         [HttpGet]
-        public ActionResult FinischerProductSelect(float SumCosted, List<int> DopelItem,  List<float> DAussen, List<float> DIntern,List<int> Knayf, string user, List<int> Halb,
-            List<int> KnayfIntern, List<int> KnayfAusse)
+        public ActionResult SaveUserOrders()
         {
+            return View();
+        }
+        [HttpGet]
+        public ActionResult FinischerProductSelect(string userInfo, float SumCosted,List<string> DopelOption, List<int> DopelItem,  List<float> DAussen, List<float> DIntern,List<int> Knayf, string user, List<int> Halb,
+            List<int> KnayfIntern, List<int> KnayfAusse, List<int> Helb, List<int> Vorhan,List<int> Aussen, List<float> VorhanAussen, List<float> HablAussen)
+        {
+
+            char[] separators = { ' ', '\n', '\t', '\r' };
+
+            if (userInfo != null)
+            {
+                string[] words = userInfo.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+
+                var UserLogin = db.User.Where(x => x.Name == words[0] & x.Sername == words[1]).ToList();
+
+                var UserName_UserSername = UserLogin.Select(x => x.Name).First() + " " + UserLogin.Select(x => x.Sername).First();
+
+                ViewBag.UserInformStatus = UserLogin.Select(x => x.Status).First();
+                ViewBag.UserId = UserLogin.Select(x => x.Id).First();
+                ViewBag.UserNameItem = UserName_UserSername;
+            }
+
+
+
             var UserOrder = db.Orders.FirstOrDefault(x => x.userKey == user);
             var DoppelSylinder = new List<Profil_Doppelzylinder>();
+            var KnayfSylinder = new List<Profil_Knaufzylinder>();
+            var HalbSylinder = new List<Profil_Halbzylinder>();
+            var HelbSylinder = new List<Hebel>();
+            var VorhanSylinder = new List<Vorhangschloss>();
+            var AussenSylinder = new List<Aussenzylinder_Rundzylinder>();
+
             var OpenLis = new List<isOpen_value>();
             var Order = db.Orders.Where(x => x.userKey == user).Distinct().ToList();
 
@@ -1907,9 +2011,6 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var KeyValue = new List<KeyValue>();
             var isopen = new List<isOpen_Order>();
-
-            var KnayfSylinder = new List<Profil_Knaufzylinder>();
-            var HalbSylinder = new List<Profil_Halbzylinder>();
 
             ViewBag.SumCosted = SumCosted;
 
@@ -1969,41 +2070,83 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
 
             }
-
             
+            if (Helb.Count() > 0)
+            {
+                for (int i = 0; i < Helb.Count(); i++)
+                {
+                    var HelbZylinder = db.Hebelzylinder.Where(x => x.Id == Helb.First()).ToList();
+                    foreach (var list in HelbZylinder)
+                        HelbSylinder.Add(list);
+                }
 
+            }
+            if (Vorhan.Count() > 0)
+            {
+                for (int i = 0; i < Vorhan.Count(); i++)
+                {
+                    var VorhanZylinder = db.Vorhangschloss.Where(x => x.Id == Vorhan.First()).ToList();
+                    foreach (var list in VorhanZylinder)
+                        VorhanSylinder.Add(list);
+                }
+
+            }
+            if (Aussen.Count() > 0)
+            {
+                for (int i = 0; i < Aussen.Count(); i++)
+                {
+                    var AussenZylinder = db.Aussenzylinder_Rundzylinder.Where(x => x.Id == Aussen.First()).ToList();
+                    foreach (var list in AussenZylinder)
+                        AussenSylinder.Add(list);
+                }
+
+            }
 
             ViewBag.Tur = Order.Select(x => x.DorName).ToList();
             var countRow = KeyValue.Distinct().ToList().Count()/OpenLis.Distinct().ToList().Count();
             ViewBag.EinRow = countRow;
 
+            var Doppelname = DoppelSylinder.Select(x => x.Name).ToList();
+
             ViewBag.DoppelAussen = DAussen.ToList();
             ViewBag.DoppelIntern = DIntern.ToList();
-
+            ViewBag.DoppelOption = DopelOption;
+            ViewBag.DoppelItem = DoppelSylinder.Count();
+            ViewBag.DopelZylinder = Doppelname.ToList();
 
             ViewBag.KnayfAussen = KnayfAusse.ToList();
             ViewBag.KnayfName = KnayfSylinder.Select(x => x.Name).ToList();
             ViewBag.KnayflIntern = KnayfIntern.ToList();
+            ViewBag.KnayfItem = KnayfSylinder.Count;
 
+            ViewBag.HalbName = HalbSylinder.Select(x => x.Name).ToList();
+            ViewBag.HalbAussen = HablAussen.ToList();
+            ViewBag.HalbCount = HalbSylinder.Count();
+            
+            ViewBag.HelbName = HelbSylinder.Select(x => x.Name).ToList();
+            ViewBag.HelbCount = HelbSylinder.Count();
 
-            var Doppelname = DoppelSylinder.Select(x => x.Name).ToList();
+            ViewBag.VorhanName = VorhanSylinder.Select(x => x.Name).ToList();
+            ViewBag.VorhanAussen = VorhanAussen.ToList();
+            ViewBag.VorhanCount = VorhanSylinder.Count();
+
+            ViewBag.AussenName = AussenSylinder.Select(x => x.Name).ToList();
+            ViewBag.AussenCount = AussenSylinder.Count();
 
             ViewBag.Key = OpenLis.Distinct().ToList();
             ViewBag.KeyValueFT = KeyValue.ToList();
-            ViewBag.DoppelItem = DoppelSylinder.Count();
-            ViewBag.DopelZylinder = Doppelname.ToList();
+           
 
-            ViewBag.KnayfItem = KnayfSylinder.Count;
+           
 
             return View("FinischerProductSelect", UserOrder );
         }
         [HttpPost]
-        public ActionResult SaveOrder(Orders Key, List<string> Turname, List<string> ZylinderId, List<float> aussen, List<float> innen, List<int> Count, List<string> NameKey, List<int> CountKey, List<string> IsOppen, List<string> Options, List<int> ItemCount,List<string>Ssl)
+        public ActionResult SaveOrder(string userName, Orders Key, List<string> Turname, List<string> ZylinderId, List<float> aussen, List<float> innen, List<int> Count, List<string> NameKey, List<int> CountKey, List<string> IsOppen, List<string> Options, List<int> ItemCount,List<string>Ssl)
         {
             int CountOrders = Turname.Count();
 
             string zylinderTyp;
-
 
             for (int i = 0; i < CountOrders; i++)
             {
@@ -2107,7 +2250,8 @@ namespace schliessanlagen_konfigurator.Controllers
                     DorName = TurnameValue,
                     ZylinderId = idZylinder,
                     Options = optionValue,
-                    Artikelnummer = artikul
+                    Artikelnummer = artikul,
+                    Created = DateTime.Now
                 };
 
 
@@ -2115,7 +2259,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 {
                     if (i >= innen.Count())
                     {
-                        orders.innen = innen.Last();
+                      
                     }
                     else
                     {
@@ -2126,9 +2270,9 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
                 if (aussen.Count() > 0)
                 {
-                    if (i >= innen.Count())
+                    if (i >= aussen.Count())
                     {
-                        orders.aussen = aussen.Last();
+                       
                     }
                     else
                     {
@@ -2160,7 +2304,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     int CountkeyOrders;
 
 
-                    if (s > CountKey.Count())
+                    if (s >= CountKey.Count())
                     {
                         CountkeyOrders = CountKey.Last();
                     }
@@ -2168,7 +2312,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     {
                         CountkeyOrders = CountKey[s];
                     }
-                    if (s > NameKey.Count())
+                    if (s >= NameKey.Count())
                     {
                         NameKeyValue = NameKey.Last();
                     }
@@ -2189,15 +2333,44 @@ namespace schliessanlagen_konfigurator.Controllers
                     {
 
                         bool valueOppen = false;
+                        if (d >= IsOppen.Count())
+                        {
+                            if (f >= IsOppen.Count())
+                            {
+                                if (IsOppen.Last() == "true")
+                                {
+                                    valueOppen = true;
+                                }
+                                if (IsOppen.Last() == "false")
+                                {
+                                    valueOppen = false;
+                                }
+                            }
+                            else
+                            {
+                                if (IsOppen[f] == "true")
+                                {
+                                    valueOppen = true;
+                                }
+                                if (IsOppen[f] == "false")
+                                {
+                                    valueOppen = false;
+                                }
+                            }
 
-                        if (IsOppen[d] == "true")
-                        {
-                            valueOppen = true;
                         }
-                        if (IsOppen[d] == "false")
+                        else
                         {
-                            valueOppen = false;
+                            if (IsOppen[d] == "true")
+                            {
+                                valueOppen = true;
+                            }
+                            if (IsOppen[d] == "false")
+                            {
+                                valueOppen = false;
+                            }
                         }
+
                         var KeyValueC = new KeyValue
                         {
                             OpenKeyId = Open_value.Id,
@@ -2218,7 +2391,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     int CountkeyOrders;
 
 
-                    if (s > CountKey.Count())
+                    if (s >= CountKey.Count())
                     {
                         CountkeyOrders = CountKey.Last();
                     }
@@ -2226,7 +2399,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     {
                         CountkeyOrders = CountKey[s];
                     }
-                    if (s > NameKey.Count())
+                    if (s >= NameKey.Count())
                     {
                         NameKeyValue = NameKey.Last();
                     }
@@ -2243,18 +2416,47 @@ namespace schliessanlagen_konfigurator.Controllers
                     db.isOpen_value.Add(Open_value);
                     db.SaveChanges();
 
-                    for (var f = 0; f < IsOppen.Count(); f++)
+                    for (var f = 0; f <= IsOppen.Count(); f++)
                     {
                         bool valueOppen = false;
-
-                        if (IsOppen[d] == "true")
+                        if(d >= IsOppen.Count())
                         {
-                            valueOppen = true;
+                            if(f >= IsOppen.Count())
+                            {
+                                if (IsOppen.Last() == "true")
+                                {
+                                    valueOppen = true;
+                                }
+                                if (IsOppen.Last() == "false")
+                                {
+                                    valueOppen = false;
+                                }
+                            }
+                            else
+                            {
+                                if (IsOppen[f] == "true")
+                                {
+                                    valueOppen = true;
+                                }
+                                if (IsOppen[f] == "false")
+                                {
+                                    valueOppen = false;
+                                }
+                            }
+                           
                         }
-                        if (IsOppen[d] == "false")
+                        else
                         {
-                            valueOppen = false;
+                            if (IsOppen[d] == "true")
+                            {
+                                valueOppen = true;
+                            }
+                            if (IsOppen[d] == "false")
+                            {
+                                valueOppen = false;
+                            }
                         }
+                       
                         var KeyValueC = new KeyValue
                         {
                             OpenKeyId = Open_value.Id,
@@ -2268,7 +2470,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
             }
             db.SaveChanges();
-            return RedirectToAction("System_Auswählen", "Konfigurator", new { Key } );
+            return RedirectToAction("System_Auswählen", "Konfigurator", new { Key, userName } );
         }
         
     }

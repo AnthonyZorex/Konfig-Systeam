@@ -1,0 +1,29 @@
+﻿@model schliessanlagen_konfigurator.Models.Users.User;
+
+@{
+    ViewData["Title"] = $"AdminConnect/{Model.Id}";
+}
+@Html.HiddenFor(m => m.Id)
+<div id="UserConteiner">
+    <h2 style="text-align:center">Mein Konto</h2>
+    <div id="UserConteinerInform">
+    <div id="UserMenu">
+            <ul style="list-style-type: none;">
+                <li>MEIN KONTO</li>
+            <hr />
+            <li>Dashboard</li>
+            <li>Bestellungen</li>
+            <li>Downloads</li>
+            <li>Adressen</li>
+            <li>Kontodetails</li>
+            <li>Wishlist</li>
+           <li><a href=" @Url.Action("IndexKonfigurator", "Konfigurator")">Logout</a></li>
+        </ul>
+    </div>
+    <div id="UserInform">
+            <h3><strong>@Html.DisplayFor(x => x.Sername)    @Html.DisplayFor(x => x.Name)</strong> </h3>
+
+        <h3>In deiner Konto-Übersicht kannst du deine letzten Bestellungen ansehen, deine Liefer- und Rechnungsadresse verwalten und dein Passwort und die Kontodetails bearbeiten.</h3>
+    </div>
+    </div>
+</div>

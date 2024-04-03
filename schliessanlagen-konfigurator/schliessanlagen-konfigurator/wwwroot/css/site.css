@@ -433,16 +433,29 @@ a {
     background-color: #EDEDED;
     padding: 5px;
 }FinihserCostInfo
-.TexCountTurFinisher {
+.TexCountTurFinisher 
+ {
     max-width: 290px;
     text-align: center;
     gap: 10px;
     display: grid;
     background-color: #EDEDED;
     padding: 5px;
+ }
+
+.TexCountTurFinisher > h5{
+    margin-left:25px;
 }
-#inputTur{
-    padding:5px;
+.TexCountTurFinisher > h6 {
+    margin-left: 25px;
+}
+
+#DorUndCount {
+    display: flex;
+    gap: 15px;
+}
+#inputTur {
+    padding: 5px;
 }
 #counterTur {
     margin-top: 10px
@@ -577,12 +590,14 @@ summary {
     margin-top: 20px;
 }
 #schopIcons {
-    margin-left: 200px;
+    margin-left: 40px;
     height: 40px;
-    max-width: 40px;
     background: #e4e4e4;
     border: 3px solid grey;
     border-radius: 30px;
+}
+#schopIcons>span {
+    color: red;
 }
 
 .modal {
@@ -633,3 +648,20 @@ summary {
 #finisherButton>button{
     height:50px;
 }
+#UserConteinerInform {
+    display: grid;
+    grid-template-columns: repeat(2,auto);
+    gap: 50px;
+    margin-top: 100px;
+}
+#UserMenu {
+    border-right: 3px solid gray;
+    padding-right: 50px;
+}
+a{
+    text-decoration:none;
+   /* color:black;*/
+}
+    a:hover {
+        color: black;
+    }

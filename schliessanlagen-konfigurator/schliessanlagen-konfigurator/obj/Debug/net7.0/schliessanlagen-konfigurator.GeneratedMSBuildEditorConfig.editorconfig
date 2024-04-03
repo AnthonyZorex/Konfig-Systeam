@@ -42,12 +42,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdFxFZGl0X1ZvcmhhbmdzY2hsb3NzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/AdminConnect.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBZG1pbkNvbm5lY3QuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
 [D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Aussenzylinder_RundzylinderRout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBdXNzZW56eWxpbmRlcl9SdW5kenlsaW5kZXJSb3V0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Bestellungsverlauf.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxCZXN0ZWxsdW5nc3ZlcmxhdWYuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/HebelzylinderRout.cshtml]
@@ -92,6 +92,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/VorhangschlossRout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxWb3JoYW5nc2NobG9zc1JvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Konfigurator/AdminConnect.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS29uZmlndXJhdG9yXEFkbWluQ29ubmVjdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Konfigurator/FinischerProductSelect.cshtml]

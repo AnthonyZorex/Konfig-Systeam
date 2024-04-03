@@ -20,26 +20,27 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div style="margin-left:400px" class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div style="margin-left:100px" class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                       @*  @{
-                            if (Model.Status == "Admin")
+
+
+                            @if (ViewBag.UserInformStatus == "Admin")
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Data</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Produktbearbeitung</a>
                                 </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="OrderSetup">Auftragsbearbeitung</a>
+                            </li>
                             }
-                        } *@
-                           
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Data</a>
-                        </li>
                         
+                        
+                       
                         <li class="nav-item">
                             <a class="nav-link text-dark" href=" @Url.Action("IndexKonfigurator", "Konfigurator")">Konfigurator</a>
                         </li>
                     </ul>
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav flex-grow-1" style="display: flex;align-items: center;text-align: center;">
                         <li class="nav-item">
                             <a class="nav-link text-dark" href=" @Url.Action("IndexKonfigurator", "Konfigurator")">SCHRITT 1</a>
                         </li>
@@ -49,11 +50,27 @@
                         <li class="nav-item">   
                             <a class="nav-link text-dark" href=" @Url.Action("OrdersKey", "Konfigurator")">SCHRITT 3</a>
                         </li>
-                        <li class="nav-item">
-                            <button class="nav-link text-dark" type="button" id="schopIcons" data-toggle="modal" data-target="#myModal"><img id="openModalBtn" src="~/Image/shopping-cart.png" width="20" height="20" style="margin-left:-2px;margin-top:-12px" /></button>
-                        </li>
+                       
                     </ul>
-                    
+                    <ul class="navbar-nav flex-grow-1" style="display: flex;align-items: center;text-align: center;">
+                        <li class="nav-item">
+                            <a style="text-decoration:underline">@ViewBag.UserNameItem</a>
+                        </li>
+                     @*    @if (@ViewBag.User !=null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" type="button" id="schopIcons" href="@Url.Action("AdminConnect","Konfigurator", new {User = ViewBag.UserId})"><img src="~/Image/shopping-cart.png" width="20" height="20" style="margin-left:-2px;margin-top:-12px" /></a>
+                            </li>
+                        } 
+                        else
+                        { *@
+                            <li class="nav-item">
+                            <button class="nav-link text-dark" type="button" id="schopIcons" data-toggle="modal" data-target="#myModal"><img id="openModalBtn" src="~/Image/shopping-cart.png" width="20" height="20" style="margin-left:-2px;margin-top:-12px" /><span>0</span></button>
+                            </li>
+                     @*    }  *@
+                        
+                      
+                    </ul>
                 </div>
             </div>
         </nav>

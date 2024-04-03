@@ -382,6 +382,9 @@ namespace schliessanlagenkonfigurator.Migrations
                     b.Property<int?>("Count")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("Created")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("DorName")
                         .HasColumnType("nvarchar(max)");
 
@@ -755,6 +758,9 @@ namespace schliessanlagenkonfigurator.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Adress")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .IsRequired()

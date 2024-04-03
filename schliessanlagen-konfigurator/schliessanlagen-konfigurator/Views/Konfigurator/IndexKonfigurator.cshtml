@@ -4,17 +4,23 @@
 @{
     ViewData["Title"] = "Konfigurator";
 }
-
+@if (TempData["AlertMessage"] != null)
+{
+    <script>
+        alert("@TempData["AlertMessage"]");
+    </script>
+}
 <div>
     <div id="konfigMenu">
         <button type="button" class="btn btn-danger">1. Schließplan erstellen</button>
-        <button type="button" class="btn btn-secondary"><a href="@Url.Action("System_Auswählen","Konfigurator")">2. System auswählen</a></button>
+        <button type="button" class="btn btn-secondary"><a href="@Url.Action("System_Auswählen","Konfigurator",new{ userName = @ViewBag.UserNameItem} )">2. System auswählen</a></button>
         <button type="button" class="btn btn-secondary">3. Parameter einstellen</button>
     </div>
     <form asp-action="SaveOrder" enctype="multipart/form-data" asp-controller="Konfigurator">
   
         @Html.HiddenFor(m => m.userKey)
 
+        <input type="hidden" value="@ViewBag.UserNameItem" name="userName" />
         <input name="ItemCount" type="hidden" id="itemcountOptions" />
 
     <div id="InformBar">
@@ -145,11 +151,26 @@
 
    let blockCount = 1;
         
-    let blockTur = 1;
-   
-    var data = JSON.parse(localStorage.getItem(`${blockTur}checkbox${blockCount}`));
+   let blockTur = 1;
 
-    // ViewBag.UserInfo
+    let OptionDoppel = @Html.Raw(ViewBag.JsonDoppelOption);
+    let OptionKnayf = @Html.Raw(ViewBag.JsonKnayf);
+    let OptionHebel = @Html.Raw(ViewBag.JsonHebel);
+    let OptionHalb = @Html.Raw(ViewBag.JsonHabl);
+    let OptionVorhan =@Html.Raw(ViewBag.JsonVorhan);
+    let OptionAussen = @Html.Raw(ViewBag.JsonAussen);
+
+    let DoppelAussenSize = @Html.Raw(ViewBag.SizeDoppelAussen);
+    let DoppelInternSize = @Html.Raw(ViewBag.SizeDoppelIntern);
+
+    let KnayfAussenSize = @Html.Raw(ViewBag.SizeKnayfAussen);
+    let KnayfInternSize = @Html.Raw(ViewBag.SizeKnayfIntern);
+    
+    let HalbSize = @Html.Raw(ViewBag.SizeHalb);
+
+    let VorhanSize = @Html.Raw(ViewBag.SizeVorhan);
+
+    var data = JSON.parse(localStorage.getItem(`${blockTur}checkbox${blockCount}`));
 
     function createCustomCheckbox(id) 
     {
@@ -161,23 +182,22 @@
         {
             localStorage.setItem(id, 'false');
         }
-        // Проверяем, есть ли уже сохраненное значение в локальном хранилище
+     
         var savedValue = localStorage.getItem(id);
 
-        // Если есть сохраненное значение, устанавливаем его в чекбоксе
         if (savedValue !== null) 
         {
             console.log(checkbox);
-            checkbox.checked = (savedValue === 'true'); // преобразуем строку в булево значение
+            checkbox.checked = (savedValue === 'true'); 
             checkboxValue = checkbox.checked;
 
         }
 
-        // Обработчик события изменения состояния чекбокса
-        checkbox.addEventListener('change', function () {
-            // Сохраняем состояние чекбокса в локальное хранилище
+        checkbox.addEventListener('change', function () 
+        {
+         
             localStorage.setItem(id, this.checked);
-            // Записываем значение чекбокса в переменную
+           
             checkboxValue = this.checked;
 
             console.log(checkbox);

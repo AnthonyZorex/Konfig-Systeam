@@ -42,14 +42,25 @@
                 <div id="OpenValue">
                     @{
                         int valueKeyBool = ViewBag.KeyValue.Count / ViewBag.Order.Count;
-
                         @for (int f = 0; f < valueKeyBool; f++)
                         {
-                            @if (ViewBag.KeyValue[countValueKey].isOpen == true)
+                            @if (ViewBag.KeyValue[countValueKey] == true)
                             {
+
+                                // if (f >= @ViewBag.DorName.Count)
+                                // {
+                                //     <h5>@ViewBag.DorName[@ViewBag.DorName.Count-1]</h5>
+                                // }
                                 <h5>@ViewBag.DorName[f]</h5>
+                                countValueKey++;
                             }
-                            countValueKey++;
+                           
+                            else
+                            {
+                                countValueKey++;
+                            }
+                           
+
                         }
                     }
                 </div>
@@ -71,7 +82,8 @@
     <div>
             @if (ViewBag.Dopelzylinder != null)
             {
-                foreach (var item in ViewBag.Dopelzylinder)
+                int elemNum = 0;
+            foreach (var item in ViewBag.Dopelzylinder)
                 {
                     <div id="ExelItem">
                         <div id="productImage">
@@ -96,7 +108,7 @@
                         <div id="SizeProduct">
                            <div>
                                 <select class="form-select" id="Aussen">
-                                    <option style="display:none" selected>@ViewBag.DopelAussen</option>
+                                    <option style="display:none" selected>@ViewBag.DAussen[elemNum]</option>
                                     <option>Außenlänge (A)</option>
                                     @for (int i = 0; i < ViewBag.Dopelzylinderaussen.Count; i++)
                                     {
@@ -105,8 +117,9 @@
                                 </select>
                            </div>
                             <div>
+                               @*  [elemNum] *@
                                 <select class="form-select"  id="Intern">
-                                    <option style="display:none" selected>@ViewBag.DopelInter</option>
+                                    <option style="display:none" selected>@ViewBag.DInter[elemNum]</option>
                                     <option>Innenlänge (B)</option>
                                     @for (int i = 0; i < ViewBag.DopelzylinderIntern.Count; i++)
                                     {
@@ -145,10 +158,12 @@
 
 
                     </div>
-                }
+                elemNum++;
+            }
         }
         @if (ViewBag.KnayfZelinder != null)
         {
+            int elemNum = 0;
             foreach (var item in ViewBag.KnayfZelinder)
             {
                 <div id="ExelItem">
@@ -174,7 +189,7 @@
                         <div id="SizeProduct">
                             <div>
                                 <select class="form-select">
-                                    <option style="display:none" selected>@ViewBag.KnayfAussen</option>
+                                    <option style="display:none" selected>@ViewBag.KAussen[elemNum]</option>
                                     <option>Außenlänge (A)</option>
                                     @for (int i = 0; i < ViewBag.KnayfZelinderAussen.Count; i++)
                                     {
@@ -184,7 +199,7 @@
                             </div>
                             <div >
                                 <select class="form-select">
-                                    <option style="display:none" selected>@ViewBag.KnayfInter</option>
+                                    <option style="display:none" selected>@ViewBag.KInter[elemNum]</option>
                                     <option>Innenlänge (B)</option>
                                     @for (int i = 0; i < ViewBag.KnayfZelinderIntern.Count; i++)
                                     {
@@ -227,6 +242,7 @@
         }
         @if (ViewBag.Halb != null)
         {
+            int elemNum = 0;
             foreach (var item in ViewBag.Halb)
             {
                 <div id="ExelItem">
@@ -252,6 +268,7 @@
                         <div >
                             <div>
                                 <select class="form-select">
+                                    <option style="display:none" selected>@ViewBag.HalbOrderAussen[elemNum]</option>
                                     <option>Außenlänge (A)</option>
                                     @for (int i = 0; i < ViewBag.AussenHalb.Count; i++)
                                     {
@@ -290,6 +307,7 @@
 
 
                 </div>
+                elemNum++;
             }
         }
         @if (ViewBag.HelbZ != null)
@@ -483,7 +501,7 @@
                 <button id="chekProduct" class="btn btn-dark"> <a href="@Url.Action("System_Auswählen", "Konfigurator")">ZURÜCK</a></button>
             </div>
             <div id="FinisherRight">
-                <button id="chekProduct" class="btn btn-danger"> <a href="@Url.Action("FinischerProductSelect", "Konfigurator", new {SumCosted = @ViewBag.Cost,DopelItem = @ViewBag.DopelzylinderIdList,DAussen = @ViewBag.DAussen,DIntern=@ViewBag.DInter, Knayf=@ViewBag.KnayfItemId,user = @ViewBag.User, Halb = @ViewBag.HalbList,KnayfAusse = @ViewBag.KnayfAussen,KnayfIntern = @ViewBag.KnayfInter})">WEITER</a></button>
+                <button id="chekProduct" class="btn btn-danger"> <a href="@Url.Action("FinischerProductSelect", "Konfigurator", new {VorhanAussen = @ViewBag.VorhanOrderAussen,HablAussen = @ViewBag.HalbOrderAussen,Aussen = @ViewBag.AussenzylinderItem,Vorhan = @ViewBag.VorhanschlosItem,Halb = @ViewBag.HalbItem, Helb = @ViewBag.HalbItem,userInfo = @ViewBag.UserNameItem,SumCosted = @ViewBag.Cost,DopelItem = @ViewBag.DopelzylinderIdList,DopelOption = @ViewBag.optionsName,DAussen = @ViewBag.DAussen,DIntern=@ViewBag.DInter, Knayf=@ViewBag.KnayfItemId,user = @ViewBag.User,KnayfAusse = @ViewBag.KAussen,KnayfIntern = @ViewBag.KInter})">WEITER</a></button>
             </div>
       </div>
     </div>

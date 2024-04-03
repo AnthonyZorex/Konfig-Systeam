@@ -1564,7 +1564,12 @@ namespace schliessanlagen_konfigurator.Controllers
         }
         #endregion
 
+       
+        public ActionResult OrderSetup()
+        {
 
+            return View();
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
