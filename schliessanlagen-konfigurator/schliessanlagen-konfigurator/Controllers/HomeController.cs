@@ -16,10 +16,6 @@ using schliessanlagen_konfigurator.Models.Vorhan;
 using schliessanlagen_konfigurator.Models.Hebelzylinder;
 using System.Text.Json;
 using Newtonsoft.Json;
-using Microsoft.CodeAnalysis.Options;
-using NuGet.ContentModel;
-using System.Collections.Immutable;
-using SkiaSharp;
 
 
 

@@ -14,17 +14,11 @@ using schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.ValueOpti
 using schliessanlagen_konfigurator.Models.ProfilDopelZylinder;
 using schliessanlagen_konfigurator.Models.ProfilDopelZylinder.ValueOptions;
 using schliessanlagen_konfigurator.Models.Vorhan;
-using schliessanlagenkonfigurator.Migrations;
 using schliessanlagen_konfigurator.Models.Users;
-using SkiaSharp;
-using Spire.Xls;
-using System.Collections;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.Reflection.PortableExecutable;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using User = schliessanlagen_konfigurator.Models.Users.User;
+using System.IO;
+using OfficeOpenXml;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace schliessanlagen_konfigurator.Controllers
 {
@@ -56,11 +50,42 @@ namespace schliessanlagen_konfigurator.Controllers
             
             db.User.Add(newUser);
             db.SaveChanges();
+
             return RedirectToAction("AdminConnect", newUser);
         }
-        public async Task<ActionResult>AdminConnect(int User)
+        public async Task<ActionResult>AdminConnect(User UserLogin)
         {
-            var UserItem = db.User.FirstOrDefault(x => x.Id == User);
+            var UserItem = db.User.Where(x => x.Id == UserLogin.Id).ToList();
+
+            var ListItem = new List<UserOrdersShop>();
+
+            for(int i = 0; i < UserItem.Count(); i++)
+            {
+                var OrderList = db.UserOrdersShop.Where(x => x.UserId == UserItem[i].Id);
+                
+                foreach(var list in OrderList)
+                {
+                    ListItem.Add(list);
+                }
+            }
+
+            ViewBag.CountOrders = ListItem.Count();
+
+            var ListItemProduct  = new List<Models.Users.ProductSysteam>();
+
+            for (int f = 0; f < ListItem.Count();f++)
+            {
+                var ProductList = db.ProductSysteam.Where(x => x.UserOrdersShopId == ListItem[f].Id);
+
+                foreach (var list in ProductList)
+                {
+                    ListItemProduct.Add(list);
+                }
+            }
+
+            ViewBag.OrderList = ListItem;
+            ViewBag.OrderItem = ListItemProduct;
+
             return View(UserItem);
         }
         public async Task<ActionResult> LoginPerson(string Login,string Password)
@@ -1832,161 +1857,237 @@ namespace schliessanlagen_konfigurator.Controllers
 
             return View("Finisher", key.Last() );
         }
-        [HttpPost]
-        public async Task<IActionResult> Create_Exel(List<string> tur, Profil_Doppelzylinder profil_Doppelzylinder, Profil_Halbzylinder profil_Halbzylinder, Profil_Knaufzylinder Profil_Knaufzylinder, Vorhangschloss Vorhang, Hebel hebelzylinder, Aussenzylinder_Rundzylinder aussenzylinder_Rundzylinder)
+      
+        [HttpGet]
+        public ActionResult SaveUserOrders(string userInfo,List<string> nameKey, List<string> TurName,List<string> DopelName,List<float> DoppelAussen,List<float> DoppelIntern
+            , List<string> DoppelOption, List<string> KnayfName, List<float> KnayfAussen, List<float> KnayfIntern, List<string> HalbName, List<float> HalbAussen, List<string> HelbName,
+           List<string> VorhanName, List<float> VorhanAussen, List<string> AussenName,float cost,List<string> key, List<bool> keyIsOpen,List<int> countKey)
         {
-            var Zylinder_Typ = await db.Schliessanlagen.ToListAsync();
+            char[] separators = { ' ', '\n', '\t', '\r' };
+
+            var Zylinder_Typ =  db.Schliessanlagen.ToList();
             var profilD = db.Profil_Doppelzylinder.ToList();
             var profilH = db.Profil_Halbzylinder.ToList();
             var profilK = db.Profil_Knaufzylinder.ToList();
             var hebel = db.Hebelzylinder.ToList();
             var Vorhangschloss = db.Vorhangschloss.ToList();
             var Aussenzylinder = db.Aussenzylinder_Rundzylinder.ToList();
-            var Orders = await db.Orders.ToListAsync();
+            var Orders =  db.Orders.ToList();
 
-            //var listType = profilD.Where(x => x.Id == profilD[i]).Select(d => d.Extern);
+            string[] words = userInfo.Split(separators, StringSplitOptions.RemoveEmptyEntries);
 
-            Workbook workbook = new Workbook();
+                var UserLogin = db.User.FirstOrDefault(x => x.Name == words[0] & x.Sername == words[1]);
 
-            workbook.LoadFromFile("CES_schliessplan_DE_schliessanlagen.xltx");
-
-
-            Worksheet worksheet = workbook.Worksheets[0];
-
-            
-            int count = 0;
-            int Row = 18;
-            for (int i = 0; i < profilD.Count(); i++)
+            using (FileStream fstream = new FileStream(@$"wwwroot/Orders/{UserLogin.Name + " " + UserLogin.Sername} OrderFile.xlsx", FileMode.OpenOrCreate))
             {
-                //var TypeSylinder = Zylinder_Typ.Where(x => x.Id == profilD[count].schliessanlagenId).Select(x => x.nameType).ToList().First();
-                //var Extern = profilD.Where(x => x.Id == profilD[count].Id).Select(d => d.aussen).ToList().First();
-                //var NameZ = profilD.Where(x => x.Id == profilD[count].Id).Select(d => d.Name).ToList().First();
-                //var Intern = profilD.Where(x => x.Id == profilD[count].Id).Select(d => d.Intern).ToList().First();
-                //var TurName = Orders.Where(x => x.ZylinderId == profilD[count].schliessanlagenId).Select(x=>x.Tur).ToList();
+                fstream.Close();
+            }
+
+            string sourceFilePath = @"wwwroot/Orders/CES_schliessplan_DE_schliessanlagen.xltx";
+           
+            string destinationFilePath = @$"wwwroot/Orders/{UserLogin.Name + " " + UserLogin.Sername} OrderFile.xlsx";
+
+            using (FileStream sourceFileStream = new FileStream(sourceFilePath, FileMode.Open, FileAccess.Read))
+            using (BinaryReader reader = new BinaryReader(sourceFileStream))
+            {
+                using (FileStream destinationFileStream = new FileStream(destinationFilePath, FileMode.Create, FileAccess.Write))
+                using (BinaryWriter writer = new BinaryWriter(destinationFileStream))
+                {
+                    byte[] buffer = new byte[1024];
+                    int bytesRead;
+                    while ((bytesRead = reader.Read(buffer, 0, buffer.Length)) > 0)
+                    {
+                        writer.Write(buffer, 0, bytesRead);
+
+                    }
+                    writer.Close();
+                }
+                reader.Close();
+                sourceFileStream.Close();
+            }
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                FileInfo fileInfo = new FileInfo(destinationFilePath);
                
-                //worksheet.Range[Row, 1].Value = $"{Row - 1}";
-                //worksheet.Range[Row, 2].Value = $"{TurName}";
-                //worksheet.Range[Row, 3].Value = $"{NameZ}";
-                //worksheet.Range[Row, 4].Value = $"{TypeSylinder}";
-                //worksheet.Range[Row, 5].Value = $"{Extern}\t|\t{Intern}";
-                //worksheet.Range[Row, 6].Value = $"";
-                count++;
-                Row++;
-            }
-            count = 0;
-            for (int i = 0; i < profilH.Count(); i++)
+
+                var UserOrder = new UserOrdersShop
+                {
+                    UserId = UserLogin.Id,
+                    ProductName = DopelName.First(),
+                    OrderSum = cost
+                };
+
+                db.UserOrdersShop.Add(UserOrder);
+                db.SaveChanges();
+
+                var CountAllItem = VorhanName.Count() + AussenName.Count() + DopelName.Count() + KnayfName.Count() + HalbName.Count() + HelbName.Count();
+
+                int Rowcheked = 17;
+            int row = 19;
+            using (ExcelPackage package = new ExcelPackage(fileInfo))
             {
+                ExcelWorksheet worksheet = package.Workbook.Worksheets["Schließplan"];
 
-                var TypeSylinder = Zylinder_Typ.Where(x => x.Id == profilH[count].schliessanlagenId).Select(x => x.nameType).ToList().First();
-    
-                var NameZ = profilH.Where(x => x.Id == profilH[count].Id).Select(d => d.Name).ToList().First();
-             
+                for (int i = 0; i < CountAllItem; i ++)
+                {
 
-                worksheet.Range[Row, 1].Value = $"{Row - 1}";
-                worksheet.Range[Row, 3].Value = $"{Row - 1}";
-                worksheet.Range[Row, 4].Value = $"{TypeSylinder}";
-                //worksheet.Range[Row, 5].Value = $"{Extern}";
-                worksheet.Range[Row, 6].Value = $"";
-                count++;
-                Row++;
+                    for (int z = 0; z < countKey.Count(); z++)
+                    {
+                        if (z < countKey.Count() / TurName.Count())
+                        {
+                            if (keyIsOpen[z] == true)
+                            {
+                                worksheet.Cells[$"S{Rowcheked + z + i }"].Value = "X";
+                            }
+                            else
+                            {
+                                worksheet.Cells[$"S{Rowcheked + z + i }"].Value = "O";
+                            }
+                        }
+                        else
+                        {
+                            break;
+                        }
+
+                    }
+                        worksheet.Cells[$"A{Rowcheked}"].Value = i + 1;
+                        worksheet.Cells[$"B{Rowcheked}"].Value = i + 1;
+                        worksheet.Cells[$"C{Rowcheked}"].Value = TurName[i];
+                        worksheet.Cells[$"E{Rowcheked}"].Value = "Ssl";
+                        
+                        if(i < countKey.Count())
+                        {
+                            worksheet.Cells[$"O{Rowcheked}"].Value = countKey[i];
+                        }
+                         if (i < key.Count())
+                         {
+                             worksheet.Cells[1, row + i].Value = key[i];
+                         }
+
+                        if (i < DopelName.Count())
+                        {
+                            worksheet.Cells[$"I{Rowcheked}"].Value = "Profil-Doppelzylinder";
+
+                            string Option = "";
+
+                            if (i < DoppelOption.Count())
+                            {
+                                Option = DoppelOption[i];
+                            }
+                            else
+                            {
+                                Option = "";
+                            }
+
+                            worksheet.Cells[$"J{Rowcheked}"].Value = Option;
+                            worksheet.Cells[$"M{Rowcheked}"].Value = DoppelAussen[i];
+                            worksheet.Cells[$"N{Rowcheked}"].Value = DoppelIntern[i];
+                            
+                            var UserOrderProduct = new Models.Users.ProductSysteam
+                            {
+                                UserOrdersShopId = UserOrder.Id,
+                                Name = DopelName[i],
+                                Aussen = DoppelAussen[i],
+                                Intern = DoppelIntern[i],
+                                Option = Option
+                            };
+
+                            db.ProductSysteam.Add(UserOrderProduct);
+                            db.SaveChanges();
+                        }
+                   
+                        else if (i < KnayfName.Count())
+                        {
+                            worksheet.Cells[$"I{Rowcheked}"].Value = "Profil-Knaufzylinder";
+                            
+                            var UserOrderProduct = new Models.Users.ProductSysteam
+                            {
+                                UserOrdersShopId = UserOrder.Id,
+                                Name = KnayfName[i],
+                                Aussen = KnayfAussen[i],
+                                Intern = KnayfIntern[i]
+                                //Option = DoppelOption[i]
+                            };
+
+                            db.ProductSysteam.Add(UserOrderProduct);
+                            db.SaveChanges();
+                        }
+
+                        else if (i < HalbName.Count())
+                        {
+                            worksheet.Cells[$"I{Rowcheked}"].Value = "Profil-Halbzylinder";
+                            
+                            var UserOrderProduct = new Models.Users.ProductSysteam
+                            {
+                                UserOrdersShopId = UserOrder.Id,
+                                Name = HalbName[i],
+                                Aussen = HalbAussen[i]
+                                //Option = DoppelOption[i]
+                            };
+
+                            db.ProductSysteam.Add(UserOrderProduct);
+                            db.SaveChanges();
+                        }
+
+                        else if (i < HelbName.Count())
+                        {
+                            worksheet.Cells[$"I{Rowcheked}"].Value = "Hebelzylinder";
+                            
+                            var UserOrderProduct = new Models.Users.ProductSysteam
+                            {
+                                UserOrdersShopId = UserOrder.Id,
+                                Name = HelbName[i],
+                                //Option = DoppelOption[i]
+                            };
+                            
+                            db.ProductSysteam.Add(UserOrderProduct);
+                            db.SaveChanges();
+                        }
+
+                        else if (i < VorhanName.Count())
+                        {
+                            worksheet.Cells[$"I{Rowcheked}"].Value = "Vorhangschloss";
+
+                            var UserOrderProduct = new Models.Users.ProductSysteam
+                            {
+                                UserOrdersShopId = UserOrder.Id,
+                                Name = VorhanName[i],
+                                Aussen = VorhanAussen[i],
+                                //Option = DoppelOption[i]
+                            };
+
+                            db.ProductSysteam.Add(UserOrderProduct);
+                            db.SaveChanges();
+                        }
+
+                        else if(i < AussenName.Count())
+                        {
+                            worksheet.Cells[$"I{Rowcheked}"].Value = "Aussenzylinder_Rundzylinder";
+                            
+                            var UserOrderProduct = new Models.Users.ProductSysteam
+                            {
+                                UserOrdersShopId = UserOrder.Id,
+                                Name = AussenName[i]
+                                //Option = DoppelOption[i]
+                            };
+
+                            db.ProductSysteam.Add(UserOrderProduct);
+                            db.SaveChanges();
+                        }
+
+                    Rowcheked++;
+                }
+                
+                package.Save();
             }
-            count = 0;
-            for (int i = 0; i < profilK.Count(); i++)
-            {
-                var TypeSylinder = Zylinder_Typ.Where(x => x.Id == profilK[count].schliessanlagenId).Select(x => x.nameType).ToList().First();
-   
-                var NameZ = profilK.Where(x => x.Id == profilK[count].Id).Select(d => d.Name).ToList().Last();
 
-                worksheet.Range[Row, 1].Value = $"{Row - 1}";
-                worksheet.Range[Row, 2].Value = $"{Row - 1}";
-                worksheet.Range[Row, 3].Value = $"{NameZ}";
-                worksheet.Range[Row, 4].Value = $"{TypeSylinder}";
-                //worksheet.Range[Row, 5].Value = $"{Extern}\t|\t{Intern}";
-                worksheet.Range[Row, 6].Value = $"";
-                Row++;
-            }
-            count = 0;
-            for (int i = 0; i < hebel.Count(); i++)
-            {
-                var TypeSylinder = Zylinder_Typ.Where(x => x.Id == hebel[count].schliessanlagenId).Select(x => x.nameType).ToList().First();
-                var NameZ = hebel.Where(x => x.Id == hebel[count].Id).Select(d => d.Name).ToList().First();
+            var UserName_UserSername = UserLogin.Name + " " + UserLogin.Sername;
 
-                worksheet.Range[Row, 1].Value = $"{Row - 1}";
-                worksheet.Range[Row, 2].Value = $"{Row - 1}";
-                worksheet.Range[Row, 3].Value = $"{NameZ}";
-                worksheet.Range[Row, 4].Value = $"{TypeSylinder}";
-                worksheet.Range[Row, 5].Value = $"";
-                worksheet.Range[Row, 6].Value = $"";
-                count++;
-                Row++;
-            }
-            count = 0;
-            for (int i = 0; i < Vorhangschloss.Count(); i++)
-            {
-                var TypeSylinder = Zylinder_Typ.Where(x => x.Id == Vorhangschloss[count].schliessanlagenId).Select(x => x.nameType).ToList().First();
-                var NameZ = Vorhangschloss.Where(x => x.Id == Vorhangschloss[count].Id).Select(d => d.Name).ToList().First();
-                worksheet.Range[Row, 1].Value = $"{Row - 1}";
-                worksheet.Range[Row, 2].Value = $"{Row - 1}";
-                worksheet.Range[Row, 3].Value = $"{NameZ}";
-                worksheet.Range[Row, 4].Value = $"{TypeSylinder}";
-                worksheet.Range[Row, 5].Value = $"";
-                worksheet.Range[Row, 6].Value = $"";
-                count++;
-                Row++;
-            }
-            count = 0;
-            for (int i = 0; i < Aussenzylinder.Count(); i++)
-            {
-                var TypeSylinder = Zylinder_Typ.Where(x => x.Id == Aussenzylinder[count].schliessanlagenId).Select(x => x.nameType).ToList().First();
-                var NameZ = Aussenzylinder.Where(x => x.Id == Aussenzylinder[count].Id).Select(d => d.Name).ToList().First();
-
-                worksheet.Range[Row, 1].Value = $"{Row - 1}";
-                worksheet.Range[Row, 2].Value = $"{Row - 1}";
-                worksheet.Range[Row, 3].Value = $"{NameZ}";
-                worksheet.Range[Row, 4].Value = $"{TypeSylinder}";
-                worksheet.Range[Row, 5].Value = "";
-                worksheet.Range[Row, 6].Value = $"";
-                count++;
-                Row++;
-            }
-            //Автоматическое подгонка ширины столбцов
-            //worksheet.AllocatedRange.AutoFitColumns();
-
-            //Применение стиля к первой строке
-            //CellStyle style = workbook.Styles.Add("newStyle");
-            //style.Font.IsBold = true;
-            //worksheet.Range[1, 1, 1, 4].Style = style;
-
-            //Сохранение в файл Excel
-            workbook.SaveToFile("CES_schliessplan_DE_schliessanlagen.xltx", ExcelVersion.Version2016);
-
-
-
-            return View("Finisher");
-        }
-        [HttpGet]
-        public ActionResult SaveUserOrders(string userInfo,List<string> nameKey, List<string> TurName,List<string> DopelName,List<float> DoppelAussen,List<float> DoppelIntern
-            , List<string> DoppelOption, List<string> KnayfName, List<float> KnayfAussen, List<float> KnayfIntern, List<string> HalbName, List<float> HalbAussen, List<string> HelbName,
-           List<string> VorhanName, List<float> VorhanAussen, List<string> AussenName)
-        {
-            char[] separators = { ' ', '\n', '\t', '\r' };
-
-            if (userInfo != null)
-            {
-                string[] words = userInfo.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-
-                var UserLogin = db.User.Where(x => x.Name == words[0] & x.Sername == words[1]).ToList();
-
-                var UserName_UserSername = UserLogin.Select(x => x.Name).First() + " " + UserLogin.Select(x => x.Sername).First();
-
-                ViewBag.UserInformStatus = UserLogin.Select(x => x.Status).First();
-                ViewBag.UserId = UserLogin.Select(x => x.Id).First();
+                ViewBag.UserInformStatus = UserLogin.Status;
+                ViewBag.UserId = UserLogin.Id;
                 ViewBag.UserNameItem = UserName_UserSername;
-            }
 
-            
 
-            return View("AdminConnect");
+            return RedirectToAction("AdminConnect", UserLogin);
         }
         [HttpGet]
         public ActionResult FinischerProductSelect(string userInfo, float SumCosted,List<string> DopelOption, List<int> DopelItem,  List<float> DAussen, List<float> DIntern,List<int> Knayf, string user, List<int> Halb,
@@ -2149,9 +2250,11 @@ namespace schliessanlagen_konfigurator.Controllers
 
             ViewBag.Key = OpenLis.Distinct().ToList();
             ViewBag.KeyValueFT = KeyValue.ToList();
-           
 
-           
+            ViewBag.IsOpen = KeyValue.Select(x => x.isOpen).ToList();
+            ViewBag.NameKey = OpenLis.Select(x=>x.NameKey).Distinct().ToList();
+            ViewBag.CountKey = OpenLis.Select(x => x.CountKey).ToList();
+
 
             return View("FinischerProductSelect", UserOrder );
         }

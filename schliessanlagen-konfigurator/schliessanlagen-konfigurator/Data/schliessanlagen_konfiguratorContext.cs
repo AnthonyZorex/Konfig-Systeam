@@ -24,7 +24,7 @@ namespace schliessanlagen_konfigurator.Data
         public DbSet<Schliessanlagen> Schliessanlagen { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<UserOrdersShop> UserOrdersShop { get; set; }
-
+        public DbSet<ProductSysteam> ProductSysteam { get; set; }
 
 
 

@@ -751,6 +751,37 @@ namespace schliessanlagenkonfigurator.Migrations
                     b.ToTable("Schliessanlagen");
                 });
 
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Users.ProductSysteam", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<float?>("Aussen")
+                        .HasColumnType("real");
+
+                    b.Property<float?>("Intern")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Option")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UserOrdersShopId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserOrdersShopId");
+
+                    b.ToTable("ProductSysteam");
+                });
+
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Users.User", b =>
                 {
                     b.Property<int>("Id")
@@ -803,9 +834,6 @@ namespace schliessanlagenkonfigurator.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("Count")
-                        .HasColumnType("int");
-
                     b.Property<float>("OrderSum")
                         .HasColumnType("real");
 
@@ -815,10 +843,6 @@ namespace schliessanlagenkonfigurator.Migrations
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
-
-                    b.Property<string>("userkey")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -1211,6 +1235,15 @@ namespace schliessanlagenkonfigurator.Migrations
                     b.Navigation("Knayf_Options");
                 });
 
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Users.ProductSysteam", b =>
+                {
+                    b.HasOne("schliessanlagen_konfigurator.Models.Users.UserOrdersShop", "UserOrdersShop")
+                        .WithMany("ProductSysteam")
+                        .HasForeignKey("UserOrdersShopId");
+
+                    b.Navigation("UserOrdersShop");
+                });
+
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Users.UserOrdersShop", b =>
                 {
                     b.HasOne("schliessanlagen_konfigurator.Models.Users.User", "User")
@@ -1385,6 +1418,11 @@ namespace schliessanlagenkonfigurator.Migrations
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Users.User", b =>
                 {
                     b.Navigation("UserOrdersShop");
+                });
+
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Users.UserOrdersShop", b =>
+                {
+                    b.Navigation("ProductSysteam");
                 });
 
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Vorhan.OptionsVorhan", b =>

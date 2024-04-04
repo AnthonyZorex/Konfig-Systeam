@@ -45,9 +45,9 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
-            "Aspose.Cells": {
+            "EPPlus": {
               "target": "Package",
-              "version": "[24.2.0, )"
+              "version": "[7.1.0, )"
             },
             "Json.Net": {
               "target": "Package",
@@ -84,10 +84,6 @@
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.3, )"
-            },
-            "Spire.XLS": {
-              "target": "Package",
-              "version": "[14.2.1, )"
             }
           },
           "imports": [
