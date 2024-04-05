@@ -125,8 +125,44 @@
       "PackagePath": "staticwebassets\\Image\\Bravus.2000 Vorhangschloss245220461.png"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\CES DU Halbzylinder242857569.png",
+      "PackagePath": "staticwebassets\\Image\\CES DU Halbzylinder242857569.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\CES DU Hebelzylinde243328473.png",
+      "PackagePath": "staticwebassets\\Image\\CES DU Hebelzylinde243328473.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\CES DU Knaufzylinder241855061.png",
+      "PackagePath": "staticwebassets\\Image\\CES DU Knaufzylinder241855061.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\CES DU Schließzylinder242419221.png",
+      "PackagePath": "staticwebassets\\Image\\CES DU Schließzylinder242419221.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\CES DU Vorhängeschloss244629750.png",
+      "PackagePath": "staticwebassets\\Image\\CES DU Vorhängeschloss244629750.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\CES DU Vorhängeschloss245118532.png",
+      "PackagePath": "staticwebassets\\Image\\CES DU Vorhängeschloss245118532.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\CES WO Halbzylinder240812596.png",
+      "PackagePath": "staticwebassets\\Image\\CES WO Halbzylinder240812596.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\CES WO Knaufzylinder240423374.png",
+      "PackagePath": "staticwebassets\\Image\\CES WO Knaufzylinder240423374.png"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\SD_Logo.svg",
       "PackagePath": "staticwebassets\\Image\\SD_Logo.svg"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\System Wo245804822.png",
+      "PackagePath": "staticwebassets\\Image\\System Wo245804822.png"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\Vitess.4000 Außenzylinder243754150.png",
@@ -167,10 +203,6 @@
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\shopping-cart.png",
       "PackagePath": "staticwebassets\\Image\\shopping-cart.png"
-    },
-    {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\.~lock.Schlüssel Discount OrderFile.xlsx#",
-      "PackagePath": "staticwebassets\\Orders\\.~lock.Schlüssel Discount OrderFile.xlsx#"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\CES_schliessplan_DE_schliessanlagen.xltx",

@@ -19,6 +19,11 @@ using User = schliessanlagen_konfigurator.Models.Users.User;
 using System.IO;
 using OfficeOpenXml;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.CodeAnalysis.Options;
+using schliessanlagenkonfigurator.Migrations;
+using OfficeOpenXml.Core;
+using NuGet.Protocol;
+using System;
 
 namespace schliessanlagen_konfigurator.Controllers
 {
@@ -53,49 +58,154 @@ namespace schliessanlagen_konfigurator.Controllers
 
             return RedirectToAction("AdminConnect", newUser);
         }
-        public async Task<ActionResult>AdminConnect(User UserLogin)
+        public async Task<ActionResult> AdminConnect(User UserLogin , int UserId)
         {
-            var UserItem = db.User.Where(x => x.Id == UserLogin.Id).ToList();
-
-            var ListItem = new List<UserOrdersShop>();
-
-            for(int i = 0; i < UserItem.Count(); i++)
+            if (UserLogin.Id != 0)
             {
-                var OrderList = db.UserOrdersShop.Where(x => x.UserId == UserItem[i].Id);
-                
-                foreach(var list in OrderList)
+                var UserItem = db.User.FirstOrDefault(x => x.Id == UserLogin.Id);
+
+                var ListItem = new List<UserOrdersShop>();
+
+
+                var OrderList = db.UserOrdersShop.Where(x => x.UserId == UserItem.Id).Distinct().ToList();
+
+                foreach (var list in OrderList)
                 {
                     ListItem.Add(list);
                 }
-            }
 
-            ViewBag.CountOrders = ListItem.Count();
 
-            var ListItemProduct  = new List<Models.Users.ProductSysteam>();
+                ViewBag.CountOrders = ListItem.Count();
 
-            for (int f = 0; f < ListItem.Count();f++)
-            {
-                var ProductList = db.ProductSysteam.Where(x => x.UserOrdersShopId == ListItem[f].Id);
+                var ListItemProduct = new List<Models.Users.ProductSysteam>();
 
-                foreach (var list in ProductList)
+                for (int f = 0; f < ListItem.Count(); f++)
                 {
-                    ListItemProduct.Add(list);
+                    var ProductList = db.ProductSysteam.Where(x => x.UserOrdersShopId == ListItem[f].Id).Distinct().ToList();
+
+                    foreach (var list in ProductList)
+                    {
+                        ListItemProduct.Add(list);
+                    }
                 }
+
+                ViewBag.OrderList = ListItem;
+                ViewBag.OrderItem = ListItemProduct;
+
+                var queryOrder = from t1 in ListItem.Distinct()
+                                 join t2 in ListItemProduct.Distinct() on t1.Id equals t2.UserOrdersShopId
+
+                                 select new
+                                 {
+                                     Id = t2.UserOrdersShopId,
+                                     ProductName = t1.ProductName,
+                                     Name = t2.Name,
+                                     Aussen = t2.Aussen,
+                                     Intern = t2.Intern,
+                                     Option = t2.Option,
+                                     OrderSum = t1.OrderSum
+                                 };
+
+                var OrderInfo = queryOrder.Distinct().ToList();
+
+                ViewBag.AllOrderInfo = OrderInfo;
+
+                return View(UserItem);
             }
+            if (UserId != 0)
+            {
+                var UserItemID = db.User.FirstOrDefault(x => x.Id == UserId);
 
-            ViewBag.OrderList = ListItem;
-            ViewBag.OrderItem = ListItemProduct;
+                var ListItemId = new List<UserOrdersShop>();
 
-            return View(UserItem);
+
+                var OrderListId = db.UserOrdersShop.Where(x => x.UserId == UserId).Distinct().ToList();
+
+                foreach (var list in OrderListId)
+                {
+                    ListItemId.Add(list);
+                }
+
+
+                ViewBag.CountOrders = ListItemId.Count();
+
+                var ListItemProductId = new List<Models.Users.ProductSysteam>();
+
+                for (int f = 0; f < ListItemId.Count(); f++)
+                {
+                    var ProductList = db.ProductSysteam.Where(x => x.UserOrdersShopId == ListItemId[f].Id).Distinct().ToList();
+
+                    foreach (var list in ProductList)
+                    {
+                        ListItemProductId.Add(list);
+                    }
+                }
+
+                ViewBag.OrderList = ListItemId;
+                ViewBag.OrderItem = ListItemProductId;
+                
+                var queryOrderId = from t1 in ListItemId.Distinct()
+                                   join t2 in ListItemProductId.Distinct() on t1.Id equals t2.UserOrdersShopId
+
+                                   select new
+                                   {
+                                       Id = t2.UserOrdersShopId,
+                                       ProductName = t1.ProductName,
+                                       Name = t2.Name,
+                                       Aussen = t2.Aussen,
+                                       Intern = t2.Intern,
+                                       Option = t2.Option,
+                                       OrderSum = t1.OrderSum,
+                                   };
+
+                var OrderInfoId = queryOrderId.Distinct().ToList();
+
+                ViewBag.AllOrderInfo = OrderInfoId;
+
+                return View(UserItemID);
+            }
+            return View();
         }
         public async Task<ActionResult> LoginPerson(string Login,string Password)
         {
             var UserLogin = db.User.FirstOrDefault(x => x.Login == Login && x.Password == Password);
-            
-            if(UserLogin != null)
+
+            if (UserLogin != null)
             {
-               
-                return RedirectToAction("IndexKonfigurator", UserLogin);
+                var ListItemId = new List<UserOrdersShop>();
+
+
+                var OrderListId = db.UserOrdersShop.Where(x => x.UserId == UserLogin.Id).ToList();
+
+                foreach (var list in OrderListId)
+                {
+                    ListItemId.Add(list);
+                }
+
+
+                ViewBag.CountOrders = ListItemId.Count();
+
+                var UserLoginList = db.User.Where(x => x.Login == Login && x.Password == Password).ToList();
+
+                var queryOrderId = from t1 in UserLoginList
+
+                                   select new
+                                   {
+                                       t1.Name,
+                                       t1.Sername,
+                                      t1.Email,
+                                       t1.PhoneNumber,
+                                       t1.Password,
+                                        t1.Status,
+                                        t1.Login,
+                                        t1.Adress,
+                                       countOrder = ListItemId.Count(),
+                                       t1.Id,
+                                   };
+
+                var UserLoginP = queryOrderId.ToList();
+
+                return RedirectToAction("IndexKonfigurator", new { Auser =  UserLoginP });
             }
             else
             {
@@ -104,14 +214,56 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             
         }
-        public ActionResult IndexKonfigurator(string Status, Models.Users.User UserLogin)
+        public ActionResult IndexKonfigurator(string Status,string Auser)
         {
             ViewBag.Zylinder_Typ = db.Schliessanlagen.ToList();
-            var UserName_UserSername = UserLogin.Name + " " + UserLogin.Sername;
-            ViewBag.UserInformStatus = UserLogin.Status;
-            ViewBag.UserId = UserLogin.Id;
-            ViewBag.UserNameItem = UserName_UserSername;
-           
+
+            if (Auser != null)
+            {
+                string[] fruits = Auser.Split(',');
+
+                for (int i = 0; i < fruits.Length; i++)
+                {
+                    int index = fruits[i].IndexOf("=");
+                    if (index != -1)
+                    {
+                        string result = fruits[i].Substring(index + 1);
+                        fruits[i] = result;
+                    }
+                    
+                }
+                for (int i = 0; i < fruits.Length; i++)
+                {
+                    int index = fruits[i].IndexOf("}");
+                    if (index != -1)
+                    {
+                        string result = fruits[i].Substring(0, index);
+                        fruits[i] = result;
+                    }
+
+                }
+                for (int i = 0; i < fruits.Length; i++)
+                {
+                    int index = fruits[i].IndexOf(" ");
+                    if (index != -1)
+                    {
+                        string result = fruits[i].Substring(index + 1);
+                        fruits[i] = result;
+                    }
+
+                }
+                var UserName_UserSername = fruits[0] + " " + fruits[1];
+                ViewBag.UserInformStatus = fruits[5];
+                ViewBag.UserId = fruits[9];
+                ViewBag.UserNameItem = UserName_UserSername;
+                ViewBag.CountOrders = fruits[8];
+            }
+            else
+            {
+                ViewBag.CountOrders = 0;
+            }
+
+            
             #region knayf allParametrsDoppel
 
             var a = db.Aussen_Innen.Select(x => x.aussen).ToList();
@@ -1857,7 +2009,32 @@ namespace schliessanlagen_konfigurator.Controllers
 
             return View("Finisher", key.Last() );
         }
-      
+        
+        [HttpPost]
+        public ActionResult RemoveOrder(int data,int UserId)
+        {
+            var RemoveOrder = db.UserOrdersShop.Where(x=>x.Id == data).ToList();
+            
+            var OrderProduct = db.ProductSysteam.Where(x=>x.UserOrdersShopId ==  data).ToList();
+            
+            foreach (var listProduct in OrderProduct)
+            {
+                db.ProductSysteam.Remove(listProduct);
+               
+                foreach (var listOrder in RemoveOrder)
+                {
+                    db.UserOrdersShop.Remove(listOrder);
+                   
+                }
+               
+            }
+
+            db.SaveChanges();
+
+            var UserLogin = db.User.FirstOrDefault(x => x.Id == UserId);
+            return RedirectToAction("AdminConnect", UserLogin);
+        }
+
         [HttpGet]
         public ActionResult SaveUserOrders(string userInfo,List<string> nameKey, List<string> TurName,List<string> DopelName,List<float> DoppelAussen,List<float> DoppelIntern
             , List<string> DoppelOption, List<string> KnayfName, List<float> KnayfAussen, List<float> KnayfIntern, List<string> HalbName, List<float> HalbAussen, List<string> HelbName,
@@ -1888,6 +2065,7 @@ namespace schliessanlagen_konfigurator.Controllers
             string destinationFilePath = @$"wwwroot/Orders/{UserLogin.Name + " " + UserLogin.Sername} OrderFile.xlsx";
 
             using (FileStream sourceFileStream = new FileStream(sourceFilePath, FileMode.Open, FileAccess.Read))
+           
             using (BinaryReader reader = new BinaryReader(sourceFileStream))
             {
                 using (FileStream destinationFileStream = new FileStream(destinationFilePath, FileMode.Create, FileAccess.Write))
@@ -1927,7 +2105,7 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 ExcelWorksheet worksheet = package.Workbook.Worksheets["Schließplan"];
 
-                for (int i = 0; i < CountAllItem; i ++)
+                for (int i = 0; i < CountAllItem; i++)
                 {
 
                     for (int z = 0; z < countKey.Count(); z++)
@@ -1947,7 +2125,6 @@ namespace schliessanlagen_konfigurator.Controllers
                         {
                             break;
                         }
-
                     }
                         worksheet.Cells[$"A{Rowcheked}"].Value = i + 1;
                         worksheet.Cells[$"B{Rowcheked}"].Value = i + 1;
@@ -2218,6 +2395,7 @@ namespace schliessanlagen_konfigurator.Controllers
             }
 
             ViewBag.Tur = Order.Select(x => x.DorName).ToList();
+            
             var countRow = KeyValue.Distinct().ToList().Count()/OpenLis.Distinct().ToList().Count();
             ViewBag.EinRow = countRow;
 
@@ -2411,13 +2589,16 @@ namespace schliessanlagen_konfigurator.Controllers
 
             }
             var order_open = db.isOpen_Order.Select(x => x.Id).ToList();
+           
             var d = 0;
+           
             if (ItemCount.Count() > 0)
             {
                 var itemsCount = IsOppen.Count() / ItemCount.First();
                 for (var s = 0; s < ItemCount.First(); s++)
                 {
                     string NameKeyValue;
+
                     int CountkeyOrders;
 
 
@@ -2443,7 +2624,9 @@ namespace schliessanlagen_konfigurator.Controllers
                         NameKey = NameKeyValue,
                         CountKey = CountkeyOrders,
                     };
+
                     db.isOpen_value.Add(Open_value);
+
                     db.SaveChanges();
 
                     for (var f = 0; f < itemsCount; f++)

@@ -271,7 +271,6 @@ D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\schliessanlagen-konfigurator.runtimeconfig.json
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\schliessanlagen-konfigurator.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\schliessanlagen-konfigurator.pdb
-D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\Aspose.Cells.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\Azure.Core.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\Azure.Identity.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\Humanizer.dll
@@ -328,8 +327,6 @@ D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\NuGet.ProjectModel.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\NuGet.Protocol.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\NuGet.Versioning.dll
-D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\SkiaSharp.dll
-D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\Spire.XLS.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\System.CodeDom.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\System.Composition.AttributedModel.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\System.Composition.Convention.dll
@@ -491,13 +488,6 @@ D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
-D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
-D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\runtimes\osx\native\libSkiaSharp.dylib
-D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\runtimes\win-arm64\native\libSkiaSharp.dll
-D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\runtimes\win-x64\native\libSkiaSharp.dll
-D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\runtimes\win-x86\native\libSkiaSharp.dll
-D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
-D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
@@ -514,3 +504,11 @@ D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net7.0\schliessanlagen-konfigurator.genruntimeconfig.cache
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net7.0\ref\schliessanlagen-konfigurator.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net7.0\schliess.1BEA3511.Up2Date
+D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\EPPlus.dll
+D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\EPPlus.Interfaces.dll
+D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\EPPlus.System.Drawing.dll
+D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\Microsoft.IO.RecyclableMemoryStream.dll
+D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\System.Security.Cryptography.Pkcs.dll
+D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\runtimes\win\lib\net7.0\Microsoft.Win32.SystemEvents.dll
+D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\runtimes\win\lib\net7.0\System.Drawing.Common.dll
+D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net7.0\runtimes\win\lib\net7.0\System.Security.Cryptography.Pkcs.dll

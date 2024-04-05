@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = $"AdminConnect/{Model.Id}";
+    float costed = 0;
 }
 @Html.HiddenFor(m => m.Id)
 <div id="UserConteiner">
@@ -9,7 +10,7 @@
     <div id="UserConteinerInform">
     <div id="UserMenu">
             <ul style="list-style-type: none;">
-                <li>MEIN KONTO</li>
+            <li>MEIN KONTO</li>
             <hr />
             <li>Dashboard</li>
             <li>Bestellungen</li>
@@ -21,9 +22,66 @@
         </ul>
     </div>
     <div id="UserInform">
-            <h3><strong>@Html.DisplayFor(x => x.Sername)    @Html.DisplayFor(x => x.Name)</strong> </h3>
+        
+        <h3><strong>@Html.DisplayFor(x => x.Sername) @Html.DisplayFor(x => x.Name)</strong> </h3>
 
         <h3>In deiner Konto-Übersicht kannst du deine letzten Bestellungen ansehen, deine Liefer- und Rechnungsadresse verwalten und dein Passwort und die Kontodetails bearbeiten.</h3>
-    </div>
+           
+            <div id="AllOrderUser">
+               
+                @foreach (var z in ViewBag.AllOrderInfo)
+                {
+                    <div id="AllProductUser">
+                    <h2>@z.ProductName</h2>
+                    <details>
+                        <summary>
+                        </summary>
+                            <h4>Name: @z.Name</h4>
+                            <h4>Aussen: @z.Aussen</h4>
+                            <h4>Intern: @z.Intern</h4>
+                            <h4>Option: @z.Option</h4>
+                    </details>
+                        <div style="text-align: end;">
+                            <button id="removeOrder" onclick="(remove(@z.Id,@Model.Id))">RemovaOrder</button>
+                            <button>Pay</button>
+                        </div>
+                        <br />
+                        <hr />
+                        <h2>OrderSum: @z.OrderSum</h2>
+                    </div>
+
+                    costed = costed + z.OrderSum;
+                }
+                <br />
+                <hr />
+                <h2 style="color:red">Costed: @costed</h2>
+            </div>
+            
+        </div>
     </div>
 </div>
+
+<script>
+
+    let removeButton = document.getElementById("removeOrder");
+    let AllOrderID = document.querySelector("#OrderId");
+
+    function remove(empty,UserID) 
+    {
+        $.ajax({
+            type: "POST",
+            url: "/Konfigurator/RemoveOrder",
+            data: { data: empty, UserId: UserID },
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+        location.reload();
+    }
+
+   
+
+</script>

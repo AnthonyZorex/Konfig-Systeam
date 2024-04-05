@@ -660,8 +660,15 @@ summary {
 }
 a{
     text-decoration:none;
-   /* color:black;*/
+    color:black;
 }
     a:hover {
         color: black;
     }
+
+#AllProductUser {
+    margin-top: 50px;
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+}

@@ -12,6 +12,7 @@
 
 </head>
 <body>
+
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow ">
             <div class="container-fluid">
@@ -54,22 +55,12 @@
                     </ul>
                     <ul class="navbar-nav flex-grow-1" style="display: flex;align-items: center;text-align: center;">
                         <li class="nav-item">
-                            <a style="text-decoration:underline">@ViewBag.UserNameItem</a>
+                            <a style="text-decoration:underline" href="@Url.Action("AdminConnect","Konfigurator", new {UserId = ViewBag.UserId})">@ViewBag.UserNameItem</a>
                         </li>
-                     @*    @if (@ViewBag.User !=null)
-                        {
+                  
                             <li class="nav-item">
-                                <a class="nav-link text-dark" type="button" id="schopIcons" href="@Url.Action("AdminConnect","Konfigurator", new {User = ViewBag.UserId})"><img src="~/Image/shopping-cart.png" width="20" height="20" style="margin-left:-2px;margin-top:-12px" /></a>
+                            <button class="nav-link text-dark" type="button" id="schopIcons" data-toggle="modal" data-target="#myModal"><img id="openModalBtn" src="~/Image/shopping-cart.png" width="20" height="20" style="margin-left:-2px;margin-top:-12px" /><span id="CountOrders"></span></button>
                             </li>
-                        } 
-                        else
-                        { *@
-                            <li class="nav-item">
-                            <button class="nav-link text-dark" type="button" id="schopIcons" data-toggle="modal" data-target="#myModal"><img id="openModalBtn" src="~/Image/shopping-cart.png" width="20" height="20" style="margin-left:-2px;margin-top:-12px" /><span>@ViewBag.CountOrders</span></button>
-                            </li>
-                     @*    }  *@
-                        
-                      
                     </ul>
                 </div>
             </div>
@@ -91,7 +82,13 @@
 </html>
 
 <script>
+
+    let documentOrder = document.getElementById("CountOrders");
+    let countCost = @ViewBag.CountOrders;
+    documentOrder.textContent = countCost;
+
     $(document).ready(function () {
+
         var modal = $("#myModal");
         var btn = $("#openModalBtn");
         var closeBtn = $(".close");
