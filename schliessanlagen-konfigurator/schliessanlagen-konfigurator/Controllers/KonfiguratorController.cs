@@ -429,7 +429,6 @@ namespace schliessanlagen_konfigurator.Controllers
             var Zylinder_Typ = await db.Schliessanlagen.ToListAsync();
 
             var cheked = new List<Profil_Doppelzylinder>();
-
             var cheked2 = new List<Profil_Knaufzylinder>();
             var cheked3 = new List<Profil_Halbzylinder>();
             var cheked4 = new List<Hebel>(); 
@@ -456,7 +455,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                     var products = await db.Aussen_Innen.ToListAsync();
 
-                    var item = products.Where(x => x.aussen <= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).Select(x=>x.Profil_DoppelzylinderId).Distinct().ToList();
+                    var item = products.Where(x => x.aussen >= allUserListOrder[d].aussen & x.Intern >= allUserListOrder[d].innen).Select(x=>x.Profil_DoppelzylinderId).Distinct().ToList();
 
                     var safeDoppelItem = new List<Profil_Doppelzylinder>();
 
@@ -552,38 +551,32 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 if (allUserListOrder[d].ZylinderId == KnayfType)
                 {
-                    if (d >= profilK.Count())
+
+                    var KnayfProduct = new List<Profil_Knaufzylinder>();
+
+                    var products = await db.Aussen_Innen_Knauf.ToListAsync();
+
+                    var item = products.Where(x => x.aussen >= allUserListOrder[d].aussen & x.Intern >= allUserListOrder[d].innen).Select(x => x.Profil_KnaufzylinderId).Distinct().ToList();
+
+                    var safeDoppelItem = new List<Profil_Knaufzylinder>();
+
+                    for (int i = 0; i < item.Count(); i++)
                     {
-                        KnayfType = profilK.Last().schliessanlagenId;
+                        var chekedItem = db.Profil_Knaufzylinder.Where(x => x.Id == item[i]).ToList();
+
+                        for (int g = 0; g < chekedItem.Count(); g++)
+                            safeDoppelItem.Add(chekedItem[g]);
+
                     }
-                    else
+
+                    for (int j = 0; j < safeDoppelItem.Distinct().Count(); j++)
                     {
-                        KnayfType = profilK[d].schliessanlagenId;
+                        KnayfProduct.Add(safeDoppelItem[j]);
                     }
-                    if (allUserListOrder[d].ZylinderId == KnayfType)
+
+
+                    if (allUserListOrder[d].Options != null)
                     {
-
-                        var dopelProduct = new List<Profil_Knaufzylinder>();
-
-                        var products = await db.Aussen_Innen_Knauf.ToListAsync();
-
-                        var Knayfitem = products.Where(x => x.aussen <= allUserListOrder[d].aussen & x.Intern <= allUserListOrder[d].innen).Select(x=>x.Profil_KnaufzylinderId).Distinct().ToList();
-
-                        var safeDoppelItem = new List<Profil_Knaufzylinder>();
-
-                        for (int i = 0; i < Knayfitem.Count(); i++)
-                        {
-                            var chekedItem = db.Profil_Knaufzylinder.Where(x => x.Id == Knayfitem[i]).ToList();
-
-                            for (int g = 0; g < chekedItem.Count(); g++)
-                                safeDoppelItem.Add(chekedItem[g]);
-
-                        }
-
-                        for (int j = 0; j < safeDoppelItem.Distinct().Count(); j++)
-                        {
-                            cheked2.Add(safeDoppelItem[j]);
-                        }
 
                         var OptionsList = new List<Profil_Knaufzylinder_Options>();
 
@@ -591,66 +584,57 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         var opt = new List<Profil_Knaufzylinder_Options>();
 
-                        for (int i = 0; i < cheked2.Count(); i++)
+                        for (int i = 0; i < KnayfProduct.Count(); i++)
                         {
-                            var options = db.Profil_Knaufzylinder_Options.Where(x => x.Profil_KnaufzylinderId == cheked2[i].Id).ToList();
+                            var options = db.Profil_Knaufzylinder_Options.Where(x => x.Profil_KnaufzylinderId == KnayfProduct[i].Id).ToList();
                             for (int fs = 0; fs < options.Count(); fs++)
                             {
                                 opt.Add(options[fs]);
                             }
+                        }
+                        var resultList = new List<Knayf_Options>();
+
+                        for (int f = 0; f < opt.Count(); f++)
+                        {
+                            var OptionsName = db.Knayf_Options.Where(x => x.OptionsId == opt[f].Id).ToList();
+
+                            var result = OptionsName.Where(x => x.Name == allUserListOrder[d].Options).ToList();
+
+                            foreach (var s in result)
+                            {
+                                resultList.Add(s);
+                            }
+                        }
+
+                        var NeOptionList = new List<Profil_Knaufzylinder_Options>();
+
+                        foreach (var g in resultList)
+                        {
+                            var optX = opt.Where(x => x.Id == g.OptionsId).ToList();
+                            foreach (var mh in optX)
+                            {
+                                NeOptionList.Add(mh);
+                            }
 
                         }
-                        if (allUserListOrder[d].Options != "Options")
+                        foreach (var gf in NeOptionList)
                         {
-                            if (opt.Count() != 0)
+                            var SortProduct = KnayfProduct.Where(x => x.Id == gf.Profil_KnaufzylinderId).ToList();
+                            foreach (var j in SortProduct)
                             {
-                                for (int j = 0; j < opt.Count(); j++)
-                                {
-                                    OptionsList.Add(opt[j]);
-                                }
+                                cheked2.Add(j);
                             }
-
-                            var resultList = new List<Knayf_Options>();
-
-                            for (int f = 0; f < OptionsList.Count(); f++)
-                            {
-                                var OptionsName = db.Knayf_Options.Where(x => x.OptionsId == OptionsList[f].Id).ToList();
-
-                                var result = OptionsName.Where(x => x.Name == allUserListOrder[d].Options).ToList();
-                                for (int s = 0; s < result.Count(); s++)
-                                {
-                                    resultList.Add(result[s]);
-
-                                }
-
-
-                            }
-
-                            for (int s = 0; s < resultList.Count(); s++)
-                            {
-                                var ItemList = db.Profil_Knaufzylinder_Options.Where(x => x.Id == resultList[s].OptionsId).ToList();
-                                OptionsList = ItemList;
-                            }
-
-
-                            for (int l = 0; l < OptionsList.Count(); l++)
-                            {
-                                var dopel = db.Profil_Knaufzylinder.Where(x => x.Id == OptionsList[l].Profil_KnaufzylinderId).ToList();
-
-                                cheked2 = dopel;
-                            }
-
-                            for (int xf = 0; xf < cheked.Count(); xf++)
-                            {
-                                var ms = db.Profil_Knaufzylinder.Where(x => x.Id == cheked[xf].Id).Select(x => x).ToList();
-                                foreach (var list in ms)
-                                    dopelProduct.Add(list);
-                            }
-                            ViewBag.b = dopelProduct.ToList();
                         }
 
                     }
+                    else
+                    {
+                        foreach (var g in KnayfProduct)
+                        {
+                            cheked2.Add(g);
+                        }
 
+                    }
                 }
 
                 int HalbType = 0;
@@ -666,94 +650,90 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 if (allUserListOrder[d].ZylinderId == HalbType)
                 {
-                        var dopelProduct = new List<Profil_Halbzylinder>();
+                    var HalbProduct = new List<Profil_Halbzylinder>();
 
-                        var products = await db.Aussen_Innen_Halbzylinder.ToListAsync();
+                    var products = await db.Aussen_Innen_Halbzylinder.ToListAsync();
 
-                        var item = products.Where(x => x.aussen <= allUserListOrder[d].aussen).Select(x=>x.Profil_HalbzylinderId).Distinct().ToList();
+                    var item = products.Where(x => x.aussen >= allUserListOrder[d].aussen).Select(x => x.Profil_HalbzylinderId).Distinct().ToList();
 
-                        var safeDoppelItem = new List<Profil_Halbzylinder>();
+                    var safeDoppelItem = new List<Profil_Halbzylinder>();
 
-                        for (int i = 0; i < item.Count(); i++)
-                        {
-                            var chekedItem = db.Profil_Halbzylinder.Where(x => x.Id == item[i]).ToList();
+                    for (int i = 0; i < item.Count(); i++)
+                    {
+                        var chekedItem = db.Profil_Halbzylinder.Where(x => x.Id == item[i]).ToList();
 
-                            for (int g = 0; g < chekedItem.Count(); g++)
-                                safeDoppelItem.Add(chekedItem[g]);
+                        for (int g = 0; g < chekedItem.Count(); g++)
+                            safeDoppelItem.Add(chekedItem[g]);
 
-                        }
+                    }
 
-                        for (int j = 0; j < safeDoppelItem.Distinct().Count(); j++)
-                        {
-                            cheked3.Add(safeDoppelItem[j]);
-                        }
+                    for (int j = 0; j < safeDoppelItem.Distinct().Count(); j++)
+                    {
+                        HalbProduct.Add(safeDoppelItem[j]);
+                    }
+
+
+                    if (allUserListOrder[d].Options != null)
+                    {
 
                         var OptionsList = new List<Profil_Halbzylinder_Options>();
 
-                        var results = new List<Halbzylinder_Options>();
+                        var results = new List<Options>();
 
                         var opt = new List<Profil_Halbzylinder_Options>();
 
-                        for (int i = 0; i < cheked3.Count(); i++)
+                        for (int i = 0; i < HalbProduct.Count(); i++)
                         {
-                            var options = db.Profil_Halbzylinder_Options.Where(x => x.Profil_HalbzylinderId == cheked3[i].Id).ToList();
+                            var options = db.Profil_Halbzylinder_Options.Where(x => x.Profil_HalbzylinderId == HalbProduct[i].Id).ToList();
                             for (int fs = 0; fs < options.Count(); fs++)
                             {
                                 opt.Add(options[fs]);
                             }
-
                         }
-                        if (allUserListOrder[d].Options != "Options")
+
+                        var resultList = new List<Halbzylinder_Options>();
+
+                        for (int f = 0; f < opt.Count(); f++)
                         {
-                            if (opt.Count() != 0)
+                            var OptionsName = db.Halbzylinder_Options.Where(x => x.OptionsId == opt[f].Id).ToList();
+
+                            var result = OptionsName.Where(x => x.Name == allUserListOrder[d].Options).ToList();
+
+                            foreach (var s in result)
                             {
-                                for (int j = 0; j < opt.Count(); j++)
-                                {
-                                    OptionsList.Add(opt[j]);
-                                }
+                                resultList.Add(s);
                             }
-
-                            var resultList = new List<Halbzylinder_Options>();
-
-                            for (int f = 0; f < OptionsList.Count(); f++)
-                            {
-                                var OptionsName = db.Halbzylinder_Options.Where(x => x.OptionsId == OptionsList[f].Id).ToList();
-
-                                var result = OptionsName.Where(x => x.Name == allUserListOrder[d].Options).ToList();
-                                for (int s = 0; s < result.Count(); s++)
-                                {
-                                    resultList.Add(result[s]);
-
-                                }
-
-
-                            }
-
-
-                            for (int s = 0; s < resultList.Count(); s++)
-                            {
-                                var ItemList = db.Profil_Halbzylinder_Options.Where(x => x.Id == resultList[s].OptionsId).ToList();
-                                OptionsList = ItemList;
-                            }
-
-
-                            for (int l = 0; l < OptionsList.Count(); l++)
-                            {
-                                var dopel = db.Profil_Halbzylinder.Where(x => x.Id == OptionsList[l].Profil_HalbzylinderId).ToList();
-
-                                cheked3 = dopel;
-                            }
-
-                            for (int xf = 0; xf < cheked3.Count(); xf++)
-                            {
-                                var ms = db.Profil_Halbzylinder.Where(x => x.Id == cheked3[xf].Id).Select(x => x).ToList();
-                                foreach (var list in ms)
-                                    dopelProduct.Add(list);
-                            }
-                            ViewBag.c = dopelProduct.ToList();
                         }
 
-                   
+                        var NeOptionList = new List<Profil_Halbzylinder_Options>();
+
+                        foreach (var g in resultList)
+                        {
+                            var optX = opt.Where(x => x.Id == g.OptionsId).ToList();
+                            foreach (var mh in optX)
+                            {
+                                NeOptionList.Add(mh);
+                            }
+
+                        }
+                        foreach (var gf in NeOptionList)
+                        {
+                            var SortProduct = HalbProduct.Where(x => x.Id == gf.Profil_HalbzylinderId).ToList();
+                            foreach (var j in SortProduct)
+                            {
+                                cheked3.Add(j);
+                            }
+                        }
+
+                    }
+                    else
+                    {
+                        foreach (var g in HalbProduct)
+                        {
+                            cheked3.Add(g);
+                        }
+
+                    }
 
                 }
 
@@ -770,24 +750,8 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 if (allUserListOrder[d].ZylinderId == HebelType)
                 {
-
-                        var dopelProduct = new List<Hebel>();
-
-                      
-                        var safeDoppelItem = new List<Hebel>();
-
-                        var chekedItem = db.Hebelzylinder.ToList();
-
-                        for (int i = 0; i < chekedItem.Count(); i++)
-                        {
-                            safeDoppelItem.Add(chekedItem[i]);
-
-                        }
-
-                        for (int j = 0; j < safeDoppelItem.Distinct().Count(); j++)
-                        {
-                            cheked4.Add(safeDoppelItem[j]);
-                        }
+                    if (allUserListOrder[d].Options != null)
+                    {
 
                         var OptionsList = new List<Hebelzylinder_Options>();
 
@@ -795,61 +759,57 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         var opt = new List<Hebelzylinder_Options>();
 
-                        for (int i = 0; i < cheked4.Count(); i++)
+                        for (int i = 0; i < hebel.Count(); i++)
                         {
-                            var options = db.Hebelzylinder_Options.Where(x => x.HebelzylinderId == cheked4[i].Id).ToList();
-                           
+                            var options = db.Hebelzylinder_Options.Where(x => x.HebelzylinderId == hebel[i].Id).ToList();
                             for (int fs = 0; fs < options.Count(); fs++)
                             {
                                 opt.Add(options[fs]);
                             }
-
                         }
-                        if (allUserListOrder[d].Options != "Options")
+                        var resultList = new List<Options>();
+
+                        for (int f = 0; f < opt.Count(); f++)
                         {
-                            if (opt.Count() != 0)
+                            var OptionsName = db.Options.Where(x => x.OptionId == opt[f].Id).ToList();
+
+                            var result = OptionsName.Where(x => x.Name == allUserListOrder[d].Options).ToList();
+
+                            foreach (var s in result)
                             {
-                                for (int j = 0; j < opt.Count(); j++)
-                                {
-                                    OptionsList.Add(opt[j]);
-                                }
+                                resultList.Add(s);
                             }
-
-                            var resultList = new List<Options>();
-
-                            for (int f = 0; f < OptionsList.Count(); f++)
-                            {
-                                var OptionsName = db.Options.Where(x => x.Id == OptionsList[f].Id).ToList();
-
-                                var result = OptionsName.Where(x => x.Name == allUserListOrder[d].Options).ToList();
-                                for (int s = 0; s < result.Count(); s++)
-                                {
-                                    resultList.Add(result[s]);
-
-                                }
-
-
-                            }
-
-
-                            for (int s = 0; s < resultList.Count(); s++)
-                            {
-                                var ItemList = db.Hebelzylinder_Options.Where(x => x.Id == resultList[s].Id).ToList();
-                                OptionsList = ItemList;
-                            }
-
-
-                            for (int l = 0; l < OptionsList.Count(); l++)
-                            {
-                                var dopel = db.Hebelzylinder.Where(x => x.Id == OptionsList[l].Id).ToList();
-
-                                cheked4 = dopel;
-                            }
-                            
-                            ViewBag.d = dopelProduct.ToList();
                         }
 
-                   
+                        var NeOptionList = new List<Hebelzylinder_Options>();
+
+                        foreach (var g in resultList)
+                        {
+                            var optX = opt.Where(x => x.Id == g.OptionId).ToList();
+                            foreach (var mh in optX)
+                            {
+                                NeOptionList.Add(mh);
+                            }
+
+                        }
+                        foreach (var gf in NeOptionList)
+                        {
+                            var SortProduct = hebel.Where(x => x.Id == gf.HebelzylinderId).ToList();
+                            foreach (var j in SortProduct)
+                            {
+                                cheked4.Add(j);
+                            }
+                        }
+
+                    }
+                    else
+                    {
+                        foreach (var g in hebel)
+                        {
+                            cheked4.Add(g);
+                        }
+
+                    }
 
                 }
                 int VorhanType = 0;
@@ -1550,8 +1510,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked3.Count() > 0 && cheked4.Count() > 0 && cheked5.Count() > 0 && cheked6.Count() > 0)
             {
-
-
                 var queryOrder = from t1 in cheked.Distinct()
                                  join t2 in cheked2.Distinct() on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked3.Distinct() on t2.NameSystem equals t3.NameSystem
@@ -2719,7 +2677,15 @@ namespace schliessanlagen_konfigurator.Controllers
                     }
                     else
                     {
-                        orders.innen = innen[i];
+                        if(innen[i] == 0)
+                        {
+                            orders.innen = null;
+                        }
+                        else
+                        {
+                            orders.innen = innen[i];
+                        }
+                       
                     }
 
                     
@@ -2732,7 +2698,15 @@ namespace schliessanlagen_konfigurator.Controllers
                     }
                     else
                     {
-                        orders.aussen = aussen[i];
+                        if (aussen[i] == 0)
+                        {
+                            orders.aussen = null;
+                        }
+                        else
+                        {
+                            orders.aussen = aussen[i];
+                        }
+                       
                     }
                   
                 }

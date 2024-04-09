@@ -91,7 +91,7 @@
                                         <input id="TypeSelectTurItem" name="Ssl" placeholder="Ssl" />
                                     </div>
                                 <div id="SelectTurItem">
-                                        <select id="TypeSelectTurItem" onchange="selectParam(event.target.value,1)" name="ZylinderId">
+                                        <select id="TypeSelectTurItem"  name="ZylinderId">
                                     @foreach (var list in ViewBag.Zylinder_Typ)
                                     {
                                         <option>@list.nameType</option>
@@ -100,18 +100,18 @@
                             </div>
                                    
                             <div id="SelectTurItem">
-                                    <select id="TypeSelectTurItem"  class="aussen" name="aussen">
-                                    <option>Außenlänge</option>
+                                        <select id="TypeSelectTurItem" class="aussen" name="aussen">
+                                     <option value ="0" selected>Außenlänge</option>
                                      @foreach (var list in ViewBag.DoppelAussen)
                                     {
                                         <option id="OptionA">@list</option>
                                     }
                                 </select>
-
+                                    
                             </div>
                             <div id="SelectTurItem">
                                         <select id="TypeSelectTurItem" class="Innen" name="innen">
-                                    <option>Innenlänge</option>
+                                            <option value="0" selected>Innenlänge</option>
                                     @foreach (var list in ViewBag.DoppelIntern)
                                     {
                                        <option id="OptionI">@list</option>
@@ -171,9 +171,9 @@
     let VorhanSize = @Html.Raw(ViewBag.SizeVorhan);
 
     var data = JSON.parse(localStorage.getItem(`${blockTur}checkbox${blockCount}`));
-
     
 
+   
     function selectParam(value,turNumber) 
     {
 
@@ -186,8 +186,6 @@
         let Aitems = Aussen.querySelectorAll("#OptionA");
         let Iitems = Intern.querySelectorAll("#OptionI");
         let Oitems = Option.querySelectorAll("#OptionO");
-
-        console.log(Aitems);
 
         Aitems.forEach(function (items) 
         {
@@ -419,8 +417,8 @@
                                 </div>
                                      
                                 <div id="SelectTurItem">
-                                            <select id="TypeSelectTurItem" class="aussen" name="aussen">
-                                        <option>Außenlänge</option>
+                                        <select id="TypeSelectTurItem"  class="aussen" name="aussen">
+                                            <option value="0" selected>Außenlänge</option>
                                         @foreach (var list in ViewBag.DoppelAussen)
                                         {
                                           <option id="OptionA">@list</option>
@@ -429,7 +427,7 @@
                                 </div>
                                 <div id="SelectTurItem">
                                             <select id="TypeSelectTurItem" class="Innen" name="innen">
-                                           <option>Innenlänge</option>
+                                               <option value="0" selected>Innenlänge</option>
                                          @foreach (var list in ViewBag.DoppelIntern)
                                          {
                                                <option id="OptionI">@list</option>

@@ -372,6 +372,7 @@
         }
         @if (ViewBag.Vorhanschlos != null)
         {
+            int elemNum = 0;
             foreach (var item in ViewBag.Vorhanschlos)
             {
                 <div id="ExelItem">
@@ -397,6 +398,7 @@
                         <div>
                             <div>
                                 <select class="form-select">
+                                    <option style="display:none" selected>@ViewBag.VorhanOrderAussen[elemNum]</option>
                                     <option>Außenlänge (A)</option>
                                     @for (int i = 0; i < ViewBag.VorhanSize.Count; i++)
                                     {
@@ -513,26 +515,5 @@
 </div>
 <script>
  
-    let selectorAussen = document.getElementById('Aussen').childNodes;
-
-    // let optionsAussen = selectorAussen.childNodes
-
-    let selectInen = document.getElementById('Intern').childNodes;
    
-    // console.log(selectorAussen);
-    // console.log(selectInen);
-    
-    function ChekedDopel() 
-    {
-        selectorAussen.forEach((item) => 
-        {
-            console.log(item.value);
-
-        });
-        // for (let i; i < optionAussen.length; i++) {
-
-        // }
-
-    }
-    ChekedDopel()
 </script>
