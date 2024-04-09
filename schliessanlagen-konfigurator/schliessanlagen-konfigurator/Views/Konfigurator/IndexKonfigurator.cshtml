@@ -69,7 +69,7 @@
             </div>
             <div>
                 <div id="turInfo">
-                    <div id="blockInfo">
+                        <div id="BlockTur-1">
                         <div class="TexCountTur">
                             <div id="ItemTur">
                                 <div>
@@ -91,7 +91,7 @@
                                         <input id="TypeSelectTurItem" name="Ssl" placeholder="Ssl" />
                                     </div>
                                 <div id="SelectTurItem">
-                                    <select id="TypeSelectTurItem" name="ZylinderId">
+                                        <select id="TypeSelectTurItem" onchange="selectParam(event.target.value,1)" name="ZylinderId">
                                     @foreach (var list in ViewBag.Zylinder_Typ)
                                     {
                                         <option>@list.nameType</option>
@@ -100,31 +100,31 @@
                             </div>
                                    
                             <div id="SelectTurItem">
-                                    <select id="TypeSelectTurItem" name="aussen">
+                                    <select id="TypeSelectTurItem"  class="aussen" name="aussen">
                                     <option>Außenlänge</option>
-                                    @foreach (var list in ViewBag.DoppelAussen)
+                                     @foreach (var list in ViewBag.DoppelAussen)
                                     {
-                                        <option>@list</option>
+                                        <option id="OptionA">@list</option>
                                     }
                                 </select>
 
                             </div>
                             <div id="SelectTurItem">
-                                    <select id="TypeSelectTurItem" name="innen">
+                                        <select id="TypeSelectTurItem" class="Innen" name="innen">
                                     <option>Innenlänge</option>
                                     @foreach (var list in ViewBag.DoppelIntern)
                                     {
-                                        <option>@list</option>
+                                       <option id="OptionI">@list</option>
                                     }
                                 </select>
                             </div>
                            
                             <div id="SelectTurItem">
-                               <select id="TypeSelectTurItem" name="Options">
+                               <select id="TypeSelectTurItem" class="Option" name="Options">
                                     <option>Options</option>
                                     @foreach (var list in ViewBag.OptionsName)
                                     {
-                                        <option>@list</option>
+                                       <option id="OptionO">@list</option>
                                     }
                                 </select>
                             </div>
@@ -171,6 +171,156 @@
     let VorhanSize = @Html.Raw(ViewBag.SizeVorhan);
 
     var data = JSON.parse(localStorage.getItem(`${blockTur}checkbox${blockCount}`));
+
+    
+
+    function selectParam(value,turNumber) 
+    {
+
+        let BlockTur = document.querySelector(`#BlockTur-${turNumber}`);
+
+        let Aussen = BlockTur.querySelector(".aussen");
+        let Intern = BlockTur.querySelector(".Innen");
+        let Option = BlockTur.querySelector(".Option");
+        
+        let Aitems = Aussen.querySelectorAll("#OptionA");
+        let Iitems = Intern.querySelectorAll("#OptionI");
+        let Oitems = Option.querySelectorAll("#OptionO");
+
+        console.log(Aitems);
+
+        Aitems.forEach(function (items) 
+        {
+            items.parentNode.removeChild(items);
+        });
+
+        Iitems.forEach(function (items) 
+        {
+            items.parentNode.removeChild(items);
+        });
+
+        Oitems.forEach(function (items) 
+        {
+            items.parentNode.removeChild(items);
+        });
+
+        if (value == "Profil-Doppelzylinder") 
+        {
+            for (let i = 0; i < DoppelAussenSize.length; i++) 
+            {
+                let option = document.createElement("option");
+                option.id = "OptionA";
+                option.innerHTML = DoppelAussenSize[i];
+                option.innerText = DoppelAussenSize[i];
+                Aussen.appendChild(option);
+            }
+            for (let i = 0; i < DoppelInternSize.length; i++) 
+            {
+                let option = document.createElement("option");
+                option.id = "OptionI";
+                option.innerHTML = DoppelInternSize[i];
+                option.innerText = DoppelInternSize[i];
+                Intern.appendChild(option);
+            }
+            for (let i = 0; i < OptionDoppel.length; i++) 
+            {
+                let option = document.createElement("option");
+                option.id = "OptionO";
+                option.innerHTML = OptionDoppel[i];
+                option.innerText = OptionDoppel[i];
+                Option.appendChild(option);
+            }
+        }
+        if (value == "Profil-Halbzylinder") 
+        {
+            for (let i = 0; i < HalbSize.length; i++) 
+            {
+                let option = document.createElement("option");
+                option.id = "OptionA";
+                option.innerHTML = HalbSize[i];
+                option.innerText = HalbSize[i];
+                Aussen.appendChild(option);
+            }
+            for (let i = 0; i < OptionHalb.length; i++) 
+            {
+                let option = document.createElement("option");
+                option.id = "OptionO";
+                option.innerHTML = OptionHalb[i];
+                option.innerText = OptionHalb[i];
+                Option.appendChild(option);
+            }
+        }
+        if (value == "Profil-Knaufzylinder") 
+        {
+            for (let i = 0; i < KnayfAussenSize.length; i++) 
+            {
+                let option = document.createElement("option");
+                option.id = "OptionA";
+                option.innerHTML = KnayfAussenSize[i];
+                option.innerText = KnayfAussenSize[i];
+                Aussen.appendChild(option);
+            }
+            for (let i = 0; i < KnayfInternSize.length; i++) 
+            {
+                let option = document.createElement("option");
+                option.id = "OptionI";
+                option.innerHTML = KnayfInternSize[i];
+                option.innerText = KnayfInternSize[i];
+                Intern.appendChild(option);
+            }
+            for (let i = 0; i < OptionKnayf.length; i++) 
+            {
+                let option = document.createElement("option");
+                option.id = "OptionO";
+                option.innerHTML = OptionKnayf[i];
+                option.innerText = OptionKnayf[i];
+                Option.appendChild(option);
+            }
+        }
+        if (value == "Hebelzylinder") 
+        {
+            for (let i = 0; i < OptionHebel.length; i++) 
+            {
+                let option = document.createElement("option");
+                option.id = "OptionO";
+                option.innerHTML = OptionHebel[i];
+                option.innerText = OptionHebel[i];
+                Option.appendChild(option);
+            }
+        }
+        if (value == "Vorhangschloss") 
+        {
+            for (let i = 0; i < VorhanSize.length; i++) 
+            {
+                let option = document.createElement("option");
+                option.id = "OptionA";
+                option.innerHTML = VorhanSize[i];
+                option.innerText = VorhanSize[i];
+                Aussen.appendChild(option);
+            }
+            for (let i = 0; i < OptionVorhan.length; i++) 
+            {
+                let option = document.createElement("option");
+                option.id = "OptionO";
+                option.innerHTML = OptionVorhan[i];
+                option.innerText = OptionVorhan[i];
+                Option.appendChild(option);
+            }
+        }
+        if (value == "Aussenzylinder_Rundzylinder") 
+        {
+            for (let i = 0; i < OptionAussen.length; i++) 
+            {
+                let option = document.createElement("option");
+                option.id = "OptionO";
+                option.innerHTML = OptionAussen[i];
+                option.innerText = OptionAussen[i];
+                Option.appendChild(option);
+            }
+        }
+        console.log(value);
+        console.log(turNumber);
+    }
 
     function createCustomCheckbox(id) 
     {
@@ -260,7 +410,7 @@
                                                       <input id="TypeSelectTurItem" name="Ssl" placeholder="Ssl" />
                                             </div>
                                 <div id="SelectTurItem">
-                                        <select id="TypeSelectTurItem" name="ZylinderId">
+                                    <select id="TypeSelectTurItem" onchange="selectParam(event.target.value,${blockTur})" name="ZylinderId">
                                     @foreach (var list in ViewBag.Zylinder_Typ)
                                     {
                                       <option>@list.nameType</option>
@@ -269,30 +419,30 @@
                                 </div>
                                      
                                 <div id="SelectTurItem">
-                                        <select id="TypeSelectTurItem" name="aussen">
+                                            <select id="TypeSelectTurItem" class="aussen" name="aussen">
                                         <option>Außenlänge</option>
                                         @foreach (var list in ViewBag.DoppelAussen)
                                         {
-                                            <option>@list</option>
+                                          <option id="OptionA">@list</option>
                                         }
                                     </select>
                                 </div>
                                 <div id="SelectTurItem">
-                                        <select id="TypeSelectTurItem" name="innen">
+                                            <select id="TypeSelectTurItem" class="Innen" name="innen">
                                            <option>Innenlänge</option>
                                          @foreach (var list in ViewBag.DoppelIntern)
                                          {
-                                           <option>@list</option>
+                                               <option id="OptionI">@list</option>
                                          }
                                     </select>
                                 </div>
                                
                                 <div id="SelectTurItem">
-                                             <select id="TypeSelectTurItem" name="Options">
+                                                 <select id="TypeSelectTurItem" class="Option" name="Options">
                                         <option>Options</option>
                                          @foreach (var list in ViewBag.OptionsName)
                                          {
-                                            <option>@list</option>
+                                             <option id="OptionO">@list</option>
                                          }
                                     </select>
                                 </div>
@@ -300,7 +450,7 @@
                                      </details>
                 `;
 
-            document.getElementById('blockInfo').appendChild(newBlock);
+            document.getElementById('BlockTur-1').appendChild(newBlock);
 
             let horizont = document.createElement('div');
             horizont.id = `${blockTur}horizontal`;

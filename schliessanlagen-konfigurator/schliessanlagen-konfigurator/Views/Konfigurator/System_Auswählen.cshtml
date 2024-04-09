@@ -4,7 +4,12 @@
 @{
     ViewData["Title"] = $"System_Auswählen/{@Model.userKey}";
 }
-
+@if (TempData["AlertMessage"] != null)
+{
+    <script>
+        alert("@TempData["AlertMessage"]");
+    </script>
+}
     <div>
         <h3>
             System auswählen
@@ -25,32 +30,32 @@
 
         @if (ViewBag.Doppel != null && ViewBag.Knaufzylinder == null && ViewBag.Halb == null && ViewBag.Hebel == null && ViewBag.VorhanSchloss == null && ViewBag.Aussen == null)
         {
-            foreach (var item in ViewBag.Doppel)
+            for (int i=0;i<ViewBag.Doppel.Count;i++)
             {
 
                 <div id="ExelItem">
                     <div id="productImage">
-                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@ViewBag.Doppel[i].ImageName)" asp-append-version="true" width="300px" height="300px" />
                     </div>
                     <div id="productMenuInfo">
                         <div id="ProductNameUndCost">
 
                             <div>
-                                <h3>@item.Name</h3>
+                                <h3>@ViewBag.Doppel[i].NameSystem</h3>
                             </div>
 
                             <div style="margin-left: auto;">
-                                <h4 id="cost">ab @item.Cost €</h4>
+                                <h4 id="cost">ab @ViewBag.Doppel[i].Cost €</h4>
                             </div>
 
                         </div>
 
                         <div id="product_desciptions">
-                            <h5>@item.description</h5>
+                            <h5>@ViewBag.Doppel[i].description</h5>
                         </div>
                         <div id="productChek">
 
-                            <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new { DopelId = item.Id , param2 = item.userKey,userInfo = @ViewBag.UserNameItem})">WÄHLEN</a>
+                            <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new { DopelId = ViewBag.Doppel[i].Id ,dopelOption = @ViewBag.DoppelOptions, param2 = ViewBag.Doppel[i].userKey,userInfo = @ViewBag.UserNameItem})">WÄHLEN</a>
 
                         </div>
                     </div>
@@ -353,5 +358,8 @@
         </div>
 
  <script>
-  
+     
+     let s = @Html.Raw(@ViewBag.UserNameItem);
+     console.log(s);
+
 </script>

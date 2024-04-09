@@ -55,11 +55,11 @@
                     </ul>
                     <ul class="navbar-nav flex-grow-1" style="display: flex;align-items: center;text-align: center;">
                         <li class="nav-item">
-                            <a style="text-decoration:underline" href="@Url.Action("AdminConnect","Konfigurator", new {UserId = ViewBag.UserId})">@ViewBag.UserNameItem</a>
+                            <a style="text-decoration:underline" id="Username" href="@Url.Action("AdminConnect","Konfigurator", new {UserId = ViewBag.UserId})">@ViewBag.UserNameItem</a>
                         </li>
                   
                             <li class="nav-item">
-                            <button class="nav-link text-dark" type="button" id="schopIcons" data-toggle="modal" data-target="#myModal"><img id="openModalBtn" src="~/Image/shopping-cart.png" width="20" height="20" style="margin-left:-2px;margin-top:-12px" /><span id="CountOrders"></span></button>
+                            <button class="nav-link text-dark" type="button" id="schopIcons" data-toggle="modal" data-target="#myModal"><img id="openModalBtn" src="~/Image/shopping-cart.png" width="20" height="20" style="margin-left:-2px;margin-top:-12px" /><span id="CountOrders">@ViewBag.CountOrders</span></button>
                             </li>
                     </ul>
                 </div>
@@ -84,8 +84,8 @@
 <script>
 
     let documentOrder = document.getElementById("CountOrders");
-    let countCost = @ViewBag.CountOrders;
-    documentOrder.textContent = countCost;
+
+    console.log(@ViewBag.UserNameItem);
 
     $(document).ready(function () {
 

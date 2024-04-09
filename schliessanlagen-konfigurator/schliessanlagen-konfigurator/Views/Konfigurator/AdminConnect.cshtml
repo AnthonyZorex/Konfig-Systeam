@@ -3,8 +3,11 @@
 @{
     ViewData["Title"] = $"AdminConnect/{Model.Id}";
     float costed = 0;
+    int ProudctItemCounter = 0;
+    int UserOrderId = 0;
 }
 @Html.HiddenFor(m => m.Id)
+
 <div id="UserConteiner">
     <h2 style="text-align:center">Mein Konto</h2>
     <div id="UserConteinerInform">
@@ -29,28 +32,34 @@
            
             <div id="AllOrderUser">
                
-                @foreach (var z in ViewBag.AllOrderInfo)
+                @for (var z=0;z< ViewBag.OrderList.Count;z++)
                 {
                     <div id="AllProductUser">
-                    <h2>@z.ProductName</h2>
+                        <h2>@ViewBag.OrderList[z].ProductName</h2>
                     <details>
                         <summary>
                         </summary>
-                            <h4>Name: @z.Name</h4>
-                            <h4>Aussen: @z.Aussen</h4>
-                            <h4>Intern: @z.Intern</h4>
-                            <h4>Option: @z.Option</h4>
+                            @for (int s = 0; s < ViewBag.CounterProduct[z]; s++)
+                            {
+                                <h4>Name: @ViewBag.OrderItem[ProudctItemCounter].Name</h4>
+                                <h4>Aussen: @ViewBag.OrderItem[ProudctItemCounter].Aussen</h4>
+                                <h4>Intern: @ViewBag.OrderItem[ProudctItemCounter].Intern</h4>
+                                <h4>Option: @ViewBag.OrderItem[ProudctItemCounter].Option</h4>
+
+                                UserOrderId = @ViewBag.OrderItem[ProudctItemCounter].UserOrdersShopId;
+                                ProudctItemCounter++;
+                            } 
                     </details>
                         <div style="text-align: end;">
-                            <button id="removeOrder" onclick="(remove(@z.Id,@Model.Id))">RemovaOrder</button>
+                            <button id="removeOrder" onclick="(remove(@UserOrderId,@Model.Id))">RemovaOrder</button>
                             <button>Pay</button>
                         </div>
                         <br />
                         <hr />
-                        <h2>OrderSum: @z.OrderSum</h2>
+                        <h2>OrderSum: @ViewBag.OrderList[z].OrderSum</h2>
                     </div>
 
-                    costed = costed + z.OrderSum;
+                    costed = costed + ViewBag.OrderList[z].OrderSum;
                 }
                 <br />
                 <hr />

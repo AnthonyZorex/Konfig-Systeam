@@ -24,6 +24,10 @@ using schliessanlagenkonfigurator.Migrations;
 using OfficeOpenXml.Core;
 using NuGet.Protocol;
 using System;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Collections.Immutable;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using System.Linq;
 
 namespace schliessanlagen_konfigurator.Controllers
 {
@@ -90,25 +94,17 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
 
                 ViewBag.OrderList = ListItem;
-                ViewBag.OrderItem = ListItemProduct;
+                ViewBag.OrderItem = ListItemProduct.OrderBy(x => x.UserOrdersShopId).ToList();
 
-                var queryOrder = from t1 in ListItem.Distinct()
-                                 join t2 in ListItemProduct.Distinct() on t1.Id equals t2.UserOrdersShopId
+                var countIterationProduct = new List<int>();
 
-                                 select new
-                                 {
-                                     Id = t2.UserOrdersShopId,
-                                     ProductName = t1.ProductName,
-                                     Name = t2.Name,
-                                     Aussen = t2.Aussen,
-                                     Intern = t2.Intern,
-                                     Option = t2.Option,
-                                     OrderSum = t1.OrderSum
-                                 };
+                foreach(var list in ListItem)
+                {
+                    var p = ListItemProduct.OrderBy(x => x.UserOrdersShopId).Where(x => x.UserOrdersShopId == list.Id).ToList();
+                    countIterationProduct.Add(p.Count());
+                }
 
-                var OrderInfo = queryOrder.Distinct().ToList();
-
-                ViewBag.AllOrderInfo = OrderInfo;
+                ViewBag.CounterProduct = countIterationProduct.ToList();
 
                 return View(UserItem);
             }
@@ -141,32 +137,24 @@ namespace schliessanlagen_konfigurator.Controllers
                     }
                 }
 
-                ViewBag.OrderList = ListItemId;
+                ViewBag.OrderList = ListItemId.ToList();
                 ViewBag.OrderItem = ListItemProductId;
-                
-                var queryOrderId = from t1 in ListItemId.Distinct()
-                                   join t2 in ListItemProductId.Distinct() on t1.Id equals t2.UserOrdersShopId
 
-                                   select new
-                                   {
-                                       Id = t2.UserOrdersShopId,
-                                       ProductName = t1.ProductName,
-                                       Name = t2.Name,
-                                       Aussen = t2.Aussen,
-                                       Intern = t2.Intern,
-                                       Option = t2.Option,
-                                       OrderSum = t1.OrderSum,
-                                   };
+                var countIterationProduct = new List<int>();
 
-                var OrderInfoId = queryOrderId.Distinct().ToList();
+                foreach (var list in ListItemId)
+                {
+                    var p = ListItemProductId.OrderBy(x => x.UserOrdersShopId).Where(x => x.UserOrdersShopId == list.Id).ToList();
+                    countIterationProduct.Add(p.Count());
+                }
 
-                ViewBag.AllOrderInfo = OrderInfoId;
+                ViewBag.CounterProduct = countIterationProduct.ToList();
 
                 return View(UserItemID);
             }
             return View();
         }
-        public async Task<ActionResult> LoginPerson(string Login,string Password)
+        public async Task<ActionResult> LoginPerson(string Login,string Password,string url)
         {
             var UserLogin = db.User.FirstOrDefault(x => x.Login == Login && x.Password == Password);
 
@@ -204,13 +192,28 @@ namespace schliessanlagen_konfigurator.Controllers
                                    };
 
                 var UserLoginP = queryOrderId.ToList();
+               
+                if (url == null)
+                {
+                    return RedirectToAction("IndexKonfigurator", new { Auser = UserLoginP });
+                }
+                else
+                {
+                    var UserName_UserSername = UserLoginList.Select(x=>x.Name).First() + " " + UserLoginList.Select(x=>x.Sername).First();
+                    ViewBag.UserNameItem = UserName_UserSername;
+                    ViewBag.UserInformStatus = UserLoginList.Select(x => x.Status).First();
+                    ViewBag.UserId = UserLoginList.Select(x => x.Id).First();
+                    ViewBag.CountOrders = db.UserOrdersShop.Where(x=>x.UserId == UserLoginList.Select(x=>x.Id).First());
 
-                return RedirectToAction("IndexKonfigurator", new { Auser =  UserLoginP });
+                    return RedirectPermanent($"~/{url}");
+                }
+               
             }
             else
             {
+                ViewBag.CountOrders = 0;
                 TempData["AlertMessage"] = "Sie haben einen falschen Benutzernamen oder ein falsches Passwort eingegeben!";
-                return RedirectToAction("IndexKonfigurator");
+                return RedirectPermanent($"~/{url}");
             }
             
         }
@@ -264,10 +267,10 @@ namespace schliessanlagen_konfigurator.Controllers
             }
 
             
-            #region knayf allParametrsDoppel
+            #region allParametrsDoppel
 
-            var a = db.Aussen_Innen.Select(x => x.aussen).ToList();
-            var d = db.Aussen_Innen.Select(x => x.Intern).ToList();
+            var a = db.Aussen_Innen.Select(x => x.aussen).Distinct().OrderBy(x=>x).ToList();
+            var d = db.Aussen_Innen.Select(x => x.Intern).Distinct().OrderBy(x => x).ToList();
 
             var DoppeloptionsName = db.NGF.Select(x => x.Name).ToList();
 
@@ -296,8 +299,8 @@ namespace schliessanlagen_konfigurator.Controllers
             #endregion
             #region knayf allParametrsKnayf
 
-            var b = db.Aussen_Innen_Knauf.Select(x => x.aussen).ToList();
-            var ba = db.Aussen_Innen_Knauf.Select(x => x.Intern).ToList();
+            var b = db.Aussen_Innen_Knauf.Select(x => x.aussen).Distinct().OrderBy(x => x).ToList();
+            var ba = db.Aussen_Innen_Knauf.Select(x => x.Intern).Distinct().OrderBy(x => x).ToList();
             var KnayfOptions = db.Knayf_Options.Select(x => x.Name).ToList();
 
             var listKnayfAussen = new List<float>();
@@ -315,7 +318,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             #endregion
             #region allPrametrsHalbzylinder
-            var c = db.Aussen_Innen_Halbzylinder.Select(x => x.aussen).ToList();
+            var c = db.Aussen_Innen_Halbzylinder.Select(x => x.aussen).Distinct().OrderBy(x => x).ToList();
 
             var HalbzylinderAussen = new List<float>();
 
@@ -426,6 +429,7 @@ namespace schliessanlagen_konfigurator.Controllers
             var Zylinder_Typ = await db.Schliessanlagen.ToListAsync();
 
             var cheked = new List<Profil_Doppelzylinder>();
+
             var cheked2 = new List<Profil_Knaufzylinder>();
             var cheked3 = new List<Profil_Halbzylinder>();
             var cheked4 = new List<Hebel>(); 
@@ -467,71 +471,69 @@ namespace schliessanlagen_konfigurator.Controllers
 
                     for (int j = 0; j < safeDoppelItem.Distinct().Count(); j++)
                     {
-                        cheked.Add(safeDoppelItem[j]);
+                        dopelProduct.Add(safeDoppelItem[j]);
                     }
-
-                    var OptionsList = new List<Profil_Doppelzylinder_Options>();
-
-                    var results = new List<NGF>();
-
-                    var opt = new List<Profil_Doppelzylinder_Options>();
-
-                    for (int i = 0; i < cheked.Count(); i++)
+                   
+                   
+                    if (allUserListOrder[d].Options != null)
                     {
-                        var options = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == cheked[i].Id).ToList();
-                        for (int fs = 0; fs < options.Count(); fs++)
-                        {
-                            opt.Add(options[fs]);
-                        }
 
-                    }
-                    if (allUserListOrder[d].Options != "Options")
-                    {
-                        if (opt.Count() != 0)
+                        var OptionsList = new List<Profil_Doppelzylinder_Options>();
+
+                        var results = new List<NGF>();
+
+                        var opt = new List<Profil_Doppelzylinder_Options>();
+
+                        for (int i = 0; i < dopelProduct.Count(); i++)
                         {
-                            for (int j = 0; j < opt.Count(); j++)
+                            var options = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == dopelProduct[i].Id).ToList();
+                            for (int fs = 0; fs < options.Count(); fs++)
                             {
-                                OptionsList.Add(opt[j]);
+                                opt.Add(options[fs]);
                             }
                         }
-
                         var resultList = new List<NGF>();
 
-                        for (int f = 0; f < OptionsList.Count(); f++)
+                        for (int f = 0; f < opt.Count(); f++)
                         {
-                            var OptionsName = db.NGF.Where(x => x.OptionsId == OptionsList[f].Id).ToList();
+                            var OptionsName = db.NGF.Where(x => x.OptionsId == opt[f].Id).ToList();
 
                             var result = OptionsName.Where(x => x.Name == allUserListOrder[d].Options).ToList();
-                            for (int s = 0; s < result.Count(); s++)
+
+                            foreach (var s in result)
                             {
-                                resultList.Add(result[s]);
-
+                                resultList.Add(s);
                             }
-
-
                         }
 
+                       var NeOptionList = new List<Profil_Doppelzylinder_Options>();
 
-                        for (int s = 0; s < resultList.Count(); s++)
+                        foreach (var g in resultList)
                         {
-                            var ItemList = db.Profil_Doppelzylinder_Options.Where(x => x.Id == resultList[s].OptionsId).ToList();
-                            OptionsList = ItemList;
+                          var optX = opt.Where(x => x.Id == g.OptionsId).ToList();
+                            foreach(var mh in optX)
+                            {
+                                NeOptionList.Add(mh);
+                            }
+                            
                         }
-
-
-                        for (int l = 0; l < OptionsList.Count(); l++)
+                        foreach (var gf in NeOptionList)
                         {
-                            var dopel = db.Profil_Doppelzylinder.Where(x => x.Id == OptionsList[l].DoppelzylinderId).ToList();
-
-                            cheked = dopel;
+                            var SortProduct = dopelProduct.Where(x => x.Id == gf.DoppelzylinderId).ToList();
+                            foreach (var j in SortProduct)
+                            {
+                                cheked.Add(j);
+                            }
                         }
 
-                        for (int xf = 0; xf < cheked.Count(); xf++)
+                    }
+                    else
+                    {
+                        foreach(var g in dopelProduct)
                         {
-                            var ms = db.Profil_Doppelzylinder.Where(x => x.Id == cheked[xf].Id).Select(x => x).ToList();
-                            foreach (var list in ms)
-                                dopelProduct.Add(list);
+                            cheked.Add(g);
                         }
+                        
                     }
 
                 }
@@ -1057,24 +1059,169 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked.Count() > 0)
             {
-                var query = from t1 in cheked
-                            join t2 in allUserListOrder
-                            on t1.schliessanlagenId equals t2.ZylinderId
-                            select new
+                var D_order = new List<Orders>();
+
+                foreach (var f in profilD)
+                {
+                    var ordersI = allUserListOrder.Where(x => x.ZylinderId == f.schliessanlagenId).Distinct().ToList();
+                    
+                    foreach(var r in ordersI)
+                    {
+                        D_order.Add(r);
+                    }
+                }
+              IEnumerable<dynamic> queryOrderListDoppelAussen;
+               IEnumerable<dynamic> queryOrderListDoppelOptions;
+
+
+
+                foreach (var list in D_order)
+                {
+                    if (list.Options != null)
+                    {
+                        var OptionDoppel = new List<Profil_Doppelzylinder_Options>();
+
+                        foreach (var op in cheked)
+                        {
+                            var Option = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == op.Id).Distinct().ToList();
+
+                            foreach (var gf in Option)
                             {
-                                Id = t1.Id,
-                                userKey = keyUser.userKey,
-                                Name = t1.Name,
-                                companyName = t1.companyName,
-                                description = t1.description,
-                                NameSystem = t1.NameSystem,
-                                Cost = t1.Cost,
-                                ImageName = t1.ImageName
+                                OptionDoppel.Add(gf);
+                            }
+                        }
 
-                            };
-                var rl = query.Distinct().ToList();
+                        var NGX = new List<NGF>();
 
-                ViewBag.Doppel = rl.ToList();
+                        foreach (var f in OptionDoppel)
+                        {
+                            var OptionNGF = db.NGF.Where(x => x.OptionsId == f.Id).Distinct().ToList();
+
+                            foreach (var gf in OptionNGF)
+                            {
+                                NGX.Add(gf);
+                            }
+                        }
+
+                        var ProductOrder = from t1 in cheked
+                                           join t2 in OptionDoppel
+                                           on t1.Id equals t2.DoppelzylinderId
+                                           select new
+                                           {
+                                               Id = t1.Id,
+                                               Option = t2.Id,
+                                               Name = t1.Name,
+                                               companyName = t1.companyName,
+                                               description = t1.description,
+                                               NameSystem = t1.NameSystem,
+                                               Cost = t1.Cost,
+                                               ImageName = t1.ImageName,
+                                               schliessanlagenId = t1.schliessanlagenId
+                                           };
+
+                        var QueryProductAll = from t1 in ProductOrder
+                                              join t2 in NGX
+                                              on t1.Option equals t2.OptionsId
+                                              select new
+                                              {
+                                                  userKey = keyUser.userKey,
+                                                  Id = t1.Id,
+                                                  OptionId = t2.Id,
+                                                  Name = t1.Name,
+                                                  companyName = t1.companyName,
+                                                  description = t1.description,
+                                                  NameSystem = t1.NameSystem,
+                                                  Cost = t1.Cost,
+                                                  ImageName = t1.ImageName,
+                                                  Options = t2.Name,
+                                                  schliessanlagenId = t1.schliessanlagenId
+                                              };
+
+
+                        var AllInfoProductList = QueryProductAll.Distinct().ToList();
+
+                        var D_O_rderOption = allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Options).ToList();
+
+                        var sortedQuery = AllInfoProductList.OrderBy(item => D_O_rderOption.IndexOf(item.Options))
+                                          .ThenBy(item => item.Name)
+                                          .Distinct().ToList();
+
+                        var itemCounts = sortedQuery.GroupBy(x => x.NameSystem).Where(x => x.Count() == D_O_rderOption.Count()).ToList();
+
+                        ViewBag.DoppelInfo = itemCounts.ToList();
+
+                        //ViewBag.Doppel = itemCounts.SelectMany(group => group.Distinct()).ToList();
+
+                        //ViewBag.Doppel = itemCounts.SelectMany(group => group.Distinct())
+                        //                            .Distinct()
+                        //                            .ToList();
+
+                        var itemDopelSort = itemCounts.SelectMany(group => group.Distinct()).ToList();
+
+                        var queryOrder = from t1 in itemDopelSort
+                                         join t2 in allUserListOrder
+                                         on t1.schliessanlagenId equals t2.ZylinderId
+                                         select new
+                                         {
+                                             userKey = keyUser.userKey,
+                                             Id = t1.Id,
+                                             Name = t1.Name,
+                                             companyName = t1.companyName,
+                                             description = t1.description,
+                                             NameSystem = t1.NameSystem,
+                                             Cost = t1.Cost,
+                                             ImageName = t1.ImageName,
+                                         };
+
+                        queryOrderListDoppelOptions = queryOrder.Distinct().ToList();
+
+
+                        ViewBag.DoppelOptions = itemCounts.SelectMany(group => group)
+                                            .Select(x => x.Options)
+                                            .Distinct()
+                                            .ToList();
+
+                        ViewBag.Doppel = queryOrderListDoppelOptions;
+                    }
+                    else
+                    {
+                        var queryOrder = from t1 in cheked
+                                         join t2 in allUserListOrder
+                                         on t1.schliessanlagenId equals t2.ZylinderId
+                                         select new
+                                         {
+                                             userKey = keyUser.userKey,
+                                             Id = t1.Id,
+                                             Name = t1.Name,
+                                             companyName = t1.companyName,
+                                             description = t1.description,
+                                             NameSystem = t1.NameSystem,
+                                             Cost = t1.Cost,
+                                             ImageName = t1.ImageName,
+                                         };
+
+                        queryOrderListDoppelAussen = queryOrder.Distinct().ToList();
+                        //ViewBag.DoppelOptions = Doppelzylinder.Select(x=>x.opt)
+                        ViewBag.Doppel = queryOrderListDoppelAussen;
+                    }
+                 
+                }
+
+                //var queryOrderList = from t1 in queryOrderListDoppelAussen
+                //                     join t2 in queryOrderListDoppelOptions
+                //                 on t1.NameSystem equals t2.NameSystem
+                //                     select new
+                //                 {
+                //                     userKey = keyUser.userKey,
+                //                     Id = t1.Id,
+                //                     Name = t1.Name,
+                //                     companyName = t1.companyName,
+                //                     description = t1.description,
+                //                     NameSystem = t1.NameSystem,
+                //                     Cost = t1.Cost,
+                //                     ImageName = t1.ImageName,
+                //                 };
+
             }
 
             if (cheked2.Count() > 0)
@@ -1444,8 +1591,9 @@ namespace schliessanlagen_konfigurator.Controllers
         }
        
         [HttpGet]
-        public async Task<IActionResult> OrdersKey(int DopelId, string param2,int KnayfID, int Halb,int Hebel,int Aussen,int Vorhan,string userInfo)
+        public async Task<IActionResult> OrdersKey(int DopelId, List<string> dopelOption, string param2,int KnayfID, int Halb,int Hebel,int Aussen,int Vorhan,string userInfo)
         {
+
             char[] separators = { ' ', '\n', '\t', '\r' };
 
             if (userInfo != null)
@@ -1461,33 +1609,33 @@ namespace schliessanlagen_konfigurator.Controllers
                 ViewBag.UserNameItem = UserName_UserSername; 
             }
 
-            var key = db.Orders.Where(x => x.userKey == param2).Distinct().ToList();
+            var key = await db.Orders.Where(x => x.userKey == param2).Distinct().ToListAsync();
 
             var DopelOrderlist = new List<Profil_Doppelzylinder>();
 
-            var OrderList = db.Profil_Doppelzylinder.Where(x => x.Id == Convert.ToInt32(DopelId)).ToList();
+            var OrderList = await db.Profil_Doppelzylinder.Where(x => x.Id == Convert.ToInt32(DopelId)).ToListAsync();
 
-            var AussenInen = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == Convert.ToInt32(DopelId)).ToList();
+            var AussenInen = await db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == Convert.ToInt32(DopelId)).ToListAsync();
 
             var Halbzylinder = new List<Profil_Halbzylinder>();
 
-            var SelectHalbzylinder = db.Profil_Halbzylinder.Where(x => x.Id == Halb).ToList();
+            var SelectHalbzylinder = await db.Profil_Halbzylinder.Where(x => x.Id == Halb).ToListAsync();
 
-            var halbAussen_Inter = db.Aussen_Innen_Halbzylinder.Where(x => x.Profil_HalbzylinderId == Halb).ToList();
+            var halbAussen_Inter = await db.Aussen_Innen_Halbzylinder.Where(x => x.Profil_HalbzylinderId == Halb).ToListAsync();
 
             ViewBag.AussenHalb = halbAussen_Inter.Select(x=>x.aussen).ToList();
 
-            var KnaufZelinder = db.Profil_Knaufzylinder.Where(x => x.Id == KnayfID).ToList();
+            var KnaufZelinder = await db.Profil_Knaufzylinder.Where(x => x.Id == KnayfID).ToListAsync();
 
-            var Kanyf_AussenInen = db.Aussen_Innen_Knauf.Where(x => x.Profil_KnaufzylinderId == Convert.ToInt32(KnayfID)).ToList();
+            var Kanyf_AussenInen = await db.Aussen_Innen_Knauf.Where(x => x.Profil_KnaufzylinderId == Convert.ToInt32(KnayfID)).ToListAsync();
 
 
 
             var Vorhanschlos = new List<Vorhangschloss>();
 
-            var SelectVorhanschlos = db.Vorhangschloss.Where(x => x.Id == Vorhan).ToList();
+            var SelectVorhanschlos = await db.Vorhangschloss.Where(x => x.Id == Vorhan).ToListAsync();
 
-            var SizeVorhanschloss = db.Size.Where(x=>x.VorhangschlossId == Vorhan).Select(x=>x.sizeVorhangschloss).ToList();
+            var SizeVorhanschloss = await db.Size.Where(x=>x.VorhangschlossId == Vorhan).Select(x=>x.sizeVorhangschloss).ToListAsync();
 
            
 
@@ -1495,7 +1643,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             foreach (var list in SelectVorhanschlos)
             {
-                var VorhanOptions = db.Vorhan_Options.Where(x => x.VorhangschlossId == list.Id).ToList();
+                var VorhanOptions = await db.Vorhan_Options.Where(x => x.VorhangschlossId == list.Id).ToListAsync();
                 
                 foreach(var s in VorhanOptions)
                 {
@@ -1510,7 +1658,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             foreach (var ls in listVorHanOptions)
             {
-                var listOptionVorhanValue = db.OptionsVorhan.Where(x => x.OptioId == ls.Id).ToList();
+                var listOptionVorhanValue = await db.OptionsVorhan.Where(x => x.OptioId == ls.Id).ToListAsync();
                 foreach (var lst in listOptionVorhanValue)
                 {
                     listVorHanOptionsValueName.Add(lst);
@@ -1522,7 +1670,7 @@ namespace schliessanlagen_konfigurator.Controllers
             
             foreach (var ls in listVorHanOptionsValueName)
             {
-                var listOptionVorhanInfoValue = db.OptionsVorhan_value.Where(x => x.OptionsId == ls.Id).ToList();
+                var listOptionVorhanInfoValue = await db.OptionsVorhan_value.Where(x => x.OptionsId == ls.Id).ToListAsync();
                 
                 foreach (var lst in listOptionVorhanInfoValue)
                 {
@@ -1540,13 +1688,13 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var Aussenzylinder = new List<Aussenzylinder_Rundzylinder>();
 
-            var SelectAussenzylinder = db.Aussenzylinder_Rundzylinder.Where(x => x.Id == Aussen).ToList();
+            var SelectAussenzylinder = await db.Aussenzylinder_Rundzylinder.Where(x => x.Id == Aussen).ToListAsync();
 
             var AussenOption = new List<Aussen_Rund_options>();
 
             foreach(var x in SelectAussenzylinder)
             {
-                var listOptionsAussenZylinder = db.Aussen_Rund_options.Where(x => x.Aussenzylinder_RundzylinderId == x.Id).ToList();
+                var listOptionsAussenZylinder = await db.Aussen_Rund_options.Where(x => x.Aussenzylinder_RundzylinderId == x.Id).ToListAsync();
                 
                 foreach(var f in listOptionsAussenZylinder)
                 {
@@ -1560,7 +1708,7 @@ namespace schliessanlagen_konfigurator.Controllers
             
             foreach(var ls in AussenOption)
             {
-                var list = db.Aussen_Rund_all.Where(x=>x.Aussen_Rund_optionsId == ls.Id).ToList();
+                var list = await db.Aussen_Rund_all.Where(x=>x.Aussen_Rund_optionsId == ls.Id).ToListAsync();
                 foreach(var l in list)
                 {
                     AussenListRundAll.Add(l);
@@ -1568,11 +1716,12 @@ namespace schliessanlagen_konfigurator.Controllers
             }
 
             ViewBag.AussenName = AussenListRundAll.Select(x => x.Name).ToList();
+
             var AussenListvalue = new List<Aussen_Rouns_all_value>();
 
             foreach(var listValueAussen in AussenListRundAll)
             {
-                var valueList = db.Aussen_Rouns_all_value.Where(x => x.Aussen_Rund_allId == listValueAussen.Id).ToList();
+                var valueList = await db.Aussen_Rouns_all_value.Where(x => x.Aussen_Rund_allId == listValueAussen.Id).ToListAsync();
 
                 foreach(var f in valueList)
                 {
@@ -1583,12 +1732,12 @@ namespace schliessanlagen_konfigurator.Controllers
             ViewBag.AussenValue = AussenListvalue.Select(x=>x.Value).ToList();
 
             var HelbZ = new List<Hebel>();
-            var HebelZylinder = db.Hebelzylinder.Where(x=>x.Id == Hebel).ToList();
+            var HebelZylinder = await db.Hebelzylinder.Where(x=>x.Id == Hebel).ToListAsync();
             var HebelOption = new List<Hebelzylinder_Options>();
 
             foreach (var list in HebelZylinder)
             {
-                var HebelOptions = db.Hebelzylinder_Options.Where(x => x.HebelzylinderId == list.Id).ToList();
+                var HebelOptions = await db.Hebelzylinder_Options.Where(x => x.HebelzylinderId == list.Id).ToListAsync();
                 
                 foreach (var Optionslist in HebelOptions)
                 {
@@ -1597,15 +1746,13 @@ namespace schliessanlagen_konfigurator.Controllers
                
             }
 
-
             ViewBag.CountOptionsHebel = HebelOption.Count();
 
             var HebelOptionListAll = new List<Options>();
 
             foreach (var list in HebelOption)
             {
-                var HebelOptionsList = db.Options.Where(x => x.OptionId== list.Id).ToList();
-
+                var HebelOptionsList = await db.Options.Where(x => x.OptionId == list.Id).ToListAsync();
                 
                 foreach (var Optionslist in HebelOptionsList)
                 {
@@ -1616,12 +1763,11 @@ namespace schliessanlagen_konfigurator.Controllers
 
             ViewBag.OptionHebelName = HebelOptionListAll.Select(x => x.Name).Distinct().ToList();
 
-
             var HebelOptionValueList = new List<Options_value>();
 
             foreach (var listValue in HebelOptionListAll)
             {
-                var list = db.Options_value.Where(x => x.OptionsId == listValue.Id).ToList();
+                var list = await db.Options_value.Where(x => x.OptionsId == listValue.Id).ToListAsync();
                 foreach(var l in list)
                 {
                     HebelOptionValueList.Add(l);
@@ -1635,13 +1781,13 @@ namespace schliessanlagen_konfigurator.Controllers
             ViewBag.CountValueHebel = listAllValueHebel;
             ViewBag.ValueHebel = HebelOptionValueList.Select(x=>x.Value).Distinct().ToList();
 
-            var queryableOptionsHalb = db.Profil_Halbzylinder_Options.Where(x => x.Profil_HalbzylinderId == Convert.ToInt32(Halb)).Select(x => x.Id).ToList();
+            var queryableOptionsHalb = await db.Profil_Halbzylinder_Options.Where(x => x.Profil_HalbzylinderId == Convert.ToInt32(Halb)).Select(x => x.Id).ToListAsync();
 
             var OptionsHalb = new List<Halbzylinder_Options>();
             
                 for(int f =0;f< queryableOptionsHalb.Count(); f++)
                 {
-                    var optionsHabel = db.Halbzylinder_Options.Where(x => x.OptionsId == queryableOptionsHalb[f]).ToList();
+                    var optionsHabel = await db.Halbzylinder_Options.Where(x => x.OptionsId == queryableOptionsHalb[f]).ToListAsync();
                    
                     foreach(var listHalb in optionsHabel)
                     {
@@ -1652,15 +1798,14 @@ namespace schliessanlagen_konfigurator.Controllers
             
             for(int t=0;t<OptionsHalb.Count(); t++)
             {
-                var listValueOptionsHalb = db.Halbzylinder_Options_value.Where(x => x.Halbzylinder_OptionsId == OptionsHalb[t].Id).ToList();
+                var listValueOptionsHalb = await db.Halbzylinder_Options_value.Where(x => x.Halbzylinder_OptionsId == OptionsHalb[t].Id).ToListAsync();
                 foreach (var listvalue in listValueOptionsHalb)
                     OptionsValueHalb.Add(listvalue);
             }
 
             var listCountHalb = new List<int>();
             foreach (var f in OptionsHalb)
-                listCountHalb.Add(f.Halbzylinder_Options_value.Count());
-          
+                listCountHalb.Add(f.Halbzylinder_Options_value.Count());  
 
             ViewBag.countOptionsQueryHalb = queryableOptionsHalb.Count();
             ViewBag.HalbOptionsName = OptionsHalb.Select(x=>x.Name).ToList();
@@ -1678,7 +1823,6 @@ namespace schliessanlagen_konfigurator.Controllers
                         DopelOrderlist.Add(OrderList.Last());
                 }
                
-
                 if (KnaufZelinder.Count() > 0)
                 {
                     if (key[i].ZylinderId == KnaufZelinder.Select(x => x.schliessanlagenId).First())
@@ -1710,7 +1854,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             }
 
-            var queryableOptions = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == Convert.ToInt32(DopelId)).Select(x => x.Id).ToList();
+            var queryableOptions = await db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == Convert.ToInt32(DopelId)).Select(x => x.Id).ToListAsync();
             ViewBag.countOptionsQuery = queryableOptions.Count();
             
             if (queryableOptions.Count() > 0)
@@ -1719,7 +1863,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 for (int z = 0; z < queryableOptions.Count(); z++)
                 {
-                    var allOptions = db.NGF.Where(x => x.OptionsId == queryableOptions[z]).ToList();
+                    var allOptions = await db.NGF.Where(x => x.OptionsId == queryableOptions[z]).ToListAsync();
                     foreach (var option in allOptions)
                     {
                         ngf.Add(option);
@@ -1727,13 +1871,13 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 }
 
-                ViewBag.optionsName = ngf.Select(x => x.Name).ToList();
+                ViewBag.optionsName = dopelOption.ToList();
 
                 List<NGF_Value> ngfList = new List<NGF_Value>();
 
                 for (int s = 0; s < ngf.Count(); s++)
                 {
-                    var opValue = db.NGF_Value.Where(x => x.NGFId == ngf[s].Id).ToList();
+                    var opValue = await db.NGF_Value.Where(x => x.NGFId == ngf[s].Id).ToListAsync();
 
                     for (int i = 0; i < opValue.Count(); i++)
                     {
@@ -1770,7 +1914,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             }
 
-            var queryableOptionsKnayf = db.Profil_Knaufzylinder_Options.Where(x => x.Profil_KnaufzylinderId == Convert.ToInt32(KnayfID)).Select(x => x.Id).ToList();
+            var queryableOptionsKnayf = await db.Profil_Knaufzylinder_Options.Where(x => x.Profil_KnaufzylinderId == Convert.ToInt32(KnayfID)).Select(x => x.Id).ToListAsync();
             ViewBag.countOptionsQueryKnayf = queryableOptionsKnayf.Count();
             if (queryableOptionsKnayf.Count() > 0)
             {
@@ -1793,7 +1937,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 for (int s = 0; s < ngf.Count(); s++)
                 {
-                    var opValue = db.Knayf_Options_value.Where(x => x.Knayf_OptionsId == ngf[s].Id).ToList();
+                    var opValue = await db.Knayf_Options_value.Where(x => x.Knayf_OptionsId == ngf[s].Id).ToListAsync();
 
                     for (int i = 0; i < opValue.Count(); i++)
                     {
@@ -1823,7 +1967,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             foreach (var order in key)
             {
-                var isOpen = db.isOpen_Order.Where(x => x.OrdersId == order.id).ToList();
+                var isOpen = await db.isOpen_Order.Where(x => x.OrdersId == order.id).ToListAsync();
 
                 foreach (var list in isOpen)
                     keyOpenOrder.Add(list);
@@ -1832,7 +1976,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             foreach (var order in keyOpenOrder)
             {
-                var opens = db.isOpen_value.Where(x => x.isOpen_OrderId == order.Id).ToList();
+                var opens = await db.isOpen_value.Where(x => x.isOpen_OrderId == order.Id).ToListAsync();
                 foreach (var cheked in opens)
                     IsOpenValue.Add(cheked);
             }
@@ -1840,7 +1984,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             foreach (var tl in IsOpenValue)
             {
-                var listValueOpen = db.KeyValue.Where(x => x.OpenKeyId == tl.Id).OrderBy(x=>x.OpenKeyId).ToList();
+                var listValueOpen = await db.KeyValue.Where(x => x.OpenKeyId == tl.Id).OrderBy(x=>x.OpenKeyId).ToListAsync();
                 var id = listValueOpen.Select(x => x.OpenKeyId).ToList();
                 foreach (var tlr in listValueOpen)
                     ValueKeyOpen.Add(tlr);
@@ -1961,7 +2105,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             }
 
-            var HablAussen = db.Aussen_Innen_Halbzylinder.Where(x => x.Profil_HalbzylinderId == Convert.ToInt32(Halb)).Select(x=>x.aussen).ToList();
+            var HablAussen = await db.Aussen_Innen_Halbzylinder.Where(x => x.Profil_HalbzylinderId == Convert.ToInt32(Halb)).Select(x=>x.aussen).ToListAsync();
 
             ViewBag.SelectHalb = key.Where(x => x.ZylinderId == 2).Select(x => x.aussen).Distinct().ToList();
 
@@ -2003,9 +2147,11 @@ namespace schliessanlagen_konfigurator.Controllers
                 HelbZ.Select(x => x.Cost).Sum() + Vorhanschlos.Select(x => x.Cost).Sum() + Aussenzylinder.Select(x => x.Cost).Sum() + DoppelAussenCost
                 + KhaufAussenCost + halbAussenCost + VorhangschlossCost;
 
-            ViewBag.Cost = SumCost;
+            int precision = 2; // количество знаков после запятой
 
+            double Costed = Math.Round(SumCost, precision);
 
+            ViewBag.Cost = Costed;
 
             return View("Finisher", key.Last() );
         }
@@ -2051,41 +2197,47 @@ namespace schliessanlagen_konfigurator.Controllers
             var Aussenzylinder = db.Aussenzylinder_Rundzylinder.ToList();
             var Orders =  db.Orders.ToList();
 
-            string[] words = userInfo.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+            if (userInfo == null)
+            {
+                TempData["AlertMessage"] = "Bitte melden Sie sich an!";
+            }
+            else
+            {
+                string[] words = userInfo.Split(separators, StringSplitOptions.RemoveEmptyEntries);
 
                 var UserLogin = db.User.FirstOrDefault(x => x.Name == words[0] & x.Sername == words[1]);
 
-            using (FileStream fstream = new FileStream(@$"wwwroot/Orders/{UserLogin.Name + " " + UserLogin.Sername} OrderFile.xlsx", FileMode.OpenOrCreate))
-            {
-                fstream.Close();
-            }
-
-            string sourceFilePath = @"wwwroot/Orders/CES_schliessplan_DE_schliessanlagen.xltx";
-           
-            string destinationFilePath = @$"wwwroot/Orders/{UserLogin.Name + " " + UserLogin.Sername} OrderFile.xlsx";
-
-            using (FileStream sourceFileStream = new FileStream(sourceFilePath, FileMode.Open, FileAccess.Read))
-           
-            using (BinaryReader reader = new BinaryReader(sourceFileStream))
-            {
-                using (FileStream destinationFileStream = new FileStream(destinationFilePath, FileMode.Create, FileAccess.Write))
-                using (BinaryWriter writer = new BinaryWriter(destinationFileStream))
+                using (FileStream fstream = new FileStream(@$"wwwroot/Orders/{UserLogin.Name + " " + UserLogin.Sername} OrderFile.xlsx", FileMode.OpenOrCreate))
                 {
-                    byte[] buffer = new byte[1024];
-                    int bytesRead;
-                    while ((bytesRead = reader.Read(buffer, 0, buffer.Length)) > 0)
-                    {
-                        writer.Write(buffer, 0, bytesRead);
-
-                    }
-                    writer.Close();
+                    fstream.Close();
                 }
-                reader.Close();
-                sourceFileStream.Close();
-            }
+
+                string sourceFilePath = @"wwwroot/Orders/CES_schliessplan_DE_schliessanlagen.xltx";
+
+                string destinationFilePath = @$"wwwroot/Orders/{UserLogin.Name + " " + UserLogin.Sername} OrderFile.xlsx";
+
+                using (FileStream sourceFileStream = new FileStream(sourceFilePath, FileMode.Open, FileAccess.Read))
+
+                using (BinaryReader reader = new BinaryReader(sourceFileStream))
+                {
+                    using (FileStream destinationFileStream = new FileStream(destinationFilePath, FileMode.Create, FileAccess.Write))
+                    using (BinaryWriter writer = new BinaryWriter(destinationFileStream))
+                    {
+                        byte[] buffer = new byte[1024];
+                        int bytesRead;
+                        while ((bytesRead = reader.Read(buffer, 0, buffer.Length)) > 0)
+                        {
+                            writer.Write(buffer, 0, bytesRead);
+
+                        }
+                        writer.Close();
+                    }
+                    reader.Close();
+                    sourceFileStream.Close();
+                }
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
                 FileInfo fileInfo = new FileInfo(destinationFilePath);
-               
+
 
                 var UserOrder = new UserOrdersShop
                 {
@@ -2100,45 +2252,45 @@ namespace schliessanlagen_konfigurator.Controllers
                 var CountAllItem = VorhanName.Count() + AussenName.Count() + DopelName.Count() + KnayfName.Count() + HalbName.Count() + HelbName.Count();
 
                 int Rowcheked = 17;
-            int row = 19;
-            using (ExcelPackage package = new ExcelPackage(fileInfo))
-            {
-                ExcelWorksheet worksheet = package.Workbook.Worksheets["Schließplan"];
-
-                for (int i = 0; i < CountAllItem; i++)
+                int row = 19;
+                using (ExcelPackage package = new ExcelPackage(fileInfo))
                 {
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets["Schließplan"];
 
-                    for (int z = 0; z < countKey.Count(); z++)
+                    for (int i = 0; i < CountAllItem; i++)
                     {
-                        if (z < countKey.Count() / TurName.Count())
+
+                        for (int z = 0; z < countKey.Count(); z++)
                         {
-                            if (keyIsOpen[z] == true)
+                            if (z < countKey.Count() / TurName.Count())
                             {
-                                worksheet.Cells[$"S{Rowcheked + z + i }"].Value = "X";
+                                if (keyIsOpen[z] == true)
+                                {
+                                    worksheet.Cells[$"S{Rowcheked + z + i}"].Value = "X";
+                                }
+                                else
+                                {
+                                    worksheet.Cells[$"S{Rowcheked + z + i}"].Value = "O";
+                                }
                             }
                             else
                             {
-                                worksheet.Cells[$"S{Rowcheked + z + i }"].Value = "O";
+                                break;
                             }
                         }
-                        else
-                        {
-                            break;
-                        }
-                    }
                         worksheet.Cells[$"A{Rowcheked}"].Value = i + 1;
                         worksheet.Cells[$"B{Rowcheked}"].Value = i + 1;
                         worksheet.Cells[$"C{Rowcheked}"].Value = TurName[i];
                         worksheet.Cells[$"E{Rowcheked}"].Value = "Ssl";
-                        
-                        if(i < countKey.Count())
+
+                        if (i < countKey.Count())
                         {
                             worksheet.Cells[$"O{Rowcheked}"].Value = countKey[i];
                         }
-                         if (i < key.Count())
-                         {
-                             worksheet.Cells[1, row + i].Value = key[i];
-                         }
+                        if (i < key.Count())
+                        {
+                            worksheet.Cells[1, row + i].Value = key[i];
+                        }
 
                         if (i < DopelName.Count())
                         {
@@ -2158,7 +2310,7 @@ namespace schliessanlagen_konfigurator.Controllers
                             worksheet.Cells[$"J{Rowcheked}"].Value = Option;
                             worksheet.Cells[$"M{Rowcheked}"].Value = DoppelAussen[i];
                             worksheet.Cells[$"N{Rowcheked}"].Value = DoppelIntern[i];
-                            
+
                             var UserOrderProduct = new Models.Users.ProductSysteam
                             {
                                 UserOrdersShopId = UserOrder.Id,
@@ -2171,11 +2323,11 @@ namespace schliessanlagen_konfigurator.Controllers
                             db.ProductSysteam.Add(UserOrderProduct);
                             db.SaveChanges();
                         }
-                   
+
                         else if (i < KnayfName.Count())
                         {
                             worksheet.Cells[$"I{Rowcheked}"].Value = "Profil-Knaufzylinder";
-                            
+
                             var UserOrderProduct = new Models.Users.ProductSysteam
                             {
                                 UserOrdersShopId = UserOrder.Id,
@@ -2192,7 +2344,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         else if (i < HalbName.Count())
                         {
                             worksheet.Cells[$"I{Rowcheked}"].Value = "Profil-Halbzylinder";
-                            
+
                             var UserOrderProduct = new Models.Users.ProductSysteam
                             {
                                 UserOrdersShopId = UserOrder.Id,
@@ -2208,14 +2360,14 @@ namespace schliessanlagen_konfigurator.Controllers
                         else if (i < HelbName.Count())
                         {
                             worksheet.Cells[$"I{Rowcheked}"].Value = "Hebelzylinder";
-                            
+
                             var UserOrderProduct = new Models.Users.ProductSysteam
                             {
                                 UserOrdersShopId = UserOrder.Id,
                                 Name = HelbName[i],
                                 //Option = DoppelOption[i]
                             };
-                            
+
                             db.ProductSysteam.Add(UserOrderProduct);
                             db.SaveChanges();
                         }
@@ -2236,10 +2388,10 @@ namespace schliessanlagen_konfigurator.Controllers
                             db.SaveChanges();
                         }
 
-                        else if(i < AussenName.Count())
+                        else if (i < AussenName.Count())
                         {
                             worksheet.Cells[$"I{Rowcheked}"].Value = "Aussenzylinder_Rundzylinder";
-                            
+
                             var UserOrderProduct = new Models.Users.ProductSysteam
                             {
                                 UserOrdersShopId = UserOrder.Id,
@@ -2251,20 +2403,23 @@ namespace schliessanlagen_konfigurator.Controllers
                             db.SaveChanges();
                         }
 
-                    Rowcheked++;
-                }
-                
-                package.Save();
-            }
+                        Rowcheked++;
+                    }
 
-            var UserName_UserSername = UserLogin.Name + " " + UserLogin.Sername;
+                    package.Save();
+                }
+
+                var UserName_UserSername = UserLogin.Name + " " + UserLogin.Sername;
 
                 ViewBag.UserInformStatus = UserLogin.Status;
                 ViewBag.UserId = UserLogin.Id;
                 ViewBag.UserNameItem = UserName_UserSername;
+                return RedirectToAction("AdminConnect", UserLogin);
+            }
+           
 
 
-            return RedirectToAction("AdminConnect", UserLogin);
+            return View();
         }
         [HttpGet]
         public ActionResult FinischerProductSelect(string userInfo, float SumCosted,List<string> DopelOption, List<int> DopelItem,  List<float> DAussen, List<float> DIntern,List<int> Knayf, string user, List<int> Halb,
@@ -2532,11 +2687,17 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 if (i >= Options.Count())
                 {
-                    optionValue = Options.Last();
+                    if (Options.Last() == "Options")
+                        optionValue = null;
+                    else
+                        optionValue = Options.Last();
                 }
                 else
                 {
-                    optionValue = Options[i];
+                    if (Options[i] == "Options")
+                        optionValue = null;
+                    else
+                        optionValue = Options[i];
                 }
 
                 var orders = new Orders

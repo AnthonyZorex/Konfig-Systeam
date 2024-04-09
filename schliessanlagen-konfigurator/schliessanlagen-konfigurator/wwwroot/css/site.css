@@ -48,10 +48,12 @@ a {
     color: aliceblue;
 }
 
+
     a:hover {
         text-decoration: none;
         color: aliceblue;
     }
+
 
 #crud {
     border: none;
@@ -501,6 +503,10 @@ a {
     width: 300px;
     text-align: start;
 }
+#BlockTur-1 {
+    width: 300px;
+    text-align: start;
+}
 #TexCountTurFinisher > h5{
     margin-left: 50px;
 }
@@ -658,13 +664,7 @@ summary {
     border-right: 3px solid gray;
     padding-right: 50px;
 }
-a{
-    text-decoration:none;
-    color:black;
-}
-    a:hover {
-        color: black;
-    }
+
 
 #AllProductUser {
     margin-top: 50px;

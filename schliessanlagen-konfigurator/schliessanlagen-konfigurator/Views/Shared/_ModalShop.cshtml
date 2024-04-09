@@ -37,6 +37,7 @@
             <label>Password</label>
             <input class="form-control" type="password" name="Password" />
             <input class="btn btn-success" type="submit"  value="Eintrag" />
+            <input type="hidden" id="urlLink" name="url"/>
    </div>
    </form>
 </div>
@@ -46,7 +47,25 @@
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 }
 <script>
+
+    let currentUrl = window.location.href;
+    let url = document.getElementById("urlLink");
+
+    var startIndex = currentUrl.indexOf("/localhost:7187/") + "/localhost:7187/".length;
+
+    if (startIndex !== -1) 
+    {
+        var resultString = currentUrl.substring(startIndex);
+        url.value = resultString;
+
+    } 
+    else 
+    {
+        url.value = currentUrl;
+    }
   
+
+
     let login = document.getElementById("login");
     let registrations = document.getElementById("registration");
     let registrationsForm = document.getElementById("registrationForm");

@@ -6,7 +6,12 @@
     int z = 0;
     int countValueKey = 0;
 }
-
+@if (TempData["AlertMessage"] != null)
+{
+    <script>
+        alert("@TempData["AlertMessage"]");
+    </script>
+}
 @Html.HiddenFor(m => m.userKey)  
 
 <div id="FinisherPage">
