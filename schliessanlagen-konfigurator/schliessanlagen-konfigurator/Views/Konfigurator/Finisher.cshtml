@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = $"Finisher/{Model.userKey}";
+    
     int z = 0;
     int countValueKey = 0;
 }
@@ -44,7 +45,7 @@
             <div id="numerKey">
         <h3>Schlüssel Nr.@z </h3>
          </div>
-                <div id="OpenValue">
+                @* <div id="OpenValue">
                     @{
                         int valueKeyBool = ViewBag.KeyValue.Count / ViewBag.Order.Count;
                         @for (int f = 0; f < valueKeyBool; f++)
@@ -52,11 +53,11 @@
                             @if (ViewBag.KeyValue[countValueKey] == true)
                             {
 
-                                // if (f >= @ViewBag.DorName.Count)
-                                // {
-                                //     <h5>@ViewBag.DorName[@ViewBag.DorName.Count-1]</h5>
-                                // }
-                                <h5>@ViewBag.DorName[f]</h5>
+                                if (f >= @ViewBag.DorName.Count)
+                                {
+                                    <h5>@ViewBag.DorName[@ViewBag.DorName.Count-1]</h5>
+                                }
+                                <h5>@ViewBag.DorName[0]</h5>
                                 countValueKey++;
                             }
                            
@@ -68,7 +69,7 @@
 
                         }
                     }
-                </div>
+                </div> *@
             </div>
             
     } 
@@ -89,18 +90,16 @@
             {
                 int elemNum = 0;
             foreach (var item in ViewBag.Dopelzylinder)
-                {
+            {
                     <div id="ExelItem">
                         <div id="productImage">
                             <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
                         </div>
                         <div id="productMenuInfo">
                             <div id="ProductNameUndCost">
-
                                 <div>
                                     <h3>@item.Name</h3>
                                 </div>
-
                             </div>
                             <div>
                             <select class="form-select">
@@ -110,32 +109,61 @@
                             <div id="product_desciptions">
                                 <h5>Zylinder Länge</h5>
                             </div>
-                        <div id="SizeProduct">
-                           <div>
-                                <select class="form-select" id="Aussen">
-                                    <option style="display:none" selected>@ViewBag.DAussen[elemNum]</option>
-                                    <option>Außenlänge (A)</option>
-                                    @for (int i = 0; i < ViewBag.Dopelzylinderaussen.Count; i++)
-                                    {
-                                        <option>@ViewBag.Dopelzylinderaussen[i]</option>
-                                    }
-                                </select>
-                           </div>
-                            <div>
-                               @*  [elemNum] *@
-                                <select class="form-select"  id="Intern">
-                                    <option style="display:none" selected>@ViewBag.DInter[elemNum]</option>
-                                    <option>Innenlänge (B)</option>
-                                    @for (int i = 0; i < ViewBag.DopelzylinderIntern.Count; i++)
-                                    {
-                                        <option>@ViewBag.DopelzylinderIntern[i]</option>
-                                    }
-                                </select>
+                        @if (item.isGround == true)
+                        {
+                            <div id="@item.Id" class="SizeProduct">
+                                <div>
+                                    <select class="form-select" onchange="selectParamAussen(event.target.value,@item.Id)" id="Aussen">
+                                        <option style="display:none" selected>@ViewBag.DAussen[elemNum]</option>
+                                        <option>Außenlänge (A)</option>
+                                        @for (int i = 0; i < ViewBag.Dopelzylinderaussen.Count; i++)
+                                        {
+                                            <option id="OptionA">@ViewBag.Dopelzylinderaussen[i]</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div>
+                                    <select class="form-select" id="Intern" onchange="selectParamIntern(event.target.value,@item.Id)">
+                                        
+                                        <option style="display:none" selected>@ViewBag.DInter[elemNum]</option>
+                                        <option>Innenlänge (B)</option>
+                                        @for (int i = 0; i < ViewBag.DopelzylinderIntern.Count; i++)
+                                        {
+                                            <option id="OptionI">@ViewBag.DopelzylinderIntern[i]</option>
+                                        }
+                                    </select>
+                                </div>
                             </div>
-                        </div>
+                        }
+                        else
+                        {
+                            <div id="@item.Id" class="SizeProduct">
+                                <div>
+                                    <select class="form-select" id="Aussen" onchange="selectParamAussenIsGround(event.target.value,@item.Id)">
+                                        <option style="display:none" selected>@ViewBag.DAussen[elemNum]</option>
+                                        <option>Außenlänge (A)</option>
+                                        @for (int i = 0; i < ViewBag.Dopelzylinderaussen.Count; i++)
+                                        {
+                                            <option id="OptionA">@ViewBag.Dopelzylinderaussen[i]</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div>
+                                    <select class="form-select" id="Intern" onchange="selectParamInternIsGround(event.target.value,@item.Id)">
+                                        <option style="display:none" selected>@ViewBag.DInter[elemNum]</option>
+                                        <option>Innenlänge (B)</option>
+                                        @for (int i = 0; i < ViewBag.DopelzylinderIntern.Count; i++)
+                                        {
+                                            <option id="OptionI">@ViewBag.DopelzylinderIntern[i]</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        }
+                       
                         <div>
                             <h3>Weitere Optionen</h3>
-                            <div >
+                            <div>
                                 @{
                                     int valueCount = 0;
                                 }
@@ -144,7 +172,7 @@
                                     @for (int i = 0; i < ViewBag.optionsName.Count; i++)
                                     {
 
-                                        <select class="form-select" id="ProductOptionsSelector">
+                                        <select class="form-select" id="ProductOptionsSelector" onchange="selectParamOptions(event,@valueCount,@item.Id)">
                                             <option>@ViewBag.optionsName[i]</option>
                                             @for (int j = 0; j < ViewBag.countOptionsList[i]; j++)
                                             {
@@ -191,28 +219,56 @@
                         <div id="product_desciptions">
                             <h5>Zylinder Länge</h5>
                         </div>
-                        <div id="SizeProduct">
-                            <div>
-                                <select class="form-select">
-                                    <option style="display:none" selected>@ViewBag.KAussen[elemNum]</option>
-                                    <option>Außenlänge (A)</option>
-                                    @for (int i = 0; i < ViewBag.KnayfZelinderAussen.Count; i++)
-                                    {
-                                        <option>@ViewBag.KnayfZelinderAussen[i]</option>
-                                    }
-                                </select>
+                        @if (item.isGround == true)
+                        {
+                            <div id="@item.Id" class="SizeProduct">
+                                <div>
+                                    <select class="form-select" id="Aussen" onchange="selectParamAussen(event.target.value,@item.Id)">
+                                        <option style="display:none" selected>@ViewBag.KAussen[elemNum]</option>
+                                        <option>Außenlänge (A)</option>
+                                        @for (int i = 0; i < ViewBag.KnayfZelinderAussen.Count; i++)
+                                        {
+                                            <option id="OptionA">@ViewBag.KnayfZelinderAussen[i]</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div>
+                                    <select class="form-select" id="Intern" onchange="selectParamIntern(event.target.value,@item.Id)">
+                                        <option style="display:none" selected>@ViewBag.KInter[elemNum]</option>
+                                        <option>Innenlänge (B)</option>
+                                        @for (int i = 0; i < ViewBag.KnayfZelinderIntern.Count; i++)
+                                        {
+                                            <option id="OptionI">@ViewBag.KnayfZelinderIntern[i]</option>
+                                        }
+                                    </select>
+                                </div>
                             </div>
-                            <div >
-                                <select class="form-select">
-                                    <option style="display:none" selected>@ViewBag.KInter[elemNum]</option>
-                                    <option>Innenlänge (B)</option>
-                                    @for (int i = 0; i < ViewBag.KnayfZelinderIntern.Count; i++)
-                                    {
-                                        <option>@ViewBag.KnayfZelinderIntern[i]</option>
-                                    }
-                                </select>
+                        }
+                        else
+                        {
+                            <div id="@item.Id" class="SizeProduct">
+                                <div>
+                                    <select class="form-select" id="Aussen" onchange="selectParamAussenIsGround(event.target.value,@item.Id)">
+                                        <option style="display:none" selected>@ViewBag.KAussen[elemNum]</option>
+                                        <option>Außenlänge (A)</option>
+                                        @for (int i = 0; i < ViewBag.KnayfZelinderAussen.Count; i++)
+                                        {
+                                            <option id="OptionA">@ViewBag.KnayfZelinderAussen[i]</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div>
+                                    <select class="form-select" id="Intern" onchange="selectParamInternIsGround(event.target.value,@item.Id)">
+                                        <option style="display:none" selected>@ViewBag.KInter[elemNum]</option>
+                                        <option>Innenlänge (B)</option>
+                                        @for (int i = 0; i < ViewBag.KnayfZelinderIntern.Count; i++)
+                                        {
+                                            <option id="OptionI">@ViewBag.KnayfZelinderIntern[i]</option>
+                                        }
+                                    </select>
+                                </div>
                             </div>
-                        </div>
+                        }
                         <div>
                             <h3>Weitere Optionen</h3>
                             <div >
@@ -224,7 +280,7 @@
                                     @for (int i = 0; i < ViewBag.optionsNameKnayf.Count; i++)
                                     {
 
-                                        <select class="form-select" id="ProductOptionsSelector">
+                                        <select class="form-select" onchange="selectParamOptions(event,@valueCount,@item.Id)" id="ProductOptionsSelector">
                                             <option>@ViewBag.optionsNameKnayf[i]</option>
                                             @for (int j = 0; j < ViewBag.countOptionsListKnayf[i]; j++)
                                             {
@@ -500,7 +556,7 @@
             <input type="button" class="btn btn-danger" value="ANDERES SYSTEM WÄHLEN" />
         </div>
         <div id="orderCost">
-            <h1>@ViewBag.Cost €</h1>
+            <h1 id="cost">@ViewBag.Cost €</h1>
         </div>
         
       <div id="buttonActionFinishBlock">
@@ -514,6 +570,301 @@
     </div>
 </div>
 <script>
- 
-   
+
+    // let OptionPrice = @Html.Raw(@ViewBag.optionsPrise);
+
+    // console.log(OptionPrice);
+
+    let AllPrice = document.getElementById("cost");
+
+    localStorage.setItem("cost", AllPrice.innerHTML);
+    localStorage.sInnen = 0;
+    localStorage.sAussen = 0;
+    localStorage.options = 0;
+
+    let AussenCost = 0;
+    let InternCost = 0;
+    let OptionCost = 0;
+
+    function selectParamAussenIsGround(value, idBlock) 
+    {
+        let iterations = 0;
+        let serchedItem = 0;
+
+        let BlockTur = document.getElementById(idBlock);
+
+        let Aussen = BlockTur.querySelector("#Aussen");
+        let Aitems = Aussen.querySelectorAll("#OptionA");
+
+        let Intern = BlockTur.querySelector("#Intern");
+
+        console.log(Intern);
+
+        let Iitems = Intern.querySelectorAll("#OptionI");
+
+        console.log(Iitems);
+        Aitems.forEach(function (items) {
+
+            if (serchedItem == 1) {
+                return;
+            }
+            else {
+                let ItemValue = Number(items.innerHTML);
+                if (ItemValue > 31) {
+                    iterations++;
+
+                    if (ItemValue == value) {
+                        serchedItem++;
+                        return;
+                    }
+                }
+                else {
+                    if (ItemValue == value) {
+                        AussenCost = 0;
+                        let a = Number(localStorage.sInnen);
+                        let b = Number(localStorage.sAussen);
+                        let c = Number(localStorage.options);
+
+                        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
+                        AllPrice.innerHTML = String(sum);
+                        console.log(cost.innerHTML);
+                        serchedItem++;
+                        return;
+                    }
+                }
+
+            }
+
+        });
+
+        AussenCost = 0;
+
+        for (let i = 0; i < iterations; i++) {
+            AussenCost = AussenCost + 5;
+        }
+
+
+        localStorage.sAussen = AussenCost;
+        let a = Number(localStorage.sInnen);
+        let b = Number(localStorage.sAussen);
+        let c = Number(localStorage.options);
+
+        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
+        AllPrice.innerHTML = String(sum);
+
+        iterations = 0;
+        serchedItem = 0;
+
+    }
+    function selectParamInternIsGround(value, idBlock) 
+    {
+        let Iiterations = 0;
+        let IserchedItem = 0;
+
+        let BlockTur = document.getElementById(idBlock);
+
+        let Intern = BlockTur.querySelector("#Intern");
+        let Iitems = Intern.querySelectorAll("#OptionI");
+
+        Iitems.forEach(function (items) {
+            if (IserchedItem == 1) {
+                return;
+            }
+            else {
+                let ItemValue = Number(items.innerHTML);
+
+                if (ItemValue > 31) {
+                    Iiterations++;
+
+                    if (ItemValue == value) {
+                        IserchedItem++;
+                        return;
+                    }
+                }
+                else {
+                    if (ItemValue == value) {
+                        InternCost = 0;
+                        let a = Number(localStorage.sInnen);
+                        let b = Number(localStorage.sAussen);
+                        let c = Number(localStorage.options);
+
+                        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
+                        AllPrice.innerHTML = String(sum);
+                        console.log(cost.innerHTML);
+                        IserchedItem++;
+                        return;
+                    }
+                }
+
+            }
+
+        });
+
+        InternCost = 0;
+        for (let i = 0; i < Iiterations; i++) {
+            InternCost = InternCost + 5;
+        }
+        localStorage.sInnen = InternCost;
+
+        let a = Number(localStorage.sInnen);
+        let b = Number(localStorage.sAussen);
+        let c = Number(localStorage.options);
+
+        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
+        AllPrice.innerHTML = String(sum);
+        Iiterations = 0;
+        IserchedItem = 0;
+    }
+    function selectParamAussen(value, idBlock) 
+    {
+        let iterations = 0;
+        let serchedItem = 0;
+
+        let BlockTur = document.getElementById(idBlock);
+        let Aussen = BlockTur.querySelector("#Aussen");
+        let Aitems = Aussen.querySelectorAll("#OptionA");
+
+        let Intern = BlockTur.querySelector("#Intern");
+        let Iitems = Intern.querySelectorAll("#OptionI");
+
+        Aitems.forEach(function (items) {
+            if (serchedItem == 1) {
+                return;
+            }
+            else {
+                let ItemValue = Number(items.innerHTML);
+                if (ItemValue > 31) {
+                    iterations++;
+
+                    if (ItemValue == value) {
+                        serchedItem++;
+                        return;
+                    }
+                }
+                else {
+                    if (ItemValue == value) {
+                        AussenCost = 0;
+                        let a = Number(localStorage.sInnen);
+                        let b = Number(localStorage.sAussen);
+                        let c = Number(localStorage.options);
+
+                        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
+                        AllPrice.innerHTML = String(sum);
+                        console.log(cost.innerHTML);
+                        serchedItem++;
+                        return;
+                    }
+                }
+
+            }
+
+        });
+
+
+
+        let size = Iitems.length - iterations;
+
+        let slicedArray = Array.prototype.slice.call(Iitems, 0, size);
+
+        for (let i = 0; i < Iitems.length; i++) {
+            Iitems[i].style.display = "none";
+        }
+
+        for (let i = 0; i < slicedArray.length; i++) {
+            Iitems[i].style.display = "block";
+        }
+        AussenCost = 0;
+
+        for (let i = 0; i < iterations; i++) {
+            AussenCost = AussenCost + 5;
+        }
+
+
+        localStorage.sAussen = AussenCost;
+        let a = Number(localStorage.sInnen);
+        let b = Number(localStorage.sAussen);
+        let c = Number(localStorage.options);
+
+        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
+        AllPrice.innerHTML = String(sum);
+
+        iterations = 0;
+        serchedItem = 0;
+
+
+    }
+    function selectParamIntern(value, idBlock) 
+    {
+        let Iiterations = 0;
+        let IserchedItem = 0;
+
+        let BlockTur = document.getElementById(idBlock);
+
+        let Intern = BlockTur.querySelector("#Intern");
+
+        let Iitems = Intern.querySelectorAll("#OptionI");
+
+        Iitems.forEach(function (items) {
+            if (IserchedItem == 1) {
+                return;
+            }
+            else {
+                let ItemValue = Number(items.innerHTML);
+
+                if (ItemValue > 31) {
+                    Iiterations++;
+
+                    if (ItemValue == value) {
+                        IserchedItem++;
+                        return;
+                    }
+                }
+                else {
+                    if (ItemValue == value) {
+                        InternCost = 0;
+                        let a = Number(localStorage.sInnen);
+                        let b = Number(localStorage.sAussen);
+                        let c = Number(localStorage.options);
+
+                        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
+                        AllPrice.innerHTML = String(sum);
+                        console.log(cost.innerHTML);
+                        IserchedItem++;
+                        return;
+                    }
+                }
+
+            }
+
+        });
+        InternCost = 0;
+        for (let i = 0; i < Iiterations; i++) {
+            InternCost = InternCost + 5;
+        }
+        localStorage.sInnen = InternCost;
+
+        let a = Number(localStorage.sInnen);
+        let b = Number(localStorage.sAussen);
+        let c = Number(localStorage.options);
+
+        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
+        AllPrice.innerHTML = String(sum);
+        Iiterations = 0;
+        IserchedItem = 0;
+    }
+    function selectParamOptions(event, count,idBlock) {
+        // var selectedOptionId = event.target.options[event.target.selectedIndex].id;
+        // OptionCost = OptionPrice[selectedOptionId];
+        // localStorage.options = OptionCost;
+        // let a = Number(localStorage.sInnen);
+        // let b = Number(localStorage.sAussen);
+        // let c = Number(localStorage.options);
+
+        // let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
+        // AllPrice.innerHTML = String(sum);
+
+        // OptionCost = 0;
+        // console.log(OptionPrice[selectedOptionId]);
+    }
+
 </script>

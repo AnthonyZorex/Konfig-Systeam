@@ -524,6 +524,9 @@ namespace schliessanlagenkonfigurator.Migrations
                     b.Property<string>("description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool?>("isGround")
+                        .HasColumnType("bit");
+
                     b.Property<int>("schliessanlagenId")
                         .HasColumnType("int");
 
@@ -654,6 +657,9 @@ namespace schliessanlagenkonfigurator.Migrations
 
                     b.Property<string>("description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("isGround")
+                        .HasColumnType("bit");
 
                     b.Property<int>("schliessanlagenId")
                         .HasColumnType("int");

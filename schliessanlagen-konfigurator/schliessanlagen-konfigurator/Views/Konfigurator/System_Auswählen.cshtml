@@ -244,7 +244,7 @@
                 </div>
             }
         }
-    @*     @if (ViewBag.Doppel != null && ViewBag.Halb != null)
+         @if (ViewBag.Doppel != null && ViewBag.Halb != null  && ViewBag.Knaufzylinder != null && ViewBag.Hebel == null && ViewBag.VorhanSchloss == null && ViewBag.Aussen == null)
         {
             foreach (var item in ViewBag.Doppel)
             {
@@ -271,7 +271,7 @@
                         </div>
                         <div id="productChek">
 
-                            <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new { DopelId = item.Id , param2 = item.userKey,Halb = item?.cheked3})">WÄHLEN</a>
+                            <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new { DopelId = item.Id , param2 = item.userKey,Halb = item?.cheked3,KnayfID = item?.cheked2})">WÄHLEN</a>
 
                         </div>
                     </div>
@@ -279,7 +279,7 @@
 
                 </div>
             }
-        }*@
+        }
         @if (ViewBag.Doppel != null && ViewBag.Knaufzylinder != null && ViewBag.Halb == null && ViewBag.Hebel == null && ViewBag.VorhanSchloss == null && ViewBag.Aussen == null)
         {
             foreach (var item in ViewBag.Doppel)
@@ -359,7 +359,4 @@
 
  <script>
      
-     let s = @Html.Raw(@ViewBag.UserNameItem);
-     console.log(s);
-
 </script>

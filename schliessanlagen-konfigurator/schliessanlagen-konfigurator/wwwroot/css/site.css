@@ -574,7 +574,7 @@ summary {
     display: flex;
     gap: 20px;
 }
-#SizeProduct{
+.SizeProduct{
     display:flex;
 }
 #orderCost {

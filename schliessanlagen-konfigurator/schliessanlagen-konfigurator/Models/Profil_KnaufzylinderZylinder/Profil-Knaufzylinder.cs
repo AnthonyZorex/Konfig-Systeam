@@ -13,6 +13,7 @@ namespace schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder
         public string? description { get; set; }
         public string? NameSystem { get; set; }
         public float Cost { get; set; }
+        public bool? isGround { get; set; }
         public string? ImageName { get; set; }
         [NotMapped]
         [DisplayName("Upload your photo")]
