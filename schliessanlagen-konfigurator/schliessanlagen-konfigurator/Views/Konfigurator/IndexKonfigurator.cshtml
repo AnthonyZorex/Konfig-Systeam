@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = "Konfigurator";
+
 }
 @if (TempData["AlertMessage"] != null)
 {
@@ -43,7 +44,7 @@
                 <div  class="TexCount">
                     <h6>1</h6>
                     <div id="TexInputKey">
-                            <input id="inputS" name="NameKey" placeholder="Name des Schlüssels" type="text" />
+                            <input id="inputS" name="NameKey" onchange="chekedNameArienKey(event.target.value,1)" placeholder="Name des Schlüssels" type="text" />
                     </div>
                     <div>
                             <input id="inputCount" name="CountKey" value="1" type="text" />
@@ -75,9 +76,8 @@
                                 <div>
                                     <h6 id="counterTur">1</h6>
                                 </div>
-
                                             <div>
-                                                <input id="inputTur" name="Turname" placeholder="Name der Tür" />
+                                        <input id="inputTur" name="Turname" onchange="chekedNameArientiren(event.target.value,1)" placeholder="Name der Tür" />
                                             </div>
                                    
                                 <div>
@@ -91,7 +91,7 @@
                                         <input id="TypeSelectTurItem" name="Ssl" placeholder="Ssl" />
                                     </div>
                                 <div id="SelectTurItem">
-                                        <select id="TypeSelectTurItem"  name="ZylinderId">
+                                        <select id="TypeSelectTurItem" onchange="selectParam(event.target.value,1)" name="ZylinderId">
                                     @foreach (var list in ViewBag.Zylinder_Typ)
                                     {
                                         <option>@list.nameType</option>
@@ -101,7 +101,7 @@
                                    
                             <div id="SelectTurItem">
                                         <select id="TypeSelectTurItem" class="aussen" name="aussen">
-                                     <option value ="0" selected>Außenlänge</option>
+                                     <option value="0" selected>Außenlänge</option>
                                      @foreach (var list in ViewBag.DoppelAussen)
                                     {
                                         <option id="OptionA">@list</option>
@@ -149,8 +149,7 @@
 </div>
 <script>
 
-   let blockCount = 1;
-        
+   let blockCount = 1; 
    let blockTur = 1;
 
     let OptionDoppel = @Html.Raw(ViewBag.JsonDoppelOption);
@@ -167,16 +166,46 @@
     let KnayfInternSize = @Html.Raw(ViewBag.SizeKnayfIntern);
     
     let HalbSize = @Html.Raw(ViewBag.SizeHalb);
-
     let VorhanSize = @Html.Raw(ViewBag.SizeVorhan);
-
     var data = JSON.parse(localStorage.getItem(`${blockTur}checkbox${blockCount}`));
-    
-
    
+    function chekedNameArientiren(value,id) 
+    {
+        let allKeyName = document.querySelectorAll("#inputS");
+       
+        let cheker = 1;
+        for (let i = 0; i < allKeyName.length; i++) 
+        {
+            if (allKeyName[i].value == value) 
+            {
+                let checkbox = document.getElementById(`${id}checkbox${cheker}`);
+                checkbox.checked = true;
+                let Icheckbox = document.getElementById(`I${id}checkbox${cheker}`);
+                Icheckbox.value = true;
+            }
+            cheker++;
+        }
+       
+    }
+    function chekedNameArienKey(value,id) 
+    {
+        let allTurName = document.querySelectorAll("#inputTur");
+        let cheker = 1;
+
+        for (let i = 0; i < allTurName.length; i++) 
+        {
+            if (allTurName[i].value == value) {
+                let checkbox = document.getElementById(`${cheker}checkbox${id}`);
+                checkbox.checked = true;
+                let Icheckbox = document.getElementById(`I${cheker}checkbox${id}`);
+                Icheckbox.value = true;
+             
+            }
+            cheker++;
+        }
+    }
     function selectParam(value,turNumber) 
     {
-
         let BlockTur = document.querySelector(`#BlockTur-${turNumber}`);
 
         let Aussen = BlockTur.querySelector(".aussen");
@@ -316,8 +345,7 @@
                 Option.appendChild(option);
             }
         }
-        console.log(value);
-        console.log(turNumber);
+
     }
 
     function createCustomCheckbox(id) 
@@ -335,7 +363,7 @@
 
         if (savedValue !== null) 
         {
-            console.log(checkbox);
+   
             checkbox.checked = (savedValue === 'true'); 
             checkboxValue = checkbox.checked;
 
@@ -348,11 +376,8 @@
            
             checkboxValue = this.checked;
 
-            console.log(checkbox);
-            console.log(checkboxValue);
-
             let switches = document.getElementById(`I${id}`);
-            console.log(switches);
+         
             if (switches !== null)
                 switches.value = String(this.checked);
 
@@ -395,7 +420,7 @@
                                     </div>
 
                                     <div>
-                                            <input id="inputTur" name="Turname" placeholder="Name der Tür" />
+                                                            <input id="inputTur"  onchange="chekedNameArientiren(event.target.value,${blockTur})" name="Turname" placeholder="Name der Tür" />
                                     </div>
 
                                     <div>
@@ -436,7 +461,7 @@
                                 </div>
                                
                                 <div id="SelectTurItem">
-                                                 <select id="TypeSelectTurItem" class="Option" name="Options">
+                                      <select id="TypeSelectTurItem" class="Option" name="Options">
                                         <option>Options</option>
                                          @foreach (var list in ViewBag.OptionsName)
                                          {
@@ -518,7 +543,7 @@
                                     <div  class="TexCount">
                          <h6>${blockCount}</h6>
                             <div id="TexInputKey">
-                                    <input id="inputS" name="NameKey" placeholder="Name des Schlüssels" type="text" />
+                                <input id="inputS" name="NameKey" onchange="chekedNameArienKey(event.target.value,${blockCount})" placeholder="Name des Schlüssels" type="text" />
                             </div>
                             <div>
                                      <input id="inputCount" name="CountKey" value="1" type="text" />

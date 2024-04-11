@@ -315,7 +315,44 @@
 
                 </div>
             }
-        } 
+        }
+        @if (ViewBag.Doppel != null && ViewBag.Knaufzylinder != null && ViewBag.Halb != null && ViewBag.Hebel != null && ViewBag.VorhanSchloss != null && ViewBag.Aussen == null)
+        {
+            var s = @ViewBag.Doppel.Count;
+            foreach (var item in ViewBag.Doppel)
+            {
+
+                <div id="ExelItem">
+                    <div id="productImage">
+                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                    </div>
+                    <div id="productMenuInfo">
+                        <div id="ProductNameUndCost">
+
+                            <div>
+                                <h3>@item.Name</h3>
+                            </div>
+
+                            <div style="margin-left: auto;">
+                                <h4 id="cost">ab @item.Cost €</h4>
+                            </div>
+
+                        </div>
+
+                        <div id="product_desciptions">
+                            <h5>@item.description</h5>
+                        </div>
+                        <div id="productChek">
+
+                            <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new { DopelId = item?.Id , param2 = item.userKey,KnayfID = item?.cheked2, Halb = item?.cheked3,Hebel = item?.cheked4,Vorhan = item?.cheked5,userInfo = @ViewBag.User})">WÄHLEN</a>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            }
+        }
         @if (ViewBag.Doppel != null && ViewBag.Knaufzylinder != null && ViewBag.Halb != null && ViewBag.Hebel != null && ViewBag.VorhanSchloss != null && ViewBag.Aussen != null)
         {
             var s = @ViewBag.Doppel.Count;

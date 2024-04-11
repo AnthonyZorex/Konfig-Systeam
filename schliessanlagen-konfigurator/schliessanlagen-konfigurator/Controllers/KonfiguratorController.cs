@@ -472,6 +472,8 @@ namespace schliessanlagen_konfigurator.Controllers
                         dopelProduct.Add(safeDoppelItem[j]);
                     }
 
+
+
                     var allDopelOption = allUserListOrder.Where(x => x.ZylinderId == dopelType).ToList();
 
                     var DopelOption = from t1 in allUserListOrder
@@ -1189,10 +1191,19 @@ namespace schliessanlagen_konfigurator.Controllers
             if (allOderAussen.Count() > 0)
             {
                 var allAussenOption = allUserListOrder.Where(x => x.ZylinderId == AussenType).ToList();
+                
+                var AussenOption = from t1 in allUserListOrder
+                                  join t2 in Aussenzylinder
+                                  on t1.ZylinderId equals t2.schliessanlagenId
+                                  select new
+                                  {
+                                      Option = t1.Options
+                                  };
 
-                var boolOptionAussen = allUserListOrder.FirstOrDefault(x => x.ZylinderId == AussenType);
 
-                if (boolOptionAussen != null)
+                var OptionAussen = AussenOption.Where(x => x.Option != null).Count();
+                
+                if (OptionAussen> 0)
                 {
                     var OptionsList = new List<Aussen_Rund_options>();
 
@@ -1646,9 +1657,11 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var Join = queryOrder.Distinct().ToList();
 
-
-                ViewBag.a = Join;
-                ViewBag.b = Join;
+                ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
+                ViewBag.Knaufzylinder = "";
+                ViewBag.Halb = "";
+                ViewBag.Hebel = "";
+                ViewBag.VorhanSchloss = "";
             }
             if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked3.Count() > 0 && cheked4.Count() > 0 && cheked5.Count() > 0 && cheked6.Count() > 0)
             {
@@ -1728,7 +1741,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var Kanyf_AussenInen = await db.Aussen_Innen_Knauf.Where(x => x.Profil_KnaufzylinderId == Convert.ToInt32(KnayfID)).ToListAsync();
 
-
+            var IsOpenValue = new List<isOpen_value>();
 
             var Vorhanschlos = new List<Vorhangschloss>();
 
@@ -2071,7 +2084,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 foreach (var list in isOpen)
                     keyOpenOrder.Add(list);
             }
-            var IsOpenValue = new List<isOpen_value>();
+           
 
             foreach (var order in keyOpenOrder)
             {
@@ -2239,7 +2252,6 @@ namespace schliessanlagen_konfigurator.Controllers
 
             ViewBag.Aussenzylinder = Aussenzylinder.ToList();
             ViewBag.AussenzylinderItem = Aussenzylinder.Select(x=>x.Id).ToList();
-
 
             ViewBag.KeyValue = ValueKeyOpen.Select(x=>x.isOpen).ToList();
             ViewBag.DorName = key.Select(x => x.DorName).Distinct().ToList();

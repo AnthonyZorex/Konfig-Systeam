@@ -209,6 +209,50 @@
       "PackagePath": "staticwebassets\\Image\\CES WO Vorhängeschloss 215240044311.png"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\EVVA EPS Halbzylinder243738195.png",
+      "PackagePath": "staticwebassets\\Image\\EVVA EPS Halbzylinder243738195.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\EVVA EPS Hebelzylinder245304587.png",
+      "PackagePath": "staticwebassets\\Image\\EVVA EPS Hebelzylinder245304587.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\EVVA EPS Knaufzylinder242540538.png",
+      "PackagePath": "staticwebassets\\Image\\EVVA EPS Knaufzylinder242540538.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\EVVA EPS Knaufzylinder242856414.png",
+      "PackagePath": "staticwebassets\\Image\\EVVA EPS Knaufzylinder242856414.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\EVVA EPS Schließzylinder242426237.png",
+      "PackagePath": "staticwebassets\\Image\\EVVA EPS Schließzylinder242426237.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\EVVA EPS Vorhängeschloss245053244.png",
+      "PackagePath": "staticwebassets\\Image\\EVVA EPS Vorhängeschloss245053244.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\EVVA ICS Halbzylinder241334749.png",
+      "PackagePath": "staticwebassets\\Image\\EVVA ICS Halbzylinder241334749.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\EVVA ICS Hebelzylinder MB23242243167.png",
+      "PackagePath": "staticwebassets\\Image\\EVVA ICS Hebelzylinder MB23242243167.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\EVVA ICS Knaufzylinder240627749.png",
+      "PackagePath": "staticwebassets\\Image\\EVVA ICS Knaufzylinder240627749.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\EVVA ICS Schließzylinder240309015.png",
+      "PackagePath": "staticwebassets\\Image\\EVVA ICS Schließzylinder240309015.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\EVVA ICS Vorhängeschloss241756210.png",
+      "PackagePath": "staticwebassets\\Image\\EVVA ICS Vorhängeschloss241756210.png"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\SD_Logo.svg",
       "PackagePath": "staticwebassets\\Image\\SD_Logo.svg"
     },
