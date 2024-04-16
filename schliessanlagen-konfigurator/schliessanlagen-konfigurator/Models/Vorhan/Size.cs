@@ -1,6 +1,4 @@
-﻿using schliessanlagen_konfigurator.Models.ProfilDopelZylinder;
-
-namespace schliessanlagen_konfigurator.Models.Vorhan
+﻿namespace schliessanlagen_konfigurator.Models.Vorhan
 {
     public class Size
     {

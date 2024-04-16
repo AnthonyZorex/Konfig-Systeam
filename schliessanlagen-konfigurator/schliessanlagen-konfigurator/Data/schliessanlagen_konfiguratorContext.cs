@@ -1,32 +1,33 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using schliessanlagen_konfigurator.Models;
+using schliessanlagen_konfigurator.Models.Aussen_Rund;
 using schliessanlagen_konfigurator.Models.Halbzylinder;
 using schliessanlagen_konfigurator.Models.Halbzylinder.ValueOptions;
+using schliessanlagen_konfigurator.Models.Hebelzylinder;
+using schliessanlagen_konfigurator.Models.OrdersOpen;
 using schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder;
 using schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.ValueOptions;
 using schliessanlagen_konfigurator.Models.ProfilDopelZylinder;
 using schliessanlagen_konfigurator.Models.ProfilDopelZylinder.ValueOptions;
-using schliessanlagen_konfigurator.Models.Hebelzylinder;
-using schliessanlagen_konfigurator.Models.Vorhan;
-using schliessanlagen_konfigurator.Models.Aussen_Rund;
-using schliessanlagen_konfigurator.Models.OrdersOpen;
 using schliessanlagen_konfigurator.Models.Users;
+using schliessanlagen_konfigurator.Models.Vorhan;
 
 namespace schliessanlagen_konfigurator.Data
 {
-    public class schliessanlagen_konfiguratorContext : DbContext
+    public class schliessanlagen_konfiguratorContext : IdentityDbContext<User>
     {
         public schliessanlagen_konfiguratorContext(DbContextOptions<schliessanlagen_konfiguratorContext> options)
             : base(options)
         {
-             
+
         }
-        public DbSet<Schliessanlagen> Schliessanlagen { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<UserOrdersShop> UserOrdersShop { get; set; }
         public DbSet<ProductSysteam> ProductSysteam { get; set; }
 
-
+        public DbSet<Schliessanlagen> Schliessanlagen { get; set; }
 
         public DbSet<Profil_Doppelzylinder> Profil_Doppelzylinder { get; set; }
         public DbSet<Profil_Doppelzylinder_Options> Profil_Doppelzylinder_Options { get; set; }
@@ -41,7 +42,7 @@ namespace schliessanlagen_konfigurator.Data
         public DbSet<Halbzylinder_Options_value> Halbzylinder_Options_value { get; set; }
         public DbSet<Aussen_Innen_Halbzylinder> Aussen_Innen_Halbzylinder { get; set; }
 
-        
+
         public DbSet<Hebel> Hebelzylinder { get; set; }
         public DbSet<Hebelzylinder_Options> Hebelzylinder_Options { get; set; }
         public DbSet<Options> Options { get; set; }
@@ -67,12 +68,26 @@ namespace schliessanlagen_konfigurator.Data
         public DbSet<KeyValue> KeyValue { get; set; }
 
         public DbSet<Profil_Knaufzylinder> Profil_Knaufzylinder { get; set; }
-        public DbSet<Aussen_Innen_Knauf> Aussen_Innen_Knauf {  get; set; }
+        public DbSet<Aussen_Innen_Knauf> Aussen_Innen_Knauf { get; set; }
         public DbSet<Knayf_Options> Knayf_Options { get; set; }
         public DbSet<Knayf_Options_value> Knayf_Options_value { get; set; }
         public DbSet<Profil_Knaufzylinder_Options> Profil_Knaufzylinder_Options { get; set; }
 
-        
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            var admin = new IdentityRole("admin");
+            admin.NormalizedName = "admin";
+
+            var client = new IdentityRole("client");
+            client.NormalizedName = "client";
+
+            builder.Entity<IdentityRole>().HasData(admin, client);
+        }
+
     }
+
+
 }
 

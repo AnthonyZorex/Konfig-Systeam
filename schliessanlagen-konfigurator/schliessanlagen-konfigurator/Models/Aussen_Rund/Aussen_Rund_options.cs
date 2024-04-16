@@ -1,6 +1,4 @@
-﻿using schliessanlagen_konfigurator.Models.Vorhan;
-
-namespace schliessanlagen_konfigurator.Models.Aussen_Rund
+﻿namespace schliessanlagen_konfigurator.Models.Aussen_Rund
 {
     public class Aussen_Rund_options
     {

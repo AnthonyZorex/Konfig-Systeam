@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-namespace schliessanlagen_konfigurator.Models.ProfilDopelZylinder.ValueOptions
+﻿namespace schliessanlagen_konfigurator.Models.ProfilDopelZylinder.ValueOptions
 {
     public class NGF_Value
     {

@@ -1,6 +1,4 @@
-﻿using schliessanlagen_konfigurator.Models.ProfilDopelZylinder;
-
-namespace schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.ValueOptions
+﻿namespace schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.ValueOptions
 {
     public class Knayf_Options_value
     {

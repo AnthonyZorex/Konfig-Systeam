@@ -1,6 +1,4 @@
-﻿using schliessanlagen_konfigurator.Models.ProfilDopelZylinder;
-
-namespace schliessanlagen_konfigurator.Models.Halbzylinder
+﻿namespace schliessanlagen_konfigurator.Models.Halbzylinder
 {
     public class Aussen_Innen_Halbzylinder
     {

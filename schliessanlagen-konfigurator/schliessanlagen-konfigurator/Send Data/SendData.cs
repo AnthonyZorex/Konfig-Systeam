@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using schliessanlagen_konfigurator.Data;
 using schliessanlagen_konfigurator.Models;
-using System.Diagnostics.Metrics;
-using System.Security.AccessControl;
-using schliessanlagen_konfigurator.Models.Users;
 namespace schliessanlagen_konfigurator.Send_Data
 {
     public class SendData
@@ -11,9 +8,9 @@ namespace schliessanlagen_konfigurator.Send_Data
         public static void Initialize(IServiceProvider serviceProvider)
         {
             using (var context = new schliessanlagen_konfiguratorContext(
-                serviceProvider.GetRequiredService <
+                serviceProvider.GetRequiredService<
                     DbContextOptions<schliessanlagen_konfiguratorContext>>()))
-                {
+            {
                 if (context.Schliessanlagen.Any())
                 {
                     return;
@@ -46,7 +43,7 @@ namespace schliessanlagen_konfigurator.Send_Data
                 {
                     return;
                 }
-               
+
                 if (context.Orders.Any())
                 {
                     return;
@@ -54,7 +51,7 @@ namespace schliessanlagen_konfigurator.Send_Data
                 context.Schliessanlagen.AddRange(
                    new Schliessanlagen
                    {
-                      nameType = "Profil-Doppelzylinder"
+                       nameType = "Profil-Doppelzylinder"
                    },
                    new Schliessanlagen
                    {
@@ -76,18 +73,6 @@ namespace schliessanlagen_konfigurator.Send_Data
                    {
                        nameType = "Aussenzylinder_Rundzylinder"
                    }
-                );
-                context.User.AddRange(
-                    new User
-                    {
-                        Name= "Schlüssel",
-                        Sername= "Discount",
-                        Status="Admin",
-                        Login= "Schlüssel",
-                        Password="brunnenqwe",
-                        PhoneNumber= "+4930 4508 7619",
-                        Email ="info@schluessel.discount"
-                    }
                 );
                 context.SaveChanges();
             }

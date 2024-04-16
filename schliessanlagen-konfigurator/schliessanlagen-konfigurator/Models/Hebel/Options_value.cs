@@ -1,6 +1,4 @@
-﻿using schliessanlagen_konfigurator.Models.Halbzylinder.ValueOptions;
-
-namespace schliessanlagen_konfigurator.Models.Hebelzylinder
+﻿namespace schliessanlagen_konfigurator.Models.Hebelzylinder
 {
     public class Options_value
     {

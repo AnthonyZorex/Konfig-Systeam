@@ -1,8 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using schliessanlagen_konfigurator.Models.Hebelzylinder;
 using System.ComponentModel;
-using schliessanlagen_konfigurator.Models;
-using schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder;
-using schliessanlagen_konfigurator.Models.Hebelzylinder;
+using System.ComponentModel.DataAnnotations.Schema;
 namespace schliessanlagen_konfigurator.Models
 {
     public class Hebel
@@ -23,7 +21,7 @@ namespace schliessanlagen_konfigurator.Models
         public Hebel()
         {
             Hebelzylinder_Options = new List<Hebelzylinder_Options>();
-           
+
         }
 
     }

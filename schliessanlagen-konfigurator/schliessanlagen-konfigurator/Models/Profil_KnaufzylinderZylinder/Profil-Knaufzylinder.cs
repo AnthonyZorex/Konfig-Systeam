@@ -1,6 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel;
-using schliessanlagen_konfigurator.Models.ProfilDopelZylinder;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder
 {

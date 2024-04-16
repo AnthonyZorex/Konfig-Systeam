@@ -1,7 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using schliessanlagen_konfigurator.Models.Vorhan;
 using System.ComponentModel;
-using schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder;
-using schliessanlagen_konfigurator.Models.Vorhan;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace schliessanlagen_konfigurator.Models
 {

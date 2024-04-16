@@ -1,6 +1,4 @@
-﻿using schliessanlagen_konfigurator.Models.ProfilDopelZylinder;
-
-namespace schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder
+﻿namespace schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder
 {
     public class Aussen_Innen_Knauf
     {

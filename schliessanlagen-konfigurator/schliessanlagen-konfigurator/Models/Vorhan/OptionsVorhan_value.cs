@@ -1,8 +1,4 @@
-﻿using schliessanlagen_konfigurator.Models.Hebelzylinder;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel;
-
-namespace schliessanlagen_konfigurator.Models.Vorhan
+﻿namespace schliessanlagen_konfigurator.Models.Vorhan
 {
     public class OptionsVorhan_value
     {

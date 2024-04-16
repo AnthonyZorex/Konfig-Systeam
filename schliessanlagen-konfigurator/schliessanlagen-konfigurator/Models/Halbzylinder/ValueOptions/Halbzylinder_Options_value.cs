@@ -1,6 +1,4 @@
-﻿using schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.ValueOptions;
-
-namespace schliessanlagen_konfigurator.Models.Halbzylinder.ValueOptions
+﻿namespace schliessanlagen_konfigurator.Models.Halbzylinder.ValueOptions
 {
     public class Halbzylinder_Options_value
     {

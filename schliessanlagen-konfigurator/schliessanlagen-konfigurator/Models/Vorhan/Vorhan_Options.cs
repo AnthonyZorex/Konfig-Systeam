@@ -1,6 +1,4 @@
-﻿using schliessanlagen_konfigurator.Models.Halbzylinder.ValueOptions;
-
-namespace schliessanlagen_konfigurator.Models.Vorhan
+﻿namespace schliessanlagen_konfigurator.Models.Vorhan
 {
     public class Vorhan_Options
     {

@@ -25,7 +25,7 @@
                     <ul class="navbar-nav flex-grow-1">
 
 
-                            @if (ViewBag.UserInformStatus == "Admin")
+                            @if (User.IsInRole("admin"))
                             {
                                 <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Produktbearbeitung</a>
@@ -53,21 +53,21 @@
                         </li>
                        
                     </ul>
-                    <ul class="navbar-nav flex-grow-1" style="display: flex;align-items: center;text-align: center;">
+                  @*   <ul class="navbar-nav flex-grow-1" style="display: flex;align-items: center;text-align: center;">
                         <li class="nav-item">
                             <a style="text-decoration:underline;color:black;" id="Username" href="@Url.Action("AdminConnect","Konfigurator", new {UserId = ViewBag.UserId})">@ViewBag.UserNameItem</a>
                         </li>
                   
                             <li class="nav-item">
-                            <button class="nav-link text-dark" type="button" id="schopIcons" data-toggle="modal" data-target="#myModal"><img id="openModalBtn" src="~/Image/shopping-cart.png" width="20" height="20" style="margin-left:-2px;margin-top:-12px" /><span id="CountOrders">@ViewBag.CountOrders</span></button>
+                            <a class="nav-link text-dark" asp-controller="Account" asp-action="Register" id="schopIcons"> <img id="openModalBtn" src="~/Image/shopping-cart.png" width="20" height="20" style="margin-left:-2px;margin-top:-12px" /><span id="CountOrders">@ViewBag.CountOrders</span></a>
                             </li>
-                    </ul>
+                    </ul> *@
+  
+                    <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
-        <div id="myModal" class="modal">
-            @Html.Partial("_ModalShop")
-        </div>
+    
     </header>
     <div class="container">
         <main role="main" >
@@ -85,26 +85,25 @@
 
     let documentOrder = document.getElementById("CountOrders");
 
-    console.log(@ViewBag.UserNameItem);
 
-    $(document).ready(function () {
+    // $(document).ready(function () {
 
-        var modal = $("#myModal");
-        var btn = $("#openModalBtn");
-        var closeBtn = $(".close");
+    //     var modal = $("#myModal");
+    //     var btn = $("#openModalBtn");
+    //     var closeBtn = $(".close");
 
-        btn.on("click", function () {
-            modal.show();
-        });
+    //     btn.on("click", function () {
+    //         modal.show();
+    //     });
 
-        closeBtn.on("click", function () {
-            modal.hide();
-        });
+    //     closeBtn.on("click", function () {
+    //         modal.hide();
+    //     });
 
-        $(window).on("click", function (event) {
-            if (event.target == modal[0]) {
-                modal.hide();
-            }
-        });
-    });
+    //     $(window).on("click", function (event) {
+    //         if (event.target == modal[0]) {
+    //             modal.hide();
+    //         }
+    //     });
+    // });
 </script>

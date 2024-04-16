@@ -1,6 +1,5 @@
-﻿using schliessanlagen_konfigurator.Models.Vorhan;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel;
 
 namespace schliessanlagen_konfigurator.Models.Aussen_Rund
 {

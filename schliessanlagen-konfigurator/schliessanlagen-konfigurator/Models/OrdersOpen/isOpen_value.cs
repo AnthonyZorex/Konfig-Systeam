@@ -1,9 +1,4 @@
-﻿using schliessanlagen_konfigurator.Models.ProfilDopelZylinder.ValueOptions;
-using schliessanlagen_konfigurator.Models.ProfilDopelZylinder;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel;
-
-namespace schliessanlagen_konfigurator.Models.OrdersOpen
+﻿namespace schliessanlagen_konfigurator.Models.OrdersOpen
 {
     public class isOpen_value
     {

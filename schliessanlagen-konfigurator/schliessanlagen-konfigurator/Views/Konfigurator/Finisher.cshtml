@@ -3,9 +3,9 @@
 
 @{
     ViewData["Title"] = $"Finisher/{Model.userKey}";
-    
+
     int z = 0;
-    int countValueKey = 0;
+    int countFalse = 0;
 }
 @if (TempData["AlertMessage"] != null)
 {
@@ -22,7 +22,6 @@
         ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim
         justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.
     </p>
-
 <div>
 
         @foreach (var item in ViewBag.Order)
@@ -45,35 +44,23 @@
             <div id="numerKey">
         <h3>Schlüssel Nr.@z </h3>
          </div>
-              <div id="OpenValue">
-                    @{
-                        int valueKeyBool = ViewBag.KeyValue.Count / ViewBag.Order.Count;
-                        @for (int f = 0; f < valueKeyBool; f++)
+                <div id="OpenValue">
+
+                    @for (int i = 0; i < ViewBag.DorName.Count; i++)
+                    {
+                        @if (ViewBag.KeyValue[countFalse] == true)
                         {
-                            @if (ViewBag.KeyValue[countValueKey] == true)
-                            {
-
-                                if (f >= @ViewBag.DorName.Count)
-                                {
-                                    <h5>@ViewBag.DorName[@ViewBag.DorName.Count-1]</h5>
-                                }
-                                <h5>@ViewBag.DorName[0]</h5>
-                                countValueKey++;
-                            }
-                           
-                            else
-                            {
-                                countValueKey++;
-                            }
-                           
-
+                            <h5>@ViewBag.DorName[i]</h5>
                         }
+                        countFalse++;
                     }
-                </div> 
-            </div>
-            
-    } 
-    <div>
+
+                </div>
+            </div>  
+       
+      
+        }
+        <div>
     </div>
         <div id="FinisherAnderes">
             <input type="button" class="btn btn-danger" value="SCHLIESSPLAN BEARBEITEN" />
@@ -171,12 +158,10 @@
                                 {
                                     @for (int i = 0; i < ViewBag.optionsName.Count; i++)
                                     {
-
+                                        <input class="form-control" readonly type="text" value="@ViewBag.optionsName[i]" />
                                         <select class="form-select" id="ProductOptionsSelector" onchange="selectParamOptions(event,@valueCount,@item.Id)">
-                                            <option>@ViewBag.optionsName[i]</option>
                                             @for (int j = 0; j < ViewBag.countOptionsList[i]; j++)
                                             {
-                                                
                                                 <option id="@valueCount">@ViewBag.optionsValue[valueCount]</option>
                                                 valueCount++;
                                             }
@@ -279,12 +264,11 @@
                                 {
                                     @for (int i = 0; i < ViewBag.optionsNameKnayf.Count; i++)
                                     {
-
+                                        <input class="form-control" readonly type="text" value="@ViewBag.optionsNameKnayf[i]" />
+         
                                         <select class="form-select" onchange="selectParamOptions(event,@valueCount,@item.Id)" id="ProductOptionsSelector">
-                                            <option>@ViewBag.optionsNameKnayf[i]</option>
                                             @for (int j = 0; j < ViewBag.countOptionsListKnayf[i]; j++)
                                             {
-
                                                 <option id="@valueCount">@ViewBag.optionsValueKnayf[valueCount]</option>
                                                 valueCount++;
                                             }
@@ -349,9 +333,9 @@
                                 {
                                     @for (int i = 0; i < ViewBag.HalbOptionsName.Count; i++)
                                     {
-                                        <select class="form-select" id="ProductOptionsSelector">
-                                            <option>@ViewBag.HalbOptionsName[i]</option>
+                                     <input class="form-control" readonly type="text" value="@ViewBag.HalbOptionsName[i]" />
 
+                                        <select class="form-select" id="ProductOptionsSelector">
                                             @for (int j = 0; j < ViewBag.HalbOptionsValueCount[i]; j++)
                                             {
                                                 <option id="@valueCount">@ViewBag.HalbOptionsValue[valueCount]</option>
@@ -360,13 +344,9 @@
                                         </select>
                                     }
                                 }
-
-
                             </div> 
                         </div>
                     </div>
-
-
                 </div>
                 elemNum++;
             }
@@ -406,14 +386,15 @@
                     {
                         @for (int i = 0; i < ViewBag.OptionHebelName.Count; i++)
                         {
-                            <select class="form-select" id="ProductOptionsSelector">
-                           <option>@ViewBag.OptionHebelName[i]</option>
-                                            @for (int j = 0; j < ViewBag.CountValueHebel[i]; j++)
-                            {
-                            <option id="@valueCount">@ViewBag.ValueHebel[valueCount]</option>
-                            valueCount++;
-                            }
-                            </select>
+                          <input class="form-control" readonly type="text" value="@ViewBag.OptionHebelName[i]" />
+
+                           <select class="form-select" id="ProductOptionsSelector">
+                               @for (int j = 0; j < ViewBag.CountValueHebel[i]; j++)
+                               {
+                                <option id="@valueCount">@ViewBag.ValueHebel[valueCount]</option>
+                                valueCount++;
+                               }
+                           </select>
                         }
                     }
 
@@ -453,6 +434,7 @@
                         </div>
                         <div>
                             <div>
+                            
                                 <select class="form-select">
                                     <option style="display:none" selected>@ViewBag.VorhanOrderAussen[elemNum]</option>
                                     <option>Außenlänge (A)</option>
@@ -475,14 +457,13 @@
                         {
                             @for (int i = 0; i < ViewBag.VorhanschlossOptionCount; i++)
                             {
-                                <select class="form-select" id="ProductOptionsSelector">
-                                <option>@ViewBag.VorhanschlossOptionName[i]</option>
+                                <input type="text" class="form-control" readonly value="@ViewBag.VorhanschlossOptionName[i]" />
 
+                                <select class="form-select" id="ProductOptionsSelector">
                                 @for (int j = 0; j < ViewBag.VorhanOptionCount[i]; j++)
                                 {
-                                                <option id="@valueCount">@ViewBag.VorhanValue[valueCount]</option>
+                                  <option id="@valueCount">@ViewBag.VorhanValue[valueCount]</option>
                                     valueCount++;
-
                                 }
 
                                 </select>
@@ -531,9 +512,9 @@
                                 {
                                     @for (int i = 0; i < ViewBag.AussenName.Count; i++)
                                     {
-
+                                        <input class="form-control" readonly type="text" value="@ViewBag.AussenName[i]" />
+                                        
                                         <select class="form-select" id="ProductOptionsSelector">
-                                            <option>@ViewBag.AussenName[i]</option>
                                             @for (int j = 0; j < ViewBag.AussenValue[i]; j++)
                                             {
                                                 <option id="@valueCount">@ViewBag.AussenValue[valueCount]</option>

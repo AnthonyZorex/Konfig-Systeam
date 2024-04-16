@@ -12,7 +12,7 @@ namespace schliessanlagen_konfigurator.Models
         public ICollection<Profil_Halbzylinder> Profil_Halbzylinder { get; set; }
         public ICollection<Profil_Knaufzylinder> Profil_Knaufzylinder { get; set; }
         public ICollection<Hebel> Hebelzylinder { get; set; }
-    
+
         public ICollection<Vorhangschloss> Vorhangschloss { get; set; }
         public ICollection<Aussenzylinder_Rundzylinder> Aussenzylinder_Rundzylinder { get; set; }
         public Schliessanlagen()

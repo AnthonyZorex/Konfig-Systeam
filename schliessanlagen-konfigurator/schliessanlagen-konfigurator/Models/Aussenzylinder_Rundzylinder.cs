@@ -1,7 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using schliessanlagen_konfigurator.Models.Aussen_Rund;
 using System.ComponentModel;
-using schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder;
-using schliessanlagen_konfigurator.Models.Aussen_Rund;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace schliessanlagen_konfigurator.Models
 {
@@ -20,11 +19,11 @@ namespace schliessanlagen_konfigurator.Models
         public IFormFile ImageFile { get; set; }
         public Schliessanlagen Schliessanlagen { get; set; }
         public ICollection<Aussen_Rund_options> Aussen_Rund_options { get; set; }
-      
+
         public Aussenzylinder_Rundzylinder()
         {
             Aussen_Rund_options = new List<Aussen_Rund_options>();
-          
+
         }
     }
 }

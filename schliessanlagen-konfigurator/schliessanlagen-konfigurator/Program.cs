@@ -1,17 +1,28 @@
-
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using schliessanlagen_konfigurator.Data;
+using schliessanlagen_konfigurator.Models.Users;
 using schliessanlagen_konfigurator.Send_Data;
 
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddRazorPages();
+
 builder.Services.AddDbContext<schliessanlagen_konfiguratorContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("schliessanlagen_konfiguratorContext") ?? throw new InvalidOperationException("Connection string 'schliessanlagen_konfiguratorContext' not found.")));
 
-// Add services to the container.
+builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<schliessanlagen_konfiguratorContext>();
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+
 
 builder.Services.AddSession(options =>
 {
@@ -20,36 +31,56 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 
 });
+builder.Services.AddRazorPages();
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+
+    // Default Password settings.
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequiredLength = 6;
+    options.Password.RequiredUniqueChars = 1;
+});
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-
     SendData.Initialize(services);
 }
+
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-// Configure the HTTP request pipeline.
-
-
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/Home/Error"); 
     app.UseHsts();
 }
 
-
-
 app.UseHttpsRedirection();
-app.UseStaticFiles();
-
 app.UseRouting();
-
-app.UseAuthorization();
 app.UseSession();
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Konfigurator}/{action=IndexKonfigurator}/{id?}");
+app.MapRazorPages();
+app.UseAuthentication();
+app.UseAuthorization();
+
+
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller=Konfigurator}/{action=IndexKonfigurator}/{id?}");
+
+
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Konfigurator}/{action=IndexKonfigurator}/{id?}");
+    endpoints.MapRazorPages();
+});
 app.Run();
