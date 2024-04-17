@@ -1,0 +1,83 @@
+﻿@page
+@model schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage.PagePersonalOrdersModel;
+
+@{
+    ViewData["Title"] = "Profile Orders";
+    ViewData["ActivePage"] = ManageNavPages.PersonalOrderNavClass;
+
+    var orderList = (List<UserOrdersShop>)ViewData["OrderLis"];
+    var orderItem = (List<ProductSysteam>)ViewData["OrderItem"];
+
+    var countProduct = (List<int>)ViewData["CounterProduct"];
+
+    float costed = 0;
+    int ProudctItemCounter = 0;
+    int UserOrderId = 0;
+}
+<h3>@ViewData["Title"]</h3>
+
+<div class="row">
+    <div class="col-md-6">
+        <div id="AllOrderUser">
+            @for (int z = 0; z < orderList.Count; z++)
+            {
+                <div id="AllProductUser">
+                  <h4>@orderList[z].ProductName</h4>
+                    <details>
+                        <summary>
+                        </summary>
+                        @for (int s = 0; s < countProduct[z]; s++)
+                        {
+                            <h4>Name: @orderItem[ProudctItemCounter].Name</h4>
+                            <h4>Aussen: @orderItem[ProudctItemCounter].Aussen</h4>
+                            <h4>Intern: @orderItem[ProudctItemCounter].Intern</h4>
+                            <h4>Option: @orderItem[ProudctItemCounter].Option</h4>
+                            UserOrderId = @orderList[z].Id;
+                            ProudctItemCounter++;
+                        }
+                    </details>
+                    <div style="text-align: end;">
+                        <button id="removeOrder" onclick="(remove(@UserOrderId))">RemovaOrder</button>
+                        <button>Pay</button>
+                    </div>
+                    <br />
+                    <hr />
+                    <h2>OrderSum: @orderList[z].OrderSum</h2>
+                </div>
+
+                costed = costed + orderList[z].OrderSum;
+            }
+            <br />
+            <hr />
+            <h2 style="color:red">Costed: @costed</h2>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+<script>
+
+    let removeButton = document.getElementById("removeOrder");
+    let AllOrderID = document.querySelector("#OrderId");
+
+    function remove(empty) 
+    {
+        console.log(empty);
+
+        $.ajax({
+            type: "POST",
+            url: "/Konfigurator/RemoveOrder",
+            data: { data: empty},
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+        location.reload();
+    }
+
+</script>

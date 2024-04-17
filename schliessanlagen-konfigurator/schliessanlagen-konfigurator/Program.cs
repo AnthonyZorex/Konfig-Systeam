@@ -17,6 +17,7 @@ builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfi
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<schliessanlagen_konfiguratorContext>();
 
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDistributedMemoryCache();

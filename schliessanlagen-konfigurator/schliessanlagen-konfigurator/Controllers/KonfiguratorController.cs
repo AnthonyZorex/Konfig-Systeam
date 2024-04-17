@@ -16,8 +16,10 @@ using schliessanlagen_konfigurator.Models.ProfilDopelZylinder.ValueOptions;
 using schliessanlagen_konfigurator.Models.Vorhan;
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;
-using User = schliessanlagen_konfigurator.Models.Users.User;
-
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.General;
+using OfficeOpenXml;
+using System.Security.Claims;
+using Newtonsoft.Json.Linq;
 namespace schliessanlagen_konfigurator.Controllers
 {
     public class KonfiguratorController : Controller
@@ -25,106 +27,14 @@ namespace schliessanlagen_konfigurator.Controllers
         schliessanlagen_konfiguratorContext db;
         private IWebHostEnvironment Environment;
         private readonly IHttpContextAccessor _contextAccessor;
-
-        public KonfiguratorController(UserManager<User> userManager, SignInManager<User> signInManager, schliessanlagen_konfiguratorContext context, IWebHostEnvironment _environment
+        public KonfiguratorController( schliessanlagen_konfiguratorContext context, IWebHostEnvironment _environment
         , IHttpContextAccessor httpContextAccessor)
         {
             db = context;
             Environment = _environment;
             _contextAccessor = httpContextAccessor;
         }      
-        public async Task<ActionResult> AdminConnect(User UserLogin, int UserId)
-        {
-            //    if (UserLogin.Id != 0)
-            //    {
-            //        var UserItem = db.User.FirstOrDefault(x => x.Id == UserLogin.Id);
 
-            //        var ListItem = new List<UserOrdersShop>();
-
-
-            //        var OrderList = db.UserOrdersShop.Where(x => x.UserId == UserItem.Id).Distinct().ToList();
-
-            //        foreach (var list in OrderList)
-            //        {
-            //            ListItem.Add(list);
-            //        }
-
-
-            //        ViewBag.CountOrders = ListItem.Count();
-
-            //        var ListItemProduct = new List<Models.Users.ProductSysteam>();
-
-            //        for (int f = 0; f < ListItem.Count(); f++)
-            //        {
-            //            var ProductList = db.ProductSysteam.Where(x => x.UserOrdersShopId == ListItem[f].Id).Distinct().ToList();
-
-            //            foreach (var list in ProductList)
-            //            {
-            //                ListItemProduct.Add(list);
-            //            }
-            //        }
-
-            //        ViewBag.OrderList = ListItem;
-            //        ViewBag.OrderItem = ListItemProduct.OrderBy(x => x.UserOrdersShopId).ToList();
-
-            //        var countIterationProduct = new List<int>();
-
-            //        foreach(var list in ListItem)
-            //        {
-            //            var p = ListItemProduct.OrderBy(x => x.UserOrdersShopId).Where(x => x.UserOrdersShopId == list.Id).ToList();
-            //            countIterationProduct.Add(p.Count());
-            //        }
-
-            //        ViewBag.CounterProduct = countIterationProduct.ToList();
-
-            //        return View(UserItem);
-            //    }
-            //    if (UserId != 0)
-            //    {
-            //        var UserItemID = db.User.FirstOrDefault(x => x.Id == UserId);
-
-            //        var ListItemId = new List<UserOrdersShop>();
-
-
-            //        var OrderListId = db.UserOrdersShop.Where(x => x.UserId == UserId).Distinct().ToList();
-
-            //        foreach (var list in OrderListId)
-            //        {
-            //            ListItemId.Add(list);
-            //        }
-
-
-            //        ViewBag.CountOrders = ListItemId.Count();
-
-            //        var ListItemProductId = new List<Models.Users.ProductSysteam>();
-
-            //        for (int f = 0; f < ListItemId.Count(); f++)
-            //        {
-            //            var ProductList = db.ProductSysteam.Where(x => x.UserOrdersShopId == ListItemId[f].Id).Distinct().ToList();
-
-            //            foreach (var list in ProductList)
-            //            {
-            //                ListItemProductId.Add(list);
-            //            }
-            //        }
-
-            //        ViewBag.OrderList = ListItemId.ToList();
-            //        ViewBag.OrderItem = ListItemProductId;
-
-            //        var countIterationProduct = new List<int>();
-
-            //        foreach (var list in ListItemId)
-            //        {
-            //            var p = ListItemProductId.OrderBy(x => x.UserOrdersShopId).Where(x => x.UserOrdersShopId == list.Id).ToList();
-            //            countIterationProduct.Add(p.Count());
-            //        }
-
-            //        ViewBag.CounterProduct = countIterationProduct.ToList();
-
-            //        return View(UserItemID);
-            //    }
-            return View();
-        }
         public ActionResult IndexKonfigurator(string Status, string Auser)
         {
             ViewBag.Zylinder_Typ = db.Schliessanlagen.ToList();
@@ -1864,9 +1774,11 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 }
 
-                ViewBag.optionsName = dopelOption.ToList();
+                ViewBag.optionsName = ngf.Select(x=>x.Name).ToList();
 
                 List<NGF_Value> ngfList = new List<NGF_Value>();
+
+                var oPvalueCount = new List<int>();
 
                 for (int s = 0; s < ngf.Count(); s++)
                 {
@@ -1877,8 +1789,9 @@ namespace schliessanlagen_konfigurator.Controllers
                         ngfList.Add(opValue[i]);
 
                     }
-                    ViewBag.optionValueCount = opValue.Count();
+                    oPvalueCount.Add(opValue.Count());
                 }
+                ViewBag.optionValueCount = oPvalueCount;
 
                 foreach (var order in key)
                 {
@@ -2152,36 +2065,40 @@ namespace schliessanlagen_konfigurator.Controllers
         }
 
         [HttpPost]
-        public ActionResult RemoveOrder(int data, int UserId)
+        public ActionResult RemoveOrder(int data)
         {
-            //var RemoveOrder = db.UserOrdersShop.Where(x=>x.Id == data).ToList();
+            var RemoveOrder = db.UserOrdersShop.Where(x => x.Id == data).ToList();
 
-            //var OrderProduct = db.ProductSysteam.Where(x=>x.UserOrdersShopId ==  data).ToList();
+            var OrderProduct = db.ProductSysteam.Where(x => x.UserOrdersShopId == data).ToList();
 
-            //foreach (var listProduct in OrderProduct)
-            //{
-            //    db.ProductSysteam.Remove(listProduct);
+            foreach (var listProduct in OrderProduct)
+            {
+                db.ProductSysteam.Remove(listProduct);
 
-            //    foreach (var listOrder in RemoveOrder)
-            //    {
-            //        db.UserOrdersShop.Remove(listOrder);
+                foreach (var listOrder in RemoveOrder)
+                {
+                    db.UserOrdersShop.Remove(listOrder);
 
-            //    }
+                }
 
-            //}
+            }
 
             db.SaveChanges();
 
-            //var UserLogin = db.User.FirstOrDefault(x => x.Id == UserId);
-            return RedirectToAction("AdminConnect"/*, UserLogin*/);
+         
+            return Redirect("/Identity/Account/Manage/PagePersonalOrders");
         }
 
         [HttpGet]
-        public ActionResult SaveUserOrders(string userInfo, List<string> nameKey, List<string> TurName, List<string> DopelName, List<float> DoppelAussen, List<float> DoppelIntern
+        public async Task<IActionResult> SaveUserOrders( List<string> nameKey, List<string> TurName, List<string> DopelName, List<float> DoppelAussen, List<float> DoppelIntern
             , List<string> DoppelOption, List<string> KnayfName, List<float> KnayfAussen, List<float> KnayfIntern, List<string> HalbName, List<float> HalbAussen, List<string> HelbName,
            List<string> VorhanName, List<float> VorhanAussen, List<string> AussenName, float cost, List<string> key, List<bool> keyIsOpen, List<int> countKey)
         {
-            char[] separators = { ' ', '\n', '\t', '\r' };
+
+            ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
+            string loginInform =  ident.Claims.Select(x=>x.Value).First();
+            var users = db.Users.FirstOrDefault(x => x.Id == loginInform);
+
 
             var Zylinder_Typ = db.Schliessanlagen.ToList();
             var profilD = db.Profil_Doppelzylinder.ToList();
@@ -2192,229 +2109,213 @@ namespace schliessanlagen_konfigurator.Controllers
             var Aussenzylinder = db.Aussenzylinder_Rundzylinder.ToList();
             var Orders = db.Orders.ToList();
 
-            if (userInfo == null)
-            {
-                TempData["AlertMessage"] = "Bitte melden Sie sich an!";
-            }
-            else
-            {
-                //string[] words = userInfo.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+                using (FileStream fstream = new FileStream(@$"wwwroot/Orders/{users.FirstName + users.LastName} OrderFile.xlsx", FileMode.OpenOrCreate))
+                {
+                    fstream.Close();
+                }
 
-                //var UserLogin = UserDb.User.FirstOrDefault(x => x.Name == words[0] & x.Sername == words[1]);
+                string sourceFilePath = @"wwwroot/Orders/CES_schliessplan_DE_schliessanlagen.xltx";
 
-                //using (FileStream fstream = new FileStream(@$"wwwroot/Orders/{UserLogin.Name + " " + UserLogin.Sername} OrderFile.xlsx", FileMode.OpenOrCreate))
-                //{
-                //    fstream.Close();
-                //}
+                string destinationFilePath = @$"wwwroot/Orders/{users.FirstName + users.LastName} OrderFile.xlsx";
 
-                //string sourceFilePath = @"wwwroot/Orders/CES_schliessplan_DE_schliessanlagen.xltx";
+                using (FileStream sourceFileStream = new FileStream(sourceFilePath, FileMode.Open, FileAccess.Read))
 
-                //string destinationFilePath = @$"wwwroot/Orders/{UserLogin.Name + " " + UserLogin.Sername} OrderFile.xlsx";
+                using (BinaryReader reader = new BinaryReader(sourceFileStream))
+                {
+                    using (FileStream destinationFileStream = new FileStream(destinationFilePath, FileMode.Create, FileAccess.Write))
+                    using (BinaryWriter writer = new BinaryWriter(destinationFileStream))
+                    {
+                        byte[] buffer = new byte[1024];
+                        int bytesRead;
+                        while ((bytesRead = reader.Read(buffer, 0, buffer.Length)) > 0)
+                        {
+                            writer.Write(buffer, 0, bytesRead);
 
-                //using (FileStream sourceFileStream = new FileStream(sourceFilePath, FileMode.Open, FileAccess.Read))
-
-                //using (BinaryReader reader = new BinaryReader(sourceFileStream))
-                //{
-                //    using (FileStream destinationFileStream = new FileStream(destinationFilePath, FileMode.Create, FileAccess.Write))
-                //    using (BinaryWriter writer = new BinaryWriter(destinationFileStream))
-                //    {
-                //        byte[] buffer = new byte[1024];
-                //        int bytesRead;
-                //        while ((bytesRead = reader.Read(buffer, 0, buffer.Length)) > 0)
-                //        {
-                //            writer.Write(buffer, 0, bytesRead);
-
-                //        }
-                //        writer.Close();
-                //    }
-                //    reader.Close();
-                //    sourceFileStream.Close();
-                //}
-                //ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-                //FileInfo fileInfo = new FileInfo(destinationFilePath);
+                        }
+                        writer.Close();
+                    }
+                    reader.Close();
+                    sourceFileStream.Close();
+                }
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                FileInfo fileInfo = new FileInfo(destinationFilePath);
 
 
-                //var UserOrder = new UserOrdersShop
-                //{
-                //    //UserId = UserLogin.Id,
-                //    ProductName = DopelName.First(),
-                //    OrderSum = cost
-                //};
+                var UserOrder = new Models.Users.UserOrdersShop
+                {
+                    UserId = users.Id,
+                    ProductName = DopelName.First(),
+                    OrderSum = cost
+                };
 
-                //UserDb.UserOrdersShop.Add(UserOrder);
-                //db.SaveChanges();
+                db.UserOrdersShop.Add(UserOrder);
+                db.SaveChanges();
 
-                //var CountAllItem = VorhanName.Count() + AussenName.Count() + DopelName.Count() + KnayfName.Count() + HalbName.Count() + HelbName.Count();
+                var CountAllItem = VorhanName.Count() + AussenName.Count() + DopelName.Count() + KnayfName.Count() + HalbName.Count() + HelbName.Count();
 
-                //int Rowcheked = 17;
-                //int row = 19;
-                //using (ExcelPackage package = new ExcelPackage(fileInfo))
-                //{
-                //    ExcelWorksheet worksheet = package.Workbook.Worksheets["Schließplan"];
+                int Rowcheked = 17;
+                int row = 19;
+                using (ExcelPackage package = new ExcelPackage(fileInfo))
+                {
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets["Schließplan"];
 
-                //    for (int i = 0; i < CountAllItem; i++)
-                //    {
+                    for (int i = 0; i < CountAllItem; i++)
+                    {
 
-                //        for (int z = 0; z < countKey.Count(); z++)
-                //        {
-                //            if (z < countKey.Count() / TurName.Count())
-                //            {
-                //                if (keyIsOpen[z] == true)
-                //                {
-                //                    worksheet.Cells[$"S{Rowcheked + z + i}"].Value = "X";
-                //                }
-                //                else
-                //                {
-                //                    worksheet.Cells[$"S{Rowcheked + z + i}"].Value = "O";
-                //                }
-                //            }
-                //            else
-                //            {
-                //                break;
-                //            }
-                //        }
-                //        worksheet.Cells[$"A{Rowcheked}"].Value = i + 1;
-                //        worksheet.Cells[$"B{Rowcheked}"].Value = i + 1;
-                //        worksheet.Cells[$"C{Rowcheked}"].Value = TurName[i];
-                //        worksheet.Cells[$"E{Rowcheked}"].Value = "Ssl";
+                        for (int z = 0; z < countKey.Count(); z++)
+                        {
+                            if (z < countKey.Count() / TurName.Count())
+                            {
+                                if (keyIsOpen[z] == true)
+                                {
+                                    worksheet.Cells[$"S{Rowcheked + z + i}"].Value = "X";
+                                }
+                                else
+                                {
+                                    worksheet.Cells[$"S{Rowcheked + z + i}"].Value = "O";
+                                }
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        worksheet.Cells[$"A{Rowcheked}"].Value = i + 1;
+                        worksheet.Cells[$"B{Rowcheked}"].Value = i + 1;
+                        worksheet.Cells[$"C{Rowcheked}"].Value = TurName[i];
+                        worksheet.Cells[$"E{Rowcheked}"].Value = "Ssl";
 
-                //        if (i < countKey.Count())
-                //        {
-                //            worksheet.Cells[$"O{Rowcheked}"].Value = countKey[i];
-                //        }
-                //        if (i < key.Count())
-                //        {
-                //            worksheet.Cells[1, row + i].Value = key[i];
-                //        }
+                        if (i < countKey.Count())
+                        {
+                            worksheet.Cells[$"O{Rowcheked}"].Value = countKey[i];
+                        }
+                        if (i < key.Count())
+                        {
+                            worksheet.Cells[1, row + i].Value = key[i];
+                        }
 
-                //        if (i < DopelName.Count())
-                //        {
-                //            worksheet.Cells[$"I{Rowcheked}"].Value = "Profil-Doppelzylinder";
+                        if (i < DopelName.Count())
+                        {
+                            worksheet.Cells[$"I{Rowcheked}"].Value = "Profil-Doppelzylinder";
 
-                //            string Option = "";
+                            string Option = "";
 
-                //            if (i < DoppelOption.Count())
-                //            {
-                //                Option = DoppelOption[i];
-                //            }
-                //            else
-                //            {
-                //                Option = "";
-                //            }
+                            if (i < DoppelOption.Count())
+                            {
+                                Option = DoppelOption[i];
+                            }
+                            else
+                            {
+                                Option = "";
+                            }
 
-                //            worksheet.Cells[$"J{Rowcheked}"].Value = Option;
-                //            worksheet.Cells[$"M{Rowcheked}"].Value = DoppelAussen[i];
-                //            worksheet.Cells[$"N{Rowcheked}"].Value = DoppelIntern[i];
+                            worksheet.Cells[$"J{Rowcheked}"].Value = Option;
+                            worksheet.Cells[$"M{Rowcheked}"].Value = DoppelAussen[i];
+                            worksheet.Cells[$"N{Rowcheked}"].Value = DoppelIntern[i];
 
-                //            var UserOrderProduct = new Models.Users.ProductSysteam
-                //            {
-                //                UserOrdersShopId = UserOrder.Id,
-                //                Name = DopelName[i],
-                //                Aussen = DoppelAussen[i],
-                //                Intern = DoppelIntern[i],
-                //                Option = Option
-                //            };
+                            var UserOrderProduct = new Models.Users.ProductSysteam
+                            {
+                                UserOrdersShopId = UserOrder.Id,
+                                Name = DopelName[i],
+                                Aussen = DoppelAussen[i],
+                                Intern = DoppelIntern[i],
+                                Option = Option
+                            };
 
-                //            UserDb.ProductSysteam.Add(UserOrderProduct);
-                //            db.SaveChanges();
-                //        }
+                            db.ProductSysteam.Add(UserOrderProduct);
+                            db.SaveChanges();
+                        }
 
-                //        else if (i < KnayfName.Count())
-                //        {
-                //            worksheet.Cells[$"I{Rowcheked}"].Value = "Profil-Knaufzylinder";
+                        else if (i < KnayfName.Count())
+                        {
+                            worksheet.Cells[$"I{Rowcheked}"].Value = "Profil-Knaufzylinder";
 
-                //            var UserOrderProduct = new Models.Users.ProductSysteam
-                //            {
-                //                UserOrdersShopId = UserOrder.Id,
-                //                Name = KnayfName[i],
-                //                Aussen = KnayfAussen[i],
-                //                Intern = KnayfIntern[i]
-                //                //Option = DoppelOption[i]
-                //            };
+                            var UserOrderProduct = new Models.Users.ProductSysteam
+                            {
+                                UserOrdersShopId = UserOrder.Id,
+                                Name = KnayfName[i],
+                                Aussen = KnayfAussen[i],
+                                Intern = KnayfIntern[i]
+                                //Option = DoppelOption[i]
+                            };
 
-                //            UserDb.ProductSysteam.Add(UserOrderProduct);
-                //            db.SaveChanges();
-                //        }
+                            db.ProductSysteam.Add(UserOrderProduct);
+                            db.SaveChanges();
+                        }
 
-                //        else if (i < HalbName.Count())
-                //        {
-                //            worksheet.Cells[$"I{Rowcheked}"].Value = "Profil-Halbzylinder";
+                        else if (i < HalbName.Count())
+                        {
+                            worksheet.Cells[$"I{Rowcheked}"].Value = "Profil-Halbzylinder";
 
-                //            var UserOrderProduct = new Models.Users.ProductSysteam
-                //            {
-                //                UserOrdersShopId = UserOrder.Id,
-                //                Name = HalbName[i],
-                //                Aussen = HalbAussen[i]
-                //                //Option = DoppelOption[i]
-                //            };
+                            var UserOrderProduct = new Models.Users.ProductSysteam
+                            {
+                                UserOrdersShopId = UserOrder.Id,
+                                Name = HalbName[i],
+                                Aussen = HalbAussen[i]
+                                //Option = DoppelOption[i]
+                            };
 
-                //            UserDb.ProductSysteam.Add(UserOrderProduct);
-                //            db.SaveChanges();
-                //        }
+                            db.ProductSysteam.Add(UserOrderProduct);
+                            db.SaveChanges();
+                        }
 
-                //        else if (i < HelbName.Count())
-                //        {
-                //            worksheet.Cells[$"I{Rowcheked}"].Value = "Hebelzylinder";
+                        else if (i < HelbName.Count())
+                        {
+                            worksheet.Cells[$"I{Rowcheked}"].Value = "Hebelzylinder";
 
-                //            var UserOrderProduct = new Models.Users.ProductSysteam
-                //            {
-                //                UserOrdersShopId = UserOrder.Id,
-                //                Name = HelbName[i],
-                //                //Option = DoppelOption[i]
-                //            };
+                            var UserOrderProduct = new Models.Users.ProductSysteam
+                            {
+                                UserOrdersShopId = UserOrder.Id,
+                                Name = HelbName[i],
+                                //Option = DoppelOption[i]
+                            };
 
-                //            UserDb.ProductSysteam.Add(UserOrderProduct);
-                //            db.SaveChanges();
-                //        }
+                            db.ProductSysteam.Add(UserOrderProduct);
+                            db.SaveChanges();
+                        }
 
-                //        else if (i < VorhanName.Count())
-                //        {
-                //            worksheet.Cells[$"I{Rowcheked}"].Value = "Vorhangschloss";
+                        else if (i < VorhanName.Count())
+                        {
+                            worksheet.Cells[$"I{Rowcheked}"].Value = "Vorhangschloss";
 
-                //            var UserOrderProduct = new Models.Users.ProductSysteam
-                //            {
-                //                UserOrdersShopId = UserOrder.Id,
-                //                Name = VorhanName[i],
-                //                Aussen = VorhanAussen[i],
-                //                //Option = DoppelOption[i]
-                //            };
+                            var UserOrderProduct = new Models.Users.ProductSysteam
+                            {
+                                UserOrdersShopId = UserOrder.Id,
+                                Name = VorhanName[i],
+                                Aussen = VorhanAussen[i],
+                                //Option = DoppelOption[i]
+                            };
 
-                //            UserDb.ProductSysteam.Add(UserOrderProduct);
-                //            db.SaveChanges();
-                //        }
+                            db.ProductSysteam.Add(UserOrderProduct);
+                            db.SaveChanges();
+                        }
 
-                //        else if (i < AussenName.Count())
-                //        {
-                //            worksheet.Cells[$"I{Rowcheked}"].Value = "Aussenzylinder_Rundzylinder";
+                        else if (i < AussenName.Count())
+                        {
+                            worksheet.Cells[$"I{Rowcheked}"].Value = "Aussenzylinder_Rundzylinder";
 
-                //            var UserOrderProduct = new Models.Users.ProductSysteam
-                //            {
-                //                UserOrdersShopId = UserOrder.Id,
-                //                Name = AussenName[i]
-                //                //Option = DoppelOption[i]
-                //            };
+                            var UserOrderProduct = new Models.Users.ProductSysteam
+                            {
+                                UserOrdersShopId = UserOrder.Id,
+                                Name = AussenName[i]
+                                //Option = DoppelOption[i]
+                            };
 
-                //            UserDb.ProductSysteam.Add(UserOrderProduct);
-                //            db.SaveChanges();
-                //        }
+                            db.ProductSysteam.Add(UserOrderProduct);
+                            db.SaveChanges();
+                        }
 
-                //        Rowcheked++;
-                //    }
+                        Rowcheked++;
+                    
 
-                //    package.Save();
-                //}
+                    package.Save();
+                }
 
-                //var UserName_UserSername = UserLogin.Name + " " + UserLogin.Sername;
 
-                //ViewBag.UserInformStatus = UserLogin.Status;
-                //ViewBag.UserId = UserLogin.Id;
-                //ViewBag.UserNameItem = UserName_UserSername;
-                return RedirectToAction("AdminConnect"/*, UserLogin*/);
+
+                return Redirect("/Identity/Account/Manage/PagePersonalOrders");
             }
 
-
-
-            return View();
         }
         [HttpGet]
         public ActionResult FinischerProductSelect(float SumCosted, List<string> DopelOption, List<int> DopelItem, List<float> DAussen, List<float> DIntern, List<int> Knayf, string user, List<int> Halb,

@@ -5,12 +5,6 @@
     ViewData["Title"] = $"FinisherProduct/{Model.userKey}";
     int countFalse = 0;
 }
-@if (TempData["AlertMessage"] != null)
-{
-    <script>
-        alert("@TempData["AlertMessage"]");
-    </script>
-}
 <div>
     <div id="konfigMenu">
         <button type="button" class="btn btn-danger">1. Schließplan erstellen</button>
@@ -304,23 +298,26 @@
     </div>
     <div id="finisherButton">
             <a class="btn btn-dark" href=" @Url.Action("OrdersKey", "Konfigurator", new { })">ALS ANGEBOT PER EMAIL</a>
-            @if (ViewBag.UserNameItem!="")
+           
+            
+           
+            @if (User.IsInRole("client") || User.IsInRole("admin"))
             {
-                  @*   <script>
-                    alert("Bitte melden Sie sich an!");
-                    </script> *@
-
-                <a class="btn btn-danger">
+                <a class="btn btn-danger"
+                   href="@Url.Action("SaveUserOrders", "Konfigurator", new {countKey = @ViewBag.CountKey,key = @ViewBag.NameKey,keyIsOpen = @ViewBag.IsOpen,cost = ViewBag.SumCosted,TurName = @ViewBag.Tur,userInfo = @ViewBag.UserNameItem,nameKey = @ViewBag.Key, DopelName = @ViewBag.DopelZylinder,DoppelAussen=@ViewBag.DoppelAussen,DoppelIntern=@ViewBag.DoppelIntern,DoppelOption = @ViewBag.DoppelOption,KnayfName = @ViewBag.KnayfName,KnayfAussen = @ViewBag.KnayfAussen,KnayfIntern = @ViewBag.KnayflIntern,HalbName = @ViewBag.HalbName,HalbAussen = @ViewBag.HalbAussen,HelbName = @ViewBag.HelbName, VorhanName=@ViewBag.VorhanName, VorhanAussen = @ViewBag.VorhanAussen, AussenName = @ViewBag.AussenName})">
                     IN DEN WARENKORB
                 </a>
 
             }
             else
             {
-                <a class="btn btn-danger"
-                   href="@Url.Action("SaveUserOrders", "Konfigurator", new {countKey = @ViewBag.CountKey,key = @ViewBag.NameKey,keyIsOpen = @ViewBag.IsOpen,cost = ViewBag.SumCosted,TurName = @ViewBag.Tur,userInfo = @ViewBag.UserNameItem,nameKey = @ViewBag.Key, DopelName = @ViewBag.DopelZylinder,DoppelAussen=@ViewBag.DoppelAussen,DoppelIntern=@ViewBag.DoppelIntern,DoppelOption = @ViewBag.DoppelOption,KnayfName = @ViewBag.KnayfName,KnayfAussen = @ViewBag.KnayfAussen,KnayfIntern = @ViewBag.KnayflIntern,HalbName = @ViewBag.HalbName,HalbAussen = @ViewBag.HalbAussen,HelbName = @ViewBag.HelbName, VorhanName=@ViewBag.VorhanName, VorhanAussen = @ViewBag.VorhanAussen, AussenName = @ViewBag.AussenName})">
+                <script>
+                    alert("@TempData["AlertMessage"]");
+                </script>
+                <a class="btn btn-danger">
                     IN DEN WARENKORB
                 </a>
+               
             }
            
     </div>

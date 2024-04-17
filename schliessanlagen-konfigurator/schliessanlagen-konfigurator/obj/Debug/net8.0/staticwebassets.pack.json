@@ -5,8 +5,80 @@
       "PackagePath": "staticwebassets\\schliessanlagen-konfigurator.bundle.scp.css"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\ABUS Bravus.2000 Außenzylinder244131261.png",
+      "PackagePath": "staticwebassets\\Image\\ABUS Bravus.2000 Außenzylinder244131261.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\ABUS Bravus.2000 Hebelzylinder243943217.png",
+      "PackagePath": "staticwebassets\\Image\\ABUS Bravus.2000 Hebelzylinder243943217.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\ABUS Bravus.3000 Außenzylinder244803805.png",
+      "PackagePath": "staticwebassets\\Image\\ABUS Bravus.3000 Außenzylinder244803805.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\ABUS Bravus.3000 Hebelzylinder244634179.png",
+      "PackagePath": "staticwebassets\\Image\\ABUS Bravus.3000 Hebelzylinder244634179.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\ABUS Bravus.3000 Schließzylinder244319131.png",
+      "PackagePath": "staticwebassets\\Image\\ABUS Bravus.3000 Schließzylinder244319131.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\Abus Bravus.3000 Knaufzylinder244440702.png",
+      "PackagePath": "staticwebassets\\Image\\Abus Bravus.3000 Knaufzylinder244440702.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\Bravus.2000 Halbzylinder243838749.png",
+      "PackagePath": "staticwebassets\\Image\\Bravus.2000 Halbzylinder243838749.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\Bravus.2000 Knaufzylinder243709484.png",
+      "PackagePath": "staticwebassets\\Image\\Bravus.2000 Knaufzylinder243709484.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\Bravus.2000 Schließzylinder243547141.png",
+      "PackagePath": "staticwebassets\\Image\\Bravus.2000 Schließzylinder243547141.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\Bravus.2000 Vorhangschloss244046598.png",
+      "PackagePath": "staticwebassets\\Image\\Bravus.2000 Vorhangschloss244046598.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\Bravus.3000 Halbzylinder244600045.png",
+      "PackagePath": "staticwebassets\\Image\\Bravus.3000 Halbzylinder244600045.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\Bravus.3000 Vorhangschloss244728579.png",
+      "PackagePath": "staticwebassets\\Image\\Bravus.3000 Vorhangschloss244728579.png"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\SD_Logo.svg",
       "PackagePath": "staticwebassets\\Image\\SD_Logo.svg"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\Vitess.4000 Außenzylinder242451772.png",
+      "PackagePath": "staticwebassets\\Image\\Vitess.4000 Außenzylinder242451772.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\Vitess.4000 Halbzylinder241939347.png",
+      "PackagePath": "staticwebassets\\Image\\Vitess.4000 Halbzylinder241939347.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\Vitess.4000 Hebelzylinder242032300.png",
+      "PackagePath": "staticwebassets\\Image\\Vitess.4000 Hebelzylinder242032300.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\Vitess.4000 Schließzylinder241543089.png",
+      "PackagePath": "staticwebassets\\Image\\Vitess.4000 Schließzylinder241543089.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\Vitess.4000 Vorhangschloss242354965.png",
+      "PackagePath": "staticwebassets\\Image\\Vitess.4000 Vorhangschloss242354965.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\Vitess.4000241729692.png",
+      "PackagePath": "staticwebassets\\Image\\Vitess.4000241729692.png"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\edit-tools.png",

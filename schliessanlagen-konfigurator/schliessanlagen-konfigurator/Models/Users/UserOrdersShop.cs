@@ -6,7 +6,7 @@
         public float OrderSum { get; set; }
         public string ProductName { get; set; }
 
-        public int? UserId { get; set; }
+        public string? UserId { get; set; }
         public User User { get; set; }
 
         public ICollection<ProductSysteam> ProductSysteam { get; set; }

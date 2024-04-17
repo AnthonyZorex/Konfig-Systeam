@@ -23,6 +23,37 @@ namespace schliessanlagen_konfigurator.Data
         {
 
         }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            var adminId = Guid.NewGuid().ToString();
+            var clientId = Guid.NewGuid().ToString();
+
+            var adminRole = new IdentityRole
+            {
+                Id = adminId,
+                Name = "admin",
+                NormalizedName = "admin"
+            };
+
+            var clientRole = new IdentityRole
+            {
+                Id = clientId,
+                Name = "client",
+                NormalizedName = "client"
+            };
+
+            builder.Entity<IdentityRole>().HasData(adminRole, clientRole);
+            //base.OnModelCreating(builder);
+            //var admin = new IdentityRole("admin");
+            //admin.NormalizedName = "admin";
+
+            //var client = new IdentityRole("client");
+            //client.NormalizedName = "client";
+
+            //builder.Entity<IdentityRole>().HasData(admin, client);
+        }
         public DbSet<User> User { get; set; }
         public DbSet<UserOrdersShop> UserOrdersShop { get; set; }
         public DbSet<ProductSysteam> ProductSysteam { get; set; }
@@ -74,17 +105,7 @@ namespace schliessanlagen_konfigurator.Data
         public DbSet<Profil_Knaufzylinder_Options> Profil_Knaufzylinder_Options { get; set; }
 
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-            var admin = new IdentityRole("admin");
-            admin.NormalizedName = "admin";
-
-            var client = new IdentityRole("client");
-            client.NormalizedName = "client";
-
-            builder.Entity<IdentityRole>().HasData(admin, client);
-        }
+        
 
     }
 

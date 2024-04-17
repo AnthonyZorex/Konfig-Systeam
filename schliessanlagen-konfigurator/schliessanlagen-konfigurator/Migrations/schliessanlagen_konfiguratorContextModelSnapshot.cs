@@ -51,13 +51,13 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a8f59e4b-84d3-46ec-9253-17f29f499a6e",
+                            Id = "a8849744-494a-4f9f-9735-f0843f148158",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "807bb9c4-8a91-4f35-9410-62ddebd73305",
+                            Id = "e284bdfa-4593-4669-9975-7e17885954b1",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -1033,16 +1033,12 @@ namespace schliessanlagen_konfigurator.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId1")
-                        .IsRequired()
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserOrdersShop");
                 });
@@ -1495,9 +1491,7 @@ namespace schliessanlagen_konfigurator.Migrations
                 {
                     b.HasOne("schliessanlagen_konfigurator.Models.Users.User", "User")
                         .WithMany("UserOrdersShop")
-                        .HasForeignKey("UserId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });
