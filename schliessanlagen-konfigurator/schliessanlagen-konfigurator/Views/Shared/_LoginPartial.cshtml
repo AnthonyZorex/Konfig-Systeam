@@ -15,7 +15,7 @@
                 <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">Profile</a></li>
                 
             <li><hr class="dropdown-divider"/></li>
-                <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Logout">Logout</a></li>
+                <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Context.Request.Path">Logout</a></li>
         </ul>
     </li>
 
@@ -23,10 +23,48 @@
 else
 {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            <a class="nav-link text-dark" onclick="" asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Context.Request.Path">Register</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            <a class="nav-link text-dark" onclick="saveReturnUrl()" asp-area="Identity" asp-route-returnUrl="@Context.Request.Path" asp-page="/Account/Login">Login</a>
         </li>
 }
+  
 </ul>
+<script>
+    
+    function saveReturnUrl() 
+    {
+        // Получаем текущий URL 
+        var currentUrl = window.location.href;
+
+        // Сохраняем текущий URL в куки
+        document.cookie = "returnUrl=" + currentUrl;
+    }
+    // if (document.cookie === returnUrl + '=') 
+    // {
+    //     document.addEventListener('DOMContentLoaded', function () {
+    //         var myCookieValue = getCookie("returnUrl");
+    //         let parts = myCookieValue.split('?');
+    //         console.log(parts[1]);
+    //         // let str = "https://example.com/path/to/page?param1=value1&param2=value2";
+
+
+    //         // if (parts.length > 1) {
+    //         //     let queryString = parts[1]; // Вторая часть строки после "?"
+    //         //     console.log(queryString); // Вывести всё после "?"
+    //         // } else {
+    //         //     console.log("В строке нет знака ?");
+    //         // }
+
+    //         // window.location.href = "https://example.com/new-page";
+
+    //         // document.cookie.split(";").forEach(function (cookie) {
+    //         //     document.cookie = cookie.replace(/^ +/, "")
+    //         //         .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+    //         // });
+    //     });
+    // }
+   
+    
+</script>

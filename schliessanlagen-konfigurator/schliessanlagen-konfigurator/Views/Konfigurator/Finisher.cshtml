@@ -7,13 +7,8 @@
     int z = 0;
     int countFalse = 0;
 }
-@if (TempData["AlertMessage"] != null)
-{
-    <script>
-        alert("@TempData["AlertMessage"]");
-    </script>
-}
-@Html.HiddenFor(m => m.userKey)  
+
+@Html.HiddenFor(m => m.userKey)
 
 <div id="FinisherPage">
     <h1>Schlüssel konfigurieren</h1>
@@ -22,28 +17,28 @@
         ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim
         justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.
     </p>
-<div>
+    <div>
 
         @foreach (var item in ViewBag.Order)
         {
             z++;
             <div id="finisherItem">
-            <div id="ItemCounterOrders">
-                    
+                <div id="ItemCounterOrders">
+
                     <div id="counterKey">
-                        <button class="btn btn-success">-</button>
-                        <h4>@item.CountKey</h4>
-                        <button class="btn btn-success">+</button>
+                        <button onclick="minus(@z)" class="btn btn-success">-</button>
+                        <h4 id="countKey-@z">@item.CountKey</h4>
+                        <button onclick="plus(@z)" class="btn btn-success">+</button>
                     </div>
-                            
-            </div>
-            <div id="nameItem">
-        <h2>@item.NameKey</h2>
-        </div>
-        
-            <div id="numerKey">
-        <h3>Schlüssel Nr.@z </h3>
-         </div>
+
+                </div>
+                <div id="nameItem">
+                    <h2>@item.NameKey</h2>
+                </div>
+
+                <div id="numerKey">
+                    <h3>Schlüssel Nr.@z </h3>
+                </div>
                 <div id="OpenValue">
 
                     @for (int i = 0; i < ViewBag.DorName.Count; i++)
@@ -56,98 +51,71 @@
                     }
 
                 </div>
-            </div>  
-       
-      
+            </div>
+
+
         }
         <div>
-    </div>
+        </div>
         <div id="FinisherAnderes">
             <input type="button" class="btn btn-danger" value="SCHLIESSPLAN BEARBEITEN" />
         </div>
-            <h1>Türen konfigurieren</h1>
-            <p>
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
-                ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim
-                justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.
-            </p>
+        <h1>Türen konfigurieren</h1>
+        <p>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
+            ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim
+            justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.
+        </p>
     </div>
     <div>
-            @if (ViewBag.Dopelzylinder != null)
-            {
-                int elemNum = 0;
+        @if (ViewBag.Dopelzylinder != null)
+        {
+            int elemNum = 0;
             foreach (var item in ViewBag.Dopelzylinder)
             {
-                    <div id="ExelItem">
-                        <div id="productImage">
-                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
-                        </div>
-                        <div id="productMenuInfo">
-                            <div id="ProductNameUndCost">
-                                <div>
-                                    <h3>@item.Name</h3>
-                                </div>
-                            </div>
+                <div id="ExelItem">
+                    <div id="productImage">
+                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
+                    </div>
+                    <div id="productMenuInfo">
+                        <div id="ProductNameUndCost">
                             <div>
+                                <h3>@item.Name</h3>
+                            </div>
+                        </div>
+                        <div>
                             <select class="form-select">
-                                    <option>Doppelzylinder</option>
+                                <option>Doppelzylinder</option>
+                            </select>
+                        </div>
+                        <div id="product_desciptions">
+                            <h5>Zylinder Länge</h5>
+                        </div>
+
+                        <div id="@item.Id" class="SizeProduct">
+                            <div>
+                                <select class="form-select" id="Aussen" onchange="selectParamAussen(event.target.value,@item.Id,@ViewBag.DAussen[elemNum])">
+                                    <option style="display:none" selected>@ViewBag.DAussen[elemNum]</option>
+                                    <option>Außenlänge (A)</option>
+                                    @for (int i = 0; i < ViewBag.Dopelzylinderaussen.Count; i++)
+                                    {
+                                        <option id="OptionA">@ViewBag.Dopelzylinderaussen[i]</option>
+                                    }
                                 </select>
                             </div>
-                            <div id="product_desciptions">
-                                <h5>Zylinder Länge</h5>
+                            <div>
+                                <select class="form-select" id="Intern" onchange="selectParamIntern(event.target.value,@item.Id,@ViewBag.DInter[elemNum])">
+                                    <option style="display:none" selected>@ViewBag.DInter[elemNum]</option>
+                                    <option>Innenlänge (B)</option>
+                                    @for (int i = 0; i < ViewBag.DopelzylinderIntern.Count; i++)
+                                    {
+                                        <option id="OptionI">@ViewBag.DopelzylinderIntern[i]</option>
+                                    }
+                                </select>
                             </div>
-                        @if (item.isGround == true)
-                        {
-                            <div id="@item.Id" class="SizeProduct">
-                                <div>
-                                    <select class="form-select" onchange="selectParamAussen(event.target.value,@item.Id)" id="Aussen">
-                                        <option style="display:none" selected>@ViewBag.DAussen[elemNum]</option>
-                                        <option>Außenlänge (A)</option>
-                                        @for (int i = 0; i < ViewBag.Dopelzylinderaussen.Count; i++)
-                                        {
-                                            <option id="OptionA">@ViewBag.Dopelzylinderaussen[i]</option>
-                                        }
-                                    </select>
-                                </div>
-                                <div>
-                                    <select class="form-select" id="Intern" onchange="selectParamIntern(event.target.value,@item.Id)">
-                                        
-                                        <option style="display:none" selected>@ViewBag.DInter[elemNum]</option>
-                                        <option>Innenlänge (B)</option>
-                                        @for (int i = 0; i < ViewBag.DopelzylinderIntern.Count; i++)
-                                        {
-                                            <option id="OptionI">@ViewBag.DopelzylinderIntern[i]</option>
-                                        }
-                                    </select>
-                                </div>
-                            </div>
-                        }
-                        else
-                        {
-                            <div id="@item.Id" class="SizeProduct">
-                                <div>
-                                    <select class="form-select" id="Aussen" onchange="selectParamAussenIsGround(event.target.value,@item.Id)">
-                                        <option style="display:none" selected>@ViewBag.DAussen[elemNum]</option>
-                                        <option>Außenlänge (A)</option>
-                                        @for (int i = 0; i < ViewBag.Dopelzylinderaussen.Count; i++)
-                                        {
-                                            <option id="OptionA">@ViewBag.Dopelzylinderaussen[i]</option>
-                                        }
-                                    </select>
-                                </div>
-                                <div>
-                                    <select class="form-select" id="Intern" onchange="selectParamInternIsGround(event.target.value,@item.Id)">
-                                        <option style="display:none" selected>@ViewBag.DInter[elemNum]</option>
-                                        <option>Innenlänge (B)</option>
-                                        @for (int i = 0; i < ViewBag.DopelzylinderIntern.Count; i++)
-                                        {
-                                            <option id="OptionI">@ViewBag.DopelzylinderIntern[i]</option>
-                                        }
-                                    </select>
-                                </div>
-                            </div>
-                        }
-                       
+                        </div>
+
+
                         <div>
                             <h3>Weitere Optionen</h3>
                             <div>
@@ -158,14 +126,41 @@
                                 {
                                     @for (int i = 0; i < ViewBag.optionsName.Count; i++)
                                     {
-                                        <input class="form-control" readonly type="text" value="@ViewBag.optionsName[i]" />
-                                        <select class="form-select" id="ProductOptionsSelector" onchange="selectParamOptions(event,@valueCount,@item.Id)">
+                                        if (@ViewBag.optionsName[i] == @ViewBag.DoppelOptionSelected[elemNum])
+                                        {
+                                            <input class="form-control" readonly type="text" value="&#10003; @ViewBag.optionsName[i]" style="color: green;margin-top: 5px;" />
+                                        }
+                                        else
+                                        {
+                                            <input class="form-control" style="margin-top: 5px;" readonly type="text" value="@ViewBag.optionsName[i]" />
+                                        }
+
+
+
+                                        <select style="margin-bottom: 10px;" class="form-select" id="ProductOptionsSelector" onchange="selectParamOptions(event,@valueCount,@item.Id)">
+
                                             @for (int j = 0; j < ViewBag.countOptionsList[i]; j++)
                                             {
-                                                <option id="@valueCount">@ViewBag.optionsValue[valueCount]</option>
+                                                if (@ViewBag.optionsName[i] == @ViewBag.DoppelOptionSelected[elemNum])
+                                                {
+                                                    if (@ViewBag.optionsValue[valueCount] == "Ja")
+                                                    {
+                                                        <option id="@valueCount" selected>@ViewBag.optionsValue[valueCount]</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option id="@valueCount">@ViewBag.optionsValue[valueCount]</option>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <option id="@valueCount">@ViewBag.optionsValue[valueCount]</option>
+                                                }
                                                 valueCount++;
                                             }
+
                                         </select>
+
                                     }
                                 }
 
@@ -175,7 +170,7 @@
                     </div>
 
 
-                    </div>
+                </div>
                 elemNum++;
             }
         }
@@ -204,59 +199,33 @@
                         <div id="product_desciptions">
                             <h5>Zylinder Länge</h5>
                         </div>
-                        @if (item.isGround == true)
-                        {
-                            <div id="@item.Id" class="SizeProduct">
-                                <div>
-                                    <select class="form-select" id="Aussen" onchange="selectParamAussen(event.target.value,@item.Id)">
-                                        <option style="display:none" selected>@ViewBag.KAussen[elemNum]</option>
-                                        <option>Außenlänge (A)</option>
-                                        @for (int i = 0; i < ViewBag.KnayfZelinderAussen.Count; i++)
-                                        {
-                                            <option id="OptionA">@ViewBag.KnayfZelinderAussen[i]</option>
-                                        }
-                                    </select>
-                                </div>
-                                <div>
-                                    <select class="form-select" id="Intern" onchange="selectParamIntern(event.target.value,@item.Id)">
-                                        <option style="display:none" selected>@ViewBag.KInter[elemNum]</option>
-                                        <option>Innenlänge (B)</option>
-                                        @for (int i = 0; i < ViewBag.KnayfZelinderIntern.Count; i++)
-                                        {
-                                            <option id="OptionI">@ViewBag.KnayfZelinderIntern[i]</option>
-                                        }
-                                    </select>
-                                </div>
+
+                        <div id="@item.Id" class="SizeProduct">
+                            <div>
+                                <select class="form-select" id="Aussen" onchange="selectParamAussen(event.target.value,@item.Id,@ViewBag.KAussen[elemNum])">
+                                    <option style="display:none" selected>@ViewBag.KAussen[elemNum]</option>
+                                    <option>Außenlänge (A)</option>
+                                    @for (int i = 0; i < ViewBag.KnayfZelinderAussen.Count; i++)
+                                    {
+                                        <option id="OptionA">@ViewBag.KnayfZelinderAussen[i]</option>
+                                    }
+                                </select>
                             </div>
-                        }
-                        else
-                        {
-                            <div id="@item.Id" class="SizeProduct">
-                                <div>
-                                    <select class="form-select" id="Aussen" onchange="selectParamAussenIsGround(event.target.value,@item.Id)">
-                                        <option style="display:none" selected>@ViewBag.KAussen[elemNum]</option>
-                                        <option>Außenlänge (A)</option>
-                                        @for (int i = 0; i < ViewBag.KnayfZelinderAussen.Count; i++)
-                                        {
-                                            <option id="OptionA">@ViewBag.KnayfZelinderAussen[i]</option>
-                                        }
-                                    </select>
-                                </div>
-                                <div>
-                                    <select class="form-select" id="Intern" onchange="selectParamInternIsGround(event.target.value,@item.Id)">
-                                        <option style="display:none" selected>@ViewBag.KInter[elemNum]</option>
-                                        <option>Innenlänge (B)</option>
-                                        @for (int i = 0; i < ViewBag.KnayfZelinderIntern.Count; i++)
-                                        {
-                                            <option id="OptionI">@ViewBag.KnayfZelinderIntern[i]</option>
-                                        }
-                                    </select>
-                                </div>
+                            <div>
+                                <select class="form-select" id="Intern" onchange="selectParamIntern(event.target.value,@item.Id,@ViewBag.KInter[elemNum])">
+                                    <option style="display:none" selected>@ViewBag.KInter[elemNum]</option>
+                                    <option>Innenlänge (B)</option>
+                                    @for (int i = 0; i < ViewBag.KnayfZelinderIntern.Count; i++)
+                                    {
+                                        <option id="OptionI">@ViewBag.KnayfZelinderIntern[i]</option>
+                                    }
+                                </select>
                             </div>
-                        }
+                        </div>
+
                         <div>
                             <h3>Weitere Optionen</h3>
-                            <div >
+                            <div>
                                 @{
                                     int valueCount = 0;
                                 }
@@ -264,24 +233,44 @@
                                 {
                                     @for (int i = 0; i < ViewBag.optionsNameKnayf.Count; i++)
                                     {
-                                        <input class="form-control" readonly type="text" value="@ViewBag.optionsNameKnayf[i]" />
-         
-                                        <select class="form-select" onchange="selectParamOptions(event,@valueCount,@item.Id)" id="ProductOptionsSelector">
+                                        if (@ViewBag.optionsNameKnayf[i] == @ViewBag.KnayfOptionSelected[elemNum])
+                                        {
+                                            <input class="form-control" readonly type="text" value="&#10003; @ViewBag.optionsNameKnayf[i]" style="color: green;margin-top: 5px;" />
+                                        }
+                                        else
+                                        {
+                                            <input class="form-control" style="margin-top: 5px;" readonly type="text" value="@ViewBag.optionsNameKnayf[i]" />
+                                        }
+
+                                        <select style="margin-bottom: 10px;" class="form-select" id="ProductOptionsSelector" onchange="selectParamOptions(event,@valueCount,@item.Id)">
+
                                             @for (int j = 0; j < ViewBag.countOptionsListKnayf[i]; j++)
                                             {
-                                                <option id="@valueCount">@ViewBag.optionsValueKnayf[valueCount]</option>
+                                                if (@ViewBag.optionsNameKnayf[i] == @ViewBag.KnayfOptionSelected[elemNum])
+                                                {
+                                                    if (@ViewBag.optionsValueKnayf[valueCount] == "Ja")
+                                                    {
+                                                        <option id="@valueCount" selected>@ViewBag.optionsValueKnayf[valueCount]</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option id="@valueCount">@ViewBag.optionsValueKnayf[valueCount]</option>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <option id="@valueCount">@ViewBag.optionsValueKnayf[valueCount]</option>
+                                                }
                                                 valueCount++;
                                             }
+
                                         </select>
                                     }
                                 }
 
-
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             }
         }
@@ -310,9 +299,9 @@
                         <div id="product_desciptions">
                             <h5>Zylinder Länge</h5>
                         </div>
-                        <div >
+                        <div>
                             <div>
-                                <select class="form-select">
+                                <select class="form-select" onchange="selectParamAussen(event.target.value,@item.Id,@ViewBag.HalbOrderAussen[elemNum])">
                                     <option style="display:none" selected>@ViewBag.HalbOrderAussen[elemNum]</option>
                                     <option>Außenlänge (A)</option>
                                     @for (int i = 0; i < ViewBag.AussenHalb.Count; i++)
@@ -321,7 +310,7 @@
                                     }
                                 </select>
                             </div>
-                            
+
                         </div>
                         <div>
                             <h3>Weitere Optionen</h3>
@@ -333,18 +322,42 @@
                                 {
                                     @for (int i = 0; i < ViewBag.HalbOptionsName.Count; i++)
                                     {
-                                     <input class="form-control" readonly type="text" value="@ViewBag.HalbOptionsName[i]" />
 
-                                        <select class="form-select" id="ProductOptionsSelector">
+                                        if (@ViewBag.HalbOptionsName[i] == @ViewBag.HalbOptionSelected[elemNum])
+                                        {
+                                            <input class="form-control" readonly type="text" value="&#10003; @ViewBag.HalbOptionsName[i]" style="color: green;margin-top: 5px;" />
+                                        }
+                                        else
+                                        {
+                                            <input class="form-control" style="margin-top: 5px;" readonly type="text" value="@ViewBag.HalbOptionsName[i]" />
+                                        }
+
+
+                                        <select class="form-select" style="margin-bottom: 10px;" id="ProductOptionsSelector">
+
                                             @for (int j = 0; j < ViewBag.HalbOptionsValueCount[i]; j++)
                                             {
-                                                <option id="@valueCount">@ViewBag.HalbOptionsValue[valueCount]</option>
+                                                if (@ViewBag.HalbOptionsName[i] == @ViewBag.HalbOptionSelected[elemNum])
+                                                {
+                                                    if (@ViewBag.HalbOptionsValue[valueCount] == "Ja")
+                                                    {
+                                                        <option id="@valueCount" selected>@ViewBag.optionsValue[valueCount]</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option id="@valueCount">@ViewBag.HalbOptionsValue[valueCount]</option>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <option id="@valueCount">@ViewBag.HalbOptionsValue[valueCount]</option>
+                                                }
                                                 valueCount++;
                                             }
                                         </select>
                                     }
                                 }
-                            </div> 
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -353,6 +366,7 @@
         }
         @if (ViewBag.HelbZ != null)
         {
+            int elemNum = 0;
             foreach (var item in ViewBag.HelbZ)
             {
                 <div id="ExelItem">
@@ -375,36 +389,57 @@
                         <div id="product_desciptions">
                             <h5>Zylinder Länge</h5>
                         </div>
-                     
+
                         <div>
                             <h3>Weitere Optionen</h3>
-                         <div>
-                            @{
-                            int valueCount = 0;
-                            }
-                    @if (ViewBag.CountOptionsHebel > 0)
-                    {
-                        @for (int i = 0; i < ViewBag.OptionHebelName.Count; i++)
-                        {
-                          <input class="form-control" readonly type="text" value="@ViewBag.OptionHebelName[i]" />
+                            <div>
+                                @{
+                                    int valueCount = 0;
+                                }
 
-                           <select class="form-select" id="ProductOptionsSelector">
-                               @for (int j = 0; j < ViewBag.CountValueHebel[i]; j++)
-                               {
-                                <option id="@valueCount">@ViewBag.ValueHebel[valueCount]</option>
-                                valueCount++;
-                               }
-                           </select>
-                        }
-                    }
+                                @if (ViewBag.CountOptionsHebel > 0)
+                                {
+                                    @for (int i = 0; i < ViewBag.OptionHebelName.Count; i++)
+                                    {
+                                        if (@ViewBag.OptionHebelName[i] == @ViewBag.HebelOptionSelected[elemNum])
+                                        {
+                                            <input class="form-control" readonly type="text" value="&#10003; @ViewBag.OptionHebelName[i]" style="color: green;margin-top: 5px;" />
+                                        }
+                                        else
+                                        {
+                                            <input style="margin-top: 5px;" class="form-control" readonly type="text" value="@ViewBag.OptionHebelName[i]" />
+                                        }
 
+                                        <select class="form-select" style="margin-bottom: 10px;" id="ProductOptionsSelector">
 
-                    </div> 
+                                            @for (int j = 0; j < ViewBag.CountValueHebel[i]; j++)
+                                            {
+                                                if ((@ViewBag.OptionHebelName[i] == @ViewBag.HebelOptionSelected[elemNum]))
+                                                {
+                                                    if (@ViewBag.ValueHebel[valueCount] == "Ja")
+                                                    {
+                                                        <option id="@valueCount" selected>@ViewBag.ValueHebel[valueCount]</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option id="@valueCount">@ViewBag.ValueHebel[valueCount]</option>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <option id="@valueCount">@ViewBag.ValueHebel[valueCount]</option>
+                                                }
+                                                valueCount++;
+                                            }
+                                        </select>
+                                    }
+                                }
+                            </div>
                         </div>
                     </div>
 
-
                 </div>
+                elemNum++;
             }
         }
         @if (ViewBag.Vorhanschlos != null)
@@ -434,8 +469,8 @@
                         </div>
                         <div>
                             <div>
-                            
-                                <select class="form-select">
+
+                                <select class="form-select" onchange="selectParamAussen(event.target.value,@item.Id)">
                                     <option style="display:none" selected>@ViewBag.VorhanOrderAussen[elemNum]</option>
                                     <option>Außenlänge (A)</option>
                                     @for (int i = 0; i < ViewBag.VorhanSize.Count; i++)
@@ -449,36 +484,60 @@
                         <div>
                             <h3>Weitere Optionen</h3>
                             <div>
-                        @{
-                        int valueCount = 0;
-                        }
-
-                        @if (ViewBag.VorhanschlossCount > 0)
-                        {
-                            @for (int i = 0; i < ViewBag.VorhanschlossOptionCount; i++)
-                            {
-                                <input type="text" class="form-control" readonly value="@ViewBag.VorhanschlossOptionName[i]" />
-
-                                <select class="form-select" id="ProductOptionsSelector">
-                                @for (int j = 0; j < ViewBag.VorhanOptionCount[i]; j++)
-                                {
-                                  <option id="@valueCount">@ViewBag.VorhanValue[valueCount]</option>
-                                    valueCount++;
+                                @{
+                                    int valueCount = 0;
                                 }
 
-                                </select>
-                            }
-                        }
-                    </div> 
+                                @if (ViewBag.VorhanschlossCount > 0)
+                                {
+                                    @for (int i = 0; i < ViewBag.VorhanschlossOptionCount; i++)
+                                    {
+                                        if (@ViewBag.VorhanschlossOptionName[i] == @ViewBag.VorhanOptionSelected[elemNum])
+                                        {
+                                            <input class="form-control" readonly type="text" value="&#10003; @ViewBag.VorhanschlossOptionName[i]" style="color: green;margin-top: 5px;" />
+                                        }
+                                        else
+                                        {
+                                            <input type="text" style="margin-top: 5px;" class="form-control" readonly value="@ViewBag.VorhanschlossOptionName[i]" />
+                                        }
+
+
+                                        <select style="margin-bottom: 10px;" class="form-select" id="ProductOptionsSelector">
+
+                                            @for (int j = 0; j < ViewBag.VorhanOptionCount[i]; j++)
+                                            {
+                                                if (@ViewBag.VorhanschlossOptionName[i] == @ViewBag.VorhanOptionSelected[elemNum])
+                                                {
+                                                    if (@ViewBag.VorhanValue[valueCount] == "Ja")
+                                                    {
+                                                        <option id="@valueCount" selected>@ViewBag.VorhanValue[valueCount]</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option id="@valueCount">@ViewBag.VorhanValue[valueCount]</option>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <option id="@valueCount">@ViewBag.VorhanValue[valueCount]</option>
+                                                }
+
+                                                valueCount++;
+                                            }
+
+                                        </select>
+                                    }
+                                }
+                            </div>
                         </div>
                     </div>
-
-
                 </div>
+                elemNum++;
             }
         }
         @if (ViewBag.Aussenzylinder != null)
         {
+            int elemNum = 0;
             foreach (var item in ViewBag.Aussenzylinder)
             {
                 <div id="ExelItem">
@@ -501,10 +560,10 @@
                         <div id="product_desciptions">
                             <h5>Zylinder Länge</h5>
                         </div>
-                       
+
                         <div>
                             <h3>Weitere Optionen</h3>
-                             <div>
+                            <div>
                                 @{
                                     int valueCount = 0;
                                 }
@@ -512,12 +571,35 @@
                                 {
                                     @for (int i = 0; i < ViewBag.AussenName.Count; i++)
                                     {
-                                        <input class="form-control" readonly type="text" value="@ViewBag.AussenName[i]" />
-                                        
-                                        <select class="form-select" id="ProductOptionsSelector">
+                                        if (@ViewBag.AussenName[i] == @ViewBag.AussenOptionSelected[elemNum])
+                                        {
+                                            <input class="form-control" readonly type="text" value="&#10003; @ViewBag.AussenName[i]" style="color: green;margin-top: 5px;" />
+                                        }
+                                        else
+                                        {
+                                            <input class="form-control" style="margin-top: 5px;" readonly type="text" value="@ViewBag.AussenName[i]" />
+                                        }
+
+                                        <select style="margin-bottom: 10px;" class="form-select" id="ProductOptionsSelector" onchange="selectParamOptions(event,@valueCount,@item.Id)">
+
                                             @for (int j = 0; j < ViewBag.AussenValue[i]; j++)
                                             {
-                                                <option id="@valueCount">@ViewBag.AussenValue[valueCount]</option>
+                                                if (@ViewBag.optionsName[i] == @ViewBag.DoppelOptionSelected[elemNum])
+                                                {
+                                                    if (@ViewBag.optionsValue[valueCount] == "Ja")
+                                                    {
+                                                        <option id="@valueCount" selected>@ViewBag.AussenValue[valueCount]</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option id="@valueCount">@ViewBag.AussenValue[valueCount]</option>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <option id="@valueCount">@ViewBag.AussenValue[valueCount]</option>
+                                                }
+
                                                 valueCount++;
                                             }
                                         </select>
@@ -525,12 +607,11 @@
                                 }
 
 
-                            </div> 
+                            </div>
                         </div>
                     </div>
-
-
                 </div>
+                elemNum++;
             }
         }
         <div id="FinisherAnderes">
@@ -539,24 +620,42 @@
         <div id="orderCost">
             <h1 id="cost">@ViewBag.Cost €</h1>
         </div>
-        
-      <div id="buttonActionFinishBlock">
-          <div id="FinisherLeft">
+       
+        <div id="buttonActionFinishBlock">
+            <div id="FinisherLeft">
                 <button id="chekProduct" class="btn btn-dark"> <a href="@Url.Action("System_Auswählen", "Konfigurator")">ZURÜCK</a></button>
             </div>
             <div id="FinisherRight">
-                <button id="chekProduct" class="btn btn-danger"> <a href="@Url.Action("FinischerProductSelect", "Konfigurator", new {VorhanAussen = @ViewBag.VorhanOrderAussen,HablAussen = @ViewBag.HalbOrderAussen,Aussen = @ViewBag.AussenzylinderItem,Vorhan = @ViewBag.VorhanschlosItem,Halb = @ViewBag.HalbItem, Helb = @ViewBag.HalbItem,userInfo = @ViewBag.UserNameItem,SumCosted = @ViewBag.Cost,DopelItem = @ViewBag.DopelzylinderIdList,DopelOption = @ViewBag.optionsName,DAussen = @ViewBag.DAussen,DIntern=@ViewBag.DInter, Knayf=@ViewBag.KnayfItemId,user = @ViewBag.User,KnayfAusse = @ViewBag.KAussen,KnayfIntern = @ViewBag.KInter})">WEITER</a></button>
+                <button id="chekProduct" class="btn btn-danger"> <a href="@Url.Action("FinischerProductSelect", "Konfigurator", new {VorhanAussen = @ViewBag.VorhanOrderAussen,HablAussen = @ViewBag.HalbOrderAussen,Aussen = @ViewBag.AussenzylinderItem,Vorhan = @ViewBag.VorhanschlosItem,Halb = @ViewBag.HalbItem, Helb = @ViewBag.HelbItem,userInfo = @ViewBag.UserNameItem,SumCosted = @ViewBag.Cost,DopelItem = @ViewBag.DopelzylinderIdList,HalbOption = @ViewBag.HalbOptionSelected,VorhnaOption = @ViewBag.VorhanOptionSelected,AussenOption = @ViewBag.AussenOptionSelected,DopelOption = @ViewBag.DoppelOptionSelected,KnayfOption = @ViewBag.KnayfOptionSelected,HebelOption = @ViewBag.HebelOptionSelected, DAussen = @ViewBag.DAussen,DIntern=@ViewBag.DInter, Knayf=@ViewBag.KnayfItemId,user = @ViewBag.User,KnayfAusse = @ViewBag.KAussen,KnayfIntern = @ViewBag.KInter})">WEITER</a></button>
             </div>
-      </div>
+        </div>
     </div>
 </div>
 <script>
 
-    // let OptionPrice = @Html.Raw(@ViewBag.optionsPrise);
+    function plus(n) 
+    {
+        let counter = document.getElementById("countKey-" + n);
 
-    // console.log(OptionPrice);
+        let value = Number(counter.innerText);
+        
+        value++;
+        let f = n - 1;
+        counter.innerText = value;
+    }
+    function minus(n) 
+    {
+        let counter = document.getElementById("countKey-" + n);
+        let value = Number(counter.innerText);
+
+        value--;
+        let f = n - 1;
+        counter.innerText = value;
+    }
 
     let AllPrice = document.getElementById("cost");
+
+    let NoOptionCost = @Html.Raw(@ViewBag.CostProducted);
 
     localStorage.setItem("cost", AllPrice.innerHTML);
     localStorage.sInnen = 0;
@@ -567,143 +666,15 @@
     let InternCost = 0;
     let OptionCost = 0;
 
-    function selectParamAussenIsGround(value, idBlock) 
-    {
-        let iterations = 0;
-        let serchedItem = 0;
 
-        let BlockTur = document.getElementById(idBlock);
-
-        let Aussen = BlockTur.querySelector("#Aussen");
-        let Aitems = Aussen.querySelectorAll("#OptionA");
-
-        let Intern = BlockTur.querySelector("#Intern");
-
-        console.log(Intern);
-
-        let Iitems = Intern.querySelectorAll("#OptionI");
-
-        console.log(Iitems);
-        Aitems.forEach(function (items) {
-
-            if (serchedItem == 1) {
-                return;
-            }
-            else {
-                let ItemValue = Number(items.innerHTML);
-                if (ItemValue > 31) {
-                    iterations++;
-
-                    if (ItemValue == value) {
-                        serchedItem++;
-                        return;
-                    }
-                }
-                else {
-                    if (ItemValue == value) {
-                        AussenCost = 0;
-                        let a = Number(localStorage.sInnen);
-                        let b = Number(localStorage.sAussen);
-                        let c = Number(localStorage.options);
-
-                        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
-                        AllPrice.innerHTML = String(sum);
-                        console.log(cost.innerHTML);
-                        serchedItem++;
-                        return;
-                    }
-                }
-
-            }
-
-        });
-
-        AussenCost = 0;
-
-        for (let i = 0; i < iterations; i++) {
-            AussenCost = AussenCost + 5;
-        }
-
-
-        localStorage.sAussen = AussenCost;
-        let a = Number(localStorage.sInnen);
-        let b = Number(localStorage.sAussen);
-        let c = Number(localStorage.options);
-
-        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
-        AllPrice.innerHTML = String(sum);
-
-        iterations = 0;
-        serchedItem = 0;
-
-    }
-    function selectParamInternIsGround(value, idBlock) 
-    {
-        let Iiterations = 0;
-        let IserchedItem = 0;
-
-        let BlockTur = document.getElementById(idBlock);
-
-        let Intern = BlockTur.querySelector("#Intern");
-        let Iitems = Intern.querySelectorAll("#OptionI");
-
-        Iitems.forEach(function (items) {
-            if (IserchedItem == 1) {
-                return;
-            }
-            else {
-                let ItemValue = Number(items.innerHTML);
-
-                if (ItemValue > 31) {
-                    Iiterations++;
-
-                    if (ItemValue == value) {
-                        IserchedItem++;
-                        return;
-                    }
-                }
-                else {
-                    if (ItemValue == value) {
-                        InternCost = 0;
-                        let a = Number(localStorage.sInnen);
-                        let b = Number(localStorage.sAussen);
-                        let c = Number(localStorage.options);
-
-                        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
-                        AllPrice.innerHTML = String(sum);
-                        console.log(cost.innerHTML);
-                        IserchedItem++;
-                        return;
-                    }
-                }
-
-            }
-
-        });
-
-        InternCost = 0;
-        for (let i = 0; i < Iiterations; i++) {
-            InternCost = InternCost + 5;
-        }
-        localStorage.sInnen = InternCost;
-
-        let a = Number(localStorage.sInnen);
-        let b = Number(localStorage.sAussen);
-        let c = Number(localStorage.options);
-
-        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
-        AllPrice.innerHTML = String(sum);
-        Iiterations = 0;
-        IserchedItem = 0;
-    }
-    function selectParamAussen(value, idBlock) 
-    {
+    function selectParamAussen(value, idBlock, oldValue) {
         let iterations = 0;
         let serchedItem = 0;
 
         let BlockTur = document.getElementById(idBlock);
         let Aussen = BlockTur.querySelector("#Aussen");
         let Aitems = Aussen.querySelectorAll("#OptionA");
+
 
         let Intern = BlockTur.querySelector("#Intern");
         let Iitems = Intern.querySelectorAll("#OptionI");
@@ -714,7 +685,8 @@
             }
             else {
                 let ItemValue = Number(items.innerHTML);
-                if (ItemValue > 31) {
+                let ItemValueOld = Number(oldValue);
+                if (ItemValue > 31 && ItemValueOld >= 30) {
                     iterations++;
 
                     if (ItemValue == value) {
@@ -722,6 +694,15 @@
                         return;
                     }
                 }
+                else if (ItemValueOld > 31) {
+                    iterations++;
+
+                    if (ItemValueOld == value) {
+                        serchedItem++;
+                        return;
+                    }
+                }
+
                 else {
                     if (ItemValue == value) {
                         AussenCost = 0;
@@ -774,8 +755,7 @@
 
 
     }
-    function selectParamIntern(value, idBlock) 
-    {
+    function selectParamIntern(value, idBlock, oldValue) {
         let Iiterations = 0;
         let IserchedItem = 0;
 
@@ -791,11 +771,19 @@
             }
             else {
                 let ItemValue = Number(items.innerHTML);
-
-                if (ItemValue > 31) {
+                let ItemValueOld = Number(oldValue);
+                if (ItemValue > 31 && ItemValueOld >= 30) {
                     Iiterations++;
 
                     if (ItemValue == value) {
+                        IserchedItem++;
+                        return;
+                    }
+                }
+                else if (ItemValueOld > 31) {
+                    Iiterations++;
+
+                    if (ItemValueOld == value) {
                         IserchedItem++;
                         return;
                     }
@@ -833,7 +821,7 @@
         Iiterations = 0;
         IserchedItem = 0;
     }
-    function selectParamOptions(event, count,idBlock) {
+    function selectParamOptions(event, count, idBlock) {
         // var selectedOptionId = event.target.options[event.target.selectedIndex].id;
         // OptionCost = OptionPrice[selectedOptionId];
         // localStorage.options = OptionCost;

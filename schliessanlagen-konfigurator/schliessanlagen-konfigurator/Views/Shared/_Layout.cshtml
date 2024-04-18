@@ -53,17 +53,8 @@
                         </li>
                        
                     </ul>
-                  @*   <ul class="navbar-nav flex-grow-1" style="display: flex;align-items: center;text-align: center;">
-                        <li class="nav-item">
-                            <a style="text-decoration:underline;color:black;" id="Username" href="@Url.Action("AdminConnect","Konfigurator", new {UserId = ViewBag.UserId})">@ViewBag.UserNameItem</a>
-                        </li>
-                  
-                            <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Account" asp-action="Register" id="schopIcons"> <img id="openModalBtn" src="~/Image/shopping-cart.png" width="20" height="20" style="margin-left:-2px;margin-top:-12px" /><span id="CountOrders">@ViewBag.CountOrders</span></a>
-                            </li>
-                    </ul> *@
-  
                     <partial name="_LoginPartial" />
+                    
                 </div>
             </div>
         </nav>
@@ -80,30 +71,3 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-
-<script>
-
-    let documentOrder = document.getElementById("CountOrders");
-
-
-    // $(document).ready(function () {
-
-    //     var modal = $("#myModal");
-    //     var btn = $("#openModalBtn");
-    //     var closeBtn = $(".close");
-
-    //     btn.on("click", function () {
-    //         modal.show();
-    //     });
-
-    //     closeBtn.on("click", function () {
-    //         modal.hide();
-    //     });
-
-    //     $(window).on("click", function (event) {
-    //         if (event.target == modal[0]) {
-    //             modal.hide();
-    //         }
-    //     });
-    // });
-</script>

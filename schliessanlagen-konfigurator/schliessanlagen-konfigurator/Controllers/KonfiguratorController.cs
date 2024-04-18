@@ -27,13 +27,13 @@ namespace schliessanlagen_konfigurator.Controllers
         schliessanlagen_konfiguratorContext db;
         private IWebHostEnvironment Environment;
         private readonly IHttpContextAccessor _contextAccessor;
-        public KonfiguratorController( schliessanlagen_konfiguratorContext context, IWebHostEnvironment _environment
+        public KonfiguratorController(schliessanlagen_konfiguratorContext context, IWebHostEnvironment _environment
         , IHttpContextAccessor httpContextAccessor)
         {
             db = context;
             Environment = _environment;
             _contextAccessor = httpContextAccessor;
-        }      
+        }
 
         public ActionResult IndexKonfigurator(string Status, string Auser)
         {
@@ -1569,6 +1569,8 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             ViewBag.VorhanschlossOptionName = listVorHanOptionsValueName.Select(x => x.Name).ToList();
 
+            ViewBag.VorhanOptionSelected = key.Where(x => x.ZylinderId == 5).Select(x => x.Options).ToList();
+
             var VorhanOptionValue = new List<OptionsVorhan_value>();
 
             foreach (var ls in listVorHanOptionsValueName)
@@ -1620,6 +1622,8 @@ namespace schliessanlagen_konfigurator.Controllers
 
             ViewBag.AussenName = AussenListRundAll.Select(x => x.Name).ToList();
 
+            ViewBag.AussenOptionSelected = key.Where(x => x.ZylinderId == 6).Select(x => x.Options).ToList();
+
             var AussenListvalue = new List<Aussen_Rouns_all_value>();
 
             foreach (var listValueAussen in AussenListRundAll)
@@ -1665,6 +1669,8 @@ namespace schliessanlagen_konfigurator.Controllers
             }
 
             ViewBag.OptionHebelName = HebelOptionListAll.Select(x => x.Name).Distinct().ToList();
+
+            ViewBag.HebelOptionSelected = key.Where(x => x.ZylinderId == 4).Select(x => x.Options).ToList();
 
             var HebelOptionValueList = new List<Options_value>();
 
@@ -1714,6 +1720,9 @@ namespace schliessanlagen_konfigurator.Controllers
             ViewBag.HalbOptionsName = OptionsHalb.Select(x => x.Name).ToList();
 
             ViewBag.HalbOptionsValue = OptionsValueHalb.Select(x => x.Value).ToList();
+
+            ViewBag.HalbOptionSelected = key.Where(x => x.ZylinderId == 2).Select(x => x.Options).ToList();
+
             ViewBag.HalbOptionsValueCount = listCountHalb.ToList();
 
             var KnayfOrderlist = new List<Profil_Knaufzylinder>();
@@ -1774,7 +1783,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 }
 
-                ViewBag.optionsName = ngf.Select(x=>x.Name).ToList();
+                ViewBag.optionsName = ngf.Select(x => x.Name).ToList();
 
                 List<NGF_Value> ngfList = new List<NGF_Value>();
 
@@ -1815,6 +1824,8 @@ namespace schliessanlagen_konfigurator.Controllers
                 ViewBag.countOptionsList = list;
 
                 ViewBag.optionsValue = ngfList.Select(x => x.Value).ToList();
+
+                ViewBag.DoppelOptionSelected = key.Where(x => x.ZylinderId == 1).Select(x => x.Options).ToList();
 
                 ViewBag.optionsPrise = JsonConvert.SerializeObject(ngfList.Select(x => x.Cost).ToList());
 
@@ -1864,6 +1875,8 @@ namespace schliessanlagen_konfigurator.Controllers
                 ViewBag.countOptionsListKnayf = list;
 
                 ViewBag.optionsValueKnayf = ngfList.Select(x => x.Value).ToList();
+
+                ViewBag.KnayfOptionSelected = key.Where(x => x.ZylinderId == 3).Select(x => x.Options).ToList();
 
                 ViewBag.optionsPriseKnayf = JsonConvert.SerializeObject(ngfList.Select(x => x.Cost).ToList());
 
@@ -2038,7 +2051,7 @@ namespace schliessanlagen_konfigurator.Controllers
             ViewBag.DInter = key.Where(x => x.ZylinderId == 1).Select(x => x.innen).ToList();
 
             ViewBag.HelbZ = HelbZ.ToList();
-            ViewBag.HalbItem = HelbZ.Select(x => x.Id).ToList();
+            ViewBag.HelbItem = HelbZ.Select(x => x.Id).ToList();
 
             ViewBag.Vorhanschlos = Vorhanschlos.ToList();
             ViewBag.VorhanschlosItem = Vorhanschlos.Select(x => x.Id).ToList();
@@ -2055,11 +2068,17 @@ namespace schliessanlagen_konfigurator.Controllers
                 HelbZ.Select(x => x.Cost).Sum() + Vorhanschlos.Select(x => x.Cost).Sum() + Aussenzylinder.Select(x => x.Cost).Sum() + DoppelAussenCost
                 + KhaufAussenCost + halbAussenCost + VorhangschlossCost;
 
+            var SumCostProduct = DopelOrderlist.Select(x => x.Cost).Sum() + KnaufZelinder.Select(x => x.Cost).Sum() + Halbzylinder.Select(x => x.Cost).Sum() +
+                HelbZ.Select(x => x.Cost).Sum() + Vorhanschlos.Select(x => x.Cost).Sum() + Aussenzylinder.Select(x => x.Cost).Sum();
+
             int precision = 2;
 
             double Costed = Math.Round(SumCost, precision);
 
+            double CostedProduct = Math.Round(SumCostProduct, precision);
+
             ViewBag.Cost = Costed;
+            ViewBag.CostProducted = JsonConvert.SerializeObject(CostedProduct);
 
             return View("Finisher", key.Last());
         }
@@ -2085,18 +2104,18 @@ namespace schliessanlagen_konfigurator.Controllers
 
             db.SaveChanges();
 
-         
+
             return Redirect("/Identity/Account/Manage/PagePersonalOrders");
         }
 
         [HttpGet]
-        public async Task<IActionResult> SaveUserOrders( List<string> nameKey, List<string> TurName, List<string> DopelName, List<float> DoppelAussen, List<float> DoppelIntern
-            , List<string> DoppelOption, List<string> KnayfName, List<float> KnayfAussen, List<float> KnayfIntern, List<string> HalbName, List<float> HalbAussen, List<string> HelbName,
+        public async Task<IActionResult> SaveUserOrders(List<string> nameKey, List<string> TurName, List<string> DopelName, List<float> DoppelAussen, List<float> DoppelIntern
+            , List<string> DoppelOption, List<string> KnayfOption, List<string> HalbOption, List<string> HebelOption, List<string> VorhnaOption, List<string> AussenOption, List<string> KnayfName, List<float> KnayfAussen, List<float> KnayfIntern, List<string> HalbName, List<float> HalbAussen, List<string> HelbName,
            List<string> VorhanName, List<float> VorhanAussen, List<string> AussenName, float cost, List<string> key, List<bool> keyIsOpen, List<int> countKey)
         {
 
             ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
-            string loginInform =  ident.Claims.Select(x=>x.Value).First();
+            string loginInform = ident.Claims.Select(x => x.Value).First();
             var users = db.Users.FirstOrDefault(x => x.Id == loginInform);
 
 
@@ -2108,217 +2127,290 @@ namespace schliessanlagen_konfigurator.Controllers
             var Vorhangschloss = db.Vorhangschloss.ToList();
             var Aussenzylinder = db.Aussenzylinder_Rundzylinder.ToList();
             var Orders = db.Orders.ToList();
+            Random rnd = new Random();
+            string time = Convert.ToString(rnd.Next(10000));
 
-                using (FileStream fstream = new FileStream(@$"wwwroot/Orders/{users.FirstName + users.LastName} OrderFile.xlsx", FileMode.OpenOrCreate))
+            using (FileStream fstream = new FileStream(@$"wwwroot/Orders/{users.FirstName + users.LastName + time} OrderFile.xlsx", FileMode.OpenOrCreate))
+            {
+                fstream.Close();
+            }
+
+            string sourceFilePath = @"wwwroot/Orders/CES_schliessplan_DE_schliessanlagen.xltx";
+
+            string destinationFilePath = @$"wwwroot/Orders/{users.FirstName + users.LastName + time} OrderFile.xlsx";
+
+            using (FileStream sourceFileStream = new FileStream(sourceFilePath, FileMode.Open, FileAccess.Read))
+
+            using (BinaryReader reader = new BinaryReader(sourceFileStream))
+            {
+                using (FileStream destinationFileStream = new FileStream(destinationFilePath, FileMode.Create, FileAccess.Write))
+                using (BinaryWriter writer = new BinaryWriter(destinationFileStream))
                 {
-                    fstream.Close();
-                }
-
-                string sourceFilePath = @"wwwroot/Orders/CES_schliessplan_DE_schliessanlagen.xltx";
-
-                string destinationFilePath = @$"wwwroot/Orders/{users.FirstName + users.LastName} OrderFile.xlsx";
-
-                using (FileStream sourceFileStream = new FileStream(sourceFilePath, FileMode.Open, FileAccess.Read))
-
-                using (BinaryReader reader = new BinaryReader(sourceFileStream))
-                {
-                    using (FileStream destinationFileStream = new FileStream(destinationFilePath, FileMode.Create, FileAccess.Write))
-                    using (BinaryWriter writer = new BinaryWriter(destinationFileStream))
+                    byte[] buffer = new byte[1024];
+                    int bytesRead;
+                    while ((bytesRead = reader.Read(buffer, 0, buffer.Length)) > 0)
                     {
-                        byte[] buffer = new byte[1024];
-                        int bytesRead;
-                        while ((bytesRead = reader.Read(buffer, 0, buffer.Length)) > 0)
-                        {
-                            writer.Write(buffer, 0, bytesRead);
+                        writer.Write(buffer, 0, bytesRead);
 
-                        }
-                        writer.Close();
                     }
-                    reader.Close();
-                    sourceFileStream.Close();
+                    writer.Close();
                 }
-                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-                FileInfo fileInfo = new FileInfo(destinationFilePath);
+                reader.Close();
+                sourceFileStream.Close();
+            }
 
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            FileInfo fileInfo = new FileInfo(destinationFilePath);
 
-                var UserOrder = new Models.Users.UserOrdersShop
+            var UserOrder = new Models.Users.UserOrdersShop
+            {
+                UserId = users.Id,
+                ProductName = DopelName.First(),
+                OrderSum = cost
+            };
+            db.UserOrdersShop.Add(UserOrder);
+            db.SaveChanges();
+
+            var CountAllItem = VorhanName.Count() + AussenName.Count() + DopelName.Count() + KnayfName.Count() + HalbName.Count() + HelbName.Count();
+
+            int Rowcheked = 17;
+            int row = 19;
+            using (ExcelPackage package = new ExcelPackage(fileInfo))
+            {
+                ExcelWorksheet worksheet = package.Workbook.Worksheets["Schließplan"];
+                int value = 0;
+                for (int i = 0; i < countKey.Count(); i++)
                 {
-                    UserId = users.Id,
-                    ProductName = DopelName.First(),
-                    OrderSum = cost
-                };
-
-                db.UserOrdersShop.Add(UserOrder);
-                db.SaveChanges();
-
-                var CountAllItem = VorhanName.Count() + AussenName.Count() + DopelName.Count() + KnayfName.Count() + HalbName.Count() + HelbName.Count();
-
-                int Rowcheked = 17;
-                int row = 19;
-                using (ExcelPackage package = new ExcelPackage(fileInfo))
-                {
-                    ExcelWorksheet worksheet = package.Workbook.Worksheets["Schließplan"];
-
-                    for (int i = 0; i < CountAllItem; i++)
+                    for (int z = 0; z < TurName.Count(); z++)
                     {
-
-                        for (int z = 0; z < countKey.Count(); z++)
+                        if (keyIsOpen[value] == true)
                         {
-                            if (z < countKey.Count() / TurName.Count())
-                            {
-                                if (keyIsOpen[z] == true)
-                                {
-                                    worksheet.Cells[$"S{Rowcheked + z + i}"].Value = "X";
-                                }
-                                else
-                                {
-                                    worksheet.Cells[$"S{Rowcheked + z + i}"].Value = "O";
-                                }
-                            }
-                            else
-                            {
-                                break;
-                            }
-                        }
-                        worksheet.Cells[$"A{Rowcheked}"].Value = i + 1;
-                        worksheet.Cells[$"B{Rowcheked}"].Value = i + 1;
-                        worksheet.Cells[$"C{Rowcheked}"].Value = TurName[i];
-                        worksheet.Cells[$"E{Rowcheked}"].Value = "Ssl";
+                            worksheet.Cells[Rowcheked + z, row+i].Value = "X";
 
-                        if (i < countKey.Count())
+                        }
+                        else
                         {
-                            worksheet.Cells[$"O{Rowcheked}"].Value = countKey[i];
+                            worksheet.Cells[Rowcheked + z, row + i].Value = "O";
                         }
-                        if (i < key.Count())
-                        {
-                            worksheet.Cells[1, row + i].Value = key[i];
-                        }
+                        
+                        value++;
+                    }
 
-                        if (i < DopelName.Count())
-                        {
-                            worksheet.Cells[$"I{Rowcheked}"].Value = "Profil-Doppelzylinder";
-
-                            string Option = "";
-
-                            if (i < DoppelOption.Count())
-                            {
-                                Option = DoppelOption[i];
-                            }
-                            else
-                            {
-                                Option = "";
-                            }
-
-                            worksheet.Cells[$"J{Rowcheked}"].Value = Option;
-                            worksheet.Cells[$"M{Rowcheked}"].Value = DoppelAussen[i];
-                            worksheet.Cells[$"N{Rowcheked}"].Value = DoppelIntern[i];
-
-                            var UserOrderProduct = new Models.Users.ProductSysteam
-                            {
-                                UserOrdersShopId = UserOrder.Id,
-                                Name = DopelName[i],
-                                Aussen = DoppelAussen[i],
-                                Intern = DoppelIntern[i],
-                                Option = Option
-                            };
-
-                            db.ProductSysteam.Add(UserOrderProduct);
-                            db.SaveChanges();
-                        }
-
-                        else if (i < KnayfName.Count())
-                        {
-                            worksheet.Cells[$"I{Rowcheked}"].Value = "Profil-Knaufzylinder";
-
-                            var UserOrderProduct = new Models.Users.ProductSysteam
-                            {
-                                UserOrdersShopId = UserOrder.Id,
-                                Name = KnayfName[i],
-                                Aussen = KnayfAussen[i],
-                                Intern = KnayfIntern[i]
-                                //Option = DoppelOption[i]
-                            };
-
-                            db.ProductSysteam.Add(UserOrderProduct);
-                            db.SaveChanges();
-                        }
-
-                        else if (i < HalbName.Count())
-                        {
-                            worksheet.Cells[$"I{Rowcheked}"].Value = "Profil-Halbzylinder";
-
-                            var UserOrderProduct = new Models.Users.ProductSysteam
-                            {
-                                UserOrdersShopId = UserOrder.Id,
-                                Name = HalbName[i],
-                                Aussen = HalbAussen[i]
-                                //Option = DoppelOption[i]
-                            };
-
-                            db.ProductSysteam.Add(UserOrderProduct);
-                            db.SaveChanges();
-                        }
-
-                        else if (i < HelbName.Count())
-                        {
-                            worksheet.Cells[$"I{Rowcheked}"].Value = "Hebelzylinder";
-
-                            var UserOrderProduct = new Models.Users.ProductSysteam
-                            {
-                                UserOrdersShopId = UserOrder.Id,
-                                Name = HelbName[i],
-                                //Option = DoppelOption[i]
-                            };
-
-                            db.ProductSysteam.Add(UserOrderProduct);
-                            db.SaveChanges();
-                        }
-
-                        else if (i < VorhanName.Count())
-                        {
-                            worksheet.Cells[$"I{Rowcheked}"].Value = "Vorhangschloss";
-
-                            var UserOrderProduct = new Models.Users.ProductSysteam
-                            {
-                                UserOrdersShopId = UserOrder.Id,
-                                Name = VorhanName[i],
-                                Aussen = VorhanAussen[i],
-                                //Option = DoppelOption[i]
-                            };
-
-                            db.ProductSysteam.Add(UserOrderProduct);
-                            db.SaveChanges();
-                        }
-
-                        else if (i < AussenName.Count())
-                        {
-                            worksheet.Cells[$"I{Rowcheked}"].Value = "Aussenzylinder_Rundzylinder";
-
-                            var UserOrderProduct = new Models.Users.ProductSysteam
-                            {
-                                UserOrdersShopId = UserOrder.Id,
-                                Name = AussenName[i]
-                                //Option = DoppelOption[i]
-                            };
-
-                            db.ProductSysteam.Add(UserOrderProduct);
-                            db.SaveChanges();
-                        }
-
-                        Rowcheked++;
-                    
-
-                    package.Save();
+                    for (int f = 9; f <= 13; f++)
+                    {
+                        worksheet.Cells[f, row + i].Value = key[i];
+                    }
+                    worksheet.Cells[$"O{Rowcheked + i}"].Value = countKey[i];
                 }
+ 
+                int DoppelCounter = 0;
+                int KnayfCounter = 0;
+                int HablCounter = 0;
+                int HebelCounter = 0;
+                int VorhanCounter = 0;
+                int AussenCounter = 0;
+
+                for (int i = 0; i < CountAllItem; i++)
+                {
+                    worksheet.Cells[$"C{Rowcheked + i}"].Value = TurName[i];
+                    worksheet.Cells[$"A{Rowcheked + i}"].Value = i+1;
+                    worksheet.Cells[$"B{Rowcheked + i}"].Value = i + 1;
+                    worksheet.Cells[$"E{Rowcheked + i}"].Value = "Ssl";
+
+                    if (DoppelCounter < DopelName.Count())
+                    {
+                        worksheet.Cells[$"I{Rowcheked + i}"].Value = "Profil-Doppelzylinder";
+
+                        string Option = "";
+
+                        if (DoppelCounter < DoppelOption.Count())
+                        {
+                            Option = DoppelOption[DoppelCounter];
+                        }
+                        else
+                        {
+                            Option = "";
+                        }
+
+                        worksheet.Cells[$"J{Rowcheked + i}"].Value = Option;
+                        worksheet.Cells[$"M{Rowcheked + i}"].Value = DoppelAussen[DoppelCounter];
+                        worksheet.Cells[$"N{Rowcheked + i}"].Value = DoppelIntern[DoppelCounter];
+
+                        var UserOrderProduct = new Models.Users.ProductSysteam
+                        {
+                            UserOrdersShopId = UserOrder.Id,
+                            Name = DopelName[DoppelCounter],
+                            Aussen = DoppelAussen[DoppelCounter],
+                            Intern = DoppelIntern[DoppelCounter],
+                            Option = Option
+                        };
+
+                        db.ProductSysteam.Add(UserOrderProduct);
+                        db.SaveChanges();
+                       
+                        DoppelCounter++;
+                    }
+
+                    else if (KnayfCounter < KnayfName.Count())
+                    {
+                        worksheet.Cells[$"I{Rowcheked + i}"].Value = "Profil-Knaufzylinder";
+
+                        string Option = "";
+
+                        if (KnayfCounter < KnayfOption.Count())
+                        {
+                            Option = KnayfOption[KnayfCounter];
+                        }
+                        else
+                        {
+                            Option = "";
+                        }
+
+                        var UserOrderProduct = new Models.Users.ProductSysteam
+                        {
+                            UserOrdersShopId = UserOrder.Id,
+                            Name = KnayfName[KnayfCounter],
+                            Aussen = KnayfAussen[KnayfCounter],
+                            Intern = KnayfIntern[KnayfCounter],
+                            Option = Option
+                        };
+
+                        db.ProductSysteam.Add(UserOrderProduct);
+                        db.SaveChanges();
+
+                        worksheet.Cells[$"J{Rowcheked + i}"].Value = Option;
+                        worksheet.Cells[$"M{Rowcheked + i}"].Value = KnayfAussen[KnayfCounter];
+                        worksheet.Cells[$"N{Rowcheked + i}"].Value = KnayfIntern[KnayfCounter];
+                        KnayfCounter++;
+                    }
 
 
+                    else if (HablCounter < HalbName.Count())
+                    {
+                        worksheet.Cells[$"I{Rowcheked + i}"].Value = "Profil-Halbzylinder";
+
+                        string Option = "";
+
+                        if (HablCounter < HalbOption.Count())
+                        {
+                            Option = HalbOption[HablCounter];
+                        }
+                        else
+                        {
+                            Option = "";
+                        }
+                        var UserOrderProduct = new Models.Users.ProductSysteam
+                        {
+                            UserOrdersShopId = UserOrder.Id,
+                            Name = HalbName[HablCounter],
+                            Aussen = HalbAussen[HablCounter],
+                            Option = Option
+                        };
+
+                        db.ProductSysteam.Add(UserOrderProduct);
+                        db.SaveChanges();
+
+                        worksheet.Cells[$"J{Rowcheked + i}"].Value = Option;
+                        worksheet.Cells[$"M{Rowcheked + i}"].Value = HalbAussen[HablCounter];
+
+                        HablCounter++;
+                    }
+
+                    else if (HebelCounter < HelbName.Count())
+                    {
+                        worksheet.Cells[$"I{Rowcheked + i}"].Value = "Hebelzylinder";
+
+                        string Option = "";
+
+                        if (HebelCounter < HebelOption.Count())
+                        {
+                            Option = HebelOption[HebelCounter];
+                        }
+                        else
+                        {
+                            Option = "";
+                        }
+
+                        var UserOrderProduct = new Models.Users.ProductSysteam
+                        {
+                            UserOrdersShopId = UserOrder.Id,
+                            Name = HelbName[HebelCounter],
+                            Option = Option
+                        };
+
+                        db.ProductSysteam.Add(UserOrderProduct);
+                        db.SaveChanges();
+                        worksheet.Cells[$"J{Rowcheked + i}"].Value = Option;
+
+                        HebelCounter++;
+                    }
+
+                    else if (VorhanCounter < VorhanName.Count())
+                    {
+                        worksheet.Cells[$"I{Rowcheked + i}"].Value = "Vorhangschloss";
+                        string Option = "";
+
+                        if (VorhanCounter < VorhnaOption.Count())
+                        {
+                            Option = VorhnaOption[VorhanCounter];
+                        }
+                        else
+                        {
+                            Option = "";
+                        }
+
+                        var UserOrderProduct = new Models.Users.ProductSysteam
+                        {
+                            UserOrdersShopId = UserOrder.Id,
+                            Name = VorhanName[VorhanCounter],
+                            Aussen = VorhanAussen[VorhanCounter],
+                            Option = Option
+                        };
+
+                        db.ProductSysteam.Add(UserOrderProduct);
+                        db.SaveChanges();
+
+                        worksheet.Cells[$"J{Rowcheked + i}"].Value = Option;
+                        worksheet.Cells[$"M{Rowcheked + i}"].Value = VorhanAussen[VorhanCounter];
+                        VorhanCounter++;
+                    }
+
+                    else if (AussenCounter < AussenName.Count())
+                    {
+                        worksheet.Cells[$"I{Rowcheked + i}"].Value = "Aussenzylinder_Rundzylinder";
+                        string Option = "";
+
+                        if (AussenCounter < AussenOption.Count())
+                        {
+                            Option = AussenOption[AussenCounter];
+                        }
+                        else
+                        {
+                            Option = "";
+                        }
+                        var UserOrderProduct = new Models.Users.ProductSysteam
+                        {
+                            UserOrdersShopId = UserOrder.Id,
+                            Name = AussenName[AussenCounter],
+                            Option = Option
+                        };
+                        worksheet.Cells[$"J{Rowcheked+ i}"].Value = Option;
+
+                        db.ProductSysteam.Add(UserOrderProduct);
+                        db.SaveChanges();
+                        AussenCounter++;
+                    }
+                    package.Save();
+                   
+                   
+                }
 
                 return Redirect("/Identity/Account/Manage/PagePersonalOrders");
             }
 
         }
         [HttpGet]
-        public ActionResult FinischerProductSelect(float SumCosted, List<string> DopelOption, List<int> DopelItem, List<float> DAussen, List<float> DIntern, List<int> Knayf, string user, List<int> Halb,
+        public ActionResult FinischerProductSelect(float SumCosted, List<string> DopelOption, List<string> HalbOption, List<string> KnayfOption, List<string> HebelOption, List<string> VorhnaOption, List<string> AussenOption, List<int> DopelItem, List<float> DAussen, List<float> DIntern, List<int> Knayf, string user, List<int> Halb,
             List<int> KnayfIntern, List<int> KnayfAusse, List<int> Helb, List<int> Vorhan, List<int> Aussen, List<float> VorhanAussen, List<float> HablAussen)
         {
             var UserOrder = db.Orders.FirstOrDefault(x => x.userKey == user);
@@ -2444,20 +2536,26 @@ namespace schliessanlagen_konfigurator.Controllers
             ViewBag.KnayfName = KnayfSylinder.Select(x => x.Name).ToList();
             ViewBag.KnayflIntern = KnayfIntern.ToList();
             ViewBag.KnayfItem = KnayfSylinder.Count;
+            ViewBag.KnayfOptionSelected = KnayfOption;
+
 
             ViewBag.HalbName = HalbSylinder.Select(x => x.Name).ToList();
             ViewBag.HalbAussen = HablAussen.ToList();
             ViewBag.HalbCount = HalbSylinder.Count();
+            ViewBag.HalbOptionSelected = HalbOption;
 
             ViewBag.HelbName = HelbSylinder.Select(x => x.Name).ToList();
             ViewBag.HelbCount = HelbSylinder.Count();
+            ViewBag.HebelOptionSelected = HebelOption;
 
             ViewBag.VorhanName = VorhanSylinder.Select(x => x.Name).ToList();
             ViewBag.VorhanAussen = VorhanAussen.ToList();
             ViewBag.VorhanCount = VorhanSylinder.Count();
+            ViewBag.VorhanOptionSelected = VorhnaOption;
 
             ViewBag.AussenName = AussenSylinder.Select(x => x.Name).ToList();
             ViewBag.AussenCount = AussenSylinder.Count();
+            ViewBag.AussenOptionSelected = AussenOption;
 
             ViewBag.Key = OpenLis.Distinct().ToList();
             ViewBag.KeyValueFT = KeyValue.ToList();

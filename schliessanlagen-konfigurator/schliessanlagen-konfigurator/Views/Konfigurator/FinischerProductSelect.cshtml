@@ -30,25 +30,25 @@
 
                 </div>
                 <div id="itemKeyBlock">
-                  @{
+                    @{
                         int counterKey = 1;
                         foreach (var list in ViewBag.Key)
                         {
-                                <div class="TexCount">
-                                    <h6>@counterKey</h6>
-                                    <div id="TexInputKey">
-                                        <input id="inputS" name="NameKey" value='@list.NameKey' type="text" />
-                                    </div>
-                                    <div>
-                                        <input id="inputCount" name="CountKey" value="@list.CountKey" type="text" />
-                                    </div>
+                            <div class="TexCount">
+                                <h6>@counterKey</h6>
+                                <div id="TexInputKey">
+                                    <input id="inputS" name="NameKey" value='@list.NameKey' type="text" />
                                 </div>
+                                <div>
+                                    <input id="inputCount" name="CountKey" value="@list.CountKey" type="text" />
+                                </div>
+                            </div>
 
                             counterKey++;
                         }
-                      
+
                     }
-                    
+
 
                 </div>
             </div>
@@ -75,252 +75,246 @@
                                 int VorhanCounter = 0;
                                 int AussenCounter = 0;
 
-                                    <div class="TexCountTurFinisher">
+                                <div class="TexCountTurFinisher">
 
-                                        @for (int item = 0; item < ViewBag.Tur.Count; item++)
+                                    @for (int item = 0; item < ViewBag.Tur.Count; item++)
                                     {
-  
                                         if (ViewBag.DoppelItem > item)
                                         {
-                                                <div id="DorUndCount">
-                                                    <h5 style="margin-top: 10px;margin-left: 2px;">
-                                                        @DoorCount
-                                                    </h5>
-                                                    <h5 id="counterTur"><strong> @ViewBag.Tur[DorItem]</strong></h5>
-                                                </div>
-                                                @if (ViewBag.DopelZylinder.Count > 0)
+                                            <div id="DorUndCount">
+                                                <h5 style="margin-top: 10px;margin-left: 2px;">
+                                                    @DoorCount
+                                                </h5>
+                                                <h5 id="counterTur"><strong> @ViewBag.Tur[DorItem]</strong></h5>
+                                            </div>
+                                            @if (ViewBag.DopelZylinder.Count > 0)
                                             {
-                                                   <h6><strong> @ViewBag.DopelZylinder[DoppelCounter]</strong></h6>
-                                                    <br/>
+                                                <h6><strong> @ViewBag.DopelZylinder[DoppelCounter]</strong></h6>
+                                                <br />
                                                 if (ViewBag.DoppelAussen.Count > 0)
                                                 {
-                                                         <h6>Außenlänge (A):@ViewBag.DoppelAussen[DoppelCounter] </h6>
+                                                    <h6>Außenlänge (A):@ViewBag.DoppelAussen[DoppelCounter] </h6>
                                                 }
 
                                                 if (ViewBag.DoppelIntern.Count > 0)
                                                 {
-                                                       <h6>Außenlänge (B):@ViewBag.DoppelIntern[DoppelCounter] </h6> 
+                                                    <h6>Außenlänge (B):@ViewBag.DoppelIntern[DoppelCounter] </h6>
                                                 }
                                             }
 
-                                             // <h6>Mit: @ViewBag.DoppelOption[DoppelCounter]</h6>
-                                            
-                                           
+                                            <h6>Mit: @ViewBag.DoppelOption[DoppelCounter]</h6>
+
+
                                             DoppelCounter++;
                                             DoorCount++;
                                             DorItem++;
-                                                 
+
                                         }
                                         if (ViewBag.KnayfItem > item)
                                         {
-                                                <div id="DorUndCount">
-                                                    <h5 style="margin-top: 10px;margin-left: 2px;">
-                                                        @DoorCount
-                                                    </h5>
-                                                    <h5 id="counterTur"><strong> @ViewBag.Tur[DorItem]</strong></h5>
-                                                </div>
+                                            <div id="DorUndCount">
+                                                <h5 style="margin-top: 10px;margin-left: 2px;">
+                                                    @DoorCount
+                                                </h5>
+                                                <h5 id="counterTur"><strong> @ViewBag.Tur[DorItem]</strong></h5>
+                                            </div>
                                             if (ViewBag.KnayfName.Count > 0)
                                             {
-                                                     <h6><strong> @ViewBag.KnayfName[KnayfCounter]</strong></h6>
-                                                    <br/>
+                                                <h6><strong> @ViewBag.KnayfName[KnayfCounter]</strong></h6>
+                                                <br />
                                                 if (ViewBag.KnayfAussen.Count > 0)
                                                 {
-                                                        <h6>Außenlänge (A):@ViewBag.KnayfAussen[KnayfCounter]
-                                                        </h6>
-                                                    if (ViewBag.KnayflIntern.Count>0)
+                                                    <h6>
+                                                        Außenlänge (A):@ViewBag.KnayfAussen[KnayfCounter]
+                                                    </h6>
+                                                    if (ViewBag.KnayflIntern.Count > 0)
                                                     {
-                                                          <h6>Außenlänge (B):@ViewBag.KnayflIntern[KnayfCounter] </h6>
+                                                        <h6>Außenlänge (B):@ViewBag.KnayflIntern[KnayfCounter] </h6>
                                                     }
                                                 }
-                                                //     @foreach (var listOption in ViewBag.DoppelOption)
-                                                // {
-                                                //         <h6>Mit: @listOption</h6>
-                                                // }
+                                                @foreach (var listOption in ViewBag.KnayfOptionSelected)
+                                                {
+                                                    <h6>Mit: @listOption</h6>
+                                                }
 
                                                 KnayfCounter++;
                                                 DoorCount++;
-                                                DorItem++; 
+                                                DorItem++;
 
                                             }
 
                                         }
                                         if (ViewBag.HalbCount > item)
                                         {
-                                                <div id="DorUndCount">
-                                                    <h5 style="margin-top: 10px;margin-left: 2px;">
-                                                        @DoorCount
-                                                    </h5>
-                                                    <h5 id="counterTur"><strong> @ViewBag.Tur[DorItem]</strong></h5>
-                                                </div>
-                                                @if(ViewBag.HalbName.Count>0)
+                                            <div id="DorUndCount">
+                                                <h5 style="margin-top: 10px;margin-left: 2px;">
+                                                    @DoorCount
+                                                </h5>
+                                                <h5 id="counterTur"><strong> @ViewBag.Tur[DorItem]</strong></h5>
+                                            </div>
+                                            @if (ViewBag.HalbName.Count > 0)
                                             {
-                                                     <h6><strong> @ViewBag.HalbName[HablCounter]</strong></h6>
-                                                    <br/>
-                                                if(ViewBag.HalbAussen.Count>0)
+                                                <h6><strong> @ViewBag.HalbName[HablCounter]</strong></h6>
+                                                <br />
+                                                if (ViewBag.HalbAussen.Count > 0)
                                                 {
-                                                         <h6>Außenlänge (A):@ViewBag.HalbAussen[HablCounter]</h6>
+                                                    <h6>Außenlänge (A):@ViewBag.HalbAussen[HablCounter]</h6>
                                                 }
 
-                                                  //     @foreach (var listOption in ViewBag.DoppelOption)
-                                                  // {
-                                                  //           <h6>Mit: @listOption</h6>
-                                                  // }
+                                                @foreach (var listOption in ViewBag.HalbOptionSelected)
+                                                {
+                                                    <h6>Mit: @listOption</h6>
+                                                }
 
-                                            HablCounter++;
-                                            DoorCount++;
-                                            DorItem++; 
+                                                HablCounter++;
+                                                DoorCount++;
+                                                DorItem++;
                                             }
 
                                         }
                                         if (ViewBag.HelbCount > item)
                                         {
-                                                <div id="DorUndCount">
-                                                    <h5 style="margin-top: 10px;margin-left: 2px;">
-                                                        @DoorCount
-                                                    </h5>
-                                                    <h5 id="counterTur"><strong> @ViewBag.Tur[DorItem]</strong></h5>
-                                                </div>
-                                                @if (ViewBag.HelbName.Count > 0)
+                                            <div id="DorUndCount">
+                                                <h5 style="margin-top: 10px;margin-left: 2px;">
+                                                    @DoorCount
+                                                </h5>
+                                                <h5 id="counterTur"><strong> @ViewBag.Tur[DorItem]</strong></h5>
+                                            </div>
+                                            @if (ViewBag.HelbName.Count > 0)
                                             {
-                                                     <h6><strong> @ViewBag.HelbName[HebelCounter]</strong></h6>
-                                                    <br/>
-                                                //     @foreach (var listOption in ViewBag.DoppelOption)
-                                                // {
-                                                //         <h6>Mit: @listOption</h6>
-                                                // }
+                                                <h6><strong> @ViewBag.HelbName[HebelCounter]</strong></h6>
+                                                <br />
+                                                @foreach (var listOption in ViewBag.HebelOptionSelected)
+                                                {
+                                                    <h6>Mit: @listOption</h6>
+                                                }
 
                                                 HebelCounter++;
                                                 DoorCount++;
                                                 DorItem++;
                                             }
-   
+
                                         }
                                         if (ViewBag.VorhanCount > item)
                                         {
-                                                <div id="DorUndCount">
-                                                    <h5 style="margin-top: 10px;margin-left: 2px;">
-                                                        @DoorCount
-                                                    </h5>
-                                                    <h5 id="counterTur"><strong> @ViewBag.Tur[DorItem]</strong></h5>
-                                                </div>
-                                                @if(ViewBag.VorhanName.Count>0)
+                                            <div id="DorUndCount">
+                                                <h5 style="margin-top: 10px;margin-left: 2px;">
+                                                    @DoorCount
+                                                </h5>
+                                                <h5 id="counterTur"><strong> @ViewBag.Tur[DorItem]</strong></h5>
+                                            </div>
+                                            @if (ViewBag.VorhanName.Count > 0)
                                             {
-                                                     <h6><strong> @ViewBag.VorhanName[VorhanCounter]</strong></h6>
-                                                    <br/>
-                                                    @if (ViewBag.VorhanAussen.Count > 0)
+                                                <h6><strong> @ViewBag.VorhanName[VorhanCounter]</strong></h6>
+                                                <br />
+                                                @if (ViewBag.VorhanAussen.Count > 0)
                                                 {
-                                                         <h6>Außenlänge (A): @ViewBag.VorhanAussen[VorhanCounter]</h6>
+                                                    <h6>Außenlänge (A): @ViewBag.VorhanAussen[VorhanCounter]</h6>
                                                 }
-                                                    //     @foreach (var listOption in ViewBag.DoppelOption)
-                                                    // {
-                                                    //         <h6>Mit: @listOption</h6>
-                                                    // }
+                                                @foreach (var listOption in ViewBag.VorhanOptionSelected)
+                                                {
+                                                    <h6>Mit: @listOption</h6>
+                                                }
 
                                                 VorhanCounter++;
                                                 DoorCount++;
-                                                DorItem++; 
+                                                DorItem++;
                                             }
                                         }
                                         if (ViewBag.AussenCount > item)
                                         {
-                                                <div id="DorUndCount">
-                                                    <h5 style="margin-top: 10px;margin-left: 2px;">
-                                                        @DoorCount
-                                                    </h5>
-                                                    <h5 id="counterTur"><strong> @ViewBag.Tur[DorItem]</strong></h5>
-                                                </div>
+                                            <div id="DorUndCount">
+                                                <h5 style="margin-top: 10px;margin-left: 2px;">
+                                                    @DoorCount
+                                                </h5>
+                                                <h5 id="counterTur"><strong> @ViewBag.Tur[DorItem]</strong></h5>
+                                            </div>
                                             if (ViewBag.AussenName.Count > 0)
                                             {
-                                                     <h6><strong> @ViewBag.AussenName[AussenCounter]</strong></h6>
-                                                 <br/>
-                                                //     @foreach (var listOption in ViewBag.DoppelOption)
-                                                // {
-                                                //         <h6>Mit: @listOption</h6>
-                                                // }
+                                                <h6><strong> @ViewBag.AussenName[AussenCounter]</strong></h6>
+                                                <br />
+                                                foreach (var listOption in ViewBag.AussenOptionSelected)
+                                                {
+                                                    <h6>Mit: @listOption</h6>
+                                                }
 
                                                 AussenCounter++;
                                                 DoorCount++;
-                                                DorItem++; 
-                                            }  
+                                                DorItem++;
+                                            }
                                         }
                                     }
-                                    </div>
-                            } 
+                                </div>
+                            }
                         </div>
-                      
+
 
                         @for (var list = 0; list < @ViewBag.Key.Count; list++)
                         {
                             <div id="InfoValue">
-                            @for (int i = 0; i < ViewBag.Tur.Count; i++)
-                            {
-                                        <div class="horizontal" id="1horizontal">
+                                @for (int i = 0; i < ViewBag.Tur.Count; i++)
+                                {
+                                    <div class="horizontal" id="1horizontal">
 
-                                          
-                                            @if (@ViewBag.KeyValueFT[countFalse].isOpen == true)
-                                            {
-                                                    <input type="checkbox" checked id="1checkbox1">
-                                                    <input type="hidden" name="IsOppen" id="I1checkbox1">
-                                                countFalse++;
-                                            }
-                                            else
-                                            {
-                                                    <input type="checkbox" id="1checkbox1">
-                                                    <input type="hidden" name="IsOppen" id="I1checkbox1">
-                                                countFalse++;
-                                            }
-                                        
-                                           
-                                        </div>
-                            }
+
+                                        @if (@ViewBag.KeyValueFT[countFalse].isOpen == true)
+                                        {
+                                            <input type="checkbox" checked id="1checkbox1">
+                                            <input type="hidden" name="IsOppen" id="I1checkbox1">
+                                            countFalse++;
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" id="1checkbox1">
+                                            <input type="hidden" name="IsOppen" id="I1checkbox1">
+                                            countFalse++;
+                                        }
+
+
+                                    </div>
+                                }
                             </div>
                         }
-                       
+
                     </div>
                 </div>
             </div>
         </div>
-    
-    <div id="FinihserCostInfo">
-        <div style="max-width: 700px;">
-            <p>
-                Lieferzeit: ca. 14 Werktage<br/>
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.
-                Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
-            </p>
+
+        <div id="FinihserCostInfo">
+            <div style="max-width: 700px;">
+                <p>
+                    Lieferzeit: ca. 14 Werktage<br />
+                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.
+                    Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                    Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
+                </p>
+            </div>
+            <div style="margin-top: 40px;">
+                <h2>@ViewBag.SumCosted</h2>
+                <h6>inkl. MwSt.</h6>
+            </div>
+
         </div>
-        <div style="margin-top: 40px;">
-            <h2>@ViewBag.SumCosted</h2>
-            <h6>inkl. MwSt.</h6>
-        </div>
-       
-    </div>
-    <div id="finisherButton">
+        <div id="finisherButton">
             <a class="btn btn-dark" href=" @Url.Action("OrdersKey", "Konfigurator", new { })">ALS ANGEBOT PER EMAIL</a>
-           
-            
-           
+
+
+
             @if (User.IsInRole("client") || User.IsInRole("admin"))
             {
                 <a class="btn btn-danger"
-                   href="@Url.Action("SaveUserOrders", "Konfigurator", new {countKey = @ViewBag.CountKey,key = @ViewBag.NameKey,keyIsOpen = @ViewBag.IsOpen,cost = ViewBag.SumCosted,TurName = @ViewBag.Tur,userInfo = @ViewBag.UserNameItem,nameKey = @ViewBag.Key, DopelName = @ViewBag.DopelZylinder,DoppelAussen=@ViewBag.DoppelAussen,DoppelIntern=@ViewBag.DoppelIntern,DoppelOption = @ViewBag.DoppelOption,KnayfName = @ViewBag.KnayfName,KnayfAussen = @ViewBag.KnayfAussen,KnayfIntern = @ViewBag.KnayflIntern,HalbName = @ViewBag.HalbName,HalbAussen = @ViewBag.HalbAussen,HelbName = @ViewBag.HelbName, VorhanName=@ViewBag.VorhanName, VorhanAussen = @ViewBag.VorhanAussen, AussenName = @ViewBag.AussenName})">
+                   href="@Url.Action("SaveUserOrders", "Konfigurator", new {HalbOption = @ViewBag.HalbOptionSelected,VorhnaOption = @ViewBag.VorhanOptionSelected,AussenOption = @ViewBag.AussenOptionSelected,DoppelOption = @ViewBag.DoppelOption,KnayfOption = @ViewBag.KnayfOptionSelected,HebelOption = @ViewBag.HebelOptionSelected,countKey = @ViewBag.CountKey,key = @ViewBag.NameKey,keyIsOpen = @ViewBag.IsOpen,cost = ViewBag.SumCosted,TurName = @ViewBag.Tur,userInfo = @ViewBag.UserNameItem,nameKey = @ViewBag.Key, DopelName = @ViewBag.DopelZylinder,DoppelAussen=@ViewBag.DoppelAussen,DoppelIntern=@ViewBag.DoppelIntern,KnayfName = @ViewBag.KnayfName,KnayfAussen = @ViewBag.KnayfAussen,KnayfIntern = @ViewBag.KnayflIntern,HalbName = @ViewBag.HalbName,HalbAussen = @ViewBag.HalbAussen,HelbName = @ViewBag.HelbName, VorhanName=@ViewBag.VorhanName, VorhanAussen = @ViewBag.VorhanAussen, AussenName = @ViewBag.AussenName})">
                     IN DEN WARENKORB
                 </a>
 
             }
             else
             {
-                <script>
-                    alert("@TempData["AlertMessage"]");
-                </script>
-                <a class="btn btn-danger">
-                    IN DEN WARENKORB
-                </a>
-               
+                <a class="btn btn-danger" asp-area="Identity" asp-page="/Account/Register">IN DEN WARENKORB</a>
             }
-           
-    </div>
+
+        </div>
     </form>
 </div>
 
