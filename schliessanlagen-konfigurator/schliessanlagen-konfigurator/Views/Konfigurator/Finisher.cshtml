@@ -6,11 +6,17 @@
 
     int z = 0;
     int countFalse = 0;
+    int d = 0;
 }
+ @using (Html.BeginForm("FinischerProductSelect", "Konfigurator", FormMethod.Post))
+{ 
+        
+    @Html.HiddenFor(m => m.userKey)
 
-@Html.HiddenFor(m => m.userKey)
+    <input type="hidden" name="user" value="@Model.userKey" />
+    <div id="FinisherPage">
+  
 
-<div id="FinisherPage">
     <h1>Schlüssel konfigurieren</h1>
     <p>
         Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
@@ -26,9 +32,9 @@
                 <div id="ItemCounterOrders">
 
                     <div id="counterKey">
-                        <button onclick="minus(@z)" class="btn btn-success">-</button>
-                        <h4 id="countKey-@z">@item.CountKey</h4>
-                        <button onclick="plus(@z)" class="btn btn-success">+</button>
+                            <input onclick="minus(@z)" type="button" value="-" class="btn btn-success" />
+                            <input type="text" style="border: none;max-width: 30px;" id="countKey-@z" readonly name="CountKey" value="@item.CountKey" />
+                            <input onclick="plus(@z)" type="button" value="+" class="btn btn-success" />
                     </div>
 
                 </div>
@@ -45,7 +51,7 @@
                     {
                         @if (ViewBag.KeyValue[countFalse] == true)
                         {
-                            <h5>@ViewBag.DorName[i]</h5>
+                                <input name="DorName" style="border: none;max-width: 100px;" readonly type="text" id="@z-DorCount-@i" value="@ViewBag.DorName[i]" />
                         }
                         countFalse++;
                     }
@@ -71,8 +77,10 @@
         @if (ViewBag.Dopelzylinder != null)
         {
             int elemNum = 0;
+         
             foreach (var item in ViewBag.Dopelzylinder)
             {
+                    <input value="@item.Id" type="hidden" name="DopelItem" />
                 <div id="ExelItem">
                     <div id="productImage">
                         <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
@@ -90,11 +98,12 @@
                         </div>
                         <div id="product_desciptions">
                             <h5>Zylinder Länge</h5>
+                            <h5>Vifile Tür</h5>
                         </div>
 
                         <div id="@item.Id" class="SizeProduct">
                             <div>
-                                <select class="form-select" id="Aussen" onchange="selectParamAussen(event.target.value,@item.Id,@ViewBag.DAussen[elemNum])">
+                                    <select class="form-select" name="DAussen" id="Aussen" onchange="selectParamAussen(event.target.value,@item.Id,@ViewBag.DAussen[elemNum])">
                                     <option style="display:none" selected>@ViewBag.DAussen[elemNum]</option>
                                     <option>Außenlänge (A)</option>
                                     @for (int i = 0; i < ViewBag.Dopelzylinderaussen.Count; i++)
@@ -104,7 +113,7 @@
                                 </select>
                             </div>
                             <div>
-                                <select class="form-select" id="Intern" onchange="selectParamIntern(event.target.value,@item.Id,@ViewBag.DInter[elemNum])">
+                                    <select class="form-select" name="DIntern" id="Intern" onchange="selectParamIntern(event.target.value,@item.Id,@ViewBag.DInter[elemNum])">
                                     <option style="display:none" selected>@ViewBag.DInter[elemNum]</option>
                                     <option>Innenlänge (B)</option>
                                     @for (int i = 0; i < ViewBag.DopelzylinderIntern.Count; i++)
@@ -112,6 +121,11 @@
                                         <option id="OptionI">@ViewBag.DopelzylinderIntern[i]</option>
                                     }
                                 </select>
+                            </div>
+                            <div style="gap: 10px;display: flex;margin-left: 50px;">
+                                    <button type="button"  onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
+                                    <input style="border: none;max-width: 30px;" id="countSchlusse-@d" type="text" readonly name="TurCount" value="@ViewBag.CounterTur[@elemNum]" />
+                                    <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
                             </div>
                         </div>
 
@@ -128,16 +142,14 @@
                                     {
                                         if (@ViewBag.optionsName[i] == @ViewBag.DoppelOptionSelected[elemNum])
                                         {
-                                            <input class="form-control" readonly type="text" value="&#10003; @ViewBag.optionsName[i]" style="color: green;margin-top: 5px;" />
+                                                <input name="DopelOption" class="form-control" readonly type="text" value="&#10003; @ViewBag.optionsName[i]" style="color: green;margin-top: 5px;" />
                                         }
                                         else
                                         {
                                             <input class="form-control" style="margin-top: 5px;" readonly type="text" value="@ViewBag.optionsName[i]" />
                                         }
 
-
-
-                                        <select style="margin-bottom: 10px;" class="form-select" id="ProductOptionsSelector" onchange="selectParamOptions(event,@valueCount,@item.Id)">
+                                    <select style="margin-bottom: 10px;" class="form-select" id="ProductDoppelOptionsSelector" onchange="selectParamOptions(event,@valueCount,@item.Id)">
 
                                             @for (int j = 0; j < ViewBag.countOptionsList[i]; j++)
                                             {
@@ -157,12 +169,12 @@
                                                     <option id="@valueCount">@ViewBag.optionsValue[valueCount]</option>
                                                 }
                                                 valueCount++;
-                                            }
+                                           }
 
                                         </select>
 
                                     }
-                                }
+                                 }
 
 
                             </div>
@@ -172,13 +184,16 @@
 
                 </div>
                 elemNum++;
+                d++;
             }
         }
         @if (ViewBag.KnayfZelinder != null)
         {
+            
             int elemNum = 0;
             foreach (var item in ViewBag.KnayfZelinder)
             {
+               <input type="hidden" name="Knayf" value="@item.Id" />
                 <div id="ExelItem">
                     <div id="productImage">
                         <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
@@ -198,11 +213,12 @@
                         </div>
                         <div id="product_desciptions">
                             <h5>Zylinder Länge</h5>
+                            <h5>Vifile Tür</h5>
                         </div>
 
                         <div id="@item.Id" class="SizeProduct">
                             <div>
-                                <select class="form-select" id="Aussen" onchange="selectParamAussen(event.target.value,@item.Id,@ViewBag.KAussen[elemNum])">
+                                <select class="form-select" name="KnayfAusse" id="Aussen" onchange="selectParamAussen(event.target.value,@item.Id,@ViewBag.KAussen[elemNum])">
                                     <option style="display:none" selected>@ViewBag.KAussen[elemNum]</option>
                                     <option>Außenlänge (A)</option>
                                     @for (int i = 0; i < ViewBag.KnayfZelinderAussen.Count; i++)
@@ -212,7 +228,7 @@
                                 </select>
                             </div>
                             <div>
-                                <select class="form-select" id="Intern" onchange="selectParamIntern(event.target.value,@item.Id,@ViewBag.KInter[elemNum])">
+                                    <select class="form-select" name="Intern" id="KnayfIntern" onchange="selectParamIntern(event.target.value,@item.Id,@ViewBag.KInter[elemNum])">
                                     <option style="display:none" selected>@ViewBag.KInter[elemNum]</option>
                                     <option>Innenlänge (B)</option>
                                     @for (int i = 0; i < ViewBag.KnayfZelinderIntern.Count; i++)
@@ -221,7 +237,12 @@
                                     }
                                 </select>
                             </div>
-                        </div>
+                            <div style="gap: 10px;display: flex;margin-left: 50px;">
+                                    <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
+                                    <input style="border: none;max-width: 30px;" id="countSchlusse-@d" value="@ViewBag.CounterTurKnayf[@elemNum]" name="TurCount" />
+                                    <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
+                            </div>
+                        </div>        
 
                         <div>
                             <h3>Weitere Optionen</h3>
@@ -235,7 +256,7 @@
                                     {
                                         if (@ViewBag.optionsNameKnayf[i] == @ViewBag.KnayfOptionSelected[elemNum])
                                         {
-                                            <input class="form-control" readonly type="text" value="&#10003; @ViewBag.optionsNameKnayf[i]" style="color: green;margin-top: 5px;" />
+                                                <input class="form-control" name="KnayfOption" readonly type="text" value="&#10003; @ViewBag.optionsNameKnayf[i]" style="color: green;margin-top: 5px;" />
                                         }
                                         else
                                         {
@@ -266,19 +287,24 @@
 
                                         </select>
                                     }
-                                }
+                                } 
 
                             </div>
                         </div>
                     </div>
                 </div>
+                d++;
+                elemNum++;
             }
+           
         }
         @if (ViewBag.Halb != null)
         {
             int elemNum = 0;
+           
             foreach (var item in ViewBag.Halb)
             {
+                    <input type="hidden" name="Halb" value="@item.Id" />
                 <div id="ExelItem">
                     <div id="productImage">
                         <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
@@ -298,10 +324,12 @@
                         </div>
                         <div id="product_desciptions">
                             <h5>Zylinder Länge</h5>
+                            <h5>Vifile Tür</h5>
                         </div>
-                        <div>
+                            <div id="@item.Id" class="SizeProduct">
+                               
                             <div>
-                                <select class="form-select" onchange="selectParamAussen(event.target.value,@item.Id,@ViewBag.HalbOrderAussen[elemNum])">
+                                    <select name="HablAussen" id="Aussen" class="form-select" onchange="selectParamAussen(event.target.value,@item.Id,@ViewBag.HalbOrderAussen[elemNum])">
                                     <option style="display:none" selected>@ViewBag.HalbOrderAussen[elemNum]</option>
                                     <option>Außenlänge (A)</option>
                                     @for (int i = 0; i < ViewBag.AussenHalb.Count; i++)
@@ -310,7 +338,11 @@
                                     }
                                 </select>
                             </div>
-
+                            <div style="gap: 10px;display: flex;margin-left: 50px;">
+                                    <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
+                                    <input style="border: none;max-width: 30px;" value="@ViewBag.CounterTurHalb[@elemNum]" name="TurCount" id="countSchlusse-@d" />
+                                    <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
+                            </div>
                         </div>
                         <div>
                             <h3>Weitere Optionen</h3>
@@ -318,14 +350,14 @@
                                 @{
                                     int valueCount = 0;
                                 }
-                                @if (ViewBag.countOptionsQueryHalb > 0)
+                               @if (ViewBag.countOptionsQueryHalb > 0)
                                 {
                                     @for (int i = 0; i < ViewBag.HalbOptionsName.Count; i++)
                                     {
 
                                         if (@ViewBag.HalbOptionsName[i] == @ViewBag.HalbOptionSelected[elemNum])
                                         {
-                                            <input class="form-control" readonly type="text" value="&#10003; @ViewBag.HalbOptionsName[i]" style="color: green;margin-top: 5px;" />
+                                            <input class="form-control" name="HalbOption" readonly type="text" value="&#10003; @ViewBag.HalbOptionsName[i]" style="color: green;margin-top: 5px;" />
                                         }
                                         else
                                         {
@@ -356,12 +388,13 @@
                                             }
                                         </select>
                                     }
-                                }
+                                } 
                             </div>
                         </div>
                     </div>
                 </div>
                 elemNum++;
+                d++;
             }
         }
         @if (ViewBag.HelbZ != null)
@@ -369,6 +402,7 @@
             int elemNum = 0;
             foreach (var item in ViewBag.HelbZ)
             {
+                    <input type="hidden" name="Helb" value="@item.Id" />
                 <div id="ExelItem">
                     <div id="productImage">
                         <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
@@ -388,8 +422,15 @@
                         </div>
                         <div id="product_desciptions">
                             <h5>Zylinder Länge</h5>
+                            <h5>Vifile Tür</h5>
                         </div>
-
+                            <div id="@item.Id" class="SizeProduct">
+                            <div style="gap: 10px;display: flex;margin-left: 50px;">
+                                    <button onclick="CylinderMinus(@d)" type="button" class="btn btn-success">-</button>
+                                    <input style="border: none;max-width: 30px;" name="TurCount" value="@ViewBag.CounterTurHebel[@elemNum]" id="countSchlusse-@d" />
+                                    <button onclick="CylinderPlus(@d)" type="button" class="btn btn-success">+</button>
+                            </div>
+                        </div>
                         <div>
                             <h3>Weitere Optionen</h3>
                             <div>
@@ -403,7 +444,7 @@
                                     {
                                         if (@ViewBag.OptionHebelName[i] == @ViewBag.HebelOptionSelected[elemNum])
                                         {
-                                            <input class="form-control" readonly type="text" value="&#10003; @ViewBag.OptionHebelName[i]" style="color: green;margin-top: 5px;" />
+                                                <input class="form-control" name="HebelOption" readonly type="text" value="&#10003; @ViewBag.OptionHebelName[i]" style="color: green;margin-top: 5px;" />
                                         }
                                         else
                                         {
@@ -433,20 +474,22 @@
                                             }
                                         </select>
                                     }
-                                }
+                                } 
                             </div>
                         </div>
                     </div>
 
                 </div>
                 elemNum++;
-            }
+                    d++;
+                }
         }
         @if (ViewBag.Vorhanschlos != null)
         {
             int elemNum = 0;
             foreach (var item in ViewBag.Vorhanschlos)
             {
+                    <input type="hidden" name="Vorhan" value="@item.Id" />
                 <div id="ExelItem">
                     <div id="productImage">
                         <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
@@ -466,11 +509,11 @@
                         </div>
                         <div id="product_desciptions">
                             <h5>Zylinder Länge</h5>
+                            <h5>Vifile Tür</h5>
                         </div>
-                        <div>
+                            <div id="@item.Id" class="SizeProduct">
                             <div>
-
-                                <select class="form-select" onchange="selectParamAussen(event.target.value,@item.Id)">
+                                    <select class="form-select" name="VorhanAussen" id="Aussen" onchange="selectParamAussen(event.target.value,@item.Id)">
                                     <option style="display:none" selected>@ViewBag.VorhanOrderAussen[elemNum]</option>
                                     <option>Außenlänge (A)</option>
                                     @for (int i = 0; i < ViewBag.VorhanSize.Count; i++)
@@ -479,7 +522,11 @@
                                     }
                                 </select>
                             </div>
-
+                            <div style="gap: 10px;display: flex;margin-left: 50px;">
+                                    <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
+                                    <input name="TurCount" style="border: none;max-width: 30px;" id="countSchlusse-@d" value="@ViewBag.CounterTurVorhan[@elemNum]" />
+                                    <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
+                            </div>
                         </div>
                         <div>
                             <h3>Weitere Optionen</h3>
@@ -490,11 +537,12 @@
 
                                 @if (ViewBag.VorhanschlossCount > 0)
                                 {
+
                                     @for (int i = 0; i < ViewBag.VorhanschlossOptionCount; i++)
                                     {
                                         if (@ViewBag.VorhanschlossOptionName[i] == @ViewBag.VorhanOptionSelected[elemNum])
                                         {
-                                            <input class="form-control" readonly type="text" value="&#10003; @ViewBag.VorhanschlossOptionName[i]" style="color: green;margin-top: 5px;" />
+                                                <input class="form-control" name="VorhnaOption" readonly type="text" value="&#10003; @ViewBag.VorhanschlossOptionName[i]" style="color: green;margin-top: 5px;" />
                                         }
                                         else
                                         {
@@ -528,18 +576,20 @@
                                         </select>
                                     }
                                 }
-                            </div>
+                            </div> 
                         </div>
                     </div>
                 </div>
                 elemNum++;
-            }
+                    d++;
+                }
         }
         @if (ViewBag.Aussenzylinder != null)
         {
             int elemNum = 0;
             foreach (var item in ViewBag.Aussenzylinder)
             {
+                    <input type="hidden" name="Aussen"  value="@item.Id"/>
                 <div id="ExelItem">
                     <div id="productImage">
                         <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
@@ -557,10 +607,15 @@
                                 <option>Aussenzylinder_Rundzylinder</option>
                             </select>
                         </div>
-                        <div id="product_desciptions">
+                        <div >
                             <h5>Zylinder Länge</h5>
+                            <h5>Vifile Tür</h5>
                         </div>
-
+                            <div id="@item.Id" class="SizeProduct">
+                                <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
+                                <input style="border: none;max-width: 30px;" name="TurCount" value="@ViewBag.CounterTur[@elemNum]" id="countSchlusse-@d" />
+                                <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
+                        </div>
                         <div>
                             <h3>Weitere Optionen</h3>
                             <div>
@@ -573,7 +628,7 @@
                                     {
                                         if (@ViewBag.AussenName[i] == @ViewBag.AussenOptionSelected[elemNum])
                                         {
-                                            <input class="form-control" readonly type="text" value="&#10003; @ViewBag.AussenName[i]" style="color: green;margin-top: 5px;" />
+                                                <input class="form-control" name="AussenOption" readonly type="text" value="&#10003; @ViewBag.AussenName[i]" style="color: green;margin-top: 5px;" />
                                         }
                                         else
                                         {
@@ -604,7 +659,7 @@
                                             }
                                         </select>
                                     }
-                                }
+                                } 
 
 
                             </div>
@@ -612,50 +667,65 @@
                     </div>
                 </div>
                 elemNum++;
-            }
+                    d++;
+                }
         }
         <div id="FinisherAnderes">
             <input type="button" class="btn btn-danger" value="ANDERES SYSTEM WÄHLEN" />
         </div>
         <div id="orderCost">
-            <h1 id="cost">@ViewBag.Cost €</h1>
+                <h1 id="cost" name="Sum">@ViewBag.Cost €</h1>
         </div>
        
         <div id="buttonActionFinishBlock">
             <div id="FinisherLeft">
-                <button id="chekProduct" class="btn btn-dark"> <a href="@Url.Action("System_Auswählen", "Konfigurator")">ZURÜCK</a></button>
+                <button id="chekProduct" type="button" class="btn btn-dark"> <a href="@Url.Action("System_Auswählen", "Konfigurator")">ZURÜCK</a></button>
             </div>
             <div id="FinisherRight">
-                <button id="chekProduct" class="btn btn-danger"> <a href="@Url.Action("FinischerProductSelect", "Konfigurator", new {VorhanAussen = @ViewBag.VorhanOrderAussen,HablAussen = @ViewBag.HalbOrderAussen,Aussen = @ViewBag.AussenzylinderItem,Vorhan = @ViewBag.VorhanschlosItem,Halb = @ViewBag.HalbItem, Helb = @ViewBag.HelbItem,userInfo = @ViewBag.UserNameItem,SumCosted = @ViewBag.Cost,DopelItem = @ViewBag.DopelzylinderIdList,HalbOption = @ViewBag.HalbOptionSelected,VorhnaOption = @ViewBag.VorhanOptionSelected,AussenOption = @ViewBag.AussenOptionSelected,DopelOption = @ViewBag.DoppelOptionSelected,KnayfOption = @ViewBag.KnayfOptionSelected,HebelOption = @ViewBag.HebelOptionSelected, DAussen = @ViewBag.DAussen,DIntern=@ViewBag.DInter, Knayf=@ViewBag.KnayfItemId,user = @ViewBag.User,KnayfAusse = @ViewBag.KAussen,KnayfIntern = @ViewBag.KInter})">WEITER</a></button>
+                    <input id="chekProduct" type="submit" value="Weiter" class="btn btn-danger" />
             </div>
         </div>
     </div>
+ 
 </div>
+
+   } 
 <script>
 
     function plus(n) 
     {
         let counter = document.getElementById("countKey-" + n);
-
-        let value = Number(counter.innerText);
-        
+        let value = Number(counter.value);
         value++;
-        let f = n - 1;
-        counter.innerText = value;
+        counter.value = value;
     }
     function minus(n) 
     {
         let counter = document.getElementById("countKey-" + n);
-        let value = Number(counter.innerText);
-
+        let value = Number(counter.value);
         value--;
-        let f = n - 1;
-        counter.innerText = value;
+        counter.value = value;
+    }
+    function CylinderPlus(n) 
+    {
+        let counter = document.getElementById("countSchlusse-" + n);
+        let value = Number(counter.value);
+        value++;
+        counter.value = value;
+    }
+    function CylinderMinus(n) 
+    {
+        let counter = document.getElementById("countSchlusse-" + n);
+        let value = Number(counter.value);
+        value--;
+        counter.value = value;
     }
 
     let AllPrice = document.getElementById("cost");
 
     let NoOptionCost = @Html.Raw(@ViewBag.CostProducted);
+
+    console.log(NoOptionCost);
 
     localStorage.setItem("cost", AllPrice.innerHTML);
     localStorage.sInnen = 0;
@@ -821,19 +891,19 @@
         Iiterations = 0;
         IserchedItem = 0;
     }
-    function selectParamOptions(event, count, idBlock) {
-        // var selectedOptionId = event.target.options[event.target.selectedIndex].id;
-        // OptionCost = OptionPrice[selectedOptionId];
-        // localStorage.options = OptionCost;
-        // let a = Number(localStorage.sInnen);
-        // let b = Number(localStorage.sAussen);
-        // let c = Number(localStorage.options);
+    // function selectParamOptions(event, count, idBlock) {
+    //     // var selectedOptionId = event.target.options[event.target.selectedIndex].id;
+    //     // OptionCost = OptionPrice[selectedOptionId];
+    //     // localStorage.options = OptionCost;
+    //     // let a = Number(localStorage.sInnen);
+    //     // let b = Number(localStorage.sAussen);
+    //     // let c = Number(localStorage.options);
 
-        // let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
-        // AllPrice.innerHTML = String(sum);
+    //     // let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
+    //     // AllPrice.innerHTML = String(sum);
 
-        // OptionCost = 0;
-        // console.log(OptionPrice[selectedOptionId]);
-    }
+    //     // OptionCost = 0;
+    //     // console.log(OptionPrice[selectedOptionId]);
+    // }
 
 </script>

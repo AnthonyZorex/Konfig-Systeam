@@ -44,7 +44,8 @@
                 <div  class="TexCount">
                     <h6>1</h6>
                     <div id="TexInputKey">
-                            <input id="inputS" name="NameKey" onchange="chekedNameArienKey(event.target.value,1)" placeholder="Name des Schlüssels" type="text" />
+                            <input id="inputA" name="FurNameKey" placeholder="Name fur Key" type="text" />
+                            <input id="inputS" name="NameKey"  onchange="chekedNameArienKey(event.target.value,1)" placeholder="Name des Schlüssels" type="text" />
                     </div>
                     <div>
                             <input id="inputCount" name="CountKey" value="1" type="text" />
@@ -81,7 +82,7 @@
                                             </div>
                                    
                                 <div>
-                                        <input id="infoButten" type='button' value="i" />
+                                        <input id="infoButten" type='text' name="CountTur" />
                                 </div>
                                    
                             </div>
@@ -91,7 +92,7 @@
                                         <input id="TypeSelectTurItem" name="Ssl" placeholder="Ssl" />
                                     </div>
                                 <div id="SelectTurItem">
-                                        <select id="TypeSelectTurItem" onchange="selectParam(event.target.value,1)" name="ZylinderId">
+                                   <select id="TypeSelectTurItem" onchange="selectParam(event.target.value,1)" name="ZylinderId">
                                     @foreach (var list in ViewBag.Zylinder_Typ)
                                     {
                                         <option>@list.nameType</option>
@@ -172,6 +173,8 @@
     let h = 0;
   
     let boolArray = [];
+
+  
 
     function bolleanCheked() 
     {
@@ -433,7 +436,6 @@
         function addBlockTur() {
         blockTur++;
 
-        // Создаем новый блок
         let newBlock = document.createElement('div');
         newBlock.id = 'BlockTur-' + blockTur;
         newBlock.innerHTML = `  <div class="TexCountTur">
@@ -446,8 +448,9 @@
                                                             <input id="inputTur"  onchange="chekedNameArientiren(event.target.value,${blockTur})" name="Turname" placeholder="Name der Tür" />
                                     </div>
 
+
                                     <div>
-                                     <input id="infoButten" type='button' value="i"/>
+                                                <input id="infoButten" type='text' name="CountTur" />
                                     </div>
                                 </div>
                                       <details>
@@ -566,6 +569,7 @@
                                     <div  class="TexCount">
                          <h6>${blockCount}</h6>
                             <div id="TexInputKey">
+                                  <input id="inputA" name="FurNameKey" placeholder="Name fur Key" type="text" />
                                 <input id="inputS" name="NameKey" onchange="chekedNameArienKey(event.target.value,${blockCount})" placeholder="Name des Schlüssels" type="text" />
                             </div>
                             <div>

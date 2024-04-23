@@ -36,8 +36,6 @@ builder.Services.AddRazorPages();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
-
-    // Default Password settings.
     options.Password.RequireDigit = true;
     options.Password.RequireLowercase = true;
     options.Password.RequireNonAlphanumeric = true;
@@ -54,29 +52,23 @@ using (var scope = app.Services.CreateScope())
     SendData.Initialize(services);
 }
 
+
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error"); 
-    app.UseHsts();
-}
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseExceptionHandler("/Home/Error");
+//    app.UseHsts();
+//}
 
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseSession();
 app.MapRazorPages();
 app.UseAuthentication();
-
 app.UseAuthorization();
-
-
-//app.MapControllerRoute(
-//    name: "default",
-//    pattern: "{controller=Konfigurator}/{action=IndexKonfigurator}/{id?}");
-
-
+app.UseCors();
 
 app.UseEndpoints(endpoints =>
 {

@@ -101,8 +101,11 @@
                                                     <h6>Außenlänge (B):@ViewBag.DoppelIntern[DoppelCounter] </h6>
                                                 }
                                             }
-
-                                            <h6>Mit: @ViewBag.DoppelOption[DoppelCounter]</h6>
+                                            if (ViewBag.DoppelOption.Count > 0)
+                                            {
+                                                <h6>Mit: @ViewBag.DoppelOption[DoppelCounter]</h6>
+                                            }
+                                           
 
 
                                             DoppelCounter++;
@@ -132,11 +135,15 @@
                                                         <h6>Außenlänge (B):@ViewBag.KnayflIntern[KnayfCounter] </h6>
                                                     }
                                                 }
-                                                @foreach (var listOption in ViewBag.KnayfOptionSelected)
+                                                if (ViewBag.KnayfOptionSelected.Count>0)
                                                 {
-                                                    <h6>Mit: @listOption</h6>
-                                                }
+                                                    @foreach (var listOption in ViewBag.KnayfOptionSelected)
+                                                    {
+                                                        <h6>Mit: @listOption</h6>
+                                                    }
 
+                                                }
+                                              
                                                 KnayfCounter++;
                                                 DoorCount++;
                                                 DorItem++;
@@ -160,11 +167,14 @@
                                                 {
                                                     <h6>Außenlänge (A):@ViewBag.HalbAussen[HablCounter]</h6>
                                                 }
-
-                                                @foreach (var listOption in ViewBag.HalbOptionSelected)
+                                                if (ViewBag.HalbOptionSelected.Count > 0)
                                                 {
-                                                    <h6>Mit: @listOption</h6>
+                                                    @foreach (var listOption in ViewBag.HalbOptionSelected)
+                                                    {
+                                                        <h6>Mit: @listOption</h6>
+                                                    }
                                                 }
+                                               
 
                                                 HablCounter++;
                                                 DoorCount++;
@@ -180,15 +190,20 @@
                                                 </h5>
                                                 <h5 id="counterTur"><strong> @ViewBag.Tur[DorItem]</strong></h5>
                                             </div>
+
                                             @if (ViewBag.HelbName.Count > 0)
                                             {
                                                 <h6><strong> @ViewBag.HelbName[HebelCounter]</strong></h6>
                                                 <br />
-                                                @foreach (var listOption in ViewBag.HebelOptionSelected)
+                                                if (ViewBag.HebelOptionSelected.Count>0)
                                                 {
-                                                    <h6>Mit: @listOption</h6>
+                                                    @foreach (var listOption in ViewBag.HebelOptionSelected)
+                                                    {
+                                                        <h6>Mit: @listOption</h6>
+                                                    }
+                                                    
                                                 }
-
+                                          
                                                 HebelCounter++;
                                                 DoorCount++;
                                                 DorItem++;
@@ -211,11 +226,14 @@
                                                 {
                                                     <h6>Außenlänge (A): @ViewBag.VorhanAussen[VorhanCounter]</h6>
                                                 }
-                                                @foreach (var listOption in ViewBag.VorhanOptionSelected)
+                                                if (ViewBag.VorhanOptionSelected.Count>0)
                                                 {
-                                                    <h6>Mit: @listOption</h6>
+                                                    @foreach (var listOption in ViewBag.VorhanOptionSelected)
+                                                    {
+                                                        <h6>Mit: @listOption</h6>
+                                                    }
                                                 }
-
+                                               
                                                 VorhanCounter++;
                                                 DoorCount++;
                                                 DorItem++;
@@ -233,9 +251,13 @@
                                             {
                                                 <h6><strong> @ViewBag.AussenName[AussenCounter]</strong></h6>
                                                 <br />
-                                                foreach (var listOption in ViewBag.AussenOptionSelected)
+
+                                                if (ViewBag.AussenOptionSelected.Count>0)
                                                 {
-                                                    <h6>Mit: @listOption</h6>
+                                                    foreach (var listOption in ViewBag.AussenOptionSelected)
+                                                    {
+                                                        <h6>Mit: @listOption</h6>
+                                                    }
                                                 }
 
                                                 AussenCounter++;
@@ -303,8 +325,7 @@
 
             @if (User.IsInRole("client") || User.IsInRole("admin"))
             {
-                <a class="btn btn-danger"
-                   href="@Url.Action("SaveUserOrders", "Konfigurator", new {HalbOption = @ViewBag.HalbOptionSelected,VorhnaOption = @ViewBag.VorhanOptionSelected,AussenOption = @ViewBag.AussenOptionSelected,DoppelOption = @ViewBag.DoppelOption,KnayfOption = @ViewBag.KnayfOptionSelected,HebelOption = @ViewBag.HebelOptionSelected,countKey = @ViewBag.CountKey,key = @ViewBag.NameKey,keyIsOpen = @ViewBag.IsOpen,cost = ViewBag.SumCosted,TurName = @ViewBag.Tur,userInfo = @ViewBag.UserNameItem,nameKey = @ViewBag.Key, DopelName = @ViewBag.DopelZylinder,DoppelAussen=@ViewBag.DoppelAussen,DoppelIntern=@ViewBag.DoppelIntern,KnayfName = @ViewBag.KnayfName,KnayfAussen = @ViewBag.KnayfAussen,KnayfIntern = @ViewBag.KnayflIntern,HalbName = @ViewBag.HalbName,HalbAussen = @ViewBag.HalbAussen,HelbName = @ViewBag.HelbName, VorhanName=@ViewBag.VorhanName, VorhanAussen = @ViewBag.VorhanAussen, AussenName = @ViewBag.AussenName})">
+                <a class="btn btn-danger" href="@Url.Action("SaveUserOrders", "Konfigurator", new {HalbOption = @ViewBag.HalbOptionSelected,VorhnaOption = @ViewBag.VorhanOptionSelected,AussenOption = @ViewBag.AussenOptionSelected,DoppelOption = @ViewBag.DoppelOption,KnayfOption = @ViewBag.KnayfOptionSelected,HebelOption = @ViewBag.HebelOptionSelected,countKey = @ViewBag.CountKey,key = @ViewBag.NameKey,keyIsOpen = @ViewBag.IsOpen,cost = ViewBag.SumCosted,TurName = @ViewBag.Tur,userInfo = @ViewBag.UserNameItem,nameKey = @ViewBag.Key, DopelName = @ViewBag.DopelZylinder,DoppelAussen=@ViewBag.DoppelAussen,DoppelIntern=@ViewBag.DoppelIntern,KnayfName = @ViewBag.KnayfName,KnayfAussen = @ViewBag.KnayfAussen,KnayfIntern = @ViewBag.KnayflIntern,HalbName = @ViewBag.HalbName,HalbAussen = @ViewBag.HalbAussen,HelbName = @ViewBag.HelbName, VorhanName=@ViewBag.VorhanName, VorhanAussen = @ViewBag.VorhanAussen, AussenName = @ViewBag.AussenName})">
                     IN DEN WARENKORB
                 </a>
 

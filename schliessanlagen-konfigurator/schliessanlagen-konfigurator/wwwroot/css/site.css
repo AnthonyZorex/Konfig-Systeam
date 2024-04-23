@@ -435,16 +435,21 @@ a {
 #TexInputKey {
     margin-top: 70px;
     margin-left: -100px;
-    height: 140px;
+    height: 350px;
 }
 #inputS {
+    margin-top: 200px;
+    padding: 4px;
+    transform: rotate(270deg);
+}
+#inputA {
     margin-top: 30px;
-    padding: 4px ;
+    padding: 4px;
     transform: rotate(270deg);
 }
 #inputCount {
     text-align: center;
-    margin-top: 25px;
+    margin-top: 55px;
     max-width: 30px;
 }
 .TexCount {
@@ -477,7 +482,7 @@ a {
     margin-top: 5px;
 }
 #ItemTur {
-    gap: 10px;
+    gap: 5px;
     display: flex;
 }
 .TexCountTur {
@@ -517,7 +522,7 @@ a {
     margin-top: 10px
 }
 #infoButten {
-    width: 20px;
+    width: 40px;
     padding: 5px;
 }
 #TypeSelectTurItem {

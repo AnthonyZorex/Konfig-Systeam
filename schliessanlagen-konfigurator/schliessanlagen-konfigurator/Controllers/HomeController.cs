@@ -15,7 +15,9 @@ using schliessanlagen_konfigurator.Models.ProfilDopelZylinder.ValueOptions;
 using schliessanlagen_konfigurator.Models.Users;
 using schliessanlagen_konfigurator.Models.Vorhan;
 using System.Diagnostics;
-
+using System;
+using System.IO;
+using OfficeOpenXml;
 
 
 namespace schliessanlagen_konfigurator.Controllers
@@ -1562,7 +1564,42 @@ namespace schliessanlagen_konfigurator.Controllers
         }
         #endregion
 
+        public ActionResult AllOrders()
+        {
+            string wwwRootPath = Environment.WebRootPath;
+            try
+            {
+                // Получаем все файлы в указанной директории
+                string path = Path.Combine(wwwRootPath + "/Orders/");
 
+                string[] files = Directory.GetFiles(path);
+
+                if (System.IO.File.Exists(files[0]))
+                {
+                    // Создаем объект ExcelPackage для чтения файла
+                    using (var excelPackage = new ExcelPackage(new FileInfo(files[0])))
+                    {
+                        // Получаем первый лист в книге
+                        ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets[0];
+
+                        // Получаем данные из ячеек листа и передаем их в представление
+                        ViewBag.ExcelData = worksheet.Cells;
+                        ViewBag.FileName = files[0];
+
+                        return View();
+                    }
+                }
+               
+
+                return View(files);
+            }
+            catch (Exception e)
+            {
+                // Обработка ошибок, если директория не существует или доступ к ней запрещен
+                ViewBag.ErrorMessage = $"An error occurred: {e.Message}";
+                return View();
+            }
+        }
         public ActionResult OrderSetup()
         {
 

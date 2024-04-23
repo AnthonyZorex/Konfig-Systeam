@@ -12,6 +12,7 @@ namespace schliessanlagen_konfigurator.Models
         public float? innen { get; set; }
         public int? Count { get; set; }
         public string? Artikelnummer { get; set; }
+        public string Ssl {  get; set; }
         public string? Options { get; set; }
         public DateTime? Created { get; set; }
         public ICollection<isOpen_Order> isOpen_Order { get; set; }

@@ -1,0 +1,22 @@
+﻿@model string[]
+
+<h2>Excel Content: @ViewBag.FileName</h2>
+
+@if (ViewBag.ExcelData != null)
+{
+    <table>
+        @foreach (var cell in ViewBag.ExcelData)
+        {
+            <tr>
+                @foreach (var item in cell)
+                {
+                    <td>@item.Text</td>
+                }
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p>Excel file not found.</p>
+}

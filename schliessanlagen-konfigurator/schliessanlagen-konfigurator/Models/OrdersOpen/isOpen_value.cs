@@ -7,7 +7,7 @@
         public isOpen_Order isOpen_Order { get; set; }
         public int CountKey { get; set; }
         public string? NameKey { get; set; }
-
+        public string? ForNameKey {  get; set; }
         public ICollection<KeyValue> KeyValue { get; set; }
         public isOpen_value()
         {
