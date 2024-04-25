@@ -60,8 +60,11 @@
 
                         <div id="AussenProfilDopel">
                             <input type="number" placeholder="Size" class="form-control" step="0.01" name="aussen" />
+                            
                         </div>
-
+                        <div id="costedSize">
+                            <input type="number" placeholder="CostSize" class="form-control" step="0.01" name="costSize" />
+                        </div>
                     </div>
                     <div id="productOptions">
                     </div>
@@ -128,6 +131,7 @@
         let plusAussen_Innen = document.getElementById('addAussen_Innen');
 
         let docAussen = document.getElementById('AussenProfilDopel');
+        let docCosted = document.getElementById('costedSize');
 
         let sum = document.querySelectorAll('#cost');
 
@@ -143,7 +147,8 @@
 
         let removeAussen_Innen = document.getElementById('addAussen_Innen_remove');
 
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function () 
+        {
             const container = document.getElementById('productOptions');
             const createBlockBtn = document.getElementById('createBlockBtn');
             const addInputBtn = document.getElementById('addInputBtn');
@@ -156,7 +161,8 @@
                 container.appendChild(block);
             });
 
-            addInputBtn.addEventListener('click', function () {
+            addInputBtn.addEventListener('click', function () 
+            {
                 const blocks = document.querySelectorAll('.input-block');
                 const lastBlock = blocks[blocks.length - 1];
 
@@ -247,22 +253,31 @@
 
 
             plusAussen_Innen.addEventListener('click', () => {
+               
                 let d = document.createElement('input');
                 d.setAttribute('name', 'aussen');
                 d.setAttribute('placeholder', 'Size');
                 d.setAttribute('class', 'form-control');
                 d.id = 'aus';
 
+                let cost = document.createElement('input');
+                cost.setAttribute('name', 'costSize');
+                cost.setAttribute('placeholder', 'CostSize');
+                cost.setAttribute('class', 'form-control');
+                cost.id = 'costSize';
+
                 docAussen.append(d);
+                docCosted.append(cost);
 
             });
-            removeAussen_Innen.addEventListener('click', () => {
+            removeAussen_Innen.addEventListener('click', () => 
+            {
                 let d = document.querySelectorAll('#aus');
-                let x = document.querySelectorAll('#inter');
+                let x = document.querySelectorAll('#costSize');
 
 
                 docAussen.removeChild(d[d.length - 1]);
-                docInnen.removeChild(x[x.length - 1]);
+                docCosted.removeChild(x[x.length - 1]);
             });
 
         })

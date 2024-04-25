@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using schliessanlagen_konfigurator.Data;
 
@@ -11,9 +12,11 @@ using schliessanlagen_konfigurator.Data;
 namespace schliessanlagen_konfigurator.Migrations
 {
     [DbContext(typeof(schliessanlagen_konfiguratorContext))]
-    partial class schliessanlagen_konfiguratorContextModelSnapshot : ModelSnapshot
+    [Migration("20240424111016_SizeCostAddf")]
+    partial class SizeCostAddf
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

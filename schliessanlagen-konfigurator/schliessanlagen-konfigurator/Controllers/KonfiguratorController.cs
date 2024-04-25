@@ -23,6 +23,7 @@ using Newtonsoft.Json.Linq;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Cors;
+using System.Security.Policy;
 namespace schliessanlagen_konfigurator.Controllers
 {
     [EnableCors("*")]
@@ -38,7 +39,7 @@ namespace schliessanlagen_konfigurator.Controllers
             Environment = _environment;
             _contextAccessor = httpContextAccessor;
         }
-
+ 
         public ActionResult IndexKonfigurator(string Status, string Auser)
         {
             ViewBag.Zylinder_Typ = db.Schliessanlagen.ToList();
@@ -1777,6 +1778,8 @@ namespace schliessanlagen_konfigurator.Controllers
             int vorhanC = 0;
             int aussenC = 0;
 
+            float SumcostedDopSylinder = 0;
+
             for (var i = 0; i < key.Count(); i++)
             {
                 if (OrderList.Count() > 0)
@@ -1799,12 +1802,12 @@ namespace schliessanlagen_konfigurator.Controllers
                                 description = OrderList.Last().description,
                                 companyName = OrderList.Last().companyName,
                                 NameSystem = OrderList.Last().NameSystem,
-                                Cost = OrderList.Last().Cost* counter[doppel].Value,
+                                Cost = OrderList.Last().Cost,
                                 ImageFile = OrderList.Last().ImageFile,
                                 ImageName = OrderList.Last().ImageName,
                                 schliessanlagenId = OrderList.Last().schliessanlagenId
                             };
-
+                            SumcostedDopSylinder += (OrderList.Last().Cost * counter[doppel].Value) - OrderList.Last().Cost;
                             DopelOrderlist.Add(dopel);
                         }
                         else
@@ -1833,12 +1836,12 @@ namespace schliessanlagen_konfigurator.Controllers
                                 description = KnaufZelinder.Last().description,
                                 companyName = KnaufZelinder.Last().companyName,
                                 NameSystem = KnaufZelinder.Last().NameSystem,
-                                Cost = KnaufZelinder.Last().Cost * counter[knayfC].Value,
+                                Cost = KnaufZelinder.Last().Cost,
                                 ImageFile = KnaufZelinder.Last().ImageFile,
                                 ImageName = KnaufZelinder.Last().ImageName,
                                 schliessanlagenId = KnaufZelinder.Last().schliessanlagenId
                             };
-
+                            SumcostedDopSylinder += (KnaufZelinder.Last().Cost * counter[knayfC].Value)- KnaufZelinder.Last().Cost;
                             KnayfOrderlist.Add(knayf);
                         }
                         else
@@ -1866,12 +1869,12 @@ namespace schliessanlagen_konfigurator.Controllers
                                 description = SelectHalbzylinder.Last().description,
                                 companyName = SelectHalbzylinder.Last().companyName,
                                 NameSystem = SelectHalbzylinder.Last().NameSystem,
-                                Cost = SelectHalbzylinder.Last().Cost * counter[halbC].Value,
+                                Cost = SelectHalbzylinder.Last().Cost,
                                 ImageFile = SelectHalbzylinder.Last().ImageFile,
                                 ImageName = SelectHalbzylinder.Last().ImageName,
                                 schliessanlagenId = SelectHalbzylinder.Last().schliessanlagenId
                             };
-
+                            SumcostedDopSylinder += (SelectHalbzylinder.Last().Cost * counter[halbC].Value)- SelectHalbzylinder.Last().Cost;
                             Halbzylinder.Add(HalbNew);
                         }
                         else
@@ -1900,12 +1903,12 @@ namespace schliessanlagen_konfigurator.Controllers
                                 description = HebelZylinder.Last().description,
                                 companyName = HebelZylinder.Last().companyName,
                                 NameSystem = HebelZylinder.Last().NameSystem,
-                                Cost = HebelZylinder.Last().Cost * counter[hebelC].Value,
+                                Cost = HebelZylinder.Last().Cost,
                                 ImageFile = HebelZylinder.Last().ImageFile,
                                 ImageName = HebelZylinder.Last().ImageName,
                                 schliessanlagenId = HebelZylinder.Last().schliessanlagenId
                             };
-
+                            SumcostedDopSylinder += (HebelZylinder.Last().Cost * counter[hebelC].Value) - HebelZylinder.Last().Cost;
                             HelbZ.Add(HebelNew);
                         }
                         else
@@ -1926,7 +1929,6 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         if (counter[vorhanC].Value > 1)
                         {
-
                             var vorhan = new Vorhangschloss
                             {
                                 Id = SelectVorhanschlos.Last().Id,
@@ -1934,12 +1936,13 @@ namespace schliessanlagen_konfigurator.Controllers
                                 description = SelectVorhanschlos.Last().description,
                                 companyName = SelectVorhanschlos.Last().companyName,
                                 NameSystem = SelectVorhanschlos.Last().NameSystem,
-                                Cost = SelectVorhanschlos.Last().Cost * counter[vorhanC].Value,
+                                Cost = SelectVorhanschlos.Last().Cost,
                                 ImageFile = SelectVorhanschlos.Last().ImageFile,
                                 ImageName = SelectVorhanschlos.Last().ImageName,
                                 schliessanlagenId = SelectVorhanschlos.Last().schliessanlagenId
                             };
-
+                            float sum = SelectVorhanschlos.Last().Cost * counter[vorhanC].Value;
+                            SumcostedDopSylinder += sum - SelectVorhanschlos.Last().Cost;
                             Vorhanschlos.Add(vorhan);
                         }
                         else
@@ -1961,7 +1964,6 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         if (counter[aussenC].Value > 1)
                         {
-
                             var aussen = new Aussenzylinder_Rundzylinder
                             {
                                 Id = SelectAussenzylinder.Last().Id,
@@ -1969,12 +1971,12 @@ namespace schliessanlagen_konfigurator.Controllers
                                 description = SelectAussenzylinder.Last().description,
                                 companyName = SelectAussenzylinder.Last().companyName,
                                 NameSystem = SelectAussenzylinder.Last().NameSystem,
-                                Cost = SelectAussenzylinder.Last().Cost * counter[aussenC].Value,
+                                Cost = SelectAussenzylinder.Last().Cost,
                                 ImageFile = SelectAussenzylinder.Last().ImageFile,
                                 ImageName = SelectAussenzylinder.Last().ImageName,
                                 schliessanlagenId = SelectAussenzylinder.Last().schliessanlagenId
                             };
-
+                            SumcostedDopSylinder += (SelectAussenzylinder.Last().Cost * counter[aussenC].Value)- SelectAussenzylinder.Last().Cost;
                             Aussenzylinder.Add(aussen);
                         }
                         else
@@ -2183,68 +2185,15 @@ namespace schliessanlagen_konfigurator.Controllers
                 {
                     ViewBag.Vorhangschloss = order.aussen;
 
-                    var NameSysteam = SelectVorhanschlos.Select(x => x.NameSystem).ToList();
-                    foreach (var list in NameSysteam)
-                    {
-                        if (list == "Vitess.4000")
-                        {
-                            if (order.aussen == 24)
-                            {
-                                VorhangschlossCost = 0;
-                            }
-                            if (order.aussen == 48)
-                            {
-                                VorhangschlossCost = 7;
-                            }
-                            if (order.aussen == 64)
-                            {
-                                VorhangschlossCost = 30;
-                            }
-                            if (order.aussen == 80)
-                            {
-                                VorhangschlossCost = 45;
-                            }
-                        }
-                        if (list == "Bravus.2000")
-                        {
-                            if (order.aussen == 24)
-                            {
-                                VorhangschlossCost = 0;
-                            }
-                            if (order.aussen == 48)
-                            {
-                                VorhangschlossCost = 7;
-                            }
-                            if (order.aussen == 64)
-                            {
-                                VorhangschlossCost = 30;
-                            }
-                            if (order.aussen == 80)
-                            {
-                                VorhangschlossCost = 44;
-                            }
-                        }
-                        if (list == "Zolit.1000")
-                        {
-                            if (order.aussen == 24)
-                            {
-                                VorhangschlossCost = 0;
-                            }
-                            if (order.aussen == 48)
-                            {
-                                VorhangschlossCost = 26.5f;
-                            }
-                            if (order.aussen == 64)
-                            {
-                                VorhangschlossCost = 26.5f;
-                            }
-                            if (order.aussen == 80)
-                            {
-                                VorhangschlossCost = 44.7f;
-                            }
-                        }
-                    }
+                    var Size = db.Size.Where(x => x.VorhangschlossId == Vorhanschlos.First().Id).ToList();
 
+                    ViewBag.VorhanschlosSizeJson = JsonConvert.SerializeObject(Size.Select(x=>x.sizeVorhangschloss).ToList());
+
+                    ViewBag.VorhanschlosSizeCostedJson = JsonConvert.SerializeObject(Size.Select(x => x.Cost).ToList());
+
+                    var costSize = Size.Where(x => x.sizeVorhangschloss == order.aussen).Select(x => x.Cost).ToList();
+
+                    VorhangschlossCost = costSize.First();
                 }
 
 
@@ -2311,7 +2260,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var SumCost = DopelOrderlist.Select(x => x.Cost).Sum() + KnaufZelinder.Select(x => x.Cost).Sum() + Halbzylinder.Select(x => x.Cost).Sum() +
                 HelbZ.Select(x => x.Cost).Sum() + Vorhanschlos.Select(x => x.Cost).Sum() + Aussenzylinder.Select(x => x.Cost).Sum() + DoppelAussenCost
-                + KhaufAussenCost + halbAussenCost + VorhangschlossCost;
+                + KhaufAussenCost + halbAussenCost + VorhangschlossCost + SumcostedDopSylinder;
 
             var SumCostProduct = DopelOrderlist.Select(x => x.Cost).Sum() + KnaufZelinder.Select(x => x.Cost).Sum() + Halbzylinder.Select(x => x.Cost).Sum() +
                 HelbZ.Select(x => x.Cost).Sum() + Vorhanschlos.Select(x => x.Cost).Sum() + Aussenzylinder.Select(x => x.Cost).Sum();
@@ -2322,8 +2271,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
             double CostedProduct = Math.Round(SumCostProduct, precision);
 
-
             ViewBag.CostProducted = JsonConvert.SerializeObject(CostedProduct);
+
+
             ViewBag.Cost = Costed;
 
             return View("Finisher", key.Last());
@@ -2354,7 +2304,7 @@ namespace schliessanlagen_konfigurator.Controllers
             return Redirect("/Identity/Account/Manage/PagePersonalOrders");
         }
 
-        [HttpPost]
+        //[HttpPost]
         public async Task<IActionResult> SaveUserOrders(List<string> nameKey, List<string> TurName, List<string> DopelName, List<float> DoppelAussen, List<float> DoppelIntern
             , List<string> DoppelOption, List<string> KnayfOption, List<string> HalbOption, List<string> HebelOption, List<string> VorhnaOption, List<string> AussenOption, List<string> KnayfName, List<float> KnayfAussen, List<float> KnayfIntern, List<string> HalbName, List<float> HalbAussen, List<string> HelbName,
            List<string> VorhanName, List<float> VorhanAussen, List<string> AussenName, float cost, List<string> key, List<bool> keyIsOpen, List<int> countKey)
@@ -2488,8 +2438,12 @@ namespace schliessanlagen_konfigurator.Controllers
                             Name = DopelName[DoppelCounter],
                             Aussen = DoppelAussen[DoppelCounter],
                             Intern = DoppelIntern[DoppelCounter],
-                            Option = Option
                         };
+
+                        if (Option != "")
+                        {
+                            UserOrderProduct.Option = Option;
+                        }
 
                         db.ProductSysteam.Add(UserOrderProduct);
                         db.SaveChanges();
@@ -2518,8 +2472,11 @@ namespace schliessanlagen_konfigurator.Controllers
                             Name = KnayfName[KnayfCounter],
                             Aussen = KnayfAussen[KnayfCounter],
                             Intern = KnayfIntern[KnayfCounter],
-                            Option = Option
                         };
+                        if (Option!="")
+                        {
+                            UserOrderProduct.Option = Option;
+                        }
 
                         db.ProductSysteam.Add(UserOrderProduct);
                         db.SaveChanges();
@@ -2550,9 +2507,11 @@ namespace schliessanlagen_konfigurator.Controllers
                             UserOrdersShopId = UserOrder.Id,
                             Name = HalbName[HablCounter],
                             Aussen = HalbAussen[HablCounter],
-                            Option = Option
                         };
-
+                        if (Option != "")
+                        {
+                            UserOrderProduct.Option = Option;
+                        }
                         db.ProductSysteam.Add(UserOrderProduct);
                         db.SaveChanges();
 
@@ -2581,8 +2540,12 @@ namespace schliessanlagen_konfigurator.Controllers
                         {
                             UserOrdersShopId = UserOrder.Id,
                             Name = HelbName[HebelCounter],
-                            Option = Option
                         };
+
+                        if (Option != "")
+                        {
+                            UserOrderProduct.Option = Option;
+                        }
 
                         db.ProductSysteam.Add(UserOrderProduct);
                         db.SaveChanges();
@@ -2610,8 +2573,11 @@ namespace schliessanlagen_konfigurator.Controllers
                             UserOrdersShopId = UserOrder.Id,
                             Name = VorhanName[VorhanCounter],
                             Aussen = VorhanAussen[VorhanCounter],
-                            Option = Option
                         };
+                        if (Option != "")
+                        {
+                            UserOrderProduct.Option = Option;
+                        }
 
                         db.ProductSysteam.Add(UserOrderProduct);
                         db.SaveChanges();
@@ -2634,12 +2600,17 @@ namespace schliessanlagen_konfigurator.Controllers
                         {
                             Option = "";
                         }
+
                         var UserOrderProduct = new Models.Users.ProductSysteam
                         {
                             UserOrdersShopId = UserOrder.Id,
                             Name = AussenName[AussenCounter],
-                            Option = Option
                         };
+                        if (Option != "")
+                        {
+                            UserOrderProduct.Option = Option;
+                        }
+
                         worksheet.Cells[$"J{Rowcheked+ i}"].Value = Option;
 
                         db.ProductSysteam.Add(UserOrderProduct);

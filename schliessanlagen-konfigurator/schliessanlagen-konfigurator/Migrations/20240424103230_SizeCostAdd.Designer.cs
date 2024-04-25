@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using schliessanlagen_konfigurator.Data;
 
@@ -11,9 +12,11 @@ using schliessanlagen_konfigurator.Data;
 namespace schliessanlagen_konfigurator.Migrations
 {
     [DbContext(typeof(schliessanlagen_konfiguratorContext))]
-    partial class schliessanlagen_konfiguratorContextModelSnapshot : ModelSnapshot
+    [Migration("20240424103230_SizeCostAdd")]
+    partial class SizeCostAdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,13 +54,13 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "270741b6-a565-4072-8b0f-d2a116894efc",
+                            Id = "824aadd8-0166-46d1-8fe7-7f840f3d6cbd",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "b40c0183-698b-40d1-97e3-aa1cab6bb0f9",
+                            Id = "14aef858-ce50-41d5-9354-4f12769c795f",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -1115,7 +1118,7 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<float>("Cost")
+                    b.Property<float?>("Cost")
                         .HasColumnType("real");
 
                     b.Property<int>("VorhangschlossId")

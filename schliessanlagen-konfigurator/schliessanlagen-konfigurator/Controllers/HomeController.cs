@@ -508,7 +508,7 @@ namespace schliessanlagen_konfigurator.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create_Vorhangschloss(Vorhangschloss Profil_Doppelzylinder,
+        public async Task<IActionResult> Create_Vorhangschloss(Vorhangschloss Profil_Doppelzylinder,List<float> costSize,
         List<string> Options, List<string> NGFDescriptions, IFormFile postedFile, List<string> valueNGF, List<float> costNGF, List<float> aussen, List<int> input_counter)
         {
 
@@ -541,6 +541,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 {
                     VorhangschlossId = s.Last(),
                     sizeVorhangschloss = aussen[i],
+                    Cost = costSize[i]
                 };
                 db.Size.Add(ausse_innen);
                 db.SaveChanges();

@@ -101,9 +101,9 @@
                             <h5>Vifile Tür</h5>
                         </div>
 
-                        <div id="@item.Id" class="SizeProduct">
+                        <div id="Size-@d" class="SizeProduct">
                             <div>
-                                    <select class="form-select" name="DAussen" id="Aussen" onchange="selectParamAussen(event.target.value,@item.Id,@ViewBag.DAussen[elemNum])">
+                                    <select class="form-select" name="DAussen" id="Aussen" onchange="selectParamAussen(event.target.value,@d)">
                                     <option style="display:none" selected>@ViewBag.DAussen[elemNum]</option>
                                     <option>Außenlänge (A)</option>
                                     @for (int i = 0; i < ViewBag.Dopelzylinderaussen.Count; i++)
@@ -113,7 +113,7 @@
                                 </select>
                             </div>
                             <div>
-                                    <select class="form-select" name="DIntern" id="Intern" onchange="selectParamIntern(event.target.value,@item.Id,@ViewBag.DInter[elemNum])">
+                                    <select class="fs" name="DIntern" id="Intern" onchange="selectParamIntern(event.target.value,@d)">
                                     <option style="display:none" selected>@ViewBag.DInter[elemNum]</option>
                                     <option>Innenlänge (B)</option>
                                     @for (int i = 0; i < ViewBag.DopelzylinderIntern.Count; i++)
@@ -123,9 +123,9 @@
                                 </select>
                             </div>
                             <div style="gap: 10px;display: flex;margin-left: 50px;">
-                                    <button type="button"  onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
+                                    <button type="button"  onclick="CylinderMinus(@d,@item.Cost)" class="btn btn-success">-</button>
                                     <input style="border: none;max-width: 30px;" id="countSchlusse-@d" type="text" readonly name="TurCount" value="@ViewBag.CounterTur[@elemNum]" />
-                                    <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
+                                    <button type="button" onclick="CylinderPlus(@d,@item.Cost)" class="btn btn-success">+</button>
                             </div>
                         </div>
 
@@ -216,9 +216,9 @@
                             <h5>Vifile Tür</h5>
                         </div>
 
-                        <div id="@item.Id" class="SizeProduct">
+                            <div id="Size-@d" class="SizeProduct">
                             <div>
-                                <select class="form-select" name="KnayfAusse" id="Aussen" onchange="selectParamAussen(event.target.value,@item.Id,@ViewBag.KAussen[elemNum])">
+                                    <select class="form-select" name="KnayfAusse" id="Aussen" onchange="selectParamAussen(event.target.value,@d,@ViewBag.KAussen[elemNum])">
                                     <option style="display:none" selected>@ViewBag.KAussen[elemNum]</option>
                                     <option>Außenlänge (A)</option>
                                     @for (int i = 0; i < ViewBag.KnayfZelinderAussen.Count; i++)
@@ -228,19 +228,19 @@
                                 </select>
                             </div>
                             <div>
-                                    <select class="form-select" name="Intern" id="KnayfIntern" onchange="selectParamIntern(event.target.value,@item.Id,@ViewBag.KInter[elemNum])">
+                                    <select class="form-select" name="Intern" id="Intern" onchange="selectParamIntern(event.target.value,@d,@ViewBag.KInter[elemNum])">
                                     <option style="display:none" selected>@ViewBag.KInter[elemNum]</option>
                                     <option>Innenlänge (B)</option>
                                     @for (int i = 0; i < ViewBag.KnayfZelinderIntern.Count; i++)
                                     {
-                                        <option id="OptionI">@ViewBag.KnayfZelinderIntern[i]</option>
+                                            <option id="OptionI">@ViewBag.KnayfZelinderIntern[i]</option>
                                     }
                                 </select>
                             </div>
                             <div style="gap: 10px;display: flex;margin-left: 50px;">
-                                    <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
+                                    <button type="button" onclick="CylinderMinus(@d,@item.Cost)" class="btn btn-success">-</button>
                                     <input style="border: none;max-width: 30px;" id="countSchlusse-@d" value="@ViewBag.CounterTurKnayf[@elemNum]" name="TurCount" />
-                                    <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
+                                    <button type="button" onclick="CylinderPlus(@d,@item.Cost)" class="btn btn-success">+</button>
                             </div>
                         </div>        
 
@@ -326,22 +326,22 @@
                             <h5>Zylinder Länge</h5>
                             <h5>Vifile Tür</h5>
                         </div>
-                            <div id="@item.Id" class="SizeProduct">
+                            <div id="Size-@d" class="SizeProduct">
                                
                             <div>
-                                    <select name="HablAussen" id="Aussen" class="form-select" onchange="selectParamAussen(event.target.value,@item.Id,@ViewBag.HalbOrderAussen[elemNum])">
+                                    <select name="HablAussen" id="Aussen" class="form-select" onchange="selectParamAussen(event.target.value,@d,@ViewBag.HalbOrderAussen[elemNum])">
                                     <option style="display:none" selected>@ViewBag.HalbOrderAussen[elemNum]</option>
                                     <option>Außenlänge (A)</option>
                                     @for (int i = 0; i < ViewBag.AussenHalb.Count; i++)
                                     {
-                                        <option>@ViewBag.AussenHalb[i]</option>
+                                            <option id="OptionA">@ViewBag.AussenHalb[i]</option>
                                     }
                                 </select>
                             </div>
                             <div style="gap: 10px;display: flex;margin-left: 50px;">
-                                    <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
+                                    <button type="button" onclick="CylinderMinus(@d,@item.Cost)" class="btn btn-success">-</button>
                                     <input style="border: none;max-width: 30px;" value="@ViewBag.CounterTurHalb[@elemNum]" name="TurCount" id="countSchlusse-@d" />
-                                    <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
+                                    <button type="button" onclick="CylinderPlus(@d,@item.Cost)" class="btn btn-success">+</button>
                             </div>
                         </div>
                         <div>
@@ -424,11 +424,11 @@
                             <h5>Zylinder Länge</h5>
                             <h5>Vifile Tür</h5>
                         </div>
-                            <div id="@item.Id" class="SizeProduct">
+                            <div id="@d" class="SizeProduct">
                             <div style="gap: 10px;display: flex;margin-left: 50px;">
-                                    <button onclick="CylinderMinus(@d)" type="button" class="btn btn-success">-</button>
+                                    <button onclick="CylinderMinus(@d,@item.Cost)" type="button" class="btn btn-success">-</button>
                                     <input style="border: none;max-width: 30px;" name="TurCount" value="@ViewBag.CounterTurHebel[@elemNum]" id="countSchlusse-@d" />
-                                    <button onclick="CylinderPlus(@d)" type="button" class="btn btn-success">+</button>
+                                    <button onclick="CylinderPlus(@d,@item.Cost)" type="button" class="btn btn-success">+</button>
                             </div>
                         </div>
                         <div>
@@ -511,21 +511,21 @@
                             <h5>Zylinder Länge</h5>
                             <h5>Vifile Tür</h5>
                         </div>
-                            <div id="@item.Id" class="SizeProduct">
+                            <div id="Size-@d" class="SizeProduct">
                             <div>
-                                    <select class="form-select" name="VorhanAussen" id="Aussen" onchange="selectParamAussen(event.target.value,@item.Id)">
+                                    <select class="form-select" name="VorhanAussen" id="Aussen" onchange="VorhanSchlus(event.target.value,@d,event.target.dataset.oldValue)">
                                     <option style="display:none" selected>@ViewBag.VorhanOrderAussen[elemNum]</option>
                                     <option>Außenlänge (A)</option>
                                     @for (int i = 0; i < ViewBag.VorhanSize.Count; i++)
                                     {
-                                        <option>@ViewBag.VorhanSize[i]</option>
+                                      <option id="OptionA">@ViewBag.VorhanSize[i]</option>
                                     }
                                 </select>
                             </div>
                             <div style="gap: 10px;display: flex;margin-left: 50px;">
-                                    <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
+                                    <button type="button" onclick="CylinderMinus(@d,@item.Cost)" class="btn btn-success">-</button>
                                     <input name="TurCount" style="border: none;max-width: 30px;" id="countSchlusse-@d" value="@ViewBag.CounterTurVorhan[@elemNum]" />
-                                    <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
+                                    <button type="button" onclick="CylinderPlus(@d,@item.Cost)" class="btn btn-success">+</button>
                             </div>
                         </div>
                         <div>
@@ -611,10 +611,10 @@
                             <h5>Zylinder Länge</h5>
                             <h5>Vifile Tür</h5>
                         </div>
-                            <div id="@item.Id" class="SizeProduct">
-                                <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
+                            <div id="@d" class="SizeProduct">
+                                <button type="button" onclick="CylinderMinus(@d,@item.Cost)" class="btn btn-success">-</button>
                                 <input style="border: none;max-width: 30px;" name="TurCount" value="@ViewBag.CounterTur[@elemNum]" id="countSchlusse-@d" />
-                                <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
+                                <button type="button" onclick="CylinderPlus(@d,@item.Cost)" class="btn btn-success">+</button>
                         </div>
                         <div>
                             <h3>Weitere Optionen</h3>
@@ -674,7 +674,7 @@
             <input type="button" class="btn btn-danger" value="ANDERES SYSTEM WÄHLEN" />
         </div>
         <div id="orderCost">
-                <h1 id="cost" name="Sum">@ViewBag.Cost €</h1>
+                <h1 id="cost" name="Sum">@ViewBag.Cost</h1><span>€</span>
         </div>
        
         <div id="buttonActionFinishBlock">
@@ -692,6 +692,28 @@
    } 
 <script>
 
+    let AllPrice = document.getElementById("cost");
+
+    let NoOptionCost = @Html.Raw(@ViewBag.CostProducted);
+
+    console.log(NoOptionCost);
+
+    let ParamSum = Number(AllPrice.innerHTML - NoOptionCost);
+    let DoppSchlussel = 0;
+    let DoppelSum = 0;
+
+    localStorage.setItem("cost", ParamSum);
+
+    localStorage.sInnen = 0;
+    localStorage.sAussen = 0;
+    localStorage.options = 0;
+    localStorage.DopItem = 0;
+
+    let AussenCost = 0;
+    let InternCost = 0;
+    let OptionCost = 0;
+
+
     function plus(n) 
     {
         let counter = document.getElementById("countKey-" + n);
@@ -706,85 +728,192 @@
         value--;
         counter.value = value;
     }
-    function CylinderPlus(n) 
+    function CylinderPlus(n, cost) 
     {
         let counter = document.getElementById("countSchlusse-" + n);
         let value = Number(counter.value);
-        value++;
-        counter.value = value;
+        let oldConter = Number(counter.value);
+
+        if (value > 1) 
+        {
+            value++;
+            counter.value = value;
+            DoppSchlussel = DoppSchlussel + ((cost * value) - (oldConter * cost));
+            DoppelSum = + DoppSchlussel;
+            localStorage.DopItem = DoppelSum;
+        }
+        else 
+        {
+            value++;
+            counter.value = value;
+            DoppSchlussel = DoppSchlussel + ((cost * value) - cost);
+            DoppelSum = + DoppSchlussel;
+            localStorage.DopItem = DoppelSum;
+        }
+       
+
+        let a = Number(localStorage.sInnen);
+        let b = Number(localStorage.sAussen);
+        let c = Number(localStorage.options);
+        let d = Number(localStorage.DopItem);
+
+        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c + d;
+
+        AllPrice.innerHTML = NoOptionCost + sum;
     }
-    function CylinderMinus(n) 
+    function CylinderMinus(n, cost) 
     {
         let counter = document.getElementById("countSchlusse-" + n);
         let value = Number(counter.value);
-        value--;
-        counter.value = value;
+        let oldConter = Number(counter.value);
+        if (value > 1) 
+        {
+            value--;
+            counter.value = value;
+            DoppSchlussel = DoppSchlussel - ((cost * value) - (cost * oldConter));
+            DoppelSum = -DoppSchlussel;
+            localStorage.DopItem = DoppelSum;
+        }
+        else 
+        {
+            value--;
+            counter.value = value;
+            DoppSchlussel = DoppSchlussel - (cost * value);
+            DoppelSum = +DoppSchlussel;
+            localStorage.DopItem = DoppelSum;
+        }
+        let a = Number(localStorage.sInnen);
+        let b = Number(localStorage.sAussen);
+        let c = Number(localStorage.options);
+        let d = Number(localStorage.DopItem);
+
+        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c + d;
+        AllPrice.innerHTML = NoOptionCost + sum;
     }
 
-    let AllPrice = document.getElementById("cost");
 
-    let NoOptionCost = @Html.Raw(@ViewBag.CostProducted);
+    localStorage.OldVorhan = 0;
+    
+    let oldVorhan = 0;
 
-    console.log(NoOptionCost);
+    function VorhanSchlus(value, idBlock, oldSize) 
+    {
+        let VorhanSizeCost = @Html.Raw(@ViewBag.VorhanschlosSizeCostedJson);
 
-    localStorage.setItem("cost", AllPrice.innerHTML);
-    localStorage.sInnen = 0;
-    localStorage.sAussen = 0;
-    localStorage.options = 0;
+        let VorhanSize = @Html.Raw(@ViewBag.VorhanschlosSizeJson);
 
-    let AussenCost = 0;
-    let InternCost = 0;
-    let OptionCost = 0;
+        let BlockTur = document.getElementById("Size-" + idBlock);
+        let Aussen = BlockTur.querySelector("#Aussen");
+        let Aitems = Aussen.querySelectorAll("#OptionA");
+       
+        let iteration = 0;
 
+        oldSize = oldVorhan;
 
-    function selectParamAussen(value, idBlock, oldValue) {
+        Aitems.forEach(function (items) 
+        {
+
+            let ItemValue = parseFloat(items.innerHTML);
+            let ItemValueOld = Number(oldSize);
+           
+            if (value > ItemValueOld) 
+            {
+                if (ItemValue == value) 
+                {
+                    localStorage.sAussen =+ VorhanSizeCost[iteration];
+                    let a = Number(localStorage.sInnen);
+                    let b = Number(localStorage.sAussen);
+                    let c = Number(localStorage.options);
+                    let d = Number(localStorage.DopItem);
+
+                    let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c + d;
+
+                    localStorage.OldVorhan = ItemValue;
+                    
+                    AllPrice.innerHTML = NoOptionCost + sum;
+                }
+                else 
+                {
+                    iteration++;
+                }
+                return;
+            }
+
+            else (ItemValue > value) 
+            {
+                if (ItemValue == ItemValueOld) 
+                {
+                    localStorage.sAussen = - (VorhanSizeCost[iteration] - VorhanSizeCost[iteration - 1]);
+                    let a = Number(localStorage.sInnen);
+                    let b = Number(localStorage.sAussen);
+                    let c = Number(localStorage.options);
+                    let d = Number(localStorage.DopItem);
+
+                    let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c + d;
+ 
+                    AllPrice.innerHTML = NoOptionCost + sum;
+                    return;
+                }
+                else 
+                {
+                    iteration++;
+                }
+               
+            }
+           
+        });
+
+    }
+    let countOldStatus = 0;
+    function selectParamAussen(value, idBlock, oldValue) 
+    {
         let iterations = 0;
         let serchedItem = 0;
 
-        let BlockTur = document.getElementById(idBlock);
+        let BlockTur = document.getElementById("Size-"+idBlock);
         let Aussen = BlockTur.querySelector("#Aussen");
+
         let Aitems = Aussen.querySelectorAll("#OptionA");
 
+        Aitems.forEach(function (items) 
+        {
+            let ItemValue = Number(items.innerHTML);
 
-        let Intern = BlockTur.querySelector("#Intern");
-        let Iitems = Intern.querySelectorAll("#OptionI");
+            let ItemValueOld = Number(oldValue);
 
-        Aitems.forEach(function (items) {
-            if (serchedItem == 1) {
+            if (serchedItem == 1) 
+            {
                 return;
             }
-            else {
-                let ItemValue = Number(items.innerHTML);
-                let ItemValueOld = Number(oldValue);
-                if (ItemValue > 31 && ItemValueOld >= 30) {
-                    iterations++;
-
-                    if (ItemValue == value) {
+            else 
+            {
+                if ((value > 31 || value > 30) && (value > ItemValueOld)) 
+                {
+                    if (ItemValue == value) 
+                    {
+                        iterations++;
+                        serchedItem++;
+                        countOldStatus++;
+                        return;
+                    }
+                    if (ItemValue > ItemValueOld) 
+                    {
+                        iterations++;
+                    }
+                    
+                }
+               
+                if (ItemValueOld > value) 
+                {
+                    if (ItemValue == ItemValueOld) 
+                    {
+                        iterations++;
                         serchedItem++;
                         return;
                     }
-                }
-                else if (ItemValueOld > 31) {
-                    iterations++;
-
-                    if (ItemValueOld == value) {
-                        serchedItem++;
-                        return;
-                    }
-                }
-
-                else {
-                    if (ItemValue == value) {
-                        AussenCost = 0;
-                        let a = Number(localStorage.sInnen);
-                        let b = Number(localStorage.sAussen);
-                        let c = Number(localStorage.options);
-
-                        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
-                        AllPrice.innerHTML = String(sum);
-                        console.log(cost.innerHTML);
-                        serchedItem++;
-                        return;
+                    if (ItemValue > value) 
+                    {
+                        AussenCost =  AussenCost -5;
                     }
                 }
 
@@ -792,102 +921,103 @@
 
         });
 
-
-
-        let size = Iitems.length - iterations;
-
-        let slicedArray = Array.prototype.slice.call(Iitems, 0, size);
-
-        for (let i = 0; i < Iitems.length; i++) {
-            Iitems[i].style.display = "none";
-        }
-
-        for (let i = 0; i < slicedArray.length; i++) {
-            Iitems[i].style.display = "block";
-        }
-        AussenCost = 0;
-
-        for (let i = 0; i < iterations; i++) {
+        for (let i = 0; i < iterations; i++) 
+        {
             AussenCost = AussenCost + 5;
         }
-
 
         localStorage.sAussen = AussenCost;
         let a = Number(localStorage.sInnen);
         let b = Number(localStorage.sAussen);
         let c = Number(localStorage.options);
+        let d = Number(localStorage.DopItem);
 
-        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
-        AllPrice.innerHTML = String(sum);
-
+        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c + d;
+        
+        AllPrice.innerHTML = NoOptionCost + sum;
         iterations = 0;
         serchedItem = 0;
-
-
     }
-    function selectParamIntern(value, idBlock, oldValue) {
+    function selectParamIntern(value, idBlock, oldValue) 
+    {
         let Iiterations = 0;
         let IserchedItem = 0;
 
-        let BlockTur = document.getElementById(idBlock);
+        let doppeclass = document.getElementsByClassName("fs");
+
+        for (let i = 0; i < doppeclass.length; i++) 
+        {
+            doppeclass[i].addEventListener("change", function (event) 
+            {
+                let oldValue = event.target.dataset.oldValue;
+                let selectedValue = event.target.value;
+                console.log("Старое значение выбранной опции:", oldValue);
+                console.log("Новое значение выбранной опции:", selectedValue);
+                // Обновляем старое значение на новое
+                event.target.dataset.oldValue = selectedValue;
+            });
+        }
+        oldValue = doppeclass.innerHTML;
+
+        let BlockTur = document.getElementById("Size-" + idBlock);
 
         let Intern = BlockTur.querySelector("#Intern");
 
         let Iitems = Intern.querySelectorAll("#OptionI");
 
-        Iitems.forEach(function (items) {
-            if (IserchedItem == 1) {
+        Iitems.forEach(function (items) 
+        {
+            let ItemValue = Number(items.innerHTML);
+
+            let ItemValueOld = Number(oldValue);
+
+            if (IserchedItem == 1) 
+            {
                 return;
             }
-            else {
-                let ItemValue = Number(items.innerHTML);
-                let ItemValueOld = Number(oldValue);
-                if (ItemValue > 31 && ItemValueOld >= 30) {
-                    Iiterations++;
-
-                    if (ItemValue == value) {
+            else 
+            {
+                if ((value > 31 || value > 30) && (value > ItemValueOld)) 
+                {
+                    if (ItemValue == value) 
+                    {
+                        InternCost = InternCost + 5;
                         IserchedItem++;
                         return;
                     }
-                }
-                else if (ItemValueOld > 31) {
-                    Iiterations++;
+                    if (ItemValue > ItemValueOld) 
+                    {
+                        InternCost = InternCost + 5;
+                    }
 
-                    if (ItemValueOld == value) {
+                }
+                if (ItemValueOld > value && ItemValue <= ItemValueOld) 
+                {
+                    if (ItemValue == ItemValueOld) 
+                    {
                         IserchedItem++;
                         return;
                     }
+                   
+                        InternCost = InternCost - 5;
                 }
-                else {
-                    if (ItemValue == value) {
-                        InternCost = 0;
-                        let a = Number(localStorage.sInnen);
-                        let b = Number(localStorage.sAussen);
-                        let c = Number(localStorage.options);
 
-                        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
-                        AllPrice.innerHTML = String(sum);
-                        console.log(cost.innerHTML);
-                        IserchedItem++;
-                        return;
-                    }
-                }
 
             }
 
         });
-        InternCost = 0;
-        for (let i = 0; i < Iiterations; i++) {
-            InternCost = InternCost + 5;
-        }
+
+
         localStorage.sInnen = InternCost;
 
         let a = Number(localStorage.sInnen);
         let b = Number(localStorage.sAussen);
         let c = Number(localStorage.options);
+        let d = Number(localStorage.DopItem);
 
-        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
-        AllPrice.innerHTML = String(sum);
+        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c + d;
+
+        AllPrice.innerHTML = NoOptionCost + sum;
         Iiterations = 0;
         IserchedItem = 0;
     }
