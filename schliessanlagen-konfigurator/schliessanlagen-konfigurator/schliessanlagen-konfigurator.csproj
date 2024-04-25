@@ -10,6 +10,7 @@
   <ItemGroup>
     <PackageReference Include="EPPlus" Version="7.1.1" />
     <PackageReference Include="Json.Net" Version="1.0.33" />
+    <PackageReference Include="MailKit" Version="4.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.4" />

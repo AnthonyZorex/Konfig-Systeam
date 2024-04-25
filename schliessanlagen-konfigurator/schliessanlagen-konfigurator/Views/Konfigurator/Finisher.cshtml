@@ -113,7 +113,7 @@
                                 </select>
                             </div>
                             <div>
-                                    <select class="fs" name="DIntern" id="Intern" onchange="selectParamIntern(event.target.value,@d)">
+                                    <select class="form-select" name="DIntern" id="Intern" onchange="selectParamIntern(event.target.value,@d)">
                                     <option style="display:none" selected>@ViewBag.DInter[elemNum]</option>
                                     <option>Innenlänge (B)</option>
                                     @for (int i = 0; i < ViewBag.DopelzylinderIntern.Count; i++)
@@ -228,7 +228,7 @@
                                 </select>
                             </div>
                             <div>
-                                    <select class="form-select" name="Intern" id="Intern" onchange="selectParamIntern(event.target.value,@d,@ViewBag.KInter[elemNum])">
+                                    <select class="form-select" name="KnayfIntern" id="Intern" onchange="selectParamIntern(event.target.value,@d,@ViewBag.KInter[elemNum])">
                                     <option style="display:none" selected>@ViewBag.KInter[elemNum]</option>
                                     <option>Innenlänge (B)</option>
                                     @for (int i = 0; i < ViewBag.KnayfZelinderIntern.Count; i++)
@@ -674,7 +674,7 @@
             <input type="button" class="btn btn-danger" value="ANDERES SYSTEM WÄHLEN" />
         </div>
         <div id="orderCost">
-                <h1 id="cost" name="Sum">@ViewBag.Cost</h1><span>€</span>
+                <input name="Sum" id="cost" type="text" style="border:none;font-size:24px" readonly value="@ViewBag.Cost" />
         </div>
        
         <div id="buttonActionFinishBlock">
@@ -942,22 +942,6 @@
     {
         let Iiterations = 0;
         let IserchedItem = 0;
-
-        let doppeclass = document.getElementsByClassName("fs");
-
-        for (let i = 0; i < doppeclass.length; i++) 
-        {
-            doppeclass[i].addEventListener("change", function (event) 
-            {
-                let oldValue = event.target.dataset.oldValue;
-                let selectedValue = event.target.value;
-                console.log("Старое значение выбранной опции:", oldValue);
-                console.log("Новое значение выбранной опции:", selectedValue);
-                // Обновляем старое значение на новое
-                event.target.dataset.oldValue = selectedValue;
-            });
-        }
-        oldValue = doppeclass.innerHTML;
 
         let BlockTur = document.getElementById("Size-" + idBlock);
 

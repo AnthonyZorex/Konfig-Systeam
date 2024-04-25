@@ -24,6 +24,9 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Cors;
 using System.Security.Policy;
+using MimeKit;
+using MailKit.Net.Smtp;
+using System.Net;
 namespace schliessanlagen_konfigurator.Controllers
 {
     [EnableCors("*")]
@@ -1442,6 +1445,34 @@ namespace schliessanlagen_konfigurator.Controllers
                 ViewBag.Halb = "";
 
             }
+            if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked5.Count() > 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked
+                                 join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
+                                 select new
+                                 {
+                                     cheked2 = t2.Id,
+                                     cheked5 = t3.Id,
+                                     userKey = keyUser.userKey,
+                                     Id = t1.Id,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round((t1.Cost + t2.Cost + t3.Cost) * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
+                ViewBag.Knaufzylinder = "";
+                ViewBag.VorhanSchloss = "";
+
+            }
             if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked3.Count() > 0 && cheked4.Count() > 0)
             {
                 int precision = 2;
@@ -2295,25 +2326,22 @@ namespace schliessanlagen_konfigurator.Controllers
                     db.UserOrdersShop.Remove(listOrder);
 
                 }
-
             }
-
             db.SaveChanges();
-
-
             return Redirect("/Identity/Account/Manage/PagePersonalOrders");
         }
-
-        //[HttpPost]
         public async Task<IActionResult> SaveUserOrders(List<string> nameKey, List<string> TurName, List<string> DopelName, List<float> DoppelAussen, List<float> DoppelIntern
-            , List<string> DoppelOption, List<string> KnayfOption, List<string> HalbOption, List<string> HebelOption, List<string> VorhnaOption, List<string> AussenOption, List<string> KnayfName, List<float> KnayfAussen, List<float> KnayfIntern, List<string> HalbName, List<float> HalbAussen, List<string> HelbName,
-           List<string> VorhanName, List<float> VorhanAussen, List<string> AussenName, float cost, List<string> key, List<bool> keyIsOpen, List<int> countKey)
+         ,List<string> DoppelOption, List<string> KnayfOption, List<string> HalbOption, List<string> HebelOption, List<string> VorhnaOption, List<string> AussenOption,
+         List<string> KnayfName, List<float> KnayfAussen, List<float> KnayfIntern, List<string> HalbName, List<float> HalbAussen, List<string> HelbName,
+         List<string> VorhanName, List<float> VorhanAussen, List<string> AussenName, string cost, List<string> key, List<bool> keyIsOpen, List<int> countKey,
+         List<int> TurCounter,List<string> Ssl,List<string> FurKey)
         {
 
             ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
             string loginInform = ident.Claims.Select(x => x.Value).First();
             var users = db.Users.FirstOrDefault(x => x.Id == loginInform);
 
+            var costed = float.Parse(cost);
 
             var Zylinder_Typ = db.Schliessanlagen.ToList();
             var profilD = db.Profil_Doppelzylinder.ToList();
@@ -2326,6 +2354,9 @@ namespace schliessanlagen_konfigurator.Controllers
             Random rnd = new Random();
             string time = Convert.ToString(rnd.Next(10000));
 
+
+            string destinationFilePath = @$"wwwroot/Orders/{users.FirstName + users.LastName + time} OrderFile.xlsx";
+
             using (FileStream fstream = new FileStream(@$"wwwroot/Orders/{users.FirstName + users.LastName + time} OrderFile.xlsx", FileMode.OpenOrCreate))
             {
                 fstream.Close();
@@ -2333,7 +2364,6 @@ namespace schliessanlagen_konfigurator.Controllers
 
             string sourceFilePath = @"wwwroot/Orders/CES_schliessplan_DE_schliessanlagen.xltx";
 
-            string destinationFilePath = @$"wwwroot/Orders/{users.FirstName + users.LastName + time} OrderFile.xlsx";
 
             using (FileStream sourceFileStream = new FileStream(sourceFilePath, FileMode.Open, FileAccess.Read))
 
@@ -2362,7 +2392,7 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 UserId = users.Id,
                 ProductName = DopelName.First(),
-                OrderSum = cost
+                OrderSum = costed
             };
             db.UserOrdersShop.Add(UserOrder);
             db.SaveChanges();
@@ -2396,6 +2426,10 @@ namespace schliessanlagen_konfigurator.Controllers
                     {
                         worksheet.Cells[f, row + i].Value = key[i];
                     }
+                    for (int f = 1; f <= 8; f++)
+                    {
+                        worksheet.Cells[f, row + i].Value = FurKey[i];
+                    }
                     worksheet.Cells[$"O{Rowcheked + i}"].Value = countKey[i];
                 }
  
@@ -2411,7 +2445,8 @@ namespace schliessanlagen_konfigurator.Controllers
                     worksheet.Cells[$"C{Rowcheked + i}"].Value = TurName[i];
                     worksheet.Cells[$"A{Rowcheked + i}"].Value = i+1;
                     worksheet.Cells[$"B{Rowcheked + i}"].Value = i + 1;
-                    worksheet.Cells[$"E{Rowcheked + i}"].Value = "Ssl";
+                    worksheet.Cells[$"E{Rowcheked + i}"].Value = Ssl[i];
+                    worksheet.Cells[$"H{Rowcheked + i}"].Value = TurCounter[i];
 
                     if (DoppelCounter < DopelName.Count())
                     {
@@ -2621,18 +2656,46 @@ namespace schliessanlagen_konfigurator.Controllers
                    
                    
                 }
+                var message = new MimeMessage();
+                message.From.Add(new MailboxAddress("Schlüssel Discount Store", "bonettaanthony466@gmail.com"));
+                message.To.Add(new MailboxAddress(users.FirstName + users.LastName, users.UserName));
+                message.Subject = "Schlüssel Discount Store";
+                message.Body = new TextPart("plain")
+                {
+                    Text = "Text",
+                };
 
+                MemoryStream memoryStream = new MemoryStream();
+
+                BodyBuilder bb = new BodyBuilder();
+
+                using (var wc = new WebClient())
+                {
+
+                    bb.Attachments.Add("Email.xlsx",
+
+                    wc.DownloadData(destinationFilePath));
+
+                }
+
+                message.Body = bb.ToMessageBody();
+                using (var client = new SmtpClient())
+                {
+                    client.Connect("smtp.gmail.com", 587, false);
+                    client.Authenticate("bonettaanthony466@gmail.com", "huqf ddvv mnba lcug ");
+                    client.Send(message);
+
+                    client.Disconnect(true);
+                }
                 return Redirect("/Identity/Account/Manage/PagePersonalOrders");
             }
 
         }
-        //[HttpGet]
         public ActionResult FinischerProductSelect(string user, List<int> TurCount, List<string> DopelOption, List<int> CountKey, List<float> DAussen,
         List<float> DIntern, List<int> DopelItem, string Sum,List<string> DorName,List<string> HalbOption,List<string> KnayfOption,List<string> HebelOption,
         List<string> VorhnaOption,List<string> AussenOption, List<int> Halb,List<int> KnayfIntern,List<int> KnayfAusse,List<int> Helb,List<int> Vorhan,
         List<int> Aussen,List<float> VorhanAussen, List<int> Knayf,List<float> HablAussen)
         {
-
             var Türname = DorName.Distinct();
 
             var UserOrder = db.Orders.FirstOrDefault(x => x.userKey == user);
@@ -2654,6 +2717,8 @@ namespace schliessanlagen_konfigurator.Controllers
             var isopen = new List<isOpen_Order>();
 
             ViewBag.SumCosted = Sum;
+            ViewBag.TurCount = Order.Select(x => x.Count).ToList();
+            ViewBag.Ssl = Order.Select(x => x.Ssl).ToList();
 
             foreach (var list in Order)
             {
@@ -2784,6 +2849,9 @@ namespace schliessanlagen_konfigurator.Controllers
             ViewBag.AussenOptionSelected = AussenOption;
 
             ViewBag.Key = OpenLis.Distinct().ToList();
+
+            ViewBag.FurKey = OpenLis.Select(x=>x.ForNameKey).Distinct().ToList();
+
             ViewBag.KeyValueFT = KeyValue.ToList();
 
             ViewBag.IsOpen = KeyValue.Select(x => x.isOpen).ToList();
