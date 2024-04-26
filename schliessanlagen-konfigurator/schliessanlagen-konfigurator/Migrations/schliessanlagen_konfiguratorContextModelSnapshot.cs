@@ -51,13 +51,13 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "270741b6-a565-4072-8b0f-d2a116894efc",
+                            Id = "66adfacb-85c1-4bb8-bbb2-a34b2b9ed9b4",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "b40c0183-698b-40d1-97e3-aa1cab6bb0f9",
+                            Id = "8bd631e5-f8ad-4cb3-82ee-5540bbe0f7bc",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -1042,6 +1042,9 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("createData")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

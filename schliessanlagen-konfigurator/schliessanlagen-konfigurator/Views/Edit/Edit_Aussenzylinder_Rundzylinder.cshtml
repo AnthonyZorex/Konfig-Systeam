@@ -19,6 +19,11 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="description" class="control-label"></label>
+                <input asp-for="description" class="form-control" />
+                <span asp-validation-for="description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Cost" class="control-label"></label>
                 <input asp-for="Cost" class="form-control" />
                 <span asp-validation-for="Cost" class="text-danger"></span>
@@ -37,6 +42,32 @@
             <br />
             @Html.ValidationMessageFor(m => m.ImageFile, "", new { @class = "error" })
             <hr />
+            @if (ViewBag.optionV == true)
+            {
+                <div>
+                    <h2>Options</h2>
+                    <div class="form-group">
+                        <label class="control-label">Options Name</label>
+                        <input name="Name" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Description</label>
+                        <input name="Description" class="form-control" />
+                    </div>
+                </div>
+                <div>
+                    <h2>Options Value</h2>
+                    <div class="form-group">
+                        <label class="control-label">Options Value</label>
+                        <input name="Value" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Cost</label>
+                        <input name="Cost" class="form-control" />
+                    </div>
+                </div>
+            }
+            
             <input type="submit" value="Save" class="btn btn-primary" />
         </form>
     </div>

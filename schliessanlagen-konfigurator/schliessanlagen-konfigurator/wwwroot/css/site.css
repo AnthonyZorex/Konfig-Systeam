@@ -23,6 +23,9 @@ html {
     border: 9px solid #474bff;
     animation: spinner-bulqg1 0.8s infinite linear alternate, spinner-oaa3wk 1.6s infinite linear;
 }
+th:hover{
+    cursor:pointer;
+}
 
 @keyframes spinner-bulqg1 {
     0% {
@@ -730,4 +733,8 @@ summary {
     background: white;
     padding: 40px;
     border-radius: 10px;
+    width:900px;
+}
+#AllOrderUser {
+    width: 900px;
 }

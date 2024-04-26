@@ -21,7 +21,6 @@ using OfficeOpenXml;
 using System.Security.Claims;
 using Newtonsoft.Json.Linq;
 using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json;
 using Microsoft.AspNetCore.Cors;
 using System.Security.Policy;
 using MimeKit;
@@ -2170,17 +2169,20 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 if (order.ZylinderId == 1)
                 {
+                    var aussen = DopelOrderlist.SelectMany(x => x.Aussen_Innen).FirstOrDefault(x => x.aussen<35).aussen;
 
-                    for (var i = 30; i < order.aussen;)
+                    var innen = DopelOrderlist.SelectMany(x => x.Aussen_Innen).FirstOrDefault(x => x.Intern < 35).Intern;
+
+                    for (; aussen < order.aussen;)
                     {
                         DoppelAussenCost = DoppelAussenCost + 5;
-                        i = i + 5;
+                        aussen = aussen + 5;
 
                     }
-                    for (var j = 30; j < order.innen;)
+                    for (; innen < order.innen;)
                     {
                         DoppelAussenCost = DoppelAussenCost + 5;
-                        j = j + 5;
+                        innen = innen + 5;
 
                     }
 
@@ -2334,7 +2336,7 @@ namespace schliessanlagen_konfigurator.Controllers
          ,List<string> DoppelOption, List<string> KnayfOption, List<string> HalbOption, List<string> HebelOption, List<string> VorhnaOption, List<string> AussenOption,
          List<string> KnayfName, List<float> KnayfAussen, List<float> KnayfIntern, List<string> HalbName, List<float> HalbAussen, List<string> HelbName,
          List<string> VorhanName, List<float> VorhanAussen, List<string> AussenName, string cost, List<string> key, List<bool> keyIsOpen, List<int> countKey,
-         List<int> TurCounter,List<string> Ssl,List<string> FurKey)
+         List<int> TurCounter,List<string> Ssl,List<string> FurKey, string NameSystem)
         {
 
             ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
@@ -2351,13 +2353,17 @@ namespace schliessanlagen_konfigurator.Controllers
             var Vorhangschloss = db.Vorhangschloss.ToList();
             var Aussenzylinder = db.Aussenzylinder_Rundzylinder.ToList();
             var Orders = db.Orders.ToList();
-            Random rnd = new Random();
-            string time = Convert.ToString(rnd.Next(10000));
 
+            DateTime currentTime = DateTime.Now;
 
-            string destinationFilePath = @$"wwwroot/Orders/{users.FirstName + users.LastName + time} OrderFile.xlsx";
+            // Получение дня, месяца и года из текущей даты
+            int day = currentTime.Day;
+            int month = currentTime.Month;
+            int year = currentTime.Year;
 
-            using (FileStream fstream = new FileStream(@$"wwwroot/Orders/{users.FirstName + users.LastName + time} OrderFile.xlsx", FileMode.OpenOrCreate))
+            string destinationFilePath = @$"wwwroot/Orders/{users.FirstName + users.LastName + day+ month + year} OrderFile.xlsx";
+
+            using (FileStream fstream = new FileStream(@$"wwwroot/Orders/{users.FirstName + users.LastName + day+ month + year} OrderFile.xlsx", FileMode.OpenOrCreate))
             {
                 fstream.Close();
             }
@@ -2391,8 +2397,9 @@ namespace schliessanlagen_konfigurator.Controllers
             var UserOrder = new Models.Users.UserOrdersShop
             {
                 UserId = users.Id,
-                ProductName = DopelName.First(),
-                OrderSum = costed
+                ProductName = NameSystem,
+                OrderSum = costed,
+                createData = DateTime.Now,
             };
             db.UserOrdersShop.Add(UserOrder);
             db.SaveChanges();
@@ -2717,7 +2724,7 @@ namespace schliessanlagen_konfigurator.Controllers
             var isopen = new List<isOpen_Order>();
 
             ViewBag.SumCosted = Sum;
-            ViewBag.TurCount = Order.Select(x => x.Count).ToList();
+            ViewBag.TurCount = TurCount;
             ViewBag.Ssl = Order.Select(x => x.Ssl).ToList();
 
             foreach (var list in Order)
@@ -2814,6 +2821,9 @@ namespace schliessanlagen_konfigurator.Controllers
             ViewBag.EinRow = countRow;
 
             var Doppelname = DoppelSylinder.Select(x => x.Name).ToList();
+            var Sysname = DoppelSylinder.Select(x => x.NameSystem).ToList();
+            
+            ViewBag.SysteamName = Sysname.First();
 
             ViewBag.DoppelAussen = DAussen.ToList();
             ViewBag.DoppelIntern = DIntern.ToList();

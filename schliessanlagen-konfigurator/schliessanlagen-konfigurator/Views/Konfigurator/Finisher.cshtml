@@ -674,7 +674,8 @@
             <input type="button" class="btn btn-danger" value="ANDERES SYSTEM WÄHLEN" />
         </div>
         <div id="orderCost">
-                <input name="Sum" id="cost" type="text" style="border:none;font-size:24px" readonly value="@ViewBag.Cost" />
+                <h2 id="cost">@ViewBag.Cost</h2>
+                <input name="Sum" id="costed" type="hidden" style="border:none;font-size:24px" value="@ViewBag.Cost" />
         </div>
        
         <div id="buttonActionFinishBlock">
@@ -693,12 +694,17 @@
 <script>
 
     let AllPrice = document.getElementById("cost");
+    let pris = document.getElementById("costed");
+    
+    pris.value = AllPrice.innerHTML;
+
+   
 
     let NoOptionCost = @Html.Raw(@ViewBag.CostProducted);
 
     console.log(NoOptionCost);
 
-    let ParamSum = Number(AllPrice.innerHTML - NoOptionCost);
+    let ParamSum = parseFloat(AllPrice.innerHTML.replace(',', '.') - NoOptionCost);
     let DoppSchlussel = 0;
     let DoppelSum = 0;
 
@@ -752,10 +758,10 @@
         }
        
 
-        let a = Number(localStorage.sInnen);
-        let b = Number(localStorage.sAussen);
-        let c = Number(localStorage.options);
-        let d = Number(localStorage.DopItem);
+        let a = parseFloat(localStorage.sInnen);
+        let b = parseFloat(localStorage.sAussen);
+        let c = parseFloat(localStorage.options);
+        let d = parseFloat(localStorage.DopItem);
 
         let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c + d;
 

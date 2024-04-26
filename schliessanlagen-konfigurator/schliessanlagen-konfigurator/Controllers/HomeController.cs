@@ -18,6 +18,8 @@ using System.Diagnostics;
 using System;
 using System.IO;
 using OfficeOpenXml;
+using System.Security.Claims;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 
 namespace schliessanlagen_konfigurator.Controllers
@@ -1117,6 +1119,21 @@ namespace schliessanlagen_konfigurator.Controllers
         {
             var Halbzylinder = db.Aussenzylinder_Rundzylinder.Find(profil_Halbzylinder.Id);
 
+            var options = db.Aussen_Rund_options.FirstOrDefault(x => x.Id == Halbzylinder.Id);
+            
+            if (options != null)
+            {
+                var OptionDescription = db.Aussen_Rund_all.FirstOrDefault(x => x.Aussen_Rund_optionsId == options.Id);
+
+                var optionsValue = db.Aussen_Rouns_all_value.FirstOrDefault(x => x.Aussen_Rund_allId == OptionDescription.Id);
+
+                ViewBag.optionV = true;
+            }
+            else
+            {
+                ViewBag.optionV = false;
+            }
+
             return View("../Edit/Edit_Aussenzylinder_Rundzylinder", Halbzylinder);
         }
         [HttpGet]
@@ -1155,10 +1172,45 @@ namespace schliessanlagen_konfigurator.Controllers
             db.SaveChanges();
             return RedirectToAction("Profil_HalbzylinderRout");
         }
+
         [HttpPost]
-        public ActionResult SaveAussenzylinder_Rundzylinder(Aussenzylinder_Rundzylinder profil_Halbzylinder)
+        public ActionResult SaveAussenzylinder_Rundzylinder(Aussenzylinder_Rundzylinder profil_Halbzylinder, 
+        List<string> Name, List<string> Description, List<string> Value,List<float>Cost)
         {
+
+            var option = db.Aussen_Rund_options.Where(x => x.Id == profil_Halbzylinder.Id).ToList();
+
+            if(option != null)
+            {
+                var listAllOption = new List<Aussen_Rund_all>();
+                
+                foreach (var item in option)
+                {
+                    var OptionDescription = db.Aussen_Rund_all.Where(x => x.Aussen_Rund_optionsId == item.Id).ToList();
+                    
+                    foreach(var item2 in OptionDescription)
+                    { 
+                        listAllOption.Add(item2); 
+                    }
+                }
+
+                var listAllValue = new List<Aussen_Rouns_all_value>();
+
+                foreach(var item in listAllOption)
+                {
+                    var optionsValue = db.Aussen_Rouns_all_value.Where(x => x.Aussen_Rund_allId == item.Id).ToList();
+                    
+                    foreach(var item2 in optionsValue)
+                    {
+                        listAllValue.Add(item2);
+                    }
+                }
+
+            }
+
             db.Aussenzylinder_Rundzylinder.Update(profil_Halbzylinder);
+            //db.Aussen_Rund_all.Update();
+            //db.Aussen_Rouns_all_value.Update()
             db.SaveChanges();
             return RedirectToAction("Aussenzylinder_RundzylinderRout");
         }
@@ -1564,48 +1616,55 @@ namespace schliessanlagen_konfigurator.Controllers
             return View("ProductAussenzylinder", profilInfo);
         }
         #endregion
-
+        [HttpGet]
         public ActionResult AllOrders()
         {
-            string wwwRootPath = Environment.WebRootPath;
-            try
-            {
-                // Получаем все файлы в указанной директории
-                string path = Path.Combine(wwwRootPath + "/Orders/");
+            var User = db.Users.Select(x => x).ToList();
+            var UserProduct = db.ProductSysteam.Select(x => x).ToList();
+            var UserOrders = db.UserOrdersShop.Select(x => x).ToList();
+            
+            var users = db.Users.Select(x => x).ToList();
 
-                string[] files = Directory.GetFiles(path);
+            var queryOrder = from t1 in users
+                             join t2 in UserOrders
+                             on t1.Id equals t2.UserId
+                             select new
+                             {
+                                 Id = t2.Id,
+                                 FirstName = t1.FirstName,
+                                 LastName = t1.LastName,
+                                 Address = t1.Address,
+                                 Email = t1.UserName,
+                                 ProductName = t2.ProductName,
+                                 OrderSum = t2.OrderSum,
+                                 createData = t2.createData
+                             };
 
-                if (System.IO.File.Exists(files[0]))
-                {
-                    // Создаем объект ExcelPackage для чтения файла
-                    using (var excelPackage = new ExcelPackage(new FileInfo(files[0])))
-                    {
-                        // Получаем первый лист в книге
-                        ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets[0];
+            var Order = queryOrder.Distinct().ToList();
 
-                        // Получаем данные из ячеек листа и передаем их в представление
-                        ViewBag.ExcelData = worksheet.Cells;
-                        ViewBag.FileName = files[0];
+            ViewBag.Order = Order.ToList();
 
-                        return View();
-                    }
-                }
-               
-
-                return View(files);
-            }
-            catch (Exception e)
-            {
-                // Обработка ошибок, если директория не существует или доступ к ней запрещен
-                ViewBag.ErrorMessage = $"An error occurred: {e.Message}";
-                return View();
-            }
-        }
-        public ActionResult OrderSetup()
-        {
 
             return View();
         }
+        
+        public ActionResult Download(int? Id,string FirstName,string LastName)
+        {
+            var UserOrder = db.UserOrdersShop.FirstOrDefault(x => x.Id == Id).createData;
+            
+            var day = UserOrder.Value.Day;
+            var month = UserOrder.Value.Month;
+            var year = UserOrder.Value.Year;
+            ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
+            string loginInform = ident.Claims.Select(x => x.Value).First();
+            var users = db.Users.FirstOrDefault(x => x.FirstName == FirstName && x.LastName == LastName);
+
+            var filepath = Path.Combine($"~/Orders", $"{users.FirstName + users.LastName + day + month + year} OrderFile.xlsx");
+
+            return File(filepath, "xlsx/plain", $"{users.FirstName + users.LastName + day + month + year} OrderFile.xlsx");
+
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
