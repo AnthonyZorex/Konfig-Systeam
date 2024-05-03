@@ -1108,10 +1108,10 @@ namespace schliessanlagen_konfigurator.Controllers
             return RedirectToAction("Index");
         }
         [HttpGet]
-        public async Task<IActionResult> Edit_Halbzylinder(Hebel profil_Halbzylinder)
+        public async Task<IActionResult> Edit_Hebel(Hebel profil_Halbzylinder)
         {
             var Halbzylinder = db.Hebelzylinder.Find(profil_Halbzylinder.Id);
-            return View("../Edit/Edit_Halbzylinder", Halbzylinder);
+            return View("../Edit/Edit_Hebel", Halbzylinder);
         }
 
         [HttpGet]
@@ -1137,16 +1137,25 @@ namespace schliessanlagen_konfigurator.Controllers
             return View("../Edit/Edit_Aussenzylinder_Rundzylinder", Halbzylinder);
         }
         [HttpGet]
-        public async Task<IActionResult> Edit_Vorhangschloss(Vorhangschloss profil_Halbzylinder)
+        public async Task<IActionResult> Edit_Vorhangschloss(Vorhangschloss Vorhan)
         {
-            var Halbzylinder = db.Vorhangschloss.Find(profil_Halbzylinder.Id);
+            var VorhanItem = db.Vorhangschloss.Find(Vorhan.Id);
 
-            return View("../Edit/Edit_Vorhangschloss", Halbzylinder);
+            var VorhanSize = db.Size.Where(x => x.VorhangschlossId == Vorhan.Id).ToList();
+
+            ViewBag.Size = VorhanSize;
+
+          
+            return View("../Edit/Edit_Vorhangschloss", VorhanItem);
         }
         [HttpGet]
         public async Task<IActionResult> Edit_Profil_Halbzylinder(Profil_Halbzylinder profil_Halbzylinder)
         {
             var Halbzylinder = db.Profil_Halbzylinder.Find(profil_Halbzylinder.Id);
+
+            var SizeHalbzylinder = db.Aussen_Innen_Halbzylinder.Where(x => x.Profil_HalbzylinderId == profil_Halbzylinder.Id).ToList();
+
+            var OptionsHalb = db.Profil_Halbzylinder_Options.Where(x => x.Profil_HalbzylinderId == profil_Halbzylinder.Id).Select(x => x.Id).Distinct().ToList();
 
             return View("../Edit/Edit_Profil_Halbzylinder", Halbzylinder);
         }
@@ -1161,26 +1170,42 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpPost]
         public ActionResult SaveHalbzylinder(Profil_Halbzylinder profil_Halbzylinder)
         {
-            db.Profil_Halbzylinder.Update(profil_Halbzylinder);
             db.SaveChanges();
             return RedirectToAction("Profil_HalbzylinderRout");
         }
         [HttpPost]
         public ActionResult SaveHebelzylinder(Hebel profil_Halbzylinder)
         {
-            db.Hebelzylinder.Update(profil_Halbzylinder);
+            var Items = db.Hebelzylinder.Find(profil_Halbzylinder.Id);
+            Items.schliessanlagenId = profil_Halbzylinder.schliessanlagenId;
+            Items.Name = profil_Halbzylinder.Name;
+            Items.companyName = profil_Halbzylinder.companyName;
+            Items.NameSystem = profil_Halbzylinder.NameSystem;
+            Items.description = profil_Halbzylinder.description;
+            Items.Cost = profil_Halbzylinder.Cost;
+            Items.ImageName = profil_Halbzylinder.ImageName;
+
             db.SaveChanges();
-            return RedirectToAction("Profil_HalbzylinderRout");
+            return RedirectToAction("HebelzylinderRout");
         }
 
         [HttpPost]
         public ActionResult SaveAussenzylinder_Rundzylinder(Aussenzylinder_Rundzylinder profil_Halbzylinder, 
         List<string> Name, List<string> Description, List<string> Value,List<float>Cost)
         {
+            var Items = db.Aussenzylinder_Rundzylinder.Find(profil_Halbzylinder.Id);
+
+            Items.schliessanlagenId = profil_Halbzylinder.schliessanlagenId;
+            Items.Name = profil_Halbzylinder.Name;
+            Items.companyName = profil_Halbzylinder.companyName;
+            Items.NameSystem = profil_Halbzylinder.NameSystem;
+            Items.description = profil_Halbzylinder.description;
+            Items.Cost = profil_Halbzylinder.Cost;
+            Items.ImageName = profil_Halbzylinder.ImageName;
 
             var option = db.Aussen_Rund_options.Where(x => x.Id == profil_Halbzylinder.Id).ToList();
 
-            if(option != null)
+            if(option.Count()>0)
             {
                 var listAllOption = new List<Aussen_Rund_all>();
                 
@@ -1208,16 +1233,21 @@ namespace schliessanlagen_konfigurator.Controllers
 
             }
 
-            db.Aussenzylinder_Rundzylinder.Update(profil_Halbzylinder);
-            //db.Aussen_Rund_all.Update();
-            //db.Aussen_Rouns_all_value.Update()
             db.SaveChanges();
             return RedirectToAction("Aussenzylinder_RundzylinderRout");
         }
         [HttpPost]
-        public ActionResult SaveVorhangschloss(Vorhangschloss profil_Halbzylinder)
+        public ActionResult SaveVorhangschloss(Vorhangschloss profil_Halbzylinder,List<int>Size,List<float> CostSize)
         {
-            db.Vorhangschloss.Update(profil_Halbzylinder);
+            var VorhanItem = db.Vorhangschloss.Find(profil_Halbzylinder.Id);
+            var VorhanItemSize_Cost = db.Size.Where(x=>x.VorhangschlossId == profil_Halbzylinder.Id).ToList();
+
+            for(int i = 0;i< VorhanItemSize_Cost.Count(); i++)
+            {
+                VorhanItemSize_Cost[i].sizeVorhangschloss = Size[i];
+                VorhanItemSize_Cost[i].Cost = CostSize[i];
+            }
+
             db.SaveChanges();
             return RedirectToAction("VorhangschlossRout");
         }
@@ -1225,7 +1255,6 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpPost]
         public ActionResult SaveProfil_Knaufzylinder(Profil_Knaufzylinder profil_Doppelzylinder)
         {
-            db.Profil_Knaufzylinder.Update(profil_Doppelzylinder);
             db.SaveChanges();
             return RedirectToAction("Profil_KnaufzylinderRout");
         }

@@ -4,27 +4,50 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Edit Vorhangschloss</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="SaveVorhangschloss">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+           
+            @Html.HiddenFor(x=>x.Id)
             <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
+               
+                <h3>Type</h3>
+
+                <select required onchange="SelectionNewType(event.target.value)" class="form-select" id="schliessanlagenId">
+
+                    <option>Profil-Doppelzylinder</option>
+                    <option>Profil-Halbzylinder</option>
+                    <option>Profil-Knaufzylinder</option>
+                    <option >Hebelzylinder</option>
+                    <option selected>Vorhangschloss</option>
+                    <option>Aussenzylinder_Rundzylinder</option>
+
+                </select>
+
+                <input id="VorhanType" asp-for="schliessanlagenId" type="hidden" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="schliessanlagenId" class="control-label"></label>
-                <input asp-for="schliessanlagenId" class="form-control" />
-                <span asp-validation-for="schliessanlagenId" class="text-danger"></span>
+                <label asp-for="companyName" class="control-label"></label>
+                <input required asp-for="companyName" class="form-control" />
+                <span asp-validation-for="companyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NameSystem" class="control-label"></label>
+                <input required asp-for="NameSystem" class="form-control" />
+                <span asp-validation-for="NameSystem" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="description" class="control-label"></label>
+                <input required asp-for="description" class="form-control" />
+                <span asp-validation-for="description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Cost" class="control-label"></label>
@@ -44,6 +67,22 @@
             <br />
             @Html.ValidationMessageFor(m => m.ImageFile, "", new { @class = "error" })
             <hr />
+            <h2>Size and Cost</h2>
+            <div style="display:grid;grid-template-columns:repeat(2,auto)">
+                @foreach (var list in @ViewBag.Size)
+                {
+                    <div>
+                        <input class="form-control" name="Size" value="@list.sizeVorhangschloss" />
+                    </div>
+                   
+                    <div>
+                        <input class="form-control" name="CostSize" value="@list.Cost" />
+                    </div> 
+                }
+            </div>
+            
+            <hr />
+
             <input type="submit" value="Save" class="btn btn-primary" />
         </form>
     </div>
@@ -57,3 +96,28 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+<script>
+    let schliessanlagenType = document.getElementById("schliessanlagenId");
+    let VorhanType = document.getElementById("VorhanType");
+
+    function SelectionNewType(value) {
+        if (value == "Profil-Doppelzylinder") {
+            VorhanType.value = 1;
+        }
+        if (value == "Profil-Halbzylinder") {
+            VorhanType.value = 2;
+        }
+        if (value == "Profil-Knaufzylinder") {
+            VorhanType.value = 3;
+        }
+        if (value == "Hebelzylinder") {
+            VorhanType.value = 4;
+        }
+        if (value == "Vorhangschloss") {
+            VorhanType.value = 5;
+        }
+        if (value == "Aussenzylinder_Rundzylinder") {
+            VorhanType.value = 6;
+        }
+    }
+</script>

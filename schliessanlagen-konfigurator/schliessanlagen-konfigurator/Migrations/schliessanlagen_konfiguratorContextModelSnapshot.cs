@@ -51,13 +51,13 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "66adfacb-85c1-4bb8-bbb2-a34b2b9ed9b4",
+                            Id = "2d722e00-a015-4209-93db-57bfdb75a4ee",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "8bd631e5-f8ad-4cb3-82ee-5540bbe0f7bc",
+                            Id = "75b92a00-a329-40b8-9604-d8f833dc45cd",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -540,10 +540,6 @@ namespace schliessanlagen_konfigurator.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Options")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ssl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ZylinderId")

@@ -25,28 +25,23 @@
                     </div>
 
                     <div id="schlussel2">
-                        <h4>Schlüssel hinzufügen</h4>
+                        <input id="removeButton" type="button" value="-">
+                        <input id="addButton" type="button" value="+">
                     </div>
-
                 </div>
                 <div id="itemKeyBlock">
                     @{
-                        int counterKey = 1;
                         foreach (var list in ViewBag.Key)
                         {
                             <div class="TexCount">
-                                <h6>@counterKey</h6>
+                                <input type="text" style="position: relative;" name="FurNameKey" value="@list.ForNameKey" />
                                 <div id="TexInputKey">
-                                    <input id="inputA" name="NameKey" value='@list.ForNameKey' type="text" />
                                     <input id="inputS" name="NameKey" value='@list.NameKey' type="text" />
-                                   
                                 </div>
                                 <div>
                                     <input id="inputCount" name="CountKey" value="@list.CountKey" type="text" />
                                 </div>
                             </div>
-
-                            counterKey++;
                         }
 
                     }
@@ -57,11 +52,30 @@
             <div>
                 <div id="sclusselInfo2">
                     <div id="schlussel">
-                        <h3>Türen (Zugänge)</h3>
+                        <h6>Pos</h6>
                     </div>
-
+                    <div id="schlussel">
+                        <h6 style="margin-left: 10px;">Türbezeichnung</h6>
+                    </div>
+                    <div id="schlussel" style="margin-left:100px">
+                        <h6>Zylindertyp</h6>
+                    </div>
+                    <div id="schlussel" style="text-align: center;margin-left:80px">
+                        <h6>Zylinderlänge mm</h6>
+                        <div style="display:flex;gap: 20px;">
+                            <div>
+                                <h6>außen</h6>
+                            </div>
+                            <div>
+                                <img src="/Image/zylinderlaenge.png" />
+                            </div>
+                            <div>
+                                <h6>innen</h6>
+                            </div>
+                        </div>
+                    </div>
                     <div id="schlussel3">
-                        <h4>Tür hinzufügen</h4>
+                        <h6>Stück</h6>
                     </div>
                 </div>
                 <div>
@@ -92,7 +106,7 @@
                                             @if (ViewBag.DopelZylinder.Count > 0)
                                             {
                                                 <h5>Count:@ViewBag.TurCount[DorItem]</h5>
-                                                <h5>Ssl:@ViewBag.Ssl[DorItem]</h5>
+                                               
 
                                                 <h6><strong> @ViewBag.DopelZylinder[DoppelCounter]</strong></h6>
                                                 <br />
@@ -130,7 +144,7 @@
                                             if (ViewBag.KnayfName.Count > 0)
                                             {
                                                 <h5>Count:@ViewBag.TurCount[DorItem]</h5>
-                                                <h5>Ssl:@ViewBag.Ssl[DorItem]</h5>
+                                                
                                                 <h6><strong> @ViewBag.KnayfName[KnayfCounter]</strong></h6>
                                                 <br />
                                                 if (ViewBag.KnayfAussen.Count > 0)
@@ -170,7 +184,7 @@
                                             @if (ViewBag.HalbName.Count > 0)
                                             {
                                                 <h5>Count:@ViewBag.TurCount[DorItem]</h5>
-                                                <h5>Ssl:@ViewBag.Ssl[DorItem]</h5>
+                                           
                                                 <h6><strong> @ViewBag.HalbName[HablCounter]</strong></h6>
                                                 <br />
                                                 if (ViewBag.HalbAussen.Count > 0)
@@ -204,7 +218,7 @@
                                             @if (ViewBag.HelbName.Count > 0)
                                             {
                                                 <h5>Count:@ViewBag.TurCount[DorItem]</h5>
-                                                <h5>Ssl:@ViewBag.Ssl[DorItem]</h5>
+                                             
                                                 <h6><strong> @ViewBag.HelbName[HebelCounter]</strong></h6>
                                                 <br />
                                                 if (ViewBag.HebelOptionSelected.Count>0)
@@ -233,7 +247,7 @@
                                             @if (ViewBag.VorhanName.Count > 0)
                                             {
                                                 <h5>Count:@ViewBag.TurCount[DorItem]</h5>
-                                                <h5>Ssl:@ViewBag.Ssl[DorItem]</h5>
+                                       
                                                 <h6><strong> @ViewBag.VorhanName[VorhanCounter]</strong></h6>
                                                 <br />
                                                 @if (ViewBag.VorhanAussen.Count > 0)
@@ -264,7 +278,7 @@
                                             if (ViewBag.AussenName.Count > 0)
                                             {
                                                 <h5>Count:@ViewBag.TurCount[DorItem]</h5>
-                                                <h5>Ssl:@ViewBag.Ssl[DorItem]</h5>
+                                            
                                                 <h6><strong> @ViewBag.AussenName[AussenCounter]</strong></h6>
                                                 <br />
 
@@ -341,7 +355,7 @@
 
             @if (User.IsInRole("client") || User.IsInRole("admin"))
             {
-                <a class="btn btn-danger" href="@Url.Action("SaveUserOrders", "Konfigurator", new {NameSystem = @ViewBag.SysteamName,FurKey=@ViewBag.FurKey,TurCounter = @ViewBag.TurCount,Ssl = @ViewBag.Ssl,HalbOption = @ViewBag.HalbOptionSelected,VorhnaOption = @ViewBag.VorhanOptionSelected,AussenOption = @ViewBag.AussenOptionSelected,DoppelOption = @ViewBag.DoppelOption,KnayfOption = @ViewBag.KnayfOptionSelected,HebelOption = @ViewBag.HebelOptionSelected,countKey = @ViewBag.CountKey,key = @ViewBag.NameKey,keyIsOpen = @ViewBag.IsOpen,cost = @ViewBag.SumCosted,TurName = @ViewBag.Tur,userInfo = @ViewBag.UserNameItem,nameKey = @ViewBag.Key, DopelName = @ViewBag.DopelZylinder,DoppelAussen=@ViewBag.DoppelAussen,DoppelIntern=@ViewBag.DoppelIntern,KnayfName = @ViewBag.KnayfName,KnayfAussen = @ViewBag.KnayfAussen,KnayfIntern = @ViewBag.KnayflIntern,HalbName = @ViewBag.HalbName,HalbAussen = @ViewBag.HalbAussen,HelbName = @ViewBag.HelbName, VorhanName=@ViewBag.VorhanName, VorhanAussen = @ViewBag.VorhanAussen, AussenName = @ViewBag.AussenName})">
+                <a class="btn btn-danger" href="@Url.Action("SaveUserOrders", "Konfigurator", new {NameSystem = @ViewBag.SysteamName,FurKey=@ViewBag.FurKey,TurCounter = @ViewBag.TurCount,HalbOption = @ViewBag.HalbOptionSelected,VorhnaOption = @ViewBag.VorhanOptionSelected,AussenOption = @ViewBag.AussenOptionSelected,DoppelOption = @ViewBag.DoppelOption,KnayfOption = @ViewBag.KnayfOptionSelected,HebelOption = @ViewBag.HebelOptionSelected,countKey = @ViewBag.CountKey,key = @ViewBag.NameKey,keyIsOpen = @ViewBag.IsOpen,cost = @ViewBag.SumCosted,TurName = @ViewBag.Tur,userInfo = @ViewBag.UserNameItem,nameKey = @ViewBag.Key, DopelName = @ViewBag.DopelZylinder,DoppelAussen=@ViewBag.DoppelAussen,DoppelIntern=@ViewBag.DoppelIntern,KnayfName = @ViewBag.KnayfName,KnayfAussen = @ViewBag.KnayfAussen,KnayfIntern = @ViewBag.KnayflIntern,HalbName = @ViewBag.HalbName,HalbAussen = @ViewBag.HalbAussen,HelbName = @ViewBag.HelbName, VorhanName=@ViewBag.VorhanName, VorhanAussen = @ViewBag.VorhanAussen, AussenName = @ViewBag.AussenName})">
                     IN DEN WARENKORB
                 </a>
 

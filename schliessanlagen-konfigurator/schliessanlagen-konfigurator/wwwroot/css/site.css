@@ -83,6 +83,9 @@ body {
 }
 
 
+#add_And_Minus{
+    background: red;
+}
 
 .modal-content {
     padding: 10px;
@@ -377,7 +380,7 @@ a {
     text-align:end;
 }
 #sclusselInfo {
-    margin-left: 300px;
+    margin-left: 800px;
     padding: 5px;
     background: red;
     color: white;
@@ -431,17 +434,23 @@ a {
 #schlussel {
     margin-top: 5px;
 }
+    #schlussel > h6 {
+        font-size: 14px;
+        margin-right:10px;
+    }
 #schlussel2 {
-    margin-left: 510px;
+    margin-left: 250px;
     margin-top: 5px;
 }
 #TexInputKey {
-    margin-top: 70px;
+    margin-top: -100px;
     margin-left: -100px;
-    height: 350px;
+    height: 255px;
 }
 #inputS {
-    margin-top: 200px;
+    margin-left: 40px;
+    width: 150px;
+    margin-top: 160px;
     padding: 4px;
     transform: rotate(270deg);
 }
@@ -452,7 +461,6 @@ a {
 }
 #inputCount {
     text-align: center;
-    margin-top: 55px;
     max-width: 30px;
 }
 .TexCount {
@@ -464,39 +472,46 @@ a {
     padding: 5px;
 }
 #itemKeyBlock {
-    margin-left: 300px;
+    margin-left: 800px;
     display: flex;
-    width: 996px;
-    max-width: 996px;
+    width: 500px;
+    max-width: 500px;
     overflow-x: scroll;
 }
 #blockSclussel {
    
 }
+#typeSylinder {
+    margin-top: 5px;
+    margin-left: 30px;
+    margin-right: 10px;
+}
 #sclusselInfo2 {
+    width: 800px;
     padding: 5px;
     background: red;
     color: white;
     align-items: center;
     display: flex;
+    margin-top: -45px;
 }
 #schlussel3 {
-    margin-left: 780px;
     margin-top: 5px;
+    margin-left: 70px;
 }
 #ItemTur {
     gap: 5px;
     display: flex;
 }
 .TexCountTur {
-    max-width: 290px;
+    max-width: 850px;
     text-align: center;
-    gap: 10px ;
-    display: grid;
+    display: flex;
     grid-template-columns: 30px;
     background-color: #EDEDED;
     padding: 5px;
-}FinihserCostInfo
+}
+
 .TexCountTurFinisher 
  {
     max-width: 290px;
@@ -520,22 +535,49 @@ a {
 }
 #inputTur {
     padding: 5px;
+    max-width: 200px;
 }
 #counterTur {
-    margin-top: 10px
+    margin-right: 20px;
+    margin-top: 10px;
+    float: left;
+    width: 26px;
+    text-align: center;
 }
-#infoButten {
-    width: 40px;
-    padding: 5px;
+#chekerTur {
+    margin-left: 40px;
+    display: flex;
+    gap: 5px;
+}
+    #chekerTur>button
+    {
+        width:40px;
+        border:none;
+       
+    }
+    #infoButten {
+        height: 30px;
+        width: 30px;
+        padding: 5px;
+        margin-top: 5px;
+    }
+#positio {
+   min-width: 35px;
+   max-width:35px;
 }
 #TypeSelectTurItem {
     margin-top: 5px;
     height: 30px;
-    width: 235px
+    width: 50px;
+    margin-left: 5px;
 }
-#SelectTurItem {
-    width: 280px
+#TypeSelectTurType {
+    margin-top: 5px;
+    height: 30px;
+    width: 150px;
+    margin-right: 20px;
 }
+
 .custom-checkbox {
     display: block;
 
@@ -566,7 +608,7 @@ a {
     text-align: start;
 }
 #BlockTur-1 {
-    width: 300px;
+    width: 800px;
     text-align: start;
 }
 #TexCountTurFinisher > h5{
@@ -589,6 +631,7 @@ a {
     gap: 20px;
     margin-left: 10px;
 }
+
 .checkboxContainer > input[type="checkbox"] {
     width: 20px;
     height: 20px;

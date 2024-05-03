@@ -1,0 +1,114 @@
+﻿@model Hebel;
+
+@{
+    ViewData["Title"] = "Edit_Hebel";
+}
+
+<h1>Edit Hebelzylinder</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SaveHebelzylinder" enctype="multipart/form-data">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @Html.HiddenFor(x=>x.Id)
+
+            <div class="form-group">
+                <h3>Type</h3>
+                <select required onchange="SelectionNewType(event.target.value)" class="form-select" id="schliessanlagenId">
+                  
+                    <option>Profil-Doppelzylinder</option>
+                    <option>Profil-Halbzylinder</option>
+                    <option>Profil-Knaufzylinder</option>
+                    <option selected>Hebelzylinder</option>
+                    <option>Vorhangschloss</option>
+                    <option >Aussenzylinder_Rundzylinder</option>
+
+                </select>
+                <input id="HebelType" asp-for="schliessanlagenId" type="hidden" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="companyName" class="control-label"></label>
+                <input required asp-for="companyName" class="form-control" />
+                <span asp-validation-for="companyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NameSystem" class="control-label"></label>
+                <input required asp-for="NameSystem" class="form-control" />
+                <span asp-validation-for="NameSystem" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cost" class="control-label"></label>
+                <input asp-for="Cost" type="text" class="form-control" />
+                <span asp-validation-for="Cost" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="description" class="control-label"></label>
+                <input required asp-for="description" class="form-control" />
+                <span asp-validation-for="description" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="ImageName" class="control-label"></label>
+                <input asp-for="ImageName" type="text" class="form-control" />
+                <span asp-validation-for="ImageName" class="text-danger"></span>
+            </div>
+            <label asp-for="ImageFile"  class="control-label"></label>
+            <br />
+            <input asp-for="ImageFile"  accept="image/*" />
+            <span asp-validation-for="ImageFile"  class="text-danger"></span>
+            <br />
+            @Html.ValidationMessageFor(m => m.ImageFile, "", new { @class = "error" })
+            <hr />
+             <input type="submit" value="Save" class="btn btn-primary" />         
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script>
+    let schliessanlagenType = document.getElementById("schliessanlagenId");
+    let HebelType = document.getElementById("HebelType");
+
+    function SelectionNewType(value) 
+    {
+        if (value == "Profil-Doppelzylinder") 
+        {
+            HebelType.value = 1;
+        }
+        if (value == "Profil-Halbzylinder") 
+        {
+            HebelType.value = 2;
+        }
+        if (value == "Profil-Knaufzylinder") 
+        {
+            HebelType.value = 3;
+        }
+        if (value == "Hebelzylinder") 
+        {
+            HebelType.value = 4;
+        }
+        if (value == "Vorhangschloss") 
+        {
+            HebelType.value = 5;
+        }
+        if (value == "Aussenzylinder_Rundzylinder") 
+        {
+            HebelType.value = 6;
+        }
+    }
+</script>
+

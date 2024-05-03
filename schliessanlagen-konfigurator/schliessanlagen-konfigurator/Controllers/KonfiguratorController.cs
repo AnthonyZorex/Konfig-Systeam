@@ -26,6 +26,9 @@ using System.Security.Policy;
 using MimeKit;
 using MailKit.Net.Smtp;
 using System.Net;
+using System.Net.WebSockets;
+using OfficeOpenXml.ConditionalFormatting.Contracts;
+using schliessanlagen_konfigurator.Models.Users;
 namespace schliessanlagen_konfigurator.Controllers
 {
     [EnableCors("*")]
@@ -41,63 +44,61 @@ namespace schliessanlagen_konfigurator.Controllers
             Environment = _environment;
             _contextAccessor = httpContextAccessor;
         }
- 
-        public ActionResult IndexKonfigurator(string Status, string Auser)
+        [HttpGet]
+        public ActionResult ChangedKonfigPlan(string userKey)
         {
+            var Orders = db.Orders.Where(x => x.userKey == userKey).ToList();
+            
+            var isOpen = new List<isOpen_Order>();
+            
+            foreach (var list in Orders)
+            {
+                var open = db.isOpen_Order.Where(x => x.OrdersId == list.Id).ToList();
+                
+                foreach(var item in open)
+                {
+                    isOpen.Add(item);
+                }
+            }
+
+            ViewBag.Orders = Orders.ToList();
+
+            var isOpen_value = new List<isOpen_value>();
+
+            foreach (var item in isOpen)
+            {
+                var key = db.isOpen_value.Where(x => x.isOpen_OrderId == item.Id).ToList();
+                
+                foreach(var keyItem in key)
+                {
+                    isOpen_value.Add(keyItem);
+                }
+            }
+
+            ViewBag.key = isOpen_value;
+
+            var keyValue = new List<KeyValue>();
+            
+            foreach (var item in isOpen_value)
+            {
+                var itemKey = db.KeyValue.Where(x => x.OpenKeyId == item.Id).ToList();
+               
+                foreach(var list in itemKey)
+                {
+                    keyValue.Add(list);
+                }
+            }
+
+            ViewBag.KeyValueFT = keyValue;
+
+            var chek = keyValue.Select(x => x.isOpen).ToList();
+
+            ViewBag.KeyValue = keyValue.ToList();
+
             ViewBag.Zylinder_Typ = db.Schliessanlagen.ToList();
-
-            if (Auser != null)
-            {
-                string[] fruits = Auser.Split(',');
-
-                for (int i = 0; i < fruits.Length; i++)
-                {
-                    int index = fruits[i].IndexOf("=");
-                    if (index != -1)
-                    {
-                        string result = fruits[i].Substring(index + 1);
-                        fruits[i] = result;
-                    }
-
-                }
-                for (int i = 0; i < fruits.Length; i++)
-                {
-                    int index = fruits[i].IndexOf("}");
-                    if (index != -1)
-                    {
-                        string result = fruits[i].Substring(0, index);
-                        fruits[i] = result;
-                    }
-
-                }
-                for (int i = 0; i < fruits.Length; i++)
-                {
-                    int index = fruits[i].IndexOf(" ");
-                    if (index != -1)
-                    {
-                        string result = fruits[i].Substring(index + 1);
-                        fruits[i] = result;
-                    }
-
-                }
-                var UserName_UserSername = fruits[0] + " " + fruits[1];
-                ViewBag.UserInformStatus = fruits[5];
-                ViewBag.UserId = fruits[9];
-                ViewBag.UserNameItem = UserName_UserSername;
-                ViewBag.CountOrders = fruits[8];
-            }
-            else
-            {
-                ViewBag.CountOrders = 0;
-            }
-
-
-            #region allParametrsDoppel
 
             var a = db.Aussen_Innen.Select(x => x.aussen).Distinct().OrderBy(x => x).ToList();
             var d = db.Aussen_Innen.Select(x => x.Intern).Distinct().OrderBy(x => x).ToList();
-
-            var DoppeloptionsName = db.NGF.Select(x => x.Name).ToList();
 
             var listAllInnen = new List<float>();
 
@@ -114,15 +115,6 @@ namespace schliessanlagen_konfigurator.Controllers
 
             ViewBag.DoppelIntern = ListInternDopple.Distinct();
 
-            var DoppelListOptions = new List<string>();
-
-            for (int i = 0; i < DoppeloptionsName.Count; i++)
-                DoppelListOptions.Add(DoppeloptionsName[i]);
-
-            ViewBag.OptionsName = DoppelListOptions.Distinct();
-
-            #endregion
-            #region knayf allParametrsKnayf
 
             var b = db.Aussen_Innen_Knauf.Select(x => x.aussen).Distinct().OrderBy(x => x).ToList();
             var ba = db.Aussen_Innen_Knauf.Select(x => x.Intern).Distinct().OrderBy(x => x).ToList();
@@ -138,11 +130,6 @@ namespace schliessanlagen_konfigurator.Controllers
             for (int i = 0; i < ba.Count(); i++)
                 listKnayfIntern.Add(ba[i]);
 
-            for (int i = 0; i < KnayfOptions.Count(); i++)
-                KnayfListOptions.Add(KnayfOptions[i]);
-
-            #endregion
-            #region allPrametrsHalbzylinder
             var c = db.Aussen_Innen_Halbzylinder.Select(x => x.aussen).Distinct().OrderBy(x => x).ToList();
 
             var HalbzylinderAussen = new List<float>();
@@ -150,75 +137,437 @@ namespace schliessanlagen_konfigurator.Controllers
             for (int i = 0; i < c.Count(); i++)
                 HalbzylinderAussen.Add(c[i]);
 
-            var HalbzylinderOptions = db.Halbzylinder_Options.Select(x => x.Name).ToList();
-            var HalbzylunderAllOptions = new List<string>();
-
-            for (int i = 0; i < HalbzylinderOptions.Count(); i++)
-                HalbzylunderAllOptions.Add(HalbzylinderOptions[i]);
-
-
-            #endregion
-            #region VorhanSchloss
-
             var size = db.Size.Select(x => x.sizeVorhangschloss).ToList();
             var VorhanSchlossSize = new List<float>();
 
             for (int i = 0; i < size.Count(); i++)
                 VorhanSchlossSize.Add(size[i]);
 
-            var VorhanSchloss = db.OptionsVorhan.Select(x => x.Name).ToList();
-            var VorhanSchlossOptions = new List<string>();
-
-            for (int i = 0; i < VorhanSchloss.Count(); i++)
-                VorhanSchlossOptions.Add(VorhanSchloss[i]);
-            #endregion
-            #region Hebel
-
-            var HebelOptions = db.Options.Select(x => x.Name).ToList();
-            var HebelAllOptions = new List<string>();
-
-            for (int i = 0; i < HebelOptions.Count(); i++)
-                HebelAllOptions.Add(HebelOptions[i]);
-
-            #endregion
-
-            #region Aussen
-
-            var AussenOptions = db.Aussen_Rund_all.Select(x => x.Name).ToList();
-            var AussenAllOptions = new List<string>();
-            for (int i = 0; i < AussenOptions.Count(); i++)
-                AussenAllOptions.Add(AussenOptions[i]);
-
-            #endregion
-
-            var session = _contextAccessor.HttpContext.Session;
-            var UserKey = session.Id;
+            var UserKey = userKey;
             Orders user = new Orders();
+
             user.userKey = UserKey;
             ViewBag.isOpen = db.KeyValue.Select(x => x.isOpen);
-
-
 
             ViewBag.KnayfAussen = listKnayfAussen.Distinct();
             ViewBag.KnayfInter = listKnayfIntern.Distinct();
 
-            ViewBag.JsonDoppelOption = JsonConvert.SerializeObject((DoppelListOptions.Distinct()));
-            ViewBag.JsonKnayf = JsonConvert.SerializeObject(KnayfOptions.Distinct());
-            ViewBag.JsonHabl = JsonConvert.SerializeObject(HalbzylunderAllOptions.Distinct());
-            ViewBag.JsonHebel = JsonConvert.SerializeObject(HebelAllOptions);
-            ViewBag.JsonVorhan = JsonConvert.SerializeObject(VorhanSchlossOptions.Distinct());
-            ViewBag.JsonAussen = JsonConvert.SerializeObject(AussenAllOptions.Distinct());
-
             ViewBag.SizeDoppelAussen = JsonConvert.SerializeObject(ListAussenDopple.Distinct());
             ViewBag.SizeDoppelIntern = JsonConvert.SerializeObject(ListInternDopple.Distinct());
-
 
             ViewBag.SizeKnayfAussen = JsonConvert.SerializeObject(listKnayfAussen.Distinct());
             ViewBag.SizeKnayfIntern = JsonConvert.SerializeObject(listKnayfIntern.Distinct());
 
             ViewBag.SizeHalb = JsonConvert.SerializeObject(HalbzylinderAussen.Distinct());
 
-            ViewBag.SizeVorhan = JsonConvert.SerializeObject(VorhanSchlossSize.Distinct());
+            return View(user);
+        }
+
+        [HttpPost]
+        public ActionResult ChangedKonfigPlanPost(List<string> FurNameKey, string userName, Orders Key, List<string> Turname, 
+        List<string> ZylinderId, List<float> aussen, List<float> innen, List<string> NameKey, List<int> CountKey,
+        List<string> IsOppen, List<int> ItemCount, List<int> CountTur)
+        {
+
+            if (IsOppen.Count > 1)
+            {
+                IsOppen.RemoveRange(0, IsOppen.Count - 1);
+            }
+
+            var ordersItem = db.Orders.Where(x => x.userKey == Key.userKey).ToList();
+            
+            var isOpen = new List<isOpen_Order>();
+
+            foreach (var list in ordersItem)
+            {
+                var open = db.isOpen_Order.Where(x => x.OrdersId == list.Id).ToList();
+
+                foreach (var item in open)
+                {
+                    isOpen.Add(item);
+                }
+            }
+
+            var isOpen_value = new List<isOpen_value>();
+
+            foreach (var item in isOpen)
+            {
+                var key = db.isOpen_value.Where(x => x.isOpen_OrderId == item.Id).ToList();
+
+                foreach (var keyItem in key)
+                {
+                    isOpen_value.Add(keyItem);
+                }
+            }
+            
+
+            foreach (var item in isOpen_value)
+            {
+                var itemKey = db.KeyValue.Where(x => x.OpenKeyId == item.Id).ToList();
+
+                foreach (var list in itemKey)
+                {
+                    db.KeyValue.Remove(list);
+
+                    db.SaveChanges();
+                }
+            }
+            foreach(var list in isOpen_value)
+            {
+                db.isOpen_value.Remove(list);
+                db.SaveChanges();
+            }
+
+            foreach (var list in isOpen)
+            {
+                db.isOpen_Order.Remove(list);
+                db.SaveChanges();
+            }
+            foreach(var list in ordersItem)
+            {
+                db.Orders.Remove(list);
+                db.SaveChanges();
+            }
+
+            int CountOrders = Turname.Count();
+
+            List<bool> isOpenList = new List<bool>();
+
+            string pattern = @",\s*";
+
+            string[] elements = Regex.Split(IsOppen.Last(), pattern);
+            
+            int aussenCounter = 0;
+            int InterCounter = 0;
+
+            foreach (string element in elements)
+            {
+                if (element == "true")
+                {
+                    isOpenList.Add(true);
+                }
+                else
+                {
+                    isOpenList.Add(false);
+                }
+
+            }
+
+            string zylinderTyp;
+
+            for (int i = 0; i < CountOrders; i++)
+            {
+
+                int idZylinder = 0;
+
+                if (ZylinderId.Count() <= i)
+                {
+                    zylinderTyp = ZylinderId.Last();
+
+                    if (zylinderTyp == "Doppelzylinder")
+                    {
+                        idZylinder = 1;
+                    }
+                    if (zylinderTyp == "Halbzylinder")
+                    {
+                        idZylinder = 2;
+                    }
+                    if (zylinderTyp == "Knaufzylinder")
+                    {
+                        idZylinder = 3;
+                    }
+                    if (zylinderTyp == "Hebelzylinder")
+                    {
+                        idZylinder = 4;
+                    }
+                    if (zylinderTyp == "Vorhangschloss")
+                    {
+                        idZylinder = 5;
+                    }
+                    if (zylinderTyp == "Aussenzylinder")
+                    {
+                        idZylinder = 6;
+                    }
+                }
+                else
+                {
+                    zylinderTyp = ZylinderId[i];
+
+                    if (zylinderTyp == "Doppelzylinder")
+                    {
+                        idZylinder = 1;
+                    }
+                    if (zylinderTyp == "Halbzylinder")
+                    {
+                        idZylinder = 2;
+                    }
+                    if (zylinderTyp == "Knaufzylinder")
+                    {
+                        idZylinder = 3;
+                    }
+                    if (zylinderTyp == "Hebelzylinder")
+                    {
+                        idZylinder = 4;
+                    }
+                    if (zylinderTyp == "Vorhangschloss")
+                    {
+                        idZylinder = 5;
+                    }
+                    if (zylinderTyp == "Aussenzylinder")
+                    {
+                        idZylinder = 6;
+                    }
+                }
+
+                string TurnameValue;
+                if (i >= Turname.Count())
+                {
+                    TurnameValue = Turname.Last();
+                }
+                else
+                {
+                    TurnameValue = Turname[i];
+                }
+
+
+                var orders = new Orders
+                {
+                    userKey = Key.userKey,
+                    DorName = TurnameValue,
+                    ZylinderId = idZylinder,
+                    Created = DateTime.Now,
+                    Count = CountTur[i]
+                };
+
+                if (innen.Count() > 0)
+                {
+                    if (InterCounter > innen.Count() || idZylinder == 2 || idZylinder == 4 || idZylinder == 5 || idZylinder == 6)
+                    {
+
+                    }
+                    else
+                    {
+                        if (innen[InterCounter] == 0)
+                        {
+                            orders.innen = null;
+                        }
+                        else
+                        {
+                            orders.innen = innen[InterCounter];
+                            InterCounter++;
+                        }
+
+                    }
+
+
+                }
+                if (aussen.Count() > 0)
+                {
+                    if (aussenCounter > aussen.Count() || idZylinder == 4 || idZylinder == 5 || idZylinder == 6)
+                    {
+
+                    }
+                    else
+                    {
+                        if (aussen[aussenCounter] == 0)
+                        {
+                            orders.aussen = null;
+                        }
+                        else
+                        {
+                            orders.aussen = aussen[aussenCounter];
+                            aussenCounter++;
+                        }
+
+                    }
+
+                }
+                db.Orders.Add(orders);
+                db.SaveChanges();
+
+                var x = db.Orders.Select(x => x.Id).ToList();
+
+                var Open = new isOpen_Order
+                {
+                    OrdersId = x.Last()
+                };
+                db.isOpen_Order.Add(Open);
+                db.SaveChanges();
+
+            }
+            var order_open = db.isOpen_Order.Select(x => x.Id).ToList();
+
+            var d = 0;
+
+            if (ItemCount.Count() > 0)
+            {
+                var itemsCount = isOpenList.Count() / ItemCount.First();
+                for (var s = 0; s < ItemCount.First(); s++)
+                {
+                    string NameKeyValue;
+
+                    int CountkeyOrders;
+
+
+                    if (s >= CountKey.Count())
+                    {
+                        CountkeyOrders = CountKey.Last();
+                    }
+                    else
+                    {
+                        CountkeyOrders = CountKey[s];
+                    }
+                    if (s >= NameKey.Count())
+                    {
+                        NameKeyValue = NameKey.Last();
+                    }
+                    else
+                    {
+                        NameKeyValue = NameKey[s];
+                    }
+                    var Open_value = new isOpen_value
+                    {
+                        isOpen_OrderId = order_open.Last(),
+                        NameKey = NameKeyValue,
+                        CountKey = CountkeyOrders,
+                        ForNameKey = FurNameKey[s]
+                    };
+
+                    db.isOpen_value.Add(Open_value);
+
+                    db.SaveChanges();
+
+                    for (var f = 0; f < itemsCount; f++)
+                    {
+                        var KeyValueC = new KeyValue
+                        {
+                            OpenKeyId = Open_value.Id,
+                            isOpen = isOpenList[d]
+                        };
+                        db.KeyValue.Add(KeyValueC);
+                        db.SaveChanges();
+                        d++;
+                    }
+
+                }
+            }
+            else
+            {
+                for (var s = 0; s < NameKey.Count(); s++)
+                {
+                    string NameKeyValue;
+                    int CountkeyOrders;
+
+                    if (s >= CountKey.Count())
+                    {
+                        CountkeyOrders = CountKey.Last();
+                    }
+                    else
+                    {
+                        CountkeyOrders = CountKey[s];
+                    }
+                    if (s >= NameKey.Count())
+                    {
+                        NameKeyValue = NameKey.Last();
+                    }
+                    else
+                    {
+                        NameKeyValue = NameKey[s];
+                    }
+                    var Open_value = new isOpen_value
+                    {
+                        isOpen_OrderId = order_open.Last(),
+                        NameKey = NameKeyValue,
+                        CountKey = CountkeyOrders,
+                    };
+                    db.isOpen_value.Add(Open_value);
+                    db.SaveChanges();
+
+                    for (var f = 0; f <= IsOppen.Count(); f++)
+                    {
+                        var KeyValueC = new KeyValue
+                        {
+                            OpenKeyId = Open_value.Id,
+                            isOpen = isOpenList[d]
+                        };
+                        db.KeyValue.Add(KeyValueC);
+                        db.SaveChanges();
+                        d++;
+                    }
+
+                }
+            }
+            db.SaveChanges();
+            return RedirectToAction("System_Auswählen", "Konfigurator", new { Key, userName });
+        }
+        public ActionResult IndexKonfigurator()
+        {
+            ViewBag.Zylinder_Typ = db.Schliessanlagen.ToList();
+
+            var a = db.Aussen_Innen.Select(x => x.aussen).Distinct().OrderBy(x => x).ToList();
+            var d = db.Aussen_Innen.Select(x => x.Intern).Distinct().OrderBy(x => x).ToList();
+
+            var listAllInnen = new List<float>();
+
+            var ListAussenDopple = new List<float>();
+
+            for (int i = 0; i < a.Count(); i++)
+                ListAussenDopple.Add(a[i]);
+
+            ViewBag.DoppelAussen = ListAussenDopple.Distinct();
+
+            var ListInternDopple = new List<float>();
+            for (int i = 0; i < d.Count(); i++)
+                ListInternDopple.Add(d[i]);
+
+            ViewBag.DoppelIntern = ListInternDopple.Distinct();
+
+
+            var b = db.Aussen_Innen_Knauf.Select(x => x.aussen).Distinct().OrderBy(x => x).ToList();
+            var ba = db.Aussen_Innen_Knauf.Select(x => x.Intern).Distinct().OrderBy(x => x).ToList();
+            var KnayfOptions = db.Knayf_Options.Select(x => x.Name).ToList();
+
+            var listKnayfAussen = new List<float>();
+            var listKnayfIntern = new List<float>();
+            var KnayfListOptions = new List<string>();
+
+            for (int i = 0; i < b.Count(); i++)
+                listKnayfAussen.Add(b[i]);
+
+            for (int i = 0; i < ba.Count(); i++)
+                listKnayfIntern.Add(ba[i]);
+
+            var c = db.Aussen_Innen_Halbzylinder.Select(x => x.aussen).Distinct().OrderBy(x => x).ToList();
+
+            var HalbzylinderAussen = new List<float>();
+
+            for (int i = 0; i < c.Count(); i++)
+                HalbzylinderAussen.Add(c[i]);
+         
+            var size = db.Size.Select(x => x.sizeVorhangschloss).ToList();
+            var VorhanSchlossSize = new List<float>();
+
+            for (int i = 0; i < size.Count(); i++)
+                VorhanSchlossSize.Add(size[i]);
+
+            var session = _contextAccessor.HttpContext.Session;
+
+            var UserKey = session.Id;
+            Orders user = new Orders();
+
+            user.userKey = UserKey;
+            ViewBag.isOpen = db.KeyValue.Select(x => x.isOpen);
+
+            ViewBag.KnayfAussen = listKnayfAussen.Distinct();
+            ViewBag.KnayfInter = listKnayfIntern.Distinct();
+
+            ViewBag.SizeDoppelAussen = JsonConvert.SerializeObject(ListAussenDopple.Distinct());
+            ViewBag.SizeDoppelIntern = JsonConvert.SerializeObject(ListInternDopple.Distinct());
+
+            ViewBag.SizeKnayfAussen = JsonConvert.SerializeObject(listKnayfAussen.Distinct());
+            ViewBag.SizeKnayfIntern = JsonConvert.SerializeObject(listKnayfIntern.Distinct());
+
+            ViewBag.SizeHalb = JsonConvert.SerializeObject(HalbzylinderAussen.Distinct());
 
             return View(user);
         }
@@ -228,14 +577,11 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var orders = await db.Orders.ToListAsync();
 
-            //ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
-            //string loginInform = ident.Claims.Select(x => x.Value).First();
-            //var users = db.Users.FirstOrDefault(x => x.Id == loginInform);
-
+            ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
+            string loginInform = ident.Claims.Select(x => x.Value).First();
+            var users = db.Users.FirstOrDefault(x => x.Id == loginInform);
 
             var keyUser = orders.Last();
-
-
 
             var allUserListOrder = await db.Orders.Where(x => x.userKey == keyUser.userKey).ToListAsync();
 
@@ -264,6 +610,7 @@ namespace schliessanlagen_konfigurator.Controllers
             var VorhanType = Vorhangschloss.Select(x => x.schliessanlagenId).First();
             var AussenType = Aussenzylinder.Select(x => x.schliessanlagenId).First();
 
+            int VorhCount = 0;
             var allOderDopelSyze = allUserListOrder.Where(x => x.ZylinderId == dopelType).ToList();
 
             if (allOderDopelSyze.Count() > 0)
@@ -276,7 +623,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var products = await db.Aussen_Innen.ToListAsync();
 
-                var items = products.Where(x => x.aussen >= maxInnenParameter & x.Intern >= maxAussenParameter).Select(x => x.Profil_DoppelzylinderId).Distinct().ToList();
+                var items = products.Where(x => x.aussen == maxInnenParameter & x.Intern == maxAussenParameter).Select(x => x.Profil_DoppelzylinderId).Distinct().ToList();
 
                 var safeDoppelItem = new List<Profil_Doppelzylinder>();
 
@@ -290,136 +637,14 @@ namespace schliessanlagen_konfigurator.Controllers
                     }
                       
                 }
-
                 for (int j = 0; j < safeDoppelItem.Count(); j++)
                 {
                     dopelProduct.Add(safeDoppelItem[j]);
                 }
-
-
-
-                var allDopelOption = allUserListOrder.Where(x => x.ZylinderId == dopelType).ToList();
-
-                var DopelOption = from t1 in allUserListOrder
-                                  join t2 in dopelProduct
-                                      on t1.ZylinderId equals t2.schliessanlagenId
-                                  select new
-                                  {
-                                      Option = t1.Options
-                                  };
-
-
-                var OptionDoppel = DopelOption.Where(x => x.Option != null).Count();
-
-
-                if (OptionDoppel > 0)
-                {
-                    var OptionsList = new List<Profil_Doppelzylinder_Options>();
-
-                    var results = new List<NGF>();
-
-                    var opt = new List<Profil_Doppelzylinder_Options>();
-
-                    for (int i = 0; i < dopelProduct.Count(); i++)
-                    {
-                        var options = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == dopelProduct[i].Id).GroupBy(x => x.DoppelzylinderId).ToList();
-                        foreach (var ts in options)
-                        {
-                            var optionItem = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == ts.Key).ToList();
-                            for (int fs = 0; fs < optionItem.Count(); fs++)
-                            {
-                                opt.Add(optionItem[fs]);
-                            }
-                        }
-
-                    }
-
-                    var resultList = new List<NGF>();
-
-                    var OptionsName = db.NGF.Select(x => x).ToList();
-
-                    var queryOrder = from t1 in OptionsName
-                                     join t2 in opt
-                                     on t1.OptionsId equals t2.Id
-                                     select new
-                                     {
-                                         Id = t1.Id,
-                                         Name = t1.Name,
-                                         OptionsId = t1.OptionsId,
-                                         Description = t1.Description,
-                                         DoppelzylinderId = t2.DoppelzylinderId
-                                     };
-
-
-                    var detateils = queryOrder.Distinct().ToList();
-
-                    var queryOrder2 = from t1 in detateils
-                                      join t2 in allDopelOption
-                                      on t1.Name equals t2.Options
-                                      select new
-                                      {
-                                          Id = t1.Id,
-                                          Name = t1.Name,
-                                          OptionsId = t1.OptionsId,
-                                          Description = t1.Description,
-                                          DoppelzylinderId = t1.DoppelzylinderId
-                                      };
-
-                    var groupedByDoppelId = queryOrder2.GroupBy(x => x.DoppelzylinderId);
-
-                    foreach (var group in groupedByDoppelId)
-                    {
-                        int countInGroup = group.Count();
-                        int orderOptionCount = allDopelOption.Where(x => x.Options != null).Count();
-
-                        if (countInGroup == orderOptionCount)
-
-                        {
-                            foreach (var item in group)
-                            {
-                                var resultt = new NGF
-                                {
-                                    Name = item.Name,
-                                    OptionsId = item.OptionsId,
-                                    Description = item.Description,
-                                };
-                                resultList.Add(resultt);
-                            }
-
-                        }
-                    }
-
-
-                    var NeOptionList = new List<Profil_Doppelzylinder_Options>();
-
-                    foreach (var g in resultList)
-                    {
-                        var optX = opt.Where(x => x.Id == g.OptionsId).Distinct().ToList();
-                        foreach (var mh in optX)
-                        {
-                            NeOptionList.Add(mh);
-                        }
-
-                    }
-                    foreach (var gf in NeOptionList)
-                    {
-                        var SortProduct = dopelProduct.Where(x => x.Id == gf.DoppelzylinderId).Distinct().ToList();
-                        foreach (var j in SortProduct)
-                        {
-                            cheked.Add(j);
-                        }
-                    }
-
-                }
-                else
-                {
                     foreach (var g in dopelProduct.Distinct())
                     {
                         cheked.Add(g);
                     }
-
-                }
-
             }
 
             var allOderKnayf = allUserListOrder.Where(x => x.ZylinderId == KnayfType).ToList();
@@ -434,7 +659,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var products = await db.Aussen_Innen_Knauf.ToListAsync();
 
-                var item = products.Where(x => x.aussen >= maxInnenParameter & x.Intern >= maxAussenParameter).Select(x => x.Profil_KnaufzylinderId).Distinct().ToList();
+                var item = products.Where(x => x.aussen == maxInnenParameter & x.Intern == maxAussenParameter).Select(x => x.Profil_KnaufzylinderId).Distinct().ToList();
 
                 var safeDoppelItem = new List<Profil_Knaufzylinder>();
 
@@ -452,130 +677,11 @@ namespace schliessanlagen_konfigurator.Controllers
                     KnayfProduct.Add(safeDoppelItem[j]);
                 }
 
-                var allDopelOptionKnayf = allUserListOrder.Where(x => x.ZylinderId == KnayfType).ToList();
-
-
-                var KnayfOption = from t1 in allUserListOrder
-                                  join t2 in KnayfProduct
-                                      on t1.ZylinderId equals t2.schliessanlagenId
-                                  select new
-                                  {
-                                      Option = t1.Options
-                                  };
-
-
-                var OptionKnayf = KnayfOption.Where(x => x.Option != null).Count();
-
-
-                if (OptionKnayf > 0)
-                {
-
-                    var OptionsList = new List<Profil_Knaufzylinder_Options>();
-
-                    var results = new List<Knayf_Options>();
-
-                    var opt = new List<Profil_Knaufzylinder_Options>();
-
-                    for (int i = 0; i < KnayfProduct.Count(); i++)
-                    {
-                        var options = db.Profil_Knaufzylinder_Options.Where(x => x.Profil_KnaufzylinderId == KnayfProduct[i].Id).GroupBy(x => x.Profil_KnaufzylinderId).ToList();
-
-                        foreach (var ts in options)
-                        {
-                            var optionItem = db.Profil_Knaufzylinder_Options.Where(x => x.Profil_KnaufzylinderId == ts.Key).ToList();
-
-                            for (int fs = 0; fs < optionItem.Count(); fs++)
-                            {
-                                opt.Add(optionItem[fs]);
-                            }
-                        }
-                    }
-                    var resultList = new List<Knayf_Options>();
-
-                    var allDopelOption = allUserListOrder.Where(x => x.ZylinderId == KnayfType).ToList();
-
-                    var OptionsName = db.Knayf_Options.Select(x => x).ToList();
-
-                    var queryOrderKnayf = from t1 in OptionsName
-                                          join t2 in opt
-                                          on t1.OptionsId equals t2.Id
-                                          select new
-                                          {
-                                              Id = t1.Id,
-                                              Name = t1.Name,
-                                              OptionsId = t1.OptionsId,
-                                              Description = t1.Description,
-                                              KnaufzylinderId = t2.Profil_KnaufzylinderId
-                                          };
-
-
-                    var detateilsKnayf = queryOrderKnayf.ToList();
-
-                    var queryOrderKnayf2 = from t1 in detateilsKnayf
-                                           join t2 in allDopelOptionKnayf
-                                           on t1.Name equals t2.Options
-                                           select new
-                                           {
-                                               Id = t1.Id,
-                                               Name = t1.Name,
-                                               OptionsId = t1.OptionsId,
-                                               Description = t1.Description,
-                                               KnaufzylinderId = t1.KnaufzylinderId
-                                           };
-
-                    var groupedByDoppelId = queryOrderKnayf2.GroupBy(x => x.KnaufzylinderId);
-
-                    foreach (var group in groupedByDoppelId)
-                    {
-                        int countInGroup = group.Count();
-                        int orderOptionCount = allDopelOption.Where(x => x.Options != null).Count();
-
-                        if (countInGroup == orderOptionCount)
-
-                        {
-                            foreach (var itemKnayf in group)
-                            {
-                                var resultt = new Knayf_Options
-                                {
-                                    Name = itemKnayf.Name,
-                                    OptionsId = itemKnayf.OptionsId,
-                                    Description = itemKnayf.Description,
-                                };
-                                resultList.Add(resultt);
-                            }
-
-                        }
-                    }
-
-                    var NeOptionList = new List<Profil_Knaufzylinder_Options>();
-
-                    foreach (var g in resultList)
-                    {
-                        var optX = opt.Where(x => x.Id == g.OptionsId).ToList();
-                        foreach (var mh in optX)
-                        {
-                            NeOptionList.Add(mh);
-                        }
-
-                    }
-                    foreach (var gf in NeOptionList)
-                    {
-                        var SortProduct = KnayfProduct.Where(x => x.Id == gf.Profil_KnaufzylinderId).ToList();
-                        foreach (var j in SortProduct)
-                        {
-                            cheked2.Add(j);
-                        }
-                    }
-
-                }
-                else
-                {
                     foreach (var g in KnayfProduct)
                     {
                         cheked2.Add(g);
                     }
 
-                }
             }
 
             var allOderHalb = allUserListOrder.Where(x => x.ZylinderId == HalbType).ToList();
@@ -589,7 +695,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var products = await db.Aussen_Innen_Halbzylinder.ToListAsync();
 
-                var items = products.Where(x => x.aussen >= maxAussenParameter).Select(x => x.Profil_HalbzylinderId).Distinct().ToList();
+                var items = products.Where(x => x.aussen == maxAussenParameter).Select(x => x.Profil_HalbzylinderId).Distinct().ToList();
 
                 var safeDoppelItem = new List<Profil_Halbzylinder>();
 
@@ -606,539 +712,53 @@ namespace schliessanlagen_konfigurator.Controllers
                     HalbProduct.Add(safeDoppelItem[j]);
                 }
 
-                var allHalbOption = allUserListOrder.Where(x => x.ZylinderId == HalbType).ToList();
-
-                var HalbOption = from t1 in allUserListOrder
-                                 join t2 in HalbProduct
-                                     on t1.ZylinderId equals t2.schliessanlagenId
-                                 select new
-                                 {
-                                     Option = t1.Options
-                                 };
-
-
-                var OptionKnayf = HalbOption.Where(x => x.Option != null).Count();
-
-                if (OptionKnayf > 0)
-                {
-                    var OptionsList = new List<Profil_Halbzylinder_Options>();
-
-                    var results = new List<Halbzylinder_Options>();
-
-                    var opt = new List<Profil_Halbzylinder_Options>();
-
-                    for (int i = 0; i < HalbProduct.Count(); i++)
-                    {
-                        var options = db.Profil_Halbzylinder_Options.Where(x => x.Profil_HalbzylinderId == HalbProduct[i].Id).GroupBy(x => x.Profil_HalbzylinderId).ToList();
-
-                        foreach (var ts in options)
-                        {
-                            var optionItem = db.Profil_Halbzylinder_Options.Where(x => x.Profil_HalbzylinderId == ts.Key).ToList();
-
-                            for (int fs = 0; fs < optionItem.Count(); fs++)
-                            {
-                                opt.Add(optionItem[fs]);
-                            }
-                        }
-                    }
-
-                    var resultList = new List<Halbzylinder_Options>();
-
-                    var OptionsName = db.Halbzylinder_Options.Select(x => x).ToList();
-
-                    var queryOrder = from t1 in OptionsName
-                                     join t2 in opt
-                                     on t1.OptionsId equals t2.Id
-                                     select new
-                                     {
-                                         Id = t1.Id,
-                                         Name = t1.Name,
-                                         OptionsId = t1.OptionsId,
-                                         Description = t1.Description,
-                                         DoppelzylinderId = t2.Profil_HalbzylinderId
-                                     };
-
-
-                    var detateils = queryOrder.Distinct().ToList();
-
-                    var queryOrder2 = from t1 in detateils
-                                      join t2 in allHalbOption
-                                      on t1.Name equals t2.Options
-                                      select new
-                                      {
-                                          Id = t1.Id,
-                                          Name = t1.Name,
-                                          OptionsId = t1.OptionsId,
-                                          Description = t1.Description,
-                                          DoppelzylinderId = t1.DoppelzylinderId
-                                      };
-
-                    var groupedByDoppelId = queryOrder2.GroupBy(x => x.DoppelzylinderId);
-
-                    var NeOptionList = new List<Profil_Halbzylinder_Options>();
-
-                    foreach (var group in groupedByDoppelId)
-                    {
-                        int countInGroup = group.Count();
-                        int orderOptionCount = allHalbOption.Where(x => x.Options != null).Count();
-
-                        if (countInGroup == orderOptionCount)
-
-                        {
-                            foreach (var item in group)
-                            {
-                                var resultt = new Halbzylinder_Options
-                                {
-                                    Name = item.Name,
-                                    OptionsId = item.OptionsId,
-                                    Description = item.Description,
-                                };
-                                resultList.Add(resultt);
-                            }
-
-                        }
-                    }
-
-                    foreach (var g in resultList)
-                    {
-                        var optX = opt.Where(x => x.Id == g.OptionsId).ToList();
-                        foreach (var mh in optX)
-                        {
-                            NeOptionList.Add(mh);
-                        }
-
-                    }
-                    foreach (var gf in NeOptionList)
-                    {
-                        var SortProduct = HalbProduct.Where(x => x.Id == gf.Profil_HalbzylinderId).ToList();
-                        foreach (var j in SortProduct)
-                        {
-                            cheked3.Add(j);
-                        }
-                    }
-
-                }
-                else
-                {
+                
                     foreach (var g in HalbProduct)
                     {
                         cheked3.Add(g);
                     }
 
-                }
 
             }
             var allOderHebel = allUserListOrder.Where(x => x.ZylinderId == HebelType).ToList();
 
             if (allOderHebel.Count() > 0)
             {
-                var allHebelOption = allUserListOrder.Where(x => x.ZylinderId == HebelType).ToList();
-
-                var HebelOption = from t1 in allUserListOrder
-                                  join t2 in hebel
-                                  on t1.ZylinderId equals t2.schliessanlagenId
-                                  select new
-                                  {
-                                      Option = t1.Options
-                                  };
-
-
-                var OptionHebel = HebelOption.Where(x => x.Option != null).Count();
-
-                if (OptionHebel > 0)
-                {
-                    var OptionsList = new List<Hebelzylinder_Options>();
-
-                    var results = new List<Options>();
-
-                    var opt = new List<Hebelzylinder_Options>();
-
-                    for (int i = 0; i < hebel.Count(); i++)
-                    {
-                        var options = db.Hebelzylinder_Options.Where(x => x.HebelzylinderId == hebel[i].Id).GroupBy(x => x.HebelzylinderId).ToList();
-
-                        foreach (var ts in options)
-                        {
-                            var optionItem = db.Hebelzylinder_Options.Where(x => x.HebelzylinderId == ts.Key).ToList();
-                            for (int fs = 0; fs < optionItem.Count(); fs++)
-                            {
-                                opt.Add(optionItem[fs]);
-                            }
-                        }
-                    }
-                    var resultList = new List<Options>();
-
-                    var OptionsName = db.Options.Select(x => x).ToList();
-
-                    var queryOrder = from t1 in OptionsName
-                                     join t2 in opt
-                                     on t1.OptionId equals t2.Id
-                                     select new
-                                     {
-                                         Id = t1.Id,
-                                         Name = t1.Name,
-                                         OptionsId = t1.OptionId,
-                                         Description = t1.Description,
-                                         DoppelzylinderId = t2.HebelzylinderId
-                                     };
-
-
-                    var detateils = queryOrder.Distinct().ToList();
-
-                    var queryOrder2 = from t1 in detateils
-                                      join t2 in allHebelOption
-                                      on t1.Name equals t2.Options
-                                      select new
-                                      {
-                                          Id = t1.Id,
-                                          Name = t1.Name,
-                                          OptionsId = t1.OptionsId,
-                                          Description = t1.Description,
-                                          DoppelzylinderId = t1.DoppelzylinderId
-                                      };
-
-                    var groupedByDoppelId = queryOrder2.GroupBy(x => x.DoppelzylinderId);
-
-                    foreach (var group in groupedByDoppelId)
-                    {
-                        int countInGroup = group.Count();
-
-                        int orderOptionCount = allHebelOption.Where(x => x.Options != null).Count();
-
-                        if (countInGroup == orderOptionCount)
-
-                        {
-                            foreach (var item in group)
-                            {
-                                var resultt = new Options
-                                {
-                                    Name = item.Name,
-                                    OptionId = item.OptionsId,
-                                    Description = item.Description,
-                                };
-                                resultList.Add(resultt);
-                            }
-
-                        }
-                    }
-
-                    var NeOptionList = new List<Hebelzylinder_Options>();
-
-                    foreach (var g in resultList)
-                    {
-                        var optX = opt.Where(x => x.Id == g.OptionId).ToList();
-                        foreach (var mh in optX)
-                        {
-                            NeOptionList.Add(mh);
-                        }
-
-                    }
-                    foreach (var gf in NeOptionList)
-                    {
-                        var SortProduct = hebel.Where(x => x.Id == gf.HebelzylinderId).ToList();
-                        foreach (var j in SortProduct)
-                        {
-                            cheked4.Add(j);
-                        }
-                    }
-
-                }
-                else
-                {
                     foreach (var g in hebel)
                     {
                         cheked4.Add(g);
                     }
-
-                }
-
             }
 
-            var allOderVorhan = allUserListOrder.Where(x => x.ZylinderId == VorhanType).ToList();
+            var allOderVorhan = allUserListOrder.Where(x => x.ZylinderId == VorhanType).Select(x=>x.aussen).ToList();
 
-            var VorhangProduct = new List<Vorhangschloss>();
+           
 
             if (allOderVorhan.Count() > 0)
             {
-                var maxAussenParameter = allOderVorhan.Max(x => x.aussen);
 
-                var products = await db.Size.ToListAsync();
+                var VorhangProduct = db.Vorhangschloss.ToList();
 
-                var items = products.Where(x => x.sizeVorhangschloss >= maxAussenParameter).Select(x => x.VorhangschlossId).Distinct().ToList();
-
-                var safeDoppelItem = new List<Vorhangschloss>();
-
-                for (int i = 0; i < items.Count(); i++)
-                {
-                    var chekedItem = db.Vorhangschloss.Where(x => x.Id == items[i]).ToList();
-
-                    for (int g = 0; g < chekedItem.Count(); g++)
-                        safeDoppelItem.Add(chekedItem[g]);
-
-                }
-
-                for (int j = 0; j < safeDoppelItem.Count(); j++)
-                {
-                    VorhangProduct.Add(safeDoppelItem[j]);
-                }
-
-
-                var allDopelOption = allUserListOrder.Where(x => x.ZylinderId == dopelType).ToList();
-
-                var VorhanOption = from t1 in allUserListOrder
-                                   join t2 in VorhangProduct
-                                       on t1.ZylinderId equals t2.schliessanlagenId
-                                   select new
-                                   {
-                                       Option = t1.Options
-                                   };
-
-
-                var OptionKnayf = VorhanOption.Where(x => x.Option != null).Count();
-
-                if (OptionKnayf > 0)
-                {
-                    var OptionsList = new List<Vorhan_Options>();
-
-                    var results = new List<OptionsVorhan>();
-
-                    var opt = new List<Vorhan_Options>();
-
-                    for (int i = 0; i < VorhangProduct.Count(); i++)
-                    {
-                        var options = db.Vorhan_Options.Where(x => x.VorhangschlossId == VorhangProduct[i].Id).GroupBy(x => x.VorhangschlossId).ToList();
-
-                        foreach (var ts in options)
-                        {
-                            var optionItem = db.Vorhan_Options.Where(x => x.VorhangschlossId == ts.Key).ToList();
-                            for (int fs = 0; fs < optionItem.Count(); fs++)
-                            {
-                                opt.Add(optionItem[fs]);
-                            }
-                        }
-
-                    }
-
-                    var resultList = new List<OptionsVorhan>();
-
-
-
-                    var OptionsName = db.OptionsVorhan.Select(x => x).ToList();
-
-                    var queryOrder = from t1 in OptionsName
-                                     join t2 in opt
-                                     on t1.OptioId equals t2.Id
-                                     select new
-                                     {
-                                         Id = t1.Id,
-                                         Name = t1.Name,
-                                         OptionsId = t1.OptioId,
-                                         Description = t1.Description,
-                                         DoppelzylinderId = t2.VorhangschlossId
-                                     };
-
-
-                    var detateils = queryOrder.Distinct().ToList();
-
-                    var queryOrder2 = from t1 in detateils
-                                      join t2 in allDopelOption
-                                      on t1.Name equals t2.Options
-                                      select new
-                                      {
-                                          Id = t1.Id,
-                                          Name = t1.Name,
-                                          OptionsId = t1.OptionsId,
-                                          Description = t1.Description,
-                                          DoppelzylinderId = t1.DoppelzylinderId
-                                      };
-
-                    var groupedByDoppelId = queryOrder2.GroupBy(x => x.DoppelzylinderId);
-
-                    foreach (var group in groupedByDoppelId)
-                    {
-                        int countInGroup = group.Count();
-                        int orderOptionCount = allDopelOption.Where(x => x.Options != null).Count();
-
-                        if (countInGroup == orderOptionCount)
-
-                        {
-                            foreach (var item in group)
-                            {
-                                var resultt = new OptionsVorhan
-                                {
-                                    Name = item.Name,
-                                    OptioId = item.OptionsId,
-                                    Description = item.Description,
-                                };
-                                resultList.Add(resultt);
-                            }
-
-                        }
-                    }
-
-
-                    var NeOptionList = new List<Vorhan_Options>();
-
-                    foreach (var g in resultList)
-                    {
-                        var optX = opt.Where(x => x.Id == g.OptioId).Distinct().ToList();
-                        foreach (var mh in optX)
-                        {
-                            NeOptionList.Add(mh);
-                        }
-
-                    }
-                    foreach (var gf in NeOptionList)
-                    {
-                        var SortProduct = VorhangProduct.Where(x => x.Id == gf.VorhangschlossId).Distinct().ToList();
-                        foreach (var j in SortProduct)
-                        {
-                            cheked5.Add(j);
-                        }
-                    }
-                }
-                else
-                {
-                    foreach (var g in VorhangProduct.Distinct())
-                    {
+                     foreach (var g in VorhangProduct.Distinct())
+                     {
                         cheked5.Add(g);
-                    }
+                     }
 
-                }
 
+                VorhCount++;
             }
-
-
 
             var allOderAussen = allUserListOrder.Where(x => x.ZylinderId == AussenType).ToList();
 
             if (allOderAussen.Count() > 0)
             {
-                var allAussenOption = allUserListOrder.Where(x => x.ZylinderId == AussenType).ToList();
-
-                var AussenOption = from t1 in allUserListOrder
-                                   join t2 in Aussenzylinder
-                                   on t1.ZylinderId equals t2.schliessanlagenId
-                                   select new
-                                   {
-                                       Option = t1.Options
-                                   };
-
-
-                var OptionAussen = AussenOption.Where(x => x.Option != null).Count();
-
-                if (OptionAussen > 0)
-                {
-                    var OptionsList = new List<Aussen_Rund_options>();
-
-                    var results = new List<Aussen_Rund_all>();
-
-                    var opt = new List<Aussen_Rund_options>();
-
-                    for (int i = 0; i < Aussenzylinder.Count(); i++)
-                    {
-                        var options = db.Aussen_Rund_options.Where(x => x.Aussenzylinder_RundzylinderId == hebel[i].Id).GroupBy(x => x.Aussenzylinder_RundzylinderId).ToList();
-
-                        foreach (var ts in options)
-                        {
-                            var optionItem = db.Aussen_Rund_options.Where(x => x.Aussenzylinder_RundzylinderId == ts.Key).ToList();
-
-                            for (int fs = 0; fs < optionItem.Count(); fs++)
-                            {
-                                opt.Add(optionItem[fs]);
-                            }
-                        }
-
-                    }
-                    var resultList = new List<Aussen_Rund_all>();
-
-                    var OptionsName = db.Aussen_Rund_all.Select(x => x).ToList();
-
-                    var queryOrder = from t1 in OptionsName
-                                     join t2 in opt
-                                     on t1.Aussen_Rund_optionsId equals t2.Id
-                                     select new
-                                     {
-                                         Id = t1.Id,
-                                         Name = t1.Name,
-                                         OptionsId = t1.Aussen_Rund_optionsId,
-                                         Description = t1.Description,
-                                         DoppelzylinderId = t2.Aussenzylinder_RundzylinderId
-                                     };
-
-
-                    var detateils = queryOrder.Distinct().ToList();
-
-                    var queryOrder2 = from t1 in detateils
-                                      join t2 in allAussenOption
-                                      on t1.Name equals t2.Options
-                                      select new
-                                      {
-                                          Id = t1.Id,
-                                          Name = t1.Name,
-                                          OptionsId = t1.OptionsId,
-                                          Description = t1.Description,
-                                          DoppelzylinderId = t1.DoppelzylinderId
-                                      };
-
-                    var groupedByDoppelId = queryOrder2.GroupBy(x => x.DoppelzylinderId);
-
-                    foreach (var group in groupedByDoppelId)
-                    {
-                        int countInGroup = group.Count();
-
-                        int orderOptionCount = allAussenOption.Where(x => x.Options != null).Count();
-
-                        if (countInGroup == orderOptionCount)
-
-                        {
-                            foreach (var item in group)
-                            {
-                                var resultt = new Aussen_Rund_all
-                                {
-                                    Name = item.Name,
-                                    Aussen_Rund_optionsId = item.OptionsId,
-                                    Description = item.Description,
-                                };
-                                resultList.Add(resultt);
-                            }
-
-                        }
-                    }
-                    var NeOptionList = new List<Aussen_Rund_options>();
-
-                    foreach (var g in resultList)
-                    {
-                        var optX = opt.Where(x => x.Id == g.Aussen_Rund_optionsId).ToList();
-
-                        foreach (var mh in optX)
-                        {
-                            NeOptionList.Add(mh);
-                        }
-
-                    }
-                    foreach (var gf in NeOptionList)
-                    {
-                        var SortProduct = Aussenzylinder.Where(x => x.Id == gf.Aussenzylinder_RundzylinderId).ToList();
-                        foreach (var j in SortProduct)
-                        {
-                            cheked6.Add(j);
-                        }
-                    }
-                }
-                else
-                {
                     foreach (var g in Aussenzylinder)
                     {
                         cheked6.Add(g);
                     }
-
-                }
-
-
             }
-
-            if (cheked.Count() > 0)
+            #region presset
+            if (cheked.Count() > 0 && cheked2.Count==0 && cheked3.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
 
                 int precision = 2;
@@ -1148,8 +768,13 @@ namespace schliessanlagen_konfigurator.Controllers
                                  on t1.schliessanlagenId equals t2.ZylinderId
                                  select new
                                  {
+                                     cheked3 = 0,
+                                     cheked2 = 0,
+                                     cheked4 = 0,
+                                     cheked5 = 0,
+                                     cheked6 = 0,
                                      userKey = keyUser.userKey,
-                                     Id = t1.Id,
+                                     cheked = t1.Id,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
                                      description = t1.description,
@@ -1159,33 +784,37 @@ namespace schliessanlagen_konfigurator.Controllers
                                  };
 
                 var ListOrder = queryOrder.Distinct().ToList();
-                ViewBag.Doppel = ListOrder.ToList();
-
+                ViewBag.Doppel = ListOrder.Distinct().OrderBy(x => x.Cost).ToList();
             }
 
-            if (cheked2.Count() > 0)
-            {
+           if (cheked2.Count() > 0 && cheked.Count == 0 && cheked3.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
+           {
                 int precision = 2;
                 var queryOrder = from t1 in cheked2
                                  join t2 in allUserListOrder
                                 on t1.schliessanlagenId equals t2.ZylinderId
                                  select new
                                  {
+                                     cheked = 0,
+                                     cheked3 = 0,
+                                     cheked2 = t1.Id,
+                                     cheked4 = 0,
+                                     cheked5 = 0,
+                                     cheked6 = 0,
                                      userKey = keyUser.userKey,
-                                     Id = t1.Id,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum(), precision),
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum(), precision),
                                      ImageName = t1.ImageName,
                                  };
 
                 var Knaufzylinder = queryOrder.Distinct().ToList();
 
-                ViewBag.Knaufzylinder = Knaufzylinder;
+                ViewBag.Knaufzylinder = Knaufzylinder.Distinct().OrderBy(x => x.Cost).ToList(); ;
             }
-            if (cheked3.Count() > 0)
+            if (cheked3.Count() > 0 && cheked2.Count == 0 && cheked.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
                 int precision = 2;
                 var query = from t1 in cheked3
@@ -1193,21 +822,26 @@ namespace schliessanlagen_konfigurator.Controllers
                             on t1.schliessanlagenId equals t2.ZylinderId
                             select new
                             {
-                                Id = t1.Id,
+                                cheked = 0,
+                                cheked3 = t1.Id,
+                                cheked2 = 0,
+                                cheked4 = 0,
+                                cheked5 = 0,
+                                cheked6 = 0,
                                 userKey = keyUser.userKey,
                                 Name = t1.Name,
                                 companyName = t1.companyName,
                                 description = t1.description,
                                 NameSystem = t1.NameSystem,
-                                Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum(), precision),
+                                Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum(), precision),
                                 ImageName = t1.ImageName
 
                             };
                 var rl = query.Distinct().ToList();
 
-                ViewBag.Halb = rl.ToList();
+                ViewBag.Halb = rl.Distinct().OrderBy(x => x.Cost).ToList();
             }
-            if (cheked4.Count() > 0)
+            if (cheked4.Count() > 0 && cheked2.Count == 0 && cheked3.Count == 0 && cheked.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
                 int precision = 2;
                 var query = from t1 in cheked4
@@ -1215,21 +849,26 @@ namespace schliessanlagen_konfigurator.Controllers
                             on t1.schliessanlagenId equals t2.ZylinderId
                             select new
                             {
-                                Id = t1.Id,
+                                cheked = 0,
+                                cheked3 = 0,
+                                cheked2 = 0,
+                                cheked4 = t1.Id,
+                                cheked5 = 0,
+                                cheked6 = 0,
                                 userKey = keyUser.userKey,
                                 Name = t1.Name,
                                 companyName = t1.companyName,
                                 description = t1.description,
                                 NameSystem = t1.NameSystem,
-                                Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum(), precision),
+                                Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum(), precision),
                                 ImageName = t1.ImageName
 
                             };
                 var rl = query.Distinct().ToList();
 
-                ViewBag.Hebel = rl.ToList();
+                ViewBag.Hebel = rl.Distinct().OrderBy(x => x.Cost).ToList();
             }
-            if (cheked5.Count() > 0)
+            if (cheked5.Count() > 0 && cheked2.Count == 0 && cheked3.Count == 0 && cheked4.Count == 0 && cheked.Count == 0 && cheked6.Count == 0)
             {
                 int precision = 2;
 
@@ -1238,42 +877,52 @@ namespace schliessanlagen_konfigurator.Controllers
                             on t1.schliessanlagenId equals t2.ZylinderId
                             select new
                             {
-                                Id = t1.Id,
+                                cheked = 0,
+                                cheked3 = 0,
+                                cheked2 = 0,
+                                cheked4 = 0,
+                                cheked5 = t1.Id,
+                                cheked6 = 0,
                                 userKey = keyUser.userKey,
                                 Name = t1.Name,
                                 companyName = t1.companyName,
                                 description = t1.description,
                                 NameSystem = t1.NameSystem,
-                                Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum(), precision),
+                                Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
                                 ImageName = t1.ImageName
                             };
                 var rl = query.Distinct().ToList();
 
-                ViewBag.VorhanSchloss = rl.ToList();
+                ViewBag.VorhanSchloss = rl.Distinct().OrderBy(x => x.Cost).ToList();
             }
-            if (cheked6.Count() > 0)
+            if (cheked6.Count() > 0 && cheked2.Count == 0 && cheked3.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked.Count == 0)
             {
                 int precision = 2;
 
-                var query = from t1 in cheked5
+                var query = from t1 in cheked6
                             join t2 in allUserListOrder
                             on t1.schliessanlagenId equals t2.ZylinderId
                             select new
                             {
-                                Id = t1.Id,
+                                cheked = 0,
+                                cheked3 = 0,
+                                cheked2 = 0,
+                                cheked4 = 0,
+                                cheked5 = 0,
+                                cheked6 = t1.Id,
                                 userKey = keyUser.userKey,
                                 Name = t1.Name,
                                 companyName = t1.companyName,
                                 description = t1.description,
                                 NameSystem = t1.NameSystem,
-                                Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum(), precision),
+                                Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() , precision),
                                 ImageName = t1.ImageName
                             };
                 var rl = query.Distinct().ToList();
 
-                ViewBag.Aussen = rl.ToList();
+                ViewBag.Aussen = rl.Distinct().OrderBy(x => x.Cost).ToList();
             }
-            if (cheked2.Count() > 0 && cheked.Count() > 0)
+            if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked3.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
                 int precision = 2;
                 var queryOrder = from t1 in cheked
@@ -1281,6 +930,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                  on t1.NameSystem equals t2.NameSystem
                                  select new
                                  {
+                                     cheked = t1.Id,
+                                     cheked3 = 0,
+                                     cheked4 = 0,
+                                     cheked5 = 0,
+                                     cheked6 = 0,
                                      cheked2 = t2.Id,
                                      userKey = keyUser.userKey,
                                      Id = t1.Id,
@@ -1288,39 +942,41 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round((t1.Cost + t2.Cost) * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum(), precision),
+                                     Cost = Math.Round(t1.Cost  * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum(), precision),
                                      ImageName = t1.ImageName,
                                  };
 
                 var Join = queryOrder.Distinct().ToList();
 
-                ViewBag.Doppel = Join;
-                ViewBag.Knaufzylinder = Join;
+                ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
-
-            if (cheked.Count() > 0 && cheked3.Count() > 0)
+            if (cheked.Count() > 0 && cheked3.Count() > 0 && cheked2.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
                 int precision = 2;
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked3
                                  on t1.NameSystem equals t2.NameSystem
                                  select new
                                  {
-                                     cheked3 = t2.Id,
                                      userKey = keyUser.userKey,
-                                     Id = t1.Id,
+                                     cheked = t1.Id,
+                                     cheked3 = t2.Id,
+                                     cheked4 = 0,
+                                     cheked5 = 0,
+                                     cheked6 = 0,
+                                     cheked2 = 0,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round((t1.Cost + t2.Cost) * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum(), precision),
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum(), precision),
                                      ImageName = t1.ImageName,
                                  };
                 var Join = queryOrder.Distinct().ToList();
-                ViewBag.a = Join;
-                ViewBag.DH = Join;
+                ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
-            if (cheked.Count() > 0 && cheked4.Count() > 0)
+            if (cheked.Count() > 0 && cheked4.Count() > 0 && cheked2.Count == 0 && cheked3.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
                 int precision = 2;
 
@@ -1329,21 +985,24 @@ namespace schliessanlagen_konfigurator.Controllers
                                  on t1.NameSystem equals t2.NameSystem
                                  select new
                                  {
+                                     cheked = t1.Id,
+                                     cheked3 = 0,
                                      cheked4 = t2.Id,
+                                     cheked5 = 0,
+                                     cheked6 = 0,
+                                     cheked2 = 0,
                                      userKey = keyUser.userKey,
-                                     Id = t1.Id,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round((t1.Cost + t2.Cost) * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum(), precision),
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum(), precision),
                                      ImageName = t1.ImageName,
                                  };
                 var Join = queryOrder.Distinct().ToList();
-                ViewBag.a = Join;
-                ViewBag.DHE = Join;
+                ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
-            if (cheked.Count() > 0 && cheked5.Count() > 0)
+            if (cheked.Count() > 0 && cheked5.Count() > 0 && cheked2.Count == 0 && cheked4.Count == 0 && cheked3.Count == 0 && cheked6.Count == 0)
             {
                 int precision = 2;
 
@@ -1352,22 +1011,25 @@ namespace schliessanlagen_konfigurator.Controllers
                                  on t1.NameSystem equals t2.NameSystem
                                  select new
                                  {
+                                     cheked = t1.Id,
+                                     cheked3 = 0,
+                                     cheked4 = 0,
                                      cheked5 = t2.Id,
+                                     cheked6 = 0,
+                                     cheked2 = 0,
                                      userKey = keyUser.userKey,
-                                     Id = t1.Id,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round((t1.Cost + t2.Cost) * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum(), precision),
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
                                      ImageName = t1.ImageName,
                                  };
                 var Join = queryOrder.Distinct().ToList();
-                ViewBag.a = Join;
-                ViewBag.DV = Join;
+                ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
 
-            if (cheked.Count() > 0 && cheked6.Count() > 0)
+            if (cheked.Count() > 0 && cheked6.Count() > 0 && cheked2.Count == 0 && cheked4.Count == 0 && cheked3.Count == 0 && cheked5.Count == 0)
             {
                 int precision = 2;
 
@@ -1376,22 +1038,26 @@ namespace schliessanlagen_konfigurator.Controllers
                                  on t1.NameSystem equals t2.NameSystem
                                  select new
                                  {
+                                     cheked = t1.Id,
+                                     cheked3 = 0,
+                                     cheked4 = 0,
+                                     cheked5 = 0,
                                      cheked6 = t2.Id,
+                                     cheked2 = 0,
                                      userKey = keyUser.userKey,
-                                     Id = t1.Id,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round((t1.Cost + t2.Cost) * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum(), precision),
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
                                      ImageName = t1.ImageName,
                                  };
+
                 var Join = queryOrder.Distinct().ToList();
-                ViewBag.a = Join;
-                ViewBag.DA = Join;
+                ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList(); 
             }
 
-            if (cheked2.Count() > 0 && cheked3.Count() > 0)
+            if (cheked2.Count() > 0 && cheked3.Count() > 0 && cheked.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
                 int precision = 2;
 
@@ -1400,23 +1066,277 @@ namespace schliessanlagen_konfigurator.Controllers
                                  on t1.NameSystem equals t2.NameSystem
                                  select new
                                  {
-                                     cheked2 = t2.Id,
+                                     cheked = 0,
+                                     cheked3 = t2.Id,
+                                     cheked4 = 0,
+                                     cheked5 = 0,
+                                     cheked6 = 0,
+                                     cheked2 = t1.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+                ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked2.Count() > 0 && cheked4.Count() > 0 && cheked.Count == 0 && cheked3.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked2
+                                 join t2 in cheked4
+                                 on t1.NameSystem equals t2.NameSystem
+                                 select new
+                                 {
+                                     cheked = 0,
+                                     cheked3 = 0,
+                                     cheked4 = t2.Id,
+                                     cheked5 = 0,
+                                     cheked6 = 0,
+                                     cheked2 = t1.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+                ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked2.Count() > 0 && cheked5.Count() > 0 && cheked.Count == 0 && cheked3.Count == 0 && cheked4.Count == 0 && cheked6.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked2
+                                 join t2 in cheked5
+                                 on t1.NameSystem equals t2.NameSystem
+                                 select new
+                                 {
+                                     cheked = 0,
+                                     cheked3 = 0,
+                                     cheked4 = 0,
+                                     cheked5 = t2.Id,
+                                     cheked6 = 0,
+                                     cheked2 = t1.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+                ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked2.Count() > 0 && cheked6.Count() > 0 && cheked.Count == 0 && cheked3.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked2
+                                 join t2 in cheked6
+                                 on t1.NameSystem equals t2.NameSystem
+                                 select new
+                                 {
+                                     cheked = 0,
+                                     cheked3 = 0,
+                                     cheked4 = 0,
+                                     cheked5 = 0,
+                                     cheked2 = t1.Id,
+                                     cheked6 = t2.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+                ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked3.Count() > 0 && cheked4.Count() > 0 && cheked.Count == 0 && cheked2.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked3
+                                 join t2 in cheked4
+                                 on t1.NameSystem equals t2.NameSystem
+                                 select new
+                                 {
+                                     cheked = 0,
+                                     cheked3 = t1.Id,
+                                     cheked4 = t2.Id,
+                                     cheked5 = 0,
+                                     cheked2 = 0,
+                                     cheked6 = 0,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+                ViewBag.Halb = Join.Distinct().OrderBy(x => x.Cost).ToList();
+               
+            }
+            if (cheked3.Count() > 0 && cheked5.Count() > 0 && cheked.Count == 0 && cheked2.Count == 0 && cheked6.Count == 0 && cheked4.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked3
+                                 join t2 in cheked5
+                                 on t1.NameSystem equals t2.NameSystem
+                                 select new
+                                 {
+                                     cheked = 0,
+                                     cheked3 = t1.Id,
+                                     cheked4 = 0,
+                                     cheked5 = t2.Id,
+                                     cheked2 = 0,
+                                     cheked6 = 0,
                                      userKey = keyUser.userKey,
                                      Id = t1.Id,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round((t1.Cost + t2.Cost) * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum(), precision),
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
                                      ImageName = t1.ImageName,
                                  };
 
                 var Join = queryOrder.Distinct().ToList();
-                ViewBag.b = Join;
-                ViewBag.KH = Join;
-            }
+                ViewBag.Halb = Join.Distinct().OrderBy(x => x.Cost).ToList(); 
 
-            if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked3.Count() > 0)
+            }
+            if (cheked3.Count() > 0 && cheked6.Count() > 0 && cheked.Count == 0 && cheked2.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked3
+                                 join t2 in cheked6
+                                 on t1.NameSystem equals t2.NameSystem
+                                 select new
+                                 {
+                                     cheked = 0,
+                                     cheked3 = t1.Id,
+                                     cheked4 = 0,
+                                     cheked5 = 0,
+                                     cheked2 = 0,
+                                     cheked6 = t2.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+                ViewBag.Halb = Join.Distinct().OrderBy(x => x.Cost).ToList(); 
+         
+            }
+            if (cheked4.Count() > 0 && cheked5.Count() > 0 && cheked.Count == 0 && cheked2.Count == 0 && cheked3.Count == 0 && cheked6.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked4
+                                 join t2 in cheked5
+                                 on t1.NameSystem equals t2.NameSystem
+                                 select new
+                                 {
+                                     cheked = 0,
+                                     cheked3 = 0,
+                                     cheked4 = t1.Id,
+                                     cheked5 = t2.Id,
+                                     cheked2 = 0,
+                                     cheked6 = 0,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+                ViewBag.Hebel = Join.Distinct().OrderBy(x => x.Cost).ToList(); 
+                
+            }
+            if (cheked4.Count() > 0 && cheked6.Count() > 0 && cheked.Count == 0 && cheked2.Count == 0 && cheked3.Count == 0 && cheked4.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked4
+                                 join t2 in cheked6
+                                 on t1.NameSystem equals t2.NameSystem
+                                 select new
+                                 {
+                                     cheked = 0,
+                                     cheked3 = 0,
+                                     cheked4 = t1.Id,
+                                     cheked5 = 0,
+                                     cheked2 = 0,
+                                     cheked6 = t2.Id,
+                                     userKey = keyUser.userKey,
+                                     Id = t1.Id,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+                ViewBag.Hebel = Join.Distinct().OrderBy(x => x.Cost).ToList(); 
+                
+            }
+            if (cheked5.Count() > 0 && cheked6.Count() > 0 && cheked.Count == 0 && cheked2.Count == 0 && cheked3.Count == 0 && cheked4.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked5
+                                 join t2 in cheked6
+                                 on t1.NameSystem equals t2.NameSystem
+                                 select new
+                                 {
+                                     cheked = 0,
+                                     cheked3 = 0,
+                                     cheked4 = 0,
+                                     cheked5 = t1.Id,
+                                     cheked2 = 0,
+                                     cheked6 = t2.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.VorhanSchloss = Join.Distinct().OrderBy(x => x.Cost).ToList(); 
+             
+            }
+            if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked3.Count() > 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
                 int precision = 2;
 
@@ -1425,26 +1345,56 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
                                  select new
                                  {
-                                     cheked2 = t2.Id,
+                                     cheked = t1.Id,
                                      cheked3 = t3.Id,
+                                     cheked4 = 0,
+                                     cheked5 = 0,
+                                     cheked2 = t2.Id,
+                                     cheked6 = 0,
                                      userKey = keyUser.userKey,
-                                     Id = t1.Id,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round((t1.Cost + t2.Cost + t3.Cost) * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum(), precision),
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + 
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum(), precision),
                                      ImageName = t1.ImageName,
                                  };
 
                 var Join = queryOrder.Distinct().ToList();
 
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
-                ViewBag.Knaufzylinder = "";
-                ViewBag.Halb = "";
-
             }
-            if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked5.Count() > 0)
+            if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked4.Count() > 0 && cheked3.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked
+                                 join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
+                                 select new
+                                 {
+                                     cheked = t1.Id,
+                                     cheked3 = 0,
+                                     cheked4 = t3.Id,
+                                     cheked5 = 0,
+                                     cheked2 = t2.Id,
+                                     cheked6 = 0,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked5.Count() > 0 && cheked4.Count == 0 && cheked3.Count == 0 && cheked6.Count == 0)
             {
                 int precision = 2;
 
@@ -1453,26 +1403,523 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
                                  select new
                                  {
-                                     cheked2 = t2.Id,
+                                     cheked = t1.Id,
+                                     cheked3 = 0,
+                                     cheked4 = 0,
                                      cheked5 = t3.Id,
+                                     cheked2 = t2.Id,
+                                     cheked6 = 0,
                                      userKey = keyUser.userKey,
-                                     Id = t1.Id,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round((t1.Cost + t2.Cost + t3.Cost) * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum(), precision),
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
                                      ImageName = t1.ImageName,
                                  };
 
                 var Join = queryOrder.Distinct().ToList();
 
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
-                ViewBag.Knaufzylinder = "";
-                ViewBag.VorhanSchloss = "";
-
             }
-            if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked3.Count() > 0 && cheked4.Count() > 0)
+            if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked6.Count() > 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked3.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked
+                                 join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
+                                 select new
+                                 {
+                                     cheked = t1.Id,
+                                     cheked3 = 0,
+                                     cheked4 = 0,
+                                     cheked5 = 0,
+                                     cheked2 = t2.Id,
+                                     cheked6 = t3.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked3.Count() > 0 && cheked.Count() > 0 && cheked4.Count() > 0 && cheked6.Count == 0 && cheked5.Count == 0 && cheked2.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked
+                                 join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
+                                 select new
+                                 {
+                                     cheked = t1.Id,
+                                     cheked3 = t2.Id,
+                                     cheked4 = t3.Id,
+                                     cheked5 = 0,
+                                     cheked2 = 0,
+                                     cheked6 = 0,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked3.Count() > 0 && cheked.Count() > 0 && cheked5.Count() > 0 && cheked6.Count == 0 && cheked4.Count == 0 && cheked2.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked
+                                 join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
+                                 select new
+                                 {
+                                     cheked = t1.Id,
+                                     cheked3 = t2.Id,
+                                     cheked4 = 0,
+                                     cheked5 = t3.Id,
+                                     cheked2 = 0,
+                                     cheked6 = 0,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked3.Count() > 0 && cheked.Count() > 0 && cheked6.Count() > 0 && cheked5.Count == 0 && cheked4.Count == 0 && cheked2.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked
+                                 join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
+                                 select new
+                                 {
+                                     cheked = t1.Id,
+                                     cheked3 = t2.Id,
+                                     cheked4 = 0,
+                                     cheked5 = 0,
+                                     cheked2 = 0,
+                                     cheked6 = t3.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+
+            if (cheked4.Count() > 0 && cheked.Count() > 0 && cheked5.Count() > 0 && cheked2.Count == 0 && cheked3.Count == 0 && cheked6.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked
+                                 join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
+                                 select new
+                                 {
+                                     cheked = t1.Id,
+                                     cheked3 = 0,
+                                     cheked4 = t2.Id,
+                                     cheked5 = t3.Id,
+                                     cheked2 = 0,
+                                     cheked6 = 0,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked4.Count() > 0 && cheked.Count() > 0 && cheked6.Count() > 0 && cheked2.Count == 0 && cheked3.Count == 0 && cheked5.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked
+                                 join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
+                                 select new
+                                 {
+                                     cheked = t1.Id,
+                                     cheked3 = 0,
+                                     cheked4 = t2.Id,
+                                     cheked5 = 0,
+                                     cheked2 = 0,
+                                     cheked6 = t3.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked5.Count() > 0 && cheked.Count() > 0 && cheked6.Count() > 0 && cheked2.Count == 0 && cheked3.Count == 0 && cheked4.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked
+                                 join t2 in cheked5 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
+                                 select new
+                                 {
+                                     cheked = t1.Id,
+                                     cheked3 = 0,
+                                     cheked4 = 0,
+                                     cheked5 = t2.Id,
+                                     cheked2 = 0,
+                                     cheked6 = t3.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+
+            if (cheked3.Count() > 0 && cheked2.Count() > 0 && cheked4.Count() > 0 && cheked.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked2
+                                 join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
+                                 select new
+                                 {
+                                     cheked = 0,
+                                     cheked3 = t2.Id,
+                                     cheked4 = t3.Id,
+                                     cheked5 = 0,
+                                     cheked2 = t1.Id,
+                                     cheked6 = 0,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked3.Count() > 0 && cheked2.Count() > 0 && cheked5.Count() > 0 && cheked.Count == 0 && cheked4.Count == 0 && cheked6.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked2
+                                 join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
+                                 select new
+                                 {
+                                     cheked = 0,
+                                     cheked3 = t2.Id,
+                                     cheked4 = 0,
+                                     cheked5 = t3.Id,
+                                     cheked2 = t1.Id,
+                                     cheked6 = 0,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked3.Count() > 0 && cheked2.Count() > 0 && cheked6.Count() > 0 && cheked.Count == 0 && cheked5.Count == 0 && cheked4.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked2
+                                 join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
+                                 select new
+                                 {
+                                     cheked = 0,
+                                     cheked3 = t2.Id,
+                                     cheked4 = 0,
+                                     cheked5 = 0,
+                                     cheked2 = t1.Id,
+                                     cheked6 = t3.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked4.Count() > 0 && cheked2.Count() > 0 && cheked5.Count() > 0 && cheked.Count == 0 && cheked3.Count == 0 && cheked6.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked2
+                                 join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
+                                 select new
+                                 {
+                                     cheked = 0,
+                                     cheked3 = 0,
+                                     cheked4 = t2.Id,
+                                     cheked5 = t3.Id,
+                                     cheked2 = t1.Id,
+                                     cheked6 = 0,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked4.Count() > 0 && cheked2.Count() > 0 && cheked6.Count() > 0 && cheked.Count == 0 && cheked5.Count == 0 && cheked3.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked2
+                                 join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
+                                 select new
+                                 {
+                                     cheked = 0,
+                                     cheked3 = 0,
+                                     cheked4 = t2.Id,
+                                     cheked5 = 0,
+                                     cheked2 = t1.Id,
+                                     cheked6 = t3.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked5.Count() > 0 && cheked2.Count() > 0 && cheked6.Count() > 0 && cheked.Count == 0 && cheked4.Count == 0 && cheked3.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked2
+                                 join t2 in cheked5 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
+                                 select new
+                                 {
+                                     cheked = 0,
+                                     cheked3 = 0,
+                                     cheked4 = 0,
+                                     cheked5 = t2.Id,
+                                     cheked2 = t1.Id,
+                                     cheked6 = t3.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked4.Count() > 0 && cheked3.Count() > 0 && cheked5.Count() > 0 && cheked.Count == 0 && cheked2.Count == 0 && cheked6.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked3
+                                 join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
+                                 select new
+                                 {
+                                     cheked = 0,
+                                     cheked3 = t1.Id,
+                                     cheked4 = t2.Id,
+                                     cheked5 = t3.Id,
+                                     cheked2 = 0,
+                                     cheked6 = 0,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked4.Count() > 0 && cheked3.Count() > 0 && cheked6.Count() > 0 && cheked.Count == 0 && cheked2.Count == 0 && cheked5.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked3
+                                 join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
+                                 select new
+                                 {
+                                     cheked = 0,
+                                     cheked3 = t1.Id,
+                                     cheked4 = t2.Id,
+                                     cheked5 = 0,
+                                     cheked2 = 0,
+                                     cheked6 = t3.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked5.Count() > 0 && cheked3.Count() > 0 && cheked6.Count() > 0 && cheked.Count == 0 && cheked2.Count == 0 && cheked4.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked3
+                                 join t2 in cheked5 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
+                                 select new
+                                 {
+                                     cheked = 0,
+                                     cheked3 = t1.Id,
+                                     cheked4 = 0,
+                                     cheked5 = t2.Id,
+                                     cheked2 = 0,
+                                     cheked6 = t3.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked5.Count() > 0 && cheked4.Count() > 0 && cheked6.Count() > 0 && cheked.Count == 0 && cheked2.Count == 0 && cheked3.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked4
+                                 join t2 in cheked5 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
+                                 select new
+                                 {
+                                     cheked = 0,
+                                     cheked3 = 0,
+                                     cheked4 = t1.Id,
+                                     cheked5 = t2.Id,
+                                     cheked2 = 0,
+                                     cheked6 = t3.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+
+            if (cheked.Count() > 0 && cheked2.Count() > 0 && cheked3.Count() > 0 && cheked4.Count>0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
                 int precision = 2;
 
@@ -1480,30 +1927,480 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
                                  join t4 in cheked4 on t3.NameSystem equals t4.NameSystem
-
-
                                  select new
                                  {
-                                     cheked2 = t2.Id,
+                                     cheked = t1.Id,
                                      cheked3 = t3.Id,
                                      cheked4 = t4.Id,
+                                     cheked5 = 0,
+                                     cheked2 = t2.Id,
+                                     cheked6 = 0,
                                      userKey = keyUser.userKey,
-                                     Id = t1.Id,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round((t1.Cost + t2.Cost + t3.Cost + t4.Cost) * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum(), precision),
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum(), precision),
                                      ImageName = t1.ImageName,
                                  };
 
                 var Join = queryOrder.Distinct().ToList();
 
-
-                ViewBag.a = Join;
-                ViewBag.b = Join;
+                ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
-            if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked3.Count() > 0 && cheked4.Count() > 0 && cheked5.Count() > 0)
+            if (cheked.Count() > 0 && cheked2.Count() > 0 && cheked3.Count() > 0 && cheked5.Count > 0 && cheked4.Count == 0 && cheked6.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked
+                                 join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in cheked5 on t3.NameSystem equals t4.NameSystem
+                                 select new
+                                 {
+                                     cheked = t1.Id,
+                                     cheked3 = t3.Id,
+                                     cheked4 = 0,
+                                     cheked5 = t4.Id,
+                                     cheked2 = t2.Id,
+                                     cheked6 = 0,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + 
+                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked.Count() > 0 && cheked2.Count() > 0 && cheked3.Count() > 0 && cheked6.Count > 0 && cheked4.Count == 0 && cheked5.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked
+                                 join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in cheked6 on t3.NameSystem equals t4.NameSystem
+                                 select new
+                                 {
+                                     cheked = t1.Id,
+                                     cheked3 = t3.Id,
+                                     cheked4 = 0,
+                                     cheked5 =0,
+                                     cheked2 = t2.Id,
+                                     cheked6 = t4.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
+                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked.Count() > 0 && cheked2.Count() > 0 && cheked4.Count() > 0 && cheked5.Count > 0 && cheked3.Count == 0 && cheked6.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked
+                                 join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in cheked5 on t3.NameSystem equals t4.NameSystem
+                                 select new
+                                 {
+                                     cheked = t1.Id,
+                                     cheked3 =0,
+                                     cheked4 = t3.Id,
+                                     cheked5 = t4.Id,
+                                     cheked2 = t2.Id,
+                                     cheked6 = 0,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
+                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked.Count() > 0 && cheked2.Count() > 0 && cheked4.Count() > 0 && cheked6.Count > 0 && cheked3.Count == 0 && cheked5.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked
+                                 join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in cheked6 on t3.NameSystem equals t4.NameSystem
+                                 select new
+                                 {
+                                     cheked = t1.Id,
+                                     cheked3 = 0,
+                                     cheked4 = t3.Id,
+                                     cheked5 = 0,
+                                     cheked2 = t2.Id,
+                                     cheked6 = t4.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
+                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked.Count() > 0 && cheked2.Count() > 0 && cheked5.Count() > 0 && cheked6.Count > 0 && cheked3.Count == 0 && cheked4.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked
+                                 join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in cheked6 on t3.NameSystem equals t4.NameSystem
+                                 select new
+                                 {
+                                     cheked = t1.Id,
+                                     cheked3 = 0,
+                                     cheked4 = 0,
+                                     cheked5 = t3.Id,
+                                     cheked2 = t2.Id,
+                                     cheked6 = t4.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
+                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+
+            if (cheked.Count() > 0 && cheked3.Count() > 0 && cheked4.Count() > 0 && cheked5.Count > 0 && cheked2.Count == 0 && cheked6.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked
+                                 join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in cheked5 on t3.NameSystem equals t4.NameSystem
+                                 select new
+                                 {
+                                     cheked = t1.Id,
+                                     cheked3 = t2.Id,
+                                     cheked4 = t3.Id,
+                                     cheked5 = t4.Id,
+                                     cheked2 = 0,
+                                     cheked6 = 0,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
+                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked.Count() > 0 && cheked3.Count() > 0 && cheked4.Count() > 0 && cheked6.Count > 0 && cheked2.Count == 0 && cheked5.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked
+                                 join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in cheked6 on t3.NameSystem equals t4.NameSystem
+                                 select new
+                                 {
+                                     cheked = t1.Id,
+                                     cheked3 = t2.Id,
+                                     cheked4 = t3.Id,
+                                     cheked5 = 0,
+                                     cheked2 = 0,
+                                     cheked6 = t4.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
+                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+
+            if (cheked.Count() > 0 && cheked3.Count() > 0 && cheked5.Count() > 0 && cheked6.Count > 0 && cheked2.Count == 0 && cheked4.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked
+                                 join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in cheked6 on t3.NameSystem equals t4.NameSystem
+                                 select new
+                                 {
+                                     cheked = t1.Id,
+                                     cheked3 = t2.Id,
+                                     cheked4 = 0,
+                                     cheked5 = t3.Id,
+                                     cheked2 = 0,
+                                     cheked6 = t4.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
+                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked.Count() > 0 && cheked4.Count() > 0 && cheked5.Count() > 0 && cheked6.Count > 0 && cheked2.Count == 0 && cheked3.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked
+                                 join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in cheked6 on t3.NameSystem equals t4.NameSystem
+                                 select new
+                                 {
+                                     cheked = t1.Id,
+                                     cheked4 = t2.Id,
+                                     cheked3 = 0,
+                                     cheked5 = t3.Id,
+                                     cheked2 = 0,
+                                     cheked6 = t4.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
+                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked2.Count() > 0 && cheked3.Count() > 0 && cheked4.Count() > 0 && cheked5.Count > 0 && cheked.Count == 0 && cheked6.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked2
+                                 join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in cheked5 on t3.NameSystem equals t4.NameSystem
+                                 select new
+                                 {
+                                     cheked = 0,
+                                     cheked4 = t3.Id,
+                                     cheked3 = t2.Id,
+                                     cheked5 = t4.Id,
+                                     cheked2 = t1.Id,
+                                     cheked6 = 0,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked2.Count() > 0 && cheked3.Count() > 0 && cheked4.Count() > 0 && cheked6.Count > 0 && cheked.Count == 0 && cheked5.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked2
+                                 join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in cheked6 on t3.NameSystem equals t4.NameSystem
+                                 select new
+                                 {
+                                     cheked = 0,
+                                     cheked4 = t3.Id,
+                                     cheked3 = t2.Id,
+                                     cheked5 = 0,
+                                     cheked2 = t1.Id,
+                                     cheked6 = t4.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked2.Count() > 0 && cheked3.Count() > 0 && cheked5.Count() > 0 && cheked6.Count > 0 && cheked.Count == 0 && cheked4.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked2
+                                 join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in cheked6 on t3.NameSystem equals t4.NameSystem
+                                 select new
+                                 {
+                                     cheked = 0,
+                                     cheked4 = 0,
+                                     cheked3 = t2.Id,
+                                     cheked5 = t3.Id,
+                                     cheked2 = t1.Id,
+                                     cheked6 = t4.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked2.Count() > 0 && cheked4.Count() > 0 && cheked5.Count() > 0 && cheked6.Count > 0 && cheked.Count == 0 && cheked3.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked2
+                                 join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in cheked6 on t3.NameSystem equals t4.NameSystem
+                                 select new
+                                 {
+                                     cheked = 0,
+                                     cheked4 = t2.Id,
+                                     cheked3 = 0,
+                                     cheked5 = t3.Id,
+                                     cheked2 = t1.Id,
+                                     cheked6 = t4.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked3.Count() > 0 && cheked4.Count() > 0 && cheked5.Count() > 0 && cheked6.Count > 0 && cheked.Count == 0 && cheked2.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked3
+                                 join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in cheked6 on t3.NameSystem equals t4.NameSystem
+                                 select new
+                                 {
+                                     cheked = 0,
+                                     cheked4 = t2.Id,
+                                     cheked3 = t1.Id,
+                                     cheked5 = t3.Id,
+                                     cheked2 = 0,
+                                     cheked6 = t4.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
+            }
+            if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked3.Count() > 0 && cheked4.Count() > 0 && cheked5.Count() > 0 && cheked6.Count == 0)
             {
                 int precision = 2;
 
@@ -1515,27 +2412,209 @@ namespace schliessanlagen_konfigurator.Controllers
 
                                  select new
                                  {
-                                     cheked2 = t2.Id,
-                                     cheked3 = t3.Id,
+                                     cheked = t1.Id,
                                      cheked4 = t4.Id,
+                                     cheked3 = t3.Id,
                                      cheked5 = t5.Id,
+                                     cheked2 = t2.Id,
+                                     cheked6 = 0,
                                      userKey = keyUser.userKey,
-                                     Id = t1.Id,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round((t1.Cost + t2.Cost + t3.Cost + t4.Cost + t5.Cost) * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum(), precision),
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
+                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t5.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
                                      ImageName = t1.ImageName,
                                  };
 
                 var Join = queryOrder.Distinct().ToList();
 
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
-                ViewBag.Knaufzylinder = "";
-                ViewBag.Halb = "";
-                ViewBag.Hebel = "";
-                ViewBag.VorhanSchloss = "";
+
+            }
+            if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked3.Count() > 0 && cheked4.Count() > 0 && cheked6.Count() > 0 && cheked5.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked
+                                 join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in cheked4 on t3.NameSystem equals t4.NameSystem
+                                 join t5 in cheked6 on t4.NameSystem equals t5.NameSystem
+
+                                 select new
+                                 {
+                                     cheked = t1.Id,
+                                     cheked4 = t4.Id,
+                                     cheked3 = t3.Id,
+                                     cheked5 = 0,
+                                     cheked2 = t2.Id,
+                                     cheked6 = t5.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
+                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t5.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
+
+            }
+            if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked3.Count() > 0 && cheked5.Count() > 0 && cheked6.Count() > 0 && cheked4.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked
+                                 join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in cheked5 on t3.NameSystem equals t4.NameSystem
+                                 join t5 in cheked6 on t4.NameSystem equals t5.NameSystem
+
+                                 select new
+                                 {
+                                     cheked = t1.Id,
+                                     cheked4 = 0,
+                                     cheked3 = t3.Id,
+                                     cheked5 = t4.Id,
+                                     cheked2 = t2.Id,
+                                     cheked6 = t5.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
+                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
+                                     t5.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
+
+            }
+            if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked5.Count() > 0 && cheked4.Count() > 0 && cheked6.Count() > 0 && cheked3.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked
+                                 join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in cheked4 on t3.NameSystem equals t4.NameSystem
+                                 join t5 in cheked6 on t4.NameSystem equals t5.NameSystem
+
+                                 select new
+                                 {
+                                     cheked = t1.Id,
+                                     cheked4 = t4.Id,
+                                     cheked3 = 0,
+                                     cheked5 = t3.Id,
+                                     cheked2 = t2.Id,
+                                     cheked6 = t5.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
+                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t5.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
+
+            }
+            if (cheked3.Count() > 0 && cheked.Count() > 0 && cheked4.Count() > 0 && cheked5.Count() > 0 && cheked6.Count() > 0 && cheked2.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked
+                                 join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in cheked4 on t3.NameSystem equals t4.NameSystem
+                                 join t5 in cheked6 on t4.NameSystem equals t5.NameSystem
+
+                                 select new
+                                 {
+                                     cheked = t1.Id,
+                                     cheked4 = t4.Id,
+                                     cheked3 = t2.Id,
+                                     cheked5 = t3.Id,
+                                     cheked2 = 0,
+                                     cheked6 = t5.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
+                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t5.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
+
+            }
+            if (cheked3.Count() > 0 && cheked2.Count() > 0 && cheked4.Count() > 0 && cheked5.Count() > 0 && cheked6.Count() > 0 && cheked1.Count == 0)
+            {
+                int precision = 2;
+
+                var queryOrder = from t1 in cheked2
+                                 join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in cheked4 on t3.NameSystem equals t4.NameSystem
+                                 join t5 in cheked6 on t4.NameSystem equals t5.NameSystem
+
+                                 select new
+                                 {
+                                     cheked = 0,
+                                     cheked4 = t4.Id,
+                                     cheked3 = t2.Id,
+                                     cheked5 = t3.Id,
+                                     cheked2 = t1.Id,
+                                     cheked6 = t5.Id,
+                                     userKey = keyUser.userKey,
+                                     Name = t1.Name,
+                                     companyName = t1.companyName,
+                                     description = t1.description,
+                                     NameSystem = t1.NameSystem,
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
+                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t5.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     ImageName = t1.ImageName,
+                                 };
+
+                var Join = queryOrder.Distinct().ToList();
+
+                ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
+
             }
             if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked3.Count() > 0 && cheked4.Count() > 0 && cheked5.Count() > 0 && cheked6.Count() > 0)
             {
@@ -1549,35 +2628,34 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t6 in cheked6.Distinct() on t5.NameSystem equals t6.NameSystem
                                  select new
                                  {
-                                     cheked2 = t2.Id,
-                                     cheked3 = t3.Id,
+                                     cheked = t1.Id,
                                      cheked4 = t4.Id,
+                                     cheked3 = t3.Id,
                                      cheked5 = t5.Id,
+                                     cheked2 = t2.Id,
                                      cheked6 = t6.Id,
                                      userKey = keyUser.userKey,
-                                     Id = t1.Id,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round((t1.Cost + t2.Cost + t3.Cost + t4.Cost + t5.Cost + t6.Cost) * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum(), precision),
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
+                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t5.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum()+
+                                     t6.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
                                      ImageName = t1.ImageName,
                                  };
 
                 var Join = queryOrder.Distinct().ToList();
-
-
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
-                ViewBag.Knaufzylinder = "";
-                ViewBag.Halb = "";
-                ViewBag.Hebel = "";
-                ViewBag.VorhanSchloss = "";
-                ViewBag.Aussen = "";
+             
             }
-
+            #endregion
             return View("System_Auswählen", keyUser);
         }
-
+        
         [HttpGet]
         public async Task<IActionResult> OrdersKey(int DopelId, List<string> dopelOption, string param2, int KnayfID, int Halb, int Hebel, int Aussen, int Vorhan)
         {
@@ -1659,7 +2737,6 @@ namespace schliessanlagen_konfigurator.Controllers
             float KhaufAussenCost = 0f;
             float DoppelAussenCost = 0f;
             float halbAussenCost = 0f;
-            float VorhangschlossCost = 0f;
 
             var Aussenzylinder = new List<Aussenzylinder_Rundzylinder>();
 
@@ -2169,9 +3246,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 if (order.ZylinderId == 1)
                 {
-                    var aussen = DopelOrderlist.SelectMany(x => x.Aussen_Innen).FirstOrDefault(x => x.aussen<35).aussen;
+                    var aussen = DopelOrderlist.SelectMany(x => x.Aussen_Innen).Where(x => x.aussen > 27 && x.aussen < 35).Max(x => x.aussen);
 
-                    var innen = DopelOrderlist.SelectMany(x => x.Aussen_Innen).FirstOrDefault(x => x.Intern < 35).Intern;
+                    var innen = DopelOrderlist.SelectMany(x => x.Aussen_Innen).Where(x => x.Intern > 27 && x.Intern < 35).Max(x => x.Intern);
 
                     for (; aussen < order.aussen;)
                     {
@@ -2191,26 +3268,33 @@ namespace schliessanlagen_konfigurator.Controllers
                 {
                     ViewBag.HalbAussen = order.aussen;
 
-                    for (var i = 30; i < order.aussen;)
+                    var SizeHalbzylinder = db.Aussen_Innen_Halbzylinder.Where(x => x.Profil_HalbzylinderId == Halbzylinder.First().Id).ToList();
+                    var aussen = SizeHalbzylinder.Where(x => x.aussen > 27 && x.aussen < 35).Max(x => x.aussen);
+
+                    for (; aussen < order.aussen;)
                     {
                         halbAussenCost = halbAussenCost + 5;
-                        i = i + 5;
+                        aussen = aussen + 5;
                     }
 
                 }
                 if (order.ZylinderId == 3)
                 {
 
-                    for (var i = 30; i < order.aussen;)
+                    var aussen = KnayfOrderlist.SelectMany(x => x.Aussen_Innen_Knauf).Where(x => x.aussen > 27 && x.aussen < 35).Max(x => x.aussen);
+
+                    var innen = KnayfOrderlist.SelectMany(x => x.Aussen_Innen_Knauf).Where(x => x.Intern > 27 && x.Intern < 35).Max(x => x.Intern);
+
+                    for (; aussen < order.aussen;)
                     {
                         KhaufAussenCost = KhaufAussenCost + 5;
-                        i = i + 5;
+                        aussen = aussen + 5;
 
                     }
-                    for (var j = 30; j < order.innen;)
+                    for (; innen < order.innen;)
                     {
                         KhaufAussenCost = KhaufAussenCost + 5;
-                        j = j + 5;
+                        innen = innen + 5;
 
                     }
                 }
@@ -2220,13 +3304,16 @@ namespace schliessanlagen_konfigurator.Controllers
 
                     var Size = db.Size.Where(x => x.VorhangschlossId == Vorhanschlos.First().Id).ToList();
 
-                    ViewBag.VorhanschlosSizeJson = JsonConvert.SerializeObject(Size.Select(x=>x.sizeVorhangschloss).ToList());
+                    ViewBag.VorhanschlosSizeJson = JsonConvert.SerializeObject(Size.Select(x => x.sizeVorhangschloss).ToList());
 
                     ViewBag.VorhanschlosSizeCostedJson = JsonConvert.SerializeObject(Size.Select(x => x.Cost).ToList());
 
-                    var costSize = Size.Where(x => x.sizeVorhangschloss == order.aussen).Select(x => x.Cost).ToList();
+                }
+                else
+                {
+                    ViewBag.VorhanschlosSizeJson = JsonConvert.SerializeObject(0);
 
-                    VorhangschlossCost = costSize.First();
+                    ViewBag.VorhanschlosSizeCostedJson = JsonConvert.SerializeObject(0);
                 }
 
 
@@ -2293,7 +3380,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var SumCost = DopelOrderlist.Select(x => x.Cost).Sum() + KnaufZelinder.Select(x => x.Cost).Sum() + Halbzylinder.Select(x => x.Cost).Sum() +
                 HelbZ.Select(x => x.Cost).Sum() + Vorhanschlos.Select(x => x.Cost).Sum() + Aussenzylinder.Select(x => x.Cost).Sum() + DoppelAussenCost
-                + KhaufAussenCost + halbAussenCost + VorhangschlossCost + SumcostedDopSylinder;
+                + KhaufAussenCost + halbAussenCost + SumcostedDopSylinder;
 
             var SumCostProduct = DopelOrderlist.Select(x => x.Cost).Sum() + KnaufZelinder.Select(x => x.Cost).Sum() + Halbzylinder.Select(x => x.Cost).Sum() +
                 HelbZ.Select(x => x.Cost).Sum() + Vorhanschlos.Select(x => x.Cost).Sum() + Aussenzylinder.Select(x => x.Cost).Sum();
@@ -2333,10 +3420,10 @@ namespace schliessanlagen_konfigurator.Controllers
             return Redirect("/Identity/Account/Manage/PagePersonalOrders");
         }
         public async Task<IActionResult> SaveUserOrders(List<string> nameKey, List<string> TurName, List<string> DopelName, List<float> DoppelAussen, List<float> DoppelIntern
-         ,List<string> DoppelOption, List<string> KnayfOption, List<string> HalbOption, List<string> HebelOption, List<string> VorhnaOption, List<string> AussenOption,
-         List<string> KnayfName, List<float> KnayfAussen, List<float> KnayfIntern, List<string> HalbName, List<float> HalbAussen, List<string> HelbName,
-         List<string> VorhanName, List<float> VorhanAussen, List<string> AussenName, string cost, List<string> key, List<bool> keyIsOpen, List<int> countKey,
-         List<int> TurCounter,List<string> Ssl,List<string> FurKey, string NameSystem)
+        ,List<string> DoppelOption, List<string> KnayfOption, List<string> HalbOption, List<string> HebelOption, List<string> VorhnaOption, List<string> AussenOption,
+        List<string> KnayfName, List<float> KnayfAussen, List<float> KnayfIntern, List<string> HalbName, List<float> HalbAussen, List<string> HelbName,
+        List<string> VorhanName, List<float> VorhanAussen, List<string> AussenName, string cost, List<string> key, List<bool> keyIsOpen, List<int> countKey,
+        List<int> TurCounter,List<string> FurKey, string NameSystem)
         {
 
             ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
@@ -2356,7 +3443,6 @@ namespace schliessanlagen_konfigurator.Controllers
 
             DateTime currentTime = DateTime.Now;
 
-            // Получение дня, месяца и года из текущей даты
             int day = currentTime.Day;
             int month = currentTime.Month;
             int year = currentTime.Year;
@@ -2452,7 +3538,6 @@ namespace schliessanlagen_konfigurator.Controllers
                     worksheet.Cells[$"C{Rowcheked + i}"].Value = TurName[i];
                     worksheet.Cells[$"A{Rowcheked + i}"].Value = i+1;
                     worksheet.Cells[$"B{Rowcheked + i}"].Value = i + 1;
-                    worksheet.Cells[$"E{Rowcheked + i}"].Value = Ssl[i];
                     worksheet.Cells[$"H{Rowcheked + i}"].Value = TurCounter[i];
 
                     if (DoppelCounter < DopelName.Count())
@@ -2725,7 +3810,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             ViewBag.SumCosted = Sum;
             ViewBag.TurCount = TurCount;
-            ViewBag.Ssl = Order.Select(x => x.Ssl).ToList();
+          
 
             foreach (var list in Order)
             {
@@ -2872,20 +3957,18 @@ namespace schliessanlagen_konfigurator.Controllers
             return View("FinischerProductSelect", UserOrder);
         }
         [HttpPost]
-        public ActionResult SaveOrder(List<string>FurNameKey,string userName, Orders Key, List<string> Turname, List<string> ZylinderId, List<float> aussen, List<float> innen, List<string> NameKey, List<int> CountKey, string IsOppen, List<string> Options, List<int> ItemCount,List<int>CountTur,List<string> Ssl)
+        public ActionResult SaveOrder(List<string>FurNameKey,string userName, Orders Key, List<string> Turname, 
+            List<string> ZylinderId, List<float> aussen, List<float> innen, List<string> NameKey, List<int> CountKey, 
+            string IsOppen, List<int> ItemCount,List<int>CountTur)
         {
             int CountOrders = Turname.Count();
 
-
             List<bool> isOpenList = new List<bool>();
 
-            // Регулярное выражение для поиска запятых и пробелов после них
             string pattern = @",\s*";
 
-            // Разбиваем строку на элементы с помощью регулярного выражения
             string[] elements = Regex.Split(IsOppen, pattern);
 
-            // Добавляем каждый элемент в список
             foreach (string element in elements)
             {
                 if (element == "true")
@@ -2899,6 +3982,8 @@ namespace schliessanlagen_konfigurator.Controllers
 
             }
 
+            int aussenCounter = 0;
+            int InterCounter = 0;
 
             string zylinderTyp;
 
@@ -2911,15 +3996,15 @@ namespace schliessanlagen_konfigurator.Controllers
                 {
                     zylinderTyp = ZylinderId.Last();
 
-                    if (zylinderTyp == "Profil-Doppelzylinder")
+                    if (zylinderTyp == "Doppelzylinder")
                     {
                         idZylinder = 1;
                     }
-                    if (zylinderTyp == "Profil-Halbzylinder")
+                    if (zylinderTyp == "Halbzylinder")
                     {
                         idZylinder = 2;
                     }
-                    if (zylinderTyp == "Profil-Knaufzylinder")
+                    if (zylinderTyp == "Knaufzylinder")
                     {
                         idZylinder = 3;
                     }
@@ -2931,7 +4016,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     {
                         idZylinder = 5;
                     }
-                    if (zylinderTyp == "Aussenzylinder_Rundzylinder")
+                    if (zylinderTyp == "Aussenzylinder")
                     {
                         idZylinder = 6;
                     }
@@ -2940,15 +4025,15 @@ namespace schliessanlagen_konfigurator.Controllers
                 {
                     zylinderTyp = ZylinderId[i];
 
-                    if (zylinderTyp == "Profil-Doppelzylinder")
+                    if (zylinderTyp == "Doppelzylinder")
                     {
                         idZylinder = 1;
                     }
-                    if (zylinderTyp == "Profil-Halbzylinder")
+                    if (zylinderTyp == "Halbzylinder")
                     {
                         idZylinder = 2;
                     }
-                    if (zylinderTyp == "Profil-Knaufzylinder")
+                    if (zylinderTyp == "Knaufzylinder")
                     {
                         idZylinder = 3;
                     }
@@ -2960,7 +4045,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     {
                         idZylinder = 5;
                     }
-                    if (zylinderTyp == "Aussenzylinder_Rundzylinder")
+                    if (zylinderTyp == "Aussenzylinder")
                     {
                         idZylinder = 6;
                     }
@@ -2976,62 +4061,33 @@ namespace schliessanlagen_konfigurator.Controllers
                     TurnameValue = Turname[i];
                 }
 
-                string artikul = "";
-
-                if (i >= Ssl.Count())
-                {
-                    artikul = Ssl.Last();
-                }
-                else
-                {
-                    artikul = Ssl[i];
-                }
-
-                string optionValue;
-
-                if (i >= Options.Count())
-                {
-                    if (Options.Last() == "Options")
-                        optionValue = null;
-                    else
-                        optionValue = Options.Last();
-                }
-                else
-                {
-                    if (Options[i] == "Options")
-                        optionValue = null;
-                    else
-                        optionValue = Options[i];
-                }
-
+                
                 var orders = new Orders
                 {
                     userKey = Key.userKey,
                     DorName = TurnameValue,
                     ZylinderId = idZylinder,
-                    Options = optionValue,
-                    Artikelnummer = artikul,
                     Created = DateTime.Now,
-                    Count  = CountTur[i],
-                    Ssl = Ssl[i],
+                    Count  = CountTur[i]
                 };
 
 
                 if (innen.Count() > 0)
                 {
-                    if (i >= innen.Count())
+                    if (InterCounter > innen.Count() || idZylinder==2 || idZylinder == 4 || idZylinder == 5 || idZylinder == 6)
                     {
 
                     }
                     else
                     {
-                        if (innen[i] == 0)
+                        if (innen[InterCounter] == 0)
                         {
                             orders.innen = null;
                         }
                         else
                         {
-                            orders.innen = innen[i];
+                            orders.innen = innen[InterCounter];
+                            InterCounter++;
                         }
 
                     }
@@ -3040,19 +4096,20 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
                 if (aussen.Count() > 0)
                 {
-                    if (i >= aussen.Count())
+                    if (aussenCounter > aussen.Count()|| idZylinder == 4 || idZylinder == 5 || idZylinder == 6)
                     {
 
                     }
                     else
                     {
-                        if (aussen[i] == 0)
+                        if (aussen[aussenCounter] == 0)
                         {
                             orders.aussen = null;
                         }
                         else
                         {
-                            orders.aussen = aussen[i];
+                            orders.aussen = aussen[aussenCounter];
+                            aussenCounter++;
                         }
 
                     }
@@ -3129,7 +4186,7 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             else
             {
-                for (var s = 0; s < Turname.Count(); s++)
+                for (var s = 0; s < NameKey.Count(); s++)
                 {
                     string NameKeyValue;
                     int CountkeyOrders;

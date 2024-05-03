@@ -64,7 +64,7 @@
         <div>
         </div>
         <div id="FinisherAnderes">
-            <input type="button" class="btn btn-danger" value="SCHLIESSPLAN BEARBEITEN" />
+                <a class="btn btn-danger" href="@Url.Action("ChangedKonfigPlan","Konfigurator",new{ userKey = @Model.userKey})">SCHLIESSPLAN BEARBEITEN</a>
         </div>
         <h1>Türen konfigurieren</h1>
         <p>
@@ -101,9 +101,9 @@
                             <h5>Vifile Tür</h5>
                         </div>
 
-                        <div id="Size-@d" class="SizeProduct">
+                        <div id="Size-@d" class="SizeProduct">  
                             <div>
-                                    <select class="form-select" name="DAussen" id="Aussen" onchange="selectParamAussen(event.target.value,@d)">
+                                    <select class="form-select" name="DAussen" id="Aussen" onchange="selectParamAussen(event.target.value,@d,@ViewBag.DAussen[elemNum])">
                                     <option style="display:none" selected>@ViewBag.DAussen[elemNum]</option>
                                     <option>Außenlänge (A)</option>
                                     @for (int i = 0; i < ViewBag.Dopelzylinderaussen.Count; i++)
@@ -179,9 +179,15 @@
 
                             </div>
                         </div>
+                            @if (@ViewBag.DAussen[elemNum] < 80 && @ViewBag.DInter[elemNum] < 80)
+                            {
+                                <h6 style="color:red">Lieferzeit: 5 - 7 Werktage</h6>
+                            }
+                            else
+                            {
+                                <h6 style="color:red">Lieferzeit: ca 20 Werktage</h6>
+                            }
                     </div>
-
-
                 </div>
                 elemNum++;
                 d++;
@@ -217,6 +223,8 @@
                         </div>
 
                             <div id="Size-@d" class="SizeProduct">
+
+                               
                             <div>
                                     <select class="form-select" name="KnayfAusse" id="Aussen" onchange="selectParamAussen(event.target.value,@d,@ViewBag.KAussen[elemNum])">
                                     <option style="display:none" selected>@ViewBag.KAussen[elemNum]</option>
@@ -291,6 +299,14 @@
 
                             </div>
                         </div>
+                            @if (@ViewBag.KAussen[elemNum] < 80 && @ViewBag.KInter[elemNum] < 80)
+                            {
+                                <h6 style="color:red">Lieferzeit: 5 - 7 Werktage</h6>
+                            }
+                            else
+                            {
+                                <h6 style="color:red">Lieferzeit: ca 20 Werktage</h6>
+                            }
                     </div>
                 </div>
                 d++;
@@ -391,7 +407,16 @@
                                 } 
                             </div>
                         </div>
+                            @if (@ViewBag.HalbOrderAussen[elemNum] < 75)
+                            {
+                                <h6 style="color:red">Lieferzeit: 5 - 7 Werktage</h6>
+                            }
+                            else
+                            {
+                                <h6 style="color:red">Lieferzeit: ca 20 Werktage</h6>
+                            }
                     </div>
+                       
                 </div>
                 elemNum++;
                 d++;
@@ -578,6 +603,14 @@
                                 }
                             </div> 
                         </div>
+                            @if (@ViewBag.CounterTurVorhan[@elemNum] < 45)
+                            {
+                                <h6 style="color:red">Lieferzeit: 5 - 7 Werktage</h6>
+                            }
+                            else
+                            {
+                                <h6 style="color:red">Lieferzeit: ca 20 Werktage</h6>
+                            }
                     </div>
                 </div>
                 elemNum++;
@@ -613,7 +646,7 @@
                         </div>
                             <div id="@d" class="SizeProduct">
                                 <button type="button" onclick="CylinderMinus(@d,@item.Cost)" class="btn btn-success">-</button>
-                                <input style="border: none;max-width: 30px;" name="TurCount" value="@ViewBag.CounterTur[@elemNum]" id="countSchlusse-@d" />
+                                <input style="border: none;max-width: 30px;" name="TurCount" value="@ViewBag.CounterTurAussen[@elemNum]" id="countSchlusse-@d" />
                                 <button type="button" onclick="CylinderPlus(@d,@item.Cost)" class="btn btn-success">+</button>
                         </div>
                         <div>
@@ -671,7 +704,7 @@
                 }
         }
         <div id="FinisherAnderes">
-            <input type="button" class="btn btn-danger" value="ANDERES SYSTEM WÄHLEN" />
+            <input type="button"  onclick="goBack()" class="btn btn-danger" value="ANDERES SYSTEM WÄHLEN" />
         </div>
         <div id="orderCost">
                 <h2 id="cost">@ViewBag.Cost</h2>
@@ -694,11 +727,10 @@
 <script>
 
     let AllPrice = document.getElementById("cost");
+
     let pris = document.getElementById("costed");
     
     pris.value = AllPrice.innerHTML;
-
-   
 
     let NoOptionCost = @Html.Raw(@ViewBag.CostProducted);
 
@@ -718,7 +750,6 @@
     let AussenCost = 0;
     let InternCost = 0;
     let OptionCost = 0;
-
 
     function plus(n) 
     {
@@ -871,24 +902,52 @@
 
     }
     let countOldStatus = 0;
+
+ 
+
+    function ValueWithHistory(initialValue) 
+    {
+        this.value = initialValue;
+        this.oldValue = initialValue; // Инициализация старого значения
+
+        // Метод для установки нового значения и сохранения старого
+        this.setValue = function (newValue) 
+        {
+            this.oldValue = this.value; // Сохранение текущего значения в старое
+            this.value = newValue; // Установка нового значения
+        };
+    }
+
     function selectParamAussen(value, idBlock, oldValue) 
     {
+   
         let iterations = 0;
         let serchedItem = 0;
 
         let BlockTur = document.getElementById("Size-"+idBlock);
         let Aussen = BlockTur.querySelector("#Aussen");
-
         let Aitems = Aussen.querySelectorAll("#OptionA");
+
+        if (valuef.oldValue === undefined) 
+        {
+             var valuef = new ValueWithHistory(oldValue);
+        }
+
+        let num = Number(value);
+        valuef.setValue(num);
+
+        console.log(valuef.value);
+        console.log(valuef.oldValue);
 
         Aitems.forEach(function (items) 
         {
             let ItemValue = Number(items.innerHTML);
 
-            let ItemValueOld = Number(oldValue);
+            let ItemValueOld = Number(value.oldValue);
 
             if (serchedItem == 1) 
             {
+               
                 return;
             }
             else 
@@ -1011,19 +1070,23 @@
         Iiterations = 0;
         IserchedItem = 0;
     }
-    // function selectParamOptions(event, count, idBlock) {
-    //     // var selectedOptionId = event.target.options[event.target.selectedIndex].id;
-    //     // OptionCost = OptionPrice[selectedOptionId];
-    //     // localStorage.options = OptionCost;
-    //     // let a = Number(localStorage.sInnen);
-    //     // let b = Number(localStorage.sAussen);
-    //     // let c = Number(localStorage.options);
+    function goBack() {
+        window.history.back();
+    }
+    // function selectParamOptions(event, count, idBlock) 
+    // {
+    //     var selectedOptionId = event.target.options[event.target.selectedIndex].id;
+    //     OptionCost = OptionPrice[selectedOptionId];
+    //     localStorage.options = OptionCost;
+    //     let a = Number(localStorage.sInnen);
+    //     let b = Number(localStorage.sAussen);
+    //     let c = Number(localStorage.options);
 
-    //     // let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
-    //     // AllPrice.innerHTML = String(sum);
+    //     let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
+    //     AllPrice.innerHTML = String(sum);
 
-    //     // OptionCost = 0;
-    //     // console.log(OptionPrice[selectedOptionId]);
+    //     OptionCost = 0;
+    //     console.log(OptionPrice[selectedOptionId]);
     // }
 
 </script>

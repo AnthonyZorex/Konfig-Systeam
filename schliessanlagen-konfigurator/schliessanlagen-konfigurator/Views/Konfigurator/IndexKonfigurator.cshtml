@@ -30,25 +30,21 @@
                 <div id="schlussel">
                     <h3>Schlüssel</h3>
                 </div>
-               
-                <div id="schlussel2">
-                    <h4>Schlüssel hinzufügen</h4>
-                </div>
-                
-                <div>
+
+                    <div id ="schlussel2">
                         <input id="removeButton" type="button" value="-">
                         <input id="addButton" type="button" value="+">
                 </div>
             </div>
             <div id="itemKeyBlock">
                 <div  class="TexCount">
-                    <h6>1</h6>
+                        <input type="text" required style="position: relative;" name="FurNameKey" value="1" />
                     <div id="TexInputKey">
-                            <input id="inputA" name="FurNameKey" placeholder="Name fur Key" type="text" />
-                            <input id="inputS" name="NameKey"  onchange="chekedNameArienKey(event.target.value,1)" placeholder="Name des Schlüssels" type="text" />
+                       
+                            <input id="inputS" required name="NameKey"  onchange="chekedNameArienKey(event.target.value,1)" placeholder="Name des Schlüssels" type="text" />
                     </div>
                     <div>
-                            <input id="inputCount" name="CountKey" value="1" type="text" />
+                            <input id="inputCount" required name="CountKey" value="1" type="text" />
                     </div>
                 </div>
              
@@ -57,16 +53,20 @@
         <div>
             <div id="sclusselInfo2">
                 <div id="schlussel">
-                    <h3>Türen (Zugänge)</h3>
+                    <h6>Pos</h6>   
                 </div>
+                    <div id="schlussel">
+                        <h6 style="margin-left: 10px;">Türbezeichnung</h6>
+               </div>
+                    <div id="schlussel" style="margin-left:150px">
+                  <h6>Zylindertyp</h6>
+               </div>
+                    <div id="schlussel" style="text-align: center;margin-left:80px">
+                       <h6>Zylinderlänge mm</h6>
 
+                    </div>
                 <div id="schlussel3">
-                    <h4>Tür hinzufügen</h4>
-                </div>
-
-                <div>
-                    <input id="removeButtonTur" type="button" value="-">
-                    <input id="addButtonTur" type="button" value="+">
+                     <h6>Stück</h6>
                 </div>
             </div>
             <div>
@@ -74,25 +74,21 @@
                         <div id="BlockTur-1">
                         <div class="TexCountTur">
                             <div id="ItemTur">
-                                <div>
+                                    <div id="position">
                                     <h6 id="counterTur">1</h6>
                                 </div>
                                             <div>
-                                        <input id="inputTur" name="Turname" onchange="chekedNameArientiren(event.target.value,1)" placeholder="Name der Tür" />
+                                        <input id="inputTur" required name="Turname" onchange="chekedNameArientiren(event.target.value,1)" placeholder="Name der Tür" />
                                             </div>
-                                   
-                                <div>
-                                        <input id="infoButten" type='text' name="CountTur" />
-                                </div>
-                                   
                             </div>
-                                <details>
-                                 <summary>  </summary>
-                                    <div id="SelectTurItem">
-                                        <input id="TypeSelectTurItem" name="Ssl" placeholder="Ssl" />
+                                    <div>
+
+                                    <img  id="typeSylinder" src="/Image/doppelzylinder.png" height="25" width="40" />
+                                    
                                     </div>
+
                                 <div id="SelectTurItem">
-                                   <select id="TypeSelectTurItem" onchange="selectParam(event.target.value,1)" name="ZylinderId">
+                                    <select id="TypeSelectTurType" onchange="selectParam(event.target.value,1)" name="ZylinderId">
                                     @foreach (var list in ViewBag.Zylinder_Typ)
                                     {
                                         <option>@list.nameType</option>
@@ -101,8 +97,7 @@
                             </div>
                                    
                             <div id="SelectTurItem">
-                                        <select id="TypeSelectTurItem" class="aussen" name="aussen">
-                                     <option value="0" selected>Außenlänge</option>
+                                     <select id="TypeSelectTurItem" class="aussen" name="aussen">
                                      @foreach (var list in ViewBag.DoppelAussen)
                                     {
                                         <option id="OptionA">@list</option>
@@ -112,24 +107,17 @@
                             </div>
                             <div id="SelectTurItem">
                                         <select id="TypeSelectTurItem" class="Innen" name="innen">
-                                            <option value="0" selected>Innenlänge</option>
                                     @foreach (var list in ViewBag.DoppelIntern)
                                     {
                                        <option id="OptionI">@list</option>
                                     }
                                 </select>
                             </div>
-                           
-                            <div id="SelectTurItem">
-                               <select id="TypeSelectTurItem" class="Option" name="Options">
-                                    <option>Options</option>
-                                    @foreach (var list in ViewBag.OptionsName)
-                                    {
-                                       <option id="OptionO">@list</option>
-                                    }
-                                </select>
-                            </div>
-                                </details>
+                                <div id="chekerTur">
+                                    <button type="button" onclick="Plus(1)">+</button>
+                                    <input id="infoButten"  value="1" type="text" name="CountTur" />
+                                    <button type="button" onclick="Minus(1)">-</button>
+                                </div>
                         </div>
                     </div>
                 <div id="InfoValue">
@@ -142,6 +130,10 @@
                 </div>
                 </div>
             </div>
+                <div id="add_And_Minus">
+                    <input id="removeButtonTur" type="button" value="-">
+                    <input id="addButtonTur" type="button" value="+">
+                </div>
         </div>
     </div>
         <input type="text" name="IsOppen" style="display:none" id="vBool" />
@@ -151,15 +143,8 @@
 </div>
 <script>
 
-   let blockCount = 1; 
-   let blockTur = 1;
-
-    let OptionDoppel = @Html.Raw(ViewBag.JsonDoppelOption);
-    let OptionKnayf = @Html.Raw(ViewBag.JsonKnayf);
-    let OptionHebel = @Html.Raw(ViewBag.JsonHebel);
-    let OptionHalb = @Html.Raw(ViewBag.JsonHabl);
-    let OptionVorhan =@Html.Raw(ViewBag.JsonVorhan);
-    let OptionAussen = @Html.Raw(ViewBag.JsonAussen);
+    let blockCount = document.querySelectorAll(".TexCount").length;
+    let blockTur = document.querySelectorAll("#inputTur").length;
 
     let DoppelAussenSize = @Html.Raw(ViewBag.SizeDoppelAussen);
     let DoppelInternSize = @Html.Raw(ViewBag.SizeDoppelIntern);
@@ -168,13 +153,11 @@
     let KnayfInternSize = @Html.Raw(ViewBag.SizeKnayfIntern);
     
     let HalbSize = @Html.Raw(ViewBag.SizeHalb);
-    let VorhanSize = @Html.Raw(ViewBag.SizeVorhan);
     let data = JSON.parse(localStorage.getItem(`${blockTur}checkbox${blockCount}`));
     let h = 0;
   
-    let boolArray = [];
 
-  
+    let boolArray = [];
 
     function bolleanCheked() 
     {
@@ -187,11 +170,10 @@
             for (let j = 0; j < dorCounter.length; j++) {
                 w++;
                 let chekbox = document.getElementById(`I${w}checkbox${h}`);
-                console.log(chekbox.value);
+  
                 boolArray.push(chekbox.value);
             }
         }
-        console.log(boolArray);
         boolV.value = boolArray;
     }
 
@@ -220,7 +202,8 @@
 
         for (let i = 0; i < allTurName.length; i++) 
         {
-            if (allTurName[i].value == value) {
+            if (allTurName[i].value == value) 
+            {
                 let checkbox = document.getElementById(`${cheker}checkbox${id}`);
                 checkbox.checked = true;
                 let Icheckbox = document.getElementById(`I${cheker}checkbox${id}`);
@@ -230,6 +213,22 @@
             cheker++;
         }
     }
+    function Plus(turNumber) 
+    {
+        let BlockTur = document.querySelector(`#BlockTur-${turNumber}`);
+        let countTur = BlockTur.querySelector("#infoButten");
+        let count = countTur.value;
+        count++;
+        countTur.value = count;
+    }
+    function Minus(turNumber) 
+    {
+        let BlockTur = document.querySelector(`#BlockTur-${turNumber}`);
+        let countTur = BlockTur.querySelector("#infoButten");
+        let count = countTur.value;
+        count--;
+        countTur.value = count;
+    }
     function selectParam(value,turNumber) 
     {
         let BlockTur = document.querySelector(`#BlockTur-${turNumber}`);
@@ -238,10 +237,13 @@
         let Intern = BlockTur.querySelector(".Innen");
         let Option = BlockTur.querySelector(".Option");
         
+        let TypeSylinder = BlockTur.querySelector("#typeSylinder");
+
+        console.log(TypeSylinder);
+
         let Aitems = Aussen.querySelectorAll("#OptionA");
         let Iitems = Intern.querySelectorAll("#OptionI");
-        let Oitems = Option.querySelectorAll("#OptionO");
-
+        
         Aitems.forEach(function (items) 
         {
             items.parentNode.removeChild(items);
@@ -252,12 +254,8 @@
             items.parentNode.removeChild(items);
         });
 
-        Oitems.forEach(function (items) 
-        {
-            items.parentNode.removeChild(items);
-        });
 
-        if (value == "Profil-Doppelzylinder") 
+        if (value == "Doppelzylinder") 
         {
             for (let i = 0; i < DoppelAussenSize.length; i++) 
             {
@@ -266,6 +264,7 @@
                 option.innerHTML = DoppelAussenSize[i];
                 option.innerText = DoppelAussenSize[i];
                 Aussen.appendChild(option);
+               
             }
             for (let i = 0; i < DoppelInternSize.length; i++) 
             {
@@ -275,16 +274,10 @@
                 option.innerText = DoppelInternSize[i];
                 Intern.appendChild(option);
             }
-            for (let i = 0; i < OptionDoppel.length; i++) 
-            {
-                let option = document.createElement("option");
-                option.id = "OptionO";
-                option.innerHTML = OptionDoppel[i];
-                option.innerText = OptionDoppel[i];
-                Option.appendChild(option);
-            }
+           
+            TypeSylinder.src = "/Image/doppelzylinder.png";
         }
-        if (value == "Profil-Halbzylinder") 
+        if (value == "Halbzylinder") 
         {
             for (let i = 0; i < HalbSize.length; i++) 
             {
@@ -294,16 +287,10 @@
                 option.innerText = HalbSize[i];
                 Aussen.appendChild(option);
             }
-            for (let i = 0; i < OptionHalb.length; i++) 
-            {
-                let option = document.createElement("option");
-                option.id = "OptionO";
-                option.innerHTML = OptionHalb[i];
-                option.innerText = OptionHalb[i];
-                Option.appendChild(option);
-            }
+          
+            TypeSylinder.src = "/Image/halbzylinder.png";
         }
-        if (value == "Profil-Knaufzylinder") 
+        if (value == "Knaufzylinder") 
         {
             for (let i = 0; i < KnayfAussenSize.length; i++) 
             {
@@ -321,55 +308,23 @@
                 option.innerText = KnayfInternSize[i];
                 Intern.appendChild(option);
             }
-            for (let i = 0; i < OptionKnayf.length; i++) 
-            {
-                let option = document.createElement("option");
-                option.id = "OptionO";
-                option.innerHTML = OptionKnayf[i];
-                option.innerText = OptionKnayf[i];
-                Option.appendChild(option);
-            }
+          
+            TypeSylinder.src = "/Image/knaufzylinder.png";
+
         }
         if (value == "Hebelzylinder") 
         {
-            for (let i = 0; i < OptionHebel.length; i++) 
-            {
-                let option = document.createElement("option");
-                option.id = "OptionO";
-                option.innerHTML = OptionHebel[i];
-                option.innerText = OptionHebel[i];
-                Option.appendChild(option);
-            }
+           
+            TypeSylinder.src = "/Image/briefkastenzylinder.png";
         }
         if (value == "Vorhangschloss") 
         {
-            for (let i = 0; i < VorhanSize.length; i++) 
-            {
-                let option = document.createElement("option");
-                option.id = "OptionA";
-                option.innerHTML = VorhanSize[i];
-                option.innerText = VorhanSize[i];
-                Aussen.appendChild(option);
-            }
-            for (let i = 0; i < OptionVorhan.length; i++) 
-            {
-                let option = document.createElement("option");
-                option.id = "OptionO";
-                option.innerHTML = OptionVorhan[i];
-                option.innerText = OptionVorhan[i];
-                Option.appendChild(option);
-            }
+            TypeSylinder.src = "/Image/vorhangschloss.png";
         }
         if (value == "Aussenzylinder_Rundzylinder") 
         {
-            for (let i = 0; i < OptionAussen.length; i++) 
-            {
-                let option = document.createElement("option");
-                option.id = "OptionO";
-                option.innerHTML = OptionAussen[i];
-                option.innerText = OptionAussen[i];
-                Option.appendChild(option);
-            }
+          
+            TypeSylinder.src =  "/Image/aussenzylinder.png";
         }
 
     }
@@ -440,26 +395,23 @@
         newBlock.id = 'BlockTur-' + blockTur;
         newBlock.innerHTML = `  <div class="TexCountTur">
                                 <div id="ItemTur">
-                                    <div>
+                                    <div id="position">
                                        <h6 id="counterTur">${blockTur}</h6>
                                     </div>
 
                                     <div>
-                                                            <input id="inputTur"  onchange="chekedNameArientiren(event.target.value,${blockTur})" name="Turname" placeholder="Name der Tür" />
+                                              <input id="inputTur" required  onchange="chekedNameArientiren(event.target.value,${blockTur})" name="Turname" placeholder="Name der Tür" />
                                     </div>
 
+                                        <div>
 
-                                    <div>
-                                                <input id="infoButten" type='text' name="CountTur" />
-                                    </div>
+                                             <img  id="typeSylinder" src="/Image/doppelzylinder.png" height="25" width="40"  />
+
+                                        </div>
                                 </div>
-                                      <details>
-                                        <summary>  </summary>
-                                             <div id ="SelectTurItem">
-                                                      <input id="TypeSelectTurItem" name="Ssl" placeholder="Ssl" />
-                                            </div>
+                                     
                                 <div id="SelectTurItem">
-                                    <select id="TypeSelectTurItem" onchange="selectParam(event.target.value,${blockTur})" name="ZylinderId">
+                                        <select id="TypeSelectTurType"  onchange="selectParam(event.target.value,${blockTur})" name="ZylinderId">
                                     @foreach (var list in ViewBag.Zylinder_Typ)
                                     {
                                       <option>@list.nameType</option>
@@ -469,7 +421,6 @@
                                      
                                 <div id="SelectTurItem">
                                         <select id="TypeSelectTurItem"  class="aussen" name="aussen">
-                                            <option value="0" selected>Außenlänge</option>
                                         @foreach (var list in ViewBag.DoppelAussen)
                                         {
                                           <option id="OptionA">@list</option>
@@ -478,25 +429,21 @@
                                 </div>
                                 <div id="SelectTurItem">
                                             <select id="TypeSelectTurItem" class="Innen" name="innen">
-                                               <option value="0" selected>Innenlänge</option>
                                          @foreach (var list in ViewBag.DoppelIntern)
                                          {
                                                <option id="OptionI">@list</option>
                                          }
                                     </select>
                                 </div>
-                               
-                                <div id="SelectTurItem">
-                                      <select id="TypeSelectTurItem" class="Option" name="Options">
-                                        <option>Options</option>
-                                         @foreach (var list in ViewBag.OptionsName)
-                                         {
-                                             <option id="OptionO">@list</option>
-                                         }
-                                    </select>
-                                </div>
+
+
+                                           <div id="chekerTur">
+                                            <button type="button" onclick="Plus(${blockTur})">+</button>
+                                        <input id="infoButten"  value="1" type="text" name="CountTur" />
+                                            <button type="button" onclick="Minus(${blockTur})">-</button>
+                                    </div>
                             </div>
-                                     </details>
+                              
                 `;
 
             document.getElementById('BlockTur-1').appendChild(newBlock);
@@ -555,25 +502,22 @@
               
         }
 
-        // Функция для добавления блока
     function addBlock() 
     {
         blockCount++;
     
         let item = document.getElementById('itemcountOptions');
         item.value = blockCount;
-        // Создаем новый блок
         let newBlock = document.createElement('div');
         newBlock.id = 'TexCount-' + blockCount;
         newBlock.innerHTML = `
-                                    <div  class="TexCount">
-                         <h6>${blockCount}</h6>
+                               <div  class="TexCount">
+                                     <input type="text" required  name="FurNameKey" style="position: relative;" value="${blockCount}" />
                             <div id="TexInputKey">
-                                  <input id="inputA" name="FurNameKey" placeholder="Name fur Key" type="text" />
-                                <input id="inputS" name="NameKey" onchange="chekedNameArienKey(event.target.value,${blockCount})" placeholder="Name des Schlüssels" type="text" />
+                                    <input id="inputS" required name="NameKey" onchange="chekedNameArienKey(event.target.value,${blockCount})" placeholder="Name des Schlüssels" type="text" />
                             </div>
                             <div>
-                                     <input id="inputCount" name="CountKey" value="1" type="text" />
+                                         <input id="inputCount" required name="CountKey" value="1" type="text" />
                             </div>
                         </div>
 

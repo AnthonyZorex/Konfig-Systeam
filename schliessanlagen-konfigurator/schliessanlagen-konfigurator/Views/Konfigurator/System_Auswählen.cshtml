@@ -23,406 +23,175 @@
        
         @Html.HiddenFor(m => m.userKey)
 
-        @if (ViewBag.Doppel != null && ViewBag.Knaufzylinder == null && ViewBag.Halb == null && ViewBag.Hebel == null && ViewBag.VorhanSchloss == null && ViewBag.Aussen == null)
-        {
-            for (int i=0;i<ViewBag.Doppel.Count;i++)
+        @{
+            if (ViewBag.Doppel != null)
             {
-
-                <div id="ExelItem">
-                    <div id="productImage">
-                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@ViewBag.Doppel[i].ImageName)" asp-append-version="true" width="300px" height="300px" />
-                    </div>
-                    <div id="productMenuInfo">
-                        <div id="ProductNameUndCost">
-
-                            <div>
-                                <h3>@ViewBag.Doppel[i].NameSystem</h3>
-                            </div>
-
-                            <div style="margin-left: auto;">
-                                <h4 id="cost">ab @ViewBag.Doppel[i].Cost €</h4>
-                            </div>
-
+                foreach (var item in ViewBag.Doppel)
+                {
+                    <div id="ExelItem">
+                        <div id="productImage">
+                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                         </div>
-
-                        <div id="product_desciptions">
-                            <h5>@ViewBag.Doppel[i].description</h5>
-                        </div>
-                        <div id="productChek">
-
-                            <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new { DopelId = ViewBag.Doppel[i].Id ,dopelOption = @ViewBag.DoppelOptions, param2 = ViewBag.Doppel[i].userKey,userInfo = @ViewBag.UserNameItem})">WÄHLEN</a>
-
+                        <div id="productMenuInfo">
+                            <div id="ProductNameUndCost">
+                                <div>
+                                    <h3>@item.NameSystem</h3>
+                                </div>
+                                <div style="margin-left: auto;">
+                                    <h4 id="cost">ab @item.Cost €</h4>
+                                </div>
+                            </div>
+                            <div id="product_desciptions">
+                                <h5>@item.description</h5>
+                            </div>
+                            <div id="productChek">
+                                <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new { DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
+                            </div>
                         </div>
                     </div>
-
-
-                </div>
+                }
             }
-        }
-        @if (ViewBag.Knaufzylinder != null && ViewBag.Doppel == null && ViewBag.Halb == null && ViewBag.Hebel == null && ViewBag.VorhanSchloss == null && ViewBag.Aussen == null)
-        {
-            foreach (var item in ViewBag.Knaufzylinder)
+
+            else  if (ViewBag.Knaufzylinder != null)
             {
-
-                <div id="ExelItem">
-                    <div id="productImage">
-                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                    </div>
-                    <div id="productMenuInfo">
-                        <div id="ProductNameUndCost">
-
-                            <div>
-                                <h3>@item.NameSystem</h3>
-                            </div>
-
-                            <div style="margin-left: auto;">
-                                <h4 id="cost">ab @item.Cost €</h4>
-                            </div>
-
+                foreach (var item in ViewBag.Knaufzylinder)
+                {
+                    <div id="ExelItem">
+                        <div id="productImage">
+                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                         </div>
-
-                        <div id="product_desciptions">
-                            <h5>@item.description</h5>
-                        </div>
-                        <div id="productChek">
-
-                            <a class="btn btn-danger" id="chekProduct" name="KnayfID" href=" @Url.Action("OrdersKey", "Konfigurator", new { KnayfID = item.Id , param2 = item.userKey})">WÄHLEN</a>
-
+                        <div id="productMenuInfo">
+                            <div id="ProductNameUndCost">
+                                <div>
+                                    <h3>@item.NameSystem</h3>
+                                </div>
+                                <div style="margin-left: auto;">
+                                    <h4 id="cost">ab @item.Cost €</h4>
+                                </div>
+                            </div>
+                            <div id="product_desciptions">
+                                <h5>@item.description</h5>
+                            </div>
+                            <div id="productChek">
+                                <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
+                            </div>
                         </div>
                     </div>
-
-                </div>
+                }
             }
-        }
-        @if (ViewBag.Halb != null && ViewBag.Doppel == null && ViewBag.Knaufzylinder == null && ViewBag.Hebel == null && ViewBag.VorhanSchloss == null && ViewBag.Aussen == null)
-        {
-            foreach (var item in ViewBag.Halb )
+            else if (ViewBag.Halb != null)
             {
-
-                <div id="ExelItem">
-                    <div id="productImage">
-                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                    </div>
-                    <div id="productMenuInfo">
-                        <div id="ProductNameUndCost">
-
-                            <div>
-                                <h3>@item.NameSystem</h3>
-                            </div>
-
-                            <div style="margin-left: auto;">
-                                <h4 id="cost">ab @item.Cost €</h4>
-                            </div>
-
+                foreach (var item in ViewBag.Halb)
+                {
+                    <div id="ExelItem">
+                        <div id="productImage">
+                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                         </div>
-
-                        <div id="product_desciptions">
-                            <h5>@item.description</h5>
-                        </div>
-                        <div id="productChek">
-
-                            <a class="btn btn-danger" id="chekProduct" name="Halb" href=" @Url.Action("OrdersKey", "Konfigurator", new { Halb = item.Id , param2 = item.userKey})">WÄHLEN</a>
-
+                        <div id="productMenuInfo">
+                            <div id="ProductNameUndCost">
+                                <div>
+                                    <h3>@item.NameSystem</h3>
+                                </div>
+                                <div style="margin-left: auto;">
+                                    <h4 id="cost">ab @item.Cost €</h4>
+                                </div>
+                            </div>
+                            <div id="product_desciptions">
+                                <h5>@item.description</h5>
+                            </div>
+                            <div id="productChek">
+                                <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new { DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
+                            </div>
                         </div>
                     </div>
-
-
-                </div>
+                }
             }
-        }
-        @if (ViewBag.Hebel != null && ViewBag.Doppel == null && ViewBag.Knaufzylinder == null && ViewBag.Halb == null && ViewBag.VorhanSchloss == null && ViewBag.Aussen == null)
-        {
-            foreach (var item in ViewBag.Hebel)
+            else if (ViewBag.Hebel != null)
             {
-
-                <div id="ExelItem">
-                    <div id="productImage">
-                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                    </div>
-                    <div id="productMenuInfo">
-                        <div id="ProductNameUndCost">
-
-                            <div>
-                                <h3>@item.NameSystem</h3>
-                            </div>
-
-                            <div style="margin-left: auto;">
-                                <h4 id="cost">ab @item.Cost €</h4>
-                            </div>
-
+                foreach (var item in ViewBag.Hebel)
+                {
+                    <div id="ExelItem">
+                        <div id="productImage">
+                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                         </div>
-
-                        <div id="product_desciptions">
-                            <h5>@item.description</h5>
-                        </div>
-                        <div id="productChek">
-
-                            <a class="btn btn-danger" id="chekProduct" name="Hebel" href=" @Url.Action("OrdersKey", "Konfigurator", new { Hebel = item.Id , param2 = item.userKey})">WÄHLEN</a>
-
+                        <div id="productMenuInfo">
+                            <div id="ProductNameUndCost">
+                                <div>
+                                    <h3>@item.NameSystem</h3>
+                                </div>
+                                <div style="margin-left: auto;">
+                                    <h4 id="cost">ab @item.Cost €</h4>
+                                </div>
+                            </div>
+                            <div id="product_desciptions">
+                                <h5>@item.description</h5>
+                            </div>
+                            <div id="productChek">
+                                <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new { DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
+                            </div>
                         </div>
                     </div>
-
-
-                </div>
+                }
             }
-        }
-        @if (ViewBag.VorhanSchloss != null && ViewBag.Doppel == null && ViewBag.Knaufzylinder == null && ViewBag.Halb == null && ViewBag.Hebel == null && ViewBag.Aussen == null)
-        {
-            foreach (var item in ViewBag.VorhanSchloss)
+            else if (ViewBag.VorhanSchloss != null)
             {
-
-                <div id="ExelItem">
-                    <div id="productImage">
-                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                    </div>
-                    <div id="productMenuInfo">
-                        <div id="ProductNameUndCost">
-
-                            <div>
-                                <h3>@item.NameSystem</h3>
-                            </div>
-
-                            <div style="margin-left: auto;">
-                                <h4 id="cost">ab @item.Cost €</h4>
-                            </div>
-
+                foreach (var item in ViewBag.VorhanSchloss)
+                {
+                    <div id="ExelItem">
+                        <div id="productImage">
+                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                         </div>
-
-                        <div id="product_desciptions">
-                            <h5>@item.description</h5>
-                        </div>
-                        <div id="productChek">
-
-                            <a class="btn btn-danger" id="chekProduct" name="Vorhan" href=" @Url.Action("OrdersKey", "Konfigurator", new { Vorhan = item.Id , param2 = item.userKey})">WÄHLEN</a>
-
+                        <div id="productMenuInfo">
+                            <div id="ProductNameUndCost">
+                                <div>
+                                    <h3>@item.NameSystem</h3>
+                                </div>
+                                <div style="margin-left: auto;">
+                                    <h4 id="cost">ab @item.Cost €</h4>
+                                </div>
+                            </div>
+                            <div id="product_desciptions">
+                                <h5>@item.description</h5>
+                            </div>
+                            <div id="productChek">
+                                <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
+                            </div>
                         </div>
                     </div>
-
-
-                </div>
+                }
             }
-        }
-        @if (ViewBag.Aussen != null && ViewBag.Doppel == null && ViewBag.Knaufzylinder == null && ViewBag.Halb == null && ViewBag.Hebel == null && ViewBag.VorhanSchloss == null)
-        {
-            foreach (var item in ViewBag.Aussen)
+            else if (ViewBag.Aussen != null)
             {
-
-                <div id="ExelItem">
-                    <div id="productImage">
-                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                    </div>
-                    <div id="productMenuInfo">
-                        <div id="ProductNameUndCost">
-
-                            <div>
-                                <h3>@item.NameSystem</h3>
-                            </div>
-
-                            <div style="margin-left: auto;">
-                                <h4 id="cost">ab @item.Cost €</h4>
-                            </div>
-
+                foreach (var item in ViewBag.Aussen)
+                {
+                    <div id="ExelItem">
+                        <div id="productImage">
+                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                         </div>
-
-                        <div id="product_desciptions">
-                            <h5>@item.description</h5>
-                        </div>
-                        <div id="productChek">
-
-                            <a class="btn btn-danger" id="chekProduct" name="Aussen" href=" @Url.Action("OrdersKey", "Konfigurator", new { Aussen = item.Id , param2 = item.userKey})">WÄHLEN</a>
-
+                        <div id="productMenuInfo">
+                            <div id="ProductNameUndCost">
+                                <div>
+                                    <h3>@item.NameSystem</h3>
+                                </div>
+                                <div style="margin-left: auto;">
+                                    <h4 id="cost">ab @item.Cost €</h4>
+                                </div>
+                            </div>
+                            <div id="product_desciptions">
+                                <h5>@item.description</h5>
+                            </div>
+                            <div id="productChek">
+                                <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
+                            </div>
                         </div>
                     </div>
-
-
-                </div>
+                }
             }
+
+           
+           
         }
-         @if (ViewBag.Doppel != null && ViewBag.Halb != null  && ViewBag.Knaufzylinder != null && ViewBag.Hebel == null && ViewBag.VorhanSchloss == null && ViewBag.Aussen == null)
-        {
-            foreach (var item in ViewBag.Doppel)
-            {
 
-                <div id="ExelItem">
-                    <div id="productImage">
-                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                    </div>
-                    <div id="productMenuInfo">
-                        <div id="ProductNameUndCost">
-
-                            <div>
-                                <h3>@item.NameSystem</h3>
-                            </div>
-
-                            <div style="margin-left: auto;">
-                                <h4 id="cost">ab @item.Cost €</h4>
-                            </div>
-
-                        </div>
-
-                        <div id="product_desciptions">
-                            <h5>@item.description</h5>
-                        </div>
-                        <div id="productChek">
-
-                            <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new { DopelId = item.Id , param2 = item.userKey,Halb = item?.cheked3,KnayfID = item?.cheked2})">WÄHLEN</a>
-
-                        </div>
-                    </div>
-
-
-                </div>
-            }
-        }
-        @if (ViewBag.Doppel != null && ViewBag.Knaufzylinder != null && ViewBag.Halb == null && ViewBag.Hebel == null && ViewBag.VorhanSchloss == null && ViewBag.Aussen == null)
-        {
-            foreach (var item in ViewBag.Doppel)
-            {
-
-                <div id="ExelItem">
-                    <div id="productImage">
-                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                    </div>
-                    <div id="productMenuInfo">
-                        <div id="ProductNameUndCost">
-
-                            <div>
-                                <h3>@item.NameSystem</h3>
-                            </div>
-
-                            <div style="margin-left: auto;">
-                                <h4 id="cost">ab @item.Cost €</h4>
-                            </div>
-
-                        </div>
-
-                        <div id="product_desciptions">
-                            <h5>@item.description</h5>
-                        </div>
-                        <div id="productChek">
-
-                            <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new { DopelId = item.Id , param2 = item.userKey,KnayfID = item?.cheked2,userInfo = @ViewBag.User})">WÄHLEN</a>
-
-                        </div>
-                    </div>
-
-
-                </div>
-            }
-        }
-        @if (ViewBag.Doppel != null && ViewBag.Knaufzylinder != null && ViewBag.Halb != null && ViewBag.Hebel != null && ViewBag.VorhanSchloss != null && ViewBag.Aussen == null)
-        {
-            var s = @ViewBag.Doppel.Count;
-            foreach (var item in ViewBag.Doppel)
-            {
-
-                <div id="ExelItem">
-                    <div id="productImage">
-                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                    </div>
-                    <div id="productMenuInfo">
-                        <div id="ProductNameUndCost">
-
-                            <div>
-                                <h3>@item.NameSystem</h3>
-                            </div>
-
-                            <div style="margin-left: auto;">
-                                <h4 id="cost">ab @item.Cost €</h4>
-                            </div>
-
-                        </div>
-
-                        <div id="product_desciptions">
-                            <h5>@item.description</h5>
-                        </div>
-                        <div id="productChek">
-
-                            <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new { DopelId = item?.Id , param2 = item.userKey,KnayfID = item?.cheked2, Halb = item?.cheked3,Hebel = item?.cheked4,Vorhan = item?.cheked5,userInfo = @ViewBag.User})">WÄHLEN</a>
-
-                        </div>
-                    </div>
-
-
-                </div>
-            }
-        }
-        @if (ViewBag.Doppel != null && ViewBag.Knaufzylinder != null && ViewBag.Halb != null && ViewBag.Hebel != null && ViewBag.VorhanSchloss != null && ViewBag.Aussen != null)
-        {
-            var s = @ViewBag.Doppel.Count;
-            foreach (var item in ViewBag.Doppel)
-            {
-
-                <div id="ExelItem">
-                    <div id="productImage">
-                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                    </div>
-                    <div id="productMenuInfo">
-                        <div id="ProductNameUndCost">
-
-                            <div>
-                                <h3>@item.NameSystem</h3>
-                            </div>
-
-                            <div style="margin-left: auto;">
-                                <h4 id="cost">ab @item.Cost €</h4>
-                            </div>
-
-                        </div>
-
-                        <div id="product_desciptions">
-                            <h5>@item.description</h5>
-                        </div>
-                        <div id="productChek">
-
-                            <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new { DopelId = item?.Id , param2 = item.userKey,KnayfID = item?.cheked2, Halb = item?.cheked3,Hebel = item?.cheked4,Vorhan = item?.cheked5,Aussen= item?.cheked6,userInfo = @ViewBag.User})">WÄHLEN</a>
-
-                        </div>
-                    </div>
-
-
-                </div>
-            }
-        }
-        @if (ViewBag.Doppel != null && ViewBag.Knaufzylinder != null && ViewBag.Halb == null && ViewBag.Hebel == null && ViewBag.VorhanSchloss != null && ViewBag.Aussen == null)
-        {
-            var s = @ViewBag.Doppel.Count;
-            foreach (var item in ViewBag.Doppel)
-            {
-
-                <div id="ExelItem">
-                    <div id="productImage">
-                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                    </div>
-                    <div id="productMenuInfo">
-                        <div id="ProductNameUndCost">
-
-                            <div>
-                                <h3>@item.NameSystem</h3>
-                            </div>
-
-                            <div style="margin-left: auto;">
-                                <h4 id="cost">ab @item.Cost €</h4>
-                            </div>
-
-                        </div>
-
-                        <div id="product_desciptions">
-                            <h5>@item.description</h5>
-                        </div>
-                        <div id="productChek">
-
-                            <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new { DopelId = item?.Id , param2 = item.userKey,KnayfID = item.cheked2,Vorhan = item.cheked5,userInfo = @ViewBag.User})">WÄHLEN</a>
-
-                        </div>
-                    </div>
-
-
-                </div>
-            }
-        }
+       
     </form>
-    <div id="loader" style="display: none;">
-  
 </div>
-        </div>
