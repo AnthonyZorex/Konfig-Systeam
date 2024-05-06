@@ -43,8 +43,7 @@
               "ViewState": "AQIAAJMAAAAAAAAAAAASwKYAAAAWAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
               "WhenOpened": "2024-04-30T09:19:41.503Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -57,8 +56,7 @@
               "ViewState": "AQIAAIoAAAAAAAAAAAAqwK0AAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-29T11:34:55.183Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -68,7 +66,7 @@
               "RelativeDocumentMoniker": "schliessanlagen-konfigurator\\Views\\Konfigurator\\ChangedKonfigPlan.cshtml",
               "ToolTip": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Views\\Konfigurator\\ChangedKonfigPlan.cshtml",
               "RelativeToolTip": "schliessanlagen-konfigurator\\Views\\Konfigurator\\ChangedKonfigPlan.cshtml",
-              "ViewState": "AQIAAOgAAAAAAAAAAAAAAP0AAAAAAAAA",
+              "ViewState": "AQIAAN8BAAAAAAAAAADwv+wBAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-05-03T16:16:56.448Z",
               "IsPinned": true,
@@ -85,8 +83,7 @@
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAEcAAAAZAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-05-02T09:39:48.248Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -98,8 +95,7 @@
               "RelativeToolTip": "schliessanlagen-konfigurator\\Views\\Konfigurator\\IndexKonfigurator.cshtml",
               "ViewState": "AQIAACgCAAAAAAAAAAAAACgCAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-05-06T12:23:51.526Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-06T12:23:51.526Z"
             }
           ]
         }
