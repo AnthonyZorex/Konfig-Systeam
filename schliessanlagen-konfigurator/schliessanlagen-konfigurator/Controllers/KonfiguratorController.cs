@@ -3434,7 +3434,7 @@ namespace schliessanlagen_konfigurator.Controllers
             db.SaveChanges();
             return Redirect("/Identity/Account/Manage/PagePersonalOrders");
         }
-        public async Task<IActionResult> SaveUserOrders(List<string> nameKey, List<string> TurName, List<string> DopelName, List<float> DoppelAussen, List<float> DoppelIntern
+        public async Task<IActionResult> SaveUserOrders(List<string> TurName, List<string> DopelName, List<float> DoppelAussen, List<float> DoppelIntern
         ,List<string> DoppelOption, List<string> KnayfOption, List<string> HalbOption, List<string> HebelOption, List<string> VorhnaOption, List<string> AussenOption,
         List<string> KnayfName, List<float> KnayfAussen, List<float> KnayfIntern, List<string> HalbName, List<float> HalbAussen, List<string> HelbName,
         List<string> VorhanName, List<float> VorhanAussen, List<string> AussenName, string cost, List<string> key, List<bool> keyIsOpen, List<int> countKey,
@@ -3519,14 +3519,14 @@ namespace schliessanlagen_konfigurator.Controllers
                     {
                         if (keyIsOpen[value] == true)
                         {
-                            worksheet.Cells[Rowcheked + z, row+i].Value = "X";
+                            worksheet.Cells[Rowcheked + z, row + i].Value = "X";
 
                         }
                         else
                         {
                             worksheet.Cells[Rowcheked + z, row + i].Value = "O";
                         }
-                        
+
                         value++;
                     }
 
@@ -3798,183 +3798,11 @@ namespace schliessanlagen_konfigurator.Controllers
             }
 
         }
-        public ActionResult FinischerProductSelect(string user, List<int> TurCount, List<string> DopelOption, List<int> CountKey, List<float> DAussen,
-        List<float> DIntern, List<int> DopelItem, string Sum,List<string> DorName,List<string> HalbOption,List<string> KnayfOption,List<string> HebelOption,
-        List<string> VorhnaOption,List<string> AussenOption, List<int> Halb,List<int> KnayfIntern,List<int> KnayfAusse,List<int> Helb,List<int> Vorhan,
-        List<int> Aussen,List<float> VorhanAussen, List<int> Knayf,List<float> HablAussen)
-        {
-            var Türname = DorName.Distinct();
-
-            var UserOrder = db.Orders.FirstOrDefault(x => x.userKey == user);
-
-            var DoppelSylinder = new List<Profil_Doppelzylinder>();
-            var KnayfSylinder = new List<Profil_Knaufzylinder>();
-            var HalbSylinder = new List<Profil_Halbzylinder>();
-            var HelbSylinder = new List<Hebel>();
-            var VorhanSylinder = new List<Vorhangschloss>();
-            var AussenSylinder = new List<Aussenzylinder_Rundzylinder>();
-
-            var OpenLis = new List<isOpen_value>();
-
-            var Order = db.Orders.Where(x => x.userKey == user).Distinct().ToList();
-
-            var OrderChekedKey = db.Orders.Where(x => x.userKey == user).ToList();
-
-            var KeyValue = new List<KeyValue>();
-            var isopen = new List<isOpen_Order>();
-
-            ViewBag.SumCosted = Sum;
-            ViewBag.TurCount = TurCount;
-          
-
-            foreach (var list in Order)
-            {
-                var IsOpen = db.isOpen_Order.Where(x => x.OrdersId == list.Id).Distinct().ToList();
-                foreach (var OpenList in IsOpen)
-                {
-                    isopen.Add(OpenList);
-
-                }
-
-            }
-            foreach (var OpenList in isopen.Distinct())
-            {
-                var OpenValue = db.isOpen_value.Where(x => x.isOpen_OrderId == OpenList.Id).Distinct().ToList();
-
-                foreach (var allList in OpenValue.Distinct())
-                    OpenLis.Add(allList);
-            }
-
-            foreach (var OpenList in OpenLis.Distinct().ToList())
-            {
-                var opened = db.KeyValue.Where(x => x.OpenKeyId == OpenList.Id).Distinct().ToList();
-                foreach (var allList in opened.Distinct())
-                    KeyValue.Add(allList);
-
-            }
-
-            if (DopelItem.Count() > 0)
-            {
-                for (int i = 0; i < DopelItem.Count(); i++)
-                {
-                    var DopelZylinder = db.Profil_Doppelzylinder.Where(x => x.Id == DopelItem.First()).ToList();
-                    foreach (var list in DopelZylinder)
-                        DoppelSylinder.Add(list);
-                }
-
-            }
-            if (Knayf.Count() > 0)
-            {
-                for (int i = 0; i < Knayf.Count(); i++)
-                {
-                    var KnayfZylinder = db.Profil_Knaufzylinder.Where(x => x.Id == Knayf.First()).ToList();
-                    foreach (var list in KnayfZylinder)
-                        KnayfSylinder.Add(list);
-                }
-
-            }
-            if (Halb.Count() > 0)
-            {
-                for (int i = 0; i < Halb.Count(); i++)
-                {
-                    var HalbZylinder = db.Profil_Halbzylinder.Where(x => x.Id == Halb.First()).ToList();
-                    foreach (var list in HalbZylinder)
-                        HalbSylinder.Add(list);
-                }
-
-            }
-
-            if (Helb.Count() > 0)
-            {
-                for (int i = 0; i < Helb.Count(); i++)
-                {
-                    var HelbZylinder = db.Hebelzylinder.Where(x => x.Id == Helb.First()).ToList();
-                    foreach (var list in HelbZylinder)
-                        HelbSylinder.Add(list);
-                }
-
-            }
-            if (Vorhan.Count() > 0)
-            {
-                for (int i = 0; i < Vorhan.Count(); i++)
-                {
-                    var VorhanZylinder = db.Vorhangschloss.Where(x => x.Id == Vorhan.First()).ToList();
-                    foreach (var list in VorhanZylinder)
-                        VorhanSylinder.Add(list);
-                }
-
-            }
-            if (Aussen.Count() > 0)
-            {
-                for (int i = 0; i < Aussen.Count(); i++)
-                {
-                    var AussenZylinder = db.Aussenzylinder_Rundzylinder.Where(x => x.Id == Aussen.First()).ToList();
-                    foreach (var list in AussenZylinder)
-                        AussenSylinder.Add(list);
-                }
-
-            }
-
-            ViewBag.Tur = Order.Select(x => x.DorName).ToList();
-
-            var countRow = KeyValue.Distinct().ToList().Count() / OpenLis.Distinct().ToList().Count();
-            ViewBag.EinRow = countRow;
-
-            var Doppelname = DoppelSylinder.Select(x => x.Name).ToList();
-            var Sysname = DoppelSylinder.Select(x => x.NameSystem).ToList();
-            
-            ViewBag.SysteamName = Sysname.First();
-
-            ViewBag.DoppelAussen = DAussen.ToList();
-            ViewBag.DoppelIntern = DIntern.ToList();
-            ViewBag.DoppelOption = DopelOption;
-            ViewBag.DoppelItem = DoppelSylinder.Count();
-            ViewBag.DopelZylinder = Doppelname.ToList();
-
-            ViewBag.KnayfAussen = KnayfAusse.ToList();
-            ViewBag.KnayfName = KnayfSylinder.Select(x => x.Name).ToList();
-            ViewBag.KnayflIntern = KnayfIntern.ToList();
-            ViewBag.KnayfItem = KnayfSylinder.Count;
-            ViewBag.KnayfOptionSelected = KnayfOption;
-
-
-            ViewBag.HalbName = HalbSylinder.Select(x => x.Name).ToList();
-            ViewBag.HalbAussen = HablAussen.ToList();
-            ViewBag.HalbCount = HalbSylinder.Count();
-            ViewBag.HalbOptionSelected = HalbOption;
-
-            ViewBag.HelbName = HelbSylinder.Select(x => x.Name).ToList();
-            ViewBag.HelbCount = HelbSylinder.Count();
-            ViewBag.HebelOptionSelected = HebelOption;
-
-            ViewBag.HebelOptionSelectedJson = JsonConvert.SerializeObject(HebelOption);
-
-            ViewBag.VorhanName = VorhanSylinder.Select(x => x.Name).ToList();
-            ViewBag.VorhanAussen = VorhanAussen.ToList();
-            ViewBag.VorhanCount = VorhanSylinder.Count();
-            ViewBag.VorhanOptionSelected = VorhnaOption;
-
-            ViewBag.AussenName = AussenSylinder.Select(x => x.Name).ToList();
-            ViewBag.AussenCount = AussenSylinder.Count();
-            ViewBag.AussenOptionSelected = AussenOption;
-
-            ViewBag.Key = OpenLis.Distinct().ToList();
-
-            ViewBag.FurKey = OpenLis.Select(x=>x.ForNameKey).Distinct().ToList();
-
-            ViewBag.KeyValueFT = KeyValue.ToList();
-
-            ViewBag.IsOpen = KeyValue.Select(x => x.isOpen).ToList();
-            ViewBag.NameKey = OpenLis.Select(x => x.NameKey).Distinct().ToList();
-            ViewBag.CountKey = OpenLis.Select(x => x.CountKey).ToList();
-
-
-            return View("FinischerProductSelect", UserOrder);
-        }
+      
         [HttpPost]
         public ActionResult SaveOrder(List<string>FurNameKey,string userName, Orders Key, List<string> Turname, 
-            List<string> ZylinderId, List<float> aussen, List<float> innen, List<string> NameKey, List<int> CountKey, 
-            string IsOppen,List<int>CountTur)
+        List<string> ZylinderId, List<float> aussen, List<float> innen, List<string> NameKey, List<int> CountKey, 
+        string IsOppen,List<int>CountTur)
         {
             int CountOrders = Turname.Count();
 

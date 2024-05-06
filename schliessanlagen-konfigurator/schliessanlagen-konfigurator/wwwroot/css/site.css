@@ -365,6 +365,9 @@ a {
 }
 #cost{
    color:red;
+   font-size:24px;
+   outline:none;
+   border:none;
 }
 #product_desciptions{
     margin-top:20px;

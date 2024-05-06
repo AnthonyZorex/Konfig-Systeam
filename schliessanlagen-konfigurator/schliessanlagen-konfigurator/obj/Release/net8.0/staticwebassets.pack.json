@@ -253,6 +253,10 @@
       "PackagePath": "staticwebassets\\Image\\SD_Logo.svg"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\Schliarticle.jpg",
+      "PackagePath": "staticwebassets\\Image\\Schliarticle.jpg"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\Vitess.4000 Außenzylinder242451772.png",
       "PackagePath": "staticwebassets\\Image\\Vitess.4000 Außenzylinder242451772.png"
     },
@@ -327,6 +331,10 @@
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\AnthonyBonetta2942024 OrderFile.xlsx",
       "PackagePath": "staticwebassets\\Orders\\AnthonyBonetta2942024 OrderFile.xlsx"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\AnthonyBonetta652024 OrderFile.xlsx",
+      "PackagePath": "staticwebassets\\Orders\\AnthonyBonetta652024 OrderFile.xlsx"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\CES_schliessplan_DE_schliessanlagen.xltx",

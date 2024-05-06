@@ -22,8 +22,13 @@
             @for (int z = 0; z < orderList.Count; z++)
             {
                 <div id="AllProductUser">
-                  <h4>@orderList[z].ProductName</h4>
-                    <details>
+                        <div style="display:flex;gap: 200px;">
+                        <img src="@("/Image/Schliarticle.jpg")" height="150" width="150" />
+                        <h4>@orderList[z].ProductName</h4>
+                        <h2>@orderList[z].OrderSum €</h2>
+                 </div>
+                   
+                    @* <details>
                         <summary>
                         </summary>
                         @for (int s = 0; s < countProduct[z]; s++)
@@ -35,14 +40,14 @@
                             UserOrderId = @orderList[z].Id;
                             ProudctItemCounter++;
                         }
-                    </details>
+                    </details> *@
                     <div style="text-align: end;">
                         <button id="removeOrder" onclick="(remove(@UserOrderId))">RemovaOrder</button>
                         <button>Pay</button>
                     </div>
                     <br />
                     <hr />
-                    <h2>OrderSum: @orderList[z].OrderSum</h2>
+                   
                 </div>
 
                 costed = costed + orderList[z].OrderSum;

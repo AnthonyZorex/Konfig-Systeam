@@ -8,7 +8,7 @@
     int countFalse = 0;
     int d = 0;
 }
- @using (Html.BeginForm("FinischerProductSelect", "Konfigurator", FormMethod.Post))
+@using (Html.BeginForm("SaveUserOrders", "Konfigurator", FormMethod.Post))
 { 
         
     @Html.HiddenFor(m => m.userKey)
@@ -33,29 +33,35 @@
 
                     <div id="counterKey">
                             <input onclick="minus(@z)" type="button" value="-" class="btn btn-success" />
-                            <input type="text" style="border: none;max-width: 30px;" id="countKey-@z" readonly name="CountKey" value="@item.CountKey" />
+                            <input type="text" style="border: none;max-width: 30px;" id="countKey-@z" readonly name="countKey" value="@item.CountKey" />
                             <input onclick="plus(@z)" type="button" value="+" class="btn btn-success" />
                     </div>
 
                 </div>
                 <div id="nameItem">
-                    <h2>@item.NameKey</h2>
+                        <input style="border: none;" name="key" value="@item.NameKey" />
+                        <input style="border: none;" type="hidden" name="FurKey" value="@item.ForNameKey" /> 
                 </div>
 
                 <div id="numerKey">
                     <h3>Schlüssel Nr.@z </h3>
                 </div>
                 <div id="OpenValue">
+
                         @if (ViewBag.DorName.Count > ViewBag.CountKey)
                         {
                             @for (int i = 0; i < ViewBag.DorName.Count; i++)
                             {
                                 @if (ViewBag.KeyValue[countFalse] == true)
                                 {
-                                        <input name="DorName" style="border: none;max-width: 100px;" readonly type="text" id="@z-DorCount-@i" value="@ViewBag.DorName[i]" />
+                                    <input type="hidden" name="keyIsOpen" value="true" />
+                                    <input name="TurName" style="border: none;max-width: 100px;" readonly type="text" id="@z-DorCount-@i" value="@ViewBag.DorName[i]" />
+                                }
+                                else
+                                {
+                                    <input type="hidden" name="keyIsOpen" value="false" />
                                 }
                                 countFalse++;
-
                             }
                             
                         }
@@ -65,7 +71,12 @@
                             {
                                 @if (ViewBag.KeyValue[countFalse] == true)
                                 {
-                                        <input name="DorName" style="border: none;max-width: 100px;" readonly type="text" id="@z-DorCount-@i" value="@ViewBag.DorName[i]" />
+                                    <input type="hidden" name="keyIsOpen" value="true" />
+                                    <input name="TurName" style="border: none;max-width: 100px;" readonly type="text" id="@z-DorCount-@i" value="@ViewBag.DorName[i]" />
+                                }
+                                else
+                                {
+                                    <input type="hidden" name="keyIsOpen" value="false" />
                                 }
                                 countFalse++;
                             }
@@ -73,8 +84,6 @@
                    
                 </div>
             </div>
-
-
         }
         <div>
         </div>
@@ -103,7 +112,8 @@
                     <div id="productMenuInfo">
                         <div id="ProductNameUndCost">
                             <div>
-                                <h3>@item.Name</h3>
+                                    <input style="border: none;" readonly type="text" name="DopelName" value="@item.Name" />
+                                    <input style="border: none;" type="hidden" name="NameSystem" value="@item.NameSystem" />
                             </div>
                         </div>
                         <div>
@@ -118,7 +128,7 @@
 
                         <div id="Size-@d" class="SizeProduct">  
                             <div>
-                                    <select class="form-select" name="DAussen" id="Aussen" onchange="selectParamAussen(event.target.value,@d,@ViewBag.DAussen[elemNum])">
+                                    <select class="form-select" name="DoppelAussen" id="Aussen" onchange="selectParamAussen(event.target.value,@d,@ViewBag.DAussen[elemNum])">
                                     <option style="display:none" selected>@ViewBag.DAussen[elemNum]</option>
                                     <option>Außenlänge (A)</option>
                                     @for (int i = 0; i < ViewBag.Dopelzylinderaussen.Count; i++)
@@ -128,7 +138,7 @@
                                 </select>
                             </div>
                             <div>
-                                    <select class="form-select" name="DIntern" id="Intern" onchange="selectParamIntern(event.target.value,@d)">
+                                    <select class="form-select" name="DoppelIntern" id="Intern" onchange="selectParamIntern(event.target.value,@d)">
                                     <option style="display:none" selected>@ViewBag.DInter[elemNum]</option>
                                     <option>Innenlänge (B)</option>
                                     @for (int i = 0; i < ViewBag.DopelzylinderIntern.Count; i++)
@@ -139,7 +149,7 @@
                             </div>
                             <div style="gap: 10px;display: flex;margin-left: 50px;">
                                     <button type="button"  onclick="CylinderMinus(@d,@item.Cost)" class="btn btn-success">-</button>
-                                    <input style="border: none;max-width: 30px;" id="countSchlusse-@d" type="text" readonly name="TurCount" value="@ViewBag.CounterTur[@elemNum]" />
+                                    <input style="border: none;max-width: 30px;" id="countSchlusse-@d" type="text" readonly name="TurCounter" value="@ViewBag.CounterTur[@elemNum]" />
                                     <button type="button" onclick="CylinderPlus(@d,@item.Cost)" class="btn btn-success">+</button>
                             </div>
                         </div>
@@ -164,7 +174,7 @@
                                             <input class="form-control" style="margin-top: 5px;" readonly type="text" value="@ViewBag.optionsName[i]" />
                                         }
 
-                                    <select style="margin-bottom: 10px;" class="form-select" id="ProductDoppelOptionsSelector" onchange="selectParamOptions(event,@valueCount,@item.Id)">
+                                            <select style="margin-bottom: 10px;" name="DoppelOption" class="form-select" id="ProductDoppelOptionsSelector" onchange="selectParamOptions(event,@valueCount,@item.Id)">
 
                                             @for (int j = 0; j < ViewBag.countOptionsList[i]; j++)
                                             {
@@ -223,7 +233,8 @@
                         <div id="ProductNameUndCost">
 
                             <div>
-                                <h3>@item.Name</h3>
+                                    <input style="border: none;" readonly type="text" name="KnayfName" value="@item.Name" />
+                                    <input style="border: none;" type="hidden" name="NameSystem" value="@item.NameSystem" />
                             </div>
 
                         </div>
@@ -238,10 +249,8 @@
                         </div>
 
                             <div id="Size-@d" class="SizeProduct">
-
-                               
                             <div>
-                                    <select class="form-select" name="KnayfAusse" id="Aussen" onchange="selectParamAussen(event.target.value,@d,@ViewBag.KAussen[elemNum])">
+                                    <select class="form-select" name="KnayfAussen" id="Aussen" onchange="selectParamAussen(event.target.value,@d,@ViewBag.KAussen[elemNum])">
                                     <option style="display:none" selected>@ViewBag.KAussen[elemNum]</option>
                                     <option>Außenlänge (A)</option>
                                     @for (int i = 0; i < ViewBag.KnayfZelinderAussen.Count; i++)
@@ -262,7 +271,7 @@
                             </div>
                             <div style="gap: 10px;display: flex;margin-left: 50px;">
                                     <button type="button" onclick="CylinderMinus(@d,@item.Cost)" class="btn btn-success">-</button>
-                                    <input style="border: none;max-width: 30px;" id="countSchlusse-@d" value="@ViewBag.CounterTurKnayf[@elemNum]" name="TurCount" />
+                                    <input style="border: none;max-width: 30px;" id="countSchlusse-@d" value="@ViewBag.CounterTurKnayf[@elemNum]" name="TurCounter" />
                                     <button type="button" onclick="CylinderPlus(@d,@item.Cost)" class="btn btn-success">+</button>
                             </div>
                         </div>        
@@ -286,7 +295,7 @@
                                             <input class="form-control" style="margin-top: 5px;" readonly type="text" value="@ViewBag.optionsNameKnayf[i]" />
                                         }
 
-                                        <select style="margin-bottom: 10px;" class="form-select" id="ProductOptionsSelector" onchange="selectParamOptions(event,@valueCount,@item.Id)">
+                                            <select style="margin-bottom: 10px;" name="KnayfOption" class="form-select" id="ProductOptionsSelector" onchange="selectParamOptions(event,@valueCount,@item.Id)">
 
                                             @for (int j = 0; j < ViewBag.countOptionsListKnayf[i]; j++)
                                             {
@@ -344,7 +353,8 @@
                         <div id="ProductNameUndCost">
 
                             <div>
-                                <h3>@item.Name</h3>
+                                    <input style="border: none;" readonly type="text" name="HalbName" value="@item.Name" />
+                                    <input style="border: none;" type="hidden" name="NameSystem" value="@item.NameSystem" />
                             </div>
 
                         </div>
@@ -360,7 +370,7 @@
                             <div id="Size-@d" class="SizeProduct">
                                
                             <div>
-                                    <select name="HablAussen" id="Aussen" class="form-select" onchange="selectParamAussen(event.target.value,@d,@ViewBag.HalbOrderAussen[elemNum])">
+                                    <select name="HalbAussen" id="Aussen" class="form-select" onchange="selectParamAussen(event.target.value,@d,@ViewBag.HalbOrderAussen[elemNum])">
                                     <option style="display:none" selected>@ViewBag.HalbOrderAussen[elemNum]</option>
                                     <option>Außenlänge (A)</option>
                                     @for (int i = 0; i < ViewBag.AussenHalb.Count; i++)
@@ -371,7 +381,7 @@
                             </div>
                             <div style="gap: 10px;display: flex;margin-left: 50px;">
                                     <button type="button" onclick="CylinderMinus(@d,@item.Cost)" class="btn btn-success">-</button>
-                                    <input style="border: none;max-width: 30px;" value="@ViewBag.CounterTurHalb[@elemNum]" name="TurCount" id="countSchlusse-@d" />
+                                    <input style="border: none;max-width: 30px;" value="@ViewBag.CounterTurHalb[@elemNum]" name="TurCounter" id="countSchlusse-@d" />
                                     <button type="button" onclick="CylinderPlus(@d,@item.Cost)" class="btn btn-success">+</button>
                             </div>
                         </div>
@@ -395,8 +405,7 @@
                                             <input class="form-control" style="margin-top: 5px;" readonly type="text" value="@ViewBag.HalbOptionsName[i]" />
                                         }
 
-
-                                        <select class="form-select" style="margin-bottom: 10px;" id="ProductOptionsSelector">
+                                            <select class="form-select" name="HalbOption" style="margin-bottom: 10px;" id="ProductOptionsSelector">
 
                                             @for (int j = 0; j < ViewBag.HalbOptionsValueCount[i]; j++)
                                             {
@@ -451,7 +460,8 @@
                         <div id="ProductNameUndCost">
 
                             <div>
-                                <h3>@item.Name</h3>
+                                    <input style="border: none;" readonly type="text" name="HelbName" value="@item.Name" />
+                                    <input style="border: none;" type="hidden" name="NameSystem" value="@item.NameSystem" />
                             </div>
 
                         </div>
@@ -467,7 +477,7 @@
                             <div id="@d" class="SizeProduct">
                             <div style="gap: 10px;display: flex;margin-left: 50px;">
                                     <button onclick="CylinderMinus(@d,@item.Cost)" type="button" class="btn btn-success">-</button>
-                                    <input style="border: none;max-width: 30px;" name="TurCount" value="@ViewBag.CounterTurHebel[@elemNum]" id="countSchlusse-@d" />
+                                    <input style="border: none;max-width: 30px;" name="TurCounter" value="@ViewBag.CounterTurHebel[@elemNum]" id="countSchlusse-@d" />
                                     <button onclick="CylinderPlus(@d,@item.Cost)" type="button" class="btn btn-success">+</button>
                             </div>
                         </div>
@@ -491,7 +501,7 @@
                                             <input style="margin-top: 5px;" class="form-control" readonly type="text" value="@ViewBag.OptionHebelName[i]" />
                                         }
 
-                                        <select class="form-select" style="margin-bottom: 10px;" id="ProductOptionsSelector">
+                                            <select class="form-select" name="HebelOption" style="margin-bottom: 10px;" id="ProductOptionsSelector">
 
                                             @for (int j = 0; j < ViewBag.CountValueHebel[i]; j++)
                                             {
@@ -538,7 +548,8 @@
                         <div id="ProductNameUndCost">
 
                             <div>
-                                <h3>@item.Name</h3>
+                                    <input style="border: none;" readonly type="text" name="VorhanName" value="@item.Name" />
+                                    <input style="border: none;" type="hidden" name="NameSystem" value="@item.NameSystem" />
                             </div>
 
                         </div>
@@ -564,7 +575,7 @@
                             </div>
                             <div style="gap: 10px;display: flex;margin-left: 50px;">
                                     <button type="button" onclick="CylinderMinus(@d,@item.Cost)" class="btn btn-success">-</button>
-                                    <input name="TurCount" style="border: none;max-width: 30px;" id="countSchlusse-@d" value="@ViewBag.CounterTurVorhan[@elemNum]" />
+                                    <input name="TurCounter" style="border: none;max-width: 30px;" id="countSchlusse-@d" value="@ViewBag.CounterTurVorhan[@elemNum]" />
                                     <button type="button" onclick="CylinderPlus(@d,@item.Cost)" class="btn btn-success">+</button>
                             </div>
                         </div>
@@ -590,7 +601,7 @@
                                         }
 
 
-                                        <select style="margin-bottom: 10px;" class="form-select" id="ProductOptionsSelector">
+                                            <select style="margin-bottom: 10px;" name="VorhnaOption" class="form-select" id="ProductOptionsSelector">
 
                                             @for (int j = 0; j < ViewBag.VorhanOptionCount[i]; j++)
                                             {
@@ -646,7 +657,8 @@
                         <div id="ProductNameUndCost">
 
                             <div>
-                                <h3>@item.Name</h3>
+                                    <input style="border: none;" readonly type="text" name="AussenName" value="@item.Name" />
+                                    <input style="border: none;" type="hidden" name="NameSystem" value="@item.NameSystem" />
                             </div>
 
                         </div>
@@ -661,7 +673,7 @@
                         </div>
                             <div id="@d" class="SizeProduct">
                                 <button type="button" onclick="CylinderMinus(@d,@item.Cost)" class="btn btn-success">-</button>
-                                <input style="border: none;max-width: 30px;" name="TurCount" value="@ViewBag.CounterTurAussen[@elemNum]" id="countSchlusse-@d" />
+                                <input style="border: none;max-width: 30px;" name="TurCounter" value="@ViewBag.CounterTurAussen[@elemNum]" id="countSchlusse-@d" />
                                 <button type="button" onclick="CylinderPlus(@d,@item.Cost)" class="btn btn-success">+</button>
                         </div>
                         <div>
@@ -683,7 +695,7 @@
                                             <input class="form-control" style="margin-top: 5px;" readonly type="text" value="@ViewBag.AussenName[i]" />
                                         }
 
-                                        <select style="margin-bottom: 10px;" class="form-select" id="ProductOptionsSelector" onchange="selectParamOptions(event,@valueCount,@item.Id)">
+                                            <select style="margin-bottom: 10px;" name="AussenOption" class="form-select" id="ProductOptionsSelector" onchange="selectParamOptions(event,@valueCount,@item.Id)">
 
                                             @for (int j = 0; j < ViewBag.AussenValue[i]; j++)
                                             {
@@ -722,7 +734,7 @@
             <input type="button"  onclick="goBack()" class="btn btn-danger" value="ANDERES SYSTEM WÄHLEN" />
         </div>
         <div id="orderCost">
-                <h2 id="cost">@ViewBag.Cost</h2>
+                <input name="cost" readonly type="text" value="@ViewBag.Cost" id="cost" />
                 <input name="Sum" id="costed" type="hidden" style="border:none;font-size:24px" value="@ViewBag.Cost" />
         </div>
        
@@ -731,14 +743,20 @@
                 <button id="chekProduct" type="button" class="btn btn-dark"> <a href="@Url.Action("System_Auswählen", "Konfigurator")">ZURÜCK</a></button>
             </div>
             <div id="FinisherRight">
-                    <input id="chekProduct" type="submit" value="Weiter" class="btn btn-danger" />
+                    @if (User.IsInRole("client") || User.IsInRole("admin"))
+                    {
+
+                        <input id="chekProduct" type="submit" value="IN DEN WARENKORB" class="btn btn-danger" />
+                    }
+                    else
+                    {
+                        <a class="btn btn-danger" asp-area="Identity" asp-page="/Account/Register">IN DEN WARENKORB</a>
+                    }
             </div>
         </div>
     </div>
- 
 </div>
-
-   } 
+} 
 <script>
 
     let AllPrice = document.getElementById("cost");
