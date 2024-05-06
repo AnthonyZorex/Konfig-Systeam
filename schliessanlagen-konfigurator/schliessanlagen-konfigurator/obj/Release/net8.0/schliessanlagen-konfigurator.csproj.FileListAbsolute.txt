@@ -292,3 +292,6 @@ D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\schliessanlagen-konfigurator.pdb
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\schliessanlagen-konfigurator.genruntimeconfig.cache
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\ref\schliessanlagen-konfigurator.dll
+D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\BouncyCastle.Cryptography.dll
+D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\MailKit.dll
+D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\MimeKit.dll

@@ -22,7 +22,6 @@
         @Html.HiddenFor(m => m.userKey)
 
         <input type="hidden" value="@ViewBag.UserNameItem" name="userName" />
-        <input name="ItemCount" type="hidden" id="itemcountOptions" />
 
     <div id="InformBar">
         <div id="blockSclussel" >
@@ -506,8 +505,6 @@
     {
         blockCount++;
     
-        let item = document.getElementById('itemcountOptions');
-        item.value = blockCount;
         let newBlock = document.createElement('div');
         newBlock.id = 'TexCount-' + blockCount;
         newBlock.innerHTML = `

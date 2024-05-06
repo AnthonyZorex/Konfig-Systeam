@@ -74,8 +74,10 @@ namespace schliessanlagen_konfigurator.Controllers
                     isOpen_value.Add(keyItem);
                 }
             }
+            var Key = isOpen_value.GroupBy(item => item.NameKey)
+                      .Select(group => group.First()).ToList();
 
-            ViewBag.key = isOpen_value;
+            ViewBag.key = Key;
 
             var keyValue = new List<KeyValue>();
             
@@ -166,7 +168,7 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpPost]
         public ActionResult ChangedKonfigPlanPost(List<string> FurNameKey, string userName, Orders Key, List<string> Turname, 
         List<string> ZylinderId, List<float> aussen, List<float> innen, List<string> NameKey, List<int> CountKey,
-        List<string> IsOppen, List<int> ItemCount, List<int> CountTur)
+        List<string> IsOppen, List<int> CountTur)
         {
 
             if (IsOppen.Count > 1)
@@ -399,15 +401,16 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var d = 0;
 
-            if (ItemCount.Count() > 0)
+            if (CountOrders > 0)
             {
-                var itemsCount = isOpenList.Count() / ItemCount.First();
-                for (var s = 0; s < ItemCount.First(); s++)
+                var itemsCount = isOpenList.Count() / CountOrders;
+
+                for (var s = 0; s < CountOrders; s++)
                 {
                     string NameKeyValue;
 
                     int CountkeyOrders;
-
+                    string FurNameKeyValue;
 
                     if (s >= CountKey.Count())
                     {
@@ -425,12 +428,20 @@ namespace schliessanlagen_konfigurator.Controllers
                     {
                         NameKeyValue = NameKey[s];
                     }
+                    if (s >= FurNameKey.Count())
+                    {
+                        FurNameKeyValue = FurNameKey.Last();
+                    }
+                    else
+                    {
+                        FurNameKeyValue = FurNameKey[s];
+                    }
                     var Open_value = new isOpen_value
                     {
                         isOpen_OrderId = order_open.Last(),
                         NameKey = NameKeyValue,
                         CountKey = CountkeyOrders,
-                        ForNameKey = FurNameKey[s]
+                        ForNameKey = FurNameKeyValue
                     };
 
                     db.isOpen_value.Add(Open_value);
@@ -483,8 +494,9 @@ namespace schliessanlagen_konfigurator.Controllers
                     db.isOpen_value.Add(Open_value);
                     db.SaveChanges();
 
-                    for (var f = 0; f <= IsOppen.Count(); f++)
+                    for (var f = 0; f < isOpenList.Count(); f++)
                     {
+
                         var KeyValueC = new KeyValue
                         {
                             OpenKeyId = Open_value.Id,
@@ -623,7 +635,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var products = await db.Aussen_Innen.ToListAsync();
 
-                var items = products.Where(x => x.aussen == maxInnenParameter & x.Intern == maxAussenParameter).Select(x => x.Profil_DoppelzylinderId).Distinct().ToList();
+                var items = products.Where(x => x.aussen <= maxInnenParameter & x.Intern >= maxAussenParameter).Select(x => x.Profil_DoppelzylinderId).Distinct().ToList();
 
                 var safeDoppelItem = new List<Profil_Doppelzylinder>();
 
@@ -659,7 +671,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var products = await db.Aussen_Innen_Knauf.ToListAsync();
 
-                var item = products.Where(x => x.aussen == maxInnenParameter & x.Intern == maxAussenParameter).Select(x => x.Profil_KnaufzylinderId).Distinct().ToList();
+                var item = products.Where(x => x.aussen <= maxInnenParameter & x.Intern >= maxAussenParameter).Select(x => x.Profil_KnaufzylinderId).Distinct().ToList();
 
                 var safeDoppelItem = new List<Profil_Knaufzylinder>();
 
@@ -757,6 +769,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         cheked6.Add(g);
                     }
             }
+
             #region presset
             if (cheked.Count() > 0 && cheked2.Count==0 && cheked3.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
@@ -2580,7 +2593,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
 
             }
-            if (cheked3.Count() > 0 && cheked2.Count() > 0 && cheked4.Count() > 0 && cheked5.Count() > 0 && cheked6.Count() > 0 && cheked1.Count == 0)
+            if (cheked3.Count() > 0 && cheked2.Count() > 0 && cheked4.Count() > 0 && cheked5.Count() > 0 && cheked6.Count() > 0 && cheked.Count == 0)
             {
                 int precision = 2;
 
@@ -2653,6 +2666,7 @@ namespace schliessanlagen_konfigurator.Controllers
              
             }
             #endregion
+
             return View("System_Auswählen", keyUser);
         }
         
@@ -3240,7 +3254,8 @@ namespace schliessanlagen_konfigurator.Controllers
                 foreach (var tlr in listValueOpen)
                     ValueKeyOpen.Add(tlr);
             }
-            ViewBag.Order = IsOpenValue.Distinct().ToList();
+            ViewBag.Order = IsOpenValue.GroupBy(item => item.NameKey)
+           .Select(group => group.First()).ToList();
 
             foreach (var order in key)
             {
@@ -3269,7 +3284,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     ViewBag.HalbAussen = order.aussen;
 
                     var SizeHalbzylinder = db.Aussen_Innen_Halbzylinder.Where(x => x.Profil_HalbzylinderId == Halbzylinder.First().Id).ToList();
-                    var aussen = SizeHalbzylinder.Where(x => x.aussen > 27 && x.aussen < 35).Max(x => x.aussen);
+                    var aussen = SizeHalbzylinder.Where(x => x.aussen > 27 && x.aussen < 35 ).Max(x => x.aussen);
 
                     for (; aussen < order.aussen;)
                     {
@@ -3283,7 +3298,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                     var aussen = KnayfOrderlist.SelectMany(x => x.Aussen_Innen_Knauf).Where(x => x.aussen > 27 && x.aussen < 35).Max(x => x.aussen);
 
-                    var innen = KnayfOrderlist.SelectMany(x => x.Aussen_Innen_Knauf).Where(x => x.Intern > 27 && x.Intern < 35).Max(x => x.Intern);
+                    var innen = KnayfOrderlist.SelectMany(x => x.Aussen_Innen_Knauf).Where(x => x.Intern > 27 && x.Intern < 35 ).Max(x => x.Intern);
 
                     for (; aussen < order.aussen;)
                     {
@@ -3335,6 +3350,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             ViewBag.KnayfItemIdJson = JsonConvert.SerializeObject(KnayfOrderlist.Select(x => x.Id).ToList());
 
+            ViewBag.CountKey = IsOpenValue.Select(x => x.NameKey).Distinct().Count();
             ViewBag.KnayfZelinderAussen = Kanyf_AussenInen.Select(x => x.aussen).Distinct().ToList();
             ViewBag.KnayfZelinderIntern = Kanyf_AussenInen.Select(x => x.Intern).Distinct().ToList();
 
@@ -3366,7 +3382,6 @@ namespace schliessanlagen_konfigurator.Controllers
             ViewBag.Aussenzylinder = Aussenzylinder.ToList();
             ViewBag.AussenzylinderItem = Aussenzylinder.Select(x => x.Id).ToList();
             ViewBag.AussenzylinderItemJson = JsonConvert.SerializeObject(Aussenzylinder.Select(x => x.Id).ToList());
-
 
             ViewBag.KeyCount = IsOpenValue.Count;
             ViewBag.KeyValue = ValueKeyOpen.Select(x => x.isOpen).ToList();
@@ -3959,7 +3974,7 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpPost]
         public ActionResult SaveOrder(List<string>FurNameKey,string userName, Orders Key, List<string> Turname, 
             List<string> ZylinderId, List<float> aussen, List<float> innen, List<string> NameKey, List<int> CountKey, 
-            string IsOppen, List<int> ItemCount,List<int>CountTur)
+            string IsOppen,List<int>CountTur)
         {
             int CountOrders = Turname.Count();
 
@@ -4132,15 +4147,16 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var d = 0;
 
-            if (ItemCount.Count() > 0)
+            if (CountOrders > 0)
             {
-                var itemsCount = isOpenList.Count() / ItemCount.First();
-                for (var s = 0; s < ItemCount.First(); s++)
+                var itemsCount = isOpenList.Count() / CountOrders;
+
+                for (var s = 0; s < CountOrders; s++)
                 {
                     string NameKeyValue;
 
                     int CountkeyOrders;
-
+                    string FurNameKeyValue;
 
                     if (s >= CountKey.Count())
                     {
@@ -4158,12 +4174,20 @@ namespace schliessanlagen_konfigurator.Controllers
                     {
                         NameKeyValue = NameKey[s];
                     }
+                    if (s >= FurNameKey.Count())
+                    {
+                        FurNameKeyValue = FurNameKey.Last();
+                    }
+                    else
+                    {
+                        FurNameKeyValue = FurNameKey[s];
+                    }
                     var Open_value = new isOpen_value
                     {
                         isOpen_OrderId = order_open.Last(),
                         NameKey = NameKeyValue,
                         CountKey = CountkeyOrders,
-                        ForNameKey = FurNameKey[s]
+                        ForNameKey = FurNameKeyValue
                     };
 
                     db.isOpen_value.Add(Open_value);
@@ -4216,7 +4240,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     db.isOpen_value.Add(Open_value);
                     db.SaveChanges();
 
-                    for (var f = 0; f <= IsOppen.Count(); f++)
+                    for (var f = 0; f < isOpenList.Count(); f++)
                     {
 
                         var KeyValueC = new KeyValue

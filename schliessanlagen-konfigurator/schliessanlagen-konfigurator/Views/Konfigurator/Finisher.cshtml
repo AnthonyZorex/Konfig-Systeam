@@ -46,16 +46,31 @@
                     <h3>Schlüssel Nr.@z </h3>
                 </div>
                 <div id="OpenValue">
-
-                    @for (int i = 0; i < ViewBag.DorName.Count; i++)
-                    {
-                        @if (ViewBag.KeyValue[countFalse] == true)
+                        @if (ViewBag.DorName.Count > ViewBag.CountKey)
                         {
-                                <input name="DorName" style="border: none;max-width: 100px;" readonly type="text" id="@z-DorCount-@i" value="@ViewBag.DorName[i]" />
-                        }
-                        countFalse++;
-                    }
+                            @for (int i = 0; i < ViewBag.DorName.Count; i++)
+                            {
+                                @if (ViewBag.KeyValue[countFalse] == true)
+                                {
+                                        <input name="DorName" style="border: none;max-width: 100px;" readonly type="text" id="@z-DorCount-@i" value="@ViewBag.DorName[i]" />
+                                }
+                                countFalse++;
 
+                            }
+                            
+                        }
+                        else
+                        {
+                            @for (int i = 0; i < ViewBag.CountKey; i++)
+                            {
+                                @if (ViewBag.KeyValue[countFalse] == true)
+                                {
+                                        <input name="DorName" style="border: none;max-width: 100px;" readonly type="text" id="@z-DorCount-@i" value="@ViewBag.DorName[i]" />
+                                }
+                                countFalse++;
+                            }
+                        }
+                   
                 </div>
             </div>
 

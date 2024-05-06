@@ -21,7 +21,6 @@
         @Html.HiddenFor(m => m.userKey)
 
         <input type="hidden" value="@Model.userKey" name="userName" />
-        <input name="ItemCount" type="hidden" id="itemcountOptions" />
 
         <div id="InformBar">
             <div id="blockSclussel">
@@ -179,86 +178,80 @@
                                  idcountTurBlock++;
                                 }
                         </div>
-                        <div id="InfoValue">
+                        <div id="InfoValue1">
 
-                            @if (ViewBag.Key.Count > ViewBag.Orders.Count)
-                            {
                                 @for (var list = 0; list < ViewBag.Key.Count; list++)
                                 {
-
                                     string idhorizontal = $"{idHorizont}horizontal";
 
-                                    <div class="horizontal" id="@idhorizontal">
+                                    <div class="horizontal1" id="@idhorizontal">
 
-                                        @for (int i = 0; i < ViewBag.Orders.Count; i++)
+                                        @if (ViewBag.key.Count > ViewBag.Orders.Count)
                                         {
-                                            string idWithoutSpaces = $"{chekboxtur}checkbox{chekbox}";
-                                            string idIchekbox = $"I{chekboxtur}checkbox{chekbox}";
-                                            string idChekboxContainer = $"{chekboxtur}.checkboxContainer{chekbox}";
-                                            <div class="checkboxContainer" id="@idChekboxContainer">
+                                            @for (int i = 0; i < ViewBag.key.Count; i++)
+                                            {
+                                                string idWithoutSpaces = $"{chekboxtur}checkbox{chekbox}";
+                                                string idIchekbox = $"I{chekboxtur}checkbox{chekbox}";
+                                                string idChekboxContainer = $"{chekboxtur}.checkboxContainer{chekbox}";
+                                                <div class="checkboxContainer" id="@idChekboxContainer">
 
-                                                @if (@ViewBag.KeyValueFT[countFalse].isOpen == true)
-                                                {
-                                                    <input type="checkbox" checked id="@idWithoutSpaces">
-                                                    <input type="hidden" value="true" name="IsOppen" id="@idIchekbox">
-                                                    countFalse++;
-                                                }
-                                                else
-                                                {
-                                                    <input type="checkbox" id="@idWithoutSpaces">
-                                                    <input type="hidden" value="false" name="IsOppen" id="@idIchekbox">
-                                                    countFalse++;
-                                                }
-                                            </div>
+                                                    @if (@ViewBag.KeyValueFT[countFalse].isOpen == true)
+                                                    {
+                                                        <input type="checkbox" checked id="@idWithoutSpaces">
+                                                        <input type="hidden" value="true" name="IsOppen" id="@idIchekbox">
+                                                        chekboxtur++;
+                                                        countFalse++;
+                                                 
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" id="@idWithoutSpaces">
+                                                        <input type="hidden" value="false" name="IsOppen" id="@idIchekbox">
+                                                        chekboxtur++;
+                                                        countFalse++;
+                                                        
+                                                    }
+                                                
+                                                </div>
+                                           
+                                            }
+                                            chekboxtur = 1;
                                             chekbox++;
-
                                         }
+                                        else
+                                        {
+                                            @for (int i = 0; i < ViewBag.Orders.Count; i++)
+                                            {
+                                                string idWithoutSpaces = $"{chekboxtur}checkbox{chekbox}";
+                                                string idIchekbox = $"I{chekboxtur}checkbox{chekbox}";
+                                                string idChekboxContainer = $"{chekboxtur}.checkboxContainer{chekbox}";
+                                                <div class="checkboxContainer" id="@idChekboxContainer">
+
+                                                    @if (@ViewBag.KeyValueFT[countFalse].isOpen == true)
+                                                    {
+                                                        <input type="checkbox" checked id="@idWithoutSpaces">
+                                                        <input type="hidden" value="true" name="IsOppen" id="@idIchekbox">
+                                                        chekboxtur++;
+                                                        countFalse++;
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" id="@idWithoutSpaces">
+                                                        <input type="hidden" value="false" name="IsOppen" id="@idIchekbox">
+                                                        chekboxtur++;
+                                                        countFalse++;
+                                                    }
+                                                </div>
+                                           
+                                            }
+                                            chekboxtur = 1;
+                                            chekbox++;
+                                        }
+
                                     </div>
                                     idHorizont++;
-                                    chekboxtur++;
-                                    chekbox = 1;
-
                                 }
-                            }
-                            else
-                            {
-                                @for (var list = 0; list < ViewBag.Orders.Count ; list++)
-                                {
 
-                                    string idhorizontal = $"{idHorizont}horizontal";
-
-                                    <div class="horizontal" id="@idhorizontal">
-
-                                        @for (int i = 0; i < ViewBag.Key.Count; i++)
-                                        {
-                                            string idWithoutSpaces = $"{chekboxtur}checkbox{chekbox}";
-                                            string idIchekbox = $"I{chekboxtur}checkbox{chekbox}";
-                                            string idChekboxContainer = $"{chekboxtur}.checkboxContainer{chekbox}";
-                                            <div class="checkboxContainer" id="@idChekboxContainer">
-
-                                                @if (@ViewBag.KeyValueFT[countFalse].isOpen == true)
-                                                {
-                                                    <input type="checkbox" checked id="@idWithoutSpaces">
-                                                    <input type="hidden" value="true" name="IsOppen" id="@idIchekbox">
-                                                    countFalse++;
-                                                }
-                                                else
-                                                {
-                                                    <input type="checkbox" id="@idWithoutSpaces">
-                                                    <input type="hidden" value="false" name="IsOppen" id="@idIchekbox">
-                                                    countFalse++;
-                                                }
-                                            </div>
-                                            chekbox++;
-
-                                        }
-                                    </div>
-                                    idHorizont++;
-                                    chekboxtur++;
-                                    chekbox = 1;
-
-                                }
-                            }
                         </div>
                     </div>
                 </div>
@@ -295,8 +288,7 @@
         let dorCounter = document.querySelectorAll("#inputTur");
         let keyCounter = document.querySelectorAll("#inputS");
         let boolV = document.getElementById('vBool');
-        for (let i = 0; i < keyCounter.length; i++) 
-        {
+        for (let i = 0; i < keyCounter.length; i++) {
             h++;
             let w = 0;
             for (let j = 0; j < dorCounter.length; j++) {
@@ -353,9 +345,7 @@
         count--;
         countTur.value = count;
     }
-
-    function selectParam(value, turNumber) 
-    {
+    function selectParam(value, turNumber) {
         let BlockTur = document.querySelector(`#BlockTur-${turNumber}`);
 
         let Aussen = BlockTur.querySelector(".aussen");
@@ -440,24 +430,19 @@
         }
 
     }
-   
 
-    function createCustomCheckbox(id) 
-    {
+    function createCustomCheckbox(id) {
         var checkbox = document.getElementById(id);
         var checkboxValue = false;
 
-        if (!localStorage.getItem(id)) 
-        {
-            if (checkbox.checked == true) 
-            {
+        if (!localStorage.getItem(id)) {
+            if (checkbox.checked == true) {
                 localStorage.setItem(id, 'true');
             }
-            else 
-            {
+            else {
                 localStorage.setItem(id, 'false');
             }
-            
+
         }
 
         var savedValue = localStorage.getItem(id);
@@ -483,24 +468,9 @@
         });
     }
 
-    function foo() 
-    {
-        let id = 0;
-        let count = 0;
+    function foo() {
         localStorage.clear();
-        for (let i = 0; i < blockTur; i++) 
-        {
-            id++;
-            for (let j = 0; j < blockCount; j++) 
-            {
-                count++;
-                createCustomCheckbox(`${id}checkbox${count}`);
-               
-            }
-            count = 0;
-            
-        }
-       
+        createCustomCheckbox(`${blockTur}checkbox${blockCount}`);
     }
 
     window.onload = foo()
@@ -543,44 +513,44 @@
 
                                     <div id="SelectTurItem">
                                             <select id="TypeSelectTurType"  onchange="selectParam(event.target.value,${blockTur})" name="ZylinderId">
-                                            @foreach (var list in ViewBag.Zylinder_Typ)
-                                            {
+    @foreach (var list in ViewBag.Zylinder_Typ)
+    {
                                               <option>@list.nameType</option>
-                                            }
+    }
                                         </select>
                                     </div>
 
                                     <div id="SelectTurItem">
                                             <select id="TypeSelectTurItem"  class="aussen" name="aussen">
-                                            @foreach (var list in ViewBag.DoppelAussen)
-                                            {
+    @foreach (var list in ViewBag.DoppelAussen)
+    {
                                                   <option id="OptionA">@list</option>
-                                            }
+    }
                                         </select>
                                     </div>
                                     <div id="SelectTurItem">
                                                 <select id="TypeSelectTurItem" class="Innen" name="innen">
-                                                @foreach (var list in ViewBag.DoppelIntern)
-                                                {
+    @foreach (var list in ViewBag.DoppelIntern)
+    {
                                                        <option id="OptionI">@list</option>
-                                                }
+    }
                                         </select>
                                     </div>
+
+
                                                <div id="chekerTur">
                                                 <button type="button" onclick="Plus(${blockTur})">+</button>
-                                                <input id="infoButten" required  value="1" type="text" name="CountTur" />
+                                            <input id="infoButten"  value="1" type="text" name="CountTur" />
                                                 <button type="button" onclick="Minus(${blockTur})">-</button>
                                         </div>
                                 </div>
+
                     `;
 
         document.getElementById('BlockTur-1').appendChild(newBlock);
 
-        let horizont = document.createElement('div');
-        horizont.id = `${blockTur}horizontal`;
-        horizont.classList.add('horizontal');
-
-        for (let i = 1; i <= blockCount; i++) {
+        for (let i = 1; i <= blockCount; i++) 
+        {
 
             let newBlockTur = document.createElement('div');
 
@@ -591,9 +561,9 @@
 
             newBlockTur.classList.add('checkboxContainer');
 
-            horizont.appendChild(newBlockTur);
+            document.getElementById(`${i}horizontal`).appendChild(newBlockTur);
 
-            document.getElementById('InfoValue').appendChild(horizont);
+            document.getElementById('InfoValue1').appendChild(document.getElementById(`${i}horizontal`));
 
             createCustomCheckbox(`${blockTur}checkbox${i}`);
         }
@@ -607,7 +577,9 @@
                 for (let f = 1; f <= blockTur;) {
                     let blockToRemoveTurValue = document.getElementById(`${f}.checkboxContainer${blockCount}`);
                     blockToRemoveTurValue.remove();
+
                     f++;
+
                 }
 
             }
@@ -625,8 +597,6 @@
     function addBlock() {
         blockCount++;
 
-        let item = document.getElementById('itemcountOptions');
-        item.value = blockCount;
         let newBlock = document.createElement('div');
         newBlock.id = 'TexCount-' + blockCount;
         newBlock.innerHTML = `
@@ -636,16 +606,19 @@
                                         <input id="inputS" required name="NameKey" onchange="chekedNameArienKey(event.target.value,${blockCount})" placeholder="Name des Schlüssels" type="text" />
                                 </div>
                                 <div>
-                                         <input id="inputCount" name="CountKey" value="1" type="text" />
+                                             <input id="inputCount" required name="CountKey" value="1" type="text" />
                                 </div>
                             </div>
 
                 `;
         document.getElementById('itemKeyBlock').appendChild(newBlock);
 
-        let horizont = document.getElementById(`${blockTur}horizontal`);
+        let horizont = document.createElement('div');
+        horizont.id = `${blockCount}horizontal`;
+        horizont.classList.add('horizontal1');
 
-        for (let i = 1; i <= blockTur; i++) {
+        for (let i = 1; i <= blockTur; i++) 
+        {
 
             let newBlockTur = document.createElement('div');
 
@@ -656,9 +629,9 @@
 
             newBlockTur.classList.add('checkboxContainer');
 
-            document.getElementById(`${i}horizontal`).appendChild(newBlockTur);
+            horizont.appendChild(newBlockTur);
 
-            document.getElementById('InfoValue').appendChild(horizont);
+            document.getElementById('InfoValue1').appendChild(horizont);
 
             createCustomCheckbox(`${i}checkbox${blockCount}`);
         }
