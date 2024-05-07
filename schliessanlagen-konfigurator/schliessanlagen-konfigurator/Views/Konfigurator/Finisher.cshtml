@@ -759,26 +759,21 @@
 } 
 <script>
 
+    let keyPrice = @Html.Raw(ViewBag.KeyCost);
+
     let AllPrice = document.getElementById("cost");
 
     let pris = document.getElementById("costed");
     
     pris.value = AllPrice.innerHTML;
-
     let NoOptionCost = @Html.Raw(@ViewBag.CostProducted);
-
-    console.log(NoOptionCost);
-
     let ParamSum = parseFloat(AllPrice.innerHTML.replace(',', '.') - NoOptionCost);
-    let DoppSchlussel = 0;
-    let DoppelSum = 0;
-
     localStorage.setItem("cost", ParamSum);
 
     localStorage.sInnen = 0;
     localStorage.sAussen = 0;
     localStorage.options = 0;
-    localStorage.DopItem = 0;
+    localStorage.keyCost = 0;
 
     let AussenCost = 0;
     let InternCost = 0;
@@ -790,6 +785,8 @@
         let value = Number(counter.value);
         value++;
         counter.value = value;
+
+        AllPrice.value = parseFloat(AllPrice.value) + keyPrice;
     }
     function minus(n) 
     {
@@ -797,6 +794,8 @@
         let value = Number(counter.value);
         value--;
         counter.value = value;
+
+        AllPrice.value = parseFloat(AllPrice.value) - keyPrice;
     }
     function CylinderPlus(n, cost) 
     {
@@ -804,63 +803,21 @@
         let value = Number(counter.value);
         let oldConter = Number(counter.value);
 
-        if (value > 1) 
-        {
             value++;
             counter.value = value;
-            DoppSchlussel = DoppSchlussel + ((cost * value) - (oldConter * cost));
-            DoppelSum = + DoppSchlussel;
-            localStorage.DopItem = DoppelSum;
-        }
-        else 
-        {
-            value++;
-            counter.value = value;
-            DoppSchlussel = DoppSchlussel + ((cost * value) - cost);
-            DoppelSum = + DoppSchlussel;
-            localStorage.DopItem = DoppelSum;
-        }
-       
 
-        let a = parseFloat(localStorage.sInnen);
-        let b = parseFloat(localStorage.sAussen);
-        let c = parseFloat(localStorage.options);
-        let d = parseFloat(localStorage.DopItem);
-
-        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c + d;
-
-        AllPrice.innerHTML = NoOptionCost + sum;
+            AllPrice.value = parseFloat(AllPrice.value) +  cost;
     }
     function CylinderMinus(n, cost) 
     {
         let counter = document.getElementById("countSchlusse-" + n);
         let value = Number(counter.value);
         let oldConter = Number(counter.value);
-        if (value > 1) 
-        {
             value--;
             counter.value = value;
-            DoppSchlussel = DoppSchlussel - ((cost * value) - (cost * oldConter));
-            DoppelSum = -DoppSchlussel;
-            localStorage.DopItem = DoppelSum;
-        }
-        else 
-        {
-            value--;
-            counter.value = value;
-            DoppSchlussel = DoppSchlussel - (cost * value);
-            DoppelSum = +DoppSchlussel;
-            localStorage.DopItem = DoppelSum;
-        }
-        let a = Number(localStorage.sInnen);
-        let b = Number(localStorage.sAussen);
-        let c = Number(localStorage.options);
-        let d = Number(localStorage.DopItem);
 
-        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c + d;
-        AllPrice.innerHTML = NoOptionCost + sum;
+             AllPrice.value = parseFloat(AllPrice.value) - cost;
     }
-
 
     localStorage.OldVorhan = 0;
     
@@ -896,7 +853,7 @@
                     let c = Number(localStorage.options);
                     let d = Number(localStorage.DopItem);
 
-                    let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c + d;
+                    let sum =  a + b + c + d;
 
                     localStorage.OldVorhan = ItemValue;
                     

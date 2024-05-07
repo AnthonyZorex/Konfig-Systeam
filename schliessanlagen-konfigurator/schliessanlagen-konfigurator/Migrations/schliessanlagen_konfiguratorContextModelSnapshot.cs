@@ -51,13 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2d722e00-a015-4209-93db-57bfdb75a4ee",
+                            Id = "3fa61fcb-bdcd-4437-9e9f-0beeabc610f3",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "75b92a00-a329-40b8-9604-d8f833dc45cd",
+                            Id = "2894c610-28e0-453a-9f94-8a4b8ae1992d",
+                            Name = "client",
+                            NormalizedName = "client"
+                        },
+                        new
+                        {
+                            Id = "81314379-1711-4962-9773-c0ee9d9668f4",
+                            Name = "admin",
+                            NormalizedName = "admin"
+                        },
+                        new
+                        {
+                            Id = "6d0063ee-50f0-4208-996c-621e02423c77",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -527,9 +539,6 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Artikelnummer")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("Count")
                         .HasColumnType("int");
 
@@ -909,6 +918,26 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Schliessanlagen");
+                });
+
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.SysteamPriceKey", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("NameSysteam")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Price")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SysteamPriceKey");
                 });
 
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Users.ProductSysteam", b =>

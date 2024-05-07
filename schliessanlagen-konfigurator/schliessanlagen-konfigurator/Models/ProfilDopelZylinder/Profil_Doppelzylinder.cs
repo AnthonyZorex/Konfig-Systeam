@@ -5,7 +5,6 @@ namespace schliessanlagen_konfigurator.Models.ProfilDopelZylinder
 {
     public class Profil_Doppelzylinder
     {
-
         public int Id { get; set; }
         public int schliessanlagenId { get; set; }
         public string Name { get; set; }

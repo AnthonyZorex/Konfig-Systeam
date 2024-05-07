@@ -45,14 +45,14 @@ namespace schliessanlagen_konfigurator.Data
             };
 
             builder.Entity<IdentityRole>().HasData(adminRole, clientRole);
-            //base.OnModelCreating(builder);
-            //var admin = new IdentityRole("admin");
-            //admin.NormalizedName = "admin";
+            base.OnModelCreating(builder);
+            var admin = new IdentityRole("admin");
+            admin.NormalizedName = "admin";
 
-            //var client = new IdentityRole("client");
-            //client.NormalizedName = "client";
+            var client = new IdentityRole("client");
+            client.NormalizedName = "client";
 
-            //builder.Entity<IdentityRole>().HasData(admin, client);
+            builder.Entity<IdentityRole>().HasData(admin, client);
         }
         public DbSet<User> User { get; set; }
         public DbSet<UserOrdersShop> UserOrdersShop { get; set; }
@@ -97,6 +97,7 @@ namespace schliessanlagen_konfigurator.Data
         public DbSet<isOpen_Order> isOpen_Order { get; set; }
         public DbSet<isOpen_value> isOpen_value { get; set; }
         public DbSet<KeyValue> KeyValue { get; set; }
+        public DbSet<SysteamPriceKey> SysteamPriceKey {  get; set; }
 
         public DbSet<Profil_Knaufzylinder> Profil_Knaufzylinder { get; set; }
         public DbSet<Aussen_Innen_Knauf> Aussen_Innen_Knauf { get; set; }

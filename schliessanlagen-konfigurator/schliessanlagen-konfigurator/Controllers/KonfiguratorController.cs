@@ -597,6 +597,29 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var allUserListOrder = await db.Orders.Where(x => x.userKey == keyUser.userKey).ToListAsync();
 
+            var isOpenList = new List<isOpen_Order>();
+
+            foreach(var item in allUserListOrder)
+            {
+                var orderItem = await db.isOpen_Order.Where(x => x.OrdersId == item.Id).ToListAsync();
+                foreach (var list in orderItem)
+                {
+                    isOpenList.Add(list);
+                }
+            }
+
+            var isOpen = new List<isOpen_value>();
+
+            foreach (var item in isOpenList)
+            {
+                var orderItem = await db.isOpen_value.Where(x => x.isOpen_OrderId == item.Id).GroupBy(item => item.NameKey)
+                .Select(group => group.First()).ToListAsync();
+                foreach (var list in orderItem)
+                {
+                    isOpen.Add(list);
+                }
+            }
+
             ViewBag.Zylinder_Typ = await db.Schliessanlagen.ToListAsync();
 
             var profilD = await db.Profil_Doppelzylinder.ToListAsync();
@@ -775,10 +798,11 @@ namespace schliessanlagen_konfigurator.Controllers
             {
 
                 int precision = 2;
-
+              
+                var keySum = db.SysteamPriceKey.ToList();
                 var queryOrder = from t1 in cheked
-                                 join t2 in allUserListOrder
-                                 on t1.schliessanlagenId equals t2.ZylinderId
+                                 join t2 in allUserListOrder on t1.schliessanlagenId equals t2.ZylinderId
+                                 join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
                                      cheked3 = 0,
@@ -792,20 +816,24 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x=>x.Count.Value).Sum(), precision),
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x=>x.Count.Value).Sum() +
+                                     (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
-                var ListOrder = queryOrder.Distinct().ToList();
-                ViewBag.Doppel = ListOrder.Distinct().OrderBy(x => x.Cost).ToList();
+                                var ListOrder = queryOrder.Distinct().ToList();
+                                ViewBag.Doppel = ListOrder.Distinct().OrderBy(x => x.Cost).ToList();
             }
 
            if (cheked2.Count() > 0 && cheked.Count == 0 && cheked3.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
            {
                 int precision = 2;
+
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked2
-                                 join t2 in allUserListOrder
-                                on t1.schliessanlagenId equals t2.ZylinderId
+                                 join t2 in allUserListOrder on t1.schliessanlagenId equals t2.ZylinderId
+                                 join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
                                      cheked = 0,
@@ -819,20 +847,24 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum(), precision),
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum()+
+                                       (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
                 var Knaufzylinder = queryOrder.Distinct().ToList();
 
-                ViewBag.Knaufzylinder = Knaufzylinder.Distinct().OrderBy(x => x.Cost).ToList(); ;
-            }
+                ViewBag.Knaufzylinder = Knaufzylinder.Distinct().OrderBy(x => x.Cost).ToList();
+           }
             if (cheked3.Count() > 0 && cheked2.Count == 0 && cheked.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
                 int precision = 2;
+
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var query = from t1 in cheked3
-                            join t2 in allUserListOrder
-                            on t1.schliessanlagenId equals t2.ZylinderId
+                            join t2 in allUserListOrder on t1.schliessanlagenId equals t2.ZylinderId
+                            join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                             select new
                             {
                                 cheked = 0,
@@ -846,7 +878,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                 companyName = t1.companyName,
                                 description = t1.description,
                                 NameSystem = t1.NameSystem,
-                                Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum(), precision),
+                                Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum()+
+                                (t3.Price * isOpen.Count()), precision),
                                 ImageName = t1.ImageName
 
                             };
@@ -857,9 +890,12 @@ namespace schliessanlagen_konfigurator.Controllers
             if (cheked4.Count() > 0 && cheked2.Count == 0 && cheked3.Count == 0 && cheked.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
                 int precision = 2;
+
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var query = from t1 in cheked4
-                            join t2 in allUserListOrder
-                            on t1.schliessanlagenId equals t2.ZylinderId
+                            join t2 in allUserListOrder on t1.schliessanlagenId equals t2.ZylinderId
+                            join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                             select new
                             {
                                 cheked = 0,
@@ -873,7 +909,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                 companyName = t1.companyName,
                                 description = t1.description,
                                 NameSystem = t1.NameSystem,
-                                Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum(), precision),
+                                Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum()+
+                                (t3.Price * isOpen.Count()), precision),
                                 ImageName = t1.ImageName
 
                             };
@@ -885,9 +922,11 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var query = from t1 in cheked5
-                            join t2 in allUserListOrder
-                            on t1.schliessanlagenId equals t2.ZylinderId
+                            join t2 in allUserListOrder on t1.schliessanlagenId equals t2.ZylinderId
+                            join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                             select new
                             {
                                 cheked = 0,
@@ -901,7 +940,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                 companyName = t1.companyName,
                                 description = t1.description,
                                 NameSystem = t1.NameSystem,
-                                Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
+                                Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum()+
+                                (t3.Price * isOpen.Count()), precision),
                                 ImageName = t1.ImageName
                             };
                 var rl = query.Distinct().ToList();
@@ -911,10 +951,12 @@ namespace schliessanlagen_konfigurator.Controllers
             if (cheked6.Count() > 0 && cheked2.Count == 0 && cheked3.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked.Count == 0)
             {
                 int precision = 2;
+                
+                var keySum = db.SysteamPriceKey.ToList();
 
                 var query = from t1 in cheked6
-                            join t2 in allUserListOrder
-                            on t1.schliessanlagenId equals t2.ZylinderId
+                            join t2 in allUserListOrder on t1.schliessanlagenId equals t2.ZylinderId
+                            join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                             select new
                             {
                                 cheked = 0,
@@ -928,7 +970,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                 companyName = t1.companyName,
                                 description = t1.description,
                                 NameSystem = t1.NameSystem,
-                                Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() , precision),
+                                Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum()+
+                                  (t3.Price * isOpen.Count()), precision),
                                 ImageName = t1.ImageName
                             };
                 var rl = query.Distinct().ToList();
@@ -938,9 +981,12 @@ namespace schliessanlagen_konfigurator.Controllers
             if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked3.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
                 int precision = 2;
+
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked
-                                 join t2 in cheked2
-                                 on t1.NameSystem equals t2.NameSystem
+                                 join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in keySum on t2.NameSystem equals t3.NameSysteam
                                  select new
                                  {
                                      cheked = t1.Id,
@@ -955,7 +1001,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost  * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum(), precision),
+                                     Cost = Math.Round(t1.Cost  * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum()+
+                                        (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -967,9 +1014,11 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked
-                                 join t2 in cheked3
-                                 on t1.NameSystem equals t2.NameSystem
+                                 join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in keySum on t2.NameSystem equals t3.NameSysteam
                                  select new
                                  {
                                      userKey = keyUser.userKey,
@@ -983,19 +1032,23 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum(), precision),
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum()+
+                                      (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
                 var Join = queryOrder.Distinct().ToList();
+
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked.Count() > 0 && cheked4.Count() > 0 && cheked2.Count == 0 && cheked3.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
                 int precision = 2;
+                
+                var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked
-                                 join t2 in cheked4
-                                 on t1.NameSystem equals t2.NameSystem
+                                 join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in keySum on t2.NameSystem equals t3.NameSysteam
                                  select new
                                  {
                                      cheked = t1.Id,
@@ -1009,9 +1062,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum(), precision),
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum()+
+                                      (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
+
                 var Join = queryOrder.Distinct().ToList();
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -1019,9 +1074,11 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked
-                                 join t2 in cheked5
-                                 on t1.NameSystem equals t2.NameSystem
+                                 join t2 in cheked5 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in keySum on t2.NameSystem equals t3.NameSysteam
                                  select new
                                  {
                                      cheked = t1.Id,
@@ -1035,7 +1092,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum()+
+                                   (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
                 var Join = queryOrder.Distinct().ToList();
@@ -1046,9 +1104,11 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked
-                                 join t2 in cheked6
-                                 on t1.NameSystem equals t2.NameSystem
+                                 join t2 in cheked6 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
                                      cheked = t1.Id,
@@ -1062,7 +1122,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum()+
+                                      (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1073,10 +1134,12 @@ namespace schliessanlagen_konfigurator.Controllers
             if (cheked2.Count() > 0 && cheked3.Count() > 0 && cheked.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
                 int precision = 2;
+                
+                var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked2
-                                 join t2 in cheked3
-                                 on t1.NameSystem equals t2.NameSystem
+                                 join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
                                      cheked = 0,
@@ -1090,7 +1153,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum(), precision),
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum()+
+                                    (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1101,9 +1165,11 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked2
-                                 join t2 in cheked4
-                                 on t1.NameSystem equals t2.NameSystem
+                                 join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
                                      cheked = 0,
@@ -1117,7 +1183,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum(), precision),
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum()+
+                                     (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1128,9 +1195,11 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked2
-                                 join t2 in cheked5
-                                 on t1.NameSystem equals t2.NameSystem
+                                 join t2 in cheked5 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
                                      cheked = 0,
@@ -1144,7 +1213,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum()+
+                                     (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1155,9 +1225,11 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked2
-                                 join t2 in cheked6
-                                 on t1.NameSystem equals t2.NameSystem
+                                 join t2 in cheked6 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
                                      cheked = 0,
@@ -1171,7 +1243,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum()+
+                                       (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1181,10 +1254,12 @@ namespace schliessanlagen_konfigurator.Controllers
             if (cheked3.Count() > 0 && cheked4.Count() > 0 && cheked.Count == 0 && cheked2.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
                 int precision = 2;
+                
+                var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked3
-                                 join t2 in cheked4
-                                 on t1.NameSystem equals t2.NameSystem
+                                 join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
                                      cheked = 0,
@@ -1198,7 +1273,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum(), precision),
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum()+
+                                       (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1210,9 +1286,11 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked3
-                                 join t2 in cheked5
-                                 on t1.NameSystem equals t2.NameSystem
+                                 join t2 in cheked5 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
                                      cheked = 0,
@@ -1227,7 +1305,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum()+
+                                     (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1239,9 +1318,11 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked3
-                                 join t2 in cheked6
-                                 on t1.NameSystem equals t2.NameSystem
+                                 join t2 in cheked6 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
                                      cheked = 0,
@@ -1255,7 +1336,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum()+
+                                     (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1267,9 +1349,11 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked4
-                                 join t2 in cheked5
-                                 on t1.NameSystem equals t2.NameSystem
+                                 join t2 in cheked5 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
                                      cheked = 0,
@@ -1283,7 +1367,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum()+
+                                     (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1295,9 +1380,11 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked4
-                                 join t2 in cheked6
-                                 on t1.NameSystem equals t2.NameSystem
+                                 join t2 in cheked6 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
                                      cheked = 0,
@@ -1312,7 +1399,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum()+
+                                      (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1324,9 +1412,11 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked5
-                                 join t2 in cheked6
-                                 on t1.NameSystem equals t2.NameSystem
+                                 join t2 in cheked6 on t1.NameSystem equals t2.NameSystem
+                                 join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
                                      cheked = 0,
@@ -1340,7 +1430,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum()+
+                                       (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1353,9 +1444,12 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
                                      cheked = t1.Id,
@@ -1370,7 +1464,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + 
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum(), precision),
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1382,9 +1476,12 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+                
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
                                      cheked = t1.Id,
@@ -1399,7 +1496,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum(), precision),
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1411,9 +1508,12 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
                                      cheked = t1.Id,
@@ -1428,7 +1528,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1440,9 +1540,12 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
                                      cheked = t1.Id,
@@ -1457,7 +1560,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1469,9 +1572,12 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
                                      cheked = t1.Id,
@@ -1486,7 +1592,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum(), precision),
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum()+ (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1498,9 +1604,12 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
                                      cheked = t1.Id,
@@ -1515,7 +1624,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum()+ (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1527,9 +1636,12 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
                                      cheked = t1.Id,
@@ -1544,7 +1656,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1557,9 +1669,12 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
                                      cheked = t1.Id,
@@ -1574,7 +1689,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum()+ (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1586,9 +1701,12 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
                                      cheked = t1.Id,
@@ -1603,7 +1721,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum()+(t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1615,9 +1733,12 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked5 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
                                      cheked = t1.Id,
@@ -1632,7 +1753,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1645,9 +1766,12 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked2
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
                                      cheked = 0,
@@ -1662,7 +1786,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum(), precision),
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1674,9 +1798,12 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked2
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
                                      cheked = 0,
@@ -1691,7 +1818,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1703,9 +1830,12 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked2
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
                                      cheked = 0,
@@ -1720,7 +1850,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1732,9 +1862,12 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked2
                                  join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
                                      cheked = 0,
@@ -1749,7 +1882,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1761,9 +1894,12 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked2
                                  join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
                                      cheked = 0,
@@ -1778,7 +1914,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1790,9 +1926,12 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+                
                 var queryOrder = from t1 in cheked2
                                  join t2 in cheked5 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
                                      cheked = 0,
@@ -1807,7 +1946,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1819,9 +1958,12 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked3
                                  join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
                                      cheked = 0,
@@ -1836,7 +1978,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1847,10 +1989,13 @@ namespace schliessanlagen_konfigurator.Controllers
             if (cheked4.Count() > 0 && cheked3.Count() > 0 && cheked6.Count() > 0 && cheked.Count == 0 && cheked2.Count == 0 && cheked5.Count == 0)
             {
                 int precision = 2;
+                
+                var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked3
                                  join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
                                      cheked = 0,
@@ -1865,7 +2010,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1877,9 +2022,12 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked3
                                  join t2 in cheked5 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
                                      cheked = 0,
@@ -1894,7 +2042,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1906,9 +2054,12 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked4
                                  join t2 in cheked5 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
+                                 join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
                                      cheked = 0,
@@ -1923,7 +2074,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1936,10 +2087,13 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
                                  join t4 in cheked4 on t3.NameSystem equals t4.NameSystem
+                                 join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
                                      cheked = t1.Id,
@@ -1955,7 +2109,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
                                      t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum(), precision),
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1967,10 +2121,13 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
                                  join t4 in cheked5 on t3.NameSystem equals t4.NameSystem
+                                 join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
                                      cheked = t1.Id,
@@ -1987,7 +2144,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + 
                                      t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
                                      t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1999,10 +2156,13 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
                                  join t4 in cheked6 on t3.NameSystem equals t4.NameSystem
+                                 join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
                                      cheked = t1.Id,
@@ -2019,7 +2179,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
                                      t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
                                      t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2031,10 +2191,13 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
                                  join t4 in cheked5 on t3.NameSystem equals t4.NameSystem
+                                 join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
                                      cheked = t1.Id,
@@ -2051,7 +2214,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
                                      t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
                                      t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2063,10 +2226,13 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
                                  join t4 in cheked6 on t3.NameSystem equals t4.NameSystem
+                                 join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
                                      cheked = t1.Id,
@@ -2083,7 +2249,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
                                      t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
                                      t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2095,10 +2261,13 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
                                  join t4 in cheked6 on t3.NameSystem equals t4.NameSystem
+                                 join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
                                      cheked = t1.Id,
@@ -2115,7 +2284,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
                                      t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
                                      t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2128,10 +2297,13 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
                                  join t4 in cheked5 on t3.NameSystem equals t4.NameSystem
+                                 join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
                                      cheked = t1.Id,
@@ -2148,7 +2320,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
                                      t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
                                      t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2160,10 +2332,13 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
                                  join t4 in cheked6 on t3.NameSystem equals t4.NameSystem
+                                 join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
                                      cheked = t1.Id,
@@ -2180,7 +2355,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
                                      t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
                                      t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2193,10 +2368,13 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
                                  join t4 in cheked6 on t3.NameSystem equals t4.NameSystem
+                                 join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
                                      cheked = t1.Id,
@@ -2213,7 +2391,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
                                      t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
                                      t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2225,10 +2403,13 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
                                  join t4 in cheked6 on t3.NameSystem equals t4.NameSystem
+                                 join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
                                      cheked = t1.Id,
@@ -2245,7 +2426,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
                                      t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
                                      t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2257,10 +2438,13 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked2
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
                                  join t4 in cheked5 on t3.NameSystem equals t4.NameSystem
+                                 join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
                                      cheked = 0,
@@ -2277,7 +2461,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
                                      t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
                                      t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2289,10 +2473,13 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked2
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
                                  join t4 in cheked6 on t3.NameSystem equals t4.NameSystem
+                                 join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
                                      cheked = 0,
@@ -2309,7 +2496,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
                                      t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
                                      t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2321,10 +2508,13 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked2
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
                                  join t4 in cheked6 on t3.NameSystem equals t4.NameSystem
+                                 join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
                                      cheked = 0,
@@ -2341,7 +2531,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
                                      t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
                                      t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2353,10 +2543,13 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked2
                                  join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
                                  join t4 in cheked6 on t3.NameSystem equals t4.NameSystem
+                                 join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
                                      cheked = 0,
@@ -2373,7 +2566,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
                                      t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
                                      t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2385,10 +2578,13 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked3
                                  join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
                                  join t4 in cheked6 on t3.NameSystem equals t4.NameSystem
+                                 join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
                                      cheked = 0,
@@ -2405,7 +2601,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
                                      t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
                                      t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2417,12 +2613,14 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
                                  join t4 in cheked4 on t3.NameSystem equals t4.NameSystem
                                  join t5 in cheked5 on t4.NameSystem equals t5.NameSystem
-
+                                 join t6 in keySum on t5.NameSystem equals t6.NameSysteam
                                  select new
                                  {
                                      cheked = t1.Id,
@@ -2440,7 +2638,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
                                      t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
                                      t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t5.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum(), precision),
+                                     t5.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t6.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2453,12 +2651,14 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
                                  join t4 in cheked4 on t3.NameSystem equals t4.NameSystem
                                  join t5 in cheked6 on t4.NameSystem equals t5.NameSystem
-
+                                 join t6 in keySum on t5.NameSystem equals t6.NameSysteam
                                  select new
                                  {
                                      cheked = t1.Id,
@@ -2476,7 +2676,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
                                      t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
                                      t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t5.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     t5.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t6.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2489,12 +2689,14 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
                                  join t4 in cheked5 on t3.NameSystem equals t4.NameSystem
                                  join t5 in cheked6 on t4.NameSystem equals t5.NameSystem
-
+                                 join t6 in keySum on t5.NameSystem equals t6.NameSysteam
                                  select new
                                  {
                                      cheked = t1.Id,
@@ -2512,7 +2714,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
                                      t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
                                      t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
-                                     t5.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     t5.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t6.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2525,12 +2727,14 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
                                  join t4 in cheked4 on t3.NameSystem equals t4.NameSystem
                                  join t5 in cheked6 on t4.NameSystem equals t5.NameSystem
-
+                                 join t6 in keySum on t5.NameSystem equals t6.NameSysteam
                                  select new
                                  {
                                      cheked = t1.Id,
@@ -2548,7 +2752,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
                                      t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
                                      t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t5.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     t5.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t6.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2561,12 +2765,14 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
                                  join t4 in cheked4 on t3.NameSystem equals t4.NameSystem
                                  join t5 in cheked6 on t4.NameSystem equals t5.NameSystem
-
+                                 join t6 in keySum on t5.NameSystem equals t6.NameSysteam
                                  select new
                                  {
                                      cheked = t1.Id,
@@ -2584,7 +2790,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
                                      t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
                                      t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t5.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     t5.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t6.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2597,12 +2803,14 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked2
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
                                  join t4 in cheked4 on t3.NameSystem equals t4.NameSystem
                                  join t5 in cheked6 on t4.NameSystem equals t5.NameSystem
-
+                                 join t6 in keySum on t5.NameSystem equals t6.NameSysteam
                                  select new
                                  {
                                      cheked = 0,
@@ -2620,7 +2828,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
                                      t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
                                      t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t5.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     t5.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t6.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2633,12 +2841,15 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var keySum = db.SysteamPriceKey.ToList();
+
                 var queryOrder = from t1 in cheked.Distinct()
                                  join t2 in cheked2.Distinct() on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked3.Distinct() on t2.NameSystem equals t3.NameSystem
                                  join t4 in cheked4.Distinct() on t3.NameSystem equals t4.NameSystem
                                  join t5 in cheked5.Distinct() on t4.NameSystem equals t5.NameSystem
                                  join t6 in cheked6.Distinct() on t5.NameSystem equals t6.NameSystem
+                                 join t7 in keySum on t6.NameSystem equals t7.NameSysteam
                                  select new
                                  {
                                      cheked = t1.Id,
@@ -2656,8 +2867,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
                                      t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
                                      t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t5.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum()+
-                                     t6.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum(), precision),
+                                     t5.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
+                                     t6.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t7.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2671,7 +2882,7 @@ namespace schliessanlagen_konfigurator.Controllers
         }
         
         [HttpGet]
-        public async Task<IActionResult> OrdersKey(int DopelId, List<string> dopelOption, string param2, int KnayfID, int Halb, int Hebel, int Aussen, int Vorhan)
+        public async Task<IActionResult> OrdersKey(string Systeam, int DopelId, List<string> dopelOption, string param2, int KnayfID, int Halb, int Hebel, int Aussen, int Vorhan)
         {
 
             var key = await db.Orders.Where(x => x.userKey == param2).Distinct().ToListAsync();
@@ -3247,6 +3458,11 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             var ValueKeyOpen = new List<KeyValue>();
 
+            var keykosted = IsOpenValue.GroupBy(item => item.NameKey)
+           .Select(group => group.First()).ToList();
+
+           
+
             foreach (var tl in IsOpenValue)
             {
                 var listValueOpen = await db.KeyValue.Where(x => x.OpenKeyId == tl.Id).ToListAsync();
@@ -3254,6 +3470,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 foreach (var tlr in listValueOpen)
                     ValueKeyOpen.Add(tlr);
             }
+
             ViewBag.Order = IsOpenValue.GroupBy(item => item.NameKey)
            .Select(group => group.First()).ToList();
 
@@ -3296,9 +3513,11 @@ namespace schliessanlagen_konfigurator.Controllers
                 if (order.ZylinderId == 3)
                 {
 
-                    var aussen = KnayfOrderlist.SelectMany(x => x.Aussen_Innen_Knauf).Where(x => x.aussen > 27 && x.aussen < 35).Max(x => x.aussen);
+                    var KnayfSize = db.Aussen_Innen_Knauf.Where(x => x.Profil_KnaufzylinderId == KnayfOrderlist.First().Id).ToList();
 
-                    var innen = KnayfOrderlist.SelectMany(x => x.Aussen_Innen_Knauf).Where(x => x.Intern > 27 && x.Intern < 35 ).Max(x => x.Intern);
+                    var aussen = KnayfSize.Where(x => x.aussen > 27 && x.aussen < 35).Max(x => x.aussen);
+
+                    var innen = KnayfSize.Where(x => x.Intern > 27 && x.Intern < 35 ).Max(x => x.Intern);
 
                     for (; aussen < order.aussen;)
                     {
@@ -3333,6 +3552,14 @@ namespace schliessanlagen_konfigurator.Controllers
 
 
             }
+
+            var systeamkeyPrice = db.SysteamPriceKey.Where(x => x.NameSysteam == Systeam).Select(x=>x.Price).ToList();
+
+            ViewBag.KeyCost = JsonConvert.SerializeObject(systeamkeyPrice.First());
+
+            var costKey = systeamkeyPrice.First() * keykosted.Count();
+
+            ViewBag.keySumCost = JsonConvert.SerializeObject(costKey);
 
             var HablAussen = await db.Aussen_Innen_Halbzylinder.Where(x => x.Profil_HalbzylinderId == Convert.ToInt32(Halb)).Select(x => x.aussen).ToListAsync();
 
@@ -3395,10 +3622,10 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var SumCost = DopelOrderlist.Select(x => x.Cost).Sum() + KnaufZelinder.Select(x => x.Cost).Sum() + Halbzylinder.Select(x => x.Cost).Sum() +
                 HelbZ.Select(x => x.Cost).Sum() + Vorhanschlos.Select(x => x.Cost).Sum() + Aussenzylinder.Select(x => x.Cost).Sum() + DoppelAussenCost
-                + KhaufAussenCost + halbAussenCost + SumcostedDopSylinder;
+                + KhaufAussenCost + halbAussenCost + SumcostedDopSylinder + costKey;
 
             var SumCostProduct = DopelOrderlist.Select(x => x.Cost).Sum() + KnaufZelinder.Select(x => x.Cost).Sum() + Halbzylinder.Select(x => x.Cost).Sum() +
-                HelbZ.Select(x => x.Cost).Sum() + Vorhanschlos.Select(x => x.Cost).Sum() + Aussenzylinder.Select(x => x.Cost).Sum();
+                HelbZ.Select(x => x.Cost).Sum() + Vorhanschlos.Select(x => x.Cost).Sum() + Aussenzylinder.Select(x => x.Cost).Sum() + costKey;
 
             int precision = 2;
 

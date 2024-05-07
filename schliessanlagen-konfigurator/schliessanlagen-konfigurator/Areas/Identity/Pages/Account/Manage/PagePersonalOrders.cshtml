@@ -21,26 +21,50 @@
         <div id="AllOrderUser">
             @for (int z = 0; z < orderList.Count; z++)
             {
-                <div id="AllProductUser">
-                        <div style="display:flex;gap: 200px;">
-                        <img src="@("/Image/Schliarticle.jpg")" height="150" width="150" />
+                <div id="AllProductUser" >
+
+                    <div id="hederBlockOrder">
+                        <h3>Artikel</h3>
+                        <div id="orderCostHeader">
+                            <h3>Preis</h3>
+                            <h3>Menge</h3>
+                        </div>
+                    </div>
+                <hr/>
+                        <div id="producktInfo">
+                        <img src="@("/Image/Schliarticle.jpg")" onclick="OpenModalInfo(@z)" height="150" width="150" />
                         <h4>@orderList[z].ProductName</h4>
-                        <h2>@orderList[z].OrderSum €</h2>
-                 </div>
-                   
-                    @* <details>
-                        <summary>
-                        </summary>
-                        @for (int s = 0; s < countProduct[z]; s++)
-                        {
-                            <h4>Name: @orderItem[ProudctItemCounter].Name</h4>
-                            <h4>Aussen: @orderItem[ProudctItemCounter].Aussen</h4>
-                            <h4>Intern: @orderItem[ProudctItemCounter].Intern</h4>
-                            <h4>Option: @orderItem[ProudctItemCounter].Option</h4>
-                            UserOrderId = @orderList[z].Id;
-                            ProudctItemCounter++;
-                        }
-                    </details> *@
+                        <div id="costedInfo">
+                                <div style="display:flex"><h4 id="costedI-@z">@orderList[z].OrderSum</h4><span>€</span></div>
+                           <input onchange="counterCost(event.target.value,@z)" required id="countOrderSysteam" type="number" pattern="[0-9]+" min="1" max="1000"  />
+
+                            <h4 id="cost-@z">@orderList[z].OrderSum €</h4>
+                        </div>
+                        </div>
+
+                    <div id="myModal-@z" class="modal">
+
+                        <div class="modal-content">
+
+                            <span onclick="closedModal(@z)" class="close">&times;</span>
+
+                            <img src="@("/Image/Schliarticle.jpg")" height="150" width="150" />
+
+                            <h4>@orderList[z].ProductName</h4>
+
+                            @for (int s = 0; s < countProduct[z]; s++)
+                            {
+                                <hr/>
+                                <h4>Name: @orderItem[ProudctItemCounter].Name</h4>
+                                <h4>aussen: @orderItem[ProudctItemCounter].Aussen</h4>
+                                <h4>innen: @orderItem[ProudctItemCounter].Intern</h4>
+                                <h4>Option: @orderItem[ProudctItemCounter].Option</h4>
+                                UserOrderId = @orderList[z].Id;
+                                ProudctItemCounter++;
+                            }
+                        </div>
+                    </div>
+
                     <div style="text-align: end;">
                         <button id="removeOrder" onclick="(remove(@UserOrderId))">RemovaOrder</button>
                         <button>Pay</button>
@@ -49,7 +73,6 @@
                     <hr />
                    
                 </div>
-
                 costed = costed + orderList[z].OrderSum;
             }
             <br />
@@ -66,6 +89,49 @@
 
     let removeButton = document.getElementById("removeOrder");
     let AllOrderID = document.querySelector("#OrderId");
+
+    var span = document.getElementsByClassName("close")[0];
+    let idItem = 0;
+
+    function OpenModalInfo(id) 
+    {
+        idItem = id;
+        var modal = document.getElementById(`myModal-${id}`);
+        modal.style.display = "block";
+    }
+
+    function closedModal(id) 
+    {
+        idItem = id;
+        var modal = document.getElementById(`myModal-${id}`);
+        modal.style.display = "none";
+    }
+
+    window.onclick = function (event) 
+    {
+        var modal = document.getElementById(`myModal-${idItem}`);
+
+        if (event.target == modal) 
+        {
+            modal.style.display = "none";
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () 
+    {
+        let count = document.querySelectorAll("#countOrderSysteam");
+        count.forEach((item) => {
+            item.value = 1;
+        })
+    });
+
+    function counterCost(value,id) 
+    {
+        let costedInfo = document.getElementById(`costedI-${id}`);
+        let costed = document.getElementById(`cost-${id}`);
+        let cost = parseFloat(costedInfo.innerHTML * value);
+        costed.innerHTML = cost + "€";
+    }
 
     function remove(empty) 
     {
