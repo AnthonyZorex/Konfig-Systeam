@@ -401,8 +401,11 @@ a {
 .input-counter{
     display:none;
 }
-#ExelItem {
-    grid-template-columns: repeat(2,auto);
+#WaitTime {
+    color: red;
+}
+.ExelItem {
+    grid-template-columns: 450px 800px;
     display: grid;
     margin-top: 50px;
     max-width: 1250px;

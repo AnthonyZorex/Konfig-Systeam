@@ -105,7 +105,8 @@
             foreach (var item in ViewBag.Dopelzylinder)
             {
                     <input value="@item.Id" type="hidden" name="DopelItem" />
-                <div id="ExelItem">
+                    
+                    <div id="ExelItem-@d" class="ExelItem">
                     <div id="productImage">
                         <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
                     </div>
@@ -136,9 +137,10 @@
                                         <option id="OptionA">@ViewBag.Dopelzylinderaussen[i]</option>
                                     }
                                 </select>
+                                    <input type="hidden" id="Aussen-@d" />
                             </div>
                             <div>
-                                    <select class="form-select" name="DoppelIntern" id="Intern" onchange="selectParamIntern(event.target.value,@d)">
+                                    <select class="form-select" name="DoppelIntern" id="Intern" onchange="selectParamIntern(event.target.value,@d,@ViewBag.DInter[elemNum])">
                                     <option style="display:none" selected>@ViewBag.DInter[elemNum]</option>
                                     <option>Innenlänge (B)</option>
                                     @for (int i = 0; i < ViewBag.DopelzylinderIntern.Count; i++)
@@ -146,6 +148,7 @@
                                         <option id="OptionI">@ViewBag.DopelzylinderIntern[i]</option>
                                     }
                                 </select>
+                                    <input type="hidden" id="Innen-@d" />
                             </div>
                             <div style="gap: 10px;display: flex;margin-left: 50px;">
                                     <button type="button"  onclick="CylinderMinus(@d,@item.Cost)" class="btn btn-success">-</button>
@@ -165,52 +168,33 @@
                                 {
                                     @for (int i = 0; i < ViewBag.optionsName.Count; i++)
                                     {
-                                        if (@ViewBag.optionsName[i] == @ViewBag.DoppelOptionSelected[elemNum])
-                                        {
-                                                <input name="DopelOption" class="form-control" readonly type="text" value="&#10003; @ViewBag.optionsName[i]" style="color: green;margin-top: 5px;" />
-                                        }
-                                        else
-                                        {
-                                            <input class="form-control" style="margin-top: 5px;" readonly type="text" value="@ViewBag.optionsName[i]" />
-                                        }
+                                           <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.optionsName[i]" />
 
-                                            <select style="margin-bottom: 10px;" name="DoppelOption" class="form-select" id="ProductDoppelOptionsSelector" onchange="selectParamOptions(event,@valueCount,@item.Id)">
+                                            <select style="margin-bottom: 10px;" name="DoppelOption" class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Doppel',event.target.id,event.target.value,@valueCount,'@ViewBag.optionsName[i]',@i,@d)">
 
-                                            @for (int j = 0; j < ViewBag.countOptionsList[i]; j++)
-                                            {
-                                                if (@ViewBag.optionsName[i] == @ViewBag.DoppelOptionSelected[elemNum])
-                                                {
-                                                    if (@ViewBag.optionsValue[valueCount] == "Ja")
-                                                    {
-                                                        <option id="@valueCount" selected>@ViewBag.optionsValue[valueCount]</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option id="@valueCount">@ViewBag.optionsValue[valueCount]</option>
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    <option id="@valueCount">@ViewBag.optionsValue[valueCount]</option>
-                                                }
+                                           @for (int j = 0; j < ViewBag.countOptionsList[i]; j++)
+                                           {
+                                             <option id="@valueCount">@ViewBag.optionsValue[valueCount]</option>
+                                            
                                                 valueCount++;
                                            }
 
                                         </select>
-
+                                            <input type="hidden" id="d-@d + @i" />
                                     }
-                                 }
+                                    
+                                }
 
 
                             </div>
                         </div>
                             @if (@ViewBag.DAussen[elemNum] < 80 && @ViewBag.DInter[elemNum] < 80)
                             {
-                                <h6 style="color:red">Lieferzeit: 5 - 7 Werktage</h6>
+                                <h6 id="WaitTime">Lieferzeit: 5 - 7 Werktage</h6>
                             }
                             else
                             {
-                                <h6 style="color:red">Lieferzeit: ca 20 Werktage</h6>
+                                <h6 id="WaitTime">Lieferzeit: ca 20 Werktage</h6>
                             }
                     </div>
                 </div>
@@ -220,12 +204,11 @@
         }
         @if (ViewBag.KnayfZelinder != null)
         {
-            
             int elemNum = 0;
             foreach (var item in ViewBag.KnayfZelinder)
             {
                <input type="hidden" name="Knayf" value="@item.Id" />
-                <div id="ExelItem">
+                    <div id="ExelItem-@d" class="ExelItem">
                     <div id="productImage">
                         <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
                     </div>
@@ -258,6 +241,7 @@
                                         <option id="OptionA">@ViewBag.KnayfZelinderAussen[i]</option>
                                     }
                                 </select>
+                                    <input type="hidden" id="Aussen-@d" />
                             </div>
                             <div>
                                     <select class="form-select" name="KnayfIntern" id="Intern" onchange="selectParamIntern(event.target.value,@d,@ViewBag.KInter[elemNum])">
@@ -268,6 +252,7 @@
                                             <option id="OptionI">@ViewBag.KnayfZelinderIntern[i]</option>
                                     }
                                 </select>
+                                 <input type="hidden" id="Innen-@d" />
                             </div>
                             <div style="gap: 10px;display: flex;margin-left: 50px;">
                                     <button type="button" onclick="CylinderMinus(@d,@item.Cost)" class="btn btn-success">-</button>
@@ -286,38 +271,19 @@
                                 {
                                     @for (int i = 0; i < ViewBag.optionsNameKnayf.Count; i++)
                                     {
-                                        if (@ViewBag.optionsNameKnayf[i] == @ViewBag.KnayfOptionSelected[elemNum])
-                                        {
-                                                <input class="form-control" name="KnayfOption" readonly type="text" value="&#10003; @ViewBag.optionsNameKnayf[i]" style="color: green;margin-top: 5px;" />
-                                        }
-                                        else
-                                        {
-                                            <input class="form-control" style="margin-top: 5px;" readonly type="text" value="@ViewBag.optionsNameKnayf[i]" />
-                                        }
+                                            <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.optionsNameKnayf[i]" />
 
-                                            <select style="margin-bottom: 10px;" name="KnayfOption" class="form-select" id="ProductOptionsSelector" onchange="selectParamOptions(event,@valueCount,@item.Id)">
+                                            <select style="margin-bottom: 10px;" name="KnayfOption" class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Knayf',event.target.id,event.target.value,@valueCount,'@ViewBag.optionsNameKnayf[i]',@i,@d)">
 
                                             @for (int j = 0; j < ViewBag.countOptionsListKnayf[i]; j++)
                                             {
-                                                if (@ViewBag.optionsNameKnayf[i] == @ViewBag.KnayfOptionSelected[elemNum])
-                                                {
-                                                    if (@ViewBag.optionsValueKnayf[valueCount] == "Ja")
-                                                    {
-                                                        <option id="@valueCount" selected>@ViewBag.optionsValueKnayf[valueCount]</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option id="@valueCount">@ViewBag.optionsValueKnayf[valueCount]</option>
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    <option id="@valueCount">@ViewBag.optionsValueKnayf[valueCount]</option>
-                                                }
+                                                <option id="@valueCount">@ViewBag.optionsValueKnayf[valueCount]</option>
+                                                
                                                 valueCount++;
                                             }
 
                                         </select>
+                                            <input type="hidden" id="d-@d + @i" />
                                     }
                                 } 
 
@@ -325,11 +291,11 @@
                         </div>
                             @if (@ViewBag.KAussen[elemNum] < 80 && @ViewBag.KInter[elemNum] < 80)
                             {
-                                <h6 style="color:red">Lieferzeit: 5 - 7 Werktage</h6>
+                                <h6 id="WaitTime">Lieferzeit: 5 - 7 Werktage</h6>
                             }
                             else
                             {
-                                <h6 style="color:red">Lieferzeit: ca 20 Werktage</h6>
+                                <h6 id="WaitTime">Lieferzeit: ca 20 Werktage</h6>
                             }
                     </div>
                 </div>
@@ -345,7 +311,7 @@
             foreach (var item in ViewBag.Halb)
             {
                     <input type="hidden" name="Halb" value="@item.Id" />
-                <div id="ExelItem">
+                    <div id="ExelItem-@d" class="ExelItem">
                     <div id="productImage">
                         <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
                     </div>
@@ -375,9 +341,10 @@
                                     <option>Außenlänge (A)</option>
                                     @for (int i = 0; i < ViewBag.AussenHalb.Count; i++)
                                     {
-                                            <option id="OptionA">@ViewBag.AussenHalb[i]</option>
+                                       <option id="OptionA">@ViewBag.AussenHalb[i]</option>
                                     }
                                 </select>
+                                    <input type="hidden" id="Aussen-@d" />
                             </div>
                             <div style="gap: 10px;display: flex;margin-left: 50px;">
                                     <button type="button" onclick="CylinderMinus(@d,@item.Cost)" class="btn btn-success">-</button>
@@ -395,49 +362,30 @@
                                 {
                                     @for (int i = 0; i < ViewBag.HalbOptionsName.Count; i++)
                                     {
+                                            <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.HalbOptionsName[i]" />
 
-                                        if (@ViewBag.HalbOptionsName[i] == @ViewBag.HalbOptionSelected[elemNum])
-                                        {
-                                            <input class="form-control" name="HalbOption" readonly type="text" value="&#10003; @ViewBag.HalbOptionsName[i]" style="color: green;margin-top: 5px;" />
-                                        }
-                                        else
-                                        {
-                                            <input class="form-control" style="margin-top: 5px;" readonly type="text" value="@ViewBag.HalbOptionsName[i]" />
-                                        }
-
-                                            <select class="form-select" name="HalbOption" style="margin-bottom: 10px;" id="ProductOptionsSelector">
+                                            <select class="form-select" name="HalbOption" id="@d-Options-@i" style="margin-bottom: 10px;" onchange="OptionsSelect(@d,'Halb',event.target.id,event.target.value,@valueCount,'@ViewBag.HalbOptionsName[i]',@i,@d)" >
 
                                             @for (int j = 0; j < ViewBag.HalbOptionsValueCount[i]; j++)
                                             {
-                                                if (@ViewBag.HalbOptionsName[i] == @ViewBag.HalbOptionSelected[elemNum])
-                                                {
-                                                    if (@ViewBag.HalbOptionsValue[valueCount] == "Ja")
-                                                    {
-                                                        <option id="@valueCount" selected>@ViewBag.optionsValue[valueCount]</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option id="@valueCount">@ViewBag.HalbOptionsValue[valueCount]</option>
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    <option id="@valueCount">@ViewBag.HalbOptionsValue[valueCount]</option>
-                                                }
+                                                
+                                                 <option id="@valueCount">@ViewBag.HalbOptionsValue[valueCount]</option>
+                                                
                                                 valueCount++;
                                             }
                                         </select>
+                                            <input type="hidden" id="d-@d + @i" />
                                     }
                                 } 
                             </div>
                         </div>
                             @if (@ViewBag.HalbOrderAussen[elemNum] < 75)
                             {
-                                <h6 style="color:red">Lieferzeit: 5 - 7 Werktage</h6>
+                                <h6 id="WaitTime" >Lieferzeit: 5 - 7 Werktage</h6>
                             }
                             else
                             {
-                                <h6 style="color:red">Lieferzeit: ca 20 Werktage</h6>
+                                <h6 id="WaitTime" >Lieferzeit: ca 20 Werktage</h6>
                             }
                     </div>
                        
@@ -452,7 +400,7 @@
             foreach (var item in ViewBag.HelbZ)
             {
                     <input type="hidden" name="Helb" value="@item.Id" />
-                <div id="ExelItem">
+                    <div id="ExelItem-@d" class="ExelItem">
                     <div id="productImage">
                         <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
                     </div>
@@ -492,37 +440,19 @@
                                 {
                                     @for (int i = 0; i < ViewBag.OptionHebelName.Count; i++)
                                     {
-                                        if (@ViewBag.OptionHebelName[i] == @ViewBag.HebelOptionSelected[elemNum])
-                                        {
-                                                <input class="form-control" name="HebelOption" readonly type="text" value="&#10003; @ViewBag.OptionHebelName[i]" style="color: green;margin-top: 5px;" />
-                                        }
-                                        else
-                                        {
-                                            <input style="margin-top: 5px;" class="form-control" readonly type="text" value="@ViewBag.OptionHebelName[i]" />
-                                        }
+                                            <input style="margin-top: 5px;" id="OptionName" class="form-control" readonly type="text" value="@ViewBag.OptionHebelName[i]" />
 
-                                            <select class="form-select" name="HebelOption" style="margin-bottom: 10px;" id="ProductOptionsSelector">
+                                            <select class="form-select" name="HebelOption" id="@d-Options-@i" style="margin-bottom: 10px;" onchange="OptionsSelect(@d,'Helb',event.target.id,event.target.value,@valueCount,'@ViewBag.OptionHebelName[i]',@i,@d)">
 
                                             @for (int j = 0; j < ViewBag.CountValueHebel[i]; j++)
                                             {
-                                                if ((@ViewBag.OptionHebelName[i] == @ViewBag.HebelOptionSelected[elemNum]))
-                                                {
-                                                    if (@ViewBag.ValueHebel[valueCount] == "Ja")
-                                                    {
-                                                        <option id="@valueCount" selected>@ViewBag.ValueHebel[valueCount]</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option id="@valueCount">@ViewBag.ValueHebel[valueCount]</option>
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    <option id="@valueCount">@ViewBag.ValueHebel[valueCount]</option>
-                                                }
+                                               
+                                               <option id="@valueCount">@ViewBag.ValueHebel[valueCount]</option>
+                                               
                                                 valueCount++;
                                             }
                                         </select>
+                                            <input type="hidden" id="d-@d + @i" />
                                     }
                                 } 
                             </div>
@@ -540,7 +470,7 @@
             foreach (var item in ViewBag.Vorhanschlos)
             {
                     <input type="hidden" name="Vorhan" value="@item.Id" />
-                <div id="ExelItem">
+                    <div id="ExelItem-@d" class="ExelItem">
                     <div id="productImage">
                         <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
                     </div>
@@ -564,14 +494,15 @@
                         </div>
                             <div id="Size-@d" class="SizeProduct">
                             <div>
-                                    <select class="form-select" name="VorhanAussen" id="Aussen" onchange="VorhanSchlus(event.target.value,@d,event.target.dataset.oldValue)">
+                                    <select class="form-select" name="VorhanAussen" id="Aussen" onchange="VorhanSchlus(event.target.value,@d,@ViewBag.VorhanSize[elemNum])">
                                     <option style="display:none" selected>@ViewBag.VorhanOrderAussen[elemNum]</option>
-                                    <option>Außenlänge (A)</option>
+                                    <option selected>Außenlänge (A)</option>
                                     @for (int i = 0; i < ViewBag.VorhanSize.Count; i++)
                                     {
                                       <option id="OptionA">@ViewBag.VorhanSize[i]</option>
                                     }
                                 </select>
+                                    <input type="hidden" id="Aussen-@d" />
                             </div>
                             <div style="gap: 10px;display: flex;margin-left: 50px;">
                                     <button type="button" onclick="CylinderMinus(@d,@item.Cost)" class="btn btn-success">-</button>
@@ -591,51 +522,32 @@
 
                                     @for (int i = 0; i < ViewBag.VorhanschlossOptionCount; i++)
                                     {
-                                        if (@ViewBag.VorhanschlossOptionName[i] == @ViewBag.VorhanOptionSelected[elemNum])
-                                        {
-                                                <input class="form-control" name="VorhnaOption" readonly type="text" value="&#10003; @ViewBag.VorhanschlossOptionName[i]" style="color: green;margin-top: 5px;" />
-                                        }
-                                        else
-                                        {
-                                            <input type="text" style="margin-top: 5px;" class="form-control" readonly value="@ViewBag.VorhanschlossOptionName[i]" />
-                                        }
 
+                                            <input type="text" style="margin-top: 5px;" id="OptionName" class="form-control" readonly value="@ViewBag.VorhanschlossOptionName[i]" />
 
-                                            <select style="margin-bottom: 10px;" name="VorhnaOption" class="form-select" id="ProductOptionsSelector">
+                                            <select style="margin-bottom: 10px;" name="VorhnaOption" class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Vorhan',event.target.id,event.target.value,@valueCount,'@ViewBag.VorhanschlossOptionName[i]',@i,@d)">
 
                                             @for (int j = 0; j < ViewBag.VorhanOptionCount[i]; j++)
                                             {
-                                                if (@ViewBag.VorhanschlossOptionName[i] == @ViewBag.VorhanOptionSelected[elemNum])
-                                                {
-                                                    if (@ViewBag.VorhanValue[valueCount] == "Ja")
-                                                    {
-                                                        <option id="@valueCount" selected>@ViewBag.VorhanValue[valueCount]</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option id="@valueCount">@ViewBag.VorhanValue[valueCount]</option>
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    <option id="@valueCount">@ViewBag.VorhanValue[valueCount]</option>
-                                                }
+          
+                                              <option id="@valueCount">@ViewBag.VorhanValue[valueCount]</option>
 
                                                 valueCount++;
                                             }
 
                                         </select>
+                                            <input type="hidden" id="d-@d + @i" />
                                     }
                                 }
                             </div> 
                         </div>
                             @if (@ViewBag.CounterTurVorhan[@elemNum] < 45)
                             {
-                                <h6 style="color:red">Lieferzeit: 5 - 7 Werktage</h6>
+                                <h6 id="WaitTime">Lieferzeit: 5 - 7 Werktage</h6>
                             }
                             else
                             {
-                                <h6 style="color:red">Lieferzeit: ca 20 Werktage</h6>
+                                <h6 id="WaitTime">Lieferzeit: ca 20 Werktage</h6>
                             }
                     </div>
                 </div>
@@ -649,7 +561,7 @@
             foreach (var item in ViewBag.Aussenzylinder)
             {
                     <input type="hidden" name="Aussen"  value="@item.Id"/>
-                <div id="ExelItem">
+                    <div id="ExelItem-@d" class="ExelItem">
                     <div id="productImage">
                         <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
                     </div>
@@ -686,42 +598,20 @@
                                 {
                                     @for (int i = 0; i < ViewBag.AussenName.Count; i++)
                                     {
-                                        if (@ViewBag.AussenName[i] == @ViewBag.AussenOptionSelected[elemNum])
-                                        {
-                                                <input class="form-control" name="AussenOption" readonly type="text" value="&#10003; @ViewBag.AussenName[i]" style="color: green;margin-top: 5px;" />
-                                        }
-                                        else
-                                        {
-                                            <input class="form-control" style="margin-top: 5px;" readonly type="text" value="@ViewBag.AussenName[i]" />
-                                        }
+                                            <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.AussenName[i]" />
 
-                                            <select style="margin-bottom: 10px;" name="AussenOption" class="form-select" id="ProductOptionsSelector" onchange="selectParamOptions(event,@valueCount,@item.Id)">
+                                            <select style="margin-bottom: 10px;" name="AussenOption" class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Aussen',event.target.id,event.target.value,@valueCount,'@ViewBag.AussenName[i]',@i,@d)">
 
                                             @for (int j = 0; j < ViewBag.AussenValue[i]; j++)
                                             {
-                                                if (@ViewBag.optionsName[i] == @ViewBag.DoppelOptionSelected[elemNum])
-                                                {
-                                                    if (@ViewBag.optionsValue[valueCount] == "Ja")
-                                                    {
-                                                        <option id="@valueCount" selected>@ViewBag.AussenValue[valueCount]</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option id="@valueCount">@ViewBag.AussenValue[valueCount]</option>
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    <option id="@valueCount">@ViewBag.AussenValue[valueCount]</option>
-                                                }
+                                              <option id="@valueCount">@ViewBag.AussenValue[valueCount]</option>
 
                                                 valueCount++;
                                             }
                                         </select>
+                                            <input type="hidden" id="d-@d + @i" />
                                     }
                                 } 
-
-
                             </div>
                         </div>
                     </div>
@@ -761,23 +651,199 @@
 
     let keyPrice = @Html.Raw(ViewBag.KeyCost);
 
+    let DoppelOptions = @Html.Raw(ViewBag.DoppelOptionsNameJson) || null;
+    let DoppelOptionsValue = @Html.Raw(ViewBag.DoppelOptionsValue) || null;
+    let DoppelCostValue = @Html.Raw(ViewBag.optionsPrise) || null;
+
+    let knayfOptionName = @Html.Raw(ViewBag.OptionsNameKnayfJson) || null;
+    let KnayfOptionPrice = @Html.Raw(ViewBag.optionsPriseKnayf) || null;
+    let KnayfOptionsValue = @Html.Raw(ViewBag.optionsValueKnayfJson) || null;
+
+    let HalbOptionsName = @Html.Raw(ViewBag.HalbOptionsNameJson) || null;
+    let HalbOptionsValue = @Html.Raw(ViewBag.HalbOptionsValueJson) || null;
+    let HalbOptionsValueCost = @Html.Raw(ViewBag.HalbOptionsValueCostJson) || null;
+
+    let HebelOptionsName = @Html.Raw(ViewBag.OptionsHebelNameJson) || null;
+    let HebelOptionsValue = @Html.Raw(ViewBag.HebelValueJson) || null;
+    let HebelOptionsCost = @Html.Raw(ViewBag.HebelValueCostJson) || null; 
+
+    let VorhanSchloss = @Html.Raw(ViewBag.VorhanschlossOptionNameJson) || null;
+    let VorhanSchlossValue = @Html.Raw(ViewBag.VorhanValueJson) || null;
+    let VorhanSchlossValueCost = @Html.Raw(ViewBag.VorhanValueCostJson) || null;
+
+    let AussenRundOptionsName = @Html.Raw(ViewBag.AussenNameJson) || null;
+    let AussenRundOptionsValue = @Html.Raw(ViewBag.AussenValueJson) || null;
+    let AussenRundOptionsCostValue = @Html.Raw(ViewBag.AussenValueCostJson) || null;
+
     let AllPrice = document.getElementById("cost");
 
     let pris = document.getElementById("costed");
     
     pris.value = AllPrice.innerHTML;
+   
     let NoOptionCost = @Html.Raw(@ViewBag.CostProducted);
     let ParamSum = parseFloat(AllPrice.innerHTML.replace(',', '.') - NoOptionCost);
+    
     localStorage.setItem("cost", ParamSum);
 
-    localStorage.sInnen = 0;
-    localStorage.sAussen = 0;
-    localStorage.options = 0;
     localStorage.keyCost = 0;
 
-    let AussenCost = 0;
-    let InternCost = 0;
-    let OptionCost = 0;
+    let hasFreilauffunktion = false;
+
+    let hasNotUndGefahrenfunktion = false;
+
+    function OptionsSelect(idBlock, TypeSylinder, id, optionsValue, elemNum, OptionsName, N,count) 
+    {
+        let countSchluss = document.getElementById("countSchlusse-" + count);
+
+        let BlockTur = document.getElementById("ExelItem-" + idBlock);
+
+        let QueryNameOptions = BlockTur.querySelectorAll("#OptionName");
+
+        let Selector = document.getElementById(id);
+
+        let selectedOption = Selector.options[Selector.selectedIndex].id;
+
+        QueryNameOptions.forEach((item)=>
+        {
+            if (item.defaultValue === OptionsName ) 
+            {   
+                if (optionsValue != "Nein") 
+                {
+                    item.value = '\u2713' + OptionsName;
+                    item.style.color = "green";
+                    if (item.value === '\u2713' + "Freilauffunktion") 
+                    {
+                        hasFreilauffunktion = true;
+
+                        if (item.value === '\u2713' + "Freilauffunktion" && hasFreilauffunktion === true && hasNotUndGefahrenfunktion === true) 
+                        {
+                            for (let i = 0;i <QueryNameOptions.length; i++) 
+                            {
+                                if (QueryNameOptions[i].value === '\u2713' + "Not- und Gefahrenfunktion") 
+                                {
+                                    let OptionOldCheker = document.getElementById(`d-${idBlock} + ${i}`);
+                                    AllPrice.value = (parseFloat(AllPrice.value) - (OptionOldCheker.value * Number(countSchluss.value)));
+                                    QueryNameOptions[i].value = QueryNameOptions[i].defaultValue;
+                                    QueryNameOptions[i].style.color = "black";
+                                    var chekedSelect = document.getElementById(idBlock + "-Options-" + i);
+                                    chekedSelect.value = "Nein";
+                                    hasFreilauffunktion == false;
+                                }
+                                
+                            }
+                        }
+                    }
+                    else if (item.value === '\u2713' + "Not- und Gefahrenfunktion") 
+                    {
+                        hasNotUndGefahrenfunktion = true;
+                        
+                        if (item.value === '\u2713' + "Not- und Gefahrenfunktion" && hasFreilauffunktion === true && hasNotUndGefahrenfunktion === true) 
+                        {
+                            for (let i = 0; i < QueryNameOptions.length; i++) 
+                            {
+                                if (QueryNameOptions[i].value === '\u2713' + "Freilauffunktion") 
+                                {
+                                    let OptionOldCheker = document.getElementById(`d-${idBlock} + ${i}`);
+                                    AllPrice.value = (parseFloat(AllPrice.value) - (OptionOldCheker.value * Number(countSchluss.value)));
+                                    QueryNameOptions[i].value = QueryNameOptions[i].defaultValue;
+                                    QueryNameOptions[i].style.color = "black";
+                                    var chekedSelect = document.getElementById(idBlock + "-Options-" + i);
+                                    chekedSelect.value = "Nein";
+                                    hasNotUndGefahrenfunktion == false;
+                                }
+                            }                            
+                            
+                        }
+                    }
+
+                    if (TypeSylinder === "Doppel") 
+                    {
+                            let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
+                            AllPrice.value = parseFloat(AllPrice.value) + (DoppelCostValue[selectedOption] * Number(countSchluss.value));
+                            OptionOldCheker.value = DoppelCostValue[selectedOption];
+                    }
+                    if (TypeSylinder === "Knayf") 
+                    {
+                        let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
+                        AllPrice.value = parseFloat(AllPrice.value) + (KnayfOptionPrice[selectedOption] * Number(countSchluss.value));
+                        OptionOldCheker.value = KnayfOptionPrice[selectedOption];
+                    }
+                    if (TypeSylinder === "Halb")
+                    {
+                        let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
+                        AllPrice.value = parseFloat(AllPrice.value) + (HalbOptionsValueCost[selectedOption] * Number(countSchluss.value));
+                        OptionOldCheker.value = HalbOptionsValueCost[selectedOption];
+                    }
+                    if (TypeSylinder === "Helb") 
+                    {
+                        let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
+                        AllPrice.value = parseFloat(AllPrice.value) + (HebelOptionsCost[selectedOption] * Number(countSchluss.value));
+                        OptionOldCheker.value = HebelOptionsCost[selectedOption];
+                    }
+                    if (TypeSylinder === "Vorhan") 
+                    {
+                        let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
+                        AllPrice.value = parseFloat(AllPrice.value) + (VorhanSchlossValueCost[selectedOption] * Number(countSchluss.value));
+                        OptionOldCheker.value = VorhanSchlossValueCost[selectedOption];
+                    }
+                    if (TypeSylinder === "Aussen") 
+                    {
+                        let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
+                        AllPrice.value = parseFloat(AllPrice.value) + (AussenRundOptionsCostValue[selectedOption] * Number(countSchluss.value));
+                        OptionOldCheker.value = AussenRundOptionsCostValue[selectedOption];
+                    }
+                }
+                else 
+                {
+                    if (TypeSylinder === "Doppel") 
+                    {
+                        let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
+                        AllPrice.value = (parseFloat(AllPrice.value) - (OptionOldCheker.value * Number(countSchluss.value)));
+                        item.value = OptionsName;
+                        item.style.color = "black";
+                    }
+                    if (TypeSylinder === "Knayf") 
+                    {
+                        let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
+                        AllPrice.value = (parseFloat(AllPrice.value) - (OptionOldCheker.value * Number(countSchluss.value)));
+                        item.value = OptionsName;
+                        item.style.color = "black";
+                    }
+                    if (TypeSylinder === "Halb") 
+                    {
+                        let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
+                        AllPrice.value = (parseFloat(AllPrice.value) - (OptionOldCheker.value * Number(countSchluss.value)));
+                        item.value = OptionsName;
+                        item.style.color = "black";
+                    }
+                    if (TypeSylinder === "Helb") 
+                    {
+                        let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
+                        AllPrice.value = (parseFloat(AllPrice.value) - (OptionOldCheker.value * Number(countSchluss.value)));
+                        item.value = OptionsName;
+                        item.style.color = "black";
+                    }
+                    if (TypeSylinder === "Vorhan") 
+                    {
+                        let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
+                        AllPrice.value = (parseFloat(AllPrice.value) - (OptionOldCheker.value * Number(countSchluss.value)));
+                        item.value = OptionsName;
+                        item.style.color = "black";
+                    }
+                    if (TypeSylinder === "Aussen") 
+                    {
+                        let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
+                        AllPrice.value = (parseFloat(AllPrice.value) - (OptionOldCheker.value * Number(countSchluss.value)));
+                        item.value = OptionsName;
+                        item.style.color = "black";
+                    }
+                }
+            }
+        });
+       
+
+    }
 
     function plus(n) 
     {
@@ -785,7 +851,6 @@
         let value = Number(counter.value);
         value++;
         counter.value = value;
-
         AllPrice.value = parseFloat(AllPrice.value) + keyPrice;
     }
     function minus(n) 
@@ -794,7 +859,6 @@
         let value = Number(counter.value);
         value--;
         counter.value = value;
-
         AllPrice.value = parseFloat(AllPrice.value) - keyPrice;
     }
     function CylinderPlus(n, cost) 
@@ -805,7 +869,6 @@
 
             value++;
             counter.value = value;
-
             AllPrice.value = parseFloat(AllPrice.value) +  cost;
     }
     function CylinderMinus(n, cost) 
@@ -813,131 +876,115 @@
         let counter = document.getElementById("countSchlusse-" + n);
         let value = Number(counter.value);
         let oldConter = Number(counter.value);
-            value--;
-            counter.value = value;
+        value--;
+        counter.value = value;
 
-             AllPrice.value = parseFloat(AllPrice.value) - cost;
+        AllPrice.value = parseFloat(AllPrice.value) - cost;
     }
 
-    localStorage.OldVorhan = 0;
-    
-    let oldVorhan = 0;
 
+    let iterations = 0;
     function VorhanSchlus(value, idBlock, oldSize) 
     {
-        let VorhanSizeCost = @Html.Raw(@ViewBag.VorhanschlosSizeCostedJson);
+        let serchedItem = 0;
 
-        let VorhanSize = @Html.Raw(@ViewBag.VorhanschlosSizeJson);
-
+        let VorhanSizeCost = @Html.Raw(ViewBag.VorhanschlosSizeCostedJson)||null;
+        let VorhanSize = @Html.Raw(ViewBag.VorhanschlosSizeJson)|| null;
         let BlockTur = document.getElementById("Size-" + idBlock);
         let Aussen = BlockTur.querySelector("#Aussen");
         let Aitems = Aussen.querySelectorAll("#OptionA");
-       
-        let iteration = 0;
 
-        oldSize = oldVorhan;
+        let countSchluss = BlockTur.querySelector("#countSchlusse-" + idBlock);
+        let oldAussen = BlockTur.querySelector("#Aussen-" + idBlock);
+        
+        if (oldAussen.value === "") 
+        {
+            oldAussen.value = oldSize;
+        }
+
+        AllPrice.value = parseFloat(AllPrice.value) - (VorhanSizeCost[iterations] * Number(countSchluss.value));
 
         Aitems.forEach(function (items) 
         {
-
             let ItemValue = parseFloat(items.innerHTML);
-            let ItemValueOld = Number(oldSize);
-           
-            if (value > ItemValueOld) 
+            let ItemValueOld = Number(oldAussen.value);
+
+            if (serchedItem == 1) 
             {
-                if (ItemValue == value) 
-                {
-                    localStorage.sAussen =+ VorhanSizeCost[iteration];
-                    let a = Number(localStorage.sInnen);
-                    let b = Number(localStorage.sAussen);
-                    let c = Number(localStorage.options);
-                    let d = Number(localStorage.DopItem);
-
-                    let sum =  a + b + c + d;
-
-                    localStorage.OldVorhan = ItemValue;
-                    
-                    AllPrice.innerHTML = NoOptionCost + sum;
-                }
-                else 
-                {
-                    iteration++;
-                }
                 return;
             }
-
-            else (ItemValue > value) 
+            else 
             {
-                if (ItemValue == ItemValueOld) 
+                if (value > ItemValueOld) 
                 {
-                    localStorage.sAussen = - (VorhanSizeCost[iteration] - VorhanSizeCost[iteration - 1]);
-                    let a = Number(localStorage.sInnen);
-                    let b = Number(localStorage.sAussen);
-                    let c = Number(localStorage.options);
-                    let d = Number(localStorage.DopItem);
+                    if (ItemValue == value) 
+                    {
+                        oldAussen.value = ItemValue;
+                        serchedItem++;
 
-                    let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c + d;
- 
-                    AllPrice.innerHTML = NoOptionCost + sum;
-                    return;
+                        AllPrice.value = parseFloat(AllPrice.value) + (VorhanSizeCost[iterations] * Number(countSchluss.value));
+                        
+                        return;
+                    }
+                    else
+                    {
+                        iterations++;
+                    }
+
                 }
-                else 
+
+                if (ItemValueOld > value) 
                 {
-                    iteration++;
+                    if (ItemValue == ItemValueOld) 
+                    {
+                        oldAussen.value = value;
+                        serchedItem++;
+                        AllPrice.value = parseFloat(AllPrice.value) + (VorhanSizeCost[iterations] * Number(countSchluss.value));
+                        return;
+                    }
+                    else 
+                    {
+                        iterations --;
+                    }
                 }
-               
+
             }
            
         });
-
+       
+        serchedItem = 0;
     }
-    let countOldStatus = 0;
-
- 
-
-    function ValueWithHistory(initialValue) 
-    {
-        this.value = initialValue;
-        this.oldValue = initialValue; // Инициализация старого значения
-
-        // Метод для установки нового значения и сохранения старого
-        this.setValue = function (newValue) 
-        {
-            this.oldValue = this.value; // Сохранение текущего значения в старое
-            this.value = newValue; // Установка нового значения
-        };
-    }
-
     function selectParamAussen(value, idBlock, oldValue) 
     {
-   
         let iterations = 0;
         let serchedItem = 0;
 
         let BlockTur = document.getElementById("Size-"+idBlock);
+        let countSchluss = BlockTur.querySelector("#countSchlusse-" + idBlock);
+
+        let ProductBlock = document.getElementById("ExelItem-" + idBlock);
+        let WaitTime = ProductBlock.querySelector("#WaitTime");
+        let Innen = BlockTur.querySelector("#Intern");
+
         let Aussen = BlockTur.querySelector("#Aussen");
         let Aitems = Aussen.querySelectorAll("#OptionA");
-
-        if (valuef.oldValue === undefined) 
-        {
-             var valuef = new ValueWithHistory(oldValue);
-        }
+        let oldAussen = BlockTur.querySelector("#Aussen-" + idBlock);
 
         let num = Number(value);
-        valuef.setValue(num);
 
-        console.log(valuef.value);
-        console.log(valuef.oldValue);
+        if (oldAussen.value === "") 
+        {
+            oldAussen.value = oldValue;
+        }
 
         Aitems.forEach(function (items) 
         {
             let ItemValue = Number(items.innerHTML);
 
-            let ItemValueOld = Number(value.oldValue);
+            let ItemValueOld = Number(oldAussen.value);
 
             if (serchedItem == 1) 
             {
-               
                 return;
             }
             else 
@@ -946,12 +993,18 @@
                 {
                     if (ItemValue == value) 
                     {
-                        iterations++;
+                        oldAussen.value = ItemValue;
                         serchedItem++;
-                        countOldStatus++;
+                        iterations++;
+
+                        for (let i = 0; i !== iterations; i++) 
+                        {
+                            AllPrice.value = parseFloat(AllPrice.value) + (5 * Number(countSchluss.value));
+                        }
+
                         return;
                     }
-                    if (ItemValue > ItemValueOld) 
+                    if(ItemValue>31)
                     {
                         iterations++;
                     }
@@ -962,13 +1015,13 @@
                 {
                     if (ItemValue == ItemValueOld) 
                     {
-                        iterations++;
+                        oldAussen.value = value;
                         serchedItem++;
                         return;
                     }
-                    if (ItemValue > value) 
+                    else
                     {
-                        AussenCost =  AussenCost -5;
+                        AllPrice.value = parseFloat(AllPrice.value) - (5 * Number(countSchluss.value));
                     }
                 }
 
@@ -976,41 +1029,50 @@
 
         });
 
-        for (let i = 0; i < iterations; i++) 
+        if (Innen.value == 80 && Aussen.value == 80) 
         {
-            AussenCost = AussenCost + 5;
+            WaitTime.innerHTML = "Lieferzeit: 14 - 20 Werktage";
+            WaitTime.textContent = "Lieferzeit: 14 - 20 Werktage";
+        }
+        else 
+        {
+            WaitTime.innerHTML = "Lieferzeit: 5 - 7 Werktage";
+            WaitTime.textContent = "Lieferzeit: 5 - 7 Werktage";
         }
 
-        localStorage.sAussen = AussenCost;
-        let a = Number(localStorage.sInnen);
-        let b = Number(localStorage.sAussen);
-        let c = Number(localStorage.options);
-        let d = Number(localStorage.DopItem);
-
-        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c + d;
-        
-        AllPrice.innerHTML = NoOptionCost + sum;
         iterations = 0;
         serchedItem = 0;
     }
     function selectParamIntern(value, idBlock, oldValue) 
     {
-        let Iiterations = 0;
-        let IserchedItem = 0;
+        let iterations = 0;
+        let serchedItem = 0;
 
+        let ProductBlock = document.getElementById("ExelItem-" + idBlock);
+        let WaitTime = ProductBlock.querySelector("#WaitTime");
         let BlockTur = document.getElementById("Size-" + idBlock);
+        let countSchluss = BlockTur.querySelector("#countSchlusse-" + idBlock);
 
-        let Intern = BlockTur.querySelector("#Intern");
+        let Aussen = BlockTur.querySelector("#Aussen");
+        
+        let Innen = BlockTur.querySelector("#Intern");
+        let Aitems = Innen.querySelectorAll("#OptionI");
+        let oldAussen = BlockTur.querySelector("#Innen-" + idBlock);
 
-        let Iitems = Intern.querySelectorAll("#OptionI");
+        let num = Number(value);
 
-        Iitems.forEach(function (items) 
+        if (oldAussen.value === "") 
+        {
+            oldAussen.value = oldValue;
+        }
+
+        Aitems.forEach(function (items) 
         {
             let ItemValue = Number(items.innerHTML);
 
-            let ItemValueOld = Number(oldValue);
+            let ItemValueOld = Number(oldAussen.value);
 
-            if (IserchedItem == 1) 
+            if (serchedItem == 1) 
             {
                 return;
             }
@@ -1020,63 +1082,58 @@
                 {
                     if (ItemValue == value) 
                     {
-                        InternCost = InternCost + 5;
-                        IserchedItem++;
+                        oldAussen.value = ItemValue;
+                        serchedItem++;
+                        iterations++;
+                        for (let i = 0; i !== iterations; i++) 
+                        {
+                            AllPrice.value = parseFloat(AllPrice.value) + (5 * Number(countSchluss.value));
+                        }
+
                         return;
                     }
-                    if (ItemValue > ItemValueOld) 
+                    if (ItemValue > 31)
                     {
-                        InternCost = InternCost + 5;
+                        iterations++;
                     }
 
                 }
-                if (ItemValueOld > value && ItemValue <= ItemValueOld) 
+
+                if (ItemValueOld > value) 
                 {
-                    if (ItemValue == ItemValueOld) 
+                    if (ItemValue == ItemValueOld)
                     {
-                        IserchedItem++;
+                        oldAussen.value = value;
+                        serchedItem++;
                         return;
                     }
-                   
-                        InternCost = InternCost - 5;
+                    else 
+                    {
+                        AllPrice.value = parseFloat(AllPrice.value) - (5 * Number(countSchluss.value));
+                    }
                 }
-
 
             }
 
         });
 
+        if (Innen.value == 80 && Aussen.value == 80) 
+        {
+            WaitTime.innerHTML = "Lieferzeit: 14 - 20 Werktage";
+            WaitTime.textContent = "Lieferzeit: 14 - 20 Werktage";
+        }
+        else 
+        {
+            WaitTime.innerHTML = "Lieferzeit: 5 - 7 Werktage";
+            WaitTime.textContent = "Lieferzeit: 5 - 7 Werktage";
+        }
 
-        localStorage.sInnen = InternCost;
-
-        let a = Number(localStorage.sInnen);
-        let b = Number(localStorage.sAussen);
-        let c = Number(localStorage.options);
-        let d = Number(localStorage.DopItem);
-
-        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c + d;
-
-        AllPrice.innerHTML = NoOptionCost + sum;
-        Iiterations = 0;
-        IserchedItem = 0;
+        iterations = 0;
+        serchedItem = 0;
     }
-    function goBack() {
+    function goBack() 
+    {
         window.history.back();
     }
-    // function selectParamOptions(event, count, idBlock) 
-    // {
-    //     var selectedOptionId = event.target.options[event.target.selectedIndex].id;
-    //     OptionCost = OptionPrice[selectedOptionId];
-    //     localStorage.options = OptionCost;
-    //     let a = Number(localStorage.sInnen);
-    //     let b = Number(localStorage.sAussen);
-    //     let c = Number(localStorage.options);
-
-    //     let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
-    //     AllPrice.innerHTML = String(sum);
-
-    //     OptionCost = 0;
-    //     console.log(OptionPrice[selectedOptionId]);
-    // }
-
+    
 </script>
