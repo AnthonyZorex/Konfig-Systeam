@@ -128,6 +128,19 @@
             <button id="addInputBtn" type="button" class="btn btn-success">+</button>
             <button id="RemoveInputBtn" type="button" class="btn btn-danger">-</button>
             <hr />
+            <h2>Key Inform</h2>
+            @foreach (var list in ViewBag.KeyCost)
+            {
+                <div class="form-group">
+                    <label class="control-label">System Name</label>
+                    <input name="NSysteam" value="@list.NameSysteam" id="opt" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">KeyKost</label>
+                    <input name="keyCost" value="@list.Price" id="opt" class="form-control" />
+                </div>
+            }
+            <hr />
             <input type="submit" value="Save" class="btn btn-primary" />
         </form>
     </div>

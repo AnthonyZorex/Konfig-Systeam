@@ -23,6 +23,8 @@ using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pag
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.Extensions.Hosting;
 using System.Diagnostics.Metrics;
+using System.Linq;
+using NuGet.DependencyResolver;
 
 
 namespace schliessanlagen_konfigurator.Controllers
@@ -46,7 +48,24 @@ namespace schliessanlagen_konfigurator.Controllers
         #region ViewZylinder
         public async Task<IActionResult> Index()
         {
-            ViewBag.item = await db.Profil_Doppelzylinder.ToListAsync();
+            var AllDoppel = await db.Profil_Doppelzylinder.Select(x=>x.NameSystem).ToListAsync();
+
+            ViewBag.item = await db.Profil_Doppelzylinder.OrderBy(x=>x.Cost).ToListAsync();
+
+            var listPriceKey = new List<SysteamPriceKey>();
+            
+            foreach (var System in AllDoppel)
+            {
+                var itemKey = await db.SysteamPriceKey.Where(x => x.NameSysteam == System).ToListAsync();
+               
+                foreach(var i in itemKey)
+                {
+                    listPriceKey.Add(i);
+                }
+                
+            }
+
+            ViewBag.KeyCost =  listPriceKey.OrderBy(x => x.Price).Select(x => x.Price).ToList();
 
             return View();
         }
@@ -54,35 +73,34 @@ namespace schliessanlagen_konfigurator.Controllers
 
         public async Task<IActionResult> Profil_KnaufzylinderRout()
         {
-            ViewBag.item = db.Profil_Knaufzylinder;
+            ViewBag.item = db.Profil_Knaufzylinder.OrderBy(x => x.Cost).ToList();
             return View();
         }
         [HttpGet]
         public IActionResult HebelzylinderRout()
         {
-            ViewBag.item = db.Hebelzylinder;
+            ViewBag.item = db.Hebelzylinder.OrderBy(x => x.Cost).ToList();
             return View();
         }
         [HttpGet]
         public IActionResult VorhangschlossRout()
         {
-            ViewBag.item = db.Vorhangschloss;
+            ViewBag.item = db.Vorhangschloss.OrderBy(x => x.Cost).ToList();
             return View();
         }
         [HttpGet]
         public IActionResult Aussenzylinder_RundzylinderRout()
         {
-            ViewBag.item = db.Aussenzylinder_Rundzylinder;
+            ViewBag.item = db.Aussenzylinder_Rundzylinder.OrderBy(x => x.Cost).ToList();
             return View();
         }
         [HttpGet]
         public IActionResult Profil_HalbzylinderRout()
         {
-            ViewBag.item = db.Profil_Halbzylinder;
+            ViewBag.item = db.Profil_Halbzylinder.OrderBy(x => x.Cost).ToList();
             return View();
         }
-        [HttpPost]
-        //Schliessanlagen Create    
+        [HttpPost]   
         public async Task<IActionResult> Create(Schliessanlagen schliessanlagen)
         {
             db.Schliessanlagen.Add(schliessanlagen);
@@ -934,6 +952,23 @@ namespace schliessanlagen_konfigurator.Controllers
         {
             var Doppel = db.Profil_Doppelzylinder.Find(profil_Doppelzylinder.Id);
 
+            var AllDoppel = await db.Profil_Doppelzylinder.Where(x=>x.NameSystem==Doppel.NameSystem).Select(x => x.NameSystem).ToListAsync();
+
+            var listPriceKey = new List<SysteamPriceKey>();
+
+            foreach (var System in AllDoppel)
+            {
+                var itemKey = await db.SysteamPriceKey.Where(x => x.NameSysteam == System).ToListAsync();
+
+                foreach (var i in itemKey)
+                {
+                    listPriceKey.Add(i);
+                }
+
+            }
+
+            ViewBag.KeyCost = listPriceKey.ToList();
+
             var SizeHalbzylinder = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == profil_Doppelzylinder.Id).ToList();
 
             var options = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == Doppel.Id).ToList();
@@ -990,7 +1025,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Save(Profil_Doppelzylinder profil_Doppelzylinder, List<int> SizeAus, List<int> SizeInen, List<string> Options,
-        List<string> Descriptions, List<string> valueNGF, List<float> costNGF, List<int> inputCounter)
+        List<string> Descriptions, List<string> valueNGF, List<float> costNGF, List<int> inputCounter,string NSysteam,float keyCost)
         {
             var Items = db.Profil_Doppelzylinder.Find(profil_Doppelzylinder.Id);
             Items.schliessanlagenId = profil_Doppelzylinder.schliessanlagenId;
@@ -1100,6 +1135,15 @@ namespace schliessanlagen_konfigurator.Controllers
                 db.Aussen_Innen.Add(SizeV);
             }
             db.SaveChanges();
+
+            var Key = db.SysteamPriceKey.FirstOrDefault(x => x.NameSysteam == Items.NameSystem).Id;
+
+            var keyItem = db.SysteamPriceKey.Find(Key);
+            keyItem.NameSysteam = NSysteam;
+            keyItem.Price = keyCost;
+           
+            db.SaveChanges();
+
             return RedirectToAction("Index");
         }
         [HttpGet]
