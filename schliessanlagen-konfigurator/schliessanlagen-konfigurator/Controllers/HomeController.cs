@@ -20,6 +20,9 @@ using System.IO;
 using OfficeOpenXml;
 using System.Security.Claims;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+using Microsoft.AspNetCore.Identity.Data;
+using Microsoft.Extensions.Hosting;
+using System.Diagnostics.Metrics;
 
 
 namespace schliessanlagen_konfigurator.Controllers
@@ -567,7 +570,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var ngf = new OptionsVorhan
                 {
-                    OptioId = x.Last(),
+                    OptionId = x.Last(),
                     Name = Options[i],
                     Description = NGFDescriptions[i],
                     ImageFile = postedFile
@@ -779,7 +782,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var a = db.Vorhan_Options.Where(x => x.VorhangschlossId == Vorhang.Id).First();
 
-            var option = db.OptionsVorhan.Where(x => x.OptioId == a.Id).First();
+            var option = db.OptionsVorhan.Where(x => x.OptionId == a.Id).First();
 
             var optionV = db.OptionsVorhan_value.Where(x => x.OptionsId == option.Id).ToList();
 
@@ -878,9 +881,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var a = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == doppelzylinder.Id).ToList();
 
-            var option = new List<NGF>()
-
-; for (int i = 0; i < a.Count(); i++)
+            var option = new List<NGF>();           
+            
+            for (int i = 0; i < a.Count(); i++)
             {
                 var of = db.NGF.Where(x => x.OptionsId == a[i].Id).ToList();
 
@@ -929,203 +932,51 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit_Doppelzylinder(Profil_Doppelzylinder profil_Doppelzylinder)
         {
-            Profil_Doppelzylinder? Profil_Doppelzylinder = await db.Profil_Doppelzylinder.FirstOrDefaultAsync(p => p.Id == profil_Doppelzylinder.Id);
+            var Doppel = db.Profil_Doppelzylinder.Find(profil_Doppelzylinder.Id);
 
-            var aussen_Innen = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == profil_Doppelzylinder.Id).ToList();
+            var SizeHalbzylinder = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == profil_Doppelzylinder.Id).ToList();
 
+            var options = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == Doppel.Id).ToList();
 
-            ViewBag.AussenProduct = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == profil_Doppelzylinder.Id).Select(x => x.aussen).ToList();
-            ViewBag.InternProduct = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == profil_Doppelzylinder.Id).Select(x => x.Intern).ToList();
-
-            var queryableOptions = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == profil_Doppelzylinder.Id).Select(x => x.Id).ToList();
-
-
-            ViewBag.countOptionsQuery = queryableOptions.Count();
-
-            if (queryableOptions.Count() > 0)
-            {
-
-                List<NGF> ngf = new List<NGF>();
-
-                for (int z = 0; z < queryableOptions.Count(); z++)
-                {
-                    var allOptions = db.NGF.Where(x => x.OptionsId == queryableOptions[z]).ToList();
-                    foreach (var option in allOptions)
-                    {
-                        ngf.Add(option);
-                    }
-
-                }
-                var ngfName = ngf.ToList();
-
-                ViewBag.optionsName = ngf.Select(x => x.Name).ToList();
-
-                List<NGF_Value> ngfList = new List<NGF_Value>();
-
-                for (int s = 0; s < ngf.Count(); s++)
-                {
-                    var opValue = db.NGF_Value.Where(x => x.NGFId == ngf[s].Id).ToList();
-
-                    for (int i = 0; i < opValue.Count(); i++)
-                    {
-                        ngfList.Add(opValue[i]);
-
-                    }
-                    ViewBag.optionValueCount = opValue.Count();
-                }
-
-                var list = new List<int>();
-
-                foreach (var fs in ngf)
-                {
-                    list.Add(fs.NGF_Value.Count());
-                }
-
-
-                ViewBag.countOptionsList = list;
-
-                ViewBag.optionsValue = ngfList.Select(x => x.Value).ToList();
-                ViewBag.optionsCost = ngfList.Select(x => x.Cost).ToList();
-                ViewBag.DopelOptionsCost = ngfList.Select(x => x.Value).ToList();
-
-                ViewBag.optionsPrise = JsonConvert.SerializeObject(ngfList.Select(x => x.Cost).ToList());
-
-            }
-
-
-
-            return View("../Edit/Edit_Doppelzylinder", Profil_Doppelzylinder);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Save(Profil_Doppelzylinder profil_Doppelzylinder, int? Id, List<float> aussen, List<float> innen
-            , List<string> optionsName, List<string> optionsValue, List<float> optionsCost, List<int> input_counter)
-        {
-            var itemToUpdate = await db.Profil_Doppelzylinder.FirstOrDefaultAsync(e => e.Id == Id);
-
-            var Aussen = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == Id).ToList();
-
-            if (profil_Doppelzylinder.ImageFile != null)
-            {
-                string wwwRootPath = Environment.WebRootPath;
-
-                string fileName = Path.GetFileNameWithoutExtension(profil_Doppelzylinder.ImageFile.FileName);
-
-                string extension = Path.GetExtension(profil_Doppelzylinder.ImageFile.FileName);
-
-                profil_Doppelzylinder.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-
-                string path = Path.Combine(wwwRootPath + "/Image/", fileName);
-
-                using (var fileStream = new FileStream(path, FileMode.Create))
-                {
-                    await profil_Doppelzylinder.ImageFile.CopyToAsync(fileStream);
-                }
-            }
-            itemToUpdate.Name = profil_Doppelzylinder.Name;
-            itemToUpdate.Cost = profil_Doppelzylinder.Cost;
-            itemToUpdate.companyName = profil_Doppelzylinder.companyName;
-            itemToUpdate.description = profil_Doppelzylinder.description;
-            itemToUpdate.NameSystem = profil_Doppelzylinder.NameSystem;
-            itemToUpdate.ImageName = profil_Doppelzylinder.ImageName;
-
-            for (int i = 0; i < aussen.Count(); i++)
-            {
-                if (aussen.Count() > Aussen.Count())
-                {
-                    var ausse_innen = new Aussen_Innen
-                    {
-                        Profil_DoppelzylinderId = Aussen.Select(x => x.Profil_DoppelzylinderId).First(),
-                        aussen = aussen[i],
-                        Intern = innen[i]
-                    };
-                    db.Aussen_Innen.Add(ausse_innen);
-
-                    db.SaveChanges();
-                }
-                else
-                {
-                    Aussen[i].Intern = innen[i];
-                    Aussen[i].aussen = aussen[i];
-                }
-
-            }
-            //int counter = 0;
-
-            //var DopelOptions = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == Id).ToList();
-
-            //for (var i = 0; i < DopelOptions.Count(); i++)
-            //{
-
-            //    //var dopOptions = new Profil_Doppelzylinder_Options
-            //    //{
-            //    //    DoppelzylinderId = s.Last(),
-
-            //    //};
-            //    //db.Profil_Doppelzylinder_Options.Add(dopOptions);
-            //    //db.SaveChanges();
-
-            //    var dopelOptions = db.Profil_Doppelzylinder_Options.Select(x => x.Id).ToList();
-
-            //    var ngf = db.NGF.Where(d=>d.OptionsId== dopelOptions[i]).ToList();
-
-            //    foreach(var lis in ngf)
-            //    {
-            //        lis.OptionsId = dopelOptions[i];
-            //        lis.Name = optionsName[i];  
-            //    }
-
-            //    //var ngf = new NGF
-            //    //{
-            //    //    OptionsId = x.Last(),
-            //    //    Name = Options[i],
-            //    //    Description = NGFDescriptions[i],
-            //    //    ImageFile = postedFile
-            //    //};
-
-            //    //db.NGF.Add(ngf);
-
-
-            //    for (var j = 0; j < input_counter[i]; j++)
-            //    {
-            //        var ngfValue = db.NGF_Value.Where(x => x.NGFId == ngf[i].Id);
-
-            //        //var ngfValue = new NGF_Value
-            //        //{
-            //        //    NGFId = ng.Last(),
-            //        //    Value = valueNGF[counter],
-            //        //    Cost = costNGF[counter]
-            //        //};
-            //        //db.NGF_Value.Add(ngfValue);
-
-            //        counter++;
-
-            //    }
-
-            //}
-
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
-        [HttpGet]
-        public async Task<IActionResult> Edit_Hebel(Hebel profil_Halbzylinder)
-        {
-            var Halbzylinder = db.Hebelzylinder.Find(profil_Halbzylinder.Id);
-            return View("../Edit/Edit_Hebel", Halbzylinder);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Edit_Aussenzylinder_Rundzylinder(Aussenzylinder_Rundzylinder profil_Halbzylinder)
-        {
-            var Halbzylinder = db.Aussenzylinder_Rundzylinder.Find(profil_Halbzylinder.Id);
-
-            var options = db.Aussen_Rund_options.FirstOrDefault(x => x.Id == Halbzylinder.Id);
-            
             if (options != null)
             {
-                var OptionDescription = db.Aussen_Rund_all.FirstOrDefault(x => x.Aussen_Rund_optionsId == options.Id);
+                var OptionsSylinder = new List<NGF>();
 
-                var optionsValue = db.Aussen_Rouns_all_value.FirstOrDefault(x => x.Aussen_Rund_allId == OptionDescription.Id);
+                foreach (var item in options)
+                {
+                    var Opt = db.NGF.Where(x => x.OptionsId == item.Id).ToList();
+
+                    foreach (var list in Opt)
+                    {
+                        OptionsSylinder.Add(list);
+                    }
+                }
+
+                ViewBag.Options = OptionsSylinder.ToList();
+
+                var ValueOption = new List<NGF_Value>();
+
+                var countV = new List<int>();
+
+                foreach (var list in OptionsSylinder)
+                {
+                    var listValue = db.NGF_Value.Where(x => x.NGFId == list.Id).ToList();
+                   
+                    foreach (var value in listValue)
+                    {
+                        ValueOption.Add(value);
+                    }
+                    if (listValue.Count() > 0)
+                    {
+                        countV.Add(listValue.Count());
+                    }
+
+                }
+
+                ViewBag.CountOptions = countV.ToList();
+                ViewBag.OptionValue = ValueOption;
+
+                ViewBag.Size = SizeHalbzylinder;
 
                 ViewBag.optionV = true;
             }
@@ -1134,18 +985,269 @@ namespace schliessanlagen_konfigurator.Controllers
                 ViewBag.optionV = false;
             }
 
-            return View("../Edit/Edit_Aussenzylinder_Rundzylinder", Halbzylinder);
+            return View("../Edit/Edit_Doppelzylinder", Doppel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Save(Profil_Doppelzylinder profil_Doppelzylinder, List<int> SizeAus, List<int> SizeInen, List<string> Options,
+        List<string> Descriptions, List<string> valueNGF, List<float> costNGF, List<int> inputCounter)
+        {
+            var Items = db.Profil_Doppelzylinder.Find(profil_Doppelzylinder.Id);
+            Items.schliessanlagenId = profil_Doppelzylinder.schliessanlagenId;
+            Items.Name = profil_Doppelzylinder.Name;
+            Items.companyName = profil_Doppelzylinder.companyName;
+            Items.NameSystem = profil_Doppelzylinder.NameSystem;
+            Items.description = profil_Doppelzylinder.description;
+            Items.Cost = profil_Doppelzylinder.Cost;
+            Items.ImageName = profil_Doppelzylinder.ImageName;
+
+            var option = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == profil_Doppelzylinder.Id).ToList();
+
+            if (Options.Count() == 0 || option.Count() > 0)
+            {
+                var listAllOption = new List<NGF>();
+
+                foreach (var item in option)
+                {
+                    var OptionDescription = db.NGF.Where(x => x.OptionsId == item.Id).ToList();
+
+                    foreach (var item2 in OptionDescription)
+                    {
+                        listAllOption.Add(item2);
+                    }
+                }
+
+                foreach (var item in listAllOption)
+                {
+                    var optionsValue = db.NGF_Value.Where(x => x.NGFId == item.Id).ToList();
+
+                    foreach (var item2 in optionsValue)
+                    {
+                        db.NGF_Value.Remove(item2);
+                    }
+                }
+                db.SaveChanges();
+
+                foreach (var list in listAllOption)
+                {
+                    db.NGF.Remove(list);
+                }
+
+                db.SaveChanges();
+
+                foreach (var optionsList in option)
+                {
+                    db.Profil_Doppelzylinder_Options.Remove(optionsList);
+                }
+                db.SaveChanges();
+            }
+            if (Options.Count > 0)
+            {
+                int counter = 0;
+
+                for (var i = 0; i < Options.Count(); i++)
+                {
+                    var createOptions = new Profil_Doppelzylinder_Options
+                    {
+                        DoppelzylinderId = Items.Id,
+                    };
+
+                    db.Profil_Doppelzylinder_Options.Add(createOptions);
+                    db.SaveChanges();
+
+                    var createOptionsAussen = new NGF
+                    {
+                        OptionsId = createOptions.Id,
+                        Name = Options[i],
+                        Description = Descriptions[i],
+                    };
+
+                    db.NGF.Add(createOptionsAussen);
+                    db.SaveChanges();
+
+                    for (int f = 0; f < inputCounter[i]; f++)
+                    {
+                        var costedValue = new NGF_Value
+                        {
+                            NGFId = createOptionsAussen.Id,
+                            Value = valueNGF[counter],
+                            Cost = costNGF[counter],
+                        };
+                        db.NGF_Value.Add(costedValue);
+                        counter++;
+                    }
+                    db.SaveChanges();
+                }
+
+            }
+
+            var KnayfItemSize_Cost = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == profil_Doppelzylinder.Id).ToList();
+           
+            foreach (var list in KnayfItemSize_Cost)
+            {
+                db.Aussen_Innen.Remove(list);
+            }
+            db.SaveChanges();
+
+            for (int i = 0; i < SizeAus.Count(); i++)
+            {
+                var SizeV = new Aussen_Innen
+                {
+                    Profil_DoppelzylinderId = Items.Id,
+                    aussen = SizeAus[i],
+                    Intern = SizeInen[i],
+                };
+                db.Aussen_Innen.Add(SizeV);
+            }
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public async Task<IActionResult> Edit_Hebel(Hebel profil_Halbzylinder)
+        {
+            var Halbzylinder = db.Hebelzylinder.Find(profil_Halbzylinder.Id);
+
+            var options = db.Hebelzylinder_Options.Where(x => x.HebelzylinderId == Halbzylinder.Id).ToList();
+            
+            var countV = new List<int>();
+
+            if (options != null)
+            {
+                var OptionsSylinder = new List<Options>();
+
+                foreach (var item in options)
+                {
+                    var Opt = db.Options.Where(x => x.OptionId == item.Id).ToList();
+                    
+                    foreach (var list in Opt)
+                    {
+                        OptionsSylinder.Add(list);
+                    }
+                }
+
+                ViewBag.Options = OptionsSylinder.ToList();
+
+                var ValueOption = new List<Options_value>();
+
+                foreach (var list in OptionsSylinder)
+                {
+                    var listValue = db.Options_value.Where(x => x.OptionsId == list.Id).ToList();
+                    foreach (var value in listValue)
+                    {
+                        ValueOption.Add(value);
+                    }
+                    countV.Add(listValue.Count());
+                }
+                ViewBag.OptionValue = ValueOption;
+
+                ViewBag.optionV = true;
+            }
+            else
+            {
+                ViewBag.optionV = false;
+            }
+
+            ViewBag.CountOptions = countV.ToList();
+            
+            return View("../Edit/Edit_Hebel", Halbzylinder);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit_Aussenzylinder_Rundzylinder(Aussenzylinder_Rundzylinder aussenzylinder)
+        {
+            var Auszylinder = db.Aussenzylinder_Rundzylinder.Find(aussenzylinder.Id);
+
+            var options = db.Aussen_Rund_options.Where(x => x.Aussenzylinder_RundzylinderId == Auszylinder.Id).ToList();
+            var countV = new List<int>();
+
+            if (options != null)
+            {
+                var OptionsSylinder = new List<Aussen_Rund_all>();
+
+                foreach(var item in options)
+                {
+                    var Opt = db.Aussen_Rund_all.Where(x => x.Aussen_Rund_optionsId == item.Id).ToList();
+                    foreach(var list in Opt)
+                    {
+                        OptionsSylinder.Add(list);
+                    }
+                }
+
+                ViewBag.Options = OptionsSylinder.ToList();
+
+                var ValueOption = new List<Aussen_Rouns_all_value>();
+              
+                foreach(var list in OptionsSylinder)
+                {
+                    var listValue = db.Aussen_Rouns_all_value.Where(x=>x.Aussen_Rund_allId == list.Id).ToList();
+                    foreach(var value in listValue)
+                    {
+                        ValueOption.Add(value);
+                    }
+                    countV.Add(listValue.Count());
+                }
+                ViewBag.OptionValue = ValueOption;
+
+                ViewBag.optionV = true;
+            }
+            else
+            {
+                ViewBag.optionV = false;
+            }
+            ViewBag.CountOptions = countV.ToList();
+            return View("../Edit/Edit_Aussenzylinder_Rundzylinder", Auszylinder);
         }
         [HttpGet]
         public async Task<IActionResult> Edit_Vorhangschloss(Vorhangschloss Vorhan)
         {
             var VorhanItem = db.Vorhangschloss.Find(Vorhan.Id);
+            
+            var countV = new List<int>();
 
             var VorhanSize = db.Size.Where(x => x.VorhangschlossId == Vorhan.Id).ToList();
 
-            ViewBag.Size = VorhanSize;
+            var options = db.Vorhan_Options.Where(x => x.VorhangschlossId == VorhanItem.Id).ToList();
+
+            if (options != null)
+            {
+                var OptionsSylinder = new List<OptionsVorhan>();
+
+                foreach (var item in options)
+                {
+                    var Opt = db.OptionsVorhan.Where(x => x.OptionId == item.Id).ToList();
+                    foreach (var list in Opt)
+                    {
+                        OptionsSylinder.Add(list);
+                    }
+                }
+
+                ViewBag.Options = OptionsSylinder.ToList();
 
           
+                var ValueOption = new List<OptionsVorhan_value>();
+
+                foreach (var list in OptionsSylinder)
+                {
+                    var listValue = db.OptionsVorhan_value.Where(x => x.OptionsId == list.Id).ToList();
+                    foreach (var value in listValue)
+                    {
+                        ValueOption.Add(value);
+                    }
+                    countV.Add(listValue.Count());
+                }
+                ViewBag.OptionValue = ValueOption;
+
+                ViewBag.optionV = true;
+            }
+            else
+            {
+                ViewBag.optionV = false;
+            }
+
+
+            ViewBag.Size = VorhanSize;
+            ViewBag.CountOptions = countV.ToList();
+
             return View("../Edit/Edit_Vorhangschloss", VorhanItem);
         }
         [HttpGet]
@@ -1155,26 +1257,230 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var SizeHalbzylinder = db.Aussen_Innen_Halbzylinder.Where(x => x.Profil_HalbzylinderId == profil_Halbzylinder.Id).ToList();
 
-            var OptionsHalb = db.Profil_Halbzylinder_Options.Where(x => x.Profil_HalbzylinderId == profil_Halbzylinder.Id).Select(x => x.Id).Distinct().ToList();
+            var options = db.Profil_Halbzylinder_Options.Where(x => x.Profil_HalbzylinderId == Halbzylinder.Id).ToList();
+
+            if (options != null)
+            {
+                var OptionsSylinder = new List<Halbzylinder_Options>();
+
+                foreach (var item in options)
+                {
+                    var Opt = db.Halbzylinder_Options.Where(x => x.OptionsId == item.Id).ToList();
+                    
+                    foreach (var list in Opt)
+                    {
+                        OptionsSylinder.Add(list);
+                    }
+                }
+
+                ViewBag.Options = OptionsSylinder.ToList();
+
+                var ValueOption = new List<Halbzylinder_Options_value>();
+
+                var countV = new List<int>();
+
+                foreach (var list in OptionsSylinder)
+                {
+                    var listValue = db.Halbzylinder_Options_value.Where(x => x.Halbzylinder_OptionsId == list.Id).ToList();
+                    foreach (var value in listValue)
+                    {
+                        ValueOption.Add(value);
+                    }
+                    if (listValue.Count() > 0)
+                    {
+                        countV.Add(listValue.Count());
+                    }
+                   
+                }
+                
+                ViewBag.CountOptions = countV.ToList();   
+                ViewBag.OptionValue = ValueOption;
+
+                ViewBag.Size = SizeHalbzylinder;
+
+                ViewBag.optionV = true;
+            }
+            else
+            {
+                ViewBag.optionV = false;
+            }
 
             return View("../Edit/Edit_Profil_Halbzylinder", Halbzylinder);
         }
         public async Task<IActionResult> Edit_Profil_Knaufzylinder(Profil_Knaufzylinder profil_Halbzylinder)
         {
-            var Halbzylinder = db.Profil_Knaufzylinder.Find(profil_Halbzylinder.Id);
+            var Knayf = db.Profil_Knaufzylinder.Find(profil_Halbzylinder.Id);
 
-            return View("../Edit/Edit_Profil_Knaufzylinder", Halbzylinder);
+            var SizeHalbzylinder = db.Aussen_Innen_Knauf.Where(x => x.Profil_KnaufzylinderId == profil_Halbzylinder.Id).ToList();
+
+            var options = db.Profil_Knaufzylinder_Options.Where(x => x.Profil_KnaufzylinderId == Knayf.Id).ToList();
+
+            if (options != null)
+            {
+                var OptionsSylinder = new List<Knayf_Options>();
+
+                foreach (var item in options)
+                {
+                    var Opt = db.Knayf_Options.Where(x => x.OptionsId == item.Id).ToList();
+
+                    foreach (var list in Opt)
+                    {
+                        OptionsSylinder.Add(list);
+                    }
+                }
+
+                ViewBag.Options = OptionsSylinder.ToList();
+
+                var ValueOption = new List<Knayf_Options_value>();
+
+                var countV = new List<int>();
+
+                foreach (var list in OptionsSylinder)
+                {
+                    var listValue = db.Knayf_Options_value.Where(x => x.Knayf_OptionsId == list.Id).ToList();
+                    foreach (var value in listValue)
+                    {
+                        ValueOption.Add(value);
+                    }
+                    if (listValue.Count() > 0)
+                    {
+                        countV.Add(listValue.Count());
+                    }
+
+                }
+
+                ViewBag.CountOptions = countV.ToList();
+                ViewBag.OptionValue = ValueOption;
+
+                ViewBag.Size = SizeHalbzylinder;
+
+                ViewBag.optionV = true;
+            }
+            else
+            {
+                ViewBag.optionV = false;
+            }
+
+            return View("../Edit/Edit_Profil_Knaufzylinder", Knayf);
         }
         #endregion
         #region SaveEditForm
         [HttpPost]
-        public ActionResult SaveHalbzylinder(Profil_Halbzylinder profil_Halbzylinder)
+        public ActionResult SaveHalbzylinder(Profil_Halbzylinder profil_Halbzylinder, List<int> Size, List<float> CostSize, List<string> Options,
+        List<string> Descriptions, List<string> valueNGF, List<float> costNGF, List<int> inputCounter)
         {
+            var Items = db.Profil_Halbzylinder.Find(profil_Halbzylinder.Id);
+            Items.schliessanlagenId = profil_Halbzylinder.schliessanlagenId;
+            Items.Name = profil_Halbzylinder.Name;
+            Items.companyName = profil_Halbzylinder.companyName;
+            Items.NameSystem = profil_Halbzylinder.NameSystem;
+            Items.description = profil_Halbzylinder.description;
+            Items.Cost = profil_Halbzylinder.Cost;
+            Items.ImageName = profil_Halbzylinder.ImageName;
+
+            var option = db.Profil_Halbzylinder_Options.Where(x => x.Profil_HalbzylinderId == profil_Halbzylinder.Id).ToList();
+
+            if (Options.Count() == 0 || option.Count() > 0)
+            {
+                var listAllOption = new List<Halbzylinder_Options>();
+
+                foreach (var item in option)
+                {
+                    var OptionDescription = db.Halbzylinder_Options.Where(x => x.OptionsId == item.Id).ToList();
+
+                    foreach (var item2 in OptionDescription)
+                    {
+                        listAllOption.Add(item2);
+                    }
+                }
+
+                foreach (var item in listAllOption)
+                {
+                    var optionsValue = db.Halbzylinder_Options_value.Where(x => x.Halbzylinder_OptionsId == item.Id).ToList();
+
+                    foreach (var item2 in optionsValue)
+                    {
+                        db.Halbzylinder_Options_value.Remove(item2);
+                    }
+                }
+                db.SaveChanges();
+
+                foreach (var list in listAllOption)
+                {
+                    db.Halbzylinder_Options.Remove(list);
+                }
+
+                db.SaveChanges();
+
+                foreach (var optionsList in option)
+                {
+                    db.Profil_Halbzylinder_Options.Remove(optionsList);
+                }
+                db.SaveChanges();
+            }
+            if (Options.Count > 0)
+            {
+                int counter = 0;
+
+                for (var i = 0; i < Options.Count(); i++)
+                {
+                    var createOptions = new Profil_Halbzylinder_Options
+                    {
+                        Profil_HalbzylinderId = Items.Id,
+                    };
+
+                    db.Profil_Halbzylinder_Options.Add(createOptions);
+                    db.SaveChanges();
+
+                    var createOptionsAussen = new Halbzylinder_Options
+                    {
+                        OptionsId = createOptions.Id,
+                        Name = Options[i],
+                        Description = Descriptions[i],
+                    };
+
+                    db.Halbzylinder_Options.Add(createOptionsAussen);
+                    db.SaveChanges();
+
+                    for (int f = 0; f < inputCounter[i]; f++)
+                    {
+                        var costedValue = new Halbzylinder_Options_value
+                        {
+                            Halbzylinder_OptionsId = createOptionsAussen.Id,
+                            Value = valueNGF[counter],
+                            Cost = costNGF[counter],
+                        };
+                        db.Halbzylinder_Options_value.Add(costedValue);
+                        counter++;
+                    }
+                    db.SaveChanges();
+                }
+
+            }
+
+            var HalbSize_Cost = db.Aussen_Innen_Halbzylinder.Where(x => x.Profil_HalbzylinderId == profil_Halbzylinder.Id).ToList();
+            foreach (var list in HalbSize_Cost)
+            {
+                db.Aussen_Innen_Halbzylinder.Remove(list);
+            }
             db.SaveChanges();
+
+            for (int i = 0; i < Size.Count(); i++)
+            {
+                var SizeV = new Aussen_Innen_Halbzylinder
+                {
+                    Profil_HalbzylinderId = Items.Id,
+                    aussen = Size[i],
+                };
+                db.Aussen_Innen_Halbzylinder.Add(SizeV);
+            }
+            db.SaveChanges();
+
             return RedirectToAction("Profil_HalbzylinderRout");
         }
         [HttpPost]
-        public ActionResult SaveHebelzylinder(Hebel profil_Halbzylinder)
+        public ActionResult SaveHebelzylinder(Hebel profil_Halbzylinder, List<string> Options,
+        List<string> Descriptions, List<string> valueNGF, List<float> costNGF, List<int> inputCounter)
         {
             var Items = db.Hebelzylinder.Find(profil_Halbzylinder.Id);
             Items.schliessanlagenId = profil_Halbzylinder.schliessanlagenId;
@@ -1185,16 +1491,93 @@ namespace schliessanlagen_konfigurator.Controllers
             Items.Cost = profil_Halbzylinder.Cost;
             Items.ImageName = profil_Halbzylinder.ImageName;
 
-            db.SaveChanges();
+            var option = db.Hebelzylinder_Options.Where(x => x.HebelzylinderId == profil_Halbzylinder.Id).ToList();
+
+            if (Options.Count() == 0 || option.Count() > 0)
+            {
+                var listAllOption = new List<Options>();
+
+                foreach (var item in option)
+                {
+                    var OptionDescription = db.Options.Where(x => x.OptionId == item.Id).ToList();
+
+                    foreach (var item2 in OptionDescription)
+                    {
+                        listAllOption.Add(item2);
+                    }
+                }
+
+                foreach (var item in listAllOption)
+                {
+                    var optionsValue = db.Options_value.Where(x => x.OptionsId == item.Id).ToList();
+
+                    foreach (var item2 in optionsValue)
+                    {
+                        db.Options_value.Remove(item2);
+                    }
+                }
+                db.SaveChanges();
+
+                foreach (var list in listAllOption)
+                {
+                    db.Options.Remove(list);
+                }
+
+                db.SaveChanges();
+
+                foreach (var optionsList in option)
+                {
+                    db.Hebelzylinder_Options.Remove(optionsList);
+                }
+                db.SaveChanges();
+            }
+            if (Options.Count>0)
+            {
+                int counter = 0;
+                for (var i = 0; i < Options.Count(); i++)
+                {
+                    var createOptions = new Hebelzylinder_Options
+                    {
+                        HebelzylinderId = Items.Id,
+                    };
+
+                    db.Hebelzylinder_Options.Add(createOptions);
+                    db.SaveChanges();
+
+                        var createOptionsAussen = new Options
+                        {
+                            OptionId = createOptions.Id,
+                            Name = Options[i],
+                            Description = Descriptions[i],
+                        };
+
+                        db.Options.Add(createOptionsAussen);
+                        db.SaveChanges();
+
+                        for (int f = 0; f < inputCounter[i]; f++)
+                        {
+                            var costedValue = new Options_value
+                            {
+                                OptionsId = createOptionsAussen.Id,
+                                Value = valueNGF[counter],
+                                Cost = costNGF[counter],
+                            };
+                            db.Options_value.Add(costedValue);
+                            counter++;
+                        }
+                    db.SaveChanges();
+                }
+                
+            }
+
             return RedirectToAction("HebelzylinderRout");
         }
 
         [HttpPost]
-        public ActionResult SaveAussenzylinder_Rundzylinder(Aussenzylinder_Rundzylinder profil_Halbzylinder, 
-        List<string> Name, List<string> Description, List<string> Value,List<float>Cost)
+        public ActionResult SaveAussenzylinder_Rundzylinder(Aussenzylinder_Rundzylinder profil_Halbzylinder, List<string> Options,
+        List<string> Descriptions,List<string> Name, List<string> Description, List<string> valueNGF, List<float> costNGF, List<int> inputCounter)
         {
             var Items = db.Aussenzylinder_Rundzylinder.Find(profil_Halbzylinder.Id);
-
             Items.schliessanlagenId = profil_Halbzylinder.schliessanlagenId;
             Items.Name = profil_Halbzylinder.Name;
             Items.companyName = profil_Halbzylinder.companyName;
@@ -1203,58 +1586,310 @@ namespace schliessanlagen_konfigurator.Controllers
             Items.Cost = profil_Halbzylinder.Cost;
             Items.ImageName = profil_Halbzylinder.ImageName;
 
-            var option = db.Aussen_Rund_options.Where(x => x.Id == profil_Halbzylinder.Id).ToList();
+            var option = db.Aussen_Rund_options.Where(x => x.Aussenzylinder_RundzylinderId == profil_Halbzylinder.Id).ToList();
 
-            if(option.Count()>0)
+            if(Options.Count()==0 || option.Count() > 0)
             {
-                var listAllOption = new List<Aussen_Rund_all>();
-                
-                foreach (var item in option)
-                {
-                    var OptionDescription = db.Aussen_Rund_all.Where(x => x.Aussen_Rund_optionsId == item.Id).ToList();
-                    
-                    foreach(var item2 in OptionDescription)
-                    { 
-                        listAllOption.Add(item2); 
-                    }
-                }
+                   var listAllOption = new List<Aussen_Rund_all>();
 
-                var listAllValue = new List<Aussen_Rouns_all_value>();
-
-                foreach(var item in listAllOption)
-                {
-                    var optionsValue = db.Aussen_Rouns_all_value.Where(x => x.Aussen_Rund_allId == item.Id).ToList();
-                    
-                    foreach(var item2 in optionsValue)
+                    foreach (var item in option)
                     {
-                        listAllValue.Add(item2);
+                        var OptionDescription = db.Aussen_Rund_all.Where(x => x.Aussen_Rund_optionsId == item.Id).ToList();
+
+                        foreach (var item2 in OptionDescription)
+                        {
+                            listAllOption.Add(item2);
+                        }
                     }
+
+                    foreach (var item in listAllOption)
+                    {
+                        var optionsValue = db.Aussen_Rouns_all_value.Where(x => x.Aussen_Rund_allId == item.Id).ToList();
+
+                        foreach (var item2 in optionsValue)
+                        {
+                            db.Aussen_Rouns_all_value.Remove(item2);
+                        }
+                    }
+                    db.SaveChanges();
+
+                    foreach(var list in listAllOption)
+                    {
+                        db.Aussen_Rund_all.Remove(list);
+                    }
+
+                    db.SaveChanges();
+
+                    foreach(var optionsList in option)
+                    {
+                        db.Aussen_Rund_options.Remove(optionsList);
+                    }
+                    db.SaveChanges();
+              
+                
+
+            }
+            if (Options.Count > 0)
+            {
+                int counter = 0;
+                for (var i = 0; i < Options.Count(); i++)
+                {
+                    var createOptions = new Aussen_Rund_options
+                    {
+                        Aussenzylinder_RundzylinderId = Items.Id,
+                    };
+
+                    db.Aussen_Rund_options.Add(createOptions);
+                    db.SaveChanges();
+
+                    var createOptionsAussen = new Aussen_Rund_all
+                    {
+                        Aussen_Rund_optionsId = createOptions.Id,
+                        Name = Options[i],
+                        Description = Descriptions[i],
+                    };
+
+                    db.Aussen_Rund_all.Add(createOptionsAussen);
+                    db.SaveChanges();
+
+                    for (int f = 0; f < inputCounter[i]; f++)
+                    {
+                        var costedValue = new Aussen_Rouns_all_value
+                        {
+                            Aussen_Rund_allId = createOptionsAussen.Id,
+                            Value = valueNGF[counter],
+                            Cost = costNGF[counter],
+                        };
+                        db.Aussen_Rouns_all_value.Add(costedValue);
+                        counter++;
+                    }
+                    db.SaveChanges();
                 }
 
             }
-
-            db.SaveChanges();
             return RedirectToAction("Aussenzylinder_RundzylinderRout");
         }
         [HttpPost]
-        public ActionResult SaveVorhangschloss(Vorhangschloss profil_Halbzylinder,List<int>Size,List<float> CostSize)
+        public ActionResult SaveVorhangschloss(Vorhangschloss profil_Halbzylinder,List<int>Size,List<float> CostSize, List<string> Options,
+        List<string> Descriptions, List<string> valueNGF, List<float> costNGF, List<int> inputCounter)
         {
-            var VorhanItem = db.Vorhangschloss.Find(profil_Halbzylinder.Id);
-            var VorhanItemSize_Cost = db.Size.Where(x=>x.VorhangschlossId == profil_Halbzylinder.Id).ToList();
+            var Items = db.Vorhangschloss.Find(profil_Halbzylinder.Id);
+            Items.schliessanlagenId = profil_Halbzylinder.schliessanlagenId;
+            Items.Name = profil_Halbzylinder.Name;
+            Items.companyName = profil_Halbzylinder.companyName;
+            Items.NameSystem = profil_Halbzylinder.NameSystem;
+            Items.description = profil_Halbzylinder.description;
+            Items.Cost = profil_Halbzylinder.Cost;
+            Items.ImageName = profil_Halbzylinder.ImageName;
 
-            for(int i = 0;i< VorhanItemSize_Cost.Count(); i++)
+            var option = db.Vorhan_Options.Where(x => x.VorhangschlossId == profil_Halbzylinder.Id).ToList();
+
+            if (Options.Count() == 0 || option.Count() > 0)
             {
-                VorhanItemSize_Cost[i].sizeVorhangschloss = Size[i];
-                VorhanItemSize_Cost[i].Cost = CostSize[i];
-            }
+                var listAllOption = new List<OptionsVorhan>();
 
+                foreach (var item in option)
+                {
+                    var OptionDescription = db.OptionsVorhan.Where(x => x.OptionId == item.Id).ToList();
+
+                    foreach (var item2 in OptionDescription)
+                    {
+                        listAllOption.Add(item2);
+                    }
+                }
+
+                foreach (var item in listAllOption)
+                {
+                    var optionsValue = db.OptionsVorhan_value.Where(x => x.OptionsId == item.Id).ToList();
+
+                    foreach (var item2 in optionsValue)
+                    {
+                        db.OptionsVorhan_value.Remove(item2);
+                    }
+                }
+                db.SaveChanges();
+
+                foreach (var list in listAllOption)
+                {
+                    db.OptionsVorhan.Remove(list);
+                }
+
+                db.SaveChanges();
+
+                foreach (var optionsList in option)
+                {
+                    db.Vorhan_Options.Remove(optionsList);
+                }
+                db.SaveChanges();
+            }
+            else
+            {
+                int counter = 0;
+                for (var i = 0; i < Options.Count(); i++)
+                {
+                    var createOptions = new Vorhan_Options
+                    {
+                        VorhangschlossId = Items.Id,
+                    };
+
+                    db.Vorhan_Options.Add(createOptions);
+                    db.SaveChanges();
+
+                    var createOptionsAussen = new OptionsVorhan
+                    {
+                        OptionId = createOptions.Id,
+                        Name = Options[i],
+                        Description = Descriptions[i],
+                    };
+
+                    db.OptionsVorhan.Add(createOptionsAussen);
+                    db.SaveChanges();
+
+                    for (int f = 0; f < inputCounter[i]; f++)
+                    {
+                        var costedValue = new OptionsVorhan_value
+                        {
+                            OptionsId = createOptionsAussen.Id,
+                            Value = valueNGF[counter],
+                            Cost = costNGF[counter],
+                        };
+                        db.OptionsVorhan_value.Add(costedValue);
+                        counter++;
+                    }
+                    db.SaveChanges();
+                }
+            }
+            var VorhanItemSize_Cost = db.Size.Where(x=>x.VorhangschlossId == profil_Halbzylinder.Id).ToList();
+            foreach(var list in VorhanItemSize_Cost)
+            {
+                db.Size.Remove(list);
+            }
             db.SaveChanges();
+
+            for (int i =0;i< Size.Count(); i++)
+            {
+                var SizeV = new Size
+                {
+                    VorhangschlossId = Items.Id,
+                    sizeVorhangschloss = Size[i],
+                    Cost = CostSize[i],
+                };
+               db.Size.Add(SizeV);
+            }
+            db.SaveChanges();
+
             return RedirectToAction("VorhangschlossRout");
         }
 
         [HttpPost]
-        public ActionResult SaveProfil_Knaufzylinder(Profil_Knaufzylinder profil_Doppelzylinder)
+        public ActionResult SaveProfil_Knaufzylinder(Profil_Knaufzylinder profil_Knayf,List<int> SizeAus, List<int> SizeInen, List<string> Options,
+        List<string> Descriptions, List<string> valueNGF, List<float> costNGF, List<int> inputCounter)
         {
+            var Items = db.Profil_Knaufzylinder.Find(profil_Knayf.Id);
+            Items.schliessanlagenId = profil_Knayf.schliessanlagenId;
+            Items.Name = profil_Knayf.Name;
+            Items.companyName = profil_Knayf.companyName;
+            Items.NameSystem = profil_Knayf.NameSystem;
+            Items.description = profil_Knayf.description;
+            Items.Cost = profil_Knayf.Cost;
+            Items.ImageName = profil_Knayf.ImageName;
+
+            var option = db.Profil_Knaufzylinder_Options.Where(x => x.Profil_KnaufzylinderId == profil_Knayf.Id).ToList();
+            
+            if (Options.Count() == 0 || option.Count() > 0)
+            {
+                var listAllOption = new List<Knayf_Options>();
+
+                foreach (var item in option)
+                {
+                    var OptionDescription = db.Knayf_Options.Where(x => x.OptionsId == item.Id).ToList();
+
+                    foreach (var item2 in OptionDescription)
+                    {
+                        listAllOption.Add(item2);
+                    }
+                }
+
+                foreach (var item in listAllOption)
+                {
+                    var optionsValue = db.Knayf_Options_value.Where(x => x.Knayf_OptionsId == item.Id).ToList();
+
+                    foreach (var item2 in optionsValue)
+                    {
+                        db.Knayf_Options_value.Remove(item2);
+                    }
+                }
+                db.SaveChanges();
+
+                foreach (var list in listAllOption)
+                {
+                    db.Knayf_Options.Remove(list);
+                }
+
+                db.SaveChanges();
+
+                foreach (var optionsList in option)
+                {
+                    db.Profil_Knaufzylinder_Options.Remove(optionsList);
+                }
+                db.SaveChanges();
+            }
+            if (Options.Count > 0)
+            {
+                int counter = 0;
+
+                for (var i = 0; i < Options.Count(); i++)
+                {
+                    var createOptions = new Profil_Knaufzylinder_Options
+                    {
+                        Profil_KnaufzylinderId = Items.Id,
+                    };
+
+                    db.Profil_Knaufzylinder_Options.Add(createOptions);
+                    db.SaveChanges();
+
+                    var createOptionsAussen = new Knayf_Options
+                    {
+                        OptionsId = createOptions.Id,
+                        Name = Options[i],
+                        Description = Descriptions[i],
+                    };
+
+                    db.Knayf_Options.Add(createOptionsAussen);
+                    db.SaveChanges();
+
+                    for (int f = 0; f < inputCounter[i]; f++)
+                    {
+                        var costedValue = new Knayf_Options_value
+                        {
+                            Knayf_OptionsId = createOptionsAussen.Id,
+                            Value = valueNGF[counter],
+                            Cost = costNGF[counter],
+                        };
+                        db.Knayf_Options_value.Add(costedValue);
+                        counter++;
+                    }
+                    db.SaveChanges();
+                }
+            }
+
+            var KnayfItemSize_Cost = db.Aussen_Innen_Knauf.Where(x => x.Profil_KnaufzylinderId == profil_Knayf.Id).ToList();
+            foreach (var list in KnayfItemSize_Cost)
+            {
+                db.Aussen_Innen_Knauf.Remove(list);
+            }
+            db.SaveChanges();
+
+            for (int i = 0; i < SizeAus.Count(); i++)
+            {
+                var SizeV = new Aussen_Innen_Knauf
+                {
+                    Profil_KnaufzylinderId = Items.Id,
+                    aussen = SizeAus[i],
+                    Intern = SizeInen[i],
+                };
+                db.Aussen_Innen_Knauf.Add(SizeV);
+            }
             db.SaveChanges();
             return RedirectToAction("Profil_KnaufzylinderRout");
         }
@@ -1541,7 +2176,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 for (int z = 0; z < queryableOptions.Count(); z++)
                 {
-                    var allOptions = db.OptionsVorhan.Where(x => x.OptioId == queryableOptions[z]).ToList();
+                    var allOptions = db.OptionsVorhan.Where(x => x.OptionId == queryableOptions[z]).ToList();
                     foreach (var option in allOptions)
                     {
                         ngf.Add(option);

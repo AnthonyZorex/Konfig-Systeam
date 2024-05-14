@@ -51,25 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3fa61fcb-bdcd-4437-9e9f-0beeabc610f3",
+                            Id = "2a7e6a96-35d2-4ed7-8a4e-da55a90e4188",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "2894c610-28e0-453a-9f94-8a4b8ae1992d",
+                            Id = "cf1f9fe4-95c5-48cd-8a8a-93d0eead59cf",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "81314379-1711-4962-9773-c0ee9d9668f4",
+                            Id = "47ff46da-4ca3-4a9a-ae37-8bf6cb142a54",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "6d0063ee-50f0-4208-996c-621e02423c77",
+                            Id = "e329364b-6cdb-41ec-b61e-518c07a6bf93",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -1097,10 +1097,7 @@ namespace schliessanlagen_konfigurator.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OptioId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OptionId")
+                    b.Property<int?>("OptionId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -1538,9 +1535,7 @@ namespace schliessanlagen_konfigurator.Migrations
                 {
                     b.HasOne("schliessanlagen_konfigurator.Models.Vorhan.Vorhan_Options", "Option")
                         .WithMany("Options")
-                        .HasForeignKey("OptionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OptionId");
 
                     b.Navigation("Option");
                 });

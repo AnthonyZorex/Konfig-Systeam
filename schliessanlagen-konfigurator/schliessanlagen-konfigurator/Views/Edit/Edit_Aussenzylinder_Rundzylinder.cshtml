@@ -1,6 +1,9 @@
 ﻿@model schliessanlagen_konfigurator.Models.Aussenzylinder_Rundzylinder;
 @{
     ViewData["Title"] = "Edit";
+    int count = -1;
+    int f = -1;
+    int r = -1;
 }
 <h1>Edit Aussenzylinder \ Rundzylinder</h1>
 <hr />
@@ -43,7 +46,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Cost" class="control-label"></label>
-                <input required asp-for="Cost" class="form-control" />
+                <input required asp-for="Cost" type="number" step="0.01" class="form-control" />
                 <span asp-validation-for="Cost" class="text-danger"></span>
             </div>
 
@@ -53,32 +56,52 @@
                 <span asp-validation-for="ImageName" class="text-danger"></span>
             </div>
            <hr />
-        
-            @if (ViewBag.optionV == true)
-            {
-                <div>
-                    <h2>Options</h2>
-                    <div class="form-group">
-                        <label class="control-label">Options Name</label>
-                        <input name="Name" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Description</label>
-                        <input name="Description" class="form-control" />
-                    </div>
-                </div>
-                <div>
-                    <h2>Options Value</h2>
-                    <div class="form-group">
-                        <label class="control-label">Options Value</label>
-                        <input name="Value" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Cost</label>
-                        <input name="Cost" class="form-control" />
-                    </div>
-                </div>
-            }
+            <div id="productOptions">
+                @if (ViewBag.optionV == true)
+                {
+                    @foreach (var options in ViewBag.Options)
+                    {
+                        r++;
+                        <div class="input-block">
+                            <h2>Options</h2>
+                            <div class="form-group">
+                                <label class="control-label">Options Name</label>
+                                <input name="Options" value="@options.Name" id="opt" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Description</label>
+                                <input name="Descriptions" value="@options.Description" class="form-control" />
+                            </div>
+
+                            <h1>Value & Cost </h1>
+                            <div id="Aussen_Innen_ProfilDopel">
+                                <div id="valueNGF" class="form-group">
+
+                                    @for (int i = 0; i < ViewBag.CountOptions[r]; i++)
+                                    {
+                                        count++;
+                                        <input type="text" placeholder="valueNGF" name="valueNGF" value="@ViewBag.OptionValue[count].Value" class="form-control" />
+                                    }
+                                </div>
+                                <div class="form-group" id="costNGF">
+
+                                    @for (int i = 0; i < ViewBag.CountOptions[r]; i++)
+                                    {
+                                        f++;
+                                        <input type="text" placeholder="costNGF" @* step="0,01" *@ name="costNGF" value="@ViewBag.OptionValue[f].Cost" class="form-control" />
+                                    }
+                                </div>
+                                <input type="hidden" id="counter" name="inputCounter" />
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+
+            <button id="createBlockBtn" type="button" class="btn btn-success">Add Options</button>
+            <button id="addInputBtn" type="button" class="btn btn-success">+</button>
+            <button id="RemoveInputBtn" type="button" class="btn btn-danger">-</button>
+            <hr />
             <input type="submit" value="Save" class="btn btn-primary" />
         </form>
     </div>
@@ -94,36 +117,150 @@
     }
 }
 <script>
-
     let schliessanlagenType = document.getElementById("schliessanlagenId");
     let AussenType = document.getElementById("AussenType");
 
-    function SelectionNewType(value) 
-    {
-        if (value == "Profil-Doppelzylinder") 
-        {
+    function SelectionNewType(value) {
+        if (value == "Profil-Doppelzylinder") {
             AussenType.value = 1;
         }
-        if (value == "Profil-Halbzylinder") 
-        {
+        if (value == "Profil-Halbzylinder") {
             AussenType.value = 2;
         }
-        if (value == "Profil-Knaufzylinder") 
-        {
+        if (value == "Profil-Knaufzylinder") {
             AussenType.value = 3;
         }
-        if (value == "Hebelzylinder") 
-        {
+        if (value == "Hebelzylinder") {
             AussenType.value = 4;
         }
-        if (value == "Vorhangschloss") 
-        {
+        if (value == "Vorhangschloss") {
             AussenType.value = 5;
         }
-        if (value == "Aussenzylinder_Rundzylinder") 
-        {
+        if (value == "Aussenzylinder_Rundzylinder") {
             AussenType.value = 6;
         }
     }
-    
+    let costNGF = document.getElementById('costNGF');
+    let valueNGF = document.getElementById('valueNGF');
+
+    let productOptions = document.getElementById('productOptions');
+    let addOptions = document.getElementById('addOptions');
+
+
+    window.addEventListener('load', function () {
+        const blocks = document.querySelectorAll('.input-block');
+        for (let i = 0; i < blocks.length; i++) {
+            let counterBlock = blocks[i].querySelectorAll("#valueNGF  input");
+
+            let counter = blocks[i].querySelectorAll("#counter");
+
+            counter[0].value = counterBlock.length;
+
+            console.log(counter[0].value);
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const container = document.getElementById('productOptions');
+        const createBlockBtn = document.getElementById('createBlockBtn');
+        const addInputBtn = document.getElementById('addInputBtn');
+        const RemoveInputBtn = document.getElementById('RemoveInputBtn');
+
+
+        let blockCounter = document.querySelectorAll('.input-block').length > 0 ? document.querySelectorAll('.input-block').length : 1;
+
+        createBlockBtn.addEventListener('click', function () {
+            const block = createBlock();
+            container.appendChild(block);
+        });
+
+        addInputBtn.addEventListener('click', function () {
+            const blocks = document.querySelectorAll('.input-block');
+            const lastBlock = blocks[blocks.length - 1];
+
+            if (lastBlock) {
+                addInputs(lastBlock);
+            } else {
+                alert('Сначала создайте блок');
+            }
+        });
+
+        RemoveInputBtn.addEventListener('click', function () {
+            const blocks = document.querySelectorAll('.input-block');
+            const lastBlock = blocks[blocks.length - 1];
+
+            let inputProductValue = lastBlock.querySelectorAll("#valueNGF  input");
+            let inputProductPrice = lastBlock.querySelectorAll("#costNGF  input");
+
+            if (lastBlock) {
+                if (inputProductValue.length < 2) {
+                    productOptions.removeChild(lastBlock);
+                }
+                else {
+                    inputProductValue[inputProductValue.length - 1].parentNode.removeChild(inputProductValue[inputProductValue.length - 1]);
+                    inputProductPrice[inputProductPrice.length - 1].parentNode.removeChild(inputProductPrice[inputProductPrice.length - 1]);
+                }
+            }
+            else {
+                alert('Сначала создайте блок');
+            }
+        });
+
+
+
+        function createBlock() {
+            const block = document.createElement('div');
+            block.classList.add('input-block');
+            block.id = `block-${blockCounter}`;
+            block.innerHTML = `<div>
+                                                                            <h1>Options</h1>
+                                                                            <label>Name</label>
+                                                                            <input class="form-control" type="text" name="Options" />
+                                                                            <div>
+                                                                                <p></p>
+                                                                                <input name="postedFile" type="file" class="btn btn-success" />
+                                                                                <p></p>
+                                                                            </div>
+                                                                            <label>Descriptions</label>
+                                                                            <input class="form-control" type="text" name="Descriptions" />
+                                                                            <h1>Value & Cost </h1>
+                                                                            <div id="Aussen_Innen_ProfilDopel">
+                                                                                <div id="valueNGF">
+                                                                                    <input type="text" placeholder="valueNGF" name="valueNGF" />
+
+                                                                                </div>
+                                                                                <div id="costNGF">
+                                                                                            <input type="number" placeholder="costNGF" step="0.01" name="costNGF" />
+                                                                                </div>
+                                                                                                        <input type="hidden" id="counter" name="inputCounter" />
+                                                                            </div>
+                                                                        </div>`;
+
+            blockCounter++;
+
+            return block;
+        }
+
+        function addInputs(block) {
+            let d = document.createElement('input');
+            d.setAttribute('name', 'costNGF');
+            d.setAttribute('placeholder', 'costNGF');
+
+            let x = document.createElement('input');
+            x.setAttribute('name', 'valueNGF');
+            x.setAttribute('placeholder', 'valueNGF');
+
+            const div1 = block.querySelector('#valueNGF');
+            const div2 = block.querySelector('#costNGF');
+
+            div1.appendChild(x);
+
+            div2.appendChild(d);
+
+            var counter = document.querySelectorAll('#counter');
+            counter[counter.length - 1].value = block.querySelectorAll("#valueNGF  input").length;
+        };
+
+    })
+
 </script>

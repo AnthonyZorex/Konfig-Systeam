@@ -153,12 +153,25 @@
                 }
             });
 
-            RemoveInputBtn.addEventListener('click', function () {
+            RemoveInputBtn.addEventListener('click', function () 
+            {
                 const blocks = document.querySelectorAll('.input-block');
                 const lastBlock = blocks[blocks.length - 1];
 
+                let inputProductValue = document.querySelectorAll("#valueNGF  input");
+                let inputProductPrice = document.querySelectorAll("#costNGF  input");
+
+                let lastBlockValue = inputProductValue[inputProductValue.length - 1];
+                let lastBlockPrice = inputProductPrice[inputProductPrice.length - 1];
+
                 if (lastBlock) {
-                    productOptions.removeChild(lastBlock);
+                    if (inputProductValue.length < 2) {
+                        productOptions.removeChild(lastBlock);
+                    }
+                    else {
+                        document.getElementById("valueNGF").removeChild(lastBlockValue);
+                        document.getElementById("costNGF").removeChild(lastBlockPrice);
+                    }
                 }
                 else {
                     alert('Сначала создайте блок');
@@ -190,7 +203,7 @@
 
                                                                     </div>
                                                                     <div id="costNGF">
-                                                                                <input type="number" id='cost' placeholder="costNGF" id="cost" step="0.01" name="costNGF" />
+                                                                                <input type="number" placeholder="costNGF" step="0.01" name="costNGF" />
                                                                     </div>
                                                                                 <input type="hidden" id="counter" name="input_counter" />
                                                                 </div>

@@ -6,7 +6,7 @@ namespace schliessanlagen_konfigurator.Models.Vorhan
     public class OptionsVorhan
     {
         public int Id { get; set; }
-        public int? OptioId { get; set; }
+        public int? OptionId { get; set; }
         public Vorhan_Options Option { get; set; }
         public string Name { get; set; }
         public string? ImageName { get; set; }

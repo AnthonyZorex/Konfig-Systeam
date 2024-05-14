@@ -2934,7 +2934,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             foreach (var ls in listVorHanOptions)
             {
-                var listOptionVorhanValue = await db.OptionsVorhan.Where(x => x.OptioId == ls.Id).ToListAsync();
+                var listOptionVorhanValue = await db.OptionsVorhan.Where(x => x.OptionId == ls.Id).ToListAsync();
                 foreach (var lst in listOptionVorhanValue)
                 {
                     listVorHanOptionsValueName.Add(lst);
@@ -3804,7 +3804,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 int value = 0;
                 for (int i = 0; i < countKey.Count(); i++)
                 {
-                    for (int z = 0; z < TurName.Count(); z++)
+                    for (int z = 0; z < TurName.Distinct().Count(); z++)
                     {
                         if (keyIsOpen[value] == true)
                         {
@@ -3846,7 +3846,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                     if (DoppelCounter < DopelName.Count())
                     {
-                        worksheet.Cells[$"I{Rowcheked + i}"].Value = "Profil-Doppelzylinder";
+                        worksheet.Cells[$"G{Rowcheked + i}"].Value = "Profil-Doppelzylinder";
 
                         string Option = "";
 
@@ -3884,7 +3884,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                     else if (KnayfCounter < KnayfName.Count())
                     {
-                        worksheet.Cells[$"I{Rowcheked + i}"].Value = "Profil-Knaufzylinder";
+                        worksheet.Cells[$"G{Rowcheked + i}"].Value = "Profil-Knaufzylinder";
 
                         string Option = "";
 
@@ -3921,7 +3921,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                     else if (HablCounter < HalbName.Count())
                     {
-                        worksheet.Cells[$"I{Rowcheked + i}"].Value = "Profil-Halbzylinder";
+                        worksheet.Cells[$"G{Rowcheked + i}"].Value = "Profil-Halbzylinder";
 
                         string Option = "";
 
@@ -3954,7 +3954,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                     else if (HebelCounter < HelbName.Count())
                     {
-                        worksheet.Cells[$"I{Rowcheked + i}"].Value = "Hebelzylinder";
+                        worksheet.Cells[$"G{Rowcheked + i}"].Value = "Hebelzylinder";
 
                         string Option = "";
 
@@ -3987,7 +3987,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                     else if (VorhanCounter < VorhanName.Count())
                     {
-                        worksheet.Cells[$"I{Rowcheked + i}"].Value = "Vorhangschloss";
+                        worksheet.Cells[$"G{Rowcheked + i}"].Value = "Vorhangschloss";
                         string Option = "";
 
                         if (VorhanCounter < VorhnaOption.Count())
@@ -4020,7 +4020,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                     else if (AussenCounter < AussenName.Count())
                     {
-                        worksheet.Cells[$"I{Rowcheked + i}"].Value = "Aussenzylinder_Rundzylinder";
+                        worksheet.Cells[$"G{Rowcheked + i}"].Value = "Aussenzylinder_Rundzylinder";
                         string Option = "";
 
                         if (AussenCounter < AussenOption.Count())
