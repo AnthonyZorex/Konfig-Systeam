@@ -3796,15 +3796,16 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var CountAllItem = VorhanName.Count() + AussenName.Count() + DopelName.Count() + KnayfName.Count() + HalbName.Count() + HelbName.Count();
 
-            int Rowcheked = 17;
-            int row = 19;
+            int Rowcheked = 14;
+            int row = 17;
             using (ExcelPackage package = new ExcelPackage(fileInfo))
             {
                 ExcelWorksheet worksheet = package.Workbook.Worksheets["Schließplan"];
                 int value = 0;
+
                 for (int i = 0; i < countKey.Count(); i++)
                 {
-                    for (int z = 0; z < TurName.Distinct().Count(); z++)
+                    for (int z = 0; z < CountAllItem; z++)
                     {
                         if (keyIsOpen[value] == true)
                         {
@@ -3837,9 +3838,23 @@ namespace schliessanlagen_konfigurator.Controllers
                 int VorhanCounter = 0;
                 int AussenCounter = 0;
 
+                worksheet.Cells[$"C{5}"].Value = NameSystem;
+                worksheet.Cells[$"C{8}"].Value = Orders.Select(x=>x.Id).Last();
+                worksheet.Cells[$"C{9}"].Value = users.Address;
+
                 for (int i = 0; i < CountAllItem; i++)
                 {
-                    worksheet.Cells[$"C{Rowcheked + i}"].Value = TurName[i];
+                    string Dor = "";
+
+                    if(i > (TurName.Count()-1))
+                    {
+                        Dor = TurName.Last();
+                    }
+                    else
+                    {
+                        Dor = TurName[i];
+                    }
+                    worksheet.Cells[$"C{Rowcheked + i}"].Value = Dor;
                     worksheet.Cells[$"A{Rowcheked + i}"].Value = i+1;
                     worksheet.Cells[$"B{Rowcheked + i}"].Value = i + 1;
                     worksheet.Cells[$"H{Rowcheked + i}"].Value = TurCounter[i];
@@ -3860,8 +3875,8 @@ namespace schliessanlagen_konfigurator.Controllers
                         }
 
                         worksheet.Cells[$"J{Rowcheked + i}"].Value = Option;
-                        worksheet.Cells[$"M{Rowcheked + i}"].Value = DoppelAussen[DoppelCounter];
-                        worksheet.Cells[$"N{Rowcheked + i}"].Value = DoppelIntern[DoppelCounter];
+                        worksheet.Cells[$"K{Rowcheked + i}"].Value = DoppelAussen[DoppelCounter];
+                        worksheet.Cells[$"L{Rowcheked + i}"].Value = DoppelIntern[DoppelCounter];
 
                         var UserOrderProduct = new Models.Users.ProductSysteam
                         {
@@ -3913,8 +3928,8 @@ namespace schliessanlagen_konfigurator.Controllers
                         db.SaveChanges();
 
                         worksheet.Cells[$"J{Rowcheked + i}"].Value = Option;
-                        worksheet.Cells[$"M{Rowcheked + i}"].Value = KnayfAussen[KnayfCounter];
-                        worksheet.Cells[$"N{Rowcheked + i}"].Value = KnayfIntern[KnayfCounter];
+                        worksheet.Cells[$"K{Rowcheked + i}"].Value = KnayfAussen[KnayfCounter];
+                        worksheet.Cells[$"L{Rowcheked + i}"].Value = KnayfIntern[KnayfCounter];
                         KnayfCounter++;
                     }
 
@@ -3947,7 +3962,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         db.SaveChanges();
 
                         worksheet.Cells[$"J{Rowcheked + i}"].Value = Option;
-                        worksheet.Cells[$"M{Rowcheked + i}"].Value = HalbAussen[HablCounter];
+                        worksheet.Cells[$"K{Rowcheked + i}"].Value = HalbAussen[HablCounter];
 
                         HablCounter++;
                     }
@@ -4014,7 +4029,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         db.SaveChanges();
 
                         worksheet.Cells[$"J{Rowcheked + i}"].Value = Option;
-                        worksheet.Cells[$"M{Rowcheked + i}"].Value = VorhanAussen[VorhanCounter];
+                        worksheet.Cells[$"K{Rowcheked + i}"].Value = VorhanAussen[VorhanCounter];
                         VorhanCounter++;
                     }
 
@@ -4043,7 +4058,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         }
 
                         worksheet.Cells[$"J{Rowcheked+ i}"].Value = Option;
-
+                        worksheet.Cells.AutoFitColumns();
                         db.ProductSysteam.Add(UserOrderProduct);
                         db.SaveChanges();
                         AussenCounter++;
