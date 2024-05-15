@@ -3581,6 +3581,13 @@ namespace schliessanlagen_konfigurator.Controllers
             var KnayfaussenActual = new List<float>();
             var KnayfInenActual = new List<float>();
 
+            if (Vorhanschlos.Count()==0)
+            {
+                int SizeN = 0;
+                ViewBag.VorhanschlosSizeJson = JsonConvert.SerializeObject(SizeN);
+                ViewBag.VorhanschlosSizeCostedJson = JsonConvert.SerializeObject(SizeN);
+            }
+          
 
             var SizeHalb = key.Where(x => x.ZylinderId == 2).Select(x => x).ToList();
             var HalbaussenActual = new List<float>();
@@ -3840,7 +3847,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 worksheet.Cells[$"C{5}"].Value = NameSystem;
                 worksheet.Cells[$"C{8}"].Value = Orders.Select(x=>x.Id).Last();
-                worksheet.Cells[$"C{9}"].Value = users.Address;
+                worksheet.Cells[$"C{9}"].Value = users.Address +"\n"+ users.FirstName + users.LastName;
 
                 for (int i = 0; i < CountAllItem; i++)
                 {
@@ -3867,7 +3874,14 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         if (DoppelCounter < DoppelOption.Count())
                         {
-                            Option = DoppelOption[DoppelCounter];
+                            if (DoppelOption[DoppelCounter] == "Nein")
+                            {
+                                Option ="";
+                            }
+                            else
+                            {
+                                Option = DoppelOption[DoppelCounter];
+                            }
                         }
                         else
                         {
