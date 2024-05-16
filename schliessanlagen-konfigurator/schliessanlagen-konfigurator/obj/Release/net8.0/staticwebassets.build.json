@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "i5DWmqoFRH6LgaXXZkP5KLVqyQ/0LiFev4bikIxEuW4=",
+  "Hash": "fzlprJmDmgBSh7FVm71KWlG9wGlG9zE4ZPyG+kh09FA=",
   "Source": "schliessanlagen-konfigurator",
   "BasePath": "_content/schliessanlagen-konfigurator",
   "Mode": "Default",
@@ -3988,12 +3988,12 @@
       "OriginalItemSpec": "wwwroot\\Orders\\AnthonyBonetta1652024 OrderFile.xlsx"
     },
     {
-      "Identity": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\CES_schliessplan_DE_schliessanlagen.xltx",
+      "Identity": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\CES_schliessplan_DE_schliessanlagen.xlsx",
       "SourceId": "schliessanlagen-konfigurator",
       "SourceType": "Discovered",
       "ContentRoot": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\",
       "BasePath": "_content/schliessanlagen-konfigurator",
-      "RelativePath": "Orders/CES_schliessplan_DE_schliessanlagen.xltx",
+      "RelativePath": "Orders/CES_schliessplan_DE_schliessanlagen.xlsx",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -4004,7 +4004,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Orders\\CES_schliessplan_DE_schliessanlagen.xltx"
+      "OriginalItemSpec": "wwwroot\\Orders\\CES_schliessplan_DE_schliessanlagen.xlsx"
     }
   ]
 }

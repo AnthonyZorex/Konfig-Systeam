@@ -47,7 +47,7 @@
           "dependencies": {
             "EPPlus": {
               "target": "Package",
-              "version": "[7.1.2, )"
+              "version": "[4.5.3.3, )"
             },
             "Json.Net": {
               "target": "Package",
@@ -112,6 +112,10 @@
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.3, )"
+            },
+            "PayPal": {
+              "target": "Package",
+              "version": "[1.9.1, )"
             }
           },
           "imports": [

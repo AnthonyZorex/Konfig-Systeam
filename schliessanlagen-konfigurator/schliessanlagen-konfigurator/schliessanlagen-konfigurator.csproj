@@ -5,10 +5,11 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>schliessanlagen_konfigurator</RootNamespace>
+    <TypeScriptModuleKind>umd</TypeScriptModuleKind>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EPPlus" Version="7.1.2" />
+    <PackageReference Include="EPPlus" Version="4.5.3.3" />
     <PackageReference Include="Json.Net" Version="1.0.33" />
     <PackageReference Include="MailKit" Version="4.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.4" />
@@ -35,10 +36,11 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="PayPal" Version="1.9.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\Orders\CES_schliessplan_DE_schliessanlagen.xltx" />
+    <None Include="wwwroot\Orders\CES_schliessplan_DE_schliessanlagen.xlsx" />
   </ItemGroup>
 
 </Project>

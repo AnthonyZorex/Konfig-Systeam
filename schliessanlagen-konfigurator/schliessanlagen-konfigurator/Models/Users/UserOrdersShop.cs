@@ -10,7 +10,8 @@ namespace schliessanlagen_konfigurator.Models.Users
         public DateTime? createData { get; set; }
         public string? UserId { get; set; }
         public User User { get; set; }
-
+        public string? OrderStatus { get; set; }
+        public int? count { get; set; }
         public ICollection<ProductSysteam> ProductSysteam { get; set; }
         public UserOrdersShop()
         {

@@ -36,7 +36,7 @@
                         <h4>@orderList[z].ProductName</h4>
                         <div id="costedInfo">
                                 <div style="display:flex"><h4 id="costedI-@z">@orderList[z].OrderSum</h4><span>€</span></div>
-                           <input onchange="counterCost(event.target.value,@z)" required id="countOrderSysteam" type="number" pattern="[0-9]+" min="1" max="1000"  />
+                            <input onchange="counterCost(event.target.value,@z)" required id="countOrderSysteam" value="@orderList[z].count" type="number" pattern="[0-9]+" min="1" max="1000" />
 
                             <h4 id="cost-@z">@orderList[z].OrderSum €</h4>
                         </div>

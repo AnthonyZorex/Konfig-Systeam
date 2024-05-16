@@ -1,4 +1,112 @@
 ﻿@page
 @model schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage.HistoriOrdersModel
 @{
+    ViewData["Title"] = "Bezahlt Orders";
+    ViewData["ActivePage"] = ManageNavPages.HistoriOrderNavClass;
+
+    float costed = 0;
+    int ProudctItemCounter = 0;
+    int UserOrderId = 0;
+
+    var orderList = (List<UserOrdersShop>)ViewData["OrderLis"];
+    var orderItem = (List<ProductSysteam>)ViewData["OrderItem"];
+
+    var countProduct = (List<int>)ViewData["CounterProduct"];
+
 }
+<h3>@ViewData["Title"]</h3>
+<div class="row">
+    <div class="col-md-6">
+        <div id="AllOrderUser">
+            @for (int z = 0; z < orderList.Count; z++)
+            {
+                <div id="AllProductUser">
+
+                    <div id="hederBlockOrder">
+                        <h3>Artikel</h3>
+                        <div id="orderCostHeader">
+                            <h3>Menge</h3>
+                            <h3>Preis</h3>
+                        </div>
+                    </div>
+                    <hr />
+                    <div id="producktInfo">
+                        <img src="@("/Image/Schliarticle.jpg")" onclick="OpenModalInfo(@z)" height="150" width="150" />
+                        <h4>@orderList[z].ProductName</h4>
+                        <div id="costedInfo">
+                            <input read readonly id="countOrderSysteam" value="@orderList[z].count" type="text" />
+                            <h4 id="cost-@z">@orderList[z].OrderSum €</h4>
+                        </div>
+                    </div>
+
+                    <div id="myModal-@z" class="modal">
+
+                        <div class="modal-content">
+
+                            <span onclick="closedModal(@z)" class="close">&times;</span>
+
+                            <img src="@("/Image/Schliarticle.jpg")" height="150" width="150" />
+
+                            <h4>@orderList[z].ProductName</h4>
+
+                            @for (int s = 0; s < countProduct[z]; s++)
+                            {
+                                <hr />
+                                <h4>Name: @orderItem[ProudctItemCounter].Name</h4>
+                                <h4>aussen: @orderItem[ProudctItemCounter].Aussen</h4>
+                                <h4>innen: @orderItem[ProudctItemCounter].Intern</h4>
+                                <h4>Option - @orderItem[ProudctItemCounter].Option</h4>
+                                UserOrderId = @orderList[z].Id;
+                                ProudctItemCounter++;
+                            }
+                        </div>
+                    </div>
+                    <br />
+                    <hr />
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+<script>
+    let AllOrderID = document.querySelector("#OrderId");
+
+    var span = document.getElementsByClassName("close")[0];
+    let idItem = 0;
+
+    function OpenModalInfo(id) 
+    {
+        idItem = id;
+        var modal = document.getElementById(`myModal-${id}`);
+        modal.style.display = "block";
+    }
+
+    function closedModal(id) {
+        idItem = id;
+        var modal = document.getElementById(`myModal-${id}`);
+        modal.style.display = "none";
+    }
+
+    window.onclick = function (event) {
+        var modal = document.getElementById(`myModal-${idItem}`);
+
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        let count = document.querySelectorAll("#countOrderSysteam");
+        count.forEach((item) => {
+            item.value = 1;
+        })
+    });
+
+    
+</script>
+

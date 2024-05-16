@@ -291,7 +291,6 @@ D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\BouncyCastle.Cryptography.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\MailKit.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\MimeKit.dll
+D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\PayPal.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\EPPlus.dll
-D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\EPPlus.Interfaces.dll
-D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\EPPlus.System.Drawing.dll
-D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\Microsoft.IO.RecyclableMemoryStream.dll
+D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\System.Xml.XPath.XmlDocument.dll

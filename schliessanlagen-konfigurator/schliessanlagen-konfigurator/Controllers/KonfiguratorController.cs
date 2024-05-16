@@ -29,9 +29,7 @@ using System.Net;
 using System.Net.WebSockets;
 using OfficeOpenXml.ConditionalFormatting.Contracts;
 using schliessanlagen_konfigurator.Models.Users;
-using System.Timers;
-using Timer = System.Timers.Timer;
-using System.Diagnostics;
+using PayPal.Api;
 namespace schliessanlagen_konfigurator.Controllers
 {
     [EnableCors("*")]
@@ -3769,7 +3767,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 fstream.Close();
             }
 
-            string sourceFilePath = @"wwwroot/Orders/CES_schliessplan_DE_schliessanlagen.xltx";
+            string sourceFilePath = @"wwwroot/Orders/CES_schliessplan_DE_schliessanlagen.xlsx";
 
 
             using (FileStream sourceFileStream = new FileStream(sourceFilePath, FileMode.Open, FileAccess.Read))
@@ -3792,7 +3790,6 @@ namespace schliessanlagen_konfigurator.Controllers
                 sourceFileStream.Close();
             }
 
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             FileInfo fileInfo = new FileInfo(destinationFilePath);
 
             var UserOrder = new Models.Users.UserOrdersShop
@@ -3800,6 +3797,8 @@ namespace schliessanlagen_konfigurator.Controllers
                 UserId = users.Id,
                 ProductName = NameSystem,
                 OrderSum = costed,
+                OrderStatus = "Nicht bezahlt",
+                count = 1,
                 createData = DateTime.Now,
             };
             db.UserOrdersShop.Add(UserOrder);
@@ -3809,6 +3808,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             int Rowcheked = 14;
             int row = 17;
+
             using (ExcelPackage package = new ExcelPackage(fileInfo))
             {
                 ExcelWorksheet worksheet = package.Workbook.Worksheets["Schließplan"];

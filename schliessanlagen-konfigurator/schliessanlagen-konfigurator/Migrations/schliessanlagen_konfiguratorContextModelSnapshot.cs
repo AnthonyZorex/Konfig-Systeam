@@ -51,25 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2a7e6a96-35d2-4ed7-8a4e-da55a90e4188",
+                            Id = "19ea7e1f-a6e3-447b-b4a0-56de690bdd50",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "cf1f9fe4-95c5-48cd-8a8a-93d0eead59cf",
+                            Id = "1e433926-0261-4fcc-94ee-3871bb6db806",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "47ff46da-4ca3-4a9a-ae37-8bf6cb142a54",
+                            Id = "a6e7b2e8-dd86-4939-8a48-e979135a1ca4",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "e329364b-6cdb-41ec-b61e-518c07a6bf93",
+                            Id = "701afc7f-227c-4aee-81f1-bc3d4a1b91af",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -1058,6 +1058,9 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("OrderStatus")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<float>("OrderSum")
                         .HasColumnType("real");
 
@@ -1067,6 +1070,9 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("count")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("createData")
                         .HasColumnType("datetime2");
