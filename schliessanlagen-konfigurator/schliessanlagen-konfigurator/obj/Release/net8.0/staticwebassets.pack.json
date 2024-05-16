@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\schliessanlagen-konfigurator.bundle.scp.css"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\215 N58 Hangschloss243629775.png",
+      "PackagePath": "staticwebassets\\Image\\215 N58 Hangschloss243629775.png"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\ABUS Bravus.2000 Außenzylinder244131261.png",
       "PackagePath": "staticwebassets\\Image\\ABUS Bravus.2000 Außenzylinder244131261.png"
     },
@@ -257,6 +261,26 @@
       "PackagePath": "staticwebassets\\Image\\Schliarticle.jpg"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\UDM5-30 Rund-Außenzylinder245052542.png",
+      "PackagePath": "staticwebassets\\Image\\UDM5-30 Rund-Außenzylinder245052542.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\UDM5-5558_30 Hebelzylinder244122292.png",
+      "PackagePath": "staticwebassets\\Image\\UDM5-5558_30 Hebelzylinder244122292.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\UDM5-810 Profil-Doppelzylinder244654947.png",
+      "PackagePath": "staticwebassets\\Image\\UDM5-810 Profil-Doppelzylinder244654947.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\UDM5-815 Knaufzylinder241000792.png",
+      "PackagePath": "staticwebassets\\Image\\UDM5-815 Knaufzylinder241000792.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\UDM5-8511 Halbzylinder242040300.png",
+      "PackagePath": "staticwebassets\\Image\\UDM5-8511 Halbzylinder242040300.png"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\Vitess.4000 Außenzylinder242451772.png",
       "PackagePath": "staticwebassets\\Image\\Vitess.4000 Außenzylinder242451772.png"
     },
@@ -323,6 +347,10 @@
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\zylinderlaenge.png",
       "PackagePath": "staticwebassets\\Image\\zylinderlaenge.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\AnthonyBonetta1652024 OrderFile.xlsx",
+      "PackagePath": "staticwebassets\\Orders\\AnthonyBonetta1652024 OrderFile.xlsx"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\CES_schliessplan_DE_schliessanlagen.xltx",

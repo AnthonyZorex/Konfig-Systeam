@@ -1,0 +1,15 @@
+D:\Konfig-Systeam\schliessanlagen-konfigurator\UserOrders\bin\Release\net8.0\UserOrders.exe
+D:\Konfig-Systeam\schliessanlagen-konfigurator\UserOrders\bin\Release\net8.0\UserOrders.deps.json
+D:\Konfig-Systeam\schliessanlagen-konfigurator\UserOrders\bin\Release\net8.0\UserOrders.runtimeconfig.json
+D:\Konfig-Systeam\schliessanlagen-konfigurator\UserOrders\bin\Release\net8.0\UserOrders.dll
+D:\Konfig-Systeam\schliessanlagen-konfigurator\UserOrders\bin\Release\net8.0\UserOrders.pdb
+D:\Konfig-Systeam\schliessanlagen-konfigurator\UserOrders\obj\Release\net8.0\UserOrders.GeneratedMSBuildEditorConfig.editorconfig
+D:\Konfig-Systeam\schliessanlagen-konfigurator\UserOrders\obj\Release\net8.0\UserOrders.AssemblyInfoInputs.cache
+D:\Konfig-Systeam\schliessanlagen-konfigurator\UserOrders\obj\Release\net8.0\UserOrders.AssemblyInfo.cs
+D:\Konfig-Systeam\schliessanlagen-konfigurator\UserOrders\obj\Release\net8.0\UserOrders.csproj.CoreCompileInputs.cache
+D:\Konfig-Systeam\schliessanlagen-konfigurator\UserOrders\obj\Release\net8.0\UserOrders.sourcelink.json
+D:\Konfig-Systeam\schliessanlagen-konfigurator\UserOrders\obj\Release\net8.0\UserOrders.dll
+D:\Konfig-Systeam\schliessanlagen-konfigurator\UserOrders\obj\Release\net8.0\refint\UserOrders.dll
+D:\Konfig-Systeam\schliessanlagen-konfigurator\UserOrders\obj\Release\net8.0\UserOrders.pdb
+D:\Konfig-Systeam\schliessanlagen-konfigurator\UserOrders\obj\Release\net8.0\UserOrders.genruntimeconfig.cache
+D:\Konfig-Systeam\schliessanlagen-konfigurator\UserOrders\obj\Release\net8.0\ref\UserOrders.dll

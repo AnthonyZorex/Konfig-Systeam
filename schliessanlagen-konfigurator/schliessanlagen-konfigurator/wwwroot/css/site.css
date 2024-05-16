@@ -229,6 +229,7 @@ a {
     overflow-x:scroll;
 }
 #InfoValue1 {
+    gap: 10px;
     display: flex;
     border-left: 2px solid grey;
     border-right: 2px solid grey;
@@ -700,6 +701,7 @@ a {
     display: grid;
     gap: 200px;
     margin-top: 15px;
+    padding-bottom: 13px;
 }
 .horizontal {
     display: flex;

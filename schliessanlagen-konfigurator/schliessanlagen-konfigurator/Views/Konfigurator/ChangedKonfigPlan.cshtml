@@ -39,15 +39,15 @@
                         int countTur = 0;
                         foreach (var list in ViewBag.key)
                         {
-                                                            <div class="TexCount" id="TexCount-@keyId">
-                                                                <input type="text" style="position: relative;" name="FurNameKey" value="@list.ForNameKey" />
-                                                                <div id="TexInputKey">
-                                                                    <input id="inputS" onchange="chekedNameArienKey(event.target.value,1)" name="NameKey" value='@list.NameKey' type="text" />
+                                                                <div class="TexCount" id="TexCount-@keyId">
+                                                                    <input type="text" style="position: relative;" name="FurNameKey" value="@list.ForNameKey" />
+                                                                    <div id="TexInputKey">
+                                                                        <input id="inputS" onchange="chekedNameArienKey(event.target.value,1)" name="NameKey" value='@list.NameKey' type="text" />
+                                                                    </div>
+                                                                    <div>
+                                                                        <input id="inputCount" name="CountKey" value="@list.CountKey" type="text" />
+                                                                    </div>
                                                                 </div>
-                                                                <div>
-                                                                    <input id="inputCount" name="CountKey" value="@list.CountKey" type="text" />
-                                                                </div>
-                                                            </div>
                             keyId++;
                         }
                     }
@@ -584,28 +584,12 @@
     function removeBlock() 
     {
         let blockToRemove = document.getElementById('TexCount-' + blockCount);
+        let blockChekbox = document.getElementById("InfoValue1");
+        let allBlock = document.querySelectorAll(".horizontal1");
 
-        if (blockToRemove) {
             blockToRemove.remove();
-            if (blockTur > 1) {
-                for (let f = 1; f <= blockTur;) {
-                    let blockToRemoveTurValue = document.getElementById(`${f}.checkboxContainer${blockCount}`);
-                    blockToRemoveTurValue.remove();
-
-                    f++;
-
-                }
-
-            }
-
-            else {
-                let blockToRemoveTurValue = document.getElementById(`${blockTur}.checkboxContainer${blockCount}`);
-                blockToRemoveTurValue.remove();
-            }
-
-            blockCount--;
-        }
-
+            blockChekbox.removeChild(allBlock[allBlock.length - 1]);
+        blockCount--;
     }
 
     function addBlock() {

@@ -59,7 +59,7 @@
           }
         }
       },
-      "EPPlus/7.1.1": {
+      "EPPlus/7.1.2": {
         "type": "package",
         "dependencies": {
           "EPPlus.Interfaces": "6.1.1",
@@ -3363,15 +3363,15 @@
         "packageIcon.png"
       ]
     },
-    "EPPlus/7.1.1": {
-      "sha512": "0iA0gIf1BYNVXWloj4sKQXGc7yBTm41fh5zu7XNq0CXMB1zHC3KwBggGPyy8AEQJqHZnedRRCbOe1ITEo2LOcA==",
+    "EPPlus/7.1.2": {
+      "sha512": "BEmY3oPCL3JotBqwJnMcLrwzcBsmasXPrONo6Ur00VaXQuasNAJPL5NAKnC56EWrsjqe0q8kmKvdyFYM5iwuTA==",
       "type": "package",
-      "path": "epplus/7.1.1",
+      "path": "epplus/7.1.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "EPPlusLogo.png",
-        "epplus.7.1.1.nupkg.sha512",
+        "epplus.7.1.2.nupkg.sha512",
         "epplus.nuspec",
         "lib/net35/EPPlus.dll",
         "lib/net35/EPPlus.xml",
@@ -9218,7 +9218,7 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
-      "EPPlus >= 7.1.1",
+      "EPPlus >= 7.1.2",
       "Json.Net >= 1.0.33",
       "MailKit >= 4.5.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 8.0.4",
@@ -9281,7 +9281,7 @@
         "dependencies": {
           "EPPlus": {
             "target": "Package",
-            "version": "[7.1.1, )"
+            "version": "[7.1.2, )"
           },
           "Json.Net": {
             "target": "Package",

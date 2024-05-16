@@ -170,7 +170,7 @@
                                     {
                                            <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.optionsName[i]" />
 
-                                            <select style="margin-bottom: 10px;" name="DoppelOption" class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Doppel',event.target.id,event.target.value,@valueCount,'@ViewBag.optionsName[i]',@i,@d)">
+                                            <select style="margin-bottom: 10px;"  class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Doppel',event.target.id,event.target.value,@valueCount,'@ViewBag.optionsName[i]',@i,@d)">
 
                                         @for (int j = 0; j < ViewBag.countOptionsList[i]; j++)
                                         {
@@ -180,6 +180,8 @@
                                         }
 
                                         </select>
+
+                                            <input type="hidden" name="DoppelOption" id="Option-@d + @i" />
                                             <input type="hidden" id="d-@d + @i" />
                                     }
                                     
@@ -273,7 +275,7 @@
                                     {
                                             <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.optionsNameKnayf[i]" />
 
-                                            <select style="margin-bottom: 10px;" name="KnayfOption" class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Knayf',event.target.id,event.target.value,@valueCount,'@ViewBag.optionsNameKnayf[i]',@i,@d)">
+                                            <select style="margin-bottom: 10px;"  class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Knayf',event.target.id,event.target.value,@valueCount,'@ViewBag.optionsNameKnayf[i]',@i,@d)">
 
                                             @for (int j = 0; j < ViewBag.countOptionsListKnayf[i]; j++)
                                             {
@@ -283,6 +285,7 @@
                                             }
 
                                         </select>
+                                            <input type="hidden" name="KnayfOption" id="Option-@d + @i" />
                                             <input type="hidden" id="d-@d + @i" />
                                     }
                                 } 
@@ -364,7 +367,7 @@
                                     {
                                             <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.HalbOptionsName[i]" />
 
-                                            <select class="form-select" name="HalbOption" id="@d-Options-@i" style="margin-bottom: 10px;" onchange="OptionsSelect(@d,'Halb',event.target.id,event.target.value,@valueCount,'@ViewBag.HalbOptionsName[i]',@i,@d)" >
+                                            <select class="form-select"  id="@d-Options-@i" style="margin-bottom: 10px;" onchange="OptionsSelect(@d,'Halb',event.target.id,event.target.value,@valueCount,'@ViewBag.HalbOptionsName[i]',@i,@d)" >
 
                                             @for (int j = 0; j < ViewBag.HalbOptionsValueCount[i]; j++)
                                             {
@@ -374,6 +377,8 @@
                                                 valueCount++;
                                             }
                                         </select>
+
+                                            <input type="hidden" name="HalbOption" id="Option-@d + @i" />
                                             <input type="hidden" id="d-@d + @i" />
                                     }
                                 } 
@@ -442,7 +447,7 @@
                                     {
                                             <input style="margin-top: 5px;" id="OptionName" class="form-control" readonly type="text" value="@ViewBag.OptionHebelName[i]" />
 
-                                            <select class="form-select" name="HebelOption" id="@d-Options-@i" style="margin-bottom: 10px;" onchange="OptionsSelect(@d,'Helb',event.target.id,event.target.value,@valueCount,'@ViewBag.OptionHebelName[i]',@i,@d)">
+                                            <select class="form-select"  id="@d-Options-@i" style="margin-bottom: 10px;" onchange="OptionsSelect(@d,'Helb',event.target.id,event.target.value,@valueCount,'@ViewBag.OptionHebelName[i]',@i,@d)">
 
                                             @for (int j = 0; j < ViewBag.CountValueHebel[i]; j++)
                                             {
@@ -452,6 +457,7 @@
                                                 valueCount++;
                                             }
                                         </select>
+                                            <input type="hidden"  name="HebelOption" id="Option-@d + @i" />
                                             <input type="hidden" id="d-@d + @i" />
                                     }
                                 } 
@@ -525,7 +531,7 @@
 
                                             <input type="text" style="margin-top: 5px;" id="OptionName" class="form-control" readonly value="@ViewBag.VorhanschlossOptionName[i]" />
 
-                                            <select style="margin-bottom: 10px;" name="VorhnaOption" class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Vorhan',event.target.id,event.target.value,@valueCount,'@ViewBag.VorhanschlossOptionName[i]',@i,@d)">
+                                            <select style="margin-bottom: 10px;"  class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Vorhan',event.target.id,event.target.value,@valueCount,'@ViewBag.VorhanschlossOptionName[i]',@i,@d)">
 
                                             @for (int j = 0; j < ViewBag.VorhanOptionCount[i]; j++)
                                             {
@@ -536,6 +542,8 @@
                                             }
 
                                         </select>
+
+                                            <input type="hidden" name="VorhnaOption" id="Option-@d + @i" />
                                             <input type="hidden" id="d-@d + @i" />
                                     }
                                 }
@@ -598,9 +606,9 @@
                                 {
                                     @for (int i = 0; i < ViewBag.AussenName.Count; i++)
                                     {
-                                            <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.AussenName[i]" />
+                                       <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.AussenName[i]" />
 
-                                            <select style="margin-bottom: 10px;" name="AussenOption" class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Aussen',event.target.id,event.target.value,@valueCount,'@ViewBag.AussenName[i]',@i,@d)">
+                                        <select style="margin-bottom: 10px;"  class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Aussen',event.target.id,event.target.value,@valueCount,'@ViewBag.AussenName[i]',@i,@d)">
 
                                             @for (int j = 0; j < ViewBag.AussenValue[i]; j++)
                                             {
@@ -608,8 +616,11 @@
 
                                                 valueCount++;
                                             }
+
                                         </select>
                                             <input type="hidden" id="d-@d + @i" />
+                                            <input type="hidden" name="AussenOption" id="Option-@d + @i" />
+
                                     }
                                 } 
                             </div>
@@ -763,36 +774,60 @@
                     if (TypeSylinder === "Doppel") 
                     {
                             let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
+                            
+                            let OptionDoppel = document.getElementById(`Option-${idBlock} + ${N}`);
+                            OptionDoppel.value = `${item.defaultValue}:  ${optionsValue}`;
+
                             AllPrice.value = parseFloat(AllPrice.value) + (DoppelCostValue[selectedOption] * Number(countSchluss.value));
                             OptionOldCheker.value = DoppelCostValue[selectedOption];
                     }
                     if (TypeSylinder === "Knayf") 
                     {
                         let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
+
+                        let OptionKnayf = document.getElementById(`Option-${idBlock} + ${N}`);
+                        OptionKnayf.value = `${item.defaultValue}:  ${optionsValue}`;
+
                         AllPrice.value = parseFloat(AllPrice.value) + (KnayfOptionPrice[selectedOption] * Number(countSchluss.value));
                         OptionOldCheker.value = KnayfOptionPrice[selectedOption];
                     }
                     if (TypeSylinder === "Halb")
                     {
                         let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
+
+                        let OptionHalb = document.getElementById(`Option-${idBlock} + ${N}`);
+                        OptionHalb.value = `${item.defaultValue}:  ${optionsValue}`;
+
                         AllPrice.value = parseFloat(AllPrice.value) + (HalbOptionsValueCost[selectedOption] * Number(countSchluss.value));
                         OptionOldCheker.value = HalbOptionsValueCost[selectedOption];
                     }
                     if (TypeSylinder === "Helb") 
                     {
                         let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
+
+                        let OptionHelb = document.getElementById(`Option-${idBlock} + ${N}`);
+                        OptionHelb.value = `${item.defaultValue}:  ${optionsValue}`;
+
                         AllPrice.value = parseFloat(AllPrice.value) + (HebelOptionsCost[selectedOption] * Number(countSchluss.value));
                         OptionOldCheker.value = HebelOptionsCost[selectedOption];
                     }
                     if (TypeSylinder === "Vorhan") 
                     {
                         let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
+
+                        let OptionVorhan = document.getElementById(`Option-${idBlock} + ${N}`);
+                        OptionVorhan.value = `${item.defaultValue}:  ${optionsValue}`;
+
                         AllPrice.value = parseFloat(AllPrice.value) + (VorhanSchlossValueCost[selectedOption] * Number(countSchluss.value));
                         OptionOldCheker.value = VorhanSchlossValueCost[selectedOption];
                     }
                     if (TypeSylinder === "Aussen") 
                     {
                         let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
+
+                        let OptionAussen = document.getElementById(`Option-${idBlock} + ${N}`);
+                        OptionAussen.value = `${item.defaultValue}:  ${optionsValue}`;
+
                         AllPrice.value = parseFloat(AllPrice.value) + (AussenRundOptionsCostValue[selectedOption] * Number(countSchluss.value));
                         OptionOldCheker.value = AussenRundOptionsCostValue[selectedOption];
                     }
@@ -802,6 +837,10 @@
                     if (TypeSylinder === "Doppel") 
                     {
                         let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
+                        
+                        let OptionDoppel = document.getElementById(`Option-${idBlock} + ${N}`);
+                        OptionDoppel.value = ``;
+
                         AllPrice.value = (parseFloat(AllPrice.value) - (OptionOldCheker.value * Number(countSchluss.value)));
                         item.value = OptionsName;
                         item.style.color = "black";
@@ -809,6 +848,10 @@
                     if (TypeSylinder === "Knayf") 
                     {
                         let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
+
+                        let OptionKnayf = document.getElementById(`Option-${idBlock} + ${N}`);
+                        OptionKnayf.value = ``;
+                        
                         AllPrice.value = (parseFloat(AllPrice.value) - (OptionOldCheker.value * Number(countSchluss.value)));
                         item.value = OptionsName;
                         item.style.color = "black";
@@ -816,6 +859,10 @@
                     if (TypeSylinder === "Halb") 
                     {
                         let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
+
+                        let OptionHalb = document.getElementById(`Option-${idBlock} + ${N}`);
+                        OptionHalb.value = ``;
+                        
                         AllPrice.value = (parseFloat(AllPrice.value) - (OptionOldCheker.value * Number(countSchluss.value)));
                         item.value = OptionsName;
                         item.style.color = "black";
@@ -823,6 +870,10 @@
                     if (TypeSylinder === "Helb") 
                     {
                         let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
+
+                        let OptionHelb = document.getElementById(`Option-${idBlock} + ${N}`);
+                        OptionHelb.value = ``;
+
                         AllPrice.value = (parseFloat(AllPrice.value) - (OptionOldCheker.value * Number(countSchluss.value)));
                         item.value = OptionsName;
                         item.style.color = "black";
@@ -830,6 +881,10 @@
                     if (TypeSylinder === "Vorhan") 
                     {
                         let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
+                         
+                        let OptionVorhan = document.getElementById(`Option-${idBlock} + ${N}`);
+                        OptionVorhan.value = ``;
+
                         AllPrice.value = (parseFloat(AllPrice.value) - (OptionOldCheker.value * Number(countSchluss.value)));
                         item.value = OptionsName;
                         item.style.color = "black";
@@ -837,6 +892,10 @@
                     if (TypeSylinder === "Aussen") 
                     {
                         let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
+
+                         let OptionAussen = document.getElementById(`Option-${idBlock} + ${N}`);
+                        OptionAussen.value = ``;
+
                         AllPrice.value = (parseFloat(AllPrice.value) - (OptionOldCheker.value * Number(countSchluss.value)));
                         item.value = OptionsName;
                         item.style.color = "black";
@@ -949,12 +1008,12 @@
                                     IserchedItem++;
 
                                     Innen.value = Number(valueI);
-                                    AllPrice.value = parseFloat(Costen) - (5 * Number(countSchluss.value));
+                                    AllPrice.value = parseFloat(Costen) - (4 * Number(countSchluss.value));
                                     return;
                                 }
                                 else 
                                 {
-                                    AllPrice.value = parseFloat(Costen) - (5 * Number(countSchluss.value));
+                                    AllPrice.value = parseFloat(Costen) - (4 * Number(countSchluss.value));
                                 }
                             }
 
@@ -1011,11 +1070,11 @@
                                     serchedItem++;
                                     Aussen.value = Number(value);
 
-                                    AllPrice.value = parseFloat(Costen) - (5 * Number(countSchluss.value));
+                                    AllPrice.value = parseFloat(Costen) - (4 * Number(countSchluss.value));
                                     return;
                                 }
                                 else {
-                                    AllPrice.value = parseFloat(Costen) - (5 * Number(countSchluss.value));
+                                    AllPrice.value = parseFloat(Costen) - (4 * Number(countSchluss.value));
                                 }
                             }
 
@@ -1182,13 +1241,13 @@
                             oldAussen.value = value;
                             serchedItem++;
                             
-                            AllPrice.value = parseFloat(Costen) - (5 * Number(countSchluss.value));
+                            AllPrice.value = parseFloat(Costen) - (4 * Number(countSchluss.value));
                             return;
                         }
                         else 
                         {
 
-                            AllPrice.value = parseFloat(Costen) - (5 * Number(countSchluss.value));
+                            AllPrice.value = parseFloat(Costen) - (4 * Number(countSchluss.value));
                         }
                     }                    
                     
@@ -1280,11 +1339,11 @@
                         {
                             oldAussen.value = value;
                             serchedItem++;
-                            AllPrice.value = parseFloat(Costen) - (5 * Number(countSchluss.value));
+                            AllPrice.value = parseFloat(Costen) - (4 * Number(countSchluss.value));
                             return;
                         }
                         else {
-                            AllPrice.value = parseFloat(Costen) - (5 * Number(countSchluss.value));
+                            AllPrice.value = parseFloat(Costen) - (4 * Number(countSchluss.value));
                         }
                     }
                     

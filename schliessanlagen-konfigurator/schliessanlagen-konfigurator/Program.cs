@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using schliessanlagen_konfigurator.Data;
 using schliessanlagen_konfigurator.Models.Users;
 using schliessanlagen_konfigurator.Send_Data;
-
+using System.Threading;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,16 +25,22 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-
-
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromSeconds(30);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 
 });
 builder.Services.AddRazorPages();
+
+builder.Services.AddResponseCompression(options =>
+{
+    options.EnableForHttps = true;
+    options.ExcludedMimeTypes = new[] { "text/plain" };
+ 
+    options.Providers.Add<BrotliCompressionProvider>();
+    options.Providers.Add<GzipCompressionProvider>();
+});
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
@@ -61,6 +69,8 @@ app.UseStaticFiles();
 //    app.UseExceptionHandler("/Home/Error");
 //    app.UseHsts();
 //}
+
+//app.UseResponseCompression();
 
 app.UseHttpsRedirection();
 app.UseRouting();

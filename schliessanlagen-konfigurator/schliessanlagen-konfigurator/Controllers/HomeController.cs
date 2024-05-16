@@ -17,7 +17,6 @@ using schliessanlagen_konfigurator.Models.Vorhan;
 using System.Diagnostics;
 using System;
 using System.IO;
-using OfficeOpenXml;
 using System.Security.Claims;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using Microsoft.AspNetCore.Identity.Data;
@@ -113,8 +112,16 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpPost]
         public async Task<IActionResult> Create_Profil_Doppelzylinder(Profil_Doppelzylinder Profil_Doppelzylinder,
         List<string> Options, List<string> NGFDescriptions, IFormFile postedFile, List<float> aussen,
-        List<float> innen, List<string> valueNGF, List<float> costNGF, List<int> input_counter)
+        List<float> innen, List<string> valueNGF, List<float> costNGF, List<int> input_counter,string KeyName, float KeyCost)
         {
+
+            var key = new SysteamPriceKey
+            {
+                NameSysteam = KeyName,
+                Price = KeyCost,
+            };
+            db.SysteamPriceKey.Add(key);
+            db.SaveChanges();
 
             if (Profil_Doppelzylinder.ImageFile != null)
             {

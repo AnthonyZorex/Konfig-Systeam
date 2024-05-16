@@ -1,13 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "bKyUKXn6HzaJmH/67uohap083Qsq1ZQ3qWSZlJAZO9Nzb1BjgJ+u6Li86KWb5/sHo1ywT1QuMBaCFvaGRv8xxA==",
+  "dgSpecHash": "tJmvSJTQebT/g+FCWB/JVdkWtjMNh44G0AHN/9Zftt6ZBjGwAjJYLkmlANOZVHZ9CRLtTGfH+uqq5cqUMCJp9w==",
   "success": true,
   "projectFilePath": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\JAKUB\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\JAKUB\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
     "C:\\Users\\JAKUB\\.nuget\\packages\\bouncycastle.cryptography\\2.3.0\\bouncycastle.cryptography.2.3.0.nupkg.sha512",
-    "C:\\Users\\JAKUB\\.nuget\\packages\\epplus\\7.1.1\\epplus.7.1.1.nupkg.sha512",
+    "C:\\Users\\JAKUB\\.nuget\\packages\\epplus\\7.1.2\\epplus.7.1.2.nupkg.sha512",
     "C:\\Users\\JAKUB\\.nuget\\packages\\epplus.interfaces\\6.1.1\\epplus.interfaces.6.1.1.nupkg.sha512",
     "C:\\Users\\JAKUB\\.nuget\\packages\\epplus.system.drawing\\6.1.1\\epplus.system.drawing.6.1.1.nupkg.sha512",
     "C:\\Users\\JAKUB\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",

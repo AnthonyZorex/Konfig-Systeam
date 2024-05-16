@@ -29,6 +29,9 @@ using System.Net;
 using System.Net.WebSockets;
 using OfficeOpenXml.ConditionalFormatting.Contracts;
 using schliessanlagen_konfigurator.Models.Users;
+using System.Timers;
+using Timer = System.Timers.Timer;
+using System.Diagnostics;
 namespace schliessanlagen_konfigurator.Controllers
 {
     [EnableCors("*")]
@@ -512,6 +515,7 @@ namespace schliessanlagen_konfigurator.Controllers
             db.SaveChanges();
             return RedirectToAction("System_Auswählen", "Konfigurator", new { Key, userName });
         }
+       
         public ActionResult IndexKonfigurator()
         {
             ViewBag.Zylinder_Typ = db.Schliessanlagen.ToList();
@@ -2880,7 +2884,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             return View("System_Auswählen", keyUser);
         }
-        
+
         [HttpGet]
         public async Task<IActionResult> OrdersKey(string Systeam, int DopelId, List<string> dopelOption, string param2, int KnayfID, int Halb, int Hebel, int Aussen, int Vorhan)
         {
@@ -3511,13 +3515,13 @@ namespace schliessanlagen_konfigurator.Controllers
 
                     for (; aussen < order.aussen;)
                     {
-                        DoppelAussenCost = DoppelAussenCost + 5;
+                        DoppelAussenCost = DoppelAussenCost + 4;
                         aussen = aussen + 5;
 
                     }
                     for (; innen < order.innen;)
                     {
-                        DoppelAussenCost = DoppelAussenCost + 5;
+                        DoppelAussenCost = DoppelAussenCost + 4;
                         innen = innen + 5;
 
                     }
@@ -3532,7 +3536,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                     for (; aussen < order.aussen;)
                     {
-                        halbAussenCost = halbAussenCost + 5;
+                        halbAussenCost = halbAussenCost + 4;
                         aussen = aussen + 5;
                     }
 
@@ -3548,13 +3552,13 @@ namespace schliessanlagen_konfigurator.Controllers
 
                     for (; aussen < order.aussen;)
                     {
-                        KhaufAussenCost = KhaufAussenCost + 5;
+                        KhaufAussenCost = KhaufAussenCost + 4;
                         aussen = aussen + 5;
 
                     }
                     for (; innen < order.innen;)
                     {
-                        KhaufAussenCost = KhaufAussenCost + 5;
+                        KhaufAussenCost = KhaufAussenCost + 4;
                         innen = innen + 5;
 
                     }
@@ -3852,19 +3856,29 @@ namespace schliessanlagen_konfigurator.Controllers
                 for (int i = 0; i < CountAllItem; i++)
                 {
                     string Dor = "";
-
+                    int countT = 0;
                     if(i > (TurName.Count()-1))
                     {
-                        Dor = TurName.Last();
+                        countT = TurCounter.Last();
                     }
                     else
                     {
                         Dor = TurName[i];
                     }
+                    if (i > (TurCounter.Count() - 1))
+                    {
+                       
+                        countT = TurCounter.Last();
+                    }
+                    else
+                    {
+                       
+                        countT = TurCounter[i];
+                    }
                     worksheet.Cells[$"C{Rowcheked + i}"].Value = Dor;
                     worksheet.Cells[$"A{Rowcheked + i}"].Value = i+1;
                     worksheet.Cells[$"B{Rowcheked + i}"].Value = i + 1;
-                    worksheet.Cells[$"H{Rowcheked + i}"].Value = TurCounter[i];
+                    worksheet.Cells[$"H{Rowcheked + i}"].Value = countT;
 
                     if (DoppelCounter < DopelName.Count())
                     {
@@ -4027,24 +4041,47 @@ namespace schliessanlagen_konfigurator.Controllers
                         {
                             Option = "";
                         }
+                        
+                        if (VorhanAussen.Count() > 0)
+                        {
+                            var UserOrderProduct = new Models.Users.ProductSysteam
+                            {
+                                UserOrdersShopId = UserOrder.Id,
+                                Name = VorhanName[VorhanCounter],
+                                Aussen = VorhanAussen[VorhanCounter],
+                            };
+                            if (Option != "")
+                            {
+                                UserOrderProduct.Option = Option;
+                            }
 
-                        var UserOrderProduct = new Models.Users.ProductSysteam
-                        {
-                            UserOrdersShopId = UserOrder.Id,
-                            Name = VorhanName[VorhanCounter],
-                            Aussen = VorhanAussen[VorhanCounter],
-                        };
-                        if (Option != "")
-                        {
-                            UserOrderProduct.Option = Option;
+                            db.ProductSysteam.Add(UserOrderProduct);
+                            db.SaveChanges();
+
+                            worksheet.Cells[$"J{Rowcheked + i}"].Value = Option;
+                            worksheet.Cells[$"K{Rowcheked + i}"].Value = VorhanAussen[VorhanCounter];
+                            VorhanCounter++;
                         }
+                        else
+                        {
+                            var UserOrderProduct = new Models.Users.ProductSysteam
+                            {
+                                UserOrdersShopId = UserOrder.Id,
+                                Name = VorhanName[VorhanCounter],
+                            };
+                            if (Option != "")
+                            {
+                                UserOrderProduct.Option = Option;
+                            }
 
-                        db.ProductSysteam.Add(UserOrderProduct);
-                        db.SaveChanges();
+                            db.ProductSysteam.Add(UserOrderProduct);
+                            db.SaveChanges();
 
-                        worksheet.Cells[$"J{Rowcheked + i}"].Value = Option;
-                        worksheet.Cells[$"K{Rowcheked + i}"].Value = VorhanAussen[VorhanCounter];
-                        VorhanCounter++;
+                            worksheet.Cells[$"J{Rowcheked + i}"].Value = Option;
+                            worksheet.Cells[$"K{Rowcheked + i}"].Value = "";
+                            VorhanCounter++;
+                           
+                        }
                     }
 
                     else if (AussenCounter < AussenName.Count())
