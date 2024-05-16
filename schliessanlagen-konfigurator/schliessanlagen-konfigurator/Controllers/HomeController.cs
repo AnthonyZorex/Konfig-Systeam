@@ -15,16 +15,7 @@ using schliessanlagen_konfigurator.Models.ProfilDopelZylinder.ValueOptions;
 using schliessanlagen_konfigurator.Models.Users;
 using schliessanlagen_konfigurator.Models.Vorhan;
 using System.Diagnostics;
-using System;
-using System.IO;
 using System.Security.Claims;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
-using Microsoft.AspNetCore.Identity.Data;
-using Microsoft.Extensions.Hosting;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using NuGet.DependencyResolver;
-
 
 namespace schliessanlagen_konfigurator.Controllers
 {
@@ -42,7 +33,66 @@ namespace schliessanlagen_konfigurator.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
         }
+        [HttpGet]
+        public async Task<IActionResult> ImageConfig()
+        {
+            string sourceFilePath = @"wwwroot/Image/";
 
+
+            IEnumerable<string> imageFiles = Directory.GetFiles(sourceFilePath, "*.png")
+                                                      .Select(Path.GetFileName);
+
+            return View("../Edit/ImageConfig", imageFiles);
+
+        }
+        [HttpGet]
+        public ActionResult Delete(string imageName)
+        {
+            string sourceFilePath = @"wwwroot/Image/";
+
+            string imagePathToDelete = Path.Combine(sourceFilePath, imageName);
+
+            if (System.IO.File.Exists(imagePathToDelete))
+            {
+                System.IO.File.Delete(imagePathToDelete);
+            }
+
+            return RedirectToAction("ImageConfig", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult Upload(IFormFile file)
+        {
+            if (file != null && file.Length > 0)
+            {
+                // Путь для сохранения файла на сервере (например, папка "uploads" в корне вашего веб-приложения)
+                string uploadFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Image");
+
+                // Создаем папку, если она не существует
+                if (!Directory.Exists(uploadFolderPath))
+                {
+                    Directory.CreateDirectory(uploadFolderPath);
+                }
+
+                // Сохраняем файл на сервере
+                string filePath = Path.Combine(uploadFolderPath, file.FileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyTo(fileStream);
+                }
+
+                // Возвращаем сообщение об успешной загрузке
+                ViewBag.Message = "File uploaded successfully.";
+            }
+            else
+            {
+                // Возвращаем сообщение об ошибке, если файл не выбран
+                ViewBag.Message = "Please select a file.";
+            }
+
+            return RedirectToAction("ImageConfig", "Home");
+
+        }
 
         #region ViewZylinder
         public async Task<IActionResult> Index()

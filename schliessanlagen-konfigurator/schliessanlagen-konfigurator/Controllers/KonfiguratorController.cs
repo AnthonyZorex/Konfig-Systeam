@@ -3732,6 +3732,31 @@ namespace schliessanlagen_konfigurator.Controllers
             db.SaveChanges();
             return Redirect("/Identity/Account/Manage/PagePersonalOrders");
         }
+        public ActionResult CleanupData()
+        {
+            // Определение даты, предшествующей месяцу
+            DateTime cutoffDate = DateTime.Today.AddMonths(-1);
+
+            // Выбор данных, которые нужно удалить
+            var oldData = db.UserOrdersShop.Where(e => e.OrderStatus == "Nicht bezahlt").ToList();
+
+            foreach(var list in oldData)
+            {
+                var data = db.ProductSysteam.Where(x => x.UserOrdersShopId == list.Id).ToList();
+                foreach(var x in data)
+                {
+                    db.ProductSysteam.Remove(x);
+                    db.SaveChanges();
+                }
+            }
+
+            // Удаление данных
+            db.UserOrdersShop.RemoveRange(oldData);
+            db.SaveChanges();
+
+            ViewBag.Message = $"{oldData.Count} records deleted successfully.";
+            return View();
+        }
         public async Task<IActionResult> SaveUserOrders(List<string> TurName, List<string> DopelName, List<float> DoppelAussen, List<float> DoppelIntern
         ,List<string> DoppelOption, List<string> KnayfOption, List<string> HalbOption, List<string> HebelOption, List<string> VorhnaOption, List<string> AussenOption,
         List<string> KnayfName, List<float> KnayfAussen, List<float> KnayfIntern, List<string> HalbName, List<float> HalbAussen, List<string> HelbName,
