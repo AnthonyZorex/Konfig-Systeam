@@ -514,7 +514,16 @@ namespace schliessanlagen_konfigurator.Controllers
             db.SaveChanges();
             return RedirectToAction("System_Auswählen", "Konfigurator", new { Key, userName });
         }
-       
+       public ActionResult endOrder(int data)
+       {
+            var PaymentOrder = db.UserOrdersShop.Find(data);
+
+            PaymentOrder.OrderStatus = "Bezahlt";
+
+            db.SaveChanges();
+
+            return Redirect("/Identity/Account/Manage/PagePersonalOrders");
+       }
         public ActionResult IndexKonfigurator()
         {
 

@@ -16,7 +16,6 @@
     <input type="hidden" name="user" value="@Model.userKey" />
     <div id="FinisherPage">
   
-
     <h1>Schlüssel konfigurieren</h1>
     <p>
         Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
@@ -155,6 +154,9 @@
                                     <input style="border: none;max-width: 30px;" id="countSchlusse-@d" type="number" min="0" value="@ViewBag.CounterTur[@elemNum]" />
                                     <button type="button" onclick="CylinderPlus(@d,'@item.Cost')" class="btn btn-success">+</button>
                             </div>
+                                <div style="margin-left: 20px;">
+                                    <input type="button" value="?" onclick="OpenModalInfo(@d)" class="btn btn-success" />
+                                </div>
                         </div>
 
 
@@ -200,7 +202,26 @@
                             }
                     </div>
                 </div>
-                elemNum++;
+                    <div id="myModal-@d" class="modal">
+
+                        <div class="modal-content">
+
+                            <span onclick="closedModal(@d)" class="close">&times;</span>
+                            <div style="display:grid; grid-template-columns: 450px 500px;">
+                                <div id="productImage">
+                                    <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
+                                </div>
+                                <div>
+                                    <h3>@item.Name</h3>
+                                    <p>@item.description</p>
+                                </div>
+                            </div>
+                           
+
+                        </div>
+                    </div>
+
+                    elemNum++;
                 d++;
             }
         }
@@ -261,6 +282,9 @@
                                     <input style="border: none;max-width: 30px;" id="countSchlusse-@d" type="number" min="0" value="@ViewBag.CounterTurKnayf[@elemNum]" name="TurCounter" />
                                     <button type="button" onclick="CylinderPlus(@d,'@item.Cost')" class="btn btn-success">+</button>
                             </div>
+                                <div style="margin-left: 20px;">
+                                    <input type="button" value="?" onclick="OpenModalInfo(@d)" class="btn btn-success" />
+                                </div>
                         </div>        
 
                         <div>
@@ -302,7 +326,25 @@
                             }
                     </div>
                 </div>
-                d++;
+                    <div id="myModal-@d" class="modal">
+
+                        <div class="modal-content">
+
+                            <span onclick="closedModal(@d)" class="close">&times;</span>
+                            <div style="display:grid; grid-template-columns: 450px 500px;">
+                                <div id="productImage">
+                                    <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
+                                </div>
+                                <div>
+                                    <h3>@item.Name</h3>
+                                    <p>@item.description</p>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    d++;
                 elemNum++;
             }
            
@@ -354,6 +396,10 @@
                                     <input style="border: none;max-width: 30px;" value="@ViewBag.CounterTurHalb[@elemNum]" type="number" min="0" name="TurCounter" id="countSchlusse-@d" />
                                     <button type="button" onclick="CylinderPlus(@d,'@item.Cost')" class="btn btn-success">+</button>
                             </div>
+
+                                <div style="margin-left: 20px;">
+                                    <input type="button" value="?" onclick="OpenModalInfo(@d)" class="btn btn-success" />
+                                </div>
                         </div>
                         <div>
                             <h3>Weitere Optionen</h3>
@@ -395,7 +441,25 @@
                     </div>
                        
                 </div>
-                elemNum++;
+                    <div id="myModal-@d" class="modal">
+
+                        <div class="modal-content">
+
+                            <span onclick="closedModal(@d)" class="close">&times;</span>
+                            <div style="display:grid; grid-template-columns: 450px 500px;">
+                                <div id="productImage">
+                                    <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
+                                </div>
+                                <div>
+                                    <h3>@item.Name</h3>
+                                    <p>@item.description</p>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    elemNum++;
                 d++;
             }
         }
@@ -433,6 +497,10 @@
                                     <input style="border: none;max-width: 30px;" name="TurCounter" type="number" min="0" value="@ViewBag.CounterTurHebel[@elemNum]" id="countSchlusse-@d" />
                                     <button onclick="CylinderPlus(@d,'@item.Cost')" type="button" class="btn btn-success">+</button>
                             </div>
+
+                                <div style="margin-left: 20px;">
+                                    <input type="button" value="?" onclick="OpenModalInfo(@d)" class="btn btn-success" />
+                                </div>
                         </div>
                         <div>
                             <h3>Weitere Optionen</h3>
@@ -464,8 +532,25 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
+                    <div id="myModal-@d" class="modal">
+
+                        <div class="modal-content">
+
+                            <span onclick="closedModal(@d)" class="close">&times;</span>
+                            <div style="display:grid; grid-template-columns: 450px 500px;">
+                                <div id="productImage">
+                                    <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
+                                </div>
+                                <div>
+                                    <h3>@item.Name</h3>
+                                    <p>@item.description</p>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
                 elemNum++;
                     d++;
                 }
@@ -515,6 +600,10 @@
                                     <input name="TurCounter" style="border: none;max-width: 30px;" type="number" min="0" id="countSchlusse-@d" value="@ViewBag.CounterTurVorhan[@elemNum]" />
                                     <button type="button" onclick="CylinderPlus(@d,'@item.Cost')" class="btn btn-success">+</button>
                             </div>
+
+                                <div style="margin-left: 20px;">
+                                    <input type="button" value="?" onclick="OpenModalInfo(@d)" class="btn btn-success" />
+                                </div>
                         </div>
                         <div>
                             <h3>Weitere Optionen</h3>
@@ -559,6 +648,24 @@
                             }
                     </div>
                 </div>
+                    <div id="myModal-@d" class="modal">
+
+                        <div class="modal-content">
+
+                            <span onclick="closedModal(@d)" class="close">&times;</span>
+                            <div style="display:grid; grid-template-columns: 450px 500px;">
+                                <div id="productImage">
+                                    <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
+                                </div>
+                                <div>
+                                    <h3>@item.Name</h3>
+                                    <p>@item.description</p>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
                 elemNum++;
                     d++;
                 }
@@ -595,7 +702,11 @@
                                 <button type="button" onclick="CylinderMinus(@d,'@item.Cost')" class="btn btn-success">-</button>
                                 <input style="border: none;max-width: 30px;" name="TurCounter" type="number" min="0" value="@ViewBag.CounterTurAussen[@elemNum]" id="countSchlusse-@d" />
                                 <button type="button" onclick="CylinderPlus(@d,'@item.Cost')" class="btn btn-success">+</button>
+                                <div style="margin-left: 20px;">
+                                    <input type="button" value="?" onclick="OpenModalInfo(@d)" class="btn btn-success" />
+                                </div>
                         </div>
+                           
                         <div>
                             <h3>Weitere Optionen</h3>
                             <div>
@@ -627,6 +738,24 @@
                         </div>
                     </div>
                 </div>
+                    <div id="myModal-@d" class="modal">
+
+                        <div class="modal-content">
+
+                            <span onclick="closedModal(@d)" class="close">&times;</span>
+                            <div style="display:grid; grid-template-columns: 450px 500px;">
+                                <div id="productImage">
+                                    <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
+                                </div>
+                                <div>
+                                    <h3>@item.Name</h3>
+                                    <p>@item.description</p>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
                 elemNum++;
                     d++;
                 }
@@ -705,6 +834,35 @@
     let hasFreilauffunktion = false;
 
     let hasNotUndGefahrenfunktion = false;
+
+    let removeButton = document.getElementById("removeOrder");
+    let AllOrderID = document.querySelector("#OrderId");
+
+    var span = document.getElementsByClassName("close")[0];
+    let idItem = 0;
+
+    function OpenModalInfo(id) 
+    {
+        idItem = id;
+        var modal = document.getElementById(`myModal-${id}`);
+        modal.style.display = "block";
+    }
+
+    function closedModal(id) 
+    {
+        idItem = id;
+        var modal = document.getElementById(`myModal-${id}`);
+        modal.style.display = "none";
+    }
+
+    window.onclick = function (event) 
+    {
+        var modal = document.getElementById(`myModal-${idItem}`);
+
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
 
     function OptionsSelect(idBlock, TypeSylinder, id, optionsValue, elemNum, OptionsName, N,count) 
     {

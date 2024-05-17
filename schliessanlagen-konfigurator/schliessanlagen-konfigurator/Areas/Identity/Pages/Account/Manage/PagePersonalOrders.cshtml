@@ -70,7 +70,7 @@
                     </div>                  
                     <br />
                         <button id="removeOrder" class="btn btn-danger" onclick="(remove(@UserOrderId))">RemovaOrder</button>
-                    <button id="removeOrder" class="btn btn-danger" onclick="OpenModalInfo(@z)">Pay</button>
+                    <button id="removeOrder" class="btn btn-danger" onclick="OpenModalInfo(@z,@orderList[z].Id)">Pay</button>
                     <hr />
                    
                 </div>
@@ -86,7 +86,7 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
-<script src="https://www.paypal.com/sdk/js?client-id=AZH15S9JkSTGxqJmoCVcNRfEkiIsWuYBLjaCnAITqmqepVQEmiHP6lAAj-3BdygEs3qh71GxqI39piYa&currency=USD"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=AZH15S9JkSTGxqJmoCVcNRfEkiIsWuYBLjaCnAITqmqepVQEmiHP6lAAj-3BdygEs3qh71GxqI39piYa&currency=EUR"></script>
 <script>
 
     let removeButton = document.getElementById("removeOrder");
@@ -95,7 +95,7 @@
     var span = document.getElementsByClassName("close")[0];
     let idItem = 0;
 
-    function OpenModalInfo(id) 
+    function OpenModalInfo(id,IdOrder) 
     {
         let cost = document.getElementById("cost-" + id);
 
@@ -110,16 +110,26 @@
                 return actions.order.create({
                     purchase_units: [{
                         amount: {
-                            value: `${costen}`,
-                            currency_code: 'EUR'
+                            value: `${costen}`
                         }
                     }]
                 });
             },
             onApprove: function (data, actions) {
-                return actions.order.capture().then(function (details) {
+                return actions.order.capture().then(function (details) 
+                {
                     alert('Transaction completed by ' + details.payer.name.given_name);
-                    // Здесь вы можете выполнить дополнительные действия после завершения оплаты
+                    $.ajax({
+                        type: "POST",
+                        url: "/Konfigurator/endOrder",
+                        data: { data: IdOrder },
+                        success: function (response) {
+                            console.log(response);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(error);
+                        }
+                    });
                 });
             }
         }).render('#paypal-button-container');
