@@ -62,14 +62,15 @@
                                 UserOrderId = @orderList[z].Id;
                                 ProudctItemCounter++;
                             }
+                            <hr />
+                            <br />
+                            <div id="paypal-button-container">
+                            </div>
                         </div>
-                    </div>
-
-                    <div style="text-align: end;">
-                        <button id="removeOrder" onclick="(remove(@UserOrderId))">RemovaOrder</button>
-                        <button>Pay</button>
-                    </div>
+                    </div>                  
                     <br />
+                        <button id="removeOrder" class="btn btn-danger" onclick="(remove(@UserOrderId))">RemovaOrder</button>
+                    <button id="removeOrder" class="btn btn-danger" onclick="OpenModalInfo(@z)">Pay</button>
                     <hr />
                    
                 </div>
@@ -85,6 +86,7 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+<script src="https://www.paypal.com/sdk/js?client-id=AZH15S9JkSTGxqJmoCVcNRfEkiIsWuYBLjaCnAITqmqepVQEmiHP6lAAj-3BdygEs3qh71GxqI39piYa&currency=USD"></script>
 <script>
 
     let removeButton = document.getElementById("removeOrder");
@@ -95,9 +97,32 @@
 
     function OpenModalInfo(id) 
     {
+        let cost = document.getElementById("cost-" + id);
+
+        var stringWithoutEuro = cost.innerHTML.replace("€", "");
+        var costen = parseFloat(stringWithoutEuro);
         idItem = id;
         var modal = document.getElementById(`myModal-${id}`);
         modal.style.display = "block";
+
+        paypal.Buttons({
+            createOrder: function (data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: `${costen}`,
+                            currency_code: 'EUR'
+                        }
+                    }]
+                });
+            },
+            onApprove: function (data, actions) {
+                return actions.order.capture().then(function (details) {
+                    alert('Transaction completed by ' + details.payer.name.given_name);
+                    // Здесь вы можете выполнить дополнительные действия после завершения оплаты
+                });
+            }
+        }).render('#paypal-button-container');
     }
 
     function closedModal(id) 
@@ -135,8 +160,6 @@
 
     function remove(empty) 
     {
-        console.log(empty);
-
         $.ajax({
             type: "POST",
             url: "/Konfigurator/RemoveOrder",
@@ -148,6 +171,7 @@
                 console.error(error);
             }
         });
+
         location.reload();
     }
 

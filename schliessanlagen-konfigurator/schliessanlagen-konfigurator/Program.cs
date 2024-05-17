@@ -70,7 +70,7 @@ app.UseStaticFiles();
 //    app.UseHsts();
 //}
 
-//app.UseResponseCompression();
+app.UseResponseCompression();
 
 app.UseHttpsRedirection();
 app.UseRouting();

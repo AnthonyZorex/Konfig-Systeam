@@ -38,9 +38,7 @@ namespace schliessanlagen_konfigurator.Controllers
         {
             string sourceFilePath = @"wwwroot/Image/";
 
-
-            IEnumerable<string> imageFiles = Directory.GetFiles(sourceFilePath, "*.png")
-                                                      .Select(Path.GetFileName);
+            IEnumerable<string> imageFiles = Directory.GetFiles(sourceFilePath, "*.png").Select(Path.GetFileName);
 
             return View("../Edit/ImageConfig", imageFiles);
 
@@ -791,7 +789,6 @@ namespace schliessanlagen_konfigurator.Controllers
         #region DelitZylinderItem
         [HttpGet]
         [Route("Home/Delete_Doppelzylinder")]
-
         public async Task<IActionResult> Delete_KnayfZylinder(int id)
         {
             var Knaufzylinder = db.Profil_Knaufzylinder.Find(id);
@@ -800,6 +797,15 @@ namespace schliessanlagen_konfigurator.Controllers
             var option = db.Knayf_Options.Where(x => x.OptionsId == a.Id).First();
             var Size = db.Aussen_Innen_Knauf.Where(x => x.Profil_KnaufzylinderId == id).First();
             var optionV = db.Knayf_Options_value.Where(x => x.Knayf_OptionsId == option.Id).ToList();
+
+            string sourceFilePath = @"wwwroot/Image/";
+
+            string imagePathToDelete = Path.Combine(sourceFilePath, Knaufzylinder.ImageName);
+
+            if (System.IO.File.Exists(imagePathToDelete))
+            {
+                System.IO.File.Delete(imagePathToDelete);
+            }
 
             db.Aussen_Innen_Knauf.Remove(Size);
             db.SaveChanges();
@@ -827,6 +833,15 @@ namespace schliessanlagen_konfigurator.Controllers
         {
             var hebel = db.Hebelzylinder.Find(id);
             var a = db.Hebelzylinder_Options.Where(x => x.HebelzylinderId == hebel.Id).First();
+
+            string sourceFilePath = @"wwwroot/Image/";
+
+            string imagePathToDelete = Path.Combine(sourceFilePath, hebel.ImageName);
+
+            if (System.IO.File.Exists(imagePathToDelete))
+            {
+                System.IO.File.Delete(imagePathToDelete);
+            }
 
             var option = db.Options.Where(x => x.OptionId == a.Id).First();
 
@@ -861,6 +876,14 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var optionV = db.OptionsVorhan_value.Where(x => x.OptionsId == option.Id).ToList();
 
+            string sourceFilePath = @"wwwroot/Image/";
+
+            string imagePathToDelete = Path.Combine(sourceFilePath, Vorhang.ImageName);
+
+            if (System.IO.File.Exists(imagePathToDelete))
+            {
+                System.IO.File.Delete(imagePathToDelete);
+            }
 
             db.Vorhangschloss.Remove(Vorhang);
             db.SaveChanges();
@@ -877,9 +900,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 db.SaveChanges();
             }
 
-
             return RedirectToAction("VorhangschlossRout");
-
         }
         public async Task<IActionResult> Delete_Halbzylinder(int id)
         {
@@ -890,6 +911,16 @@ namespace schliessanlagen_konfigurator.Controllers
             var option = db.Halbzylinder_Options.Where(x => x.OptionsId == a.Id).First();
             var Size = db.Aussen_Innen_Halbzylinder.Where(x => x.Profil_HalbzylinderId == Halbzylinder.Id).First();
             var optionV = db.Halbzylinder_Options_value.Where(x => x.Halbzylinder_OptionsId == option.Id).ToList();
+
+            string sourceFilePath = @"wwwroot/Image/";
+
+            string imagePathToDelete = Path.Combine(sourceFilePath, Halbzylinder.ImageName);
+
+            if (System.IO.File.Exists(imagePathToDelete))
+            {
+                System.IO.File.Delete(imagePathToDelete);
+            }
+
             db.Profil_Halbzylinder.Remove(Halbzylinder);
             db.SaveChanges();
             for (int i = 0; i < optionV.Count(); i++)
@@ -913,6 +944,15 @@ namespace schliessanlagen_konfigurator.Controllers
             var aussenzylinder = db.Aussenzylinder_Rundzylinder.Find(id);
 
             var a = db.Aussen_Rund_options.Where(x => x.Aussenzylinder_RundzylinderId == aussenzylinder.Id).ToList();
+
+            string sourceFilePath = @"wwwroot/Image/";
+
+            string imagePathToDelete = Path.Combine(sourceFilePath, aussenzylinder.ImageName);
+
+            if (System.IO.File.Exists(imagePathToDelete))
+            {
+                System.IO.File.Delete(imagePathToDelete);
+            }
 
             var option = new List<Aussen_Rund_all>();
 
@@ -943,7 +983,6 @@ namespace schliessanlagen_konfigurator.Controllers
                 db.SaveChanges();
             }
 
-
             db.Aussenzylinder_Rundzylinder.Remove(aussenzylinder);
             db.SaveChanges();
 
@@ -955,6 +994,15 @@ namespace schliessanlagen_konfigurator.Controllers
             var doppelzylinder = db.Profil_Doppelzylinder.Find(id);
 
             var a = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == doppelzylinder.Id).ToList();
+
+            string sourceFilePath = @"wwwroot/Image/";
+
+            string imagePathToDelete = Path.Combine(sourceFilePath, doppelzylinder.ImageName);
+
+            if (System.IO.File.Exists(imagePathToDelete))
+            {
+                System.IO.File.Delete(imagePathToDelete);
+            }
 
             var option = new List<NGF>();           
             

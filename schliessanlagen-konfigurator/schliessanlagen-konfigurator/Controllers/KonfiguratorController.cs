@@ -30,6 +30,7 @@ using System.Net.WebSockets;
 using OfficeOpenXml.ConditionalFormatting.Contracts;
 using schliessanlagen_konfigurator.Models.Users;
 using PayPal.Api;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Information;
 namespace schliessanlagen_konfigurator.Controllers
 {
     [EnableCors("*")]
@@ -516,6 +517,100 @@ namespace schliessanlagen_konfigurator.Controllers
        
         public ActionResult IndexKonfigurator()
         {
+
+            var UserOList = new List<UserOrdersShop>();
+
+            var oldData = db.UserOrdersShop.Where(e => e.OrderStatus == "Nicht bezahlt").ToList();
+
+            foreach(var order in oldData)
+            {
+                var item = DateTime.Now.Month - order.createData.Value.Month;
+                
+                var ChekedWik = DateTime.Now.Day - order.createData.Value.Day;
+
+                if (item > 0)
+                {
+                    var users = db.Users.FirstOrDefault(x=>x.Id==order.UserId);
+                    UserOList.Add(order);
+
+                    string destinationFilePath = @$"wwwroot/Orders/{users.FirstName + users.LastName + order.createData.Value.Minute + order.createData.Value.Hour  + order.createData.Value.Day + order.createData.Value.Month + order.createData.Value.Year} OrderFile.xlsx";
+
+                    var message = new MimeMessage();
+                    message.From.Add(new MailboxAddress("Schlüssel Discount Store", "bonettaanthony466@gmail.com"));
+                    message.To.Add(new MailboxAddress(users.FirstName + users.LastName, users.UserName));
+                    message.Subject = "Schlüssel Discount Store";
+                    
+                    var bodyBuilder = new BodyBuilder();
+                    bodyBuilder.TextBody = "Ваша система была удалена так как истёк срок ожидания!";
+
+                  
+                    using (var wc = new WebClient())
+                    {
+                        byte[] fileBytes = wc.DownloadData(destinationFilePath);
+                        bodyBuilder.Attachments.Add("Email.xlsx", fileBytes);
+                    }
+
+                    message.Body = bodyBuilder.ToMessageBody();
+                    using (var client = new SmtpClient())
+                    {
+                        client.Connect("smtp.gmail.com", 587, false);
+                        client.Authenticate("bonettaanthony466@gmail.com", "huqf ddvv mnba lcug ");
+                        client.Send(message);
+
+                        client.Disconnect(true);
+                    }
+
+                    var data = db.ProductSysteam.Where(x => x.UserOrdersShopId == order.Id).ToList();
+
+                    foreach (var x in data)
+                    {
+                        db.ProductSysteam.Remove(x);
+                        db.SaveChanges();
+                    }
+
+                    // Удаление данных
+                    db.UserOrdersShop.RemoveRange(order);
+                    db.SaveChanges();
+
+
+                    if (System.IO.File.Exists(destinationFilePath))
+                    {
+                        System.IO.File.Delete(destinationFilePath);
+                    }
+
+                }
+                else if (ChekedWik >= 7)
+                {
+                    var users = db.Users.FirstOrDefault(x => x.Id == order.UserId);
+
+                    string destinationFilePath = @$"wwwroot/Orders/{users.FirstName + users.LastName + order.createData.Value.Minute + order.createData.Value.Hour + order.createData.Value.Day + order.createData.Value.Month + order.createData.Value.Year} OrderFile.xlsx";
+
+                    var message = new MimeMessage();
+                    message.From.Add(new MailboxAddress("Schlüssel Discount Store", "bonettaanthony466@gmail.com"));
+                    message.To.Add(new MailboxAddress(users.FirstName + users.LastName, users.UserName));
+                    message.Subject = "Schlüssel Discount Store";
+
+                    var bodyBuilder = new BodyBuilder();
+                    bodyBuilder.TextBody = $"Прошло {ChekedWik} дней с даты создания системы { order.ProductName}!";
+
+                    using (var wc = new WebClient())
+                    {
+                        byte[] fileBytes = wc.DownloadData(destinationFilePath);
+                        bodyBuilder.Attachments.Add("Email.xlsx", fileBytes);
+                    }
+
+                    message.Body = bodyBuilder.ToMessageBody();
+                    using (var client = new SmtpClient())
+                    {
+                        client.Connect("smtp.gmail.com", 587, false);
+                        client.Authenticate("bonettaanthony466@gmail.com", "huqf ddvv mnba lcug ");
+                        client.Send(message);
+
+                        client.Disconnect(true);
+                    }  
+                }
+            }
+
             ViewBag.Zylinder_Typ = db.Schliessanlagen.ToList();
 
             var a = db.Aussen_Innen.Select(x => x.aussen).Distinct().OrderBy(x => x).ToList();
@@ -3732,31 +3827,6 @@ namespace schliessanlagen_konfigurator.Controllers
             db.SaveChanges();
             return Redirect("/Identity/Account/Manage/PagePersonalOrders");
         }
-        public ActionResult CleanupData()
-        {
-            // Определение даты, предшествующей месяцу
-            DateTime cutoffDate = DateTime.Today.AddMonths(-1);
-
-            // Выбор данных, которые нужно удалить
-            var oldData = db.UserOrdersShop.Where(e => e.OrderStatus == "Nicht bezahlt").ToList();
-
-            foreach(var list in oldData)
-            {
-                var data = db.ProductSysteam.Where(x => x.UserOrdersShopId == list.Id).ToList();
-                foreach(var x in data)
-                {
-                    db.ProductSysteam.Remove(x);
-                    db.SaveChanges();
-                }
-            }
-
-            // Удаление данных
-            db.UserOrdersShop.RemoveRange(oldData);
-            db.SaveChanges();
-
-            ViewBag.Message = $"{oldData.Count} records deleted successfully.";
-            return View();
-        }
         public async Task<IActionResult> SaveUserOrders(List<string> TurName, List<string> DopelName, List<float> DoppelAussen, List<float> DoppelIntern
         ,List<string> DoppelOption, List<string> KnayfOption, List<string> HalbOption, List<string> HebelOption, List<string> VorhnaOption, List<string> AussenOption,
         List<string> KnayfName, List<float> KnayfAussen, List<float> KnayfIntern, List<string> HalbName, List<float> HalbAussen, List<string> HelbName,
@@ -3781,13 +3851,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
             DateTime currentTime = DateTime.Now;
 
-            int day = currentTime.Day;
-            int month = currentTime.Month;
-            int year = currentTime.Year;
+            string destinationFilePath = @$"wwwroot/Orders/{users.FirstName + users.LastName + currentTime.Minute+currentTime.Hour+currentTime.Day+currentTime.Month + currentTime.Year} OrderFile.xlsx";
 
-            string destinationFilePath = @$"wwwroot/Orders/{users.FirstName + users.LastName + day+ month + year} OrderFile.xlsx";
-
-            using (FileStream fstream = new FileStream(@$"wwwroot/Orders/{users.FirstName + users.LastName + day+ month + year} OrderFile.xlsx", FileMode.OpenOrCreate))
+            using (FileStream fstream = new FileStream(@$"wwwroot/Orders/{users.FirstName + users.LastName + currentTime.Minute + currentTime.Hour + currentTime.Day + currentTime.Month + currentTime.Year} OrderFile.xlsx", FileMode.OpenOrCreate))
             {
                 fstream.Close();
             }
