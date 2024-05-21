@@ -95,7 +95,7 @@ namespace schliessanlagen_konfigurator.Controllers
         #region ViewZylinder
         public async Task<IActionResult> Index()
         {
-            var AllDoppel = await db.Profil_Doppelzylinder.Select(x=>x.NameSystem).ToListAsync();
+            var AllDoppel = await db.Profil_Doppelzylinder.OrderBy(x => x.Cost).Select(x=>x.NameSystem).ToListAsync();
 
             ViewBag.item = await db.Profil_Doppelzylinder.OrderBy(x=>x.Cost).ToListAsync();
 
@@ -112,7 +112,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 
             }
 
-            ViewBag.KeyCost =  listPriceKey.OrderBy(x => x.Price).Select(x => x.Price).ToList();
+            ViewBag.KeyCost =  listPriceKey.Select(x => x.Price).ToList();
 
             return View();
         }

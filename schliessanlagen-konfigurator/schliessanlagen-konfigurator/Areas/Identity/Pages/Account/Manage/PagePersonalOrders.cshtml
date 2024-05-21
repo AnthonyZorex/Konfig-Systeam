@@ -64,8 +64,9 @@
                             }
                             <hr />
                             <br />
-                            <div id="paypal-button-container">
+                            <div id="paypal-button-container-@z" style="margin-left: auto;margin-right: auto;">
                             </div>
+                            <input type="hidden" id="@z" value="true" />
                         </div>
                     </div>                  
                     <br />
@@ -99,40 +100,48 @@
     {
         let cost = document.getElementById("cost-" + id);
 
+        let cheker = document.getElementById(id);
+
         var stringWithoutEuro = cost.innerHTML.replace("€", "");
+        
         var costen = parseFloat(stringWithoutEuro);
         idItem = id;
+
         var modal = document.getElementById(`myModal-${id}`);
         modal.style.display = "block";
-
-        paypal.Buttons({
-            createOrder: function (data, actions) {
-                return actions.order.create({
-                    purchase_units: [{
-                        amount: {
-                            value: `${costen}`
-                        }
-                    }]
-                });
-            },
-            onApprove: function (data, actions) {
-                return actions.order.capture().then(function (details) 
-                {
-                    alert('Transaction completed by ' + details.payer.name.given_name);
-                    $.ajax({
-                        type: "POST",
-                        url: "/Konfigurator/endOrder",
-                        data: { data: IdOrder },
-                        success: function (response) {
-                            console.log(response);
-                        },
-                        error: function (xhr, status, error) {
-                            console.error(error);
-                        }
+        if (cheker.value == "true") 
+        {
+            paypal.Buttons({
+                createOrder: function (data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: `${costen}`
+                            }
+                        }]
                     });
-                });
-            }
-        }).render('#paypal-button-container');
+                },
+                onApprove: function (data, actions) {
+                    return actions.order.capture().then(function (details) {
+                        alert('Transaction completed by ' + details.payer.name.given_name);
+                        $.ajax({
+                            type: "POST",
+                            url: "/Konfigurator/endOrder",
+                            data: { data: IdOrder },
+                            success: function (response) {
+                                console.log(response);
+                            },
+                            error: function (xhr, status, error) {
+                                console.error(error);
+                            }
+                        });
+                    });
+                }
+            }).render(`#paypal-button-container-${id}`);
+
+            cheker.value = "false";
+        }
+        
     }
 
     function closedModal(id) 
