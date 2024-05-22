@@ -9,6 +9,7 @@
         <div id="routBAR">
             <div id="Bar">
                 <button class="btn btn-danger"><a href="@Url.Action("ImageConfig","Home")">Image</a></button>
+                <button class="btn btn-info"><a href="@Url.Action("SendMail","Home")">Send Mail</a></button>
                 <button class="btn btn-secondary"><a href="@Url.Action("Profil_HalbzylinderRout","Home")">Profil-Halbzylinder</a></button>
                 <button class="btn btn-success"><a href="@Url.Action("Profil_KnaufzylinderRout","Home")">Profil-Knaufzylinder</a></button>
                 <button class="btn btn-danger"><a href="@Url.Action("HebelzylinderRout","Home")">Hebelzylinder</a></button>
@@ -55,7 +56,7 @@
                     </div>
                     <div style="margin-bottom: 50px;">
                         <label>Cost</label>
-                        <input asp-for="Cost" class="form-control" />
+                        <input asp-for="Price" class="form-control" />
                     </div>
                     <h1>Aussen & Innen <input id="addAussen_Innen" class="btn btn-success" type="button" value="+" /><input id="addAussen_Innen_remove" class="btn btn-danger" type="button" value="-" /></h1>
                    
@@ -120,7 +121,7 @@
                             <td id="rowTable" class="table-info">@item.NameSystem</td>
                             <td id="rowTable" class="table-info">@item.Name</td>
                             <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
-                            <td id="rowTable " class="table-info"><h6 id="cost">@item.Cost</h6></td>
+                            <td id="rowTable " class="table-info"><h6 id="cost">@item.Price</h6></td>
                             <td id="rowTable " class="table-info"><h6 id="cost">@ViewBag.KeyCost[i]</h6></td>
 
 

@@ -16,7 +16,11 @@ using schliessanlagen_konfigurator.Models.Users;
 using schliessanlagen_konfigurator.Models.Vorhan;
 using System.Diagnostics;
 using System.Security.Claims;
-
+using MailKit.Net.Smtp;
+using MimeKit;
+using System;
+using System.Text;
+using System.Text.RegularExpressions;
 namespace schliessanlagen_konfigurator.Controllers
 {
     public class HomeController : Controller
@@ -42,6 +46,88 @@ namespace schliessanlagen_konfigurator.Controllers
 
             return View("../Edit/ImageConfig", imageFiles);
 
+        }
+        [HttpGet]
+        public async Task<IActionResult> SendMail()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> SendMailpost(IFormFile file, string Html , string Css)
+        {
+
+            if (file != null && file.Length > 0)
+            {
+                try
+                {
+                    using (var stream = new MemoryStream())
+                    {
+                        await file.CopyToAsync(stream);
+
+                        stream.Seek(0, SeekOrigin.Begin);
+
+                        using (var reader = new StreamReader(stream, Encoding.UTF8))
+                        {
+                            string fileContent = await reader.ReadToEndAsync();
+
+                            int numberOfLines = fileContent.Split('\r').Length;
+
+                            string[] lines = fileContent.Split('\n', '\r');
+                            
+                            for(int i=0; i<lines.Length; i++)
+                            {
+                                if (lines[i] != "")
+                                {
+                                    var message = new MimeMessage();
+                                    message.From.Add(new MailboxAddress("Schlüssel Discount Store", "bonettaanthony466@gmail.com"));
+                                    message.To.Add(new MailboxAddress(lines[i], lines[i]));
+                                    message.Subject = "Schlüssel Discount Store";
+                                    var builder = new BodyBuilder();
+                                    builder.HtmlBody = $@"
+                <!DOCTYPE html>
+                <html lang=""en"">
+                <head>
+                    <meta charset=""UTF-8"">
+                    <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
+                    <title>Email Template</title>
+                   {Css}
+                </head>
+                <body>
+                    {Html}
+                </body>
+                </html>
+            ";
+
+
+                                    message.Body = builder.ToMessageBody();
+
+                                    using (var client = new SmtpClient())
+                                    {
+                                        client.Connect("smtp.gmail.com", 587, false);
+                                        client.Authenticate("bonettaanthony466@gmail.com", "huqf ddvv mnba lcug ");
+                                        client.Send(message);
+
+                                        client.Disconnect(true);
+                                    }
+                                }
+                                
+                            } 
+                        }
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = "Ошибка при загрузке файла: " + ex.Message;
+                }
+            }
+            else
+            {
+                ViewBag.Message = "Пожалуйста, выберите файл для загрузки.";
+            }
+          
+
+            return RedirectToAction("SendMail", "Home");
         }
         [HttpGet]
         public ActionResult Delete(string imageName)
@@ -95,9 +181,9 @@ namespace schliessanlagen_konfigurator.Controllers
         #region ViewZylinder
         public async Task<IActionResult> Index()
         {
-            var AllDoppel = await db.Profil_Doppelzylinder.OrderBy(x => x.Cost).Select(x=>x.NameSystem).ToListAsync();
+            var AllDoppel = await db.Profil_Doppelzylinder.OrderBy(x => x.Price).Select(x=>x.NameSystem).ToListAsync();
 
-            ViewBag.item = await db.Profil_Doppelzylinder.OrderBy(x=>x.Cost).ToListAsync();
+            ViewBag.item = await db.Profil_Doppelzylinder.OrderBy(x=>x.Price).ToListAsync();
 
             var listPriceKey = new List<SysteamPriceKey>();
             
@@ -120,31 +206,31 @@ namespace schliessanlagen_konfigurator.Controllers
 
         public async Task<IActionResult> Profil_KnaufzylinderRout()
         {
-            ViewBag.item = db.Profil_Knaufzylinder.OrderBy(x => x.Cost).ToList();
+            ViewBag.item = db.Profil_Knaufzylinder.OrderBy(x => x.Price).ToList();
             return View();
         }
         [HttpGet]
         public IActionResult HebelzylinderRout()
         {
-            ViewBag.item = db.Hebelzylinder.OrderBy(x => x.Cost).ToList();
+            ViewBag.item = db.Hebelzylinder.OrderBy(x => x.Price).ToList();
             return View();
         }
         [HttpGet]
         public IActionResult VorhangschlossRout()
         {
-            ViewBag.item = db.Vorhangschloss.OrderBy(x => x.Cost).ToList();
+            ViewBag.item = db.Vorhangschloss.OrderBy(x => x.Price).ToList();
             return View();
         }
         [HttpGet]
         public IActionResult Aussenzylinder_RundzylinderRout()
         {
-            ViewBag.item = db.Aussenzylinder_Rundzylinder.OrderBy(x => x.Cost).ToList();
+            ViewBag.item = db.Aussenzylinder_Rundzylinder.OrderBy(x => x.Price).ToList();
             return View();
         }
         [HttpGet]
         public IActionResult Profil_HalbzylinderRout()
         {
-            ViewBag.item = db.Profil_Halbzylinder.OrderBy(x => x.Cost).ToList();
+            ViewBag.item = db.Profil_Halbzylinder.OrderBy(x => x.Price).ToList();
             return View();
         }
         [HttpPost]   
@@ -1138,7 +1224,7 @@ namespace schliessanlagen_konfigurator.Controllers
             Items.companyName = profil_Doppelzylinder.companyName;
             Items.NameSystem = profil_Doppelzylinder.NameSystem;
             Items.description = profil_Doppelzylinder.description;
-            Items.Cost = profil_Doppelzylinder.Cost;
+            Items.Price = profil_Doppelzylinder.Price;
             Items.ImageName = profil_Doppelzylinder.ImageName;
 
             var option = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == profil_Doppelzylinder.Id).ToList();
@@ -1524,7 +1610,7 @@ namespace schliessanlagen_konfigurator.Controllers
             Items.companyName = profil_Halbzylinder.companyName;
             Items.NameSystem = profil_Halbzylinder.NameSystem;
             Items.description = profil_Halbzylinder.description;
-            Items.Cost = profil_Halbzylinder.Cost;
+            Items.Price = profil_Halbzylinder.Price;
             Items.ImageName = profil_Halbzylinder.ImageName;
 
             var option = db.Profil_Halbzylinder_Options.Where(x => x.Profil_HalbzylinderId == profil_Halbzylinder.Id).ToList();
@@ -1637,7 +1723,7 @@ namespace schliessanlagen_konfigurator.Controllers
             Items.companyName = profil_Halbzylinder.companyName;
             Items.NameSystem = profil_Halbzylinder.NameSystem;
             Items.description = profil_Halbzylinder.description;
-            Items.Cost = profil_Halbzylinder.Cost;
+            Items.Price = profil_Halbzylinder.Price;
             Items.ImageName = profil_Halbzylinder.ImageName;
 
             var option = db.Hebelzylinder_Options.Where(x => x.HebelzylinderId == profil_Halbzylinder.Id).ToList();
@@ -1732,7 +1818,7 @@ namespace schliessanlagen_konfigurator.Controllers
             Items.companyName = profil_Halbzylinder.companyName;
             Items.NameSystem = profil_Halbzylinder.NameSystem;
             Items.description = profil_Halbzylinder.description;
-            Items.Cost = profil_Halbzylinder.Cost;
+            Items.Price = profil_Halbzylinder.Price;
             Items.ImageName = profil_Halbzylinder.ImageName;
 
             var option = db.Aussen_Rund_options.Where(x => x.Aussenzylinder_RundzylinderId == profil_Halbzylinder.Id).ToList();
@@ -1828,7 +1914,7 @@ namespace schliessanlagen_konfigurator.Controllers
             Items.companyName = profil_Halbzylinder.companyName;
             Items.NameSystem = profil_Halbzylinder.NameSystem;
             Items.description = profil_Halbzylinder.description;
-            Items.Cost = profil_Halbzylinder.Cost;
+            Items.Price = profil_Halbzylinder.Price;
             Items.ImageName = profil_Halbzylinder.ImageName;
 
             var option = db.Vorhan_Options.Where(x => x.VorhangschlossId == profil_Halbzylinder.Id).ToList();
@@ -1940,7 +2026,7 @@ namespace schliessanlagen_konfigurator.Controllers
             Items.companyName = profil_Knayf.companyName;
             Items.NameSystem = profil_Knayf.NameSystem;
             Items.description = profil_Knayf.description;
-            Items.Cost = profil_Knayf.Cost;
+            Items.Price = profil_Knayf.Price;
             Items.ImageName = profil_Knayf.ImageName;
 
             var option = db.Profil_Knaufzylinder_Options.Where(x => x.Profil_KnaufzylinderId == profil_Knayf.Id).ToList();

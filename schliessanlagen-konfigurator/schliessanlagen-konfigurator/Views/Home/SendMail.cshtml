@@ -1,0 +1,91 @@
+﻿@{
+    ViewData["Title"] = "Send Maill";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <label>Load maill list for send!</label>
+        <input type="file" id="sendFile" name="file" />
+        <hr />
+
+        @Html.Partial("Message")
+        
+        <hr />
+
+        <div>
+        
+            <br />
+            <hr />
+            <br />
+
+            <label>Style</label>
+
+            <pre contenteditable="true" name="Css" id="StyleCode"> </pre>
+
+            <br />
+            <hr />
+            <br />
+
+            <label>Html</label>
+
+            <pre contenteditable="true" name="Html" id="code"> </pre>
+
+        </div>
+            <input type="submit" onclick="send()" value="Send Message" />
+
+    <button onclick="Change()">Change</button>
+</div>
+
+<script>
+
+    let doc = document.getElementsByClassName("Messagecontainer")[0];
+    let htmlCode = doc.outerHTML;
+    document.getElementById("code").innerText = htmlCode;
+
+    let docS = document.getElementsByClassName("styleBlock")[0];
+    let htmlCodeS = docS.outerHTML;
+    document.getElementById("StyleCode").innerText = htmlCodeS;
+
+  
+
+    function send() 
+    {
+       
+        
+        let file = document.getElementById("sendFile").files[0];
+
+        var formData = new FormData();
+
+        formData.append("file", file);
+        formData.append("Html", document.getElementById("code").innerText);
+        formData.append("Css", document.getElementById("StyleCode").innerText);
+
+        $.ajax({
+            type: "POST", // Тип запроса
+            url: "/Home/SendMailpost", // URL вашего контроллера и действия
+            processData: false, // Не обрабатывать данные перед отправкой (объект FormData уже содержит обработанные данные)
+            contentType: false, // Тип содержимого: false, чтобы браузер сам определил Content-Type
+            data: formData, // Отправляем объект FormData на сервер
+            success: function (response) {
+                // Обработка успешного ответа от сервера
+                console.log("Содержимое успешно отправлено на сервер.");
+            },
+            error: function (xhr, status, error) {
+                // Обработка ошибки
+                console.error("Произошла ошибка: " + error);
+            }
+        });
+ 
+    }
+
+    function Change() 
+    {
+        let container = document.getElementsByClassName("Messagecontainer")[0];
+        container.outerHTML = document.getElementById("code").innerText;
+
+        let containerS = document.getElementsByClassName("styleBlock")[0];
+        containerS.outerHTML = document.getElementById("StyleCode").innerText;
+       
+    }
+   
+</script>

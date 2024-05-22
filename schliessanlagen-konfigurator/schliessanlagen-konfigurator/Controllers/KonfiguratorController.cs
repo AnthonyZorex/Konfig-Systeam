@@ -32,6 +32,7 @@ using schliessanlagen_konfigurator.Models.Users;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Information;
 using System.Diagnostics;
 using System.Data.SqlClient;
+using System.Diagnostics;
 namespace schliessanlagen_konfigurator.Controllers
 {
     [EnableCors("*")]
@@ -923,7 +924,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x=>x.Count.Value).Sum() +
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x=>x.Count.Value).Sum() +
                                      (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
@@ -954,7 +955,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum()+
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum()+
                                        (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
@@ -985,7 +986,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                 companyName = t1.companyName,
                                 description = t1.description,
                                 NameSystem = t1.NameSystem,
-                                Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum()+
+                                Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum()+
                                 (t3.Price * isOpen.Count()), precision),
                                 ImageName = t1.ImageName
 
@@ -1016,7 +1017,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                 companyName = t1.companyName,
                                 description = t1.description,
                                 NameSystem = t1.NameSystem,
-                                Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum()+
+                                Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum()+
                                 (t3.Price * isOpen.Count()), precision),
                                 ImageName = t1.ImageName
 
@@ -1047,7 +1048,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                 companyName = t1.companyName,
                                 description = t1.description,
                                 NameSystem = t1.NameSystem,
-                                Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum()+
+                                Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum()+
                                 (t3.Price * isOpen.Count()), precision),
                                 ImageName = t1.ImageName
                             };
@@ -1077,7 +1078,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                 companyName = t1.companyName,
                                 description = t1.description,
                                 NameSystem = t1.NameSystem,
-                                Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum()+
+                                Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum()+
                                   (t3.Price * isOpen.Count()), precision),
                                 ImageName = t1.ImageName
                             };
@@ -1108,7 +1109,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost  * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum()+
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum()+
                                         (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
@@ -1139,7 +1140,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum()+
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum()+
                                       (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
@@ -1169,7 +1170,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum()+
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum()+
                                       (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
@@ -1199,7 +1200,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum()+
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum()+
                                    (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
@@ -1229,7 +1230,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum()+
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum()+
                                       (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
@@ -1260,7 +1261,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum()+
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum()+
                                     (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
@@ -1290,7 +1291,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum()+
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum()+
                                      (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
@@ -1320,7 +1321,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum()+
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum()+
                                      (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
@@ -1350,7 +1351,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum()+
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum()+
                                        (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
@@ -1380,7 +1381,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum()+
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum()+
                                        (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
@@ -1412,7 +1413,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum()+
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum()+
                                      (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
@@ -1443,7 +1444,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum()+
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum()+
                                      (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
@@ -1474,7 +1475,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum()+
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum()+
                                      (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
@@ -1506,7 +1507,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum()+
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum()+
                                       (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
@@ -1537,7 +1538,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum()+
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum()+
                                        (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
@@ -1570,8 +1571,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + 
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + 
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1602,8 +1603,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1634,8 +1635,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1666,8 +1667,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1698,8 +1699,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum()+ (t4.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum()+ (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1730,8 +1731,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum()+ (t4.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum()+ (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1762,8 +1763,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1795,8 +1796,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum()+ (t4.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum()+ (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1827,8 +1828,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum()+(t4.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum()+(t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1859,8 +1860,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1892,8 +1893,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1924,8 +1925,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1956,8 +1957,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -1988,8 +1989,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2020,8 +2021,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2052,8 +2053,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2084,8 +2085,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2116,8 +2117,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2148,8 +2149,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2180,8 +2181,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2214,9 +2215,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t4.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2248,10 +2249,10 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + 
-                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + 
+                                     t2.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t4.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2283,10 +2284,10 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
-                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
+                                     t2.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t4.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2318,10 +2319,10 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
-                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
+                                     t2.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t4.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2353,10 +2354,10 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
-                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
+                                     t2.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t4.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2388,10 +2389,10 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
-                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
+                                     t2.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
+                                     t4.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2424,10 +2425,10 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
-                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
+                                     t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t4.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2459,10 +2460,10 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
-                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
+                                     t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t4.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2495,10 +2496,10 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
-                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
+                                     t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
+                                     t4.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2530,10 +2531,10 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
-                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
+                                     t2.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
+                                     t4.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2565,10 +2566,10 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
-                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t4.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2600,10 +2601,10 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
-                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t4.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2635,10 +2636,10 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
-                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
+                                     t4.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2670,10 +2671,10 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
-                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t2.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
+                                     t4.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2705,10 +2706,10 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t2.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
+                                     t4.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t5.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2741,11 +2742,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
-                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t5.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t6.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
+                                     t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t4.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t5.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t6.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2779,11 +2780,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
-                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t5.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t6.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
+                                     t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t4.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t5.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t6.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2817,11 +2818,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
-                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
-                                     t5.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t6.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
+                                     t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t4.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
+                                     t5.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t6.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2855,11 +2856,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
-                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t5.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t6.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
+                                     t2.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
+                                     t4.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t5.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t6.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2893,11 +2894,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
-                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t5.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t6.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
+                                     t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
+                                     t4.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t5.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t6.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2931,11 +2932,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
-                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t5.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t6.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
+                                     t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
+                                     t4.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t5.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t6.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2970,12 +2971,12 @@ namespace schliessanlagen_konfigurator.Controllers
                                      companyName = t1.companyName,
                                      description = t1.description,
                                      NameSystem = t1.NameSystem,
-                                     Cost = Math.Round(t1.Cost * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
-                                     t2.Cost * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
-                                     t3.Cost * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
-                                     t4.Cost * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
-                                     t5.Cost * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
-                                     t6.Cost * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t7.Price * isOpen.Count()), precision),
+                                     Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
+                                     t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
+                                     t3.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
+                                     t4.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
+                                     t5.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
+                                     t6.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t7.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
 
@@ -2998,15 +2999,13 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var OrderList = db.Profil_Doppelzylinder.Where(x => x.Id == Convert.ToInt32(DopelId)).ToList();
 
-            var AussenInen =  db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == Convert.ToInt32(DopelId)).ToList();
+            var AussenInen =  db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == Convert.ToInt32(DopelId)).Select(x => new { x.aussen, x.Intern }).ToList();
 
             var Halbzylinder = new List<Profil_Halbzylinder>();
 
             var SelectHalbzylinder =  db.Profil_Halbzylinder.Where(x => x.Id == Halb).ToList();
 
             var halbAussen_Inter =  db.Aussen_Innen_Halbzylinder.Where(x => x.Profil_HalbzylinderId == Halb).ToList();
-
-            ViewBag.AussenHalb = halbAussen_Inter.Select(x => x.aussen).ToList();
 
             var KnaufZelinder =  db.Profil_Knaufzylinder.Where(x => x.Id == KnayfID).ToList();
 
@@ -3020,14 +3019,12 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var SizeVorhanschloss =  db.Size.Where(x => x.VorhangschlossId == Vorhan).Select(x => x.sizeVorhangschloss).ToList();
 
-
-
-            var listVorHanOptions = new List<Vorhan_Options>();
+            var listVorHanOptions = new List<int>();
 
             foreach (var list in SelectVorhanschlos)
             {
-                var VorhanOptions = db.Vorhan_Options.Where(x => x.VorhangschlossId == list.Id).ToList();
-
+                var VorhanOptions = db.Vorhan_Options.Where(x => x.VorhangschlossId == list.Id).Select(x=>x.Id).ToList();
+                
                 foreach (var s in VorhanOptions)
                 {
                     listVorHanOptions.Add(s);
@@ -3041,7 +3038,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             foreach (var ls in listVorHanOptions)
             {
-                var listOptionVorhanValue = db.OptionsVorhan.Where(x => x.OptionId == ls.Id).ToList();
+                var listOptionVorhanValue = db.OptionsVorhan.Where(x => x.OptionId == ls).ToList();
 
                 foreach (var lst in listOptionVorhanValue)
                 {
@@ -3081,11 +3078,11 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var SelectAussenzylinder = db.Aussenzylinder_Rundzylinder.Where(x => x.Id == Aussen).ToList();
 
-            var AussenOption = new List<Aussen_Rund_options>();
+            var AussenOption = new List<int>();
 
             foreach (var x in SelectAussenzylinder)
             {
-                var listOptionsAussenZylinder = db.Aussen_Rund_options.Where(x => x.Aussenzylinder_RundzylinderId == x.Id).ToList();
+                var listOptionsAussenZylinder = db.Aussen_Rund_options.Where(x => x.Aussenzylinder_RundzylinderId == x.Id).Select(x=>x.Id).ToList();
 
                 foreach (var f in listOptionsAussenZylinder)
                 {
@@ -3099,7 +3096,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             foreach (var ls in AussenOption)
             {
-                var list =  db.Aussen_Rund_all.Where(x => x.Aussen_Rund_optionsId == ls.Id).ToList();
+                var list =  db.Aussen_Rund_all.Where(x => x.Aussen_Rund_optionsId == ls).ToList();
                 foreach (var l in list)
                 {
                     AussenListRundAll.Add(l);
@@ -3260,12 +3257,12 @@ namespace schliessanlagen_konfigurator.Controllers
                                 description = OrderList.Last().description,
                                 companyName = OrderList.Last().companyName,
                                 NameSystem = OrderList.Last().NameSystem,
-                                Cost = OrderList.Last().Cost,
+                                Price = OrderList.Last().Price,
                                 ImageFile = OrderList.Last().ImageFile,
                                 ImageName = OrderList.Last().ImageName,
                                 schliessanlagenId = OrderList.Last().schliessanlagenId
                             };
-                            SumcostedDopSylinder += (OrderList.Last().Cost * counter[doppel].Value) - OrderList.Last().Cost;
+                            SumcostedDopSylinder += (OrderList.Last().Price * counter[doppel].Value) - OrderList.Last().Price;
                             DopelOrderlist.Add(dopel);
                         }
                         else
@@ -3294,12 +3291,12 @@ namespace schliessanlagen_konfigurator.Controllers
                                 description = KnaufZelinder.Last().description,
                                 companyName = KnaufZelinder.Last().companyName,
                                 NameSystem = KnaufZelinder.Last().NameSystem,
-                                Cost = KnaufZelinder.Last().Cost,
+                                Price = KnaufZelinder.Last().Price,
                                 ImageFile = KnaufZelinder.Last().ImageFile,
                                 ImageName = KnaufZelinder.Last().ImageName,
                                 schliessanlagenId = KnaufZelinder.Last().schliessanlagenId
                             };
-                            SumcostedDopSylinder += (KnaufZelinder.Last().Cost * counter[knayfC].Value)- KnaufZelinder.Last().Cost;
+                            SumcostedDopSylinder += (KnaufZelinder.Last().Price * counter[knayfC].Value)- KnaufZelinder.Last().Price;
                             KnayfOrderlist.Add(knayf);
                         }
                         else
@@ -3327,12 +3324,12 @@ namespace schliessanlagen_konfigurator.Controllers
                                 description = SelectHalbzylinder.Last().description,
                                 companyName = SelectHalbzylinder.Last().companyName,
                                 NameSystem = SelectHalbzylinder.Last().NameSystem,
-                                Cost = SelectHalbzylinder.Last().Cost,
+                                Price = SelectHalbzylinder.Last().Price,
                                 ImageFile = SelectHalbzylinder.Last().ImageFile,
                                 ImageName = SelectHalbzylinder.Last().ImageName,
                                 schliessanlagenId = SelectHalbzylinder.Last().schliessanlagenId
                             };
-                            SumcostedDopSylinder += (SelectHalbzylinder.Last().Cost * counter[halbC].Value)- SelectHalbzylinder.Last().Cost;
+                            SumcostedDopSylinder += (SelectHalbzylinder.Last().Price * counter[halbC].Value)- SelectHalbzylinder.Last().Price;
                             Halbzylinder.Add(HalbNew);
                         }
                         else
@@ -3361,12 +3358,12 @@ namespace schliessanlagen_konfigurator.Controllers
                                 description = HebelZylinder.Last().description,
                                 companyName = HebelZylinder.Last().companyName,
                                 NameSystem = HebelZylinder.Last().NameSystem,
-                                Cost = HebelZylinder.Last().Cost,
+                                Price = HebelZylinder.Last().Price,
                                 ImageFile = HebelZylinder.Last().ImageFile,
                                 ImageName = HebelZylinder.Last().ImageName,
                                 schliessanlagenId = HebelZylinder.Last().schliessanlagenId
                             };
-                            SumcostedDopSylinder += (HebelZylinder.Last().Cost * counter[hebelC].Value) - HebelZylinder.Last().Cost;
+                            SumcostedDopSylinder += (HebelZylinder.Last().Price * counter[hebelC].Value) - HebelZylinder.Last().Price;
                             HelbZ.Add(HebelNew);
                         }
                         else
@@ -3394,13 +3391,13 @@ namespace schliessanlagen_konfigurator.Controllers
                                 description = SelectVorhanschlos.Last().description,
                                 companyName = SelectVorhanschlos.Last().companyName,
                                 NameSystem = SelectVorhanschlos.Last().NameSystem,
-                                Cost = SelectVorhanschlos.Last().Cost,
+                                Price = SelectVorhanschlos.Last().Price,
                                 ImageFile = SelectVorhanschlos.Last().ImageFile,
                                 ImageName = SelectVorhanschlos.Last().ImageName,
                                 schliessanlagenId = SelectVorhanschlos.Last().schliessanlagenId
                             };
-                            float sum = SelectVorhanschlos.Last().Cost * counter[vorhanC].Value;
-                            SumcostedDopSylinder += sum - SelectVorhanschlos.Last().Cost;
+                            float sum = SelectVorhanschlos.Last().Price * counter[vorhanC].Value;
+                            SumcostedDopSylinder += sum - SelectVorhanschlos.Last().Price;
                             Vorhanschlos.Add(vorhan);
                         }
                         else
@@ -3429,12 +3426,12 @@ namespace schliessanlagen_konfigurator.Controllers
                                 description = SelectAussenzylinder.Last().description,
                                 companyName = SelectAussenzylinder.Last().companyName,
                                 NameSystem = SelectAussenzylinder.Last().NameSystem,
-                                Cost = SelectAussenzylinder.Last().Cost,
+                                Price = SelectAussenzylinder.Last().Price,
                                 ImageFile = SelectAussenzylinder.Last().ImageFile,
                                 ImageName = SelectAussenzylinder.Last().ImageName,
                                 schliessanlagenId = SelectAussenzylinder.Last().schliessanlagenId
                             };
-                            SumcostedDopSylinder += (SelectAussenzylinder.Last().Cost * counter[aussenC].Value)- SelectAussenzylinder.Last().Cost;
+                            SumcostedDopSylinder += (SelectAussenzylinder.Last().Price * counter[aussenC].Value)- SelectAussenzylinder.Last().Price;
                             Aussenzylinder.Add(aussen);
                         }
                         else
@@ -3520,6 +3517,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var queryableOptionsKnayf = db.Profil_Knaufzylinder_Options.Where(x => x.Profil_KnaufzylinderId == Convert.ToInt32(KnayfID)).Select(x => x.Id).ToList();
             ViewBag.countOptionsQueryKnayf = queryableOptionsKnayf.Count();
+           
             if (queryableOptionsKnayf.Count() > 0)
             {
 
@@ -3689,14 +3687,6 @@ namespace schliessanlagen_konfigurator.Controllers
             var KnayfaussenActual = new List<float>();
             var KnayfInenActual = new List<float>();
 
-            if (Vorhanschlos.Count()==0)
-            {
-                int SizeN = 0;
-                ViewBag.VorhanschlosSizeJson = JsonConvert.SerializeObject(SizeN);
-                ViewBag.VorhanschlosSizeCostedJson = JsonConvert.SerializeObject(SizeN);
-            }
-          
-
             var SizeHalb = key.Where(x => x.ZylinderId == 2).Select(x => x).ToList();
             var HalbaussenActual = new List<float>();
 
@@ -3729,6 +3719,13 @@ namespace schliessanlagen_konfigurator.Controllers
                 InenActual.Add(Innenitem);
             }
 
+            if (Vorhanschlos.Count() == 0)
+            {
+                int SizeN = 0;
+                ViewBag.VorhanschlosSizeJson = JsonConvert.SerializeObject(SizeN);
+                ViewBag.VorhanschlosSizeCostedJson = JsonConvert.SerializeObject(SizeN);
+            }
+
             var systeamkeyPrice = db.SysteamPriceKey.Where(x => x.NameSysteam == Systeam).Select(x=>x.Price).ToList();
 
             ViewBag.KeyCost = JsonConvert.SerializeObject(systeamkeyPrice.First());
@@ -3752,6 +3749,8 @@ namespace schliessanlagen_konfigurator.Controllers
             ViewBag.KnayfItemId = KnayfOrderlist.Select(x => x.Id).ToList();
 
             ViewBag.KnayfItemIdJson = JsonConvert.SerializeObject(KnayfOrderlist.Select(x => x.Id).ToList());
+            
+            ViewBag.AussenHalb = halbAussen_Inter.Select(x => x.aussen).ToList();
 
             ViewBag.CountKey = IsOpenValue.Select(x => x.NameKey).Distinct().Count();
             ViewBag.KnayfZelinderAussen = Kanyf_AussenInen.Select(x => x.aussen).Distinct().ToList();
@@ -3797,12 +3796,12 @@ namespace schliessanlagen_konfigurator.Controllers
 
             ViewBag.UserJson = JsonConvert.SerializeObject(key.Select(x => x.userKey).Distinct().ToList());
 
-            var SumCost = DopelOrderlist.Select(x => x.Cost).Sum() + KnaufZelinder.Select(x => x.Cost).Sum() + Halbzylinder.Select(x => x.Cost).Sum() +
-                HelbZ.Select(x => x.Cost).Sum() + Vorhanschlos.Select(x => x.Cost).Sum() + Aussenzylinder.Select(x => x.Cost).Sum() + DoppelAussenCost
+            var SumCost = DopelOrderlist.Select(x => x.Price).Sum() + KnaufZelinder.Select(x => x.Price).Sum() + Halbzylinder.Select(x => x.Price).Sum() +
+                HelbZ.Select(x => x.Price).Sum() + Vorhanschlos.Select(x => x.Price).Sum() + Aussenzylinder.Select(x => x.Price).Sum() + DoppelAussenCost
                 + KhaufAussenCost + halbAussenCost + SumcostedDopSylinder + costKey;
 
-            var SumCostProduct = DopelOrderlist.Select(x => x.Cost).Sum() + KnaufZelinder.Select(x => x.Cost).Sum() + Halbzylinder.Select(x => x.Cost).Sum() +
-                HelbZ.Select(x => x.Cost).Sum() + Vorhanschlos.Select(x => x.Cost).Sum() + Aussenzylinder.Select(x => x.Cost).Sum() + costKey;
+            var SumCostProduct = DopelOrderlist.Select(x => x.Price).Sum() + KnaufZelinder.Select(x => x.Price).Sum() + Halbzylinder.Select(x => x.Price).Sum() +
+                HelbZ.Select(x => x.Price).Sum() + Vorhanschlos.Select(x => x.Price).Sum() + Aussenzylinder.Select(x => x.Price).Sum() + costKey;
 
             int precision = 2;
 
@@ -3814,7 +3813,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
 
             ViewBag.Cost = Costed;
-        
+
             return View("Finisher", key.Last());
         }
 
@@ -3844,7 +3843,6 @@ namespace schliessanlagen_konfigurator.Controllers
         List<string> VorhanName, List<float> VorhanAussen, List<string> AussenName, string cost, List<string> key, List<bool> keyIsOpen, List<int> countKey,
         List<int> TurCounter,List<string> FurKey, string NameSystem)
         {
-
             ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
             string loginInform = ident.Claims.Select(x => x.Value).First();
             var users = db.Users.FirstOrDefault(x => x.Id == loginInform);
@@ -4220,6 +4218,7 @@ namespace schliessanlagen_konfigurator.Controllers
                    
                    
                 }
+                Stopwatch stopwatch = Stopwatch.StartNew();
                 var message = new MimeMessage();
                 message.From.Add(new MailboxAddress("Schlüssel Discount Store", "bonettaanthony466@gmail.com"));
                 message.To.Add(new MailboxAddress(users.FirstName + users.LastName, users.UserName));
@@ -4251,6 +4250,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                     client.Disconnect(true);
                 }
+                stopwatch.Stop();
                 return Redirect("/Identity/Account/Manage/PagePersonalOrders");
             }
 

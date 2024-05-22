@@ -19,35 +19,141 @@ namespace schliessanlagen_konfigurator.Send_Data
                 {
                     return;
                 }
+                if (context.Aussen_Innen.Any())
+                {
+                    return;
+                }
                 if (context.Profil_Doppelzylinder_Options.Any())
                 {
                     return;
                 }
-                if (context.Hebelzylinder.Any())
+                if (context.NGF.Any())
                 {
                     return;
                 }
-                if (context.Profil_Knaufzylinder.Any())
-                {
-                    return;
-                }
-                if (context.Vorhangschloss.Any())
-                {
-                    return;
-                }
-                if (context.Aussenzylinder_Rundzylinder.Any())
-                {
-                    return;
-                }
-                if (context.Profil_Halbzylinder.Any())
+                if (context.NGF_Value.Any())
                 {
                     return;
                 }
 
-                if (context.Orders.Any())
+              
+                if (context.Hebelzylinder.Any())
                 {
                     return;
                 }
+                if (context.Hebelzylinder_Options.Any())
+                {
+                    return;
+                }
+                if (context.Options.Any())
+                {
+                    return;
+                }
+                if (context.Options_value.Any())
+                {
+                    return;
+                }
+
+
+                if (context.Profil_Knaufzylinder.Any())
+                {
+                    return;
+                }
+                if (context.Aussen_Innen_Knauf.Any())
+                {
+                    return;
+                }
+                if (context.Profil_Knaufzylinder_Options.Any())
+                {
+                    return;
+                }
+                if (context.Knayf_Options.Any())
+                {
+                    return;
+                }
+                if (context.Knayf_Options_value.Any())
+                {
+                    return;
+                }
+
+
+
+                if (context.Vorhangschloss.Any())
+                {
+                    return;
+                }
+                if (context.Size.Any())
+                {
+                    return;
+                }
+                if (context.Vorhan_Options.Any())
+                {
+                    return;
+                }
+                if (context.OptionsVorhan.Any())
+                {
+                    return;
+                }
+                if (context.OptionsVorhan_value.Any())
+                {
+                    return;
+                }
+
+
+                if (context.Aussenzylinder_Rundzylinder.Any())
+                {
+                    return;
+                }
+                if (context.Aussen_Rund_options.Any())
+                {
+                    return;
+                }
+                if (context.Aussen_Rund_all.Any())
+                {
+                    return;
+                }
+                if (context.Aussen_Rouns_all_value.Any())
+                {
+                    return;
+                }
+
+
+                if (context.Profil_Halbzylinder.Any())
+                {
+                    return;
+                }
+                if (context.Profil_Halbzylinder_Options.Any())
+                {
+                    return;
+                }
+                if (context.Halbzylinder_Options.Any())
+                {
+                    return;
+                }
+                if (context.Halbzylinder_Options_value.Any())
+                {
+                    return;
+                }
+                if (context.Aussen_Innen_Halbzylinder.Any())
+                {
+                    return;
+                }
+
+                if (context.SysteamPriceKey.Any())
+                {
+                    return;
+                }
+              
+                if (context.User.Any())
+                {
+                    return;
+                }
+             
+                if (context.UserOrdersShop.Any())
+                {
+                    return;
+                }
+
                 context.Schliessanlagen.AddRange(
                    new Schliessanlagen
                    {

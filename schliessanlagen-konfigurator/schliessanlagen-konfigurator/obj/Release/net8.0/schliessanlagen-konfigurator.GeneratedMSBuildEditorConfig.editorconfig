@@ -242,6 +242,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Message.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxNZXNzYWdlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductAussenzylinder.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9kdWN0QXVzc2VuenlsaW5kZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -272,6 +276,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Profil_KnaufzylinderRout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9maWxfS25hdWZ6eWxpbmRlclJvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/SendMail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTZW5kTWFpbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/VorhangschlossRout.cshtml]

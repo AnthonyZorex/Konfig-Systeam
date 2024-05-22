@@ -12,7 +12,7 @@ namespace schliessanlagen_konfigurator.Models
         public string? companyName { get; set; }
         public string? description { get; set; }
         public string? NameSystem { get; set; }
-        public float Cost { get; set; }
+        public float Price { get; set; }
         public string ImageName { get; set; }
         [NotMapped]
         [DisplayName("Upload your photo")]

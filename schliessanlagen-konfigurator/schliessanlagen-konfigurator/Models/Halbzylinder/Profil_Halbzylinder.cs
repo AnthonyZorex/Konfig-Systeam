@@ -13,7 +13,7 @@ namespace schliessanlagen_konfigurator.Models.Halbzylinder
         public string? description { get; set; }
         public string? NameSystem { get; set; }
         public string? Artikelnummer { get; set; }
-        public float Cost { get; set; }
+        public float Price { get; set; }
         public string ImageName { get; set; }
         [NotMapped]
         [DisplayName("Upload your photo")]

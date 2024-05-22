@@ -42,4 +42,8 @@
     <None Include="wwwroot\Orders\CES_schliessplan_DE_schliessanlagen.xlsx" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Image\" />
+  </ItemGroup>
+
 </Project>

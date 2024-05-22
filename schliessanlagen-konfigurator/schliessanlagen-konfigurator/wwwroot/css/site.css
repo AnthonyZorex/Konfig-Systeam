@@ -809,7 +809,30 @@ summary {
 #schopIcons>span {
     color: red;
 }
-
+#code {
+    width: 100%;
+    height: auto;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    line-height: 1.4;
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color:orange;
+    background:#323232;
+}
+#StyleCode {
+    width: 100%;
+    height: auto;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    line-height: 1.4;
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: peachpuff;
+    background: #323232;
+}
 .modal {
     display: none; /* По умолчанию модальное окно скрыто */
     position: fixed; /* Фиксированное положение */
