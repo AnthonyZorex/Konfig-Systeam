@@ -9,5 +9,6 @@
         public string? Option { get; set; }
         public int? UserOrdersShopId { get; set; }
         public UserOrdersShop UserOrdersShop { get; set; }
+      
     }
 }

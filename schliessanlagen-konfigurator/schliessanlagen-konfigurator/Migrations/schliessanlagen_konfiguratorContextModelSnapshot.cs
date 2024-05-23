@@ -51,25 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3f11b4dd-d4bf-43d9-9403-cae3ba6348da",
+                            Id = "7ea960c2-faed-4c55-a838-63a12d2e29af",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "b70188c9-dbd9-420d-ab3d-0671f548c710",
+                            Id = "16f7b720-c3d1-48e1-9264-fef6d64589ee",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "60b72038-0406-47b5-8a38-28eb258b4a28",
+                            Id = "621a8bd1-eba1-4bfd-9353-31680716fa0c",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "91f5be0b-2191-45e8-9b17-948b5fc2d75b",
+                            Id = "2fe4d2fa-0e06-4fd1-bbca-84f32925d219",
                             Name = "client",
                             NormalizedName = "client"
                         });

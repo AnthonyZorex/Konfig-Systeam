@@ -3820,7 +3820,13 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpPost]
         public ActionResult RemoveOrder(int data)
         {
+            ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
+            string loginInform = ident.Claims.Select(x => x.Value).First();
+            var users = db.Users.FirstOrDefault(x => x.Id == loginInform);
+
             var RemoveOrder = db.UserOrdersShop.Where(x => x.Id == data).ToList();
+
+            var currentTime = RemoveOrder.First().createData.Value;
 
             var OrderProduct = db.ProductSysteam.Where(x => x.UserOrdersShopId == data).ToList();
 
@@ -3834,6 +3840,13 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 }
             }
+            string destinationFilePath = @$"wwwroot/Orders/{users.FirstName + users.LastName + currentTime.Minute + currentTime.Hour + currentTime.Day + currentTime.Month + currentTime.Year} OrderFile.xlsx";
+
+            if (System.IO.File.Exists(destinationFilePath))
+            {
+                System.IO.File.Delete(destinationFilePath);
+            }
+
             db.SaveChanges();
             return Redirect("/Identity/Account/Manage/PagePersonalOrders");
         }
