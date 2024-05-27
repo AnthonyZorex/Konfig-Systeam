@@ -32,7 +32,6 @@ using schliessanlagen_konfigurator.Models.Users;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Information;
 using System.Diagnostics;
 using System.Data.SqlClient;
-using System.Diagnostics;
 namespace schliessanlagen_konfigurator.Controllers
 {
     [EnableCors("*")]
@@ -697,9 +696,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var orders = await db.Orders.ToListAsync();
 
-            ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
-            string loginInform = ident.Claims.Select(x => x.Value).First();
-            var users = db.Users.FirstOrDefault(x => x.Id == loginInform);
+            //ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
+            //string loginInform = ident.Claims.Select(x => x.Value).First();
+            //var users = db.Users.FirstOrDefault(x => x.Id == loginInform);
 
             var keyUser = orders.Last();
 
@@ -4374,9 +4373,9 @@ namespace schliessanlagen_konfigurator.Controllers
                     TurnameValue = Turname[i];
                 }
 
-                ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
-                string loginInform = ident.Claims.Select(x => x.Value).First();
-                var users = db.Users.Where(x => x.Id == loginInform).ToList();
+                //ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
+                //string loginInform = ident.Claims.Select(x => x.Value).First();
+                //var users = db.Users.Where(x => x.Id == loginInform).ToList();
               
 
                 var orders = new Orders

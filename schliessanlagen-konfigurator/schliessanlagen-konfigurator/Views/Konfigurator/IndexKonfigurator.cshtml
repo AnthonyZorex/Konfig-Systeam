@@ -17,7 +17,13 @@
         <button type="button" class="btn btn-secondary"><a href="@Url.Action("System_Auswählen","Konfigurator",new{ userName = @ViewBag.UserNameItem} )">2. System auswählen</a></button>
         <button type="button" class="btn btn-secondary">3. Parameter einstellen</button>
     </div>
-  
+    <div style="display:flex;gap: 20px;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+        <button onclick="hilfe()" style="border:none"><img src="/Image/help.png" width="40" hight="40"/></button>
+        <h2>Füllen Sie den Konfigurator mit Daten aus!</h2>
+    </div>
+   
+
+
     <form asp-action="SaveOrder" enctype="multipart/form-data" asp-controller="Konfigurator">
   
         @Html.HiddenFor(m => m.userKey)
@@ -139,7 +145,68 @@
         <input type="text" name="IsOppen" style="display:none" id="vBool" />
         <input type="submit"  onclick="(bolleanCheked())" class="btn btn-success" id="input" value="Weiter" />
     </form>
- 
+
+    <div id="myModal" class="modalLessen">
+        <div class="modal-contentLessen ">
+            <span class="clostHilfeModel">&times;</span>
+            <br />
+            <h2 id="hilfeText">Hier den Namen der Türen eingeben!</h2>
+            <hr/>
+            <div id="modelProgress">
+                <button id="hilfeNext" onclick="back()"> < </button>
+                <div id="circle">
+                    <div id="circle2" class="c1">
+                    </div>
+                </div>
+
+                <div id="circle">
+                    <div id="circle2" class="c2">
+                    </div>
+                </div>
+
+                <div id="circle">
+                    <div id="circle2" class="c3">
+                    </div>
+                </div>
+
+                <div id="circle">
+                    <div id="circle2" class="c4">
+                    </div>
+                </div>
+
+                <div id="circle">
+                    <div id="circle2" class="c5">
+                    </div>
+                </div>
+                <div id="circle">
+                    <div id="circle2" class="c6">
+                    </div>
+                </div>
+
+                <div id="circle">
+                    <div id="circle2" class="c7">
+                    </div>
+                </div>
+
+                <div id="circle">
+                    <div id="circle2" class="c8">
+                    </div>
+                </div>
+                <div id="circle">
+                    <div id="circle2" class="c9">
+                    </div>
+                </div>
+                <button id="hilfeBack" onclick="next()"> > </button>
+            </div>
+        </div>
+        <div class="arrow-down"></div>
+    </div>
+        <div id="myModalI" class="modalI">
+            <div class="modal-contentI ">
+                <span class="closI">&times;</span>
+            <h2>Beginnen Sie hier mit dem Ausfüllen des Konfigurators!</h2>
+            </div>
+        </div>
 </div>
 
 <script>
@@ -156,19 +223,249 @@
     let HalbSize = @Html.Raw(ViewBag.SizeHalb);
     let data = JSON.parse(localStorage.getItem(`${blockTur}checkbox${blockCount}`));
     let h = 0;
-  
+    
+    let circle2 = document.querySelectorAll("#circle2");
+
+    let closeHilfe = document.getElementsByClassName("clostHilfeModel")[0];
 
     let boolArray = [];
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        var modal = document.getElementById("myModal");
+        modal.style.display = "none";
+
+        for (let i = 1;i<circle2.length ;i++) 
+        {
+            circle2[i].style.background = "white";
+        }
+    });
+   
+    let circlestep = 0;
+    let hilfeText = document.getElementById("hilfeText");
+
+    function next() 
+    {
+        let modalcontent = document.getElementsByClassName("modal-contentLessen")[0];
+        let modalArrow = document.getElementsByClassName("arrow-down")[0];
+
+        if (circlestep < 8) 
+        {
+            circle2[circlestep].style.background = "white";
+            circlestep++;
+            circle2[circlestep].style.background = "red";
+            
+            switch (circlestep) 
+            {
+                case 0:
+                {
+                        hilfeText.innerText = "Hier den Namen der Türen eingeben!";
+                        hilfeText.innerHTML = "Hier den Namen der Türen eingeben!";
+                        modalcontent.style.marginLeft = "300px";
+                        modalArrow.style.marginLeft = "400px";
+                        modalcontent.style.marginTop = "280px";
+                    break;
+                }
+                case 1: 
+                {
+                        hilfeText.innerText = "Wählen Sie den Zylindertyp aus!";
+                        hilfeText.innerHTML = "Wählen Sie den Zylindertyp aus!";
+                        modalcontent.style.marginTop = "280px";
+                        modalcontent.style.marginLeft = "600px";
+                        modalArrow.style.marginLeft = "700px";
+                    break;
+                }
+                case 2: 
+                {
+                        hilfeText.innerText = "Wählen Sie die Außenabmessung des Zylinders aus!";
+                        hilfeText.innerHTML = "Wählen Sie die Außenabmessung des Zylinders aus!";
+                        modalcontent.style.marginTop = "240px";
+                        modalcontent.style.marginLeft = "700px";
+                        modalArrow.style.marginLeft = "850px";
+                    break;
+                }
+                 case 3:
+                 {
+                        hilfeText.innerText = "Wählen Sie die Innenabmessung des Zylinders aus!";
+                        hilfeText.innerHTML = "Wählen Sie die Innenabmessung des Zylinders aus!";
+                        modalcontent.style.marginTop = "240px";
+                        modalcontent.style.marginLeft = "700px";
+                        modalArrow.style.marginLeft = "890px";
+                    break;
+                }
+                 case 4:
+                 {
+                        hilfeText.innerText = "Geben Sie die Anzahl der Schlösser ein!";
+                        hilfeText.innerHTML = "Geben Sie die Anzahl der Schlösser ein!";
+                        modalcontent.style.marginTop = "280px";
+                        modalcontent.style.marginLeft = "800px";
+                        modalArrow.style.marginLeft = "1025px";
+                    break;
+                }
+                case 5: 
+                {
+                        hilfeText.innerText = "Wählen Sie hier aus, was dieser Schlüssel öffnet!";
+                        hilfeText.innerHTML = "Wählen Sie hier aus, was dieser Schlüssel öffnet!";
+                        modalcontent.style.marginTop = "250px";
+                        modalcontent.style.marginLeft = "950px";
+                        modalArrow.style.marginLeft = "1130px";
+                    break;
+                }
+                case 6: 
+                {
+                        hilfeText.innerText = "Geben Sie die Anzahl der Schlüssel ein!";
+                        hilfeText.innerHTML = "Geben Sie die Anzahl der Schlüssel ein!";
+                        modalcontent.style.marginTop = "230px";
+                        modalcontent.style.marginLeft = "950px";
+                        modalArrow.style.marginLeft = "1130px";
+                    break;
+                }
+                case 7: 
+                {
+                        hilfeText.innerText = "Geben Sie den Namen des Schlüssels ein!";
+                        hilfeText.innerHTML = "Geben Sie den Namen des Schlüssels ein!";
+                        modalcontent.style.marginTop = "80px";
+                        modalcontent.style.marginLeft = "950px";
+                        modalArrow.style.marginLeft = "1130px";
+                    break;
+                }
+                case 8:
+                {
+                        hilfeText.innerText = "Geben Sie ein, wem der Schlüssel gehört!";
+                        hilfeText.innerHTML = "Geben Sie ein, wem der Schlüssel gehört!";
+                        modalcontent.style.marginTop = "40px";
+                        modalcontent.style.marginLeft = "950px";
+                        modalArrow.style.marginLeft = "1130px";
+                        break;
+                }
+            }
+        }
+    }
+    function back() 
+    {
+        let modalcontent = document.getElementsByClassName("modal-contentLessen")[0];
+        let modalArrow = document.getElementsByClassName("arrow-down")[0];
+        if (circlestep > 0) 
+        {
+            circle2[circlestep].style.background = "white";
+            circlestep--;
+            circle2[circlestep].style.background = "red";
+
+            switch (circlestep) 
+            {
+                case 0:
+                    {
+                        hilfeText.innerText = "Hier den Namen der Türen eingeben!";
+                        hilfeText.innerHTML = "Hier den Namen der Türen eingeben!";
+                        modalcontent.style.marginLeft = "300px";
+                        modalArrow.style.marginLeft = "400px";
+                        modalcontent.style.marginTop = "280px";
+                        break;
+                    }
+                case 1:
+                    {
+                        hilfeText.innerText = "Wählen Sie den Zylindertyp aus!";
+                        hilfeText.innerHTML = "Wählen Sie den Zylindertyp aus!";
+                        modalcontent.style.marginTop = "280px";
+                        modalcontent.style.marginLeft = "600px";
+                        modalArrow.style.marginLeft = "700px";
+                        break;
+                    }
+                case 2:
+                    {
+                        hilfeText.innerText = "Wählen Sie die Außenabmessung des Zylinders aus!";
+                        hilfeText.innerHTML = "Wählen Sie die Außenabmessung des Zylinders aus!";
+                        modalcontent.style.marginTop = "240px";
+                        modalcontent.style.marginLeft = "700px";
+                        modalArrow.style.marginLeft = "850px";
+                        break;
+                    }
+                case 3:
+                    {
+                        hilfeText.innerText = "Wählen Sie die Innenabmessung des Zylinders aus!";
+                        hilfeText.innerHTML = "Wählen Sie die Innenabmessung des Zylinders aus!";
+                        modalcontent.style.marginTop = "240px";
+                        modalcontent.style.marginLeft = "700px";
+                        modalArrow.style.marginLeft = "890px";
+                        break;
+                    }
+                case 4:
+                    {
+                        hilfeText.innerText = "Geben Sie die Anzahl der Schlösser ein!";
+                        hilfeText.innerHTML = "Geben Sie die Anzahl der Schlösser ein!";
+                        modalcontent.style.marginTop = "280px";
+                        modalcontent.style.marginLeft = "800px";
+                        modalArrow.style.marginLeft = "1025px";
+                        break;
+                    }
+                case 5:
+                    {
+                        hilfeText.innerText = "Wählen Sie hier aus, was dieser Schlüssel öffnet!";
+                        hilfeText.innerHTML = "Wählen Sie hier aus, was dieser Schlüssel öffnet!";
+                        modalcontent.style.marginTop = "250px";
+                        modalcontent.style.marginLeft = "950px";
+                        modalArrow.style.marginLeft = "1130px";
+                        break;
+                    }
+                case 6:
+                    {
+                        hilfeText.innerText = "Geben Sie die Anzahl der Schlüssel ein!";
+                        hilfeText.innerHTML = "Geben Sie die Anzahl der Schlüssel ein!";
+                        modalcontent.style.marginTop = "230px";
+                        modalcontent.style.marginLeft = "950px";
+                        modalArrow.style.marginLeft = "1130px";
+                        break;
+                    }
+                case 7:
+                    {
+                        hilfeText.innerText = "Geben Sie den Namen des Schlüssels ein!";
+                        hilfeText.innerHTML = "Geben Sie den Namen des Schlüssels ein!";
+                        modalcontent.style.marginTop = "80px";
+                        modalcontent.style.marginLeft = "950px";
+                        modalArrow.style.marginLeft = "1130px";
+                        break;
+                    }
+                case 8:
+                {
+                        hilfeText.innerText = "Geben Sie ein, wem der Schlüssel gehört!";
+                        hilfeText.innerHTML = "Geben Sie ein, wem der Schlüssel gehört!";
+                        modalcontent.style.marginTop = "40px";
+                        modalcontent.style.marginLeft = "950px";
+                        modalArrow.style.marginLeft = "1130px";
+                        break;
+                }
+            }
+        }
+    }
+
+    closeHilfe.addEventListener("click", () => {
+        var modal = document.getElementById("myModal");
+        modal.style.display = "none";
+    })
+
+    function openModal() {
+        var modal = document.getElementById("myModal");
+        modal.style.display = "block";
+    }
+    
+    
+
+    function hilfe() 
+    {
+        openModal();
+    }
 
     function bolleanCheked() 
     {
         let dorCounter = document.querySelectorAll("#inputTur");
         let keyCounter = document.querySelectorAll("#inputS");
         let boolV = document.getElementById('vBool');
-        for (let i = 0; i < keyCounter.length; i++) {
+
+        for (let i = 0; i < keyCounter.length; i++) 
+        {
             h++;
             let w = 0;
-            for (let j = 0; j < dorCounter.length; j++) {
+            for (let j = 0; j < dorCounter.length; j++) 
+            {
                 w++;
                 let chekbox = document.getElementById(`I${w}checkbox${h}`);
   

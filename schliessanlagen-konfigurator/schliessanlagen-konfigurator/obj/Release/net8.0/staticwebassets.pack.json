@@ -357,6 +357,10 @@
       "PackagePath": "staticwebassets\\Image\\halbzylinder.png"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\help.png",
+      "PackagePath": "staticwebassets\\Image\\help.png"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\knaufzylinder.png",
       "PackagePath": "staticwebassets\\Image\\knaufzylinder.png"
     },
@@ -373,8 +377,8 @@
       "PackagePath": "staticwebassets\\Image\\zylinderlaenge.png"
     },
     {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\AnthonyBonetta44162352024 OrderFile.xlsx",
-      "PackagePath": "staticwebassets\\Orders\\AnthonyBonetta44162352024 OrderFile.xlsx"
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\AnthonyBonetta43172452024 OrderFile.xlsx",
+      "PackagePath": "staticwebassets\\Orders\\AnthonyBonetta43172452024 OrderFile.xlsx"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\CES_schliessplan_DE_schliessanlagen.xlsx",

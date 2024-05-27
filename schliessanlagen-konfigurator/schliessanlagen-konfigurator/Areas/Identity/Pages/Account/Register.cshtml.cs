@@ -88,6 +88,9 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account
             public string PhoneNumber { get; set; }
 
             [Required]
+            public bool isSend { get; set; }
+
+            [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
@@ -119,7 +122,7 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(string returnUrl = null )
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -132,6 +135,7 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account
                     UserName = Input.Email,
                     PhoneNumber = Input.PhoneNumber,
                     Address = Input.Address,
+                    isSend = Input.isSend,
                     CreatedAT = DateTime.Now,
                 };
 
@@ -169,8 +173,6 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-
-            // If we got this far, something failed, redisplay form
             return Page();
         }
 

@@ -67,7 +67,13 @@
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                 </div>
             </div>
-
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Subscribe to news</label>
+                <div class="col-sm-8">
+                    @Html.CheckBoxFor(model => model.Input.isSend, new { @class = "form-check-input" })
+                    <span asp-validation-for="Input.isSend" class="text-danger"></span>
+                </div>
+            </div>
             <div class="row mb-3">
               <div class="offset-sm-4 col-sm-4 d-grid">
                   <button type="submit" class="btn btn-primary">Register</button>

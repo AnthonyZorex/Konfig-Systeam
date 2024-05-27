@@ -184,14 +184,126 @@ a {
     overflow: auto; 
     background-color: rgba(0,0,0,0.4); 
 }
+.modalLessen {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+.arrow-down {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 20px solid white;
+    margin-top:-300px;
+    margin-left:400px;
+}
+#modelProgress {
+    display: flex;
+    gap:20px;
+    justify-content:center;
+}
+.modal-contentLessen {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 20%;
+    margin-top: 280px;
+    margin-left: 300px;
+    text-align: center;
+    border-radius: 20px;
+}
+.modalI {
+    display: none; /* Скрыто по умолчанию */
+    position: fixed; /* Оставаться на месте */
+    z-index: 1; /* Слой на вершине */
+    left: 0;
+    top: 0;
+    width: 100%; /* Полная ширина */
+    height: 100%; /* Полная высота */
+    overflow: auto; /* Включить прокрутку при необходимости */
+    background-color: rgba(0,0,0,0.4); /* Черный с прозрачностью */
+}
 
+/* Модальное содержимое */
+.modal-contentI {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% от верхнего и центра */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Можно регулировать для уменьшения ширины */
+    font-family: Arial, sans-serif; /* Измените шрифт по своему вкусу */
+    color: red; /* Измените цвет текста по своему вкусу */
+}
+
+.closeI {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.closeI:hover,
+.closeI:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+#hilfeNext {
+    border: none;
+    outline: none;
+    background: red;
+    border-radius: 20px;
+    font-size:24px;
+    color: white;
+}
+#hilfeBack {
+    border: none;
+    outline: none;
+    background: red;
+    font-size: 24px;
+    color: white;
+    border-radius: 20px;
+}
+
+
+#circle {
+    margin-top: 10px;
+    border-radius: 100%;
+    width: 15px;
+    height: 10px;
+    background: red;
+}
+#circle2 {
+    margin-left: 2px;
+    margin-top: 2px;
+    border-radius: 100%;
+    width: 5px;
+    height: 5px;
+    background: white;
+}
+.clostHilfeModel {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: -20px;
+}
 /* Modal content */
 .modal-content {
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; 
+    width: 80%;
 }
 
 /* Close button */
@@ -209,6 +321,9 @@ a {
         cursor: pointer;
     }
 
+#konfigMenu{
+    display:none;
+}
 #input {
     margin-top: 50px;
     margin-bottom: 50px;
