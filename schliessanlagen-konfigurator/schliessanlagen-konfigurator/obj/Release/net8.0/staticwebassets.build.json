@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "sb14toRXzSHfHvC2UcqPevRYjCckRkS2vnvILKpfTfQ=",
+  "Hash": "UF2TpSrYwLewfWBQwiWpDrVRj9mFsNs4+1mDwvHn6eQ=",
   "Source": "schliessanlagen-konfigurator",
   "BasePath": "_content/schliessanlagen-konfigurator",
   "Mode": "Default",
@@ -2715,6 +2715,25 @@
       "OriginalItemSpec": "wwwroot\\Image\\SD_Logo.svg"
     },
     {
+      "Identity": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\sort.png",
+      "SourceId": "schliessanlagen-konfigurator",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\",
+      "BasePath": "_content/schliessanlagen-konfigurator",
+      "RelativePath": "Image/sort.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Image\\sort.png"
+    },
+    {
       "Identity": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\UDM5-30 Rund-Außenzylinder240952453.png",
       "SourceId": "schliessanlagen-konfigurator",
       "SourceType": "Discovered",
@@ -4119,6 +4138,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Orders\\AnthonyBonetta43172452024 OrderFile.xlsx"
+    },
+    {
+      "Identity": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\AnthonyBonetta50152752024 OrderFile.xlsx",
+      "SourceId": "schliessanlagen-konfigurator",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\",
+      "BasePath": "_content/schliessanlagen-konfigurator",
+      "RelativePath": "Orders/AnthonyBonetta50152752024 OrderFile.xlsx",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Orders\\AnthonyBonetta50152752024 OrderFile.xlsx"
     },
     {
       "Identity": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\CES_schliessplan_DE_schliessanlagen.xlsx",

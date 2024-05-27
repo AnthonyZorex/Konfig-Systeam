@@ -369,6 +369,10 @@
       "PackagePath": "staticwebassets\\Image\\options.png"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\sort.png",
+      "PackagePath": "staticwebassets\\Image\\sort.png"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\vorhangschloss.png",
       "PackagePath": "staticwebassets\\Image\\vorhangschloss.png"
     },
@@ -379,6 +383,10 @@
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\AnthonyBonetta43172452024 OrderFile.xlsx",
       "PackagePath": "staticwebassets\\Orders\\AnthonyBonetta43172452024 OrderFile.xlsx"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\AnthonyBonetta50152752024 OrderFile.xlsx",
+      "PackagePath": "staticwebassets\\Orders\\AnthonyBonetta50152752024 OrderFile.xlsx"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\CES_schliessplan_DE_schliessanlagen.xlsx",

@@ -107,13 +107,14 @@
                     
                     <div id="ExelItem-@d" class="ExelItem">
                     <div id="productImage">
-                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
+                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                     </div>
                     <div id="productMenuInfo">
                         <div id="ProductNameUndCost">
                             <div>
                                     <input style="border: none;" readonly type="text" name="DopelName" value="@item.Name" />
                                     <input style="border: none;" type="hidden" name="NameSystem" value="@item.NameSystem" />
+                                    <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
                             </div>
                         </div>
                         <div>
@@ -159,7 +160,6 @@
                                 </div>
                         </div>
 
-
                         <div>
                             <h3>Weitere Optionen</h3>
                             <div>
@@ -174,32 +174,44 @@
 
                                             <select style="margin-bottom: 10px;"  class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Doppel',event.target.id,event.target.value,@valueCount,'@ViewBag.optionsName[i]',@i,@d)">
 
-                                        @for (int j = 0; j < ViewBag.countOptionsList[i]; j++)
-                                        {
-                                             <option id="@valueCount">@ViewBag.optionsValue[valueCount]</option>
+                                            @for (int j = 0; j < ViewBag.countOptionsList[i]; j++)
+                                            {
+                                                 <option id="@valueCount">@ViewBag.optionsValue[valueCount]</option>
                                             
-                                             valueCount++;
-                                        }
+                                                 valueCount++;
+                                            }
 
-                                        </select>
+                                            </select>
 
                                             <input type="hidden" id="Option-@d + @i" />
                                             <input type="hidden" id="d-@d + @i" />
                                     }
-
-                                        <input type="hidden" name="DoppelOption" id="OptionAll-@d" />
+                                     <input type="hidden" name="DoppelOption" id="OptionAll-@d" />
                                 }
-
-
                             </div>
                         </div>
-                            @if (@ViewBag.DAussen[elemNum] < 80 && @ViewBag.DInter[elemNum] < 80)
+                            @if (@ViewBag.DAussen[elemNum] >= 55 && @ViewBag.DInter[elemNum] >= 55)
                             {
-                                <h6 id="WaitTime">Lieferzeit: 5 - 7 Werktage</h6>
+                                if (@item.companyName == "CES")
+                                {
+                                    <h6 id="WaitTime">Lieferzeit: 4 Werktage</h6>
+                                }
+                                else
+                                {
+                                    <h6 id="WaitTime">Lieferzeit: 2 Werktage</h6>
+
+                                }
                             }
                             else
                             {
-                                <h6 id="WaitTime">Lieferzeit: ca 20 Werktage</h6>
+                                if (@item.companyName == "CES")
+                                {
+                                    <h6 id="WaitTime">Lieferzeit: 7 Tag</h6>
+                                }
+                                else
+                                {
+                                    <h6 id="WaitTime">Lieferzeit: 2 Werktage</h6>
+                                }
                             }
                     </div>
                 </div>
@@ -234,7 +246,7 @@
                <input type="hidden" name="Knayf" value="@item.Id" />
                     <div id="ExelItem-@d" class="ExelItem">
                     <div id="productImage">
-                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
+                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                     </div>
                     <div id="productMenuInfo">
                         <div id="ProductNameUndCost">
@@ -242,6 +254,7 @@
                             <div>
                                     <input style="border: none;" readonly type="text" name="KnayfName" value="@item.Name" />
                                     <input style="border: none;" type="hidden" name="NameSystem" value="@item.NameSystem" />
+                                    <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
                             </div>
 
                         </div>
@@ -318,13 +331,29 @@
 
                             </div>
                         </div>
-                            @if (@ViewBag.KAussen[elemNum] < 80 && @ViewBag.KInter[elemNum] < 80)
+                            @if (@ViewBag.KAussen[elemNum] >= 55 && @ViewBag.KInter[elemNum] >= 55)
                             {
-                                <h6 id="WaitTime">Lieferzeit: 5 - 7 Werktage</h6>
+                                if (@item.companyName == "CES")
+                                {
+                                    <h6 id="WaitTime">Lieferzeit: 4 Werktage</h6>
+                                }
+                                else
+                                {
+                                    <h6 id="WaitTime">Lieferzeit: 2 Werktage</h6>
+
+                                }
+
                             }
                             else
                             {
-                                <h6 id="WaitTime">Lieferzeit: ca 20 Werktage</h6>
+                                if (@item.companyName == "CES")
+                                {
+                                    <h6 id="WaitTime">Lieferzeit: 7 Tag</h6>
+                                }
+                                else
+                                {
+                                    <h6 id="WaitTime">Lieferzeit: 2 Werktage</h6>
+                                }
                             }
                     </div>
                 </div>
@@ -360,7 +389,7 @@
                     <input type="hidden" name="Halb" value="@item.Id" />
                     <div id="ExelItem-@d" class="ExelItem">
                     <div id="productImage">
-                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
+                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                     </div>
                     <div id="productMenuInfo">
                         <div id="ProductNameUndCost">
@@ -368,6 +397,7 @@
                             <div>
                                     <input style="border: none;" readonly type="text" name="HalbName" value="@item.Name" />
                                     <input style="border: none;" type="hidden" name="NameSystem" value="@item.NameSystem" />
+                                    <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
                             </div>
 
                         </div>
@@ -433,13 +463,28 @@
                                 } 
                             </div>
                         </div>
-                            @if (@ViewBag.HalbOrderAussen[elemNum] < 75)
+                            @if (@ViewBag.HalbOrderAussen[elemNum] >= 55)
                             {
-                                <h6 id="WaitTime" >Lieferzeit: 5 - 7 Werktage</h6>
+                                if (@item.companyName == "CES")
+                                {
+                                    <h6 id="WaitTime">Lieferzeit: 4 Werktage</h6>
+                                }
+                                else
+                                {
+                                    <h6 id="WaitTime">Lieferzeit: 2 Werktage</h6>
+
+                                }
                             }
                             else
                             {
-                                <h6 id="WaitTime" >Lieferzeit: ca 20 Werktage</h6>
+                                if (@item.companyName == "CES")
+                                {
+                                    <h6 id="WaitTime">Lieferzeit: 7 Tag</h6>
+                                }
+                                else
+                                {
+                                    <h6 id="WaitTime">Lieferzeit: 2 Werktage</h6>
+                                }
                             }
                     </div>
                        
@@ -474,7 +519,7 @@
                     <input type="hidden" name="Helb" value="@item.Id" />
                     <div id="ExelItem-@d" class="ExelItem">
                     <div id="productImage">
-                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
+                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                     </div>
                     <div id="productMenuInfo">
                         <div id="ProductNameUndCost">
@@ -482,6 +527,7 @@
                             <div>
                                     <input style="border: none;" readonly type="text" name="HelbName" value="@item.Name" />
                                     <input style="border: none;" type="hidden" name="NameSystem" value="@item.NameSystem" />
+                                    <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
                             </div>
 
                         </div>
@@ -522,7 +568,6 @@
 
                                             @for (int j = 0; j < ViewBag.CountValueHebel[i]; j++)
                                             {
-                                               
                                                <option id="@valueCount">@ViewBag.ValueHebel[valueCount]</option>
                                                
                                                 valueCount++;
@@ -544,7 +589,7 @@
                             <span onclick="closedModal(@d)" class="close">&times;</span>
                             <div style="display:grid; grid-template-columns: 450px 500px;">
                                 <div id="productImage">
-                                    <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
+                                    <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                                 </div>
                                 <div>
                                     <h3>@item.Name</h3>
@@ -567,7 +612,7 @@
                     <input type="hidden" name="Vorhan" value="@item.Id" />
                     <div id="ExelItem-@d" class="ExelItem">
                     <div id="productImage">
-                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
+                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                     </div>
                     <div id="productMenuInfo">
                         <div id="ProductNameUndCost">
@@ -575,6 +620,7 @@
                             <div>
                                     <input style="border: none;" readonly type="text" name="VorhanName" value="@item.Name" />
                                     <input style="border: none;" type="hidden" name="NameSystem" value="@item.NameSystem" />
+                                    <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
                             </div>
 
                         </div>
@@ -642,15 +688,7 @@
                                         <input type="hidden" name="VorhnaOption" id="OptionAll-@d" />
                                 }
                             </div> 
-                        </div>
-                            @if (@ViewBag.CounterTurVorhan[@elemNum] < 45)
-                            {
-                                <h6 id="WaitTime">Lieferzeit: 5 - 7 Werktage</h6>
-                            }
-                            else
-                            {
-                                <h6 id="WaitTime">Lieferzeit: ca 20 Werktage</h6>
-                            }
+                        </div>      
                     </div>
                 </div>
                     <div id="myModal-@d" class="modal">
@@ -660,7 +698,7 @@
                             <span onclick="closedModal(@d)" class="close">&times;</span>
                             <div style="display:grid; grid-template-columns: 450px 500px;">
                                 <div id="productImage">
-                                    <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
+                                    <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                                 </div>
                                 <div>
                                     <h3>@item.Name</h3>
@@ -683,7 +721,7 @@
                     <input type="hidden" name="Aussen"  value="@item.Id"/>
                     <div id="ExelItem-@d" class="ExelItem">
                     <div id="productImage">
-                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
+                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                     </div>
                     <div id="productMenuInfo">
                         <div id="ProductNameUndCost">
@@ -691,6 +729,7 @@
                             <div>
                                     <input style="border: none;" readonly type="text" name="AussenName" value="@item.Name" />
                                     <input style="border: none;" type="hidden" name="NameSystem" value="@item.NameSystem" />
+                                    <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
                             </div>
 
                         </div>
@@ -1375,6 +1414,8 @@
         let BlockTur = document.getElementById("Size-"+idBlock);
         let countSchluss = BlockTur.querySelector("#countSchlusse-" + idBlock);
 
+        let company = BlockTur.querySelector("#compName");
+
         let ProductBlock = document.getElementById("ExelItem-" + idBlock);
         let WaitTime = ProductBlock.querySelector("#WaitTime");
         let Innen = BlockTur.querySelector("#Intern");
@@ -1451,15 +1492,23 @@
 
         });
 
-        if (Innen.value == 80 && Aussen.value == 80) 
+        if (Innen.value >= 55 && Aussen.value >= 55) 
         {
-            WaitTime.innerHTML = "Lieferzeit: 14 - 20 Werktage";
-            WaitTime.textContent = "Lieferzeit: 14 - 20 Werktage";
+            if (company.value = "CES") 
+            {
+                WaitTime.innerHTML = "Lieferzeit:4 Werktage";
+                WaitTime.textContent = "Lieferzeit: 4 Werktage";
+            }
+            else 
+            {
+                WaitTime.innerHTML = "Lieferzeit:7 Tag";
+                WaitTime.textContent = "Lieferzeit:7 Tag";
+            }
         }
         else 
         {
-            WaitTime.innerHTML = "Lieferzeit: 5 - 7 Werktage";
-            WaitTime.textContent = "Lieferzeit: 5 - 7 Werktage";
+            WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
+            WaitTime.textContent = "Lieferzeit: 2 Werktage";
         }
 
         iterations = 0;
@@ -1476,7 +1525,7 @@
         let countSchluss = BlockTur.querySelector("#countSchlusse-" + idBlock);
 
         let Aussen = BlockTur.querySelector("#Aussen");
-        
+        let company = BlockTur.querySelector("#compName");
         let Innen = BlockTur.querySelector("#Intern");
         let Aitems = Innen.querySelectorAll("#OptionI");
         let oldAussen = BlockTur.querySelector("#Innen-" + idBlock);
@@ -1547,15 +1596,22 @@
 
         });
 
-        if (Innen.value == 80 && Aussen.value == 80) 
+        if (Innen.value >= 55 && Aussen.value >= 55) 
         {
-            WaitTime.innerHTML = "Lieferzeit: 14 - 20 Werktage";
-            WaitTime.textContent = "Lieferzeit: 14 - 20 Werktage";
+            if (company.value = "CES") 
+            {
+                WaitTime.innerHTML = "Lieferzeit:4 Werktage";
+                WaitTime.textContent = "Lieferzeit: 4 Werktage";
+            }
+            else 
+            {
+                WaitTime.innerHTML = "Lieferzeit:7 Tag";
+                WaitTime.textContent = "Lieferzeit:7 Tag";
+            }
         }
-        else 
-        {
-            WaitTime.innerHTML = "Lieferzeit: 5 - 7 Werktage";
-            WaitTime.textContent = "Lieferzeit: 5 - 7 Werktage";
+        else {
+            WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
+            WaitTime.textContent = "Lieferzeit: 2 Werktage";
         }
 
         iterations = 0;

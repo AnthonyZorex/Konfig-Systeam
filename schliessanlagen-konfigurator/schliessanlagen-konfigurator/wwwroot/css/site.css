@@ -313,7 +313,15 @@ a {
     font-size: 28px;
     font-weight: bold;
 }
-
+#filteblock {
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    display: flex;
+    padding: 20px;
+    margin: 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
     .close:hover,
     .close:focus {
         color: black;
@@ -540,7 +548,7 @@ a {
     color: red;
 }
 .ExelItem {
-    grid-template-columns: 450px 800px;
+    grid-template-columns: 350px 800px;
     display: grid;
     margin-top: 50px;
     max-width: 1250px;
@@ -756,11 +764,14 @@ a {
     display: flex;
     gap: 5px;
 }
-    #chekerTur>button
+    #chekerTur > button 
     {
-        width:40px;
-        border:none;
-       
+        font-size: 24px;
+        border-radius: 20%;
+        color: white;
+        width: 40px;
+        border: none;
+        background: red;
     }
     #infoButten {
         height: 30px;
