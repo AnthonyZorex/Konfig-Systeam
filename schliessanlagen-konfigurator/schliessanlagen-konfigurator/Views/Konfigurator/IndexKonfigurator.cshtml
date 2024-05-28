@@ -119,7 +119,7 @@
                             </div>
                                 <div id="chekerTur">
                                     <button type="button" onclick="Plus(1)">+</button>
-                                    <input id="infoButten"  value="1" type="text" name="CountTur" />
+                                    <input id="infoButten" readonly  value="1"   type="text" name="CountTur" />
                                     <button type="button" onclick="Minus(1)">-</button>
                                 </div>
                         </div>
@@ -227,6 +227,21 @@
     let closeHilfe = document.getElementsByClassName("clostHilfeModel")[0];
 
     let boolArray = [];
+
+  
+    const scroll1 = document.getElementById('itemKeyBlock');
+    const scroll2 = document.getElementById('InfoValue');
+
+    // Функция для синхронизации прокрутки
+    function syncScroll(source, target) {
+        target.scrollLeft = source.scrollLeft;
+    }
+
+    // Добавление обработчиков событий прокрутки для обоих элементов
+    scroll1.addEventListener('scroll', () => syncScroll(scroll1, scroll2));
+    scroll2.addEventListener('scroll', () => syncScroll(scroll2, scroll1));
+
+   
 
     document.addEventListener('DOMContentLoaded', (event) => {
         var modal = document.getElementById("myModal");

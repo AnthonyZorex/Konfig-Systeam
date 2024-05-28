@@ -15,14 +15,14 @@
 <body>
 
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow ">
+        <nav class="navbar navbar-expand-xl navbar-toggleable-xl navbar-light bg-white border-bottom box-shadow ">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area=""><img src="@("/Image/SD_Logo.svg")" height="60" width="60" /> Schliessanlagen Konfigurator</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div style="margin-left:100px" class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div style="margin-left:100px" class="navbar-collapse collapse d-xl-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
 
 
@@ -35,31 +35,19 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AllOrders">Auftragsbearbeitung</a>
                                 </li>
                             }
-                        
-                        
-                      
+
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" href=" @Url.Action("IndexKonfigurator", "Konfigurator")">Konfigurator</a>
-                        </li> 
+                        </li>                      
                     </ul>
-                   <ul class="navbar-nav flex-grow-1" style="display: flex;align-items: center;text-align: center;">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" href=" @Url.Action("IndexKonfigurator", "Konfigurator")">SCHRITT 1</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" href=" @Url.Action("System_Auswählen", "Konfigurator")">SCHRITT 2</a>
-                        </li>
-                        <li class="nav-item">   
-                            <a class="nav-link text-dark" href=" @Url.Action("OrdersKey", "Konfigurator")">SCHRITT 3</a>
-                        </li>
-                       
-                    </ul> 
+
                     <partial name="_LoginPartial" />
-                    
+
                 </div>
             </div>
         </nav>
-    
+        
     </header>
     <div class="container">
         <main role="main" >
