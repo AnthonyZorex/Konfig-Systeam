@@ -3,7 +3,7 @@
 
 @{
     ViewData["Title"] = "Konfigurator";
-
+    bool isKonfug = true;
 }
 @if (TempData["AlertMessage"] != null)
 {
@@ -14,8 +14,11 @@
 <div>
     <div id="konfigMenu">
         <button type="button" class="btn btn-danger">1. Schließplan erstellen</button>
-        <button type="button" class="btn btn-secondary"><a href="@Url.Action("System_Auswählen","Konfigurator",new{ userName = @ViewBag.UserNameItem} )">2. System auswählen</a></button>
-        <button type="button" class="btn btn-secondary">3. Parameter einstellen</button>
+        @if (User.IsInRole("client") || User.IsInRole("admin"))
+        {
+            <button type="button" class="btn btn-secondary"><a href="@Url.Action("System_Auswählen","Konfigurator",new{userName = @ViewBag.UserNameItem , isNewKonfig = @isKonfug} )">2. System auswählen</a></button>
+        }
+      @*   <button type="button" class="btn btn-secondary">3. Parameter einstellen</button> *@
     </div>
     <div style="display:flex;gap: 20px;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;align-items: center;">
         <button onclick="hilfe()" style="border:none"><img src="/Image/help.png" width="60" hight="60"/></button>
@@ -25,7 +28,6 @@
     <form asp-action="SaveOrder" enctype="multipart/form-data" asp-controller="Konfigurator">
   
         @Html.HiddenFor(m => m.userKey)
-
         <input type="hidden" value="@ViewBag.UserNameItem" name="userName" />
 
     <div id="InformBar">
@@ -65,9 +67,9 @@
                     <div id="schlussel" style="margin-left:150px">
                   <h6>Zylindertyp</h6>
                </div>
+
                     <div id="schlussel" style="text-align: center;margin-left:80px">
                        <h6>Zylinderlänge mm</h6>
-
                     </div>
                 <div id="schlussel3">
                      <h6>Stück</h6>

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "UF2TpSrYwLewfWBQwiWpDrVRj9mFsNs4+1mDwvHn6eQ=",
+  "Hash": "qKSYtQSpef+1kC0TGSgc00o3lDQu6+R3GOIiI3s53SQ=",
   "Source": "schliessanlagen-konfigurator",
   "BasePath": "_content/schliessanlagen-konfigurator",
   "Mode": "Default",
@@ -3019,25 +3019,6 @@
       "OriginalItemSpec": "wwwroot\\Image\\zylinderlaenge.png"
     },
     {
-      "Identity": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\js\\site.js",
-      "SourceId": "schliessanlagen-konfigurator",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\",
-      "BasePath": "_content/schliessanlagen-konfigurator",
-      "RelativePath": "js/site.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\site.js"
-    },
-    {
       "Identity": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
       "SourceId": "schliessanlagen-konfigurator",
       "SourceType": "Discovered",
@@ -4121,12 +4102,12 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
     },
     {
-      "Identity": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\AnthonyBonetta43172452024 OrderFile.xlsx",
+      "Identity": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\AnthonyBonetta0112952024 OrderFile.xlsx",
       "SourceId": "schliessanlagen-konfigurator",
       "SourceType": "Discovered",
       "ContentRoot": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\",
       "BasePath": "_content/schliessanlagen-konfigurator",
-      "RelativePath": "Orders/AnthonyBonetta43172452024 OrderFile.xlsx",
+      "RelativePath": "Orders/AnthonyBonetta0112952024 OrderFile.xlsx",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -4137,26 +4118,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Orders\\AnthonyBonetta43172452024 OrderFile.xlsx"
-    },
-    {
-      "Identity": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\AnthonyBonetta50152752024 OrderFile.xlsx",
-      "SourceId": "schliessanlagen-konfigurator",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\",
-      "BasePath": "_content/schliessanlagen-konfigurator",
-      "RelativePath": "Orders/AnthonyBonetta50152752024 OrderFile.xlsx",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Orders\\AnthonyBonetta50152752024 OrderFile.xlsx"
+      "OriginalItemSpec": "wwwroot\\Orders\\AnthonyBonetta0112952024 OrderFile.xlsx"
     },
     {
       "Identity": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\CES_schliessplan_DE_schliessanlagen.xlsx",

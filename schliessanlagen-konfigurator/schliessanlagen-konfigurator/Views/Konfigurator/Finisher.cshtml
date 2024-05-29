@@ -122,7 +122,7 @@
                                 <option>Doppelzylinder</option>
                             </select>
                         </div>
-                        <div id="product_desciptions">
+                            <div id="textInform">
                             <h5>Zylinder Länge</h5>
                             <h5>Vifile Tür</h5>
                         </div>
@@ -155,12 +155,12 @@
                                     <input style="border: none;max-width: 30px;" id="countSchlusse-@d" type="number" min="0" value="@ViewBag.CounterTur[@elemNum]" />
                                     <button type="button" onclick="CylinderPlus(@d,'@item.Price')" class="btn btn-success">+</button>
                             </div>
-                                <div style="margin-left: 20px;">
+                              @*   <div style="margin-left: 20px;">
                                     <input type="button" value="?" onclick="OpenModalInfo(@d)" class="btn btn-success" />
-                                </div>
+                                </div> *@
                         </div>
 
-                        <div>
+                        <div id="optionsItems">
                             <h3>Weitere Optionen</h3>
                             <div>
                                 @{
@@ -263,7 +263,7 @@
                                 <option>KnayfZylinder</option>
                             </select>
                         </div>
-                        <div id="product_desciptions">
+                            <div id="textInform">
                             <h5>Zylinder Länge</h5>
                             <h5>Vifile Tür</h5>
                         </div>
@@ -296,12 +296,13 @@
                                     <input style="border: none;max-width: 30px;" id="countSchlusse-@d" type="number" min="0" value="@ViewBag.CounterTurKnayf[@elemNum]" name="TurCounter" />
                                     <button type="button" onclick="CylinderPlus(@d,'@item.Price')" class="btn btn-success">+</button>
                             </div>
-                                <div style="margin-left: 20px;">
+                                
+                            @* <div style="margin-left: 20px;">
                                     <input type="button" value="?" onclick="OpenModalInfo(@d)" class="btn btn-success" />
-                                </div>
-                        </div>        
+                                </div> *@ 
+                        </div>
 
-                        <div>
+                            <div id="optionsItems">
                             <h3>Weitere Optionen</h3>
                             <div>
                                 @{
@@ -406,7 +407,7 @@
                                 <option>Halbzylinder</option>
                             </select>
                         </div>
-                        <div id="product_desciptions">
+                            <div id="textInform">
                             <h5>Zylinder Länge</h5>
                             <h5>Vifile Tür</h5>
                         </div>
@@ -429,11 +430,11 @@
                                     <button type="button" onclick="CylinderPlus(@d,'@item.Price')" class="btn btn-success">+</button>
                             </div>
 
-                                <div style="margin-left: 20px;">
+                                @* <div style="margin-left: 20px;">
                                     <input type="button" value="?" onclick="OpenModalInfo(@d)" class="btn btn-success" />
-                                </div>
+                                </div> *@
                         </div>
-                        <div>
+                            <div id="optionsItems">
                             <h3>Weitere Optionen</h3>
                             <div>
                                 @{
@@ -536,8 +537,7 @@
                                 <option>Hebelzylinder</option>
                             </select>
                         </div>
-                        <div id="product_desciptions">
-                            <h5>Zylinder Länge</h5>
+                            <div id="textInform">
                             <h5>Vifile Tür</h5>
                         </div>
                             <div id="Size-@d" class="SizeProduct">
@@ -547,11 +547,11 @@
                                     <button onclick="CylinderPlus(@d,'@item.Price')" type="button" class="btn btn-success">+</button>
                             </div>
 
-                                <div style="margin-left: 20px;">
+                              @*   <div style="margin-left: 20px;">
                                     <input type="button" value="?" onclick="OpenModalInfo(@d)" class="btn btn-success" />
-                                </div>
+                                </div> *@
                         </div>
-                        <div>
+                            <div id="optionsItems">
                             <h3>Weitere Optionen</h3>
                             <div>
                                 @{
@@ -629,7 +629,7 @@
                                 <option>Vorhangschloss</option>
                             </select>
                         </div>
-                        <div id="product_desciptions">
+                        <div id="textInform">
                             <h5>Zylinder Länge</h5>
                             <h5>Vifile Tür</h5>
                         </div>
@@ -651,11 +651,11 @@
                                     <button type="button" onclick="CylinderPlus(@d,'@item.Price')" class="btn btn-success">+</button>
                             </div>
 
-                                <div style="margin-left: 20px;">
+                              @*   <div style="margin-left: 20px;">
                                     <input type="button" value="?" onclick="OpenModalInfo(@d)" class="btn btn-success" />
-                                </div>
+                                </div> *@
                         </div>
-                        <div>
+                            <div id="optionsItems">
                             <h3>Weitere Optionen</h3>
                             <div>
                                 @{
@@ -739,19 +739,18 @@
                             </select>
                         </div>
                         <div >
-                            <h5>Zylinder Länge</h5>
                             <h5>Vifile Tür</h5>
                         </div>
                             <div id="Size-@d" class="SizeProduct">
                                 <button type="button" onclick="CylinderMinus(@d,'@item.Price')" class="btn btn-success">-</button>
                                 <input style="border: none;max-width: 30px;" name="TurCounter" type="number" min="0" value="@ViewBag.CounterTurAussen[@elemNum]" id="countSchlusse-@d" />
                                 <button type="button" onclick="CylinderPlus(@d,'@item.Price')" class="btn btn-success">+</button>
-                                <div style="margin-left: 20px;">
+                               @*  <div style="margin-left: 20px;">
                                     <input type="button" value="?" onclick="OpenModalInfo(@d)" class="btn btn-success" />
-                                </div>
+                                </div> *@
                         </div>
-                           
-                        <div>
+
+                            <div id="optionsItems">
                             <h3>Weitere Optionen</h3>
                             <div>
                                 @{

@@ -381,12 +381,8 @@
       "PackagePath": "staticwebassets\\Image\\zylinderlaenge.png"
     },
     {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\AnthonyBonetta43172452024 OrderFile.xlsx",
-      "PackagePath": "staticwebassets\\Orders\\AnthonyBonetta43172452024 OrderFile.xlsx"
-    },
-    {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\AnthonyBonetta50152752024 OrderFile.xlsx",
-      "PackagePath": "staticwebassets\\Orders\\AnthonyBonetta50152752024 OrderFile.xlsx"
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\AnthonyBonetta0112952024 OrderFile.xlsx",
+      "PackagePath": "staticwebassets\\Orders\\AnthonyBonetta0112952024 OrderFile.xlsx"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\CES_schliessplan_DE_schliessanlagen.xlsx",
@@ -399,10 +395,6 @@
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
-    },
-    {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\js\\site.js",
-      "PackagePath": "staticwebassets\\js\\site.js"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\lib\\bootstrap\\LICENSE",

@@ -37,7 +37,7 @@
     <div>
         <label>Lieferzeit</label>
 
-        <select id="liferzeit" class="form-control">
+        <select id="liferzeit" onchange="serchLiferZeit(event.target.value)" class="form-control">
         </select>
 
     </div>
@@ -48,7 +48,7 @@
     </div>
 
     <div>
-        <div style="display:flex;gap: 20px;">
+        <div id="Gesamtpreis" style="display:flex;gap: 20px;">
             <label>Gesamtpreis von </label>
             <label>Gesamtpreis bis</label>
         </div>
@@ -89,31 +89,30 @@
                             <div id="product_desciptions">
                                 <h5>@item.description</h5>
                             </div>
-                         
-                            <div id="productChek">
 
+                            <div id="productChek">
                                 <div>
-                                    @if (@item.companyName == "CES")
-                                    {
-                                        <h6 id="lifer">7 Tag</h6>
-                                    }
-                                    @if (@item.companyName == "BASIC")
-                                    {
-                                        <h6 id="lifer">2 WochenTag</h6>
-                                    }
-                                    @if (@item.companyName == "ABUS")
-                                    {
-                                        <h6 id="lifer">2 WochenTag</h6>
-                                    }
-                                    @if (@item.companyName == "EVVA")
-                                    {
-                                        <h6 id="lifer">2 WochenTag</h6>
-                                    }
-                                </div>
-                                <div>
+                                    <div>
+                                        @if (@item.companyName == "CES")
+                                        {
+                                            <h6 id="lifer">7 Tag</h6>
+                                        }
+                                        @if (@item.companyName == "BASIC")
+                                        {
+                                            <h6 id="lifer">2 WochenTag</h6>
+                                        }
+                                        @if (@item.companyName == "ABUS")
+                                        {
+                                            <h6 id="lifer">2 WochenTag</h6>
+                                        }
+                                        @if (@item.companyName == "EVVA")
+                                        {
+                                            <h6 id="lifer">2 WochenTag</h6>
+                                        }
+                                    </div>
                                     <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
                                 </div>
-                               
+
                             </div>
                         </div>
                     </div>
@@ -143,6 +142,24 @@
                                 <h5>@item.description</h5>
                             </div>
                             <div id="productChek">
+                                <div>
+                                    @if (@item.companyName == "CES")
+                                    {
+                                        <h6 id="lifer">7 Tag</h6>
+                                    }
+                                    @if (@item.companyName == "BASIC")
+                                    {
+                                        <h6 id="lifer">2 WochenTag</h6>
+                                    }
+                                    @if (@item.companyName == "ABUS")
+                                    {
+                                        <h6 id="lifer">2 WochenTag</h6>
+                                    }
+                                    @if (@item.companyName == "EVVA")
+                                    {
+                                        <h6 id="lifer">2 WochenTag</h6>
+                                    }
+                                </div>
                                 <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Systeam =  @item.NameSystem,DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
                             </div>
                         </div>
@@ -172,6 +189,24 @@
                                 <h5>@item.description</h5>
                             </div>
                             <div id="productChek">
+                                <div>
+                                    @if (@item.companyName == "CES")
+                                    {
+                                        <h6 id="lifer">7 Tag</h6>
+                                    }
+                                    @if (@item.companyName == "BASIC")
+                                    {
+                                        <h6 id="lifer">2 WochenTag</h6>
+                                    }
+                                    @if (@item.companyName == "ABUS")
+                                    {
+                                        <h6 id="lifer">2 WochenTag</h6>
+                                    }
+                                    @if (@item.companyName == "EVVA")
+                                    {
+                                        <h6 id="lifer">2 WochenTag</h6>
+                                    }
+                                </div>
                                 <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
                             </div>
                         </div>
@@ -201,6 +236,24 @@
                                 <h5>@item.description</h5>
                             </div>
                             <div id="productChek">
+                                <div>
+                                    @if (@item.companyName == "CES")
+                                    {
+                                        <h6 id="lifer">7 Tag</h6>
+                                    }
+                                    @if (@item.companyName == "BASIC")
+                                    {
+                                        <h6 id="lifer">2 WochenTag</h6>
+                                    }
+                                    @if (@item.companyName == "ABUS")
+                                    {
+                                        <h6 id="lifer">2 WochenTag</h6>
+                                    }
+                                    @if (@item.companyName == "EVVA")
+                                    {
+                                        <h6 id="lifer">2 WochenTag</h6>
+                                    }
+                                </div>
                                 <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
                             </div>
                         </div>
@@ -230,6 +283,24 @@
                                 <h5>@item.description</h5>
                             </div>
                             <div id="productChek">
+                                <div>
+                                    @if (@item.companyName == "CES")
+                                    {
+                                        <h6 id="lifer">7 Tag</h6>
+                                    }
+                                    @if (@item.companyName == "BASIC")
+                                    {
+                                        <h6 id="lifer">2 WochenTag</h6>
+                                    }
+                                    @if (@item.companyName == "ABUS")
+                                    {
+                                        <h6 id="lifer">2 WochenTag</h6>
+                                    }
+                                    @if (@item.companyName == "EVVA")
+                                    {
+                                        <h6 id="lifer">2 WochenTag</h6>
+                                    }
+                                </div>
                                 <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Systeam =  @item.NameSystem,DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
                             </div>
                         </div>
@@ -259,6 +330,24 @@
                                 <h5>@item.description</h5>
                             </div>
                             <div id="productChek">
+                                <div>
+                                    @if (@item.companyName == "CES")
+                                    {
+                                        <h6 id="lifer">7 Tag</h6>
+                                    }
+                                    @if (@item.companyName == "BASIC")
+                                    {
+                                        <h6 id="lifer">2 WochenTag</h6>
+                                    }
+                                    @if (@item.companyName == "ABUS")
+                                    {
+                                        <h6 id="lifer">2 WochenTag</h6>
+                                    }
+                                    @if (@item.companyName == "EVVA")
+                                    {
+                                        <h6 id="lifer">2 WochenTag</h6>
+                                    }
+                                </div>
                                 <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Systeam =  @item.NameSystem,DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
                             </div>
                         </div>
@@ -279,15 +368,48 @@
         });
     }
 
-    document.addEventListener("DOMContentLoaded"()=>
-        {
-            let selectLiferzeit = document.getElementById("liferzeit");
+    let selectLiferzeit = document.getElementById("liferzeit");
 
-            allDoc.forEach((item) => {
+    function serchLiferZeit(value) {
 
+        allDoc.forEach((item) => {
 
-            });
+            let companyTime = item.querySelectorAll("#lifer")[0];
+
+            if (value.trim() == "") {
+                item.style.display = "grid";
+            }
+            else if (companyTime.textContent != value.trim()) {
+                item.style.display = "none";
+            }
+            else {
+                item.style.display = "grid";
+            }
         });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+
+        let allvalue = "";
+
+        allDoc.forEach((item) => {
+
+            let lif = item.querySelectorAll("#lifer");
+            allvalue += lif[0].textContent + ",";
+        });
+
+        const items = allvalue.split(',');
+
+        const uniqueItems = [...new Set(items)];
+
+        uniqueItems.forEach((item) => {
+
+            let options = document.createElement("option");
+            options.textContent = item;
+            selectLiferzeit.appendChild(options);
+
+        })
+    });
 
     function selectCompany(value) {
         let serchSystemName = document.querySelectorAll("#serchSystemName");

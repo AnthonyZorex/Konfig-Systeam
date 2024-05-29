@@ -51,25 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "19549212-622e-4fdd-80e7-355900e86ced",
+                            Id = "578b9a2b-174a-4c4f-8b96-01e50c2d9fd9",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "17c09524-bcf9-44cd-a5a4-93232aa1758c",
+                            Id = "0f9aa5d7-c0e8-481a-986a-ba5b711aeb1a",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "c179619e-a4b4-492e-9a09-3be71b717b79",
+                            Id = "925cddb7-6ed2-4e79-9d43-20e54a10faca",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "4745be47-b953-43d2-8066-d68771d9c870",
+                            Id = "249ef8bf-b041-4887-b6be-f15736c4a631",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -1073,6 +1073,10 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserOrderKey")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("count")
                         .HasColumnType("int");

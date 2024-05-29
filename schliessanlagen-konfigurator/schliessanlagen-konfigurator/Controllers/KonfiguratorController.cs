@@ -527,7 +527,40 @@ namespace schliessanlagen_konfigurator.Controllers
        }
         public ActionResult IndexKonfigurator()
         {
+            ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
 
+            if (ident.IsAuthenticated == true)
+            {
+                string loginInform = ident.Claims.Select(x => x.Value).First();
+                var users = db.Users.FirstOrDefault(x => x.Id == loginInform);
+
+                var Ord = db.Orders.ToList();
+
+                var userOrders = db.UserOrdersShop.Where(x => x.UserId == users.Id).ToList();
+
+                var ordList = new List<Orders>();
+
+                    foreach (var list in userOrders)
+                    {
+                        var lastOrder = Ord.Where(x => x.userKey == list.UserOrderKey).ToList();
+
+                        foreach (var item in lastOrder)
+                        {
+                            ordList.Add(item);
+                        }
+                    }
+
+                    var lastlist = ordList.OrderBy(x => x.Created).Last();
+
+                ViewBag.UserNameItem = lastlist.userKey;
+
+
+            }
+            else
+            {
+                ViewBag.UserNameItem = "";
+            }
+            
             var UserOList = new List<UserOrdersShop>();
 
             var oldData = db.UserOrdersShop.Where(e => e.OrderStatus == "Nicht bezahlt").ToList();
@@ -691,14 +724,14 @@ namespace schliessanlagen_konfigurator.Controllers
             return View(user);
         }
         [HttpGet]
-        public async Task<ActionResult> System_Auswählen(Orders userKey)
+        public async Task<ActionResult> System_Auswählen(string userName, bool isNewKonfig)
         {
-
             var orders = await db.Orders.ToListAsync();
 
-            //ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
-            //string loginInform = ident.Claims.Select(x => x.Value).First();
-            //var users = db.Users.FirstOrDefault(x => x.Id == loginInform);
+            if (userName!=null && isNewKonfig == true)
+            {
+                orders = orders.Where(x => x.userKey == userName).ToList();
+            }
 
             var keyUser = orders.Last();
 
@@ -3465,7 +3498,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 ViewBag.optionsName = ngf.Select(x => x.Name).ToList();
 
                 ViewBag.DoppelOptionsNameJson = JsonConvert.SerializeObject(ngf.Select(x => x.Name).ToList());
-
+               
                 List<NGF_Value> ngfList = new List<NGF_Value>();
 
                 var oPvalueCount = new List<int>();
@@ -3506,17 +3539,22 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 ViewBag.optionsValue = ngfList.Select(x => x.Value).ToList();
 
-                ViewBag.DoppelOptionsValue = JsonConvert.SerializeObject(ngfList.Select(x => x.Value).ToList());
-
+                    ViewBag.DoppelOptionsValue = JsonConvert.SerializeObject(ngfList.Select(x => x.Value).ToList());
+                    ViewBag.optionsPrise = JsonConvert.SerializeObject(ngfList.Select(x => x.Cost).ToList());
+     
                 ViewBag.DoppelOptionSelected = key.Where(x => x.ZylinderId == 1).Select(x => x.Options).ToList();
+            }
 
-                ViewBag.optionsPrise = JsonConvert.SerializeObject(ngfList.Select(x => x.Cost).ToList());
-
+            if(queryableOptions.Count() == 0)
+            {
+                ViewBag.optionsPrise = JsonConvert.SerializeObject("");
+                ViewBag.DoppelOptionsValue = JsonConvert.SerializeObject("");
+                ViewBag.DoppelOptionsNameJson = JsonConvert.SerializeObject("");
             }
 
             var queryableOptionsKnayf = db.Profil_Knaufzylinder_Options.Where(x => x.Profil_KnaufzylinderId == Convert.ToInt32(KnayfID)).Select(x => x.Id).ToList();
             ViewBag.countOptionsQueryKnayf = queryableOptionsKnayf.Count();
-           
+
             if (queryableOptionsKnayf.Count() > 0)
             {
 
@@ -3568,6 +3606,13 @@ namespace schliessanlagen_konfigurator.Controllers
 
             }
 
+            if (queryableOptionsKnayf.Count() == 0)
+            {
+                ViewBag.optionsValueKnayfJson = JsonConvert.SerializeObject("");
+
+                ViewBag.optionsPriseKnayf = JsonConvert.SerializeObject("");
+                ViewBag.OptionsNameKnayfJson = JsonConvert.SerializeObject("");
+            }
             var keyOpenOrder = new List<isOpen_Order>();
 
             foreach (var order in key)
@@ -3849,7 +3894,7 @@ namespace schliessanlagen_konfigurator.Controllers
             db.SaveChanges();
             return Redirect("/Identity/Account/Manage/PagePersonalOrders");
         }
-        public async Task<IActionResult> SaveUserOrders(List<string> TurName, List<string> DopelName, List<float> DoppelAussen, List<float> DoppelIntern
+        public async Task<IActionResult> SaveUserOrders(string user, List<string> TurName, List<string> DopelName, List<float> DoppelAussen, List<float> DoppelIntern
         ,List<string> DoppelOption, List<string> KnayfOption, List<string> HalbOption, List<string> HebelOption, List<string> VorhnaOption, List<string> AussenOption,
         List<string> KnayfName, List<float> KnayfAussen, List<float> KnayfIntern, List<string> HalbName, List<float> HalbAussen, List<string> HelbName,
         List<string> VorhanName, List<float> VorhanAussen, List<string> AussenName, string cost, List<string> key, List<bool> keyIsOpen, List<int> countKey,
@@ -3912,6 +3957,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 OrderStatus = "Nicht bezahlt",
                 count = 1,
                 createData = DateTime.Now,
+                UserOrderKey = user,
             };
             db.UserOrdersShop.Add(UserOrder);
             db.SaveChanges();
@@ -4372,11 +4418,6 @@ namespace schliessanlagen_konfigurator.Controllers
                 {
                     TurnameValue = Turname[i];
                 }
-
-                //ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
-                //string loginInform = ident.Claims.Select(x => x.Value).First();
-                //var users = db.Users.Where(x => x.Id == loginInform).ToList();
-              
 
                 var orders = new Orders
                 {

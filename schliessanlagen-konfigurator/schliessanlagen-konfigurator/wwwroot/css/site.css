@@ -1,8 +1,105 @@
-﻿/*html {
-    font-size: 14px;
-}*/
-@media(max-width:900px) and (orientation: portrait) 
-{
+﻿#optionsItems {
+    margin-top: 20px;
+}
+
+@media(max-width:900px) and (orientation: portrait) {
+    #Gesamtpreis 
+    {
+        gap: 105px !important;
+    }
+    #product_desciptions 
+    {
+        margin-top: 10px;
+        display: block;
+        gap: 150px;
+    }
+    .SizeProduct {
+        display: flex;
+        margin-bottom: 20px;
+    }
+    #numerKey{
+        font-size:8px;
+    }
+    OpenValue > input{
+        width: 10px !important;
+    }
+    #FinisherAnderes {
+        margin-bottom: 50px;
+        margin-top: 50px;
+    }
+    #OpenValue {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: 100px 100px 100px ;
+        margin-right: 50px;
+    }
+    #cost {
+        color: red;
+    }
+ 
+    #ItemCounterOrders {
+        display: flex;
+        gap: 20px;
+    }
+    #counterKey {
+        display: flex;
+        gap: 20px;
+    }
+    #finisherItem {
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        border-radius: 10px;
+        margin-top: 20px;
+        padding: 10px;
+        background-color: white;
+        display: grid;
+        align-items: center;
+        text-align: center;
+        grid-template-columns: repeat(3, 100px);
+    }
+    .btn-success {
+        color: #fff;
+        background-color: #198754;
+        border-color: #198754;
+    }
+    a:hover {
+        text-decoration-color: none;
+        color: white;
+    }
+    a{
+        text-decoration-color: none;
+        color: white;
+    }
+    #chekProduct {
+        width: auto;
+        height: auto;
+        font-size: 12px;
+        text-align: center;
+        align-items: center;
+        color: white;
+    }
+    #lifer{
+        color:red;
+        margin-top:20px;
+        margin-bottom:20px;
+        font-size:12px;
+    }
+    #ProductNameUndCost {
+        margin-top: 20px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 20px;
+        /* gap:10px;*/
+    }
+    .ExelItem {
+        padding-bottom: 10px;
+        padding-top: 10px;
+        margin-bottom: 50px;
+        margin-top: 50px;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        width:auto;
+        max-width:800px;
+        text-align: center;
+    }
     #konfigMenu {
         margin-top: 10px;
         margin-bottom: 10px;
@@ -142,7 +239,7 @@
     }
 
     html {
-        font-size: 6px;
+        font-size: calc(6px + (8 - 6) * ((100vw - 480px) / ( 1440 - 480) ));
     }
 
     #InformBar {
@@ -167,7 +264,10 @@
         width: auto;
         overflow-x: scroll;
     }
-
+    #buttonActionFinishBlock {
+        text-align: center;
+        display: block;
+    }
     .checkboxContainer > input[type="checkbox"] {
         width: 20px;
         height: 20px;
@@ -202,7 +302,12 @@
         display: flex;
         margin-top: -45px;
     }
-
+    #textInform {
+        display: flex;
+        gap: 130px;
+        margin-top:10px;
+        margin-left:0px;
+    }
     #infoButten {
         height: 20px;
         width: 20px;
@@ -336,10 +441,149 @@
         border: none;
         margin-left: 10px;
     }
+    #chekProduct {
+        padding: 20px 100px 20px 100px;
+        margin-top: 50px;
+        text-align:center;
+        margin-bottom: 20px;
+    }
 }
 
 @media(max-width:900px) and (orientation: landscape) 
 {
+    #buttonActionFinishBlock {
+        gap: 20px;
+        justify-content: center;
+        margin-top:20px;
+        display: flex;
+    }
+
+    #orderCost{
+        text-align:center;
+    }
+
+    #Aussen_Innen_ProfilDopel {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 50px;
+    }
+    #Table {
+        display: grid;
+        grid-template-columns: repeat(9, auto);
+    }
+    #routBAR {
+        display: grid;
+        grid-template-columns: repeat(6, auto);
+        text-align: center;
+        justify-content: center;
+    }
+    #productMenu {
+        gap: 150px;
+        display: flex;
+    }
+    .SizeProduct {
+        display: flex;
+        margin-bottom: 20px;
+    }
+    #cost 
+    {
+        color: red;
+    }
+    #textInform {
+        display: flex;
+        gap: 130px;
+        margin-top: 10px;
+        margin-left: auto;
+        margin-right:auto;
+    }
+    #product_desciptions {
+        margin-top: 20px;
+        display: block;
+        gap: 150px;
+    }
+    #ItemCounterOrders 
+    {
+        display: flex;
+        gap: 20px;
+    }
+
+    #counterKey 
+    {
+        display: flex;
+        gap: 20px;
+    }
+    #TurName{
+        width:auto;
+    }
+    #finisherItem {
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        border-radius: 10px;
+        margin-top: 20px;
+        padding: 10px;
+        background-color: white;
+        display: grid;
+        align-items: center;
+        text-align: center;
+        grid-template-columns: 150px 150px 0px;
+    }
+    #FinisherAnderes{
+        margin-bottom:50px;
+        margin-top:50px;
+    }
+    #OpenValue {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: repeat(4,100px);
+        margin-right: 50px;
+    }
+    .btn-success {
+        color: #fff;
+        background-color: #198754;
+        border-color: #198754;
+    }
+
+
+    #chekProduct {
+        text-align: center;
+        color:white;
+        align-items: center;
+    }
+    #Gesamtpreis {
+        gap: 65px !important;
+    }
+    #cost{
+        color:red;
+    }
+    #lifer {
+        color: red;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        font-size: 12px;
+    }
+
+    #ProductNameUndCost {
+        margin-top: 20px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 20px;
+        /* gap:10px;*/
+    }
+
+    .ExelItem {
+        padding-bottom: 10px;
+        padding-top: 10px;
+        margin-bottom: 50px;
+        margin-top: 50px;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        width: auto;
+        max-width: 800px;
+        text-align: center;
+    }
+
+    #konfigMenu {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
     .modalLessen {
         display: none;
         position: fixed;
@@ -472,7 +716,7 @@
     }
 
     html {
-        font-size: 12px;
+        font-size: calc(12px + (16 - 12) * ((100vw - 480px) / ( 1440 - 480) ));
     }
 
     #InformBar {
@@ -675,7 +919,7 @@
     }
 }
 
-@media (min-width:1400px )
+@media (min-width:1200px )
 {
     body {
         margin-bottom: 60px;
@@ -951,7 +1195,8 @@
     }
 
     #konfigMenu {
-        display: none;
+       margin-bottom:10px;
+       margin-top:10px;
     }
 
     #input {
@@ -1132,11 +1377,6 @@
         gap: 25px
     }
 
-    #product_desciptions {
-        margin-top: 100px;
-        /*    max-width: 600px;*/
-    }
-
     #productMenu {
         gap: 150px;
         display: flex;
@@ -1233,7 +1473,11 @@
         margin: 20px;
         padding: 20px 150px 20px 150px;
     }
-
+    #textInform {
+        margin-top: 20px;
+        display: flex;
+        gap: 100px;
+    }
     #chekProduct {
         padding: 20px 150px 20px 150px;
         margin-top: 50px;
