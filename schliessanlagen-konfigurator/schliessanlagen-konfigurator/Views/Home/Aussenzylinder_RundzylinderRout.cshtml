@@ -33,27 +33,27 @@
 
                     <div style="margin-bottom: 50px;">
                         <label>Name</label>
-                        <input asp-for="Name" class="form-control" type="text" name="Name" />
+                        <input asp-for="Name" required class="form-control" type="text" name="Name" />
                     </div>
 
                     <div style="margin-bottom: 50px;">
                         <label> Company Name</label>
-                        <input asp-for="companyName" class="form-control" type="text" />
+                        <input asp-for="companyName" required class="form-control" type="text" />
                     </div>
 
                     <div style="margin-bottom: 50px;">
                         <label>Name System</label>
-                        <input asp-for="NameSystem" class="form-control" type="text" />
+                        <input asp-for="NameSystem" required class="form-control" type="text" />
                     </div>
 
                     <div style="margin-bottom: 50px;">
                         <label>Descriptions</label>
-                        <textarea asp-for="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea asp-for="description" required class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                     </div>
 
                     <div style="margin-bottom: 50px;">
                         <label>Cost</label>
-                        <input asp-for="Price" class="form-control" />
+                        <input asp-for="Price" required class="form-control" />
                     </div>
 
                     <div id="productOptions">

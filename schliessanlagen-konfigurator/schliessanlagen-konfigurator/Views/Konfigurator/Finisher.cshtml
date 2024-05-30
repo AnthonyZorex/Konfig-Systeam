@@ -1374,7 +1374,7 @@
                         
                         return;
                     }
-                    else
+                    if (ItemValue > 31) 
                     {
                         iterations++;
                     }
@@ -1393,7 +1393,7 @@
                         AllPrice.value = parseFloat(Costen) + (VorhanSizeCost[iterations] * Number(countSchluss.value));
                         return;
                     }
-                    else 
+                    if (ItemValue > 31) 
                     {
                         iterations --;
                     }
@@ -1442,27 +1442,26 @@
             }
             else 
             {
-                if ((value > 31 || value > 30) && (value > ItemValueOld)) 
+                if ((value > 31 ) && (value > ItemValueOld)) 
                 {
                         if (ItemValue == value) 
                         {
                             oldAussen.value = ItemValue;
                             serchedItem++;
-                            iterations++;
-
+                             iterations++;
                             for (let i = 0; i !== iterations; i++) 
                             {
-                            let Costen = AllPrice.value.replace(/,/g, '.');
-                                AllPrice.value = parseFloat(Costen) + (5 * Number(countSchluss.value));
+                                let Costen = AllPrice.value.replace(/,/g, '.');
+                                AllPrice.value = parseFloat(Costen) + (4 * Number(countSchluss.value));
                             }
-
                             return;
-                        }
-                        if (ItemValue > 31) 
-                        {
-                            iterations++;
-                        } 
+                         }
+                            if (ItemValue > 31) 
+                            {
+                                iterations++;
+                            } 
                 }
+                
                
                 if (ItemValueOld > value) 
                 {
@@ -1474,17 +1473,15 @@
                         {
                             oldAussen.value = value;
                             serchedItem++;
-                            
-                            AllPrice.value = parseFloat(Costen) - (4 * Number(countSchluss.value));
+                             AllPrice.value = parseFloat(Costen) - (4 * Number(countSchluss.value));
                             return;
                         }
-                        else 
+                        if (ItemValue > 31) 
                         {
-
                             AllPrice.value = parseFloat(Costen) - (4 * Number(countSchluss.value));
                         }
-                    }                    
-                    
+                    } 
+                   
                 }
 
             }
@@ -1548,18 +1545,19 @@
             }
             else 
             {
-                if ((value > 31 || value > 30) && (value > ItemValueOld)) 
+                if ((value > 31) && (value > ItemValueOld)) 
                 {
-                    let Costen = AllPrice.value.replace(/,/g, '.');
-
+                  
                     if (ItemValue == value) 
-                    {
+                    {  
                         oldAussen.value = ItemValue;
                         serchedItem++;
                         iterations++;
+
                         for (let i = 0; i !== iterations; i++) 
                         {
-                            AllPrice.value = parseFloat(Costen) + (5 * Number(countSchluss.value));
+                             let Costen = AllPrice.value.replace(/,/g, '.');
+                            AllPrice.value = parseFloat(Costen) + (4 * Number(countSchluss.value));
                         }
 
                         return;
@@ -1573,8 +1571,6 @@
 
                 if (ItemValueOld > value) 
                 {
-                    if (ItemValue > 31) 
-                    {
                         let Costen = AllPrice.value.replace(/,/g, '.');
 
                         if (ItemValue == ItemValueOld) 
@@ -1584,11 +1580,11 @@
                             AllPrice.value = parseFloat(Costen) - (4 * Number(countSchluss.value));
                             return;
                         }
-                        else {
+                        if (ItemValue > 31) 
+                        {
                             AllPrice.value = parseFloat(Costen) - (4 * Number(countSchluss.value));
                         }
-                    }
-                    
+
                 }
 
             }
