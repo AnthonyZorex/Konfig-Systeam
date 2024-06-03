@@ -72,8 +72,7 @@
               "RelativeToolTip": "schliessanlagen-konfigurator\\Views\\Shared\\_Layout.cshtml",
               "ViewState": "AQIAAAMAAAAAAAAAAAAAAA4AAAAGAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-05-31T11:38:04.596Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-31T11:38:04.596Z"
             },
             {
               "$type": "Document",
@@ -85,8 +84,7 @@
               "RelativeToolTip": "schliessanlagen-konfigurator\\Program.cs",
               "ViewState": "AQIAACcAAAAAAAAAAAAAADIAAAAiAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-30T12:22:14.008Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-30T12:22:14.008Z"
             },
             {
               "$type": "Document",
@@ -98,8 +96,7 @@
               "RelativeToolTip": "schliessanlagen-konfigurator\\Controllers\\KonfiguratorController.cs",
               "ViewState": "AQIAAAICAAAAAAAAAAAvwA8CAAAtAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-29T08:18:57.49Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-29T08:18:57.49Z"
             },
             {
               "$type": "Document",
@@ -111,8 +108,7 @@
               "RelativeToolTip": "schliessanlagen-konfigurator\\Views\\Konfigurator\\Finisher.cshtml",
               "ViewState": "AQIAABwGAAAAAAAAAAAAACEGAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-05-22T10:13:01.184Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-22T10:13:01.184Z"
             }
           ]
         }

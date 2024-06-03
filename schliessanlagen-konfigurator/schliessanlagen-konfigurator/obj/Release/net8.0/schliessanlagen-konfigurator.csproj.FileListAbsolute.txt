@@ -293,3 +293,8 @@ D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\MimeKit.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\EPPlus.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\System.Xml.XPath.XmlDocument.dll
+D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\app\web.config
+D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\app\appsettings.Development.json
+D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\app\appsettings.json
+D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\app\schliessanlagen-konfigurator.deps.json
+D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\app\schliessanlagen-konfigurator.runtimeconfig.json
