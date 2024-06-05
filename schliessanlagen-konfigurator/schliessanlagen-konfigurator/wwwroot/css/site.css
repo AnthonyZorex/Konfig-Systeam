@@ -2,6 +2,12 @@
     margin-top: 20px;
 }
 
+#selectLang{
+    border:none;
+    outline:none;
+    margin-right:50px;
+}
+
 @media(max-width:900px) and (orientation: portrait) {
     #Gesamtpreis 
     {

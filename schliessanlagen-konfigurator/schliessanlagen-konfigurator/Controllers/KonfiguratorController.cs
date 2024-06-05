@@ -549,12 +549,12 @@ namespace schliessanlagen_konfigurator.Controllers
                             ordList.Add(item);
                         }
                     }
-
+                if (ordList.Count() > 0)
+                {
                     var lastlist = ordList.OrderBy(x => x.Created).Last();
 
-                ViewBag.UserNameItem = lastlist.userKey;
-
-
+                    ViewBag.UserNameItem = lastlist.userKey;
+                }
             }
             else
             {

@@ -1,11 +1,6 @@
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\schliessanlagen-konfigurator.exe
-D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\app\web.config
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\appsettings.Development.json
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\appsettings.json
-D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\app\appsettings.Development.json
-D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\app\appsettings.json
-D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\app\schliessanlagen-konfigurator.deps.json
-D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\app\schliessanlagen-konfigurator.runtimeconfig.json
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\schliessanlagen-konfigurator.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\schliessanlagen-konfigurator.runtimeconfig.json
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\schliessanlagen-konfigurator.pdb
