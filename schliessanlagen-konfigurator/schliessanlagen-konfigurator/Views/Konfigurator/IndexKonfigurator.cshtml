@@ -3,20 +3,14 @@
 
 @{
     ViewData["Title"] = "Konfigurator";
-    bool isKonfug = true;
 }
-@if (TempData["AlertMessage"] != null)
-{
-    <script>
-        alert("@TempData["AlertMessage"]");
-    </script>
-}
+
 <div>
     <div id="konfigMenu">
         <button type="button" class="btn btn-danger">1. Schließplan erstellen</button>
         @if (User.IsInRole("client") || User.IsInRole("admin"))
         {
-            <button type="button" class="btn btn-secondary"><a href="@Url.Action("System_Auswählen","Konfigurator",new{userName = @ViewBag.UserNameItem , isNewKonfig = @isKonfug} )">2. System auswählen</a></button>
+            <button type="button" class="btn btn-secondary"><a href="@Url.Action("System_Auswählen","Konfigurator",new{userName = @ViewBag.UserNameItem , isNewKonfig = true} )">2. System auswählen</a></button>
         }
       @*   <button type="button" class="btn btn-secondary">3. Parameter einstellen</button> *@
     </div>

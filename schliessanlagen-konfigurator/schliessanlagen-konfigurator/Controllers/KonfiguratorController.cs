@@ -724,8 +724,9 @@ namespace schliessanlagen_konfigurator.Controllers
             return View(user);
         }
         [HttpGet]
-        public async Task<ActionResult> System_Auswählen(string userName, bool isNewKonfig)
+        public async Task<ActionResult> System_Auswählen(string Key, string userName, bool isNewKonfig)
         {
+            var xtr = Key;
             var orders = await db.Orders.ToListAsync();
 
             if (userName!=null && isNewKonfig == true)
@@ -734,7 +735,7 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             else
             {
-                return RedirectToAction("IndexKonfigurator", "Konfigurator");
+                orders = orders.Where(x => x.userKey == Key).ToList();
             }
 
             var keyUser = orders.Last();
@@ -4599,7 +4600,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
             }
             db.SaveChanges();
-            return RedirectToAction("System_Auswählen", "Konfigurator", new { Key, userName });
+            return RedirectToAction("System_Auswählen", "Konfigurator", new { Key = Key.userKey, userName });
         }
 
     }
