@@ -579,7 +579,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     string destinationFilePath = @$"wwwroot/Orders/{users.FirstName + users.LastName + order.createData.Value.Minute + order.createData.Value.Hour  + order.createData.Value.Day + order.createData.Value.Month + order.createData.Value.Year} OrderFile.xlsx";
 
                     var message = new MimeMessage();
-                    message.From.Add(new MailboxAddress("Schlüssel Discount Store", "bonettaanthony466@gmail.com"));
+                    message.From.Add(new MailboxAddress("Schlüssel Discount Store", "bestellung@schliessanlage.discount"));
                     message.To.Add(new MailboxAddress(users.FirstName + users.LastName, users.UserName));
                     message.Subject = "Schlüssel Discount Store";
                     
@@ -596,8 +596,8 @@ namespace schliessanlagen_konfigurator.Controllers
                     message.Body = bodyBuilder.ToMessageBody();
                     using (var client = new SmtpClient())
                     {
-                        client.Connect("smtp.gmail.com", 587, false);
-                        client.Authenticate("bonettaanthony466@gmail.com", "huqf ddvv mnba lcug ");
+                        client.Connect("smtp", 465, false);
+                        client.Authenticate("bestellung@schliessanlage.discount", "Q$iW28z5JLtXNJ");
                         client.Send(message);
 
                         client.Disconnect(true);
@@ -3961,7 +3961,7 @@ namespace schliessanlagen_konfigurator.Controllers
             db.UserOrdersShop.Add(UserOrder);
             db.SaveChanges();
 
-            var CountAllItem = VorhanName.Count() + AussenName.Count() + DopelName.Count() + KnayfName.Count() + HalbName.Count() + HelbName.Count();
+          
 
             int Rowcheked = 14;
             int row = 17;
@@ -3973,7 +3973,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 for (int i = 0; i < countKey.Count(); i++)
                 {
-                    for (int z = 0; z < CountAllItem; z++)
+                    for (int z = 0; z < TurCounter.Count(); z++)
                     {
                         if (keyIsOpen[value] == true)
                         {
@@ -4010,7 +4010,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 worksheet.Cells[$"C{8}"].Value = Orders.Select(x=>x.Id).Last();
                 worksheet.Cells[$"C{9}"].Value = users.Address +"\n"+ users.FirstName + users.LastName;
 
-                for (int i = 0; i < CountAllItem; i++)
+                for (int i = 0; i < TurCounter.Count(); i++)
                 {
                     string Dor = "";
                     int countT = 0;
@@ -4277,7 +4277,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
                 Stopwatch stopwatch = Stopwatch.StartNew();
                 var message = new MimeMessage();
-                message.From.Add(new MailboxAddress("Schlüssel Discount Store", "bonettaanthony466@gmail.com"));
+                message.From.Add(new MailboxAddress("Schlüssel Discount Store", "bestellung@schliessanlage.discount"));
                 message.To.Add(new MailboxAddress(users.FirstName + users.LastName, users.UserName));
                 message.Subject = "Schlüssel Discount Store";
                 message.Body = new TextPart("plain")
@@ -4301,8 +4301,8 @@ namespace schliessanlagen_konfigurator.Controllers
                 message.Body = bb.ToMessageBody();
                 using (var client = new SmtpClient())
                 {
-                    client.Connect("smtp.gmail.com", 587, false);
-                    client.Authenticate("bonettaanthony466@gmail.com", "huqf ddvv mnba lcug ");
+                    client.Connect("smtp", 465, false);
+                    client.Authenticate("bestellung@schliessanlage.discount", "Q$iW28z5JLtXNJ");
                     client.Send(message);
 
                     client.Disconnect(true);

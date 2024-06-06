@@ -3,66 +3,67 @@
 @{
     ViewData["Title"] = $"ProductProfil_Halb/{Model.Id}";
 }
-@Html.HiddenFor(m => m.Id)
-
-
-<div>
-    <div id="productMenu">
-        <div>
-            <img decoding="async" src="@("~/image/"+@Model.ImageName)" asp-append-version="true" width="400px" height="400px" />
-        </div>
-
-        <div id="product_desciptions">
+@if(User.IsInRole("admin"))
+{
+    @Html.HiddenFor(m => m.Id)
+    <div>
+        <div id="productMenu">
             <div>
-                <h3>@Model.Name</h3>
-                <h2><strong id="cost" style="line-height: 200%;">@Model.Price</strong></h2>
-                <h6 style="line-height: 200%; max-width: 400px;">@Model.description</h6>
+                <img decoding="async" src="@("~/image/"+@Model.ImageName)" asp-append-version="true" width="400px" height="400px" />
             </div>
 
-            <div id="cardOptions">
-                <h6>
-                    Zylinderlänge A (Außenlänge)
-                    Bitte wählen Sie zunächst die Außenlänge des Zylinders
-                </h6>
-                <select class="form-select" id="select aussen">
-                    @foreach (var listItem in ViewBag.aussen)
-                    {
-                        <option id="auss">@listItem mm</option>
+            <div id="product_desciptions">
+                <div>
+                    <h3>@Model.Name</h3>
+                    <h2><strong id="cost" style="line-height: 200%;">@Model.Price</strong></h2>
+                    <h6 style="line-height: 200%; max-width: 400px;">@Model.description</h6>
+                </div>
+
+                <div id="cardOptions">
+                    <h6>
+                        Zylinderlänge A (Außenlänge)
+                        Bitte wählen Sie zunächst die Außenlänge des Zylinders
+                    </h6>
+                    <select class="form-select" id="select aussen">
+                        @foreach (var listItem in ViewBag.aussen)
+                        {
+                            <option id="auss">@listItem mm</option>
+                        }
+                    </select>
+
+                </div>
+
+                <div id="cardOptions">
+                    @{
+                        int valueCount = 0;
                     }
-                </select>
-
-            </div>
-
-            <div id="cardOptions">
-                @{
-                    int valueCount = 0;
-                }
-                @if (ViewBag.countOptionsQuery > 0)
-                {
-                    @for (int i = 0; i < ViewBag.optionsName.Count; i++)
+                    @if (ViewBag.countOptionsQuery > 0)
                     {
-                        <h6>@ViewBag.optionsName[i]</h6>
+                        @for (int i = 0; i < ViewBag.optionsName.Count; i++)
+                        {
+                            <h6>@ViewBag.optionsName[i]</h6>
 
-                        <select class="form-select" id="ProductOptionsSelector">
+                            <select class="form-select" id="ProductOptionsSelector">
 
-                            @for (int j = 0; j < ViewBag.countOptionsList[i]; j++)
-                            {
-                                <option id="@valueCount">@ViewBag.optionsValue[valueCount]</option>
-                                valueCount++;
-                            }
-                        </select>
+                                @for (int j = 0; j < ViewBag.countOptionsList[i]; j++)
+                                {
+                                    <option id="@valueCount">@ViewBag.optionsValue[valueCount]</option>
+                                    valueCount++;
+                                }
+                            </select>
+                        }
                     }
-                }
 
 
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div>
-    <a asp-action="Index" class="btn btn-success">Back to List</a>
-</div>
+    <div>
+        <a asp-action="Index" class="btn btn-success">Back to List</a>
+    </div>
 
+}
 <script>
     let selectAussen = document.getElementById('select aussen');
    

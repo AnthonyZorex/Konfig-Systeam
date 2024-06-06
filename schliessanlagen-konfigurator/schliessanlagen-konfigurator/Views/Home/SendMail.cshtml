@@ -3,17 +3,19 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<div>
-    <label>Load maill list for send!</label>
+@if (User.IsInRole("admin"))
+{
+    <div>
+        <label>Load maill list for send!</label>
         <input type="file" id="sendFile" name="file" />
         <hr />
 
         @Html.Partial("Message")
-        
+
         <hr />
 
         <div>
-        
+
             <br />
             <hr />
             <br />
@@ -31,10 +33,11 @@
             <pre contenteditable="true" name="Html" id="code"> </pre>
 
         </div>
-            <input type="submit" onclick="send()" value="Send Message" />
+        <input type="submit" onclick="send()" value="Send Message" />
 
-    <button onclick="Change()">Change</button>
-</div>
+        <button onclick="Change()">Change</button>
+    </div>
+}
 
 <script>
 

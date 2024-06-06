@@ -6,140 +6,143 @@
     int f = -1;
     int r = -1;
 }
+@if (User.IsInRole("Admin"))
+{
 
-<h1>Edit Vorhangschloss</h1>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="SaveVorhangschloss" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-           
-            @Html.HiddenFor(x=>x.Id)
-            <div class="form-group">
-               
-                <h3>Type</h3>
+    <h1>Edit Vorhangschloss</h1>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="SaveVorhangschloss" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                <select required onchange="SelectionNewType(event.target.value)" class="form-select" id="schliessanlagenId">
+                @Html.HiddenFor(x => x.Id)
+                <div class="form-group">
 
-                    <option>Profil-Doppelzylinder</option>
-                    <option>Profil-Halbzylinder</option>
-                    <option>Profil-Knaufzylinder</option>
-                    <option >Hebelzylinder</option>
-                    <option selected>Vorhangschloss</option>
-                    <option>Aussenzylinder_Rundzylinder</option>
+                    <h3>Type</h3>
 
-                </select>
+                    <select required onchange="SelectionNewType(event.target.value)" class="form-select" id="schliessanlagenId">
 
-                <input id="VorhanType" asp-for="schliessanlagenId" type="hidden" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label asp-for="companyName" class="control-label"></label>
-                <input required asp-for="companyName" class="form-control" />
-                <span asp-validation-for="companyName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NameSystem" class="control-label"></label>
-                <input required asp-for="NameSystem" class="form-control" />
-                <span asp-validation-for="NameSystem" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="description" class="control-label"></label>
-                <input required asp-for="description" class="form-control" />
-                <span asp-validation-for="description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" type="number" step="0.001" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            
-            <div class="form-group">
-                <label asp-for="ImageName" class="control-label"></label>
-                <input asp-for="ImageName" class="form-control" />
-                <span asp-validation-for="ImageName" class="text-danger"></span>
-            </div>
-            <label asp-for="ImageFile" class="control-label"></label>
-            <hr />
-            <h1>Aussen & Innen <input id="addAussen_Innen" class="btn btn-success" type="button" value="+" /><input id="addAussen_Innen_remove" class="btn btn-danger" type="button" value="-" /></h1>
-            <div id="Aussen_Innen_ProfilDopel">
+                        <option>Profil-Doppelzylinder</option>
+                        <option>Profil-Halbzylinder</option>
+                        <option>Profil-Knaufzylinder</option>
+                        <option>Hebelzylinder</option>
+                        <option selected>Vorhangschloss</option>
+                        <option>Aussenzylinder_Rundzylinder</option>
 
-                <div id="AussenProfilDopel">
-                @foreach (var list in @ViewBag.Size)
-                {
-                        <input class="form-control" name="Size" value="@list.sizeVorhangschloss" />
-                }
+                    </select>
+
+                    <input id="VorhanType" asp-for="schliessanlagenId" type="hidden" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="companyName" class="control-label"></label>
+                    <input required asp-for="companyName" class="form-control" />
+                    <span asp-validation-for="companyName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NameSystem" class="control-label"></label>
+                    <input required asp-for="NameSystem" class="form-control" />
+                    <span asp-validation-for="NameSystem" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="description" class="control-label"></label>
+                    <input required asp-for="description" class="form-control" />
+                    <span asp-validation-for="description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input asp-for="Price" type="number" step="0.001" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
                 </div>
 
-                <div id="InnenProfilDopel">
-                    @foreach (var list in @ViewBag.Size)
+                <div class="form-group">
+                    <label asp-for="ImageName" class="control-label"></label>
+                    <input asp-for="ImageName" class="form-control" />
+                    <span asp-validation-for="ImageName" class="text-danger"></span>
+                </div>
+                <label asp-for="ImageFile" class="control-label"></label>
+                <hr />
+                <h1>Aussen & Innen <input id="addAussen_Innen" class="btn btn-success" type="button" value="+" /><input id="addAussen_Innen_remove" class="btn btn-danger" type="button" value="-" /></h1>
+                <div id="Aussen_Innen_ProfilDopel">
+
+                    <div id="AussenProfilDopel">
+                        @foreach (var list in @ViewBag.Size)
+                        {
+                            <input class="form-control" name="Size" value="@list.sizeVorhangschloss" />
+                        }
+                    </div>
+
+                    <div id="InnenProfilDopel">
+                        @foreach (var list in @ViewBag.Size)
+                        {
+                            <input class="form-control" name="CostSize" value="@list.Cost" />
+                        }
+                    </div>
+                </div>
+
+                <div id="productOptions">
+                    @if (ViewBag.optionV == true)
                     {
-                        <input class="form-control" name="CostSize" value="@list.Cost" />
+                        @foreach (var options in ViewBag.Options)
+                        {
+                            r++;
+                            <div class="input-block">
+                                <h2>Options</h2>
+                                <div class="form-group">
+                                    <label class="control-label">Options Name</label>
+                                    <input name="Options" value="@options.Name" id="opt" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Description</label>
+                                    <input name="Descriptions" value="@options.Description" class="form-control" />
+                                </div>
+
+                                <h1>Value & Cost </h1>
+                                <div id="Aussen_Innen_ProfilDopel">
+                                    <div id="valueNGF" class="form-group">
+
+                                        @for (int i = 0; i < ViewBag.CountOptions[r]; i++)
+                                        {
+                                            count++;
+                                            <input type="text" placeholder="valueNGF" name="valueNGF" value="@ViewBag.OptionValue[count].Value" class="form-control" />
+                                        }
+                                    </div>
+                                    <div class="form-group" id="costNGF">
+
+                                        @for (int i = 0; i < ViewBag.CountOptions[r]; i++)
+                                        {
+                                            f++;
+                                            <input type="text" placeholder="costNGF" @* step="0,01" *@ name="costNGF" value="@ViewBag.OptionValue[f].Cost" class="form-control" />
+                                        }
+                                    </div>
+                                    <input type="hidden" id="counter" name="inputCounter" />
+                                </div>
+                            </div>
+                        }
                     }
                 </div>
-            </div>
-
-            <div id="productOptions">
-                @if (ViewBag.optionV == true)
-                {
-                    @foreach (var options in ViewBag.Options)
-                    {
-                        r++;
-                        <div class="input-block">
-                            <h2>Options</h2>
-                            <div class="form-group">
-                                <label class="control-label">Options Name</label>
-                                <input name="Options" value="@options.Name" id="opt" class="form-control" />
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">Description</label>
-                                <input name="Descriptions" value="@options.Description" class="form-control" />
-                            </div>
-
-                            <h1>Value & Cost </h1>
-                            <div id="Aussen_Innen_ProfilDopel">
-                                <div id="valueNGF" class="form-group">
-
-                                    @for (int i = 0; i < ViewBag.CountOptions[r]; i++)
-                                    {
-                                        count++;
-                                        <input type="text" placeholder="valueNGF" name="valueNGF" value="@ViewBag.OptionValue[count].Value" class="form-control" />
-                                    }
-                                </div>
-                                <div class="form-group" id="costNGF">
-
-                                    @for (int i = 0; i < ViewBag.CountOptions[r]; i++)
-                                    {
-                                        f++;
-                                        <input type="text" placeholder="costNGF" @* step="0,01" *@ name="costNGF" value="@ViewBag.OptionValue[f].Cost" class="form-control" />
-                                    }
-                                </div>
-                                <input type="hidden" id="counter" name="inputCounter" />
-                            </div>
-                        </div>
-                    }
-                }
-            </div>
-            <hr />
-            <button id="createBlockBtn" type="button" class="btn btn-success">Add Options</button>
-            <button id="addInputBtn" type="button" class="btn btn-success">+</button>
-            <button id="RemoveInputBtn" type="button" class="btn btn-danger">-</button>
-            <hr />
-            <input type="submit" value="Save" class="btn btn-primary" />
-        </form>
+                <hr />
+                <button id="createBlockBtn" type="button" class="btn btn-success">Add Options</button>
+                <button id="addInputBtn" type="button" class="btn btn-success">+</button>
+                <button id="RemoveInputBtn" type="button" class="btn btn-danger">-</button>
+                <hr />
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-@section Scripts {
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+    @section Scripts {
     @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
     }
 }
 <script>

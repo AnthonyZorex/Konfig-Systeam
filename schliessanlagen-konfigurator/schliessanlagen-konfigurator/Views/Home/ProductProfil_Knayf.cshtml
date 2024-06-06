@@ -3,110 +3,111 @@
 @{
     ViewData["Title"] = $"ProductProfil_Knayf/{Model.Id}";
 }
-@Html.HiddenFor(m => m.Id)
-
-
-<div>
-    <div id="productMenu">
-        <div>
-            <img decoding="async" src="@("~/image/"+@Model.ImageName)" asp-append-version="true" width="400px" height="400px" />
-        </div>
-
-        <div id="product_desciptions">
+@if (User.IsInRole("admin"))
+{
+    @Html.HiddenFor(m => m.Id)
+    <div>
+        <div id="productMenu">
             <div>
-                <h3>@Model.Name</h3>
-                <h2><strong id="cost" style="line-height: 200%;">@Model.Price</strong></h2>
-                <h6 style="line-height: 200%; max-width: 400px;">@Model.description</h6>
+                <img decoding="async" src="@("~/image/"+@Model.ImageName)" asp-append-version="true" width="400px" height="400px" />
             </div>
 
-            @if (Model.isGround == true)
-            {
-                <div id="cardOptions">
-                    <h6>
-                        Zylinderlänge A (Außenlänge)
-                        Bitte wählen Sie zunächst die Außenlänge des Zylinders
-                    </h6>
-
-                    <select id="aussen" class="form-select" onchange="selectParamAussen(event.target.value)">
-                        @foreach (var listItem in ViewBag.aussen)
-                        {
-                            <option id="OptionA">@listItem</option>
-                        }
-                    </select>
-
-                    <h6>
-                        Zylinderlänge B (Innenlänge)
-                        Bitte wählen Sie jetzt die Innenlänge des Zylinders
-                    </h6>
-
-                    <select id="Innen" class="form-select" onchange="selectParamIntern(event.target.value)">
-                        @foreach (var listItem in ViewBag.innen)
-                        {
-                            <option id="OptionI">@listItem</option>
-                        }
-                    </select>
+            <div id="product_desciptions">
+                <div>
+                    <h3>@Model.Name</h3>
+                    <h2><strong id="cost" style="line-height: 200%;">@Model.Price</strong></h2>
+                    <h6 style="line-height: 200%; max-width: 400px;">@Model.description</h6>
                 </div>
 
-            }
-            else
-            {
-                <div id="cardOptions">
-                    <h6>
-                        Zylinderlänge A (Außenlänge)
-                        Bitte wählen Sie zunächst die Außenlänge des Zylinders
-                    </h6>
-
-                    <select id="aussen" class="form-select" onchange="selectParamAussenIsGround(event.target.value)">
-                        @foreach (var listItem in ViewBag.aussen)
-                        {
-                            <option id="OptionA">@listItem</option>
-                        }
-                    </select>
-
-                    <h6>
-                        Zylinderlänge B (Innenlänge)
-                        Bitte wählen Sie jetzt die Innenlänge des Zylinders
-                    </h6>
-
-                    <select id="Innen" class="form-select" onchange="selectParamInternIsGround(event.target.value)">
-                        @foreach (var listItem in ViewBag.innen)
-                        {
-                            <option id="OptionI">@listItem</option>
-                        }
-                    </select>
-                </div>
-            }
-
-            <div id="cardOptions">
-                @{
-                    int valueCount = 0;
-                }
-                @if (ViewBag.countOptionsQuery > 0)
+                @if (Model.isGround == true)
                 {
-                    @for (int i = 0; i < ViewBag.optionsName.Count; i++)
-                    {
-                        <h6>@ViewBag.optionsName[i]</h6>
+                    <div id="cardOptions">
+                        <h6>
+                            Zylinderlänge A (Außenlänge)
+                            Bitte wählen Sie zunächst die Außenlänge des Zylinders
+                        </h6>
 
-                        <select class="form-select" id="ProductOptionsSelector">
-
-                            @for (int j = 0; j < ViewBag.countOptionsList[i]; j++)
+                        <select id="aussen" class="form-select" onchange="selectParamAussen(event.target.value)">
+                            @foreach (var listItem in ViewBag.aussen)
                             {
-                                <option id="@valueCount">@ViewBag.optionsValue[valueCount]</option>
-                                valueCount++;
+                                <option id="OptionA">@listItem</option>
                             }
                         </select>
-                    }
+
+                        <h6>
+                            Zylinderlänge B (Innenlänge)
+                            Bitte wählen Sie jetzt die Innenlänge des Zylinders
+                        </h6>
+
+                        <select id="Innen" class="form-select" onchange="selectParamIntern(event.target.value)">
+                            @foreach (var listItem in ViewBag.innen)
+                            {
+                                <option id="OptionI">@listItem</option>
+                            }
+                        </select>
+                    </div>
+
+                }
+                else
+                {
+                    <div id="cardOptions">
+                        <h6>
+                            Zylinderlänge A (Außenlänge)
+                            Bitte wählen Sie zunächst die Außenlänge des Zylinders
+                        </h6>
+
+                        <select id="aussen" class="form-select" onchange="selectParamAussenIsGround(event.target.value)">
+                            @foreach (var listItem in ViewBag.aussen)
+                            {
+                                <option id="OptionA">@listItem</option>
+                            }
+                        </select>
+
+                        <h6>
+                            Zylinderlänge B (Innenlänge)
+                            Bitte wählen Sie jetzt die Innenlänge des Zylinders
+                        </h6>
+
+                        <select id="Innen" class="form-select" onchange="selectParamInternIsGround(event.target.value)">
+                            @foreach (var listItem in ViewBag.innen)
+                            {
+                                <option id="OptionI">@listItem</option>
+                            }
+                        </select>
+                    </div>
                 }
 
+                <div id="cardOptions">
+                    @{
+                        int valueCount = 0;
+                    }
+                    @if (ViewBag.countOptionsQuery > 0)
+                    {
+                        @for (int i = 0; i < ViewBag.optionsName.Count; i++)
+                        {
+                            <h6>@ViewBag.optionsName[i]</h6>
 
+                            <select class="form-select" id="ProductOptionsSelector">
+
+                                @for (int j = 0; j < ViewBag.countOptionsList[i]; j++)
+                                {
+                                    <option id="@valueCount">@ViewBag.optionsValue[valueCount]</option>
+                                    valueCount++;
+                                }
+                            </select>
+                        }
+                    }
+
+
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div>
-    <a asp-action="Index" class="btn btn-success">Back to List</a>
-</div>
+    <div>
+        <a asp-action="Index" class="btn btn-success">Back to List</a>
+    </div>
 
+}
 <script>
 
     let OptionPrice = @Html.Raw(@ViewBag.optionsPrise);

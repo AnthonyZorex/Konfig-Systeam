@@ -17,11 +17,9 @@
     <div id="FinisherPage">
   
     <h1>Schlüssel konfigurieren</h1>
-    <p>
-        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
-        ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim
-        justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.
-    </p>
+        <h3>
+            Sie können sehen, welcher Schlüssel welches Schloss öffnet, und die erforderliche Anzahl an Schlüsseln auswählen.
+    </h3>
     <div>
 
         @foreach (var item in ViewBag.Order)
@@ -90,11 +88,9 @@
                 <a class="btn btn-danger" href="@Url.Action("ChangedKonfigPlan","Konfigurator",new{ userKey = @Model.userKey})">SCHLIESSPLAN BEARBEITEN</a>
         </div>
         <h1>Türen konfigurieren</h1>
-        <p>
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
-            ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim
-            justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.
-        </p>
+        <h3>
+                Unten sind die Schlösser mit Angaben zu deren Größen, Optionen und Mengen aufgeführt.
+        </h3>
     </div>
     <div>
         @if (ViewBag.Dopelzylinder != null)
@@ -808,14 +804,11 @@
             <input type="button"  onclick="goBack()" class="btn btn-danger" value="ANDERES SYSTEM WÄHLEN" />
         </div>
         <div id="orderCost">
-                <input name="cost" readonly type="text" value="@ViewBag.Cost" id="cost" />
+                <input name="cost" readonly type="text" value="@ViewBag.Cost" id="cost" /> <h2>€</h2>
                 <input name="Sum" id="costed" type="hidden" style="border:none;font-size:24px" value="@ViewBag.Cost" />
         </div>
        
         <div id="buttonActionFinishBlock">
-            <div id="FinisherLeft">
-                <button id="chekProduct" type="button" class="btn btn-dark"> <a href="@Url.Action("System_Auswählen", "Konfigurator")">ZURÜCK</a></button>
-            </div>
             <div id="FinisherRight">
                     @if (User.IsInRole("client") || User.IsInRole("admin"))
                     {
@@ -827,6 +820,9 @@
                         <a class="btn btn-danger" asp-area="Identity" asp-page="/Account/Register">IN DEN WARENKORB</a>
                     }
             </div>
+                <div id="FinisherLeft">
+                    <button id="chekProduct" type="button" class="btn btn-dark"> <a href="@Url.Action("System_Auswählen", "Konfigurator")">ZURÜCK</a></button>
+                </div>
         </div>
     </div>
 </div>

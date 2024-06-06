@@ -13,6 +13,11 @@
     {
         gap: 105px !important;
     }
+    #schlussel2 {
+        margin-left:-10px;
+        transform: scale(0.5);
+        display: flex;
+    }
     #product_desciptions 
     {
         margin-top: 10px;
@@ -30,15 +35,21 @@
         width: 10px !important;
     }
     #FinisherAnderes {
-        margin-bottom: 50px;
+        text-align:center;
+        margin-bottom: 20px;
         margin-top: 50px;
     }
-    #OpenValue {
-        display: grid;
-        gap: 10px;
-        grid-template-columns: 100px 100px 100px ;
-        margin-right: 50px;
-    }
+        #FinisherAnderes>input{
+            width:150px;
+            height:40px;
+            font-size:10px;
+        }
+        #OpenValue {
+            display: grid;
+            gap: 10px;
+            grid-template-columns: 100px 100px 100px;
+            margin-right: 50px;
+        }
     #cost {
         color: red;
     }
@@ -62,11 +73,24 @@
         text-align: center;
         grid-template-columns: repeat(3, 100px);
     }
-    .btn-success {
-        color: #fff;
-        background-color: #198754;
-        border-color: #198754;
+    #orderCost {
+        justify-content: center;
+        display: flex;
+        text-align: center;
+        align-items:center;
     }
+        #orderCost>input{
+            font-size:24px;
+            outline:none;
+        }
+        #orderCost>h2{
+            font-size:24px;
+        }
+        .btn-success {
+            color: #fff;
+            background-color: #198754;
+            border-color: #198754;
+        }
     a:hover {
         text-decoration-color: none;
         color: white;
@@ -75,14 +99,7 @@
         text-decoration-color: none;
         color: white;
     }
-    #chekProduct {
-        width: auto;
-        height: auto;
-        font-size: 12px;
-        text-align: center;
-        align-items: center;
-        color: white;
-    }
+   
     #lifer{
         color:red;
         margin-top:20px;
@@ -228,20 +245,21 @@
     #chekerTur > button {
         border-radius: 20%;
         font-size: 8px;
-        height:20px;
         color: white;
-        width: 20px;
+        transform: scale(0.6);
         border: none;
         background: red;
     }
 
     #TypeSelectTurType {
-        height: 20px;
-        width: 50px;
+        transform: scale(0.5);
+        width:auto;
+        margin-left:-20px;
     }
 
     #chekerTur {
-        margin-left: 0px;
+        display: flex;
+        margin-left: -5px;
     }
 
     html {
@@ -250,13 +268,14 @@
 
     #InformBar {
         margin-top: 30px;
-        font-size: 12px;
+        font-size: 8px;
         gap: 50px;
     }
 
     #sclusselInfo {
-        margin-left: 300px;
+        margin-left: 240px;
         padding: 5px;
+        width:auto;
         background: red;
         color: white;
         align-items: center;
@@ -265,7 +284,7 @@
 
     #itemKeyBlock {
         margin-bottom: 20px;
-        margin-left: 300px;
+        margin-left: 240px;
         display: flex;
         width: auto;
         overflow-x: scroll;
@@ -300,7 +319,7 @@
     }
 
     #sclusselInfo2 {
-        width: 300px;
+        width: 240px;
         padding: 5px;
         background: red;
         color: white;
@@ -315,7 +334,7 @@
         margin-left:0px;
     }
     #infoButten {
-        height: 20px;
+        transform: scale(0.8);
         width: 20px;
         padding: 5px;
         margin-top: 5px;
@@ -323,8 +342,7 @@
 
     #typeSylinder {
         height: 15px;
-        margin-right: 1px;
-        margin-left: 1px;
+        margin-left: -30px;
         width: 15px;
     }
 
@@ -334,10 +352,14 @@
         margin-left: 10px;
     }
 
-    #TypeSelectTurItem {
-        max-width: 40px;
+    #TypeSelectTurItem 
+    {
+        margin-left:-25px;
+        transform: scale(0.6);
     }
-
+    #SelectTurItem{
+        width:auto;
+    }
     #InfoValue {
         display: grid;
         border-left: 2px solid grey;
@@ -365,17 +387,16 @@
         grid-template-columns: 30px;
         background-color: #EDEDED;
         padding: 5px;
-        width: 295px;
+        width: auto;
     }
-
     #inputTur {
         padding: 5px;
-        max-width: 50px;
-        height: 20px;
+        margin-left:-25px;
+        transform: scale(0.5);
     }
 
     #BlockTur-1 {
-        width: 295px;
+        width: 235px;
         text-align: start;
     }
 
@@ -419,7 +440,7 @@
     #inputS {
         margin-left: 40px;
         width: 150px;
-        margin-top: 160px;
+        margin-top: 165px;
         padding: 4px;
         transform: rotate(270deg);
     }
@@ -448,15 +469,20 @@
         margin-left: 10px;
     }
     #chekProduct {
-        padding: 20px 100px 20px 100px;
-        margin-top: 50px;
-        text-align:center;
-        margin-bottom: 20px;
+        margin-top: 10px;
+        text-align: center;
+        font-size: 16px;
+        margin-bottom: 0px;
+        color: white;
     }
+    
 }
 
 @media(max-width:900px) and (orientation: landscape) 
 {
+    #schlussel2 {
+        display: flex;
+    }
     #buttonActionFinishBlock {
         gap: 20px;
         justify-content: center;
@@ -464,15 +490,23 @@
         display: flex;
     }
 
-    #orderCost{
-        text-align:center;
+    #orderCost {
+        justify-content: center;
+        display: flex;
+        text-align: center;
     }
 
-    #Aussen_Innen_ProfilDopel {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 50px;
-    }
+        #orderCost>input{
+            outline:none;
+            width:auto;
+            
+        }
+
+        #Aussen_Innen_ProfilDopel {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
     #Table {
         display: grid;
         grid-template-columns: repeat(9, auto);
@@ -533,7 +567,8 @@
         grid-template-columns: 150px 150px 0px;
     }
     #FinisherAnderes{
-        margin-bottom:50px;
+       text-align:center;
+        margin-bottom:20px;
         margin-top:50px;
     }
     #OpenValue {
@@ -551,12 +586,16 @@
 
     #chekProduct {
         text-align: center;
-        color:white;
         align-items: center;
     }
-    #Gesamtpreis {
-        gap: 65px !important;
-    }
+        #chekProduct > a {
+            color: white !important;
+            text-decoration: none;
+        }
+
+        #Gesamtpreis {
+            gap: 65px !important;
+        }
     #cost{
         color:red;
     }
@@ -895,7 +934,7 @@
     #inputS {
         margin-left: 40px;
         width: 150px;
-        margin-top: 160px;
+        margin-top: 165px;
         padding: 4px;
         transform: rotate(270deg);
     }
@@ -977,7 +1016,7 @@
 
     #costedInfo {
         display: flex;
-        margin-left: 140px;
+        margin-left: 140px; 
     }
 
 
@@ -1469,6 +1508,7 @@
         font-size: 24px;
         outline: none;
         border: none;
+        width: 200px;
     }
 
     #product_desciptions {
@@ -1854,6 +1894,9 @@
     }
 
     #orderCost {
+        justify-content: end;
+        text-align: end;
+        display: flex;
         text-align: end;
         margin-top: 20px;
         color: red;
