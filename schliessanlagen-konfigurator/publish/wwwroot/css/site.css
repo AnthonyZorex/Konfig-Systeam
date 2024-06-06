@@ -18,8 +18,14 @@
         transform: scale(0.5);
         display: flex;
     }
-    #product_desciptions 
-    {
+    #typeSylinder {
+        height: 15px;
+        margin-left: -40px;
+        width: 15px;
+        transform: scale(0.5);
+    }
+  
+    #product_desciptions {
         margin-top: 10px;
         display: block;
         gap: 150px;
@@ -239,14 +245,14 @@
 
     #schlussel3 {
         margin-top: 5px;
-        margin-left: 60px;
+   
     }
 
     #chekerTur > button {
         border-radius: 20%;
         font-size: 8px;
         color: white;
-        transform: scale(0.6);
+        transform: scale(0.5);
         border: none;
         background: red;
     }
@@ -254,12 +260,13 @@
     #TypeSelectTurType {
         transform: scale(0.5);
         width:auto;
-        margin-left:-20px;
+        margin-left:-30px;
     }
 
     #chekerTur {
         display: flex;
-        margin-left: -5px;
+        transform: scale(0.5);
+        margin-left: -15px;
     }
 
     html {
@@ -334,31 +341,31 @@
         margin-left:0px;
     }
     #infoButten {
-        transform: scale(0.8);
+        transform: scale(0.5);
         width: 20px;
         padding: 5px;
         margin-top: 5px;
     }
 
-    #typeSylinder {
-        height: 15px;
-        margin-left: -30px;
-        width: 15px;
-    }
+   
 
     .horizontal {
         display: flex;
         gap: 20px;
         margin-left: 10px;
     }
+    #hilfeImg{
+        display:none;
+    }
 
     #TypeSelectTurItem 
     {
-        margin-left:-25px;
+        margin-left: -25px;
         transform: scale(0.6);
     }
-    #SelectTurItem{
-        width:auto;
+    #SelectTurItem {
+        width: auto;
+       margin-right:10px;
     }
     #InfoValue {
         display: grid;
@@ -404,6 +411,7 @@
         margin-top: 5px;
         font-size: 8px;
         margin-left: 2px !important;
+        padding-right: 12px ;
     }
 
     #add_And_Minus {
