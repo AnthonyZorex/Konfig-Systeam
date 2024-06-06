@@ -292,7 +292,7 @@
     }
 
     #itemKeyBlock {
-        margin-bottom: 15px;
+        margin-bottom: 17px;
         margin-left: 240px;
         display: flex;
         width: auto;
@@ -328,7 +328,7 @@
     }
 
     #sclusselInfo2 {
-        width: 240px;
+        width: 239px;
         padding: 5px;
         background: red;
         color: white;
