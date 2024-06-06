@@ -44,19 +44,41 @@
     #FinisherAnderes {
         text-align:center;
         margin-bottom: 20px;
-        margin-top: 50px;
+        margin-top: 20px;
     }
-        #FinisherAnderes>input{
-            width:150px;
-            height:40px;
-            font-size:10px;
+        #FinisherAnderes>a{
+            font-size:16px;
         }
-        #OpenValue {
-            display: grid;
-            gap: 10px;
-            grid-template-columns: 100px 100px 100px;
-            margin-right: 50px;
+        #FinisherAnderes > input {
+            font-size: 16px;
         }
+    .navbar-collapse {
+        font-size: 16px;
+    }
+    .navbar-toggler {
+        font-size: 2rem !important;
+    }
+    #keyInform {
+        margin-top: 10px;
+        text-align: start;
+        font-size: 12px;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    }
+
+        #infoTuren {
+            margin-top: 10px;
+            text-align: start;
+            font-size: 12px;
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        }
+
+
+    #OpenValue {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: 100px 100px 100px;
+        margin-right: 50px;
+    }
     #cost {
         color: red;
     }
@@ -87,8 +109,9 @@
         align-items:center;
     }
         #orderCost>input{
-            font-size:24px;
+            font-size:16px;
             outline:none;
+
         }
         #orderCost>h2{
             font-size:24px;
@@ -229,15 +252,20 @@
         height: 5px;
         background: white;
     }
-
-    #hilfeBack {
-        border: none;
-        outline: none;
-        background: red;
-        font-size: 24px;
-        color: white;
-        border-radius: 20px;
+    #FinisherRight {
+        padding-bottom: 20px;
     }
+        #FinisherRight>a{
+            font-size:16px;
+        }
+        #hilfeBack {
+            border: none;
+            outline: none;
+            background: red;
+            font-size: 24px;
+            color: white;
+            border-radius: 20px;
+        }
 
     #input {
         margin-top: 20px;
@@ -272,7 +300,7 @@
     }
 
     html {
-        font-size: calc(6px + (8 - 6) * ((100vw - 480px) / ( 1440 - 480) ));
+        font-size: calc(6px + (8 - 6) * ((100vw - 380px) / ( 1440 - 380)));
     }
 
     #InformBar {
@@ -292,7 +320,7 @@
     }
 
     #itemKeyBlock {
-        margin-bottom: 17px;
+        margin-bottom: 20px;
         margin-left: 240px;
         display: flex;
         width: auto;
@@ -328,7 +356,7 @@
     }
 
     #sclusselInfo2 {
-        width: 239px;
+        width: 240px;
         padding: 5px;
         background: red;
         color: white;
@@ -484,9 +512,9 @@
     }
     #chekProduct {
         margin-top: 10px;
+        margin-bottom:10px;
         text-align: center;
         font-size: 16px;
-        margin-bottom: 0px;
         color: white;
     }
     

@@ -732,6 +732,10 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 orders = orders.Where(x => x.userKey == userName).ToList();
             }
+            else
+            {
+                return RedirectToAction("IndexKonfigurator", "Konfigurator");
+            }
 
             var keyUser = orders.Last();
 

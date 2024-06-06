@@ -17,7 +17,7 @@
     <div id="FinisherPage">
   
     <h1>Schlüssel konfigurieren</h1>
-        <h3>
+        <h3 id="keyInform">
             Sie können sehen, welcher Schlüssel welches Schloss öffnet, und die erforderliche Anzahl an Schlüsseln auswählen.
     </h3>
     <div>
@@ -88,7 +88,7 @@
                 <a class="btn btn-danger" href="@Url.Action("ChangedKonfigPlan","Konfigurator",new{ userKey = @Model.userKey})">SCHLIESSPLAN BEARBEITEN</a>
         </div>
         <h1>Türen konfigurieren</h1>
-        <h3>
+        <h3 id="infoTuren">
                 Unten sind die Schlösser mit Angaben zu deren Größen, Optionen und Mengen aufgeführt.
         </h3>
     </div>
@@ -809,6 +809,11 @@
         </div>
        
         <div id="buttonActionFinishBlock">
+
+                <div id="FinisherLeft">
+                    <button id="chekProduct" type="button" class="btn btn-dark"> <a href="@Url.Action("System_Auswählen", "Konfigurator")">ZURÜCK</a></button>
+                </div>
+           
             <div id="FinisherRight">
                     @if (User.IsInRole("client") || User.IsInRole("admin"))
                     {
@@ -820,9 +825,7 @@
                         <a class="btn btn-danger" asp-area="Identity" asp-page="/Account/Register">IN DEN WARENKORB</a>
                     }
             </div>
-                <div id="FinisherLeft">
-                    <button id="chekProduct" type="button" class="btn btn-dark"> <a href="@Url.Action("System_Auswählen", "Konfigurator")">ZURÜCK</a></button>
-                </div>
+                
         </div>
     </div>
 </div>
