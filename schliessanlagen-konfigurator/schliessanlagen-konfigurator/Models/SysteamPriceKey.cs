@@ -5,5 +5,6 @@
         public int Id { get; set; }
         public string NameSysteam { get; set; }
         public float Price { get; set; }
+        public string DesctiptionsSysteam { get; set; } 
     }
 }

@@ -10,20 +10,13 @@
     <h1>Edit Aussenzylinder \ Rundzylinder</h1>
     <hr />
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-10">
             <form asp-action="SaveAussenzylinder_Rundzylinder" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
-                    <h3>Type</h3>
+                   
                     @Html.HiddenFor(x => x.Id)
-                    <select required onchange="SelectionNewType(event.target.value)" class="form-select" id="schliessanlagenId">
-                        <option>Profil-Doppelzylinder</option>
-                        <option>Profil-Halbzylinder</option>
-                        <option>Profil-Knaufzylinder</option>
-                        <option>Hebelzylinder</option>
-                        <option>Vorhangschloss</option>
-                        <option selected>Aussenzylinder_Rundzylinder</option>
-                    </select>
+                    
                     <input id="AussenType" asp-for="schliessanlagenId" type="hidden" class="form-control" />
                 </div>
                 <div class="form-group">
@@ -43,9 +36,9 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="description" class="control-label"></label>
-                    <input required asp-for="description" class="form-control" />
+                    <textarea asp-for="description" required class="form-control" id="exampleFormControlTextarea1"></textarea>
                     <span asp-validation-for="description" class="text-danger"></span>
-                </div>
+                </div> 
                 <div class="form-group">
                     <label asp-for="Price" class="control-label"></label>
                     <input required asp-for="Price" type="number" step="0.001" class="form-control" />
@@ -119,30 +112,15 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
-<script>
-    let schliessanlagenType = document.getElementById("schliessanlagenId");
-    let AussenType = document.getElementById("AussenType");
 
-    function SelectionNewType(value) {
-        if (value == "Profil-Doppelzylinder") {
-            AussenType.value = 1;
-        }
-        if (value == "Profil-Halbzylinder") {
-            AussenType.value = 2;
-        }
-        if (value == "Profil-Knaufzylinder") {
-            AussenType.value = 3;
-        }
-        if (value == "Hebelzylinder") {
-            AussenType.value = 4;
-        }
-        if (value == "Vorhangschloss") {
-            AussenType.value = 5;
-        }
-        if (value == "Aussenzylinder_Rundzylinder") {
-            AussenType.value = 6;
-        }
-    }
+<script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script>
+<script>
+
+    tinymce.init({
+        selector: '#exampleFormControlTextarea1'
+    });
+
+  
     let costNGF = document.getElementById('costNGF');
     let valueNGF = document.getElementById('valueNGF');
 

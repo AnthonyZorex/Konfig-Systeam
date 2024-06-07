@@ -51,25 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "578b9a2b-174a-4c4f-8b96-01e50c2d9fd9",
+                            Id = "bf823c38-a33a-4c2f-b171-df1691c8ed70",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "0f9aa5d7-c0e8-481a-986a-ba5b711aeb1a",
+                            Id = "09784c76-7f9a-409d-9b0f-f1cd13b9e50d",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "925cddb7-6ed2-4e79-9d43-20e54a10faca",
+                            Id = "f24f0fc3-d668-40e5-8270-84e0ccda9f2e",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "249ef8bf-b041-4887-b6be-f15736c4a631",
+                            Id = "d4859cd2-f51b-4da4-8890-c125ed2f6e39",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -304,6 +304,9 @@ namespace schliessanlagen_konfigurator.Migrations
                         .HasColumnType("int");
 
                     b.Property<float>("aussen")
+                        .HasColumnType("real");
+
+                    b.Property<float>("costAussen")
                         .HasColumnType("real");
 
                     b.HasKey("Id");
@@ -652,6 +655,12 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Property<float>("aussen")
                         .HasColumnType("real");
 
+                    b.Property<float>("costSizeAussen")
+                        .HasColumnType("real");
+
+                    b.Property<float>("costSizeIntern")
+                        .HasColumnType("real");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Profil_DoppelzylinderId");
@@ -785,6 +794,12 @@ namespace schliessanlagen_konfigurator.Migrations
                         .HasColumnType("int");
 
                     b.Property<float>("aussen")
+                        .HasColumnType("real");
+
+                    b.Property<float>("costSizeAussen")
+                        .HasColumnType("real");
+
+                    b.Property<float>("costSizeIntern")
                         .HasColumnType("real");
 
                     b.HasKey("Id");
@@ -927,6 +942,10 @@ namespace schliessanlagen_konfigurator.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("DesctiptionsSysteam")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NameSysteam")
                         .IsRequired()

@@ -50,12 +50,18 @@
                         <div style="margin-bottom: 50px;">
                             <label>Name System</label>
                             <input asp-for="NameSystem" required class="form-control" type="text" />
-                        </div>
 
                         <div style="margin-bottom: 50px;">
                             <label>Descriptions</label>
-                            <textarea asp-for="description" required class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                <textarea asp-for="description"  required class="form-control" id="exampleFormControlTextarea1"></textarea>
                         </div>
+                            @if (ViewBag.Content != null)
+                            {
+                                <div>
+                                    <h3>Submitted Content:</h3>
+                                    <div>@Html.Raw(ViewBag.Content)</div>
+                                </div>
+                            }
                         <div style="margin-bottom: 50px;">
                             <label>Cost</label>
                             <input asp-for="Price" required class="form-control" />
@@ -66,10 +72,12 @@
 
                             <div id="AussenProfilDopel">
                                 <input type="number" class="form-control" placeholder="Aussen" id="aus" step="0.01" name="aussen" />
+                                    <input class="form-control" name="costSizeAussen" type="number" placeholder="CostAussen" id="ausCost" step="0.01" />
                             </div>
 
                             <div id="InnenProfilDopel">
                                 <input type="number" class="form-control" placeholder="innen" id="inter" step="0.01" name="innen" />
+                                    <input class="form-control" placeholder="CostInnen" type="number" name="costSizeIntern" step="0.01" id="interCost" />
                             </div>
                         </div>
                         <div id="productOptions">
@@ -123,7 +131,7 @@
                                 <td id="rowTable" class="table-info">@item.NameSystem</td>
                                 <td id="rowTable" class="table-info">@item.Name</td>
                                 <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
-                                <td id="rowTable " class="table-info"><h6 id="cost">@item.Price</h6></td>
+                                <td id="rowTable " class="table-info"><h6 id="cost">@Convert.ToDecimal(@item.Price)</h6></td>
                                 <td id="rowTable " class="table-info"><h6 id="cost">@ViewBag.KeyCost[i]</h6></td>
 
 
@@ -145,10 +153,14 @@
     </div>
 }
 
-
 @section scripts
 {
+    <script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script>
     <script type="text/javascript">
+
+        tinymce.init({
+            selector: '#exampleFormControlTextarea1'
+        });
 
         let plusAussen_Innen = document.getElementById('addAussen_Innen');
         let docInnen = document.getElementById('InnenProfilDopel');
@@ -271,47 +283,71 @@
 
             };
 
-
-
-
             plusAussen_Innen.addEventListener('click', () => {
+
                 let d = document.createElement('input');
-                d.setAttribute('name', 'aussen');
-                d.setAttribute('placeholder', 'aussen');
+                d.setAttribute('name', 'SizeAus');
+                d.setAttribute('placeholder', 'Aussen');
                 d.setAttribute('class', 'form-control');
                 d.id = 'aus';
 
+                let costAussen = document.createElement('input');
+                costAussen.setAttribute('name', 'costSizeAussen');
+                costAussen.setAttribute('placeholder', 'costAussen');
+                costAussen.setAttribute('class', 'form-control');
+                costAussen.setAttribute('step', '0.01');
+                costAussen.setAttribute('type', 'number');
+                costAussen.id = 'ausCost';
+
                 let x = document.createElement('input');
-                x.setAttribute('name', 'innen');
-                x.setAttribute('placeholder', 'innen');
+                x.setAttribute('name', 'SizeInen');
+                x.setAttribute('placeholder', 'Innen');
                 x.id = 'inter';
                 x.setAttribute('class', 'form-control');
-                docAussen.append(d);
-                docInnen.append(x);
+
+                let costInter = document.createElement('input');
+                costInter.setAttribute('name', 'costSizeIntern');
+                costInter.setAttribute('placeholder', 'costInnen');
+                costInter.id = 'interCost';
+                costInter.setAttribute('class', 'form-control');
+                costInter.setAttribute('step', '0.01');
+                costInter.setAttribute('type', 'number');
+                docAussen.append(d, costAussen);
+                docInnen.append(x, costInter);
 
             });
             removeAussen_Innen.addEventListener('click', () => 
             {
                 let d = document.querySelectorAll('#aus');
+
+                let costAussen = document.querySelectorAll('#ausCost');
+
                 let x = document.querySelectorAll('#inter');
+                let costInter = document.querySelectorAll('#interCost');
 
+                docAussen.removeChild(costAussen[costAussen.length - 1]);
+                docAussen.removeChild(d[d.length - 1]);
 
-                docAussen.removeChild(d[d.length-1]);
                 docInnen.removeChild(x[x.length - 1]);
+                docInnen.removeChild(costInter[costInter.length - 1]);
             });
 
         })
 
         function interfaice() {
             sum.forEach((item) => {
-                if (String(item).length < 6) {
-                    item.innerHTML = item.innerHTML.slice(0, 5) + '€';
-                }
 
-                if (String(item).length > 8) {
-                    item.innerHTML = item.innerHTML.slice(0, 6) + '€';
-                }
+                const commaIndex = String(item.innerHTML).indexOf(',');
 
+
+                if (commaIndex < String(item.innerHTML) - 1 && String(item.innerHTML)[commaIndex + 1] !== ' ') 
+                {
+                    item.innerHTML = item.innerHTML + '€';
+                } else 
+                {
+                    item.innerHTML = item.innerHTML + '0€'; 
+                }
+              
             })
         }
 

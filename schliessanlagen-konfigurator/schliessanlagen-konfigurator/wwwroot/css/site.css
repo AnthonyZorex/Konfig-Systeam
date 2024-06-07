@@ -1477,19 +1477,22 @@
     }
 
     #Aussen_Innen_ProfilDopel {
+        margin-left:auto;
+        margin-right:auto;
         display: flex;
         justify-content: center;
         margin-bottom: 50px;
     }
 
     #AussenProfilDopel {
-        display: block;
-        width: 136px;
+        grid-template-columns: 140px 140px;
+        display: grid;
+        margin-right:20px;
     }
 
     #InnenProfilDopel {
-        display: block;
-        width: 400px;
+        grid-template-columns: 140px 140px;
+        display: grid;
     }
 
     #valueNGF {

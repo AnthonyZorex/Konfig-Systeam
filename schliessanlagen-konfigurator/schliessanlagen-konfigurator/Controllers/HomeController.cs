@@ -246,7 +246,7 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpPost]
         public async Task<IActionResult> Create_Profil_Doppelzylinder(Profil_Doppelzylinder Profil_Doppelzylinder,
         List<string> Options, List<string> NGFDescriptions, IFormFile postedFile, List<float> aussen,
-        List<float> innen, List<string> valueNGF, List<float> costNGF, List<int> input_counter,string KeyName, float KeyCost)
+        List<float> innen,List<float> costSizeAussen, List<float> costSizeIntern, List<string> valueNGF, List<float> costNGF, List<int> input_counter,string KeyName, float KeyCost)
         {
 
             var key = new SysteamPriceKey
@@ -286,11 +286,11 @@ namespace schliessanlagen_konfigurator.Controllers
                 {
                     Profil_DoppelzylinderId = s.Last(),
                     aussen = aussen[i],
-                    Intern = innen[i]
+                    Intern = innen[i],
+                    costSizeAussen = costSizeIntern[i],
+                    costSizeIntern = costSizeIntern[i]
                 };
                 db.Aussen_Innen.Add(ausse_innen);
-
-
                 db.SaveChanges();
             }
 
@@ -365,7 +365,7 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpPost]
         public async Task<IActionResult> Create_Profil_Knaufzylinder(Profil_Knaufzylinder Profil_Doppelzylinder,
         List<string> Options, List<string> NGFDescriptions, IFormFile postedFile, List<float> aussen,
-        List<float> innen, List<string> valueNGF, List<float> costNGF, List<int> input_counter)
+        List<float> innen, List<string> valueNGF, List<float> costNGF, List<int> input_counter, List<float> costSizeAussen, List<float> costSizeIntern)
         {
 
             if (Profil_Doppelzylinder.ImageFile != null)
@@ -397,7 +397,9 @@ namespace schliessanlagen_konfigurator.Controllers
                 {
                     Profil_KnaufzylinderId = s.Last(),
                     aussen = aussen[i],
-                    Intern = innen[i]
+                    Intern = innen[i],
+                    costSizeAussen = costSizeAussen[i],
+                    costSizeIntern = costSizeIntern[i]
                 };
                 db.Aussen_Innen_Knauf.Add(ausse_innen);
                 db.SaveChanges();
@@ -472,7 +474,7 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpPost]
         public async Task<IActionResult> Create_Profil_Halbzylinder(Profil_Halbzylinder Profil_Doppelzylinder,
         List<string> Options, List<string> NGFDescriptions, IFormFile postedFile, List<float> aussen,
-        List<float> innen, List<string> valueNGF, List<float> costNGF, List<int> input_counter)
+        List<float> innen, List<string> valueNGF, List<float> costNGF, List<int> input_counter,List<float> costSizeAussen)
         {
 
             if (Profil_Doppelzylinder.ImageFile != null)
@@ -504,7 +506,8 @@ namespace schliessanlagen_konfigurator.Controllers
                 var ausse_innen = new Aussen_Innen_Halbzylinder
                 {
                     Profil_HalbzylinderId = s.Last(),
-                    aussen = aussen[i]
+                    aussen = aussen[i],
+                    costAussen = costSizeAussen[i]
                 };
                 db.Aussen_Innen_Halbzylinder.Add(ausse_innen);
                 db.SaveChanges();
@@ -1160,7 +1163,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             ViewBag.KeyCost = listPriceKey.ToList();
 
-            var SizeHalbzylinder = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == profil_Doppelzylinder.Id).ToList();
+            var SizeDoppel = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == profil_Doppelzylinder.Id).ToList();
 
             var options = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == Doppel.Id).ToList();
 
@@ -1202,7 +1205,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 ViewBag.CountOptions = countV.ToList();
                 ViewBag.OptionValue = ValueOption;
 
-                ViewBag.Size = SizeHalbzylinder;
+                ViewBag.Size = SizeDoppel;
 
                 ViewBag.optionV = true;
             }
@@ -1216,7 +1219,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Save(Profil_Doppelzylinder profil_Doppelzylinder, List<int> SizeAus, List<int> SizeInen, List<string> Options,
-        List<string> Descriptions, List<string> valueNGF, List<float> costNGF, List<int> inputCounter,string NSysteam,float keyCost)
+        List<string> Descriptions, List<string> valueNGF, List<float> costNGF, List<int> inputCounter,string NSysteam,float keyCost, string descriptionsSysteam,List<float> costSizeAussen, List<float> costSizeIntern)
         {
             var Items = db.Profil_Doppelzylinder.Find(profil_Doppelzylinder.Id);
             Items.schliessanlagenId = profil_Doppelzylinder.schliessanlagenId;
@@ -1322,6 +1325,8 @@ namespace schliessanlagen_konfigurator.Controllers
                     Profil_DoppelzylinderId = Items.Id,
                     aussen = SizeAus[i],
                     Intern = SizeInen[i],
+                    costSizeAussen = costSizeAussen[i],
+                    costSizeIntern = costSizeIntern[i],
                 };
                 db.Aussen_Innen.Add(SizeV);
             }
@@ -1332,7 +1337,7 @@ namespace schliessanlagen_konfigurator.Controllers
             var keyItem = db.SysteamPriceKey.Find(Key);
             keyItem.NameSysteam = NSysteam;
             keyItem.Price = keyCost;
-           
+            keyItem.DesctiptionsSysteam = descriptionsSysteam;
             db.SaveChanges();
 
             return RedirectToAction("Index");
@@ -1602,7 +1607,7 @@ namespace schliessanlagen_konfigurator.Controllers
         #region SaveEditForm
         [HttpPost]
         public ActionResult SaveHalbzylinder(Profil_Halbzylinder profil_Halbzylinder, List<int> Size, List<float> CostSize, List<string> Options,
-        List<string> Descriptions, List<string> valueNGF, List<float> costNGF, List<int> inputCounter)
+        List<string> Descriptions, List<string> valueNGF, List<float> costNGF, List<int> inputCounter,List<float> costSizeAussen)
         {
             var Items = db.Profil_Halbzylinder.Find(profil_Halbzylinder.Id);
             Items.schliessanlagenId = profil_Halbzylinder.schliessanlagenId;
@@ -1706,6 +1711,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 {
                     Profil_HalbzylinderId = Items.Id,
                     aussen = Size[i],
+                    costAussen = costSizeAussen[i]
                 };
                 db.Aussen_Innen_Halbzylinder.Add(SizeV);
             }
@@ -2018,7 +2024,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
         [HttpPost]
         public ActionResult SaveProfil_Knaufzylinder(Profil_Knaufzylinder profil_Knayf,List<int> SizeAus, List<int> SizeInen, List<string> Options,
-        List<string> Descriptions, List<string> valueNGF, List<float> costNGF, List<int> inputCounter)
+        List<string> Descriptions, List<string> valueNGF, List<float> costNGF, List<int> inputCounter, List<float> costSizeAussen, List<float> costSizeIntern)
         {
             var Items = db.Profil_Knaufzylinder.Find(profil_Knayf.Id);
             Items.schliessanlagenId = profil_Knayf.schliessanlagenId;
@@ -2122,6 +2128,8 @@ namespace schliessanlagen_konfigurator.Controllers
                     Profil_KnaufzylinderId = Items.Id,
                     aussen = SizeAus[i],
                     Intern = SizeInen[i],
+                    costSizeAussen = costSizeAussen[i],
+                    costSizeIntern = costSizeIntern[i]
                 };
                 db.Aussen_Innen_Knauf.Add(SizeV);
             }

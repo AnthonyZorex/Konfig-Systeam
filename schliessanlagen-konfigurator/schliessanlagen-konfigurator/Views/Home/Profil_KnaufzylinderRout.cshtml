@@ -49,8 +49,15 @@
 
                         <div style="margin-bottom: 50px;">
                             <label>Descriptions</label>
-                            <textarea asp-for="description" required class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            <textarea asp-for="description" required class="form-control" id="exampleFormControlTextarea1"></textarea>
                         </div>
+                        @if (ViewBag.Content != null)
+                        {
+                            <div>
+                                <h3>Submitted Content:</h3>
+                                <div>@Html.Raw(ViewBag.Content)</div>
+                            </div>
+                        }
 
                         <div style="margin-bottom: 50px;">
                             <label>Cost</label>
@@ -62,10 +69,12 @@
 
                             <div id="AussenProfilDopel">
                                 <input type="number" class="form-control" required placeholder="Aussen" id="aus" step="0.01" name="aussen" />
+                                <input class="form-control" type="number" name="costSizeAussen" id="ausCost" step="0.01" />
                             </div>
 
                             <div id="InnenProfilDopel">
                                 <input type="number" class="form-control" required placeholder="innen" id="inter" step="0.01" name="innen" />
+                                <input type="number" class="form-control" name="costSizeIntern" id="interCost" step="0.01" />
                             </div>
                         </div>
                         <div id="productOptions">
@@ -126,7 +135,13 @@
 
 @section scripts
 {
+    <script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script>
+
     <script type="text/javascript">
+
+        tinymce.init({
+            selector: '#exampleFormControlTextarea1'
+        });
 
         let plusAussen_Innen = document.getElementById('addAussen_Innen');
         let docInnen = document.getElementById('InnenProfilDopel');
@@ -246,28 +261,52 @@
 
 
             plusAussen_Innen.addEventListener('click', () => {
+
                 let d = document.createElement('input');
-                d.setAttribute('name', 'aussen');
-                d.setAttribute('placeholder', 'aussen');
+                d.setAttribute('name', 'SizeAus');
+                d.setAttribute('placeholder', 'Aussen');
                 d.setAttribute('class', 'form-control');
                 d.id = 'aus';
 
+                let costAussen = document.createElement('input');
+                costAussen.setAttribute('name', 'costSizeAussen');
+                costAussen.setAttribute('placeholder', 'costAussen');
+                costAussen.setAttribute('class', 'form-control');
+                costAussen.setAttribute('step', '0.01');
+                costAussen.setAttribute('type', 'number');
+                costAussen.id = 'ausCost';
+
                 let x = document.createElement('input');
-                x.setAttribute('name', 'innen');
-                x.setAttribute('placeholder', 'innen');
+                x.setAttribute('name', 'SizeInen');
+                x.setAttribute('placeholder', 'Innen');
                 x.id = 'inter';
                 x.setAttribute('class', 'form-control');
-                docAussen.append(d);
-                docInnen.append(x);
+
+                let costInter = document.createElement('input');
+                costInter.setAttribute('name', 'costSizeIntern');
+                costInter.setAttribute('placeholder', 'costInnen');
+                costInter.id = 'interCost';
+                costInter.setAttribute('class', 'form-control');
+                costInter.setAttribute('step', '0.01');
+                costInter.setAttribute('type', 'number');
+                docAussen.append(d, costAussen);
+                docInnen.append(x, costInter);
 
             });
             removeAussen_Innen.addEventListener('click', () => {
+
                 let d = document.querySelectorAll('#aus');
+
+                let costAussen = document.querySelectorAll('#ausCost');
+
                 let x = document.querySelectorAll('#inter');
+                let costInter = document.querySelectorAll('#interCost');
 
-
+                docAussen.removeChild(costAussen[costAussen.length - 1]);
                 docAussen.removeChild(d[d.length - 1]);
+
                 docInnen.removeChild(x[x.length - 1]);
+                docInnen.removeChild(costInter[costInter.length - 1]);
             });
 
         })

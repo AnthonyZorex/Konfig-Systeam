@@ -47,10 +47,18 @@
                             <input asp-for="NameSystem" required class="form-control" type="text" />
                         </div>
 
+
                         <div style="margin-bottom: 50px;">
                             <label>Descriptions</label>
-                            <textarea asp-for="description" required class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            <textarea asp-for="description" required class="form-control" id="exampleFormControlTextarea1"></textarea>
                         </div>
+                        @if (ViewBag.Content != null)
+                        {
+                            <div>
+                                <h3>Submitted Content:</h3>
+                                <div>@Html.Raw(ViewBag.Content)</div>
+                            </div>
+                        }
 
                         <div style="margin-bottom: 50px;">
                             <label>Cost</label>
@@ -62,6 +70,7 @@
 
                             <div id="AussenProfilDopel">
                                 <input class="form-control" type="number" placeholder="Aussen" step="0.01" name="aussen" />
+                                <input class="form-control" type="number" placeholder="costSizeAussen" step="0.01" name="costSizeAussen" />
                             </div>
 
                         </div>
@@ -125,7 +134,14 @@
 
 @section scripts
 {
+    <script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script>
+
     <script type="text/javascript">
+
+        tinymce.init({
+            selector: '#exampleFormControlTextarea1'
+        });
+
 
         let plusAussen_Innen = document.getElementById('addAussen_Innen');
         let docInnen = document.getElementById('InnenProfilDopel');
@@ -251,12 +267,26 @@
                 d.setAttribute('placeholder', 'aussen');
                 d.setAttribute('class', 'form-control');
                 d.id = 'aus';
-                docAussen.append(d);
+
+                let costAussen = document.createElement('input');
+                costAussen.setAttribute('name', 'costSizeAussen');
+                costAussen.setAttribute('placeholder', 'costAussen');
+                costAussen.setAttribute('class', 'form-control');
+                costAussen.setAttribute('step', '0.01');
+                costAussen.setAttribute('type', 'number');
+                costAussen.id = 'ausCost';
+
+                docAussen.append(d, costAussen);
 
             });
             removeAussen_Innen.addEventListener('click', () => {
+
                 let d = document.querySelectorAll('#aus');
+                let costAussen = document.querySelectorAll('#ausCost');
+
                 docAussen.removeChild(d[d.length - 1]);
+                docAussen.removeChild(costAussen[costAussen.length - 1]);
+
             });
 
         })

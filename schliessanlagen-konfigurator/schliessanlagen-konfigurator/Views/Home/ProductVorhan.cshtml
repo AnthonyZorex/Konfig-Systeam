@@ -16,8 +16,10 @@
             <div id="product_desciptions">
                 <div>
                     <h3>@Model.Name</h3>
-                    <h2><strong id="cost" style="line-height: 200%;">@Model.Price</strong></h2>
-                    <h6 style="line-height: 200%; max-width: 400px;">@Model.description</h6>
+                    <h2><strong id="cost" style="line-height: 200%;">@Model.Price €</strong></h2>
+                    <div>
+                        @Html.Raw(@Model.description)
+                    </div>
                 </div>
                 <div id="cardOptions">
                     <h6>Bügel Lichte:</h6>
@@ -59,7 +61,7 @@
         <a asp-action="Index" class="btn btn-success">Back to List</a>
     </div>
 }
-
+<script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script>
 <script>
 
     let SystemName = `${"@Model.NameSystem"}`;

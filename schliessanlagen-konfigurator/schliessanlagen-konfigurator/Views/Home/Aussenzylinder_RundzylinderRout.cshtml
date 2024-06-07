@@ -50,8 +50,15 @@
 
                         <div style="margin-bottom: 50px;">
                             <label>Descriptions</label>
-                            <textarea asp-for="description" required class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            <textarea asp-for="description" required class="form-control" id="exampleFormControlTextarea1"></textarea>
                         </div>
+                        @if (ViewBag.Content != null)
+                        {
+                            <div>
+                                <h3>Submitted Content:</h3>
+                                <div>@Html.Raw(ViewBag.Content)</div>
+                            </div>
+                        }
 
                         <div style="margin-bottom: 50px;">
                             <label>Cost</label>
@@ -99,11 +106,9 @@
                                 <td id="rowTable" class="table-info">@item.Name</td>
                                 <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
                                 <td id="rowTable " class="table-info"><h6 id="cost">@item.Price</h6></td>
-
-
-
                                 <td id="rowTable" class="table-info"><a href="@Url.Action("Edit_Aussenzylinder_Rundzylinder","Home", new { item.Id })"><img src="@("/Image/edit-tools.png")" height="30" width="30" /></a></td>
                                 <td id="rowTable" class="table-info">
+
                                     <a class="compItem" href="@Url.Action("ProductAussenzylinder","Home", new { item.Id })">
                                         <img src="@("/Image/options.png")" height="30" width="30" />
                                     </a>
@@ -122,7 +127,13 @@
 
 @section scripts
 {
+    <script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script>
+
     <script type="text/javascript">
+
+            tinymce.init({
+                selector: '#exampleFormControlTextarea1'
+            });
 
         let sum = document.querySelectorAll('#cost');
 

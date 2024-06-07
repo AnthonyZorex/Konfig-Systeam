@@ -51,8 +51,15 @@
 
                         <div style="margin-bottom: 50px;">
                             <label>Descriptions</label>
-                            <textarea asp-for="description" required class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            <textarea asp-for="description" required class="form-control" id="exampleFormControlTextarea1"></textarea>
                         </div>
+                        @if (ViewBag.Content != null)
+                        {
+                            <div>
+                                <h3>Submitted Content:</h3>
+                                <div>@Html.Raw(ViewBag.Content)</div>
+                            </div>
+                        }
 
                         <div style="margin-bottom: 50px;">
                             <label>Cost</label>
@@ -112,14 +119,19 @@
                     </tbody>
                 </table>
             }
-
         </div>
     </div>
 
 }
 @section scripts
 {
+    <script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script>
+
     <script type="text/javascript">
+
+        tinymce.init({
+            selector: '#exampleFormControlTextarea1'
+        });
 
         let sum = document.querySelectorAll('#cost');
 
