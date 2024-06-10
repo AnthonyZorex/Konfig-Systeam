@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +7,9 @@ using schliessanlagen_konfigurator.Data;
 using schliessanlagen_konfigurator.Models.Users;
 using schliessanlagen_konfigurator.Send_Data;
 using System.Threading;
+using Microsoft.AspNetCore.ResponseCompression;
+using System.IO;
+using System.IO.Compression;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +46,23 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequiredUniqueChars = 1;
 });
 
+builder.Services.AddResponseCompression(options =>
+{
+    options.EnableForHttps = true;
+    options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[]
+    {
+        "image/svg+xml",
+        "application/atom+xml"
+    });
+    options.Providers.Add<BrotliCompressionProvider>();
+    options.Providers.Add<GzipCompressionProvider>();
+});
+
+builder.Services.Configure<GzipCompressionProviderOptions>(options =>
+{
+    options.Level = CompressionLevel.Optimal;
+});
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -52,14 +72,23 @@ using (var scope = app.Services.CreateScope())
 }
 
 
+app.UseStaticFiles(new StaticFileOptions
+{
+    OnPrepareResponse = ctx =>
+    {
+        ctx.Context.Response.Headers.Append("Cache-Control", "public,max-age=604800"); 
+    }
+});
+
 app.UseDefaultFiles();
-app.UseStaticFiles();
 
 //if (app.Environment.IsDevelopment())
 //{
 //    app.UseExceptionHandler("/Home/Error");
 //    app.UseHsts();
 //}
+
+app.UseResponseCompression();
 
 app.UseRequestLocalization();
 app.UseHttpsRedirection();
@@ -77,4 +106,5 @@ app.UseEndpoints(endpoints =>
         pattern: "{controller=Konfigurator}/{action=IndexKonfigurator}/{id?}");
     endpoints.MapRazorPages();
 });
+
 app.Run();

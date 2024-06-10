@@ -1,6 +1,7 @@
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\schliessanlagen-konfigurator.exe
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\appsettings.Development.json
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\appsettings.json
+D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\bundleconfig.json
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\schliessanlagen-konfigurator.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\schliessanlagen-konfigurator.runtimeconfig.json
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\schliessanlagen-konfigurator.pdb

@@ -125,7 +125,7 @@
 
                         <div id="Size-@d" class="SizeProduct">  
                             <div>
-                                    <select class="form-select" name="DoppelAussen" id="Aussen" onchange="selectParamAussen(event.target.value,@d,@ViewBag.DAussen[elemNum])">
+                                    <select class="form-select" name="DoppelAussen" id="Aussen" onchange="selectParamAussen(event.target.value,@d,@ViewBag.DAussen[elemNum],'Doppelzylinder')">
                                     <option style="display:none" selected>@ViewBag.DAussen[elemNum]</option>
                                     <option>Außenlänge (A)</option>
                                     @for (int i = 0; i < ViewBag.Dopelzylinderaussen.Count; i++)
@@ -136,7 +136,7 @@
                                     <input type="hidden" id="Aussen-@d" />
                             </div>
                             <div>
-                                    <select class="form-select" name="DoppelIntern" id="Intern" onchange="selectParamIntern(event.target.value,@d,@ViewBag.DInter[elemNum])">
+                                    <select class="form-select" name="DoppelIntern" id="Intern" onchange="selectParamIntern(event.target.value,@d,@ViewBag.DInter[elemNum],'Doppelzylinder')">
                                     <option style="display:none" selected>@ViewBag.DInter[elemNum]</option>
                                     <option>Innenlänge (B)</option>
                                     @for (int i = 0; i < ViewBag.DopelzylinderIntern.Count; i++)
@@ -266,7 +266,7 @@
 
                             <div id="Size-@d" class="SizeProduct">
                             <div>
-                                    <select class="form-select" name="KnayfAussen" id="Aussen" onchange="selectParamAussen(event.target.value,@d,@ViewBag.KAussen[elemNum])">
+                                    <select class="form-select" name="KnayfAussen" id="Aussen" onchange="selectParamAussen(event.target.value,@d,@ViewBag.KAussen[elemNum],'Knaufzylinder')">
                                     <option style="display:none" selected>@ViewBag.KAussen[elemNum]</option>
                                     <option>Außenlänge (A)</option>
                                     @for (int i = 0; i < ViewBag.KnayfZelinderAussen.Count; i++)
@@ -277,7 +277,7 @@
                                     <input type="hidden" id="Aussen-@d" />
                             </div>
                             <div>
-                                    <select class="form-select" name="KnayfIntern" id="Intern" onchange="selectParamIntern(event.target.value,@d,@ViewBag.KInter[elemNum])">
+                                    <select class="form-select" name="KnayfIntern" id="Intern" onchange="selectParamIntern(event.target.value,@d,@ViewBag.KInter[elemNum],'Knaufzylinder')">
                                     <option style="display:none" selected>@ViewBag.KInter[elemNum]</option>
                                     <option>Innenlänge (B)</option>
                                     @for (int i = 0; i < ViewBag.KnayfZelinderIntern.Count; i++)
@@ -861,6 +861,16 @@
     let AussenRundOptionsName = @Html.Raw(ViewBag.AussenNameJson) || null;
     let AussenRundOptionsValue = @Html.Raw(ViewBag.AussenValueJson) || null;
     let AussenRundOptionsCostValue = @Html.Raw(ViewBag.AussenValueCostJson) || null;
+     
+    let priceDoppelAussenCost = @Html.Raw(ViewBag.CostDoppelAussen);
+    let priceDoppelInternCost = @Html.Raw(ViewBag.CostDoppelIntern);
+
+    let priceKnayfAussenCost = @Html.Raw(ViewBag.KnayfAussenCost);
+    let priceKnayfInternCost = @Html.Raw(ViewBag.KnayfInternCost);
+
+    let halbAussenCost = @Html.Raw(ViewBag.CostHalbSize);
+
+    console.log(priceDoppelAussenCost);
 
     let AllPrice = document.getElementById("cost");
 
@@ -1404,7 +1414,7 @@
        
         serchedItem = 0;
     }
-    function selectParamAussen(value, idBlock, oldValue) 
+    function selectParamAussen(value, idBlock, oldValue,type) 
     {
         let iterations = 0;
         let serchedItem = 0;
@@ -1445,17 +1455,38 @@
                 {
                         if (ItemValue == value) 
                         {
-                            oldAussen.value = ItemValue;
-                            serchedItem++;
+                             oldAussen.value = ItemValue;
+                             serchedItem++;
                              iterations++;
-                            for (let i = 0; i !== iterations; i++) 
+
+                            if (type === "Doppelzylinder") 
                             {
-                                let Costen = AllPrice.value.replace(/,/g, '.');
-                                AllPrice.value = parseFloat(Costen) + (4 * Number(countSchluss.value));
+                                    for (let i = 0; i !== iterations; i++) 
+                                    {
+                                        let Costen = AllPrice.value.replace(/,/g, '.');
+                                        AllPrice.value = parseFloat(Costen) + (priceDoppelAussenCost[i] * Number(countSchluss.value));
+                                    }
                             }
+                            if (type === "Halbzylinder")
+                            {
+                                for (let i = 0; i !== iterations; i++) 
+                                {
+                                    let Costen = AllPrice.value.replace(/,/g, '.');
+                                    AllPrice.value = parseFloat(Costen) + (priceKnayfAussenCost[i] * Number(countSchluss.value));
+                                }
+                            }
+                            if (type === "Knaufzylinder") 
+                            {
+                                    for (let i = 0; i !== iterations; i++) 
+                                    {
+                                        let Costen = AllPrice.value.replace(/,/g, '.');
+                                        AllPrice.value = parseFloat(Costen) + (priceKnayfAussenCost[i] * Number(countSchluss.value));
+                                    }
+                            }
+                           
                             return;
-                         }
-                            if (ItemValue > 31) 
+                        }
+                            else
                             {
                                 iterations++;
                             } 
@@ -1464,52 +1495,123 @@
                
                 if (ItemValueOld > value) 
                 {
-                    if (ItemValue > 31) 
-                    {
                         let Costen = AllPrice.value.replace(/,/g, '.');
 
                         if (ItemValue == ItemValueOld) 
                         {
                             oldAussen.value = value;
                             serchedItem++;
-                             AllPrice.value = parseFloat(Costen) - (4 * Number(countSchluss.value));
+                            iterations++;
+
+                            if (type === "Doppelzylinder") 
+                            {
+                                
+                                    for (let i = 0; i !== iterations; i++) 
+                                    {
+                                        let Costen = AllPrice.value.replace(/,/g, '.');
+                                        AllPrice.value = parseFloat(Costen) - (priceDoppelAussenCost[i] * Number(countSchluss.value));
+                                    }
+                                
+                               
+
+                            }
+                            if (type === "Halbzylinder") 
+                            {
+                                for (let i = 0; i !== iterations; i++) 
+                                {
+                                    let Costen = AllPrice.value.replace(/,/g, '.');
+                                AllPrice.value = parseFloat(Costen) - (halbAussenCost[i] * Number(countSchluss.value));
+                                }
+                            }
+                            if (type === "Knaufzylinder") 
+                            {
+                               
+                                    for (let i = 0; i !== iterations; i++) 
+                                    {
+                                        let Costen = AllPrice.value.replace(/,/g, '.');
+                                        AllPrice.value = parseFloat(Costen) - (priceKnayfAussenCost[i] * Number(countSchluss.value));
+                                    }
+                               
+                            }
+
                             return;
                         }
-                        if (ItemValue > 31) 
+                        else
                         {
-                            AllPrice.value = parseFloat(Costen) - (4 * Number(countSchluss.value));
+                            iterations++;
                         }
-                    } 
+                    
                    
                 }
 
             }
 
         });
-
-        if (Innen.value >= 55 && Aussen.value >= 55) 
+        if (type === "Doppelzylinder") 
         {
-            if (company.value = "CES") 
+            if (Innen.value >= 55 && Aussen.value >= 55) 
             {
-                WaitTime.innerHTML = "Lieferzeit:4 Werktage";
-                WaitTime.textContent = "Lieferzeit: 4 Werktage";
+                if (company.value = "CES") 
+                {
+                    WaitTime.innerHTML = "Lieferzeit:4 Werktage";
+                    WaitTime.textContent = "Lieferzeit: 4 Werktage";
+                }
+                else 
+                {
+                    WaitTime.innerHTML = "Lieferzeit:7 Tag";
+                    WaitTime.textContent = "Lieferzeit:7 Tag";
+                }
             }
             else 
             {
-                WaitTime.innerHTML = "Lieferzeit:7 Tag";
-                WaitTime.textContent = "Lieferzeit:7 Tag";
+                WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
+                WaitTime.textContent = "Lieferzeit: 2 Werktage";
             }
         }
-        else 
+        if (type === "Knaufzylinder") 
         {
-            WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
-            WaitTime.textContent = "Lieferzeit: 2 Werktage";
+            if (Innen.value >= 55 && Aussen.value >= 55) 
+            {
+                if (company.value = "CES") 
+                {
+                    WaitTime.innerHTML = "Lieferzeit:4 Werktage";
+                    WaitTime.textContent = "Lieferzeit: 4 Werktage";
+                }
+                else 
+                {
+                    WaitTime.innerHTML = "Lieferzeit:7 Tag";
+                    WaitTime.textContent = "Lieferzeit:7 Tag";
+                }
+            }
+            else {
+                WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
+                WaitTime.textContent = "Lieferzeit: 2 Werktage";
+            }
+        }
+        if (type === "Halbzylinder") 
+        {
+            if (Aussen.value >= 55) 
+            {
+                if (company.value = "CES") 
+                {
+                    WaitTime.innerHTML = "Lieferzeit:4 Werktage";
+                    WaitTime.textContent = "Lieferzeit: 4 Werktage";
+                }
+                else {
+                    WaitTime.innerHTML = "Lieferzeit:7 Tag";
+                    WaitTime.textContent = "Lieferzeit:7 Tag";
+                }
+            }
+            else {
+                WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
+                WaitTime.textContent = "Lieferzeit: 2 Werktage";
+            }
         }
 
         iterations = 0;
         serchedItem = 0;
     }
-    function selectParamIntern(value, idBlock, oldValue) 
+    function selectParamIntern(value, idBlock, oldValue, type) 
     {
         let iterations = 0;
         let serchedItem = 0;
@@ -1544,29 +1646,46 @@
             }
             else 
             {
-                if ((value > 31) && (value > ItemValueOld)) 
-                {
-                  
                     if (ItemValue == value) 
                     {  
                         oldAussen.value = ItemValue;
                         serchedItem++;
                         iterations++;
 
-                        for (let i = 0; i !== iterations; i++) 
+                        if (type === "Doppelzylinder") 
                         {
-                             let Costen = AllPrice.value.replace(/,/g, '.');
-                            AllPrice.value = parseFloat(Costen) + (4 * Number(countSchluss.value));
+                                for (let i = 0; i !== iterations; i++) 
+                                {
+                                    let Costen = AllPrice.value.replace(/,/g, '.');
+                                    AllPrice.value = parseFloat(Costen) + (priceDoppelInternCost[i] * Number(countSchluss.value));
+                                }
+                        }
+                        if (type === "Halbzylinder")
+                        {
+                            for (let i = 0; i !== iterations; i++) 
+                            {
+                                let Costen = AllPrice.value.replace(/,/g, '.');
+                            AllPrice.value = parseFloat(Costen) + (halbAussenCost[i] * Number(countSchluss.value));
+                            }
+                        }
+                        if (type === "Knaufzylinder") 
+                        {
+                           
+                                for (let i = 0; i !== iterations; i++) 
+                                {
+                                    let Costen = AllPrice.value.replace(/,/g, '.');
+                                    AllPrice.value = parseFloat(Costen) + (priceKnayfInternCost[i] * Number(countSchluss.value));
+                                }
+                            
+                          
                         }
 
                         return;
                     }
-                    if (ItemValue > 31)
+                    else
                     {
                         iterations++;
                     }
-
-                }
 
                 if (ItemValueOld > value) 
                 {
@@ -1576,12 +1695,46 @@
                         {
                             oldAussen.value = value;
                             serchedItem++;
-                            AllPrice.value = parseFloat(Costen) - (4 * Number(countSchluss.value));
+
+                            if (ItemValue == ItemValueOld) 
+                            {
+                                oldAussen.value = value;
+                                serchedItem++;
+                                iterations++;
+
+                                if (type === "Doppelzylinder")
+                                {
+                                        for (let i = 0; i !== iterations; i++) 
+                                        {
+                                            let Costen = AllPrice.value.replace(/,/g, '.');
+                                            AllPrice.value = parseFloat(Costen) - (priceDoppelInternCost[i] * Number(countSchluss.value));
+                                        }
+
+                                }
+                                if (type === "Halbzylinder") 
+                                {
+                                    for (let i = 0; i !== iterations; i++) 
+                                    {
+                                        let Costen = AllPrice.value.replace(/,/g, '.');
+                                        AllPrice.value = parseFloat(Costen) - (priceKnayfAussenCost[i] * Number(countSchluss.value));
+                                    }
+                                }
+                                if (type === "Knaufzylinder") 
+                                {
+                                        for (let i = 0; i !== iterations; i++)
+                                        {
+                                            let Costen = AllPrice.value.replace(/,/g, '.');
+                                            AllPrice.value = parseFloat(Costen) - (priceKnayfInternCost[i] * Number(countSchluss.value));
+                                        }
+                                }
+                            }
+
                             return;
+
                         }
-                        if (ItemValue > 31) 
+                        else
                         {
-                            AllPrice.value = parseFloat(Costen) - (4 * Number(countSchluss.value));
+                            iterations++;
                         }
 
                 }
@@ -1590,22 +1743,68 @@
 
         });
 
-        if (Innen.value >= 55 && Aussen.value >= 55) 
+        if (type === "Doppelzylinder") 
         {
-            if (company.value = "CES") 
+            if (Innen.value >= 55 && Aussen.value >= 55) 
             {
-                WaitTime.innerHTML = "Lieferzeit:4 Werktage";
-                WaitTime.textContent = "Lieferzeit: 4 Werktage";
+                if (company.value = "CES")
+                {
+                    WaitTime.innerHTML = "Lieferzeit:4 Werktage";
+                    WaitTime.textContent = "Lieferzeit: 4 Werktage";
+                }
+                else 
+                {
+                    WaitTime.innerHTML = "Lieferzeit:7 Tag";
+                    WaitTime.textContent = "Lieferzeit:7 Tag";
+                }
             }
             else 
             {
-                WaitTime.innerHTML = "Lieferzeit:7 Tag";
-                WaitTime.textContent = "Lieferzeit:7 Tag";
+                WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
+                WaitTime.textContent = "Lieferzeit: 2 Werktage";
             }
         }
-        else {
-            WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
-            WaitTime.textContent = "Lieferzeit: 2 Werktage";
+        if (type === "Knaufzylinder") 
+        {
+            if (Innen.value >= 55 && Aussen.value >= 55) 
+            {
+                if (company.value = "CES") 
+                {
+                    WaitTime.innerHTML = "Lieferzeit:4 Werktage";
+                    WaitTime.textContent = "Lieferzeit: 4 Werktage";
+                }
+                else 
+                {
+                    WaitTime.innerHTML = "Lieferzeit:7 Tag";
+                    WaitTime.textContent = "Lieferzeit:7 Tag";
+                }
+            }
+            else 
+            {
+                WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
+                WaitTime.textContent = "Lieferzeit: 2 Werktage";
+            }
+        }
+        if (type === "Halbzylinder") 
+        {
+            if (Aussen.value >= 55) 
+            {
+                if (company.value = "CES") 
+                {
+                    WaitTime.innerHTML = "Lieferzeit:4 Werktage";
+                    WaitTime.textContent = "Lieferzeit: 4 Werktage";
+                }
+                else 
+                {
+                    WaitTime.innerHTML = "Lieferzeit:7 Tag";
+                    WaitTime.textContent = "Lieferzeit:7 Tag";
+                }
+            }
+            else 
+            {
+                WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
+                WaitTime.textContent = "Lieferzeit: 2 Werktage";
+            }
         }
 
         iterations = 0;

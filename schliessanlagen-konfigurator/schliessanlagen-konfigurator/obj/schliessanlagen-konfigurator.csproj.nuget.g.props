@@ -25,5 +25,6 @@
     <PkgMicrosoft_TypeScript_MSBuild Condition=" '$(PkgMicrosoft_TypeScript_MSBuild)' == '' ">C:\Users\JAKUB\.nuget\packages\microsoft.typescript.msbuild\5.4.4</PkgMicrosoft_TypeScript_MSBuild>
     <PkgMicrosoft_TypeScript_Compiler Condition=" '$(PkgMicrosoft_TypeScript_Compiler)' == '' ">C:\Users\JAKUB\.nuget\packages\microsoft.typescript.compiler\3.1.5</PkgMicrosoft_TypeScript_Compiler>
     <PkgMicrosoft_EntityFrameworkCore_Tools Condition=" '$(PkgMicrosoft_EntityFrameworkCore_Tools)' == '' ">C:\Users\JAKUB\.nuget\packages\microsoft.entityframeworkcore.tools\8.0.4</PkgMicrosoft_EntityFrameworkCore_Tools>
+    <PkgBuildBundlerMinifier Condition=" '$(PkgBuildBundlerMinifier)' == '' ">C:\Users\JAKUB\.nuget\packages\buildbundlerminifier\3.2.449</PkgBuildBundlerMinifier>
   </PropertyGroup>
 </Project>
