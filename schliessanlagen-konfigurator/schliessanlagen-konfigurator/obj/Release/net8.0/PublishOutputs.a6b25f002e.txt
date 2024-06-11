@@ -5,6 +5,7 @@ D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\bundleconfig.json
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\schliessanlagen-konfigurator.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\schliessanlagen-konfigurator.runtimeconfig.json
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\schliessanlagen-konfigurator.pdb
+D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\Antlr3.Runtime.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\Azure.Core.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\Azure.Identity.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\BouncyCastle.Cryptography.dll
@@ -12,6 +13,7 @@ D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\EPPlus.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\Humanizer.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\Json.Net.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\MailKit.dll
+D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\System.Web.Optimization.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\Microsoft.AspNetCore.Cryptography.Internal.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
@@ -63,6 +65,7 @@ D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\Microsoft.VisualStudio.We
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
+D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\Microsoft.Web.Infrastructure.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\Microsoft.Win32.SystemEvents.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\MimeKit.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\Mono.TextTemplating.dll
@@ -95,6 +98,7 @@ D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\System.Security.Cryptogra
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\System.Security.Permissions.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\System.Windows.Extensions.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\System.Xml.XPath.XmlDocument.dll
+D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\WebGrease.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\af\Humanizer.resources.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\ar\Humanizer.resources.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\az\Humanizer.resources.dll

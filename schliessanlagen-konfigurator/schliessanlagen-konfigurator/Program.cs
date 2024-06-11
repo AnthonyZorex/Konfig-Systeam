@@ -10,6 +10,7 @@ using System.Threading;
 using Microsoft.AspNetCore.ResponseCompression;
 using System.IO;
 using System.IO.Compression;
+using System.Web.Optimization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,7 +35,9 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 
 });
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages(); 
+
+BundleTable.EnableOptimizations = true;
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
@@ -87,11 +90,11 @@ app.UseStaticFiles(new StaticFileOptions
 
 app.UseDefaultFiles();
 
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseExceptionHandler("/Home/Error");
-//    app.UseHsts();
-//}
+if (app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+}
 
 app.UseResponseCompression();
 
