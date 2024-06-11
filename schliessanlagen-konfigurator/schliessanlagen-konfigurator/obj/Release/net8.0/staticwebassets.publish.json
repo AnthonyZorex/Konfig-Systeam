@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "0E9Ifw2Us2HJo8vPJ32gqTEvhX1fQYLn8WpxGal9zVs=",
+  "Hash": "Gne/TbipWiBBH2Bo+evHYRgPGzql75UY74V8dk4dous=",
   "Source": "schliessanlagen-konfigurator",
   "BasePath": "_content/schliessanlagen-konfigurator",
   "Mode": "Default",
@@ -6437,6 +6437,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\tinymce_7.1.2\\tinymce\\js\\tinymce\\themes\\silver\\theme.min.js"
+    },
+    {
+      "Identity": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\lib\\tinymce_7.1.2\\tinymce\\js\\tinymce\\tinymce.d.ts",
+      "SourceId": "schliessanlagen-konfigurator",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\",
+      "BasePath": "_content/schliessanlagen-konfigurator",
+      "RelativePath": "lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.d.ts",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\lib\\tinymce_7.1.2\\tinymce\\js\\tinymce\\tinymce.d.ts"
     },
     {
       "Identity": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\lib\\tinymce_7.1.2\\tinymce\\js\\tinymce\\tinymce.min.js",

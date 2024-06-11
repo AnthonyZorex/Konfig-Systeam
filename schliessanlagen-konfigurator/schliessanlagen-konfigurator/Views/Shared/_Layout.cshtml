@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Schliessanlagen Konfigurator</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="manifest" href="/manifest.json">
     <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     <link rel="icon" type="image/x-icon" loading="lazy" href="@("/Image/SD_Logo.svg")" />
 </head>
@@ -13,7 +14,7 @@
     <header>
         <nav class="navbar navbar-expand-xl navbar-toggleable-xl navbar-light bg-white border-bottom box-shadow ">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-action="IndexKonfigurator" asp-controller="Konfigurator"><img src="@("/Image/SD_Logo.svg")" height="60" width="60" /> Schliessanlagen Konfigurator</a>
+                <a class="navbar-brand" asp-area="" asp-action="IndexKonfigurator" asp-controller="Konfigurator"><img loading="lazy" src="@("/Image/SD_Logo.svg")" height="60" width="60" alt="schliessanlagen.discount" /> Schliessanlagen Konfigurator</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -55,9 +56,23 @@
             @RenderBody()
         </main>
     </div>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-   
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" async></script>
+    <script src="~/lib/jquery/dist/jquery.min.js" async></script>
+    <script src="/service-worker.js" async></script>
     @await RenderSectionAsync("Scripts", required: false)
+    <script>
+
+        if ('serviceWorker' in navigator) 
+        {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    }, error => {
+                        console.log('ServiceWorker registration failed: ', error);
+                    });
+            });
+        }
+    </script>
 </body>
 </html>

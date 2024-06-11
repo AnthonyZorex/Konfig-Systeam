@@ -51,16 +51,21 @@ builder.Services.AddResponseCompression(options =>
     options.EnableForHttps = true;
     options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[]
     {
-        "image/svg+xml",
+        "image/svg+xml+png",
         "application/atom+xml"
     });
     options.Providers.Add<BrotliCompressionProvider>();
     options.Providers.Add<GzipCompressionProvider>();
 });
 
+builder.Services.Configure<BrotliCompressionProviderOptions>(options =>
+{
+    options.Level = System.IO.Compression.CompressionLevel.Fastest;
+});
+
 builder.Services.Configure<GzipCompressionProviderOptions>(options =>
 {
-    options.Level = CompressionLevel.Optimal;
+    options.Level = System.IO.Compression.CompressionLevel.Fastest;
 });
 
 var app = builder.Build();

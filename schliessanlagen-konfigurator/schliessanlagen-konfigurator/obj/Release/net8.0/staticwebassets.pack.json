@@ -1129,6 +1129,10 @@
       "PackagePath": "staticwebassets\\lib\\tinymce_7.1.2\\tinymce\\js\\tinymce\\themes\\silver\\theme.min.js"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\lib\\tinymce_7.1.2\\tinymce\\js\\tinymce\\tinymce.d.ts",
+      "PackagePath": "staticwebassets\\lib\\tinymce_7.1.2\\tinymce\\js\\tinymce\\tinymce.d.ts"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\lib\\tinymce_7.1.2\\tinymce\\js\\tinymce\\tinymce.min.js",
       "PackagePath": "staticwebassets\\lib\\tinymce_7.1.2\\tinymce\\js\\tinymce\\tinymce.min.js"
     },
