@@ -125,9 +125,9 @@
 
                         <div id="Size-@d" class="SizeProduct">  
                             <div>
-                                    <select class="form-select" name="DoppelAussen" id="Aussen" onchange="selectParamAussen(event.target.value,@d,@ViewBag.DAussen[elemNum],'Doppelzylinder')">
+                                    <select class="form-select" name="DoppelAussen" id="Aussen" onchange="selectParamAussen(event.target.value,@d,@ViewBag.DAussen[elemNum],'Doppelzylinder',event.target.selectedIndex)">
                                     <option style="display:none" selected>@ViewBag.DAussen[elemNum]</option>
-                                    <option>Außenlänge (A)</option>
+                            
                                     @for (int i = 0; i < ViewBag.Dopelzylinderaussen.Count; i++)
                                     {
                                         <option id="OptionA">@ViewBag.Dopelzylinderaussen[i]</option>
@@ -136,9 +136,9 @@
                                     <input type="hidden" id="Aussen-@d" />
                             </div>
                             <div>
-                                    <select class="form-select" name="DoppelIntern" id="Intern" onchange="selectParamIntern(event.target.value,@d,@ViewBag.DInter[elemNum],'Doppelzylinder')">
+                                    <select class="form-select" name="DoppelIntern" id="Intern" onchange="selectParamIntern(event.target.value,@d,@ViewBag.DInter[elemNum],'Doppelzylinder',event.target.selectedIndex)">
                                     <option style="display:none" selected>@ViewBag.DInter[elemNum]</option>
-                                    <option>Innenlänge (B)</option>
+                                
                                     @for (int i = 0; i < ViewBag.DopelzylinderIntern.Count; i++)
                                     {
                                         <option id="OptionI">@ViewBag.DopelzylinderIntern[i]</option>
@@ -266,9 +266,8 @@
 
                             <div id="Size-@d" class="SizeProduct">
                             <div>
-                                    <select class="form-select" name="KnayfAussen" id="Aussen" onchange="selectParamAussen(event.target.value,@d,@ViewBag.KAussen[elemNum],'Knaufzylinder')">
+                                    <select class="form-select" name="KnayfAussen" id="Aussen" onchange="selectParamAussen(event.target.value,@d,@ViewBag.KAussen[elemNum],'Knaufzylinder',event.target.selectedIndex)">
                                     <option style="display:none" selected>@ViewBag.KAussen[elemNum]</option>
-                                    <option>Außenlänge (A)</option>
                                     @for (int i = 0; i < ViewBag.KnayfZelinderAussen.Count; i++)
                                     {
                                         <option id="OptionA">@ViewBag.KnayfZelinderAussen[i]</option>
@@ -277,9 +276,8 @@
                                     <input type="hidden" id="Aussen-@d" />
                             </div>
                             <div>
-                                    <select class="form-select" name="KnayfIntern" id="Intern" onchange="selectParamIntern(event.target.value,@d,@ViewBag.KInter[elemNum],'Knaufzylinder')">
+                                    <select class="form-select" name="KnayfIntern" id="Intern" onchange="selectParamIntern(event.target.value,@d,@ViewBag.KInter[elemNum],'Knaufzylinder',event.target.selectedIndex)">
                                     <option style="display:none" selected>@ViewBag.KInter[elemNum]</option>
-                                    <option>Innenlänge (B)</option>
                                     @for (int i = 0; i < ViewBag.KnayfZelinderIntern.Count; i++)
                                     {
                                        <option id="OptionI">@ViewBag.KnayfZelinderIntern[i]</option>
@@ -410,9 +408,8 @@
                             <div id="Size-@d" class="SizeProduct">
                                
                             <div>
-                                    <select name="HalbAussen" id="Aussen" class="form-select" onchange="selectParamAussen(event.target.value,@d,@ViewBag.HalbOrderAussen[elemNum])">
+                                    <select name="HalbAussen" id="Aussen" class="form-select" onchange="selectParamAussen(event.target.value,@d,@ViewBag.HalbOrderAussen[elemNum],'Halbzylinder',event.target.selectedIndex)">
                                     <option style="display:none" selected>@ViewBag.HalbOrderAussen[elemNum]</option>
-                                    <option>Außenlänge (A)</option>
                                     @for (int i = 0; i < ViewBag.AussenHalb.Count; i++)
                                     {
                                        <option id="OptionA">@ViewBag.AussenHalb[i]</option>
@@ -631,9 +628,8 @@
                         </div>
                             <div id="Size-@d" class="SizeProduct">
                             <div>
-                                    <select class="form-select" name="VorhanAussen" id="Aussen" onchange="VorhanSchlus(event.target.value,@d,@ViewBag.VorhanSize[elemNum])">
+                                    <select class="form-select" name="VorhanAussen" id="Aussen" onchange="VorhanSchlus(event.target.value,@d,@ViewBag.VorhanSize[elemNum],event.target.selectedIndex)">
                                     <option style="display:none" selected>@ViewBag.VorhanOrderAussen[elemNum]</option>
-                                    <option selected>Außenlänge (A)</option>
                                     @for (int i = 0; i < ViewBag.VorhanSize.Count; i++)
                                     {
                                       <option id="OptionA">@ViewBag.VorhanSize[i]</option>
@@ -869,8 +865,6 @@
     let priceKnayfInternCost = @Html.Raw(ViewBag.KnayfInternCost);
 
     let halbAussenCost = @Html.Raw(ViewBag.CostHalbSize);
-
-    console.log(priceDoppelAussenCost);
 
     let AllPrice = document.getElementById("cost");
 
@@ -1342,7 +1336,7 @@
 
     let iterations = 0;
 
-    function VorhanSchlus(value, idBlock, oldSize) 
+    function VorhanSchlus(value, idBlock, oldSize, selectId) 
     {
         let serchedItem = 0;
         let BlockTur = document.getElementById("Size-" + idBlock);
@@ -1358,6 +1352,7 @@
         }
 
         AllPrice.value = parseFloat(AllPrice.value) - (VorhanSizeCost[iterations] * Number(countSchluss.value));
+        console.log(iterations);
 
         Aitems.forEach(function (items) 
         {
@@ -1414,10 +1409,12 @@
        
         serchedItem = 0;
     }
-    function selectParamAussen(value, idBlock, oldValue,type) 
+    function selectParamAussen(value, idBlock, oldValue,type,selectId) 
     {
         let iterations = 0;
         let serchedItem = 0;
+
+        let SelectItemId = selectId - 1;
 
         let BlockTur = document.getElementById("Size-"+idBlock);
         let countSchluss = BlockTur.querySelector("#countSchlusse-" + idBlock);
@@ -1451,20 +1448,20 @@
             }
             else 
             {
-                if ((value > 31 ) && (value > ItemValueOld)) 
+                if (value > ItemValueOld) 
                 {
                         if (ItemValue == value) 
                         {
                              oldAussen.value = ItemValue;
                              serchedItem++;
-                             iterations++;
 
                             if (type === "Doppelzylinder") 
                             {
                                     for (let i = 0; i !== iterations; i++) 
                                     {
                                         let Costen = AllPrice.value.replace(/,/g, '.');
-                                        AllPrice.value = parseFloat(Costen) + (priceDoppelAussenCost[i] * Number(countSchluss.value));
+                                        let index = SelectItemId - i;
+                                        AllPrice.value = parseFloat(Costen) + (priceDoppelAussenCost[index] * Number(countSchluss.value));
                                     }
                             }
                             if (type === "Halbzylinder")
@@ -1472,7 +1469,8 @@
                                 for (let i = 0; i !== iterations; i++) 
                                 {
                                     let Costen = AllPrice.value.replace(/,/g, '.');
-                                    AllPrice.value = parseFloat(Costen) + (priceKnayfAussenCost[i] * Number(countSchluss.value));
+                                    let index = SelectItemId - i;
+                                    AllPrice.value = parseFloat(Costen) + (halbAussenCost[index] * Number(countSchluss.value));
                                 }
                             }
                             if (type === "Knaufzylinder") 
@@ -1480,19 +1478,18 @@
                                     for (let i = 0; i !== iterations; i++) 
                                     {
                                         let Costen = AllPrice.value.replace(/,/g, '.');
-                                        AllPrice.value = parseFloat(Costen) + (priceKnayfAussenCost[i] * Number(countSchluss.value));
+                                        let index = SelectItemId - i;
+                                        AllPrice.value = parseFloat(Costen) + (priceKnayfAussenCost[index] * Number(countSchluss.value));
                                     }
                             }
                            
                             return;
                         }
-                            else
+                            if (ItemValue > ItemValueOld) 
                             {
                                 iterations++;
                             } 
                 }
-                
-               
                 if (ItemValueOld > value) 
                 {
                         let Costen = AllPrice.value.replace(/,/g, '.');
@@ -1501,42 +1498,79 @@
                         {
                             oldAussen.value = value;
                             serchedItem++;
-                            iterations++;
 
                             if (type === "Doppelzylinder") 
                             {
-                                
-                                    for (let i = 0; i !== iterations; i++) 
-                                    {
-                                        let Costen = AllPrice.value.replace(/,/g, '.');
-                                        AllPrice.value = parseFloat(Costen) - (priceDoppelAussenCost[i] * Number(countSchluss.value));
-                                    }
-                                
-                               
-
+                                        if (SelectItemId > 0) 
+                                        {
+                                            for (let i = 0; i !== iterations; i++) 
+                                            {
+                                                let Costen = AllPrice.value.replace(/,/g, '.');
+                                                let index = SelectItemId - i;
+                                                AllPrice.value = parseFloat(Costen) - (priceDoppelAussenCost[index] * Number(countSchluss.value));
+                                            }
+                                           
+                                        }
+                                        else 
+                                        {
+                                            iterations++;
+                                            for (let i = 0; i !== iterations; i++) 
+                                            {
+                                                let Costen = AllPrice.value.replace(/,/g, '.');
+                                                let index = SelectItemId + i;
+                                                AllPrice.value = parseFloat(Costen) - (priceDoppelAussenCost[index] * Number(countSchluss.value));
+                                            }
+                                        }
+                                       
+                                   
                             }
                             if (type === "Halbzylinder") 
                             {
-                                for (let i = 0; i !== iterations; i++) 
+                                if (SelectItemId > 0) 
                                 {
-                                    let Costen = AllPrice.value.replace(/,/g, '.');
-                                AllPrice.value = parseFloat(Costen) - (halbAussenCost[i] * Number(countSchluss.value));
-                                }
-                            }
-                            if (type === "Knaufzylinder") 
-                            {
-                               
                                     for (let i = 0; i !== iterations; i++) 
                                     {
                                         let Costen = AllPrice.value.replace(/,/g, '.');
-                                        AllPrice.value = parseFloat(Costen) - (priceKnayfAussenCost[i] * Number(countSchluss.value));
+                                        let index = SelectItemId - i;
+                                        AllPrice.value = parseFloat(Costen) - (halbAussenCost[index] * Number(countSchluss.value));
                                     }
-                               
+                                }
+                                else 
+                                {
+                                        iterations++;
+                                        for (let i = 0; i !== iterations; i++) 
+                                        {
+                                            let Costen = AllPrice.value.replace(/,/g, '.');
+                                            let index = SelectItemId + i;
+                                            AllPrice.value = parseFloat(Costen) - (halbAussenCost[index] * Number(countSchluss.value));
+                                        }
+                                }
+
+                            }
+                            if (type === "Knaufzylinder") 
+                            {
+                                if (SelectItemId > 0) {
+                                    for (let i = 0; i !== iterations; i++) {
+                                        let Costen = AllPrice.value.replace(/,/g, '.');
+                                        let index = SelectItemId - i;
+                                        AllPrice.value = parseFloat(Costen) - (priceKnayfAussenCost[index] * Number(countSchluss.value));
+                                    }
+
+                                }
+                                else {
+                                    iterations++;
+                                    for (let i = 0; i !== iterations; i++) {
+                                        let Costen = AllPrice.value.replace(/,/g, '.');
+                                        let index = SelectItemId + i;
+                                        AllPrice.value = parseFloat(Costen) - (priceKnayfAussenCost[index] * Number(countSchluss.value));
+                                    }
+                                }
+                                    
                             }
 
                             return;
                         }
-                        else
+                        if (ItemValue >= value) 
                         {
                             iterations++;
                         }
@@ -1611,7 +1645,7 @@
         iterations = 0;
         serchedItem = 0;
     }
-    function selectParamIntern(value, idBlock, oldValue, type) 
+    function selectParamIntern(value, idBlock, oldValue, type, selectId) 
     {
         let iterations = 0;
         let serchedItem = 0;
@@ -1620,6 +1654,8 @@
         let WaitTime = ProductBlock.querySelector("#WaitTime");
         let BlockTur = document.getElementById("Size-" + idBlock);
         let countSchluss = BlockTur.querySelector("#countSchlusse-" + idBlock);
+
+        let SelectItemId = selectId - 1;
 
         let Aussen = BlockTur.querySelector("#Aussen");
         let company = BlockTur.querySelector("#compName");
@@ -1634,108 +1670,105 @@
             oldAussen.value = oldValue;
         }
 
-        Aitems.forEach(function (items) 
-        {
+        Aitems.forEach(function (items) {
             let ItemValue = Number(items.innerHTML);
 
             let ItemValueOld = Number(oldAussen.value);
 
-            if (serchedItem == 1) 
-            {
+            if (serchedItem == 1) {
                 return;
             }
-            else 
-            {
-                    if (ItemValue == value) 
-                    {  
+            else {
+                if (value > ItemValueOld) {
+                    if (ItemValue == value) {
                         oldAussen.value = ItemValue;
                         serchedItem++;
-                        iterations++;
 
                         if (type === "Doppelzylinder") 
-                        {
-                                for (let i = 0; i !== iterations; i++) 
-                                {
-                                    let Costen = AllPrice.value.replace(/,/g, '.');
-                                    AllPrice.value = parseFloat(Costen) + (priceDoppelInternCost[i] * Number(countSchluss.value));
-                                }
-                        }
-                        if (type === "Halbzylinder")
                         {
                             for (let i = 0; i !== iterations; i++) 
                             {
                                 let Costen = AllPrice.value.replace(/,/g, '.');
-                            AllPrice.value = parseFloat(Costen) + (halbAussenCost[i] * Number(countSchluss.value));
+                                let index = SelectItemId - i;
+                                AllPrice.value = parseFloat(Costen) + (priceDoppelInternCost[index] * Number(countSchluss.value));
                             }
                         }
+                       
                         if (type === "Knaufzylinder") 
                         {
-                           
-                                for (let i = 0; i !== iterations; i++) 
-                                {
-                                    let Costen = AllPrice.value.replace(/,/g, '.');
-                                    AllPrice.value = parseFloat(Costen) + (priceKnayfInternCost[i] * Number(countSchluss.value));
-                                }
-                            
-                          
+                            for (let i = 0; i !== iterations; i++) 
+                            {
+                                let Costen = AllPrice.value.replace(/,/g, '.');
+                                let index = SelectItemId - i;
+                                AllPrice.value = parseFloat(Costen) + (priceKnayfInternCost[index] * Number(countSchluss.value));
+                            }
                         }
 
                         return;
                     }
-                    else
-                    {
+                    if (ItemValue > ItemValueOld) {
                         iterations++;
                     }
+                }
+                if (ItemValueOld > value) {
+                    let Costen = AllPrice.value.replace(/,/g, '.');
 
-                if (ItemValueOld > value) 
-                {
-                        let Costen = AllPrice.value.replace(/,/g, '.');
+                    if (ItemValue == ItemValueOld) {
+                        oldAussen.value = value;
+                        serchedItem++;
 
-                        if (ItemValue == ItemValueOld) 
+                        if (type === "Doppelzylinder") 
                         {
-                            oldAussen.value = value;
-                            serchedItem++;
-
-                            if (ItemValue == ItemValueOld) 
+                            if (SelectItemId > 0) 
                             {
-                                oldAussen.value = value;
-                                serchedItem++;
+                                for (let i = 0; i !== iterations; i++) 
+                                {
+                                    let Costen = AllPrice.value.replace(/,/g, '.');
+                                    let index = SelectItemId - i;
+                                    AllPrice.value = parseFloat(Costen) - (priceDoppelAussenCost[index] * Number(countSchluss.value));
+                                }
+
+                            }
+                            else 
+                            {
                                 iterations++;
-
-                                if (type === "Doppelzylinder")
+                                for (let i = 0; i !== iterations; i++) 
                                 {
-                                        for (let i = 0; i !== iterations; i++) 
-                                        {
-                                            let Costen = AllPrice.value.replace(/,/g, '.');
-                                            AllPrice.value = parseFloat(Costen) - (priceDoppelInternCost[i] * Number(countSchluss.value));
-                                        }
-
-                                }
-                                if (type === "Halbzylinder") 
-                                {
-                                    for (let i = 0; i !== iterations; i++) 
-                                    {
-                                        let Costen = AllPrice.value.replace(/,/g, '.');
-                                        AllPrice.value = parseFloat(Costen) - (priceKnayfAussenCost[i] * Number(countSchluss.value));
-                                    }
-                                }
-                                if (type === "Knaufzylinder") 
-                                {
-                                        for (let i = 0; i !== iterations; i++)
-                                        {
-                                            let Costen = AllPrice.value.replace(/,/g, '.');
-                                            AllPrice.value = parseFloat(Costen) - (priceKnayfInternCost[i] * Number(countSchluss.value));
-                                        }
+                                    let Costen = AllPrice.value.replace(/,/g, '.');
+                                    let index = SelectItemId + i;
+                                    AllPrice.value = parseFloat(Costen) - (priceDoppelAussenCost[index] * Number(countSchluss.value));
                                 }
                             }
 
-                            return;
 
                         }
-                        else
+                        if (type === "Knaufzylinder") 
                         {
-                            iterations++;
+                            if (SelectItemId > 0) {
+                                for (let i = 0; i !== iterations; i++) {
+                                    let Costen = AllPrice.value.replace(/,/g, '.');
+                                    let index = SelectItemId - i;
+                                    AllPrice.value = parseFloat(Costen) - (priceKnayfInternCost[index] * Number(countSchluss.value));
+                                }
+
+                            }
+                            else {
+                                iterations++;
+                                for (let i = 0; i !== iterations; i++) {
+                                    let Costen = AllPrice.value.replace(/,/g, '.');
+                                    let index = SelectItemId + i;
+                                    AllPrice.value = parseFloat(Costen) - (priceKnayfInternCost[index] * Number(countSchluss.value));
+                                }
+                            }
+
                         }
+
+                        return;
+                    }
+                    if (ItemValue >= value) {
+                        iterations++;
+                    }
+
 
                 }
 
