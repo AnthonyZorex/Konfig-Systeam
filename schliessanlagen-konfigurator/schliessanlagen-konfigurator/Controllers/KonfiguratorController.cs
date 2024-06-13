@@ -579,7 +579,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     string destinationFilePath = @$"wwwroot/Orders/{users.FirstName + users.LastName + order.createData.Value.Minute + order.createData.Value.Hour  + order.createData.Value.Day + order.createData.Value.Month + order.createData.Value.Year} OrderFile.xlsx";
 
                     var message = new MimeMessage();
-                    message.From.Add(new MailboxAddress("Schlüssel Discount Store", "bestellung@schliessanlage.discount"));
+                    message.From.Add(new MailboxAddress("Schlüssel Discount Store", "info@schluessel.discount"));
                     message.To.Add(new MailboxAddress(users.FirstName + users.LastName, users.UserName));
                     message.Subject = "Schlüssel Discount Store";
                     
@@ -596,8 +596,8 @@ namespace schliessanlagen_konfigurator.Controllers
                     message.Body = bodyBuilder.ToMessageBody();
                     using (var client = new SmtpClient())
                     {
-                        client.Connect("smtp", 465, false);
-                        client.Authenticate("bestellung@schliessanlage.discount", "Q$iW28z5JLtXNJ");
+                        client.Connect("sslout.de", 25, false);
+                        client.Authenticate("info@schluessel.discount", "qvVH$ipz2BNdWy");
                         client.Send(message);
 
                         client.Disconnect(true);
@@ -4346,7 +4346,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
                 Stopwatch stopwatch = Stopwatch.StartNew();
                 var message = new MimeMessage();
-                message.From.Add(new MailboxAddress("Schlüssel Discount Store", "bestellung@schliessanlage.discount"));
+                message.From.Add(new MailboxAddress("Schlüssel Discount Store", "info@schluessel.discount"));
                 message.To.Add(new MailboxAddress(users.FirstName + users.LastName, users.UserName));
                 message.Subject = "Schlüssel Discount Store";
                 message.Body = new TextPart("plain")
@@ -4368,12 +4368,12 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
 
                 message.Body = bb.ToMessageBody();
+
                 using (var client = new SmtpClient())
                 {
-                    client.Connect("smtp", 465, false);
-                    client.Authenticate("bestellung@schliessanlage.discount", "Q$iW28z5JLtXNJ");
+                    client.Connect("sslout.de", 25, false);
+                    client.Authenticate("info@schluessel.discount", "qvVH$ipz2BNdWy");
                     client.Send(message);
-
                     client.Disconnect(true);
                 }
                 stopwatch.Stop();

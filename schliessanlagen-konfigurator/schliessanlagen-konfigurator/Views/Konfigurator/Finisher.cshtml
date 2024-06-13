@@ -806,11 +806,8 @@
        
         <div id="buttonActionFinishBlock">
 
-                <div id="FinisherLeft">
-                    <button id="chekProduct" type="button" class="btn btn-dark"> <a href="@Url.Action("System_Auswählen", "Konfigurator")">ZURÜCK</a></button>
-                </div>
-           
             <div id="FinisherRight">
+
                     @if (User.IsInRole("client") || User.IsInRole("admin"))
                     {
 
