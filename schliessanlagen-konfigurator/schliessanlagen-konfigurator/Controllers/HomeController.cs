@@ -52,6 +52,12 @@ namespace schliessanlagen_konfigurator.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public async Task<IActionResult> Impressum()
+        {
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> SendMailpost(IFormFile file, string Html , string Css)
         {
@@ -2562,11 +2568,13 @@ namespace schliessanlagen_konfigurator.Controllers
             var day = UserOrder.Value.Day;
             var month = UserOrder.Value.Month;
             var year = UserOrder.Value.Year;
+            var hour = UserOrder.Value.Hour;
+            var minuten = UserOrder.Value.Minute;
             ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
             string loginInform = ident.Claims.Select(x => x.Value).First();
             var users = db.Users.FirstOrDefault(x => x.FirstName == FirstName && x.LastName == LastName);
 
-            var filepath = Path.Combine($"~/Orders", $"{users.FirstName + users.LastName + day + month + year} OrderFile.xlsx");
+            var filepath = Path.Combine($"~/Orders", $"{users.FirstName + users.LastName + minuten + hour + day + month + year} OrderFile.xlsx");
 
             return File(filepath, "xlsx/plain", $"{users.FirstName + users.LastName + day + month + year} OrderFile.xlsx");
 

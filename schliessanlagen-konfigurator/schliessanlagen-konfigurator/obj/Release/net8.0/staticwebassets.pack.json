@@ -337,8 +337,16 @@
       "PackagePath": "staticwebassets\\Image\\aussenzylinder.png"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\basi.png",
+      "PackagePath": "staticwebassets\\Image\\basi.png"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\briefkastenzylinder.png",
       "PackagePath": "staticwebassets\\Image\\briefkastenzylinder.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\ces.png",
+      "PackagePath": "staticwebassets\\Image\\ces.png"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\doppelzylinder.png",
@@ -365,6 +373,14 @@
       "PackagePath": "staticwebassets\\Image\\knaufzylinder.png"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\logo_abus.png",
+      "PackagePath": "staticwebassets\\Image\\logo_abus.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\logo_evva.png",
+      "PackagePath": "staticwebassets\\Image\\logo_evva.png"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\options.png",
       "PackagePath": "staticwebassets\\Image\\options.png"
     },
@@ -379,34 +395,6 @@
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\zylinderlaenge.png",
       "PackagePath": "staticwebassets\\Image\\zylinderlaenge.png"
-    },
-    {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\AnthonyBonetta12171262024 OrderFile.xlsx",
-      "PackagePath": "staticwebassets\\Orders\\AnthonyBonetta12171262024 OrderFile.xlsx"
-    },
-    {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\AnthonyBonetta14151262024 OrderFile.xlsx",
-      "PackagePath": "staticwebassets\\Orders\\AnthonyBonetta14151262024 OrderFile.xlsx"
-    },
-    {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\AnthonyBonetta1918562024 OrderFile.xlsx",
-      "PackagePath": "staticwebassets\\Orders\\AnthonyBonetta1918562024 OrderFile.xlsx"
-    },
-    {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\AnthonyBonetta2018562024 OrderFile.xlsx",
-      "PackagePath": "staticwebassets\\Orders\\AnthonyBonetta2018562024 OrderFile.xlsx"
-    },
-    {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\AnthonyBonetta2318562024 OrderFile.xlsx",
-      "PackagePath": "staticwebassets\\Orders\\AnthonyBonetta2318562024 OrderFile.xlsx"
-    },
-    {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\AnthonyBonetta25171262024 OrderFile.xlsx",
-      "PackagePath": "staticwebassets\\Orders\\AnthonyBonetta25171262024 OrderFile.xlsx"
-    },
-    {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\AnthonyBonetta2818562024 OrderFile.xlsx",
-      "PackagePath": "staticwebassets\\Orders\\AnthonyBonetta2818562024 OrderFile.xlsx"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\CES_schliessplan_DE_schliessanlagen.xlsx",

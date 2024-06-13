@@ -3968,6 +3968,9 @@ namespace schliessanlagen_konfigurator.Controllers
         List<string> VorhanName, List<float> VorhanAussen, List<string> AussenName, string cost, List<string> key, List<bool> keyIsOpen, List<int> countKey,
         List<int> TurCounter,List<string> FurKey, string NameSystem)
         {
+
+            var countItemOrder = DopelName.Count() + AussenName.Count() + VorhanName.Count() + KnayfName.Count() + HelbName.Count() + HalbName.Count();
+
             ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
             string loginInform = ident.Claims.Select(x => x.Value).First();
             var users = db.Users.FirstOrDefault(x => x.Id == loginInform);
@@ -4079,11 +4082,11 @@ namespace schliessanlagen_konfigurator.Controllers
                 worksheet.Cells[$"C{8}"].Value = Orders.Select(x=>x.Id).Last();
                 worksheet.Cells[$"C{9}"].Value = users.Address +"\n"+ users.FirstName + users.LastName;
 
-                for (int i = 0; i < TurCounter.Count(); i++)
+                for (int i = 0; i < countItemOrder; i++)
                 {
                     string Dor = "";
                     int countT = 0;
-                    if(i > (TurName.Count()-1))
+                    if(i > (TurName.Count()))
                     {
                         countT = TurCounter.Last();
                     }
@@ -4091,7 +4094,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     {
                         Dor = TurName[i];
                     }
-                    if (i > (TurCounter.Count() - 1))
+                    if (i > (TurCounter.Count()))
                     {
                        
                         countT = TurCounter.Last();
