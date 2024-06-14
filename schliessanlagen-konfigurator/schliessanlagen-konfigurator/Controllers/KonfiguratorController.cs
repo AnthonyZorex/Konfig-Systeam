@@ -25,6 +25,8 @@ using Microsoft.AspNetCore.Cors;
 using System.Security.Policy;
 using MimeKit;
 using MailKit.Net.Smtp;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.WebSockets;
 using OfficeOpenXml.ConditionalFormatting.Contracts;
@@ -747,13 +749,13 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             else
             {
-                if (userName != null)
+                if (Key != null)
                 {
-                    orders = orders.Where(x => x.userKey == userName).ToList();
+                    orders = orders.Where(x => x.userKey == Key).ToList();
                 }
                 else
                 {
-                    orders = orders.Where(x => x.userKey == Key).ToList();
+                    orders = orders.Where(x => x.userKey == userName).ToList();
                 }
                
             }
@@ -4687,7 +4689,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
             }
             db.SaveChanges();
-            return RedirectToAction("System_Auswählen", "Konfigurator", new { Key = Key.userKey, userName });
+            return RedirectToAction("System_Auswählen", "Konfigurator", new { Key = Key.userKey});
         }
 
     }
