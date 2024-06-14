@@ -513,7 +513,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
             }
             db.SaveChanges();
-            return RedirectToAction("System_Auswählen", "Konfigurator", new { Key, userName });
+            return RedirectToAction("System_Auswählen", "Konfigurator", new { userName });
         }
        public ActionResult endOrder(int data)
        {
@@ -525,6 +525,17 @@ namespace schliessanlagen_konfigurator.Controllers
 
             return Redirect("/Identity/Account/Manage/PagePersonalOrders");
        }
+
+        [HttpPost]
+        public async Task<IActionResult> SetInfo(string data)
+        {
+            var setI = db.SysteamPriceKey.Where(x => x.NameSysteam == data).Select(x => x).ToList();
+
+            ViewBag.System = setI.ToList();
+
+            return View();
+        }
+
         public ActionResult IndexKonfigurator()
         {
             ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
@@ -727,6 +738,7 @@ namespace schliessanlagen_konfigurator.Controllers
         public async Task<ActionResult> System_Auswählen(string Key, string userName, bool isNewKonfig)
         {
             var xtr = Key;
+
             var orders = await db.Orders.ToListAsync();
 
             if (userName!=null && isNewKonfig == true)
@@ -735,7 +747,15 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             else
             {
-                orders = orders.Where(x => x.userKey == Key).ToList();
+                if (userName != null)
+                {
+                    orders = orders.Where(x => x.userKey == userName).ToList();
+                }
+                else
+                {
+                    orders = orders.Where(x => x.userKey == Key).ToList();
+                }
+               
             }
 
             var keyUser = orders.Last();
@@ -4347,39 +4367,37 @@ namespace schliessanlagen_konfigurator.Controllers
                    
                    
                 }
-                Stopwatch stopwatch = Stopwatch.StartNew();
-                var message = new MimeMessage();
-                message.From.Add(new MailboxAddress("Schlüssel Discount Store", "info@schluessel.discount"));
-                message.To.Add(new MailboxAddress(users.FirstName + users.LastName, users.UserName));
-                message.Subject = "Schlüssel Discount Store";
-                message.Body = new TextPart("plain")
-                {
-                    Text = "Text",
-                };
+                //var message = new MimeMessage();
+                //message.From.Add(new MailboxAddress("Schlüssel Discount Store", "info@schluessel.discount"));
+                //message.To.Add(new MailboxAddress(users.FirstName + users.LastName, users.UserName));
+                //message.Subject = "Schlüssel Discount Store";
+                //message.Body = new TextPart("plain")
+                //{
+                //    Text = "Text",
+                //};
 
-                MemoryStream memoryStream = new MemoryStream();
+                //MemoryStream memoryStream = new MemoryStream();
 
-                BodyBuilder bb = new BodyBuilder();
+                //BodyBuilder bb = new BodyBuilder();
 
-                using (var wc = new WebClient())
-                {
+                //using (var wc = new WebClient())
+                //{
 
-                    bb.Attachments.Add("Email.xlsx",
+                //    bb.Attachments.Add("Email.xlsx",
 
-                    wc.DownloadData(destinationFilePath));
+                //    wc.DownloadData(destinationFilePath));
 
-                }
+                //}
 
-                message.Body = bb.ToMessageBody();
+                //message.Body = bb.ToMessageBody();
 
-                using (var client = new SmtpClient())
-                {
-                    client.Connect("sslout.de", 25, false);
-                    client.Authenticate("info@schluessel.discount", "qvVH$ipz2BNdWy");
-                    client.Send(message);
-                    client.Disconnect(true);
-                }
-                stopwatch.Stop();
+                //using (var client = new SmtpClient())
+                //{
+                //    client.Connect("sslout.de", 25, false);
+                //    client.Authenticate("info@schluessel.discount", "qvVH$ipz2BNdWy");
+                //    client.Send(message);
+                //    client.Disconnect(true);
+                //}
                 return Redirect("/Identity/Account/Manage/PagePersonalOrders");
             }
 
@@ -4558,7 +4576,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var d = 0;
 
-            if (CountOrders > 0)
+            if (CountOrders > NameKey.Count())
             {
                 var itemsCount = isOpenList.Count() / CountOrders;
 
@@ -4626,6 +4644,8 @@ namespace schliessanlagen_konfigurator.Controllers
                     string NameKeyValue;
                     int CountkeyOrders;
 
+                    var itemsCount = isOpenList.Count() / CountOrders;
+
                     if (s >= CountKey.Count())
                     {
                         CountkeyOrders = CountKey.Last();
@@ -4651,7 +4671,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     db.isOpen_value.Add(Open_value);
                     db.SaveChanges();
 
-                    for (var f = 0; f < isOpenList.Count(); f++)
+                    for (var f = 0; f < itemsCount; f++)
                     {
 
                         var KeyValueC = new KeyValue
