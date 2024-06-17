@@ -54,7 +54,18 @@
                 </div>
                 <label asp-for="ImageFile" class="control-label"></label>
                 <hr />
-                <h1>Aussen & Innen <input id="addAussen_Innen" class="btn btn-success" type="button" value="+" /><input id="addAussen_Innen_remove" class="btn btn-danger" type="button" value="-" /></h1>
+                <h1>
+                    Aussen & Innen <input id="addAussen_Innen" class="btn btn-success" type="button" value="+" /><input id="addAussen_Innen_remove" class="btn btn-danger" type="button" value="-" />
+                    
+                    <select onchange="Müster(event.target.value,@Model.Id)">
+
+                        @for (int lis = 0; lis < @ViewBag.CountAllDoppel; lis++)
+                        {
+                            <option>@ViewBag.AllDopel[lis].Name</option>
+                        }
+
+                    </select>
+                </h1>
                 <div id="Aussen_Innen_ProfilDopel">
 
                     <div id="AussenProfilDopel">
@@ -169,7 +180,23 @@
     let docInnen = document.getElementById('InnenProfilDopel');
     let docAussen = document.getElementById('AussenProfilDopel');
 
- 
+    let allInnen = document.querySelectorAll("#aus");
+    let allAussen = document.querySelectorAll("#inter");
+
+    function Müster(value,id) 
+    {
+        $.ajax({
+            type: "GET",
+            url: "/Home/Edit_Doppelzylinder",
+            data: { data: value, DoppelId: id },
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
 
     window.addEventListener('load', function () {
         const blocks = document.querySelectorAll('.input-block');

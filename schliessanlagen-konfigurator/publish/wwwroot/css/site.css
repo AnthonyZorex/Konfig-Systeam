@@ -1,16 +1,41 @@
 ﻿#optionsItems {
     margin-top: 20px;
 }
-
+#InfoValue1 {
+    gap: 10px;
+    display: flex;
+    border-left: 2px solid #808080;
+    border-right: 2px solid #808080;
+    padding-right: 10px;
+    overflow-x: scroll;
+}
+.horizontal1 {
+    display: block;
+    gap: 20px;
+    margin-left: 10px;
+}
 #selectLang{
     border:none;
     outline:none;
     margin-right:50px;
 }
 
-@media(max-width:900px) and (orientation: portrait) {
-    #Gesamtpreis 
-    {
+@media(max-width:900px) and (orientation: portrait) 
+{
+    .horizontal1 {
+        display: block;
+        gap: 20px;
+        margin-left: 10px;
+    }
+    #InfoValue1 {
+        gap: 10px;
+        display: flex;
+        border-left: 2px solid #808080;
+        border-right: 2px solid #808080;
+        padding-right: 10px;
+        overflow-x: scroll;
+    }
+    #Gesamtpreis {
         gap: 105px !important;
     }
     #schlussel2 {

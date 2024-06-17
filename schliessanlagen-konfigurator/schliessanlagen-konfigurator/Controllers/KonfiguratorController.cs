@@ -3683,10 +3683,10 @@ namespace schliessanlagen_konfigurator.Controllers
                 {
                     var DoppelSize = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == DopelOrderlist.First().Id).ToList();
 
-                    var aussen = DoppelSize.Where(x => x.aussen > 27 && x.aussen < 35).Max(x => x.aussen);
+                    var aussen = DoppelSize.Min(x => x.aussen);
                     var aussenSize = DoppelSize.Where(x => x.aussen > aussen).Select(x => x.aussen).ToList();
 
-                    var innen = DoppelSize.Where(x => x.Intern > 27 && x.Intern < 35).Max(x => x.Intern);
+                    var innen = DoppelSize.Min(x => x.Intern);
                     var innenSize = DoppelSize.Where(x => x.Intern > innen).Select(x => x.Intern).ToList();
 
                     foreach (var aus in aussenSize)
@@ -3726,7 +3726,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                     var SizeHalbzylinder = db.Aussen_Innen_Halbzylinder.Where(x => x.Profil_HalbzylinderId == Halbzylinder.First().Id).ToList();
                     
-                    var aussen = SizeHalbzylinder.Where(x => x.aussen > 27 && x.aussen < 35).Max(x => x.aussen);
+                    var aussen = SizeHalbzylinder.Min(x => x.aussen);
 
                     var aussenSize = SizeHalbzylinder.Where(x => x.aussen > aussen).Select(x => x.aussen).ToList();
 
@@ -3751,10 +3751,10 @@ namespace schliessanlagen_konfigurator.Controllers
 
                     var KnayfSize = db.Aussen_Innen_Knauf.Where(x => x.Profil_KnaufzylinderId == KnayfOrderlist.First().Id).ToList();
 
-                    var aussen = KnayfSize.Where(x => x.aussen > 27 && x.aussen < 35).Max(x => x.aussen);
+                    var aussen = KnayfSize.Min(x => x.aussen);
                     var aussenSize = KnayfSize.Where(x => x.aussen > aussen).Select(x => x.aussen).ToList();
 
-                    var innen = KnayfSize.Where(x => x.Intern > 27 && x.Intern < 35).Max(x => x.Intern);
+                    var innen = KnayfSize.Min(x => x.Intern);
                     var innenSize = KnayfSize.Where(x => x.Intern> innen).Select(x => x.Intern).ToList();
                    
                     foreach (var aus in aussenSize)
@@ -3790,7 +3790,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
                 if (order.ZylinderId == 5)
                 {
-                    ViewBag.Vorhangschloss = order.aussen;
+                    ViewBag.Vorhangschloss = Vorhanschlos;
 
                     var Size = db.Size.Where(x => x.VorhangschlossId == Vorhanschlos.First().Id).ToList();
 

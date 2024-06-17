@@ -1147,80 +1147,172 @@ namespace schliessanlagen_konfigurator.Controllers
         }
         #endregion
         #region EditForm
+
         [HttpGet]
-        public async Task<IActionResult> Edit_Doppelzylinder(Profil_Doppelzylinder profil_Doppelzylinder)
+        public async Task<IActionResult> Edit_Doppelzylinder(Profil_Doppelzylinder profil_Doppelzylinder, string data,int DoppelId)
         {
-            var Doppel = db.Profil_Doppelzylinder.Find(profil_Doppelzylinder.Id);
-
-            var AllDoppel = await db.Profil_Doppelzylinder.Where(x=>x.NameSystem==Doppel.NameSystem).Select(x => x.NameSystem).ToListAsync();
-
-            var listPriceKey = new List<SysteamPriceKey>();
-
-            foreach (var System in AllDoppel)
+            if (data == null)
             {
-                var itemKey = await db.SysteamPriceKey.Where(x => x.NameSysteam == System).ToListAsync();
 
-                foreach (var i in itemKey)
+                var Doppel = db.Profil_Doppelzylinder.Find(profil_Doppelzylinder.Id);
+
+                var AllDoppel = await db.Profil_Doppelzylinder.Where(x => x.NameSystem == Doppel.NameSystem).Select(x => x.NameSystem).ToListAsync();
+
+                var listPriceKey = new List<SysteamPriceKey>();
+
+
+
+                foreach (var System in AllDoppel)
                 {
-                    listPriceKey.Add(i);
-                }
+                    var itemKey = await db.SysteamPriceKey.Where(x => x.NameSysteam == System).ToListAsync();
 
-            }
-
-            ViewBag.KeyCost = listPriceKey.ToList();
-
-            var SizeDoppel = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == profil_Doppelzylinder.Id).ToList();
-
-            var options = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == Doppel.Id).ToList();
-
-            if (options != null)
-            {
-                var OptionsSylinder = new List<NGF>();
-
-                foreach (var item in options)
-                {
-                    var Opt = db.NGF.Where(x => x.OptionsId == item.Id).ToList();
-
-                    foreach (var list in Opt)
+                    foreach (var i in itemKey)
                     {
-                        OptionsSylinder.Add(list);
-                    }
-                }
-
-                ViewBag.Options = OptionsSylinder.ToList();
-
-                var ValueOption = new List<NGF_Value>();
-
-                var countV = new List<int>();
-
-                foreach (var list in OptionsSylinder)
-                {
-                    var listValue = db.NGF_Value.Where(x => x.NGFId == list.Id).ToList();
-                   
-                    foreach (var value in listValue)
-                    {
-                        ValueOption.Add(value);
-                    }
-                    if (listValue.Count() > 0)
-                    {
-                        countV.Add(listValue.Count());
+                        listPriceKey.Add(i);
                     }
 
                 }
 
-                ViewBag.CountOptions = countV.ToList();
-                ViewBag.OptionValue = ValueOption;
+                ViewBag.AllDopel = db.Profil_Doppelzylinder.ToList();
 
-                ViewBag.Size = SizeDoppel;
+                ViewBag.CountAllDoppel = db.Profil_Doppelzylinder.Select(x => x.Name).Count();
 
-                ViewBag.optionV = true;
+                ViewBag.KeyCost = listPriceKey.ToList();
+
+                var SizeDoppel = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == profil_Doppelzylinder.Id).ToList();
+                var options = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == Doppel.Id).ToList();
+
+                if (options != null)
+                {
+                    var OptionsSylinder = new List<NGF>();
+
+                    foreach (var item in options)
+                    {
+                        var Opt = db.NGF.Where(x => x.OptionsId == item.Id).ToList();
+
+                        foreach (var list in Opt)
+                        {
+                            OptionsSylinder.Add(list);
+                        }
+                    }
+
+                    ViewBag.Options = OptionsSylinder.ToList();
+
+                    var ValueOption = new List<NGF_Value>();
+
+                    var countV = new List<int>();
+
+                    foreach (var list in OptionsSylinder)
+                    {
+                        var listValue = db.NGF_Value.Where(x => x.NGFId == list.Id).ToList();
+
+                        foreach (var value in listValue)
+                        {
+                            ValueOption.Add(value);
+                        }
+                        if (listValue.Count() > 0)
+                        {
+                            countV.Add(listValue.Count());
+                        }
+
+                    }
+
+                    ViewBag.CountOptions = countV.ToList();
+                    ViewBag.OptionValue = ValueOption;
+
+                    ViewBag.Size = SizeDoppel;
+
+                    ViewBag.optionV = true;
+                }
+                else
+                {
+                    ViewBag.optionV = false;
+                }
+                return View("../Edit/Edit_Doppelzylinder", Doppel);
             }
             else
             {
-                ViewBag.optionV = false;
-            }
 
-            return View("../Edit/Edit_Doppelzylinder", Doppel);
+                var Doppel = db.Profil_Doppelzylinder.Find(DoppelId);
+
+                var AllDoppel = await db.Profil_Doppelzylinder.Where(x => x.NameSystem == Doppel.NameSystem).Select(x => x.NameSystem).ToListAsync();
+
+                var listPriceKey = new List<SysteamPriceKey>();
+
+
+
+                foreach (var System in AllDoppel)
+                {
+                    var itemKey = await db.SysteamPriceKey.Where(x => x.NameSysteam == System).ToListAsync();
+
+                    foreach (var i in itemKey)
+                    {
+                        listPriceKey.Add(i);
+                    }
+
+                }
+
+                ViewBag.AllDopel = db.Profil_Doppelzylinder.ToList();
+
+                ViewBag.CountAllDoppel = db.Profil_Doppelzylinder.Select(x => x.Name).Count();
+
+                ViewBag.KeyCost = listPriceKey.ToList();
+
+
+                var dopel = db.Profil_Doppelzylinder.FirstOrDefault(x => x.Name == data);
+                var SizeDoppel = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == dopel.Id).ToList();
+                var options = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == Doppel.Id).ToList();
+
+                if (options != null)
+                {
+                    var OptionsSylinder = new List<NGF>();
+
+                    foreach (var item in options)
+                    {
+                        var Opt = db.NGF.Where(x => x.OptionsId == item.Id).ToList();
+
+                        foreach (var list in Opt)
+                        {
+                            OptionsSylinder.Add(list);
+                        }
+                    }
+
+                    ViewBag.Options = OptionsSylinder.ToList();
+
+                    var ValueOption = new List<NGF_Value>();
+
+                    var countV = new List<int>();
+
+                    foreach (var list in OptionsSylinder)
+                    {
+                        var listValue = db.NGF_Value.Where(x => x.NGFId == list.Id).ToList();
+
+                        foreach (var value in listValue)
+                        {
+                            ValueOption.Add(value);
+                        }
+                        if (listValue.Count() > 0)
+                        {
+                            countV.Add(listValue.Count());
+                        }
+
+                    }
+
+                    ViewBag.CountOptions = countV.ToList();
+                    ViewBag.OptionValue = ValueOption;
+
+                    ViewBag.Size = SizeDoppel;
+
+                    ViewBag.optionV = true;
+                }
+                else
+                {
+                    ViewBag.optionV = false;
+                }
+                return View("../Edit/Edit_Doppelzylinder", Doppel);
+            }
+           
+        
         }
 
         [HttpPost]
@@ -1237,6 +1329,8 @@ namespace schliessanlagen_konfigurator.Controllers
             Items.ImageName = profil_Doppelzylinder.ImageName;
 
             var option = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == profil_Doppelzylinder.Id).ToList();
+
+           
 
             if (Options.Count() == 0 || option.Count() > 0)
             {
