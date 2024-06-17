@@ -2113,7 +2113,11 @@
         width: 900px;
     }
 }
-@media (min-width:1440px ) {
+@media (min-width:1440px ) 
+{
+    html{
+        font-size:14px;
+    }
     body {
         margin-bottom: 60px;
         font-family: "Inter", sans-serif;
@@ -2826,7 +2830,7 @@
 
     #schlussel3 {
         margin-top: 5px;
-        margin-left: 70px;
+        margin-left: 65px;
     }
 
     #ItemTur {
