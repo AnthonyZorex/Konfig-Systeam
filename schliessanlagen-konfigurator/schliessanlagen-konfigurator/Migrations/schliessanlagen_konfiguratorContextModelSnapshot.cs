@@ -51,25 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "bf823c38-a33a-4c2f-b171-df1691c8ed70",
+                            Id = "e4694d4c-4cb7-4c31-965c-492c956d519d",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "09784c76-7f9a-409d-9b0f-f1cd13b9e50d",
+                            Id = "cf7421af-95a5-48f6-8e11-fd1d5dfe7c9b",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "f24f0fc3-d668-40e5-8270-84e0ccda9f2e",
+                            Id = "9e792da6-c0c6-4a4b-9c9f-97913ae40f7b",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "d4859cd2-f51b-4da4-8890-c125ed2f6e39",
+                            Id = "3ee7a871-b23f-4061-9b4b-4742276bf247",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -969,6 +969,9 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     b.Property<float?>("Aussen")
                         .HasColumnType("real");
+
+                    b.Property<int?>("Count")
+                        .HasColumnType("int");
 
                     b.Property<float?>("Intern")
                         .HasColumnType("real");

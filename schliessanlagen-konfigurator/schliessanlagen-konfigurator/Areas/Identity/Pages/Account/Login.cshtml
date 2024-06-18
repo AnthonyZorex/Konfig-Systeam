@@ -38,9 +38,17 @@
                     </div>
                 </div>
                 <div>
+                    <input type="hidden" name="returnUrl" id="returnUrl" />
                  <a class="btn btn-link" id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
                 </div>
             </form>
         </section>
     </div>
 </div>
+<script>
+    let returnUrl = document.getElementById("returnUrl");
+    function back() {
+        returnUrl.value = localStorage.getItem('currentURL');
+    }
+    back()
+</script>

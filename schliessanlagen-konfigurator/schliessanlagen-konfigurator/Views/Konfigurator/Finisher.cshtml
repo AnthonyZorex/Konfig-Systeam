@@ -822,7 +822,7 @@
                         <input id="chekProduct" type="submit" value="IN DEN WARENKORB" class="btn btn-danger" />
                     }
                     else
-                    {
+                    {                       
                         <a class="btn btn-danger" asp-area="Identity" asp-page="/Account/Register">IN DEN WARENKORB</a>
                     }
             </div>
@@ -893,6 +893,13 @@
 
     var span = document.getElementsByClassName("close")[0];
     let idItem = 0;
+
+    function saveCurrentURL() {
+        const currentURL = window.location.href;
+        localStorage.setItem('currentURL', currentURL);
+    }
+
+    saveCurrentURL()
 
     function OpenModalInfo(id) 
     {

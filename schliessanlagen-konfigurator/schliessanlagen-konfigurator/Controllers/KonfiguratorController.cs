@@ -4258,6 +4258,7 @@ namespace schliessanlagen_konfigurator.Controllers
                             Name = DopelName[DoppelCounter],
                             Aussen = DoppelAussen[DoppelCounter],
                             Intern = DoppelIntern[DoppelCounter],
+                            Count = countT
                         };
 
                         if (Option != "")
@@ -4292,6 +4293,7 @@ namespace schliessanlagen_konfigurator.Controllers
                             Name = KnayfName[KnayfCounter],
                             Aussen = KnayfAussen[KnayfCounter],
                             Intern = KnayfIntern[KnayfCounter],
+                            Count = countT
                         };
                         if (Option!="")
                         {
@@ -4327,6 +4329,7 @@ namespace schliessanlagen_konfigurator.Controllers
                             UserOrdersShopId = UserOrder.Id,
                             Name = HalbName[HablCounter],
                             Aussen = HalbAussen[HablCounter],
+                            Count = countT
                         };
                         if (Option != "")
                         {
@@ -4360,6 +4363,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         {
                             UserOrdersShopId = UserOrder.Id,
                             Name = HelbName[HebelCounter],
+                            Count = countT
                         };
 
                         if (Option != "")
@@ -4395,6 +4399,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                 UserOrdersShopId = UserOrder.Id,
                                 Name = VorhanName[VorhanCounter],
                                 Aussen = VorhanAussen[VorhanCounter],
+                                Count = countT
                             };
                             if (Option != "")
                             {
@@ -4414,6 +4419,7 @@ namespace schliessanlagen_konfigurator.Controllers
                             {
                                 UserOrdersShopId = UserOrder.Id,
                                 Name = VorhanName[VorhanCounter],
+                                Count = countT
                             };
                             if (Option != "")
                             {
