@@ -112,10 +112,11 @@
                                     <input style="border: none;" readonly type="text" name="DopelName" value="@item.Name" />
                                     <input style="border: none;" type="hidden" name="NameSystem" value="@item.NameSystem" />
                                     <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
+                                    <input id="costItems-@d" type="hidden" value="@item.Price" />
                             </div>
                         </div>
                         <div>
-                            <select class="form-select">
+                            <select id="type-@d" class="form-select">
                                 <option>Doppelzylinder</option>
                             </select>
                         </div>
@@ -148,9 +149,9 @@
                                     <input type="hidden" id="Innen-@d" />
                             </div>
                             <div style="gap: 10px;display: flex;margin-left: 50px;">
-                                    <button type="button"  onclick="CylinderMinus(@d,'@item.Price')" class="btn btn-success">-</button>
-                                    <input style="border: none;max-width: 30px;" name="TurCounter" id="countSchlusse-@d" type="number" min="0" value="@ViewBag.CounterTur[@elemNum]" />
-                                    <button type="button" onclick="CylinderPlus(@d,'@item.Price')" class="btn btn-success">+</button>
+                                    <button type="button"  onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
+                                    <input readonly style="border: none;max-width: 30px;" name="TurCounter" id="countSchlusse-@d" type="number" min="1" value="@ViewBag.CounterTur[@elemNum]" />
+                                    <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
                             </div>
                               @*   <div style="margin-left: 20px;">
                                     <input type="button" value="?" onclick="OpenModalInfo(@d)" class="btn btn-success" />
@@ -253,11 +254,12 @@
                                     <input style="border: none;" readonly type="text" name="KnayfName" value="@item.Name" />
                                     <input style="border: none;" type="hidden" name="NameSystem" value="@item.NameSystem" />
                                     <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
+                                    <input id="costItems-@d" type="hidden" value="@item.Price" />
                             </div>
 
                         </div>
                         <div>
-                            <select class="form-select">
+                                <select id="type-@d" class="form-select">
                                 <option>KnayfZylinder</option>
                             </select>
                         </div>
@@ -288,9 +290,9 @@
                                  <input type="hidden" id="Innen-@d" />
                             </div>
                             <div style="gap: 10px;display: flex;margin-left: 50px;">
-                                    <button type="button" onclick="CylinderMinus(@d,'@item.Price')" class="btn btn-success">-</button>
-                                    <input style="border: none;max-width: 30px;" id="countSchlusse-@d" type="number" min="0" value="@ViewBag.CounterTurKnayf[@elemNum]" name="TurCounter" />
-                                    <button type="button" onclick="CylinderPlus(@d,'@item.Price')" class="btn btn-success">+</button>
+                                    <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
+                                    <input readonly style="border: none;max-width: 30px;" id="countSchlusse-@d" type="number" min="1" value="@ViewBag.CounterTurKnayf[@elemNum]" name="TurCounter" />
+                                    <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
                             </div>
                                 
                             @* <div style="margin-left: 20px;">
@@ -396,11 +398,12 @@
                                     <input style="border: none;" readonly type="text" name="HalbName" value="@item.Name" />
                                     <input style="border: none;" type="hidden" name="NameSystem" value="@item.NameSystem" />
                                     <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
+                                    <input id="costItems-@d" type="hidden" value="@item.Price" />
                             </div>
 
                         </div>
                         <div>
-                            <select class="form-select">
+                                <select id="type-@d" class="form-select">
                                 <option>Halbzylinder</option>
                             </select>
                         </div>
@@ -421,9 +424,9 @@
                                     <input type="hidden" id="Aussen-@d" />
                             </div>
                             <div style="gap: 10px;display: flex;margin-left: 50px;">
-                                    <button type="button" onclick="CylinderMinus(@d,'@item.Price')" class="btn btn-success">-</button>
-                                    <input style="border: none;max-width: 30px;" value="@ViewBag.CounterTurHalb[@elemNum]" type="number" min="0" name="TurCounter" id="countSchlusse-@d" />
-                                    <button type="button" onclick="CylinderPlus(@d,'@item.Price')" class="btn btn-success">+</button>
+                                    <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
+                                    <input readonly style="border: none;max-width: 30px;" value="@ViewBag.CounterTurHalb[@elemNum]" type="number" min="1" name="TurCounter" id="countSchlusse-@d" />
+                                    <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
                             </div>
 
                                 @* <div style="margin-left: 20px;">
@@ -523,11 +526,12 @@
                                     <input style="border: none;" readonly type="text" name="HelbName" value="@item.Name" />
                                     <input style="border: none;" type="hidden" name="NameSystem" value="@item.NameSystem" />
                                     <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
+                                    <input id="costItems-@d" type="hidden" value="@item.Price" />
                             </div>
 
                         </div>
                         <div>
-                            <select class="form-select">
+                                <select id="type-@d" class="form-select">
                                 <option>Hebelzylinder</option>
                             </select>
                         </div>
@@ -536,9 +540,9 @@
                         </div>
                             <div id="Size-@d" class="SizeProduct">
                             <div style="gap: 10px;display: flex;margin-left: 50px;">
-                                    <button onclick="CylinderMinus(@d,'@item.Price')" type="button" class="btn btn-success">-</button>
-                                    <input style="border: none;max-width: 30px;" name="TurCounter" type="number" min="0" value="@ViewBag.CounterTurHebel[@elemNum]" id="countSchlusse-@d" />
-                                    <button onclick="CylinderPlus(@d,'@item.Price')" type="button" class="btn btn-success">+</button>
+                                    <button onclick="CylinderMinus(@d)" type="button" class="btn btn-success">-</button>
+                                    <input readonly style="border: none;max-width: 30px;" name="TurCounter" type="number" min="1" value="@ViewBag.CounterTurHebel[@elemNum]" id="countSchlusse-@d" />
+                                    <button onclick="CylinderPlus(@d)" type="button" class="btn btn-success">+</button>
                             </div>
 
                               @*   <div style="margin-left: 20px;">
@@ -615,11 +619,12 @@
                                     <input style="border: none;" readonly type="text" name="VorhanName" value="@item.Name" />
                                     <input style="border: none;" type="hidden" name="NameSystem" value="@item.NameSystem" />
                                     <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
+                                    <input id="costItems-@d" type="hidden" value="@item.Price" />
                             </div>
 
                         </div>
                         <div>
-                            <select class="form-select">
+                                <select id="type-@d" class="form-select">
                                 <option>Vorhangschloss</option>
                             </select>
                         </div>
@@ -639,9 +644,9 @@
                                     <input type="hidden" id="Aussen-@d" />
                             </div>
                             <div style="gap: 10px;display: flex;margin-left: 50px;">
-                                    <button type="button" onclick="CylinderMinus(@d,'@item.Price')" class="btn btn-success">-</button>
-                                    <input name="TurCounter" style="border: none;max-width: 30px;" type="number" min="0" id="countSchlusse-@d" value="@ViewBag.CounterTurVorhan[@elemNum]" />
-                                    <button type="button" onclick="CylinderPlus(@d,'@item.Price')" class="btn btn-success">+</button>
+                                    <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
+                                    <input name="TurCounter" readonly style="border: none;max-width: 30px;" type="number" min="1" id="countSchlusse-@d" value="@ViewBag.CounterTurVorhan[@elemNum]" />
+                                    <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
                             </div>
 
                               @*   <div style="margin-left: 20px;">
@@ -724,11 +729,12 @@
                                     <input style="border: none;" readonly type="text" name="AussenName" value="@item.Name" />
                                     <input style="border: none;" type="hidden" name="NameSystem" value="@item.NameSystem" />
                                     <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
+                                    <input id="costItems-@d" type="hidden" value="@item.Price" />
                             </div>
 
                         </div>
                         <div>
-                            <select class="form-select">
+                                <select id="type-@d" class="form-select">
                                 <option>Aussenzylinder_Rundzylinder</option>
                             </select>
                         </div>
@@ -736,9 +742,9 @@
                             <h5>Vifile Tür</h5>
                         </div>
                             <div id="Size-@d" class="SizeProduct">
-                                <button type="button" onclick="CylinderMinus(@d,'@item.Price')" class="btn btn-success">-</button>
-                                <input style="border: none;max-width: 30px;" name="TurCounter" type="number" min="0" value="@ViewBag.CounterTurAussen[@elemNum]" id="countSchlusse-@d" />
-                                <button type="button" onclick="CylinderPlus(@d,'@item.Price')" class="btn btn-success">+</button>
+                                <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
+                                <input style="border: none;max-width: 30px;" readonly name="TurCounter" type="number" min="1" value="@ViewBag.CounterTurAussen[@elemNum]" id="countSchlusse-@d" />
+                                <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
                                @*  <div style="margin-left: 20px;">
                                     <input type="button" value="?" onclick="OpenModalInfo(@d)" class="btn btn-success" />
                                 </div> *@
@@ -913,6 +919,9 @@
 
     function OptionsSelect(idBlock, TypeSylinder, id, optionsValue, elemNum, OptionsName, N,count) 
     {
+
+        let costItems = document.getElementById("costItems-" + idBlock);
+
         let countSchluss = document.getElementById("countSchlusse-" + count);
 
         let BlockTur = document.getElementById("ExelItem-" + idBlock);
@@ -945,6 +954,9 @@
                                 if (QueryNameOptions[i].value === '\u2713' + "Not- und Gefahrenfunktion" || QueryNameOptions[i].value === '\u2713' + "NGF") 
                                 {
                                     let OptionOldCheker = document.getElementById(`d-${idBlock} + ${i}`);
+
+                                    costItems.value = parseFloat(costItems.value) - (OptionOldCheker.value);
+
                                     AllPrice.value = (parseFloat(AllPrice.value) - (OptionOldCheker.value * Number(countSchluss.value)));
                                     QueryNameOptions[i].value = QueryNameOptions[i].defaultValue;
                                     QueryNameOptions[i].style.color = "black";
@@ -970,7 +982,10 @@
                             {
                                 if (QueryNameOptions[i].value === '\u2713' + "Freilauffunktion") 
                                 {
-                                    let OptionOldCheker = document.getElementById(`d-${idBlock} + ${i}`);
+                                     let OptionOldCheker = document.getElementById(`d-${idBlock} + ${i}`);
+
+                                     costItems.value = parseFloat(costItems.value) - (OptionOldCheker.value);
+
                                     AllPrice.value = (parseFloat(AllPrice.value) - (OptionOldCheker.value * Number(countSchluss.value)));
                                     QueryNameOptions[i].value = QueryNameOptions[i].defaultValue;
 
@@ -991,11 +1006,14 @@
 
                     if (TypeSylinder === "Doppel") 
                     {
-                            let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
+                             let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
 
                              TotalOptions.value += `${item.defaultValue}:  ${optionsValue}` + ", ";
 
+                             costItems.value = parseFloat(costItems.value) + (DoppelCostValue[selectedOption]);
+
                             AllPrice.value = parseFloat(AllPrice.value) + (DoppelCostValue[selectedOption] * Number(countSchluss.value));
+                            
                             OptionOldCheker.value = DoppelCostValue[selectedOption];
                     }
                     if (TypeSylinder === "Knayf") 
@@ -1003,6 +1021,8 @@
                         let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
 
                         TotalOptions.value += `${item.defaultValue}:  ${optionsValue}` + ", ";
+
+                        costItems.value = parseFloat(costItems.value) + (KnayfOptionPrice[selectedOption]);
 
                         AllPrice.value = parseFloat(AllPrice.value) + (KnayfOptionPrice[selectedOption] * Number(countSchluss.value));
                         OptionOldCheker.value = KnayfOptionPrice[selectedOption];
@@ -1013,7 +1033,9 @@
 
                         TotalOptions.value += `${item.defaultValue}:  ${optionsValue}` + ", ";
 
+                        costItems.value = parseFloat(costItems.value) + (HalbOptionsValueCost[selectedOption]);
                         AllPrice.value = parseFloat(AllPrice.value) + (HalbOptionsValueCost[selectedOption] * Number(countSchluss.value));
+                        
                         OptionOldCheker.value = HalbOptionsValueCost[selectedOption];
                     }
                     if (TypeSylinder === "Helb") 
@@ -1021,6 +1043,8 @@
                         let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
 
                         TotalOptions.value += `${item.defaultValue}:  ${optionsValue}` + ", ";
+
+                        costItems.value = parseFloat(costItems.value) + (HebelOptionsCost[selectedOption]);
 
                         AllPrice.value = parseFloat(AllPrice.value) + (HebelOptionsCost[selectedOption] * Number(countSchluss.value));
                         OptionOldCheker.value = HebelOptionsCost[selectedOption];
@@ -1031,6 +1055,8 @@
 
                         TotalOptions.value += `${item.defaultValue}:  ${optionsValue}` + ", ";
 
+                        costItems.value = parseFloat(costItems.value) + (VorhanSchlossValueCost[selectedOption]);
+
                         AllPrice.value = parseFloat(AllPrice.value) + (VorhanSchlossValueCost[selectedOption] * Number(countSchluss.value));
                         OptionOldCheker.value = VorhanSchlossValueCost[selectedOption];
                     }
@@ -1039,6 +1065,8 @@
                         let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
 
                         TotalOptions.value += `${item.defaultValue}:  ${optionsValue}` + ", ";
+
+                        costItems.value = parseFloat(costItems.value) + (AussenRundOptionsCostValue[selectedOption]);
 
                         AllPrice.value = parseFloat(AllPrice.value) + (AussenRundOptionsCostValue[selectedOption] * Number(countSchluss.value));
                         OptionOldCheker.value = AussenRundOptionsCostValue[selectedOption];
@@ -1060,6 +1088,8 @@
                         
                         OptionDoppel.value = ``;
 
+                        costItems.value = parseFloat(costItems.value) - (OptionOldCheker.value);
+
                         AllPrice.value = (parseFloat(AllPrice.value) - (OptionOldCheker.value * Number(countSchluss.value)));
                         item.value = OptionsName;
 
@@ -1075,6 +1105,8 @@
                         let OptionKnayf = document.getElementById(`Option-${idBlock} + ${N}`);
                         OptionKnayf.value = ``;
                         
+                        costItems.value = parseFloat(costItems.value) - (OptionOldCheker.value);
+
                         AllPrice.value = (parseFloat(AllPrice.value) - (OptionOldCheker.value * Number(countSchluss.value)));
                         item.value = OptionsName;
                         item.style.color = "black";
@@ -1089,6 +1121,8 @@
                         let OptionHalb = document.getElementById(`Option-${idBlock} + ${N}`);
                         OptionHalb.value = ``;
                         
+                        costItems.value = parseFloat(costItems.value) - (OptionOldCheker.value);
+
                         AllPrice.value = (parseFloat(AllPrice.value) - (OptionOldCheker.value * Number(countSchluss.value)));
                         item.value = OptionsName;
                         item.style.color = "black";
@@ -1102,6 +1136,8 @@
 
                         let OptionHelb = document.getElementById(`Option-${idBlock} + ${N}`);
                         OptionHelb.value = ``;
+
+                        costItems.value = parseFloat(costItems.value) - (OptionOldCheker.value);
 
                         AllPrice.value = (parseFloat(AllPrice.value) - (OptionOldCheker.value * Number(countSchluss.value)));
                         item.value = OptionsName;
@@ -1117,6 +1153,8 @@
                         let OptionVorhan = document.getElementById(`Option-${idBlock} + ${N}`);
                         OptionVorhan.value = ``;
 
+                        costItems.value = parseFloat(costItems.value) - (OptionOldCheker.value);
+
                         AllPrice.value = (parseFloat(AllPrice.value) - (OptionOldCheker.value * Number(countSchluss.value)));
                         item.value = OptionsName;
                         item.style.color = "black";
@@ -1128,8 +1166,10 @@
                         let regex = item.defaultValue;
                         TotalOptions.value = TotalOptions.value.replace(regex + ':  JA, ', '');
 
-                         let OptionAussen = document.getElementById(`Option-${idBlock} + ${N}`);
+                        let OptionAussen = document.getElementById(`Option-${idBlock} + ${N}`);
                         OptionAussen.value = ``;
+
+                        costItems.value = parseFloat(costItems.value) - (OptionOldCheker.value);
 
                         AllPrice.value = (parseFloat(AllPrice.value) - (OptionOldCheker.value * Number(countSchluss.value)));
                         item.value = OptionsName;
@@ -1162,175 +1202,35 @@
         }
   
     }
-    function CylinderPlus(n, cost) 
+    function CylinderPlus(n) 
     {
         let counter = document.getElementById("countSchlusse-" + n);
+
+        let costItems = document.getElementById("costItems-" + n);
+
         let value = Number(counter.value);
-        let oldConter = Number(counter.value);
 
         value++;
+
         counter.value = value;
 
-        let CostR = cost.replace(/,/g, '.');
+        AllPrice.value = parseFloat(AllPrice.value) + parseFloat(costItems.value);
 
-        AllPrice.value = parseFloat(AllPrice.value) + parseFloat(CostR);
     }
-    function CylinderMinus(n, cost) 
+    function CylinderMinus(n) 
     {
         let counter = document.getElementById("countSchlusse-" + n);
         let CountValue = Number(counter.value);
-        let oldConter = Number(counter.value);
-        CountValue--;
-
-        if (CountValue > 0) 
+        let costItems = document.getElementById("costItems-" + n);
+       
+        if (CountValue > 1) 
         {
+            CountValue--;
             counter.value = CountValue;
 
-            let CostR = cost.replace(/,/g, '.');
-
-            AllPrice.value = parseFloat(AllPrice.value) - parseFloat(CostR);
+            AllPrice.value = parseFloat(AllPrice.value) - parseFloat(costItems.value);
         }
-        if (CountValue == 0) 
-        {
-            let iterations = 0;
-            let serchedItem = 0;
 
-            let Iiterations = 0;
-            let IserchedItem = 0;
-
-            let BlockTur = document.getElementById("Size-" + n);
-            let countSchluss = BlockTur.querySelector("#countSchlusse-" + n);
-
-            let ProductBlock = document.getElementById("ExelItem-" + n);
-            let WaitTime = ProductBlock.querySelector("#WaitTime");
-          
-            try 
-            {
-                let Innen = BlockTur.querySelector("#Intern");
-                let AitemsI = Innen.querySelectorAll("#OptionI");
-                let oldInen = BlockTur.querySelector("#Innen-" + n);
-                let valueI = AitemsI[0].value;
-
-                let numI = Number(valueI);
-
-                if (oldInen.value === "") 
-                {
-                    oldInen.value = Innen.value
-                }
-
-                AitemsI.forEach(function (items) 
-                {
-                    let ItemValue = Number(items.innerHTML);
-
-                    let ItemValueOld = Number(oldInen.value);
-
-                    if (IserchedItem == 1) {
-                        return;
-                    }
-                    else 
-                    {
-
-                        if (ItemValueOld > valueI) 
-                        {
-                            if (ItemValue > 31) 
-                            {
-                                let Costen = AllPrice.value.replace(/,/g, '.');
-
-                                if (ItemValue == ItemValueOld) 
-                                {
-                                    oldInen.value = valueI;
-                                    IserchedItem++;
-
-                                    Innen.value = Number(valueI);
-                                    AllPrice.value = parseFloat(Costen) - (4 * Number(countSchluss.value));
-                                    return;
-                                }
-                                else 
-                                {
-                                    AllPrice.value = parseFloat(Costen) - (4 * Number(countSchluss.value));
-                                }
-                            }
-
-                        }
-
-                    }
-
-                });
-
-                Iiterations = 0;
-                IserchedItem = 0;
-            }
-            catch (e) 
-            {
-                console.log(e);
-            }
-
-            try 
-            {
-                let Aussen = BlockTur.querySelector("#Aussen");
-                let Aitems = Aussen.querySelectorAll("#OptionA");
-                let oldAussen = BlockTur.querySelector("#Aussen-" + n);
-
-
-                let value = Aitems[0].value;
-
-                let num = Number(value);
-
-
-                if (oldAussen.value === "") 
-                {
-                    oldAussen.value = Aussen.value
-                }
-               
-                Aitems.forEach(function (items) 
-                {
-                    let ItemValue = Number(items.innerHTML);
-
-                    let ItemValueOld = Number(oldAussen.value);
-
-                    if (serchedItem == 1)
-                    {
-                        return;
-                    }
-                    else {
-                        if (ItemValueOld > num) 
-                        {
-                            if (ItemValue > 31) 
-                            {
-                                let Costen = AllPrice.value.replace(/,/g, '.');
-                                if (ItemValue == ItemValueOld) 
-                                {
-                                    oldAussen.value = value;
-                                    serchedItem++;
-                                    Aussen.value = Number(value);
-
-                                    AllPrice.value = parseFloat(Costen) - (4 * Number(countSchluss.value));
-                                    return;
-                                }
-                                else {
-                                    AllPrice.value = parseFloat(Costen) - (4 * Number(countSchluss.value));
-                                }
-                            }
-
-                        }
-
-                    }
-
-                });
-
-                iterations = 0;
-                serchedItem = 0;
-           
-            }
-            catch (e) {
-                console.log(e);
-            }
-            
-            counter.value = CountValue;
-            let CostR = cost.replace(/,/g, '.');
-
-            AllPrice.value = parseFloat(AllPrice.value) - parseFloat(CostR);
-        }
     }
 
     let iterations = 0;
@@ -1351,7 +1251,6 @@
         }
 
         AllPrice.value = parseFloat(AllPrice.value) - (VorhanSizeCost[iterations] * Number(countSchluss.value));
-        console.log(iterations);
 
         Aitems.forEach(function (items) 
         {
@@ -1428,6 +1327,8 @@
         let Aitems = Aussen.querySelectorAll("#OptionA");
         let oldAussen = BlockTur.querySelector("#Aussen-" + idBlock);
 
+        let costItems = document.getElementById("costItems-" + idBlock);
+
         let num = Number(value);
 
         if (oldAussen.value === "") 
@@ -1460,6 +1361,9 @@
                                     {
                                         let Costen = AllPrice.value.replace(/,/g, '.');
                                         let index = SelectItemId - i;
+
+                                        costItems.value = parseFloat(costItems.value) + (priceDoppelAussenCost[index]);
+
                                         AllPrice.value = parseFloat(Costen) + (priceDoppelAussenCost[index] * Number(countSchluss.value));
                                     }
                             }
@@ -1469,6 +1373,9 @@
                                 {
                                     let Costen = AllPrice.value.replace(/,/g, '.');
                                     let index = SelectItemId - i;
+
+                                    costItems.value = parseFloat(costItems.value) + (halbAussenCost[index]);
+                                    
                                     AllPrice.value = parseFloat(Costen) + (halbAussenCost[index] * Number(countSchluss.value));
                                 }
                             }
@@ -1478,6 +1385,9 @@
                                     {
                                         let Costen = AllPrice.value.replace(/,/g, '.');
                                         let index = SelectItemId - i;
+
+                                        costItems.value = parseFloat(costItems.value) + (priceKnayfAussenCost[index]);
+
                                         AllPrice.value = parseFloat(Costen) + (priceKnayfAussenCost[index] * Number(countSchluss.value));
                                     }
                             }
@@ -1506,6 +1416,9 @@
                                             {
                                                 let Costen = AllPrice.value.replace(/,/g, '.');
                                                 let index = SelectItemId - i;
+
+                                                costItems.value = parseFloat(costItems.value) - (priceDoppelAussenCost[index]);
+
                                                 AllPrice.value = parseFloat(Costen) - (priceDoppelAussenCost[index] * Number(countSchluss.value));
                                             }
                                            
@@ -1513,10 +1426,14 @@
                                         else 
                                         {
                                             iterations++;
+
                                             for (let i = 0; i !== iterations; i++) 
                                             {
                                                 let Costen = AllPrice.value.replace(/,/g, '.');
                                                 let index = SelectItemId + i;
+
+                                                costItems.value = parseFloat(costItems.value) - (priceDoppelAussenCost[index]);
+
                                                 AllPrice.value = parseFloat(Costen) - (priceDoppelAussenCost[index] * Number(countSchluss.value));
                                             }
                                         }
@@ -1530,17 +1447,26 @@
                                     for (let i = 0; i !== iterations; i++) 
                                     {
                                         let Costen = AllPrice.value.replace(/,/g, '.');
+                                        
                                         let index = SelectItemId - i;
+
+                                        costItems.value = parseFloat(costItems.value) - (halbAussenCost[index]);
+
                                         AllPrice.value = parseFloat(Costen) - (halbAussenCost[index] * Number(countSchluss.value));
                                     }
                                 }
                                 else 
                                 {
                                         iterations++;
+
                                         for (let i = 0; i !== iterations; i++) 
                                         {
                                             let Costen = AllPrice.value.replace(/,/g, '.');
+                                            
                                             let index = SelectItemId + i;
+
+                                            costItems.value = parseFloat(costItems.value) - (halbAussenCost[index]);
+
                                             AllPrice.value = parseFloat(Costen) - (halbAussenCost[index] * Number(countSchluss.value));
                                         }
                                 }
@@ -1548,19 +1474,31 @@
                             }
                             if (type === "Knaufzylinder") 
                             {
-                                if (SelectItemId > 0) {
-                                    for (let i = 0; i !== iterations; i++) {
+                                if (SelectItemId > 0) 
+                                {
+                                    for (let i = 0; i !== iterations; i++) 
+                                    {
                                         let Costen = AllPrice.value.replace(/,/g, '.');
                                         let index = SelectItemId - i;
+
+                                    costItems.value = parseFloat(costItems.value) - (priceKnayfAussenCost[index]);
+
                                         AllPrice.value = parseFloat(Costen) - (priceKnayfAussenCost[index] * Number(countSchluss.value));
                                     }
 
                                 }
-                                else {
+                                else 
+                                {
                                     iterations++;
-                                    for (let i = 0; i !== iterations; i++) {
+
+                                    for (let i = 0; i !== iterations; i++) 
+                                    {
                                         let Costen = AllPrice.value.replace(/,/g, '.');
+                                       
                                         let index = SelectItemId + i;
+
+                                    costItems.value = parseFloat(costItems.value) - (priceKnayfAussenCost[index]);
+
                                         AllPrice.value = parseFloat(Costen) - (priceKnayfAussenCost[index] * Number(countSchluss.value));
                                     }
                                 }
@@ -1656,6 +1594,8 @@
 
         let SelectItemId = selectId - 1;
 
+        let costItems = document.getElementById("costItems-" + idBlock);
+
         let Aussen = BlockTur.querySelector("#Aussen");
         let company = BlockTur.querySelector("#compName");
         let Innen = BlockTur.querySelector("#Intern");
@@ -1669,17 +1609,21 @@
             oldAussen.value = oldValue;
         }
 
-        Aitems.forEach(function (items) {
+        Aitems.forEach(function (items)
+        {
             let ItemValue = Number(items.innerHTML);
 
             let ItemValueOld = Number(oldAussen.value);
 
-            if (serchedItem == 1) {
+            if (serchedItem == 1) 
+            {
                 return;
             }
             else {
-                if (value > ItemValueOld) {
-                    if (ItemValue == value) {
+                if (value > ItemValueOld) 
+                {
+                    if (ItemValue == value) 
+                    {
                         oldAussen.value = ItemValue;
                         serchedItem++;
 
@@ -1688,7 +1632,11 @@
                             for (let i = 0; i !== iterations; i++) 
                             {
                                 let Costen = AllPrice.value.replace(/,/g, '.');
+
                                 let index = SelectItemId - i;
+
+                                costItems.value = parseFloat(costItems.value) + (priceDoppelInternCost[index]);
+
                                 AllPrice.value = parseFloat(Costen) + (priceDoppelInternCost[index] * Number(countSchluss.value));
                             }
                         }
@@ -1699,6 +1647,9 @@
                             {
                                 let Costen = AllPrice.value.replace(/,/g, '.');
                                 let index = SelectItemId - i;
+
+                                costItems.value = parseFloat(costItems.value) + (priceKnayfInternCost[index]);
+
                                 AllPrice.value = parseFloat(Costen) + (priceKnayfInternCost[index] * Number(countSchluss.value));
                             }
                         }
@@ -1709,7 +1660,8 @@
                         iterations++;
                     }
                 }
-                if (ItemValueOld > value) {
+                if (ItemValueOld > value) 
+                {
                     let Costen = AllPrice.value.replace(/,/g, '.');
 
                     if (ItemValue == ItemValueOld) {
@@ -1723,8 +1675,12 @@
                                 for (let i = 0; i !== iterations; i++) 
                                 {
                                     let Costen = AllPrice.value.replace(/,/g, '.');
+                                   
                                     let index = SelectItemId - i;
-                                    AllPrice.value = parseFloat(Costen) - (priceDoppelAussenCost[index] * Number(countSchluss.value));
+
+                                    costItems.value = parseFloat(costItems.value) - (priceDoppelInternCost[index]);
+
+                                    AllPrice.value = parseFloat(Costen) - (priceDoppelInternCost[index] * Number(countSchluss.value));
                                 }
 
                             }
@@ -1735,7 +1691,10 @@
                                 {
                                     let Costen = AllPrice.value.replace(/,/g, '.');
                                     let index = SelectItemId + i;
-                                    AllPrice.value = parseFloat(Costen) - (priceDoppelAussenCost[index] * Number(countSchluss.value));
+
+                                    costItems.value = parseFloat(costItems.value) - (priceDoppelInternCost[index]);
+
+                                    AllPrice.value = parseFloat(Costen) - (priceDoppelInternCost[index] * Number(countSchluss.value));
                                 }
                             }
 
@@ -1743,19 +1702,33 @@
                         }
                         if (type === "Knaufzylinder") 
                         {
-                            if (SelectItemId > 0) {
-                                for (let i = 0; i !== iterations; i++) {
+                            if (SelectItemId > 0) 
+                            {
+                                for (let i = 0; i !== iterations; i++) 
+                                {
+
                                     let Costen = AllPrice.value.replace(/,/g, '.');
+
                                     let index = SelectItemId - i;
+
+                                    costItems.value = parseFloat(costItems.value) - (priceKnayfInternCost[index]);
+
                                     AllPrice.value = parseFloat(Costen) - (priceKnayfInternCost[index] * Number(countSchluss.value));
                                 }
 
                             }
-                            else {
+                            else 
+                            {
                                 iterations++;
-                                for (let i = 0; i !== iterations; i++) {
+
+                                for (let i = 0; i !== iterations; i++) 
+                                {
                                     let Costen = AllPrice.value.replace(/,/g, '.');
+
                                     let index = SelectItemId + i;
+
+                                    costItems.value = parseFloat(costItems.value) - (priceKnayfInternCost[index]);
+
                                     AllPrice.value = parseFloat(Costen) - (priceKnayfInternCost[index] * Number(countSchluss.value));
                                 }
                             }

@@ -4491,7 +4491,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 using (var client = new SmtpClient())
                 {
                     client.Connect("smtp.gmail.com", 587, false);
-                    client.Authenticate("oceanwerbung@googlemail.com", "trclsrzauwxjяwxb");
+                    client.Authenticate("oceanwerbung@googlemail.com", "bouo yqop xsdl qpar");
                     client.Send(message);
                     client.Disconnect(true);
                 }

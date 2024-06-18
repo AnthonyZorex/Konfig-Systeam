@@ -1032,7 +1032,18 @@
 }
 @media (min-width: 900px) and (max-width: 1440px) 
 {
-    
+
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+        outline: none;
+    }
+
+    /* Убираем стрелочки в Firefox */
+    input[type="number"] {
+        -moz-appearance: textfield;
+    }
     body {
         margin-bottom: 60px;
         font-family: "Inter", sans-serif;
@@ -2115,6 +2126,19 @@
 }
 @media (min-width:1440px ) 
 {
+
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        outline:none;
+        margin: 0;
+    }
+
+    /* Убираем стрелочки в Firefox */
+    input[type="number"] {
+        -moz-appearance: textfield;
+    }
+
     html{
         font-size:14px;
     }
