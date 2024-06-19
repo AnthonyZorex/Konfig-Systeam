@@ -37,25 +37,3 @@
         </div>
     </div>
 </footer>
-
-<script>
-
-    let ProductModal = document.getElementById('ProductModal');
-    let ProductModalClose = document.getElementsByClassName('ProductModalClose')[0];
-
-    function sendInfo(value) 
-    {
-        console.log(value);
-        $.ajax({
-            type: "POST",
-            url: "/Konfigurator/SetInfo",
-            data: { data: value },
-            success: function (response) {
-                console.log(response);
-            },
-            error: function (xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-</script>

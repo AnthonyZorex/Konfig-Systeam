@@ -10,7 +10,7 @@
     <h1>Edit Aussenzylinder \ Rundzylinder</h1>
     <hr />
     <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <form asp-action="SaveAussenzylinder_Rundzylinder" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
@@ -105,143 +105,143 @@
     <div>
         <a asp-action="Index" style="color:black">Back to List</a>
     </div>
-}
 
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}
-
-<script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script>
-<script>
-
-    tinymce.init({
-        selector: '#exampleFormControlTextarea1'
-    });
-
-  
-    let costNGF = document.getElementById('costNGF');
-    let valueNGF = document.getElementById('valueNGF');
-
-    let productOptions = document.getElementById('productOptions');
-    let addOptions = document.getElementById('addOptions');
-
-
-    window.addEventListener('load', function () {
-        const blocks = document.querySelectorAll('.input-block');
-        for (let i = 0; i < blocks.length; i++) {
-            let counterBlock = blocks[i].querySelectorAll("#valueNGF  input");
-
-            let counter = blocks[i].querySelectorAll("#counter");
-
-            counter[0].value = counterBlock.length;
-
-            console.log(counter[0].value);
-        }
-    });
-
-    document.addEventListener("DOMContentLoaded", function () {
-        const container = document.getElementById('productOptions');
-        const createBlockBtn = document.getElementById('createBlockBtn');
-        const addInputBtn = document.getElementById('addInputBtn');
-        const RemoveInputBtn = document.getElementById('RemoveInputBtn');
-
-
-        let blockCounter = document.querySelectorAll('.input-block').length > 0 ? document.querySelectorAll('.input-block').length : 1;
-
-        createBlockBtn.addEventListener('click', function () {
-            const block = createBlock();
-            container.appendChild(block);
-        });
-
-        addInputBtn.addEventListener('click', function () {
-            const blocks = document.querySelectorAll('.input-block');
-            const lastBlock = blocks[blocks.length - 1];
-
-            if (lastBlock) {
-                addInputs(lastBlock);
-            } else {
-                alert('Сначала создайте блок');
+    @section Scripts
+    {
+            @{
+                await Html.RenderPartialAsync("_ValidationScriptsPartial");
             }
-        });
+        <script>
 
-        RemoveInputBtn.addEventListener('click', function () {
-            const blocks = document.querySelectorAll('.input-block');
-            const lastBlock = blocks[blocks.length - 1];
+            tinymce.init({
+                selector: '#exampleFormControlTextarea1'
+            });
 
-            let inputProductValue = lastBlock.querySelectorAll("#valueNGF  input");
-            let inputProductPrice = lastBlock.querySelectorAll("#costNGF  input");
 
-            if (lastBlock) {
-                if (inputProductValue.length < 2) {
-                    productOptions.removeChild(lastBlock);
+            let costNGF = document.getElementById('costNGF');
+            let valueNGF = document.getElementById('valueNGF');
+
+            let productOptions = document.getElementById('productOptions');
+            let addOptions = document.getElementById('addOptions');
+
+
+            window.addEventListener('load', function () {
+                const blocks = document.querySelectorAll('.input-block');
+                for (let i = 0; i < blocks.length; i++) {
+                    let counterBlock = blocks[i].querySelectorAll("#valueNGF  input");
+
+                    let counter = blocks[i].querySelectorAll("#counter");
+
+                    counter[0].value = counterBlock.length;
+
+                    console.log(counter[0].value);
                 }
-                else {
-                    inputProductValue[inputProductValue.length - 1].parentNode.removeChild(inputProductValue[inputProductValue.length - 1]);
-                    inputProductPrice[inputProductPrice.length - 1].parentNode.removeChild(inputProductPrice[inputProductPrice.length - 1]);
+            });
+
+            document.addEventListener("DOMContentLoaded", function () {
+                const container = document.getElementById('productOptions');
+                const createBlockBtn = document.getElementById('createBlockBtn');
+                const addInputBtn = document.getElementById('addInputBtn');
+                const RemoveInputBtn = document.getElementById('RemoveInputBtn');
+
+
+                let blockCounter = document.querySelectorAll('.input-block').length > 0 ? document.querySelectorAll('.input-block').length : 1;
+
+                createBlockBtn.addEventListener('click', function () {
+                    const block = createBlock();
+                    container.appendChild(block);
+                });
+
+                addInputBtn.addEventListener('click', function () {
+                    const blocks = document.querySelectorAll('.input-block');
+                    const lastBlock = blocks[blocks.length - 1];
+
+                    if (lastBlock) {
+                        addInputs(lastBlock);
+                    } else {
+                        alert('Сначала создайте блок');
+                    }
+                });
+
+                RemoveInputBtn.addEventListener('click', function () {
+                    const blocks = document.querySelectorAll('.input-block');
+                    const lastBlock = blocks[blocks.length - 1];
+
+                    let inputProductValue = lastBlock.querySelectorAll("#valueNGF  input");
+                    let inputProductPrice = lastBlock.querySelectorAll("#costNGF  input");
+
+                    if (lastBlock) {
+                        if (inputProductValue.length < 2) {
+                            productOptions.removeChild(lastBlock);
+                        }
+                        else {
+                            inputProductValue[inputProductValue.length - 1].parentNode.removeChild(inputProductValue[inputProductValue.length - 1]);
+                            inputProductPrice[inputProductPrice.length - 1].parentNode.removeChild(inputProductPrice[inputProductPrice.length - 1]);
+                        }
+                    }
+                    else {
+                        alert('Сначала создайте блок');
+                    }
+                });
+
+
+
+                function createBlock() {
+                    const block = document.createElement('div');
+                    block.classList.add('input-block');
+                    block.id = `block-${blockCounter}`;
+                    block.innerHTML = `<div>
+                                                                                        <h1>Options</h1>
+                                                                                        <label>Name</label>
+                                                                                        <input class="form-control" type="text" name="Options" />
+                                                                                        <div>
+                                                                                            <p></p>
+                                                                                            <input name="postedFile" type="file" class="btn btn-success" />
+                                                                                            <p></p>
+                                                                                        </div>
+                                                                                        <label>Descriptions</label>
+                                                                                        <input class="form-control" type="text" name="Descriptions" />
+                                                                                        <h1>Value & Cost </h1>
+                                                                                        <div id="Aussen_Innen_ProfilDopel">
+                                                                                            <div id="valueNGF">
+                                                                                                <input type="text" placeholder="valueNGF" name="valueNGF" />
+
+                                                                                            </div>
+                                                                                            <div id="costNGF">
+                                                                                                        <input type="number" placeholder="costNGF" step="0.01" name="costNGF" />
+                                                                                            </div>
+                                                                                                                    <input type="hidden" id="counter" name="inputCounter" />
+                                                                                        </div>
+                                                                                    </div>`;
+
+                    blockCounter++;
+
+                    return block;
                 }
-            }
-            else {
-                alert('Сначала создайте блок');
-            }
-        });
 
+                function addInputs(block) {
+                    let d = document.createElement('input');
+                    d.setAttribute('name', 'costNGF');
+                    d.setAttribute('placeholder', 'costNGF');
 
+                    let x = document.createElement('input');
+                    x.setAttribute('name', 'valueNGF');
+                    x.setAttribute('placeholder', 'valueNGF');
 
-        function createBlock() {
-            const block = document.createElement('div');
-            block.classList.add('input-block');
-            block.id = `block-${blockCounter}`;
-            block.innerHTML = `<div>
-                                                                            <h1>Options</h1>
-                                                                            <label>Name</label>
-                                                                            <input class="form-control" type="text" name="Options" />
-                                                                            <div>
-                                                                                <p></p>
-                                                                                <input name="postedFile" type="file" class="btn btn-success" />
-                                                                                <p></p>
-                                                                            </div>
-                                                                            <label>Descriptions</label>
-                                                                            <input class="form-control" type="text" name="Descriptions" />
-                                                                            <h1>Value & Cost </h1>
-                                                                            <div id="Aussen_Innen_ProfilDopel">
-                                                                                <div id="valueNGF">
-                                                                                    <input type="text" placeholder="valueNGF" name="valueNGF" />
+                    const div1 = block.querySelector('#valueNGF');
+                    const div2 = block.querySelector('#costNGF');
 
-                                                                                </div>
-                                                                                <div id="costNGF">
-                                                                                            <input type="number" placeholder="costNGF" step="0.01" name="costNGF" />
-                                                                                </div>
-                                                                                                        <input type="hidden" id="counter" name="inputCounter" />
-                                                                            </div>
-                                                                        </div>`;
+                    div1.appendChild(x);
 
-            blockCounter++;
+                    div2.appendChild(d);
 
-            return block;
-        }
+                    var counter = document.querySelectorAll('#counter');
+                    counter[counter.length - 1].value = block.querySelectorAll("#valueNGF  input").length;
+                };
 
-        function addInputs(block) {
-            let d = document.createElement('input');
-            d.setAttribute('name', 'costNGF');
-            d.setAttribute('placeholder', 'costNGF');
+            })
 
-            let x = document.createElement('input');
-            x.setAttribute('name', 'valueNGF');
-            x.setAttribute('placeholder', 'valueNGF');
+        </script>
 
-            const div1 = block.querySelector('#valueNGF');
-            const div2 = block.querySelector('#costNGF');
-
-            div1.appendChild(x);
-
-            div2.appendChild(d);
-
-            var counter = document.querySelectorAll('#counter');
-            counter[counter.length - 1].value = block.querySelectorAll("#valueNGF  input").length;
-        };
-
-    })
-
-</script>
+     }
+}

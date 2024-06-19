@@ -12,7 +12,7 @@
     <h1>Edit</h1>
     <hr />
     <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <form asp-action="SaveProfil_Knaufzylinder">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -129,197 +129,283 @@
     </div>
 }
 
-@section Scripts {
+@section Scripts 
+{
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-}
+    <script>
 
-<script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script>
-
-<script>
-
-    tinymce.init({
-        selector: '#exampleFormControlTextarea1'
-    });
-
-    let plusAussen_Innen = document.getElementById('addAussen_Innen');
-    let removeAussen_Innen = document.getElementById('addAussen_Innen_remove');
-
-    let docInnen = document.getElementById('InnenProfilDopel');
-    let docAussen = document.getElementById('AussenProfilDopel');
-
-
-    window.addEventListener('load', function () {
-        const blocks = document.querySelectorAll('.input-block');
-        for (let i = 0; i < blocks.length; i++) {
-            let counterBlock = blocks[i].querySelectorAll("#valueNGF  input");
-
-            let counter = blocks[i].querySelectorAll("#counter");
-
-            counter[0].value = counterBlock.length;
-
-            console.log(counter[0].value);
-        }
-    });
-
-    let costNGF = document.getElementById('costNGF');
-    let valueNGF = document.getElementById('valueNGF');
-
-    let productOptions = document.getElementById('productOptions');
-    let addOptions = document.getElementById('addOptions');
-
-    plusAussen_Innen.addEventListener('click', () => {
-
-        let d = document.createElement('input');
-        d.setAttribute('name', 'SizeAus');
-        d.setAttribute('placeholder', 'Aussen');
-        d.setAttribute('class', 'form-control');
-        d.id = 'aus';
-
-        let costAussen = document.createElement('input');
-        costAussen.setAttribute('name', 'costSizeAussen');
-        costAussen.setAttribute('placeholder', 'costAussen');
-        costAussen.setAttribute('class', 'form-control');
-        costAussen.setAttribute('step', '0.01');
-        costAussen.setAttribute('type', 'number');
-        costAussen.id = 'ausCost';
-
-        let x = document.createElement('input');
-        x.setAttribute('name', 'SizeInen');
-        x.setAttribute('placeholder', 'Innen');
-        x.id = 'inter';
-        x.setAttribute('class', 'form-control');
-
-        let costInter = document.createElement('input');
-        costInter.setAttribute('name', 'costSizeIntern');
-        costInter.setAttribute('placeholder', 'costInnen');
-        costInter.id = 'interCost';
-        costInter.setAttribute('class', 'form-control');
-        costInter.setAttribute('step', '0.01');
-        costInter.setAttribute('type', 'number');
-        docAussen.append(d, costAussen);
-        docInnen.append(x, costInter);
-
-    });
-    removeAussen_Innen.addEventListener('click', () => 
-    {
-
-        let d = document.querySelectorAll('#aus');
-
-        let costAussen = document.querySelectorAll('#ausCost');
-
-        let x = document.querySelectorAll('#inter');
-        let costInter = document.querySelectorAll('#interCost');
-
-        docAussen.removeChild(costAussen[costAussen.length - 1]);
-        docAussen.removeChild(d[d.length - 1]);
-
-        docInnen.removeChild(x[x.length - 1]);
-        docInnen.removeChild(costInter[costInter.length - 1]);
-    });
-
-    document.addEventListener("DOMContentLoaded", function () {
-        const container = document.getElementById('productOptions');
-        const createBlockBtn = document.getElementById('createBlockBtn');
-        const addInputBtn = document.getElementById('addInputBtn');
-        const RemoveInputBtn = document.getElementById('RemoveInputBtn');
-
-        let blockCounter = document.querySelectorAll('.input-block').length > 0 ? document.querySelectorAll('.input-block').length : 1;
-
-        createBlockBtn.addEventListener('click', function () {
-            const block = createBlock();
-            container.appendChild(block);
+        tinymce.init({
+            selector: '#exampleFormControlTextarea1'
         });
 
-        addInputBtn.addEventListener('click', function () {
-            const blocks = document.querySelectorAll('.input-block');
-            const lastBlock = blocks[blocks.length - 1];
+        let plusAussen_Innen = document.getElementById('addAussen_Innen');
+        let removeAussen_Innen = document.getElementById('addAussen_Innen_remove');
 
-            if (lastBlock) {
-                addInputs(lastBlock);
-            } else {
-                alert('Сначала создайте блок');
-            }
-        });
+        let docInnen = document.getElementById('InnenProfilDopel');
+        let docAussen = document.getElementById('AussenProfilDopel');
 
-        RemoveInputBtn.addEventListener('click', function () {
-            const blocks = document.querySelectorAll('.input-block');
-            const lastBlock = blocks[blocks.length - 1];
+        let selectedInputs = [];
 
-            let inputProductValue = lastBlock.querySelectorAll("#valueNGF  input");
-            let inputProductPrice = lastBlock.querySelectorAll("#costNGF  input");
+        let allInnen = document.querySelectorAll("#inter");
+        let allAussen = document.querySelectorAll("#aus");
 
-            if (lastBlock) {
-                if (inputProductValue.length < 2) {
-                    productOptions.removeChild(lastBlock);
+        let aussenCost = document.querySelectorAll("#ausCost");
+        let InternCost = document.querySelectorAll("#interCost");
+
+        allAussen.forEach((item) => {
+
+            item.addEventListener("keydown", (event) => {
+                if (event.key === 'Control') {
+                    selectedInputs.push(item);
                 }
-                else {
-                    inputProductValue[inputProductValue.length - 1].parentNode.removeChild(inputProductValue[inputProductValue.length - 1]);
-                    inputProductPrice[inputProductPrice.length - 1].parentNode.removeChild(inputProductPrice[inputProductPrice.length - 1]);
+            });
+
+
+            item.addEventListener('change', (event) => {
+                selectedInputs.forEach((x) => {
+                    x.value = event.target.value;
+                });
+                selectedInputs = [];
+            });
+
+        });
+
+
+        aussenCost.forEach((item) => {
+
+            item.addEventListener("keydown", (event) => {
+                item.addEventListener("click", () => {
+                    selectedInputs.push(item);
+                })
+            });
+
+
+            item.addEventListener('change', (event) => {
+
+                selectedInputs.forEach((x) => {
+                    x.value = event.target.value;
+                });
+                selectedInputs = [];
+            });
+
+        });
+
+
+        allInnen.forEach((item) => {
+
+            item.addEventListener("keydown", (event) => {
+                if (event.key === 'Control') {
+                    selectedInputs.push(item);
                 }
-            }
-            else {
-                alert('Сначала создайте блок');
+            });
+
+
+            item.addEventListener('change', (event) => {
+                selectedInputs.forEach((x) => {
+                    x.value = event.target.value;
+                });
+                selectedInputs = [];
+            });
+
+        });
+
+
+        InternCost.forEach((item) => {
+
+            item.addEventListener("keydown", (event) => {
+                item.addEventListener("click", () => {
+                    selectedInputs.push(item);
+                })
+            });
+
+
+            item.addEventListener('change', (event) => {
+
+                selectedInputs.forEach((x) => {
+                    x.value = event.target.value;
+                });
+                selectedInputs = [];
+            });
+
+        });
+
+
+
+        window.addEventListener('load', function () {
+            const blocks = document.querySelectorAll('.input-block');
+            for (let i = 0; i < blocks.length; i++) {
+                let counterBlock = blocks[i].querySelectorAll("#valueNGF  input");
+
+                let counter = blocks[i].querySelectorAll("#counter");
+
+                counter[0].value = counterBlock.length;
+
+                console.log(counter[0].value);
             }
         });
 
-        function createBlock() {
-            const block = document.createElement('div');
-            block.classList.add('input-block');
-            block.id = `block-${blockCounter}`;
-            block.innerHTML = `<div>
-                                                                                <h1>Options</h1>
-                                                                                <label>Name</label>
-                                                                                <input class="form-control" type="text" name="Options" />
-                                                                                <div>
-                                                                                    <p></p>
-                                                                                    <input name="postedFile" type="file" class="btn btn-success" />
-                                                                                    <p></p>
-                                                                                </div>
-                                                                                <label>Descriptions</label>
-                                                                                <input class="form-control" type="text" name="Descriptions" />
-                                                                                <h1>Value & Cost </h1>
-                                                                                <div id="Aussen_Innen_ProfilDopel">
-                                                                                    <div id="valueNGF">
-                                                                                        <input type="text" placeholder="valueNGF" name="valueNGF" />
+        let costNGF = document.getElementById('costNGF');
+        let valueNGF = document.getElementById('valueNGF');
 
-                                                                                    </div>
-                                                                                    <div id="costNGF">
-                                                                                                <input type="number" placeholder="costNGF" step="0.01" name="costNGF" />
-                                                                                    </div>
-                                                                                                            <input type="hidden" id="counter" name="inputCounter" />
-                                                                                </div>
-                                                                            </div>`;
+        let productOptions = document.getElementById('productOptions');
+        let addOptions = document.getElementById('addOptions');
 
-            blockCounter++;
-
-            return block;
-        }
-
-        function addInputs(block) {
+        plusAussen_Innen.addEventListener('click', () => {
 
             let d = document.createElement('input');
-            d.setAttribute('name', 'costNGF');
-            d.setAttribute('placeholder', 'costNGF');
+            d.setAttribute('name', 'SizeAus');
+            d.setAttribute('placeholder', 'Aussen');
+            d.setAttribute('class', 'form-control');
+            d.id = 'aus';
+
+            let costAussen = document.createElement('input');
+            costAussen.setAttribute('name', 'costSizeAussen');
+            costAussen.setAttribute('placeholder', 'costAussen');
+            costAussen.setAttribute('class', 'form-control');
+            costAussen.setAttribute('step', '0.01');
+            costAussen.setAttribute('type', 'number');
+            costAussen.id = 'ausCost';
 
             let x = document.createElement('input');
-            x.setAttribute('name', 'valueNGF');
-            x.setAttribute('placeholder', 'valueNGF');
+            x.setAttribute('name', 'SizeInen');
+            x.setAttribute('placeholder', 'Innen');
+            x.id = 'inter';
+            x.setAttribute('class', 'form-control');
 
-            const div1 = block.querySelector('#valueNGF');
-            const div2 = block.querySelector('#costNGF');
+            let costInter = document.createElement('input');
+            costInter.setAttribute('name', 'costSizeIntern');
+            costInter.setAttribute('placeholder', 'costInnen');
+            costInter.id = 'interCost';
+            costInter.setAttribute('class', 'form-control');
+            costInter.setAttribute('step', '0.01');
+            costInter.setAttribute('type', 'number');
+            docAussen.append(d, costAussen);
+            docInnen.append(x, costInter);
 
-            div1.appendChild(x);
+        });
+        removeAussen_Innen.addEventListener('click', () => {
 
-            div2.appendChild(d);
+            let d = document.querySelectorAll('#aus');
 
-            var counter = document.querySelectorAll('#counter');
-            counter[counter.length - 1].value = block.querySelectorAll("#valueNGF  input").length;
-        };
+            let costAussen = document.querySelectorAll('#ausCost');
 
-    })
+            let x = document.querySelectorAll('#inter');
+            let costInter = document.querySelectorAll('#interCost');
 
-</script>
+            docAussen.removeChild(costAussen[costAussen.length - 1]);
+            docAussen.removeChild(d[d.length - 1]);
+
+            docInnen.removeChild(x[x.length - 1]);
+            docInnen.removeChild(costInter[costInter.length - 1]);
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const container = document.getElementById('productOptions');
+            const createBlockBtn = document.getElementById('createBlockBtn');
+            const addInputBtn = document.getElementById('addInputBtn');
+            const RemoveInputBtn = document.getElementById('RemoveInputBtn');
+
+            let blockCounter = document.querySelectorAll('.input-block').length > 0 ? document.querySelectorAll('.input-block').length : 1;
+
+            createBlockBtn.addEventListener('click', function () {
+                const block = createBlock();
+                container.appendChild(block);
+            });
+
+            addInputBtn.addEventListener('click', function () {
+                const blocks = document.querySelectorAll('.input-block');
+                const lastBlock = blocks[blocks.length - 1];
+
+                if (lastBlock) {
+                    addInputs(lastBlock);
+                } else {
+                    alert('Сначала создайте блок');
+                }
+            });
+
+            RemoveInputBtn.addEventListener('click', function () {
+                const blocks = document.querySelectorAll('.input-block');
+                const lastBlock = blocks[blocks.length - 1];
+
+                let inputProductValue = lastBlock.querySelectorAll("#valueNGF  input");
+                let inputProductPrice = lastBlock.querySelectorAll("#costNGF  input");
+
+                if (lastBlock) {
+                    if (inputProductValue.length < 2) {
+                        productOptions.removeChild(lastBlock);
+                    }
+                    else {
+                        inputProductValue[inputProductValue.length - 1].parentNode.removeChild(inputProductValue[inputProductValue.length - 1]);
+                        inputProductPrice[inputProductPrice.length - 1].parentNode.removeChild(inputProductPrice[inputProductPrice.length - 1]);
+                    }
+                }
+                else {
+                    alert('Сначала создайте блок');
+                }
+            });
+
+            function createBlock() {
+                const block = document.createElement('div');
+                block.classList.add('input-block');
+                block.id = `block-${blockCounter}`;
+                block.innerHTML = `<div>
+                                                                                        <h1>Options</h1>
+                                                                                        <label>Name</label>
+                                                                                        <input class="form-control" type="text" name="Options" />
+                                                                                        <div>
+                                                                                            <p></p>
+                                                                                            <input name="postedFile" type="file" class="btn btn-success" />
+                                                                                            <p></p>
+                                                                                        </div>
+                                                                                        <label>Descriptions</label>
+                                                                                        <input class="form-control" type="text" name="Descriptions" />
+                                                                                        <h1>Value & Cost </h1>
+                                                                                        <div id="Aussen_Innen_ProfilDopel">
+                                                                                            <div id="valueNGF">
+                                                                                                <input type="text" placeholder="valueNGF" name="valueNGF" />
+
+                                                                                            </div>
+                                                                                            <div id="costNGF">
+                                                                                                        <input type="number" placeholder="costNGF" step="0.01" name="costNGF" />
+                                                                                            </div>
+                                                                                                                    <input type="hidden" id="counter" name="inputCounter" />
+                                                                                        </div>
+                                                                                    </div>`;
+
+                blockCounter++;
+
+                return block;
+            }
+
+            function addInputs(block) {
+
+                let d = document.createElement('input');
+                d.setAttribute('name', 'costNGF');
+                d.setAttribute('placeholder', 'costNGF');
+
+                let x = document.createElement('input');
+                x.setAttribute('name', 'valueNGF');
+                x.setAttribute('placeholder', 'valueNGF');
+
+                const div1 = block.querySelector('#valueNGF');
+                const div2 = block.querySelector('#costNGF');
+
+                div1.appendChild(x);
+
+                div2.appendChild(d);
+
+                var counter = document.querySelectorAll('#counter');
+                counter[counter.length - 1].value = block.querySelectorAll("#valueNGF  input").length;
+            };
+
+        })
+
+    </script>
+
+
+}
+
 
 

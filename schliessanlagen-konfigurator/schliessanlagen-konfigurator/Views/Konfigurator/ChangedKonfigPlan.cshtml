@@ -270,6 +270,18 @@
 </div>
 <script>
 
+    const scroll1 = document.getElementById('itemKeyBlock');
+    const scroll2 = document.getElementById('InfoValue1');
+
+    // Функция для синхронизации прокрутки
+    function syncScroll(source, target) {
+        target.scrollLeft = source.scrollLeft;
+    }
+
+    // Добавление обработчиков событий прокрутки для обоих элементов
+    scroll1.addEventListener('scroll', () => syncScroll(scroll1, scroll2));
+    scroll2.addEventListener('scroll', () => syncScroll(scroll2, scroll1));
+
     let blockCount = document.querySelectorAll(".TexCount").length;
     let blockTur = document.querySelectorAll("#inputTur").length;
 

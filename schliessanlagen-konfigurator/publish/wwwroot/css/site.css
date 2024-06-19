@@ -1059,7 +1059,6 @@
         outline: none;
     }
 
-    /* Убираем стрелочки в Firefox */
     input[type="number"] {
         -moz-appearance: textfield;
     }
@@ -1086,7 +1085,7 @@
     }
 
     #gridImg {
-        grid-template-columns: 320px 320px 320px 320px;
+        grid-template-columns: auto auto auto;
         display: grid;
         text-align: center
     }
@@ -1750,6 +1749,7 @@
     }
 
     #itemKeyBlock {
+        margin-bottom:5px;
         margin-left: 570px;
         display: flex;
         width: auto;

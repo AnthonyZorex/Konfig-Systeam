@@ -58,12 +58,32 @@
 
 
         @Html.Partial("_Footer")
- 
 
+    <script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script>
      <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" async></script>
     <script src="~/lib/jquery/dist/jquery.min.js" async></script>
     
     @await RenderSectionAsync("Scripts", required: false)
-  
+ 
+    <script>
+        let ProductModal = document.getElementById('ProductModal');
+        let ProductModalClose = document.getElementsByClassName('ProductModalClose')[0];
+
+        function sendInfo(value) {
+            console.log(value);
+            $.ajax({
+                type: "POST",
+                url: "/Konfigurator/SetInfo",
+                data: { data: value },
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+  </script>
+
 </body>
 </html>

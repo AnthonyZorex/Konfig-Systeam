@@ -19,7 +19,7 @@
         <h2>Füllen Sie den Konfigurator mit Daten aus!</h2>
     </div>
 
-    <form asp-action="SaveOrder" enctype="multipart/form-data" asp-controller="Konfigurator">
+    <form asp-action="SaveOrder" enctype="multipart/form-data" id="content" asp-controller="Konfigurator">
   
         @Html.HiddenFor(m => m.userKey)
         <input type="hidden" value="@ViewBag.UserNameItem" name="userName" />
@@ -137,6 +137,7 @@
         </div>
     </div>
         <input type="text" name="IsOppen" style="display:none" id="vBool" />
+        <input type="button" onclick="(printDiv())" class="btn btn-success" id="input" value="Print" />
         <input type="submit"  onclick="(bolleanCheked())" class="btn btn-success" id="input" value="Weiter" />
     </form>
 
@@ -204,6 +205,18 @@
 </div>
 
 <script>
+
+    function printDiv() 
+    {
+        var printContents = document.getElementById("InformBar").innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+    }
 
     let blockCount = document.querySelectorAll(".TexCount").length;
     let blockTur = document.querySelectorAll("#inputTur").length;

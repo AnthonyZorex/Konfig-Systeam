@@ -111,8 +111,9 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
         name: "default",
-        pattern: "{controller=Konfigurator}/{action=IndexKonfigurator}/{id?}");
+        pattern: "{controller=Konfigurator}/{action=IndexKonfigurator}");
     endpoints.MapRazorPages();
+
 });
 
 app.Run();
