@@ -22,6 +22,11 @@
 
 @media(max-width:900px) and (orientation: portrait) 
 {
+
+    html {
+        font-size:4px !important;
+    }
+
     .horizontal1 {
         display: block;
         gap: 20px;
@@ -323,15 +328,14 @@
         margin-left: -45px;
         gap:10px;
     }
-
-    html {
-        font-size: calc(6px + (8 - 6) * ((100vw - 380px) / ( 1440 - 380)));
-    }
-
     #InformBar {
         margin-top: 30px;
         font-size: 8px;
         gap: 50px;
+    }
+
+    #schlussel h5 {
+        margin-left: 10px !important;
     }
 
     #sclusselInfo {
@@ -345,7 +349,7 @@
     }
 
     #itemKeyBlock {
-        margin-bottom: 20px;
+        margin-bottom: 23px;
         margin-left: 240px;
         display: flex;
         width: auto;
@@ -547,6 +551,18 @@
 
 @media(max-width:900px) and (orientation: landscape) 
 {
+    #sclusselInfo2>h5{
+        margin:0px;
+    }
+
+    html {
+        font-size: 10px;
+    }
+
+    #schlussel h5{
+        margin-left:10px !important;
+    }
+
     #schlussel2 {
         display: flex;
     }
@@ -574,6 +590,7 @@
             justify-content: center;
             margin-bottom: 50px;
         }
+
     #Table {
         display: grid;
         grid-template-columns: repeat(9, auto);
@@ -803,7 +820,7 @@
 
     #schlussel3 {
         margin-top: 5px;
-        margin-left: 50px;
+        margin-left: 10px;
     }
 
     #chekerTur > button {
@@ -827,9 +844,7 @@
         margin-left: 40px;
     }
 
-    html {
-        font-size: calc(12px + (16 - 12) * ((100vw - 480px) / ( 1440 - 480) ));
-    }
+   
 
     #InformBar {
         margin-top: 30px;
@@ -847,7 +862,7 @@
     }
 
     #itemKeyBlock {
-        margin-bottom: 10px;
+        margin-bottom: 23px;
         margin-left: 500px;
         display: flex;
         width: auto;
@@ -1032,6 +1047,10 @@
 }
 @media (min-width: 900px) and (max-width: 1440px) 
 {
+
+    html {
+        font-size: 12px;
+    }
 
     input[type="number"]::-webkit-outer-spin-button,
     input[type="number"]::-webkit-inner-spin-button {
@@ -1561,7 +1580,7 @@
     }
 
     .ExelItem {
-        grid-template-columns: 350px 800px;
+        grid-template-columns: 350px auto;
         display: grid;
         margin-top: 50px;
         max-width: 1250px;
@@ -1759,7 +1778,7 @@
 
     #schlussel3 {
         margin-top: 5px;
-        margin-left: 70px;
+        margin-left: 30px;
     }
 
     #ItemTur {
@@ -2139,9 +2158,6 @@
         -moz-appearance: textfield;
     }
 
-    html{
-        font-size:14px;
-    }
     body {
         margin-bottom: 60px;
         font-family: "Inter", sans-serif;
@@ -2355,6 +2371,9 @@
         border-radius: 20px;
     }
 
+    html {
+        font-size: 14px;
+    }
 
     #circle {
         margin-top: 10px;
@@ -2658,7 +2677,7 @@
     }
 
     .ExelItem {
-        grid-template-columns: 350px 800px;
+        grid-template-columns: 350px auto;
         display: grid;
         margin-top: 50px;
         max-width: 1250px;
