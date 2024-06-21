@@ -3719,12 +3719,29 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var CountAussenDoppel = 0;
             var countZylinder = countDoppel.Distinct().ToList();
+           
+            int dpCount = 0;
+            int knayfCount = 0;
+            int HalbCount = 0;
 
             foreach (var order in key)
             {
                 if (order.ZylinderId == 1)
                 {
-                    var DoppelSize = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == DopelOrderlist.First().Id).ToList();
+                    var DoppelSize = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == DopelOrderlist[dpCount].Id).ToList();
+
+                    var nÍtem = new Profil_Doppelzylinder {
+
+                        Id = DopelOrderlist[dpCount].Id,
+                        Name = DopelOrderlist[dpCount].Name,
+                        description = DopelOrderlist[dpCount].description,
+                        companyName = DopelOrderlist[dpCount].companyName,
+                        NameSystem = DopelOrderlist[dpCount].NameSystem,
+                        Price = DopelOrderlist[dpCount].Price,
+                        ImageFile = DopelOrderlist[dpCount].ImageFile,
+                        ImageName = DopelOrderlist[dpCount].ImageName,
+                        schliessanlagenId = DopelOrderlist[dpCount].schliessanlagenId
+                    };
 
                     var aussen = DoppelSize.Min(x => x.aussen);
                     var aussenSize = DoppelSize.Where(x => x.aussen > aussen).Select(x => x.aussen).ToList();
@@ -3741,13 +3758,13 @@ namespace schliessanlagen_konfigurator.Controllers
                                 for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
                                 {
                                     var costAussen = DoppelSize.FirstOrDefault(x => x.aussen == aus).costSizeAussen;
-                                    DoppelAussenCost = DoppelAussenCost + costAussen;
+                                    nÍtem.Price = nÍtem.Price + costAussen;
                                 }
                             }
                             else
                             {
                                 var costAussen = DoppelSize.FirstOrDefault(x => x.aussen == aus).costSizeAussen;
-                                DoppelAussenCost = DoppelAussenCost + costAussen;
+                                nÍtem.Price = nÍtem.Price + costAussen;
                             }
                           
                         }
@@ -3758,14 +3775,14 @@ namespace schliessanlagen_konfigurator.Controllers
                                 for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
                                 {
                                     var costAussen = DoppelSize.FirstOrDefault(x => x.aussen == aus).costSizeAussen;
-                                    DoppelAussenCost = DoppelAussenCost + costAussen;
+                                    nÍtem.Price = nÍtem.Price + costAussen;
                                     aussen = aus;
                                 }
                             }
                             else
                             {
                                 var costAussen = DoppelSize.FirstOrDefault(x => x.aussen == aus).costSizeAussen;
-                                DoppelAussenCost = DoppelAussenCost + costAussen;
+                                nÍtem.Price = nÍtem.Price + costAussen;
                                 aussen = aus;
                             }
                             break;
@@ -3780,13 +3797,13 @@ namespace schliessanlagen_konfigurator.Controllers
                                      for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
                                      {
                                         var costIntern = DoppelSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
-                                        DoppelAussenCost = DoppelAussenCost + costIntern;
+                                        nÍtem.Price = nÍtem.Price + costIntern;
                                      }
                                 }
                                 else
                                 {
-                                    var costIntern = DoppelSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
-                                    DoppelAussenCost = DoppelAussenCost + costIntern;
+                                     var costIntern = DoppelSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
+                                     nÍtem.Price = nÍtem.Price + costIntern;
                                 }
                             }
                             else
@@ -3796,14 +3813,14 @@ namespace schliessanlagen_konfigurator.Controllers
                                     for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
                                     {
                                         var costIntern = DoppelSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
-                                        DoppelAussenCost = DoppelAussenCost + costIntern;
+                                        nÍtem.Price = nÍtem.Price + costIntern;
                                         innen = ine;
                                     }
                                 }
                                 else
                                 {
                                     var costIntern = DoppelSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
-                                    DoppelAussenCost = DoppelAussenCost + costIntern;
+                                    nÍtem.Price = nÍtem.Price + costIntern;
                                     innen = ine;
                                 }
 
@@ -3811,14 +3828,30 @@ namespace schliessanlagen_konfigurator.Controllers
                             }
  
                     }
+                    DopelOrderlist[dpCount] = nÍtem;
                     CountAussenDoppel++;
+                    dpCount++;
                 }
+
                 if (order.ZylinderId == 2)
                 {
                     ViewBag.HalbAussen = order.aussen;
 
-                    var SizeHalbzylinder = db.Aussen_Innen_Halbzylinder.Where(x => x.Profil_HalbzylinderId == Halbzylinder.First().Id).ToList();
-                    
+                    var SizeHalbzylinder = db.Aussen_Innen_Halbzylinder.Where(x => x.Profil_HalbzylinderId == Halbzylinder[HalbCount].Id).ToList();
+
+                    var nÍtem = new Profil_Halbzylinder
+                    {
+                        Id = Halbzylinder[HalbCount].Id,
+                        Name = Halbzylinder[HalbCount].Name,
+                        description = Halbzylinder[HalbCount].description,
+                        companyName = Halbzylinder[HalbCount].companyName,
+                        NameSystem = Halbzylinder[HalbCount].NameSystem,
+                        Price = Halbzylinder[HalbCount].Price,
+                        ImageFile = Halbzylinder[HalbCount].ImageFile,
+                        ImageName = Halbzylinder[HalbCount].ImageName,
+                        schliessanlagenId = Halbzylinder[HalbCount].schliessanlagenId
+                    };
+
                     var aussen = SizeHalbzylinder.Min(x => x.aussen);
 
                     var aussenSize = SizeHalbzylinder.Where(x => x.aussen > aussen).Select(x => x.aussen).ToList();
@@ -3828,21 +3861,35 @@ namespace schliessanlagen_konfigurator.Controllers
                         if (aus < order.aussen)
                         {
                             var costAussen = SizeHalbzylinder.FirstOrDefault(x => x.aussen == aus).costAussen;
-                            halbAussenCost = halbAussenCost + costAussen;
+                            nÍtem.Price = nÍtem.Price + costAussen;
                         }
                         else
                         {
                             var costAussen = SizeHalbzylinder.FirstOrDefault(x => x.aussen == aus).costAussen;
-                            halbAussenCost = halbAussenCost + costAussen;
+                            nÍtem.Price = nÍtem.Price + costAussen;
                             aussen = aus;
                             break;
                         }
                     }
+                    Halbzylinder[HalbCount]= nÍtem;
+                    HalbCount++;
                 }
                 if (order.ZylinderId == 3)
                 {
+                    var KnayfSize = db.Aussen_Innen_Knauf.Where(x => x.Profil_KnaufzylinderId == KnayfOrderlist[knayfCount].Id).ToList();
 
-                    var KnayfSize = db.Aussen_Innen_Knauf.Where(x => x.Profil_KnaufzylinderId == KnayfOrderlist.First().Id).ToList();
+                    var nÍtem = new Profil_Knaufzylinder
+                    {
+                        Id = KnayfOrderlist[knayfCount].Id,
+                        Name = KnayfOrderlist[knayfCount].Name,
+                        description = KnayfOrderlist[knayfCount].description,
+                        companyName = KnayfOrderlist[knayfCount].companyName,
+                        NameSystem = KnayfOrderlist[knayfCount].NameSystem,
+                        Price = KnayfOrderlist[knayfCount].Price,
+                        ImageFile = KnayfOrderlist[knayfCount].ImageFile,
+                        ImageName = KnayfOrderlist[knayfCount].ImageName,
+                        schliessanlagenId = KnayfOrderlist[knayfCount].schliessanlagenId
+                    };
 
                     var aussen = KnayfSize.Min(x => x.aussen);
                     var aussenSize = KnayfSize.Where(x => x.aussen > aussen).Select(x => x.aussen).ToList();
@@ -3855,12 +3902,12 @@ namespace schliessanlagen_konfigurator.Controllers
                         if(aus < order.aussen)
                         {
                             var costAussen = KnayfSize.FirstOrDefault(x => x.aussen == aus).costSizeAussen;
-                            KhaufAussenCost = KhaufAussenCost + costAussen;
+                            nÍtem.Price = nÍtem.Price + costAussen;
                         }
                         else
                         {
                             var costAussen = KnayfSize.FirstOrDefault(x => x.aussen == aus).costSizeAussen;
-                            KhaufAussenCost = KhaufAussenCost + costAussen;
+                            nÍtem.Price = nÍtem.Price + costAussen;
                             aussen = aus;
                             break;
                         }
@@ -3870,17 +3917,19 @@ namespace schliessanlagen_konfigurator.Controllers
                         if (ine < order.innen)
                         {
                             var costIntern = KnayfSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
-                            KhaufAussenCost = KhaufAussenCost + costIntern;
+                            nÍtem.Price = nÍtem.Price + costIntern;
                         }
                         else
                         {
                             var costIntern = KnayfSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
-                            KhaufAussenCost = KhaufAussenCost + costIntern;
+                            nÍtem.Price = nÍtem.Price + costIntern;
                             innen = ine;
                             break;
                         }
                     }
-                   
+
+                    KnayfOrderlist[knayfCount] = nÍtem;
+                    knayfCount++;
                 }
                 if (order.ZylinderId == 5)
                 {

@@ -111,7 +111,7 @@
                                     <h3>Tür name: @ViewBag.DorName[d]</h3>
                                     <input style="border: none;" readonly type="text" name="DopelName" value="@item.Name" />
                                     <input style="border: none;" type="hidden" name="NameSystem" value="@item.NameSystem" />
-                                    <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
+                               
                                     <input id="costItems-@d" type="hidden" value="@item.Price" />
                             </div>
                         </div>
@@ -127,6 +127,7 @@
 
                         <div id="Size-@d" class="SizeProduct">  
                             <div>
+                                    <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
                                     <select class="form-select" name="DoppelAussen" id="Aussen" onchange="selectParamAussen(event.target.value,@d,@ViewBag.DAussen[elemNum],'Doppelzylinder',event.target.selectedIndex)">
                                     <option style="display:none" selected>@ViewBag.DAussen[elemNum]</option>
                             
@@ -253,7 +254,6 @@
                                     <h3>Tür name: @ViewBag.DorName[d]</h3>
                                     <input style="border: none;" readonly type="text" name="KnayfName" value="@item.Name" />
                                     <input style="border: none;" type="hidden" name="NameSystem" value="@item.NameSystem" />
-                                    <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
                                     <input id="costItems-@d" type="hidden" value="@item.Price" />
                             </div>
 
@@ -270,6 +270,7 @@
 
                             <div id="Size-@d" class="SizeProduct">
                             <div>
+                                    <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
                                     <select class="form-select" name="KnayfAussen" id="Aussen" onchange="selectParamAussen(event.target.value,@d,@ViewBag.KAussen[elemNum],'Knaufzylinder',event.target.selectedIndex)">
                                     <option style="display:none" selected>@ViewBag.KAussen[elemNum]</option>
                                     @for (int i = 0; i < ViewBag.KnayfZelinderAussen.Count; i++)
@@ -397,7 +398,6 @@
                                     <h3>Tür name: @ViewBag.DorName[d]</h3>
                                     <input style="border: none;" readonly type="text" name="HalbName" value="@item.Name" />
                                     <input style="border: none;" type="hidden" name="NameSystem" value="@item.NameSystem" />
-                                    <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
                                     <input id="costItems-@d" type="hidden" value="@item.Price" />
                             </div>
 
@@ -414,6 +414,7 @@
                             <div id="Size-@d" class="SizeProduct">
                                
                             <div>
+                                    <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
                                     <select name="HalbAussen" id="Aussen" class="form-select" onchange="selectParamAussen(event.target.value,@d,@ViewBag.HalbOrderAussen[elemNum],'Halbzylinder',event.target.selectedIndex)">
                                     <option style="display:none" selected>@ViewBag.HalbOrderAussen[elemNum]</option>
                                     @for (int i = 0; i < ViewBag.AussenHalb.Count; i++)
@@ -1419,7 +1420,7 @@
                             {
                                         if (SelectItemId > 0) 
                                         {
-                                            for (let i = 0; i !== iterations; i++) 
+                                            for (let i = 1; i !== iterations; i++) 
                                             {
                                                 let Costen = AllPrice.value.replace(/,/g, '.');
                                                 let index = SelectItemId - i;
@@ -1430,94 +1431,50 @@
                                             }
                                            
                                         }
-                                        else 
-                                        {
-                                            iterations++;
-
-                                            for (let i = 0; i !== iterations; i++) 
-                                            {
-                                                let Costen = AllPrice.value.replace(/,/g, '.');
-                                                let index = SelectItemId + i;
-
-                                                costItems.value = parseFloat(costItems.value) - (priceDoppelAussenCost[index]);
-
-                                                AllPrice.value = parseFloat(Costen) - (priceDoppelAussenCost[index] * Number(countSchluss.value));
-                                            }
-                                        }
-                                       
-                                   
                             }
                             if (type === "Halbzylinder") 
-                            {
-                                if (SelectItemId > 0) 
-                                {
+                             {
+                                console.log(iterations);
+                                console.log(halbAussenCost.length);
+
                                     for (let i = 0; i !== iterations; i++) 
                                     {
-                                        let Costen = AllPrice.value.replace(/,/g, '.');
+                                       let Costen = AllPrice.value.replace(/,/g, '.');
                                         
-                                        let index = SelectItemId - i;
-
-                                        costItems.value = parseFloat(costItems.value) - (halbAussenCost[index]);
-
-                                        AllPrice.value = parseFloat(Costen) - (halbAussenCost[index] * Number(countSchluss.value));
-                                    }
-                                }
-                                else 
-                                {
-                                        iterations++;
-
-                                        for (let i = 0; i !== iterations; i++) 
+                                       let index = SelectItemId;
+                                       
+                                        if (i >= index) 
                                         {
-                                            let Costen = AllPrice.value.replace(/,/g, '.');
-                                            
-                                            let index = SelectItemId + i;
-
-                                            costItems.value = parseFloat(costItems.value) - (halbAussenCost[index]);
-
-                                            AllPrice.value = parseFloat(Costen) - (halbAussenCost[index] * Number(countSchluss.value));
+                                             costItems.value = parseFloat(costItems.value) - (halbAussenCost[i]);
+                                            AllPrice.value = parseFloat(Costen) - (halbAussenCost[i] * Number(countSchluss.value));
                                         }
-                                }
-
+                                    }
                             }
                             if (type === "Knaufzylinder") 
                             {
                                 if (SelectItemId > 0) 
                                 {
+
                                     for (let i = 0; i !== iterations; i++) 
                                     {
                                         let Costen = AllPrice.value.replace(/,/g, '.');
-                                        let index = SelectItemId - i;
+                                        let index = SelectItemId+i;
 
-                                    costItems.value = parseFloat(costItems.value) - (priceKnayfAussenCost[index]);
+                                        costItems.value = parseFloat(costItems.value) - (priceKnayfAussenCost[index]);
 
                                         AllPrice.value = parseFloat(Costen) - (priceKnayfAussenCost[index] * Number(countSchluss.value));
                                     }
 
                                 }
-                                else 
-                                {
-                                    iterations++;
-
-                                    for (let i = 0; i !== iterations; i++) 
-                                    {
-                                        let Costen = AllPrice.value.replace(/,/g, '.');
-                                       
-                                        let index = SelectItemId + i;
-
-                                    costItems.value = parseFloat(costItems.value) - (priceKnayfAussenCost[index]);
-
-                                        AllPrice.value = parseFloat(Costen) - (priceKnayfAussenCost[index] * Number(countSchluss.value));
-                                    }
-                                }
-                                    
+                              
                             }
 
                             return;
                         }
-                        if (ItemValue >= value) 
-                        {
-                            iterations++;
-                        }
+                    if (ItemValue <= ItemValueOld) 
+                    {
+                        iterations++;
+                    }
                     
                    
                 }
@@ -1586,7 +1543,7 @@
             }
         }
 
-        iterations = 0;
+   
         serchedItem = 0;
     }
     function selectParamIntern(value, idBlock, oldValue, type, selectId) 
