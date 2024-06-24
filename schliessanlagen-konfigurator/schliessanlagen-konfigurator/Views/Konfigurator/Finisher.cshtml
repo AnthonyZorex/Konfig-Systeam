@@ -7,6 +7,7 @@
     int z = 0;
     int countFalse = 0;
     int d = 0;
+    int valueCount = 0;
 }
 @using (Html.BeginForm("SaveUserOrders", "Konfigurator", FormMethod.Post))
 { 
@@ -21,7 +22,6 @@
             Sie können sehen, welcher Schlüssel welches Schloss öffnet, und die erforderliche Anzahl an Schlüsseln auswählen.
     </h3>
     <div>
-
         @foreach (var item in ViewBag.Order)
         {
             z++;
@@ -44,9 +44,6 @@
                     <h3>Schlüssel Nr.@z </h3>
                 </div>
                 <div id="OpenValue">
-
-                        @if (ViewBag.DorName.Count > ViewBag.CountKey)
-                        {
                             @for (int i = 0; i < ViewBag.DorName.Count; i++)
                             {
                                 @if (ViewBag.KeyValue[countFalse] == true)
@@ -60,25 +57,6 @@
                                 }
                                 countFalse++;
                             }
-                            
-                        }
-                        else
-                        {
-                            @for (int i = 0; i < ViewBag.CountKey; i++)
-                            {
-                                @if (ViewBag.KeyValue[countFalse] == true)
-                                {
-                                    <input type="hidden" name="keyIsOpen" value="true" />
-                                    <input name="TurName" style="border: none;max-width: 100px;" readonly type="text" id="@z-DorCount-@i" value="@ViewBag.DorName[i]" />
-                                }
-                                else
-                                {
-                                    <input type="hidden" name="keyIsOpen" value="false" />
-                                }
-                                countFalse++;
-                            }
-                        }
-                   
                 </div>
             </div>
         }
@@ -99,96 +77,101 @@
          
             foreach (var item in ViewBag.Dopelzylinder)
             {
-                    <input value="@item.Id" type="hidden" name="DopelItem" />
-                    
                     <div id="ExelItem-@d" class="ExelItem">
-                    <div id="productImage">
-                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                    </div>
-                    <div id="productMenuInfo">
-                        <div id="ProductNameUndCost">
-                            <div>
+                        <input value="@item.Id" type="hidden" name="DopelItem" />
+                        <div id="productImage">
+                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                        </div>
+                        <div id="productMenuInfo">
+                            <div id="ProductNameUndCost">
+                                <div>
                                     <h3>Tür name: @ViewBag.DorName[d]</h3>
                                     <input style="border: none;" readonly type="text" name="DopelName" value="@item.Name" />
                                     <input style="border: none;" type="hidden" name="NameSystem" value="@item.NameSystem" />
-                               
-                                    <input id="costItems-@d" type="hidden" value="@item.Price" />
-                            </div>
-                        </div>
-                        <div>
-                            <select id="type-@d" class="form-select">
-                                <option>Doppelzylinder</option>
-                            </select>
-                        </div>
-                            <div id="textInform">
-                            <h5>Zylinder Länge</h5>
-                            <h5>Vifile Tür</h5>
-                        </div>
 
-                        <div id="Size-@d" class="SizeProduct">  
+                                    <input id="costItems-@d" type="hidden" value="@item.Price" />
+                                </div>
+                            </div>
                             <div>
+                                <select id="type-@d" class="form-select" onchange="switchTypeSylinder(@d,event.target.value,@elemNum,@ViewBag.CounterTur[@elemNum])">
+                                    <option selected>Doppelzylinder</option>
+                                    @foreach (var i in ViewBag.AllType)
+                                    {
+                                        if (@i.nameType != "Doppelzylinder")
+                                        {
+                                            <option>@i.nameType</option>
+                                        }
+                                    }
+
+                                </select>
+                            </div>
+                            <div id="textInform">
+                                <h5>Zylinder Länge</h5>
+                                <h5>Vifile Tür</h5>
+                            </div>
+
+                            <div id="Size-@d" class="SizeProduct">
+                                <div>
                                     <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
-                                    <select class="form-select" name="DoppelAussen" id="Aussen" onchange="selectParamAussen(event.target.value,@d,@ViewBag.DAussen[elemNum],'Doppelzylinder',event.target.selectedIndex)">
-                                    <option style="display:none" selected>@ViewBag.DAussen[elemNum]</option>
-                            
-                                    @for (int i = 0; i < ViewBag.Dopelzylinderaussen.Count; i++)
-                                    {
-                                        <option id="OptionA">@ViewBag.Dopelzylinderaussen[i]</option>
-                                    }
-                                </select>
+                                    <select class="form-select" name="DoppelAussen" id="Aussen" onchange="selectParamAussen(@d,'Doppelzylinder',event.target.selectedIndex)">
+                                        <option style="display:none" selected>@ViewBag.DAussen[elemNum]</option>
+
+                                        @for (int i = 0; i < ViewBag.Dopelzylinderaussen.Count; i++)
+                                        {
+                                            <option id="OptionA">@ViewBag.Dopelzylinderaussen[i]</option>
+                                        }
+                                    </select>
                                     <input type="hidden" id="Aussen-@d" />
-                            </div>
-                            <div>
-                                    <select class="form-select" name="DoppelIntern" id="Intern" onchange="selectParamIntern(event.target.value,@d,@ViewBag.DInter[elemNum],'Doppelzylinder',event.target.selectedIndex)">
-                                    <option style="display:none" selected>@ViewBag.DInter[elemNum]</option>
-                                
-                                    @for (int i = 0; i < ViewBag.DopelzylinderIntern.Count; i++)
-                                    {
-                                        <option id="OptionI">@ViewBag.DopelzylinderIntern[i]</option>
-                                    }
-                                </select>
+                                </div>
+                                <div>
+                                    <select class="form-select" name="DoppelIntern" id="Intern" onchange="selectParamIntern(@d,'Doppelzylinder',event.target.selectedIndex)">
+                                        <option style="display:none" selected>@ViewBag.DInter[elemNum]</option>
+
+                                        @for (int i = 0; i < ViewBag.DopelzylinderIntern.Count; i++)
+                                        {
+                                            <option id="OptionI">@ViewBag.DopelzylinderIntern[i]</option>
+                                        }
+                                    </select>
                                     <input type="hidden" id="Innen-@d" />
-                            </div>
-                            <div style="gap: 10px;display: flex;margin-left: 50px;">
-                                    <button type="button"  onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
+                                </div>
+                                <div style="gap: 10px;display: flex;margin-left: 50px;">
+                                    <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
                                     <input readonly style="border: none;max-width: 30px;" name="TurCounter" id="countSchlusse-@d" type="number" min="1" value="@ViewBag.CounterTur[@elemNum]" />
                                     <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
+                                </div>
+                                @*   <div style="margin-left: 20px;">
+                    <input type="button" value="?" onclick="OpenModalInfo(@d)" class="btn btn-success" />
+                    </div> *@
                             </div>
-                              @*   <div style="margin-left: 20px;">
-                                    <input type="button" value="?" onclick="OpenModalInfo(@d)" class="btn btn-success" />
-                                </div> *@
-                        </div>
 
-                        <div id="optionsItems">
-                            <h3>Weitere Optionen</h3>
-                            <div>
-                                @{
-                                    int valueCount = 0;
-                                }
-                                @if (ViewBag.countOptionsQuery > 0)
-                                {
-                                    @for (int i = 0; i < ViewBag.optionsName.Count; i++)
+                            <div id="optionsItems">
+                                <h3>Weitere Optionen</h3>
+                                <div>
+
+                                    @if (ViewBag.countOptionsQuery > 0)
                                     {
-                                           <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.optionsName[i]" />
+                                        @for (int i = 0; i < ViewBag.optionsName.Count; i++)
+                                        {
+                                            <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.optionsName[i]" />
 
-                                            <select style="margin-bottom: 10px;"  class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Doppel',event.target.id,event.target.value,@valueCount,'@ViewBag.optionsName[i]',@i,@d)">
+                                            <select style="margin-bottom: 10px;" class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Doppel',event.target.id,event.target.value,@valueCount,'@ViewBag.optionsName[i]',@i,@d)">
 
-                                            @for (int j = 0; j < ViewBag.countOptionsList[i]; j++)
-                                            {
-                                                 <option id="@valueCount">@ViewBag.optionsValue[valueCount]</option>
-                                            
-                                                 valueCount++;
-                                            }
+                                                @for (int j = 0; j < ViewBag.countOptionsList[i]; j++)
+                                                {
+                                                    <option id="@valueCount">@ViewBag.optionsValue[valueCount]</option>
+
+                                                    valueCount++;
+                                                }
 
                                             </select>
 
                                             <input type="hidden" id="Option-@d + @i" />
                                             <input type="hidden" id="d-@d + @i" />
+                                        }
+                                        <input type="hidden" name="DoppelOption" id="OptionAll-@d" />
                                     }
-                                     <input type="hidden" name="DoppelOption" id="OptionAll-@d" />
-                                }
+                                </div>
                             </div>
-                        </div>
                             @if (@ViewBag.DAussen[elemNum] >= 55 && @ViewBag.DInter[elemNum] >= 55)
                             {
                                 if (@item.companyName == "CES")
@@ -212,7 +195,7 @@
                                     <h6 id="WaitTime">Lieferzeit: 2 Werktage</h6>
                                 }
                             }
-                    </div>
+                        </div>
                 </div>
                     <div id="myModal-@d" class="modal">
 
@@ -259,8 +242,15 @@
 
                         </div>
                         <div>
-                                <select id="type-@d" class="form-select">
-                                <option>KnayfZylinder</option>
+                                <select id="type-@d" class="form-select" onchange="switchTypeSylinder(@d,event.target.value,@elemNum,@ViewBag.CounterTur[@elemNum])">
+                                    <option selected>KnayfZylinder</option>
+                                    @foreach (var i in ViewBag.AllType)
+                                    {
+                                        if (@i.nameType != "KnayfZylinder")
+                                        {
+                                            <option>@i.nameType</option>
+                                        }
+                                    }
                             </select>
                         </div>
                             <div id="textInform">
@@ -271,7 +261,7 @@
                             <div id="Size-@d" class="SizeProduct">
                             <div>
                                     <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
-                                    <select class="form-select" name="KnayfAussen" id="Aussen" onchange="selectParamAussen(event.target.value,@d,@ViewBag.KAussen[elemNum],'Knaufzylinder',event.target.selectedIndex)">
+                                    <select class="form-select" name="KnayfAussen" id="Aussen" onchange="selectParamAussen(@d,'Knaufzylinder',event.target.selectedIndex)">
                                     <option style="display:none" selected>@ViewBag.KAussen[elemNum]</option>
                                     @for (int i = 0; i < ViewBag.KnayfZelinderAussen.Count; i++)
                                     {
@@ -281,7 +271,7 @@
                                     <input type="hidden" id="Aussen-@d" />
                             </div>
                             <div>
-                                    <select class="form-select" name="KnayfIntern" id="Intern" onchange="selectParamIntern(event.target.value,@d,@ViewBag.KInter[elemNum],'Knaufzylinder',event.target.selectedIndex)">
+                                    <select class="form-select" name="KnayfIntern" id="Intern" onchange="selectParamIntern(@d,'Knaufzylinder',event.target.selectedIndex)">
                                     <option style="display:none" selected>@ViewBag.KInter[elemNum]</option>
                                     @for (int i = 0; i < ViewBag.KnayfZelinderIntern.Count; i++)
                                     {
@@ -305,7 +295,7 @@
                             <h3>Weitere Optionen</h3>
                             <div>
                                 @{
-                                    int valueCount = 0;
+                                     valueCount = 0;
                                 }
                                 @if (ViewBag.countOptionsQueryKnayf > 0)
                                 {
@@ -403,8 +393,15 @@
 
                         </div>
                         <div>
-                                <select id="type-@d" class="form-select">
-                                <option>Halbzylinder</option>
+                                <select id="type-@d" class="form-select" onchange="switchTypeSylinder(@d,event.target.value,@elemNum,@ViewBag.CounterTur[@elemNum])">
+                                <option selected>Halbzylinder</option>
+                                    @foreach (var i in ViewBag.AllType)
+                                    {
+                                        if (@i.nameType != "Halbzylinder")
+                                        {
+                                            <option>@i.nameType</option>
+                                        }
+                                    }
                             </select>
                         </div>
                             <div id="textInform">
@@ -438,7 +435,7 @@
                             <h3>Weitere Optionen</h3>
                             <div>
                                 @{
-                                    int valueCount = 0;
+                                     valueCount = 0;
                                 }
                                @if (ViewBag.countOptionsQueryHalb > 0)
                                 {
@@ -532,8 +529,16 @@
 
                         </div>
                         <div>
-                                <select id="type-@d" class="form-select">
+                                <select id="type-@d" class="form-select" onchange="switchTypeSylinder(@d,event.target.value,@elemNum,@ViewBag.CounterTur[@elemNum])">
                                 <option>Hebelzylinder</option>
+                                    @foreach (var i in ViewBag.AllType)
+                                    {
+                                        if (@i.nameType != "Hebelzylinder")
+                                        {
+                                            <option>@i.nameType</option>
+                                        }
+                                    }
+
                             </select>
                         </div>
                             <div id="textInform">
@@ -554,7 +559,7 @@
                             <h3>Weitere Optionen</h3>
                             <div>
                                 @{
-                                    int valueCount = 0;
+                                     valueCount = 0;
                                 }
 
                                 @if (ViewBag.CountOptionsHebel > 0)
@@ -635,7 +640,7 @@
                         </div>
                             <div id="Size-@d" class="SizeProduct">
                             <div>
-                                    <select class="form-select" name="VorhanAussen" id="Aussen" onchange="VorhanSchlus(event.target.value,@d,@ViewBag.VorhanSize[elemNum],event.target.selectedIndex)">
+                                    <select class="form-select" name="VorhanAussen" id="Aussen" onchange="VorhanSchlus(@d,event.target.selectedIndex)">
                                     <option style="display:none" selected>@ViewBag.VorhanOrderAussen[elemNum]</option>
                                     @for (int i = 0; i < ViewBag.VorhanSize.Count; i++)
                                     {
@@ -658,7 +663,7 @@
                             <h3>Weitere Optionen</h3>
                             <div>
                                 @{
-                                    int valueCount = 0;
+                                   valueCount = 0;
                                 }
 
                                 @if (ViewBag.VorhanschlossCount > 0)
@@ -717,71 +722,82 @@
             int elemNum = 0;
             foreach (var item in ViewBag.Aussenzylinder)
             {
-                    <input type="hidden" name="Aussen"  value="@item.Id"/>
+                   
                     <div id="ExelItem-@d" class="ExelItem">
-                    <div id="productImage">
+                        <input type="hidden" name="Aussen" value="@item.Id" />
+                        <div id="productImage">
                             <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                    </div>
-                    <div id="productMenuInfo">
-                        <div id="ProductNameUndCost">
+                        </div>
+                        <div id="productMenuInfo">
+                            <div id="ProductNameUndCost">
 
-                            <div>
+                                <div>
                                     <h3>Tür name: @ViewBag.DorName[d]</h3>
                                     <input style="border: none;" readonly type="text" name="AussenName" value="@item.Name" />
                                     <input style="border: none;" type="hidden" name="NameSystem" value="@item.NameSystem" />
                                     <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
                                     <input id="costItems-@d" type="hidden" value="@item.Price" />
+                                </div>
+
                             </div>
 
-                        </div>
-                        <div>
-                                <select id="type-@d" class="form-select">
-                                <option>Aussenzylinder_Rundzylinder</option>
-                            </select>
-                        </div>
-                        <div >
-                            <h5>Vifile Tür</h5>
-                        </div>
+                            <div>
+                                <select id="type-@d" class="form-select" onchange="switchTypeSylinder(@d,event.target.value,@elemNum,@ViewBag.CounterTur[@elemNum])">
+
+                                    <option selected>Aussenzylinder</option>
+
+                                    @foreach (var i in ViewBag.AllType)
+                                    {
+                                        if (@i.nameType != "Aussenzylinder")
+                                        {
+                                            <option>@i.nameType</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div>
+                                <h5>Vifile Tür</h5>
+                            </div>
                             <div id="Size-@d" class="SizeProduct">
                                 <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
                                 <input style="border: none;max-width: 30px;" readonly name="TurCounter" type="number" min="1" value="@ViewBag.CounterTurAussen[@elemNum]" id="countSchlusse-@d" />
                                 <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
-                               @*  <div style="margin-left: 20px;">
-                                    <input type="button" value="?" onclick="OpenModalInfo(@d)" class="btn btn-success" />
-                                </div> *@
-                        </div>
+                                @*  <div style="margin-left: 20px;">
+                    <input type="button" value="?" onclick="OpenModalInfo(@d)" class="btn btn-success" />
+                    </div> *@
+                            </div>
 
                             <div id="optionsItems">
-                            <h3>Weitere Optionen</h3>
-                            <div>
-                                @{
-                                    int valueCount = 0;
-                                }
-                                @if (ViewBag.AussenCountOption > 0)
-                                {
-                                    @for (int i = 0; i < ViewBag.AussenName.Count; i++)
-                                    {
-                                       <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.AussenName[i]" />
-
-                                        <select style="margin-bottom: 10px;"  class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Aussen',event.target.id,event.target.value,@valueCount,'@ViewBag.AussenName[i]',@i,@d)">
-
-                                            @for (int j = 0; j < ViewBag.AussenValue[i]; j++)
-                                            {
-                                              <option id="@valueCount">@ViewBag.AussenValue[valueCount]</option>
-
-                                                valueCount++;
-                                            }
-
-                                        </select>
-                                            <input type="hidden" id="d-@d + @i" />
-                                            <input type="hidden"  id="Option-@d + @i" />
-
+                                <h3>Weitere Optionen</h3>
+                                <div>
+                                    @{
+                                         valueCount = 0;
                                     }
+                                    @if (ViewBag.AussenCountOption > 0)
+                                    {
+                                        @for (int i = 0; i < ViewBag.AussenName.Count; i++)
+                                        {
+                                            <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.AussenName[i]" />
+
+                                            <select style="margin-bottom: 10px;" class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Aussen',event.target.id,event.target.value,@valueCount,'@ViewBag.AussenName[i]',@i,@d)">
+
+                                                @for (int j = 0; j < ViewBag.AussenValue[i]; j++)
+                                                {
+                                                    <option id="@valueCount">@ViewBag.AussenValue[valueCount]</option>
+
+                                                    valueCount++;
+                                                }
+
+                                            </select>
+                                            <input type="hidden" id="d-@d + @i" />
+                                            <input type="hidden" id="Option-@d + @i" />
+
+                                        }
                                         <input type="hidden" name="AussenOption" id="OptionAll-@d" />
-                                } 
+                                    }
+                                </div>
                             </div>
                         </div>
-                    </div>
                 </div>
                     <div id="myModal-@d" class="modal">
 
@@ -833,6 +849,13 @@
 </div>
 } 
 <script>
+
+    let DoppelInfo = @Html.Raw(ViewBag.DopelzylinderJson);
+    let KnayfInfo = @Html.Raw(ViewBag.KnayfZelinderJson);
+    let HalbInfo = @Html.Raw(ViewBag.HalbJson);
+    let HelbInfo = @Html.Raw(ViewBag.HelbZJson);
+    // let VorhanschlosInfo = @Html.Raw(ViewBag.VorhanschlosJson);
+    let AussenzylinderInfo = @Html.Raw(ViewBag.AussenzylinderJson);
 
     let keyPrice = @Html.Raw(ViewBag.KeyCost);
 
@@ -894,6 +917,199 @@
 
     var span = document.getElementsByClassName("close")[0];
     let idItem = 0;
+    let Dorname = @Html.Raw(ViewBag.DornameJson);
+    
+    function switchTypeSylinder(BlockN, value, elemNum,itemCount) 
+    {
+        let block = document.getElementById("ExelItem-" + BlockN);
+        let costedItem = block.querySelectorAll("#costItems-" + BlockN);
+
+        let cost = costedItem[0].defaultValue;
+
+        AllPrice.value = (parseFloat(AllPrice.value) - (cost * Number(itemCount)));
+
+ 
+
+        if (value == "Doppelzylinder") 
+        {
+
+            AllPrice.value = (parseFloat(AllPrice.value) + DoppelInfo[0].Price);
+
+            let img = DoppelInfo[0].ImageName;
+
+                block.innerHTML = ` <input value="${DoppelInfo[0].Id}" type="hidden" name="DopelItem" />
+                <div id="productImage">
+                         <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="/Image/${img}" asp-append-version="true" width="300px" height="300px" />
+                </div>
+                <div id="productMenuInfo">
+                    <div id="ProductNameUndCost">
+                        <div>
+                                <h3>Tür name: ${Dorname[BlockN]}</h3>
+                                    <input style="border: none;" readonly type="text" name="DopelName" value="${[DoppelInfo[0].Name]}" />
+                                        <input style="border: none;" type="hidden" name="NameSystem" value="${[DoppelInfo[0].NameSystem]}" />
+
+                                    <input id="costItems-${BlockN}" type="hidden" value="${[DoppelInfo[0].Price]}" />
+                        </div>
+                    </div>
+                    <div>
+
+                              <select id="type-${BlockN}" class="form-select" onchange="switchTypeSylinder(${BlockN},event.target.value,${elemNum},1)">
+                            <option selected>Doppelzylinder</option>
+                                @foreach (var i in ViewBag.AllType)
+                                {
+                                    if (@i.nameType != "Doppelzylinder")
+                                    {
+                                      <option>@i.nameType</option>
+                                    }
+                                }
+
+                        </select>
+                    </div>
+                    <div id="textInform">
+                        <h5>Zylinder Länge</h5>
+                        <h5>Vifile Tür</h5>
+                    </div>
+                              <div id="Size-${BlockN}" class="SizeProduct">
+                        <div>
+                              <input style="border: none;" id="compName" type="hidden" value="${[DoppelInfo[0].companyName]}" />
+                                   <select class="form-select" name="DoppelAussen" id="Aussen" onchange="selectParamAussen(event.target.value,${BlockN},ViewBag.Dopelzylinderaussen[i],'Doppelzylinder',event.target.selectedIndex)">
+
+                                @for (int i = 0; i < ViewBag.Dopelzylinderaussen.Count; i++)
+                                {
+                                   <option  id="OptionA">@ViewBag.Dopelzylinderaussen[i]</option>
+                                }
+                            </select>
+                                <input type="hidden" id="Aussen-${BlockN}" />
+                        </div>
+                        <div>
+                                  <select class="form-select" name="DoppelIntern" id="Intern" onchange="selectParamIntern(event.target.value,${BlockN},ViewBag.DopelzylinderIntern[i],'Doppelzylinder',event.target.selectedIndex)">
+
+                                        @for (int i = 0; i < ViewBag.DopelzylinderIntern.Count; i++)
+                                        {
+                                            <option id="OptionI">@ViewBag.DopelzylinderIntern[i]</option>
+                                        }
+                                        </select>
+                                            <input type="hidden" id="Innen-${BlockN}" />
+                                    </div>
+                                    <div style="gap: 10px;display: flex;margin-left: 50px;">
+                                        <button type="button" onclick="CylinderMinus(${BlockN})" class="btn btn-success">-</button>
+                                            <input readonly style="border: none;max-width: 30px;" name="TurCounter" id="countSchlusse-${BlockN}" type="number" min="1" value="1" />
+                                            <button type="button" onclick="CylinderPlus(${BlockN})" class="btn btn-success">+</button>
+                                    </div>
+                        @*   <div style="margin-left: 20px;">
+                        <input type="button" value="?" onclick="OpenModalInfo(@d)" class="btn btn-success" />
+                        </div> *@
+                                </div>
+
+                                <div id="optionsItems">
+                                    <h3>Weitere Optionen</h3>
+                                    <div>
+                              
+                       
+                                    </div>
+                                </div>
+
+                                    
+                                </div>
+                        
+                                            `;
+        }
+        if (value == "Halbzylinder") 
+        {
+            block.innerHTML = ``;
+        }
+        if (value == "Knaufzylinder") 
+        {
+             block.innerHTML =``;
+        }
+        if (value == "Hebelzylinder") {
+
+            block.innerHTML = ``;
+        }
+        if (value == "Vorhangschloss") 
+        {
+             block.innerHTML =``;
+        }
+        if (value == "Aussenzylinder") 
+        {
+
+            AllPrice.value = (parseFloat(AllPrice.value) + AussenzylinderInfo[0].Price);
+            let img = AussenzylinderInfo[0].ImageName;
+
+            block.innerHTML = `<input type="hidden" name="Aussen" value="${AussenzylinderInfo[0].Id}" />
+           
+            <div id="productImage">
+                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="/Image/${img}" asp-append-version="true" width="300px" height="300px" />
+                </div>
+            <div id="productMenuInfo">
+                <div id="ProductNameUndCost">
+                         <div>
+                            <h3>Tür name: ${Dorname[BlockN]}</h3>
+                        <input style="border: none;" readonly type="text" name="AussenName" value="${[AussenzylinderInfo[0].Name]}" />
+                            <input style="border: none;" type="hidden" name="NameSystem" value="${[AussenzylinderInfo[0].NameSystem]}" />
+                                    <input style="border: none;" id="compName" type="hidden" value="${[AussenzylinderInfo[0].companyName]}" />
+                                <input id="costItems-${[BlockN]}" type="hidden" value="${[AussenzylinderInfo[0].Price]}" />
+                        </div>
+                    </div>
+                         <div>
+                              <div>
+                                <select id="type-${BlockN}" class="form-select" onchange="switchTypeSylinder(${BlockN},event.target.value,${elemNum},1)">
+
+                        <option selected>Aussenzylinder</option>
+
+                    @foreach (var i in @ViewBag.AllType)
+                    {
+                        if (@i.nameType != "Aussenzylinder")
+                        {
+                            <option>@i.nameType</option>
+                        }
+                    }
+                    </select>
+                </div>
+
+                <div >
+                    <h5>Vifile Tür</h5>
+                </div>
+                        <div id="Size-${BlockN}" class="SizeProduct">
+                            <button type="button" onclick="CylinderMinus(${BlockN})" class="btn btn-success">-</button>
+                           
+                                <input style="border: none;max-width: 30px;" readonly name="TurCounter" type="number" min="1" value="1" id="countSchlusse-${BlockN}" />
+                           
+                            <button type="button" onclick="CylinderPlus(${BlockN})" class="btn btn-success">+</button>
+
+                </div>
+                     <div id="optionsItems">
+            <h3>Weitere Optionen</h3>
+            <div>
+
+            @if (ViewBag.AussenCountOption > 0)
+            {
+                @for (int i = 0; i < ViewBag.AussenName.Count; i++)
+                {
+                                       <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.AussenName[i]" />
+
+                                        <select style="margin-bottom: 10px;"  class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Aussen',event.target.id,event.target.value,@valueCount,'@ViewBag.AussenName[i]',@i,@d)">
+
+                                        @for (int j = 0; j < ViewBag.AussenValue[i]; j++)
+                                        {
+                                                                  <option id="@valueCount">@ViewBag.AussenValue[valueCount]</option>
+
+                                            valueCount++;
+                                        }
+
+                                        </select>
+                                            <input type="hidden" id="d-@d + @i" />
+                                            <input type="hidden"  id="Option-@d + @i" />
+
+                }
+                                    <input type="hidden" name="AussenOption" id="OptionAll-@d" />
+            }
+                    </div
+                </div>
+            </div>
+                    `;
+        }
+    }
 
     function saveCurrentURL() {
         const currentURL = window.location.href;
@@ -1241,86 +1457,38 @@
 
     }
 
-    let iterations = 0;
-
-    function VorhanSchlus(value, idBlock, oldSize, selectId) 
+    function VorhanSchlus(idBlock, selectId) 
     {
-        let serchedItem = 0;
         let BlockTur = document.getElementById("Size-" + idBlock);
-        let Aussen = BlockTur.querySelector("#Aussen");
-        let Aitems = Aussen.querySelectorAll("#OptionA");
 
+        let SelectItemId = selectId-1;
+
+        let costItems = document.getElementById("costItems-" + idBlock);
         let countSchluss = BlockTur.querySelector("#countSchlusse-" + idBlock);
+   
         let oldAussen = BlockTur.querySelector("#Aussen-" + idBlock);
         
         if (oldAussen.value === "") 
         {
-            oldAussen.value = oldSize;
+            oldAussen.value = 0;
         }
 
-        AllPrice.value = parseFloat(AllPrice.value) - (VorhanSizeCost[iterations] * Number(countSchluss.value));
+        AllPrice.value = parseFloat(AllPrice.value) - (VorhanSizeCost[oldAussen.value] * Number(countSchluss.value));
+        costItems.value = parseFloat(costItems.value) - (VorhanSizeCost[oldAussen.value]);
 
-        Aitems.forEach(function (items) 
-        {
-            let ItemValue = parseFloat(items.innerHTML);
-            let ItemValueOld = Number(oldAussen.value);
+        oldAussen.value = SelectItemId;
 
-            if (serchedItem == 1) 
-            {
-                return;
-            }
-            else 
-            {
-                if (value > ItemValueOld) 
-                {
-                    if (ItemValue == value) 
-                    {
-                        oldAussen.value = ItemValue;
-                        serchedItem++;
 
-                        let Costen = AllPrice.value.replace(/,/g, '.');
+        costItems.value = parseFloat(costItems.value) + (VorhanSizeCost[SelectItemId]);
+        AllPrice.value = parseFloat(AllPrice.value) + (VorhanSizeCost[SelectItemId] * Number(countSchluss.value));
 
-                        AllPrice.value = parseFloat(Costen) + (VorhanSizeCost[iterations] * Number(countSchluss.value));
-                        
-                        return;
-                    }
-                    if (ItemValue > 31) 
-                    {
-                        iterations++;
-                    }
+        let Costen = AllPrice.value.replace(/,/g, '.');
 
-                }
-
-                if (ItemValueOld > value) 
-                {
-                    if (ItemValue == ItemValueOld) 
-                    {
-                        oldAussen.value = value;
-                        serchedItem++;
-
-                        let Costen = AllPrice.value.replace(/,/g, '.');
-
-                        AllPrice.value = parseFloat(Costen) + (VorhanSizeCost[iterations] * Number(countSchluss.value));
-                        return;
-                    }
-                    if (ItemValue > 31) 
-                    {
-                        iterations --;
-                    }
-                }
-
-            }
-           
-        });
-       
-        serchedItem = 0;
+        AllPrice.value = Costen;
     }
-    function selectParamAussen(value, idBlock, oldValue,type,selectId) 
+    function selectParamAussen(idBlock,type,selectId) 
     {
-        let iterations = 0;
-        let serchedItem = 0;
-
-        let SelectItemId = selectId - 1;
+        let SelectItemId = selectId-1;
 
         let BlockTur = document.getElementById("Size-"+idBlock);
         let countSchluss = BlockTur.querySelector("#countSchlusse-" + idBlock);
@@ -1335,153 +1503,106 @@
         let Aitems = Aussen.querySelectorAll("#OptionA");
         let oldAussen = BlockTur.querySelector("#Aussen-" + idBlock);
 
-        let costItems = document.getElementById("costItems-" + idBlock);
+        let oldValueStart = Aitems;
 
-        let num = Number(value);
+        let costItems = document.getElementById("costItems-" + idBlock);
 
         if (oldAussen.value === "") 
         {
-            oldAussen.value = oldValue;
+            oldAussen.value = 0;
         }
 
-        Aitems.forEach(function (items) 
-        {
-            let ItemValue = Number(items.innerHTML);
-
-            let ItemValueOld = Number(oldAussen.value);
-
-            if (serchedItem == 1) 
-            {
-                return;
-            }
-            else 
-            {
-                if (value > ItemValueOld) 
-                {
-                        if (ItemValue == value) 
-                        {
-                             oldAussen.value = ItemValue;
-                             serchedItem++;
-
-                            if (type === "Doppelzylinder") 
-                            {
-                                    for (let i = 0; i !== iterations; i++) 
-                                    {
-                                        let Costen = AllPrice.value.replace(/,/g, '.');
-                                        let index = SelectItemId - i;
-
-                                        costItems.value = parseFloat(costItems.value) + (priceDoppelAussenCost[index]);
-
-                                        AllPrice.value = parseFloat(Costen) + (priceDoppelAussenCost[index] * Number(countSchluss.value));
-                                    }
-                            }
-                            if (type === "Halbzylinder")
-                            {
-                                for (let i = 0; i !== iterations; i++) 
-                                {
-                                    let Costen = AllPrice.value.replace(/,/g, '.');
-                                    let index = SelectItemId - i;
-
-                                    costItems.value = parseFloat(costItems.value) + (halbAussenCost[index]);
-                                    
-                                    AllPrice.value = parseFloat(Costen) + (halbAussenCost[index] * Number(countSchluss.value));
-                                }
-                            }
-                            if (type === "Knaufzylinder") 
-                            {
-                                    for (let i = 0; i !== iterations; i++) 
-                                    {
-                                        let Costen = AllPrice.value.replace(/,/g, '.');
-                                        let index = SelectItemId - i;
-
-                                        costItems.value = parseFloat(costItems.value) + (priceKnayfAussenCost[index]);
-
-                                        AllPrice.value = parseFloat(Costen) + (priceKnayfAussenCost[index] * Number(countSchluss.value));
-                                    }
-                            }
-                           
-                            return;
-                        }
-                            if (ItemValue > ItemValueOld) 
-                            {
-                                iterations++;
-                            } 
-                }
-                if (ItemValueOld > value) 
-                {
-                        let Costen = AllPrice.value.replace(/,/g, '.');
-
-                        if (ItemValue == ItemValueOld) 
-                        {
-                            oldAussen.value = value;
-                            serchedItem++;
-
-                            if (type === "Doppelzylinder") 
-                            {
-                                        if (SelectItemId > 0) 
-                                        {
-                                            for (let i = 1; i !== iterations; i++) 
-                                            {
-                                                let Costen = AllPrice.value.replace(/,/g, '.');
-                                                let index = SelectItemId - i;
-
-                                                costItems.value = parseFloat(costItems.value) - (priceDoppelAussenCost[index]);
-
-                                                AllPrice.value = parseFloat(Costen) - (priceDoppelAussenCost[index] * Number(countSchluss.value));
-                                            }
-                                           
-                                        }
-                            }
-                            if (type === "Halbzylinder") 
-                             {
-                                console.log(iterations);
-                                console.log(halbAussenCost.length);
-
-                                    for (let i = 0; i !== iterations; i++) 
-                                    {
-                                       let Costen = AllPrice.value.replace(/,/g, '.');
-                                        
-                                       let index = SelectItemId;
-                                       
-                                        if (i >= index) 
-                                        {
-                                             costItems.value = parseFloat(costItems.value) - (halbAussenCost[i]);
-                                            AllPrice.value = parseFloat(Costen) - (halbAussenCost[i] * Number(countSchluss.value));
-                                        }
-                                    }
-                            }
-                            if (type === "Knaufzylinder") 
-                            {
-                                if (SelectItemId > 0) 
-                                {
-
-                                    for (let i = 0; i !== iterations; i++) 
-                                    {
-                                        let Costen = AllPrice.value.replace(/,/g, '.');
-                                        let index = SelectItemId+i;
-
-                                        costItems.value = parseFloat(costItems.value) - (priceKnayfAussenCost[index]);
-
-                                        AllPrice.value = parseFloat(Costen) - (priceKnayfAussenCost[index] * Number(countSchluss.value));
-                                    }
-
-                                }
-                              
-                            }
-
-                            return;
-                        }
-                    if (ItemValue <= ItemValueOld) 
+                    if (type === "Doppelzylinder") 
                     {
-                        iterations++;
+                        for (let i = 0; i < oldAussen.value;i++) 
+                        {
+
+                            costItems.value = parseFloat(costItems.value) - (priceDoppelAussenCost[i]);
+
+                            AllPrice.value = parseFloat(AllPrice.value) - (priceDoppelAussenCost[i] * Number(countSchluss.value));
+
+                            let Costen = AllPrice.value.replace(/,/g, '.');
+
+                            AllPrice.value = Costen;
+
+                        }
                     }
-                    
-                   
-                }
+                    if (type === "Halbzylinder") 
+                    {
+                       for (let i = 0; i < oldAussen.value;i++) 
+                       {
+                            costItems.value = parseFloat(costItems.value) - (halbAussenCost[i]);
 
-            }
+                            AllPrice.value = parseFloat(AllPrice.value) - (halbAussenCost[i] * Number(countSchluss.value));
 
-        });
+                            let Costen = AllPrice.value.replace(/,/g, '.');
+
+                            AllPrice.value = Costen;
+                        }
+                    }
+                    if (type === "Knaufzylinder") 
+                    {
+                        for (let i = 0; i < oldAussen.value;i++) 
+                        {
+
+                            costItems.value = parseFloat(costItems.value) - (priceKnayfAussenCost[i]);
+
+                            AllPrice.value = parseFloat(AllPrice.value) - (priceKnayfAussenCost[i] * Number(countSchluss.value));
+
+                            let Costen = AllPrice.value.replace(/,/g, '.');
+
+                            AllPrice.value = Costen;
+
+                        }
+                    }
+          
+
+                    if (type === "Doppelzylinder") 
+                    {
+                        for (let s = 0; s < SelectItemId;s++) 
+                        {
+                            costItems.value = parseFloat(costItems.value) + (priceDoppelAussenCost[s]);
+
+                            AllPrice.value = parseFloat(AllPrice.value) + (priceDoppelAussenCost[s] * Number(countSchluss.value));
+
+                            let Costen = AllPrice.value.replace(/,/g, '.');
+
+                            AllPrice.value = Costen;
+
+                      
+                        }
+                    }
+                    if (type === "Halbzylinder") 
+                    {
+                        for (let s = 0; s < SelectItemId;s++) 
+                        {
+                            costItems.value = parseFloat(costItems.value) + (halbAussenCost[s]);
+
+                            AllPrice.value = parseFloat(AllPrice.value) + (halbAussenCost[s] * Number(countSchluss.value));
+
+                            let Costen = AllPrice.value.replace(/,/g, '.');
+
+                            AllPrice.value = Costen;
+
+                        }
+                    }
+                    if (type === "Knaufzylinder") 
+                    {
+                        for (let s = 0; s < SelectItemId;s++) 
+                        {
+
+                            costItems.value = parseFloat(costItems.value) + (priceKnayfAussenCost[s]);
+
+                            AllPrice.value = parseFloat(AllPrice.value) + (priceKnayfAussenCost[s] * Number(countSchluss.value));
+
+                            let Costen = AllPrice.value.replace(/,/g, '.');
+
+                            AllPrice.value = Costen;
+                        }
+                    }
+
+                    oldAussen.value = SelectItemId;
+
         if (type === "Doppelzylinder") 
         {
             if (Innen.value >= 55 && Aussen.value >= 55) 
@@ -1542,15 +1663,9 @@
                 WaitTime.textContent = "Lieferzeit: 2 Werktage";
             }
         }
-
-   
-        serchedItem = 0;
     }
-    function selectParamIntern(value, idBlock, oldValue, type, selectId) 
+    function selectParamIntern(idBlock,type,selectId) 
     {
-        let iterations = 0;
-        let serchedItem = 0;
-
         let ProductBlock = document.getElementById("ExelItem-" + idBlock);
         let WaitTime = ProductBlock.querySelector("#WaitTime");
         let BlockTur = document.getElementById("Size-" + idBlock);
@@ -1566,157 +1681,82 @@
         let Aitems = Innen.querySelectorAll("#OptionI");
         let oldAussen = BlockTur.querySelector("#Innen-" + idBlock);
 
-        let num = Number(value);
-
         if (oldAussen.value === "") 
         {
-            oldAussen.value = oldValue;
+            oldAussen.value = 0;
         }
 
-        Aitems.forEach(function (items)
-        {
-            let ItemValue = Number(items.innerHTML);
-
-            let ItemValueOld = Number(oldAussen.value);
-
-            if (serchedItem == 1) 
-            {
-                return;
-            }
-            else {
-                if (value > ItemValueOld) 
-                {
-                    if (ItemValue == value) 
+                    if (type === "Doppelzylinder") 
                     {
-                        oldAussen.value = ItemValue;
-                        serchedItem++;
-
-                        if (type === "Doppelzylinder") 
+                        for (let i = 0; i < oldAussen.value;i++) 
                         {
-                            for (let i = 0; i !== iterations; i++) 
-                            {
-                                let Costen = AllPrice.value.replace(/,/g, '.');
 
-                                let index = SelectItemId - i;
+                            costItems.value = parseFloat(costItems.value) - (priceDoppelInternCost[i]);
 
-                                costItems.value = parseFloat(costItems.value) + (priceDoppelInternCost[index]);
+                            AllPrice.value = parseFloat(AllPrice.value) - (priceDoppelInternCost[i] * Number(countSchluss.value));
 
-                                AllPrice.value = parseFloat(Costen) + (priceDoppelInternCost[index] * Number(countSchluss.value));
-                            }
-                        }
-                       
-                        if (type === "Knaufzylinder") 
-                        {
-                            for (let i = 0; i !== iterations; i++) 
-                            {
-                                let Costen = AllPrice.value.replace(/,/g, '.');
-                                let index = SelectItemId - i;
+                            let Costen = AllPrice.value.replace(/,/g, '.');
 
-                                costItems.value = parseFloat(costItems.value) + (priceKnayfInternCost[index]);
-
-                                AllPrice.value = parseFloat(Costen) + (priceKnayfInternCost[index] * Number(countSchluss.value));
-                            }
-                        }
-
-                        return;
-                    }
-                    if (ItemValue > ItemValueOld) {
-                        iterations++;
-                    }
-                }
-                if (ItemValueOld > value) 
-                {
-                    let Costen = AllPrice.value.replace(/,/g, '.');
-
-                    if (ItemValue == ItemValueOld) {
-                        oldAussen.value = value;
-                        serchedItem++;
-
-                        if (type === "Doppelzylinder") 
-                        {
-                            if (SelectItemId > 0) 
-                            {
-                                for (let i = 0; i !== iterations; i++) 
-                                {
-                                    let Costen = AllPrice.value.replace(/,/g, '.');
-                                   
-                                    let index = SelectItemId - i;
-
-                                    costItems.value = parseFloat(costItems.value) - (priceDoppelInternCost[index]);
-
-                                    AllPrice.value = parseFloat(Costen) - (priceDoppelInternCost[index] * Number(countSchluss.value));
-                                }
-
-                            }
-                            else 
-                            {
-                                iterations++;
-                                for (let i = 0; i !== iterations; i++) 
-                                {
-                                    let Costen = AllPrice.value.replace(/,/g, '.');
-                                    let index = SelectItemId + i;
-
-                                    costItems.value = parseFloat(costItems.value) - (priceDoppelInternCost[index]);
-
-                                    AllPrice.value = parseFloat(Costen) - (priceDoppelInternCost[index] * Number(countSchluss.value));
-                                }
-                            }
-
+                            AllPrice.value = Costen;
 
                         }
-                        if (type === "Knaufzylinder") 
+                    }
+                    
+                    if (type === "Knaufzylinder") 
+                    {
+                        for (let i = 0; i < oldAussen.value;i++) 
                         {
-                            if (SelectItemId > 0) 
-                            {
-                                for (let i = 0; i !== iterations; i++) 
-                                {
 
-                                    let Costen = AllPrice.value.replace(/,/g, '.');
+                            costItems.value = parseFloat(costItems.value) - (priceKnayfInternCost[i]);
 
-                                    let index = SelectItemId - i;
+                            AllPrice.value = parseFloat(AllPrice.value) - (priceKnayfInternCost[i] * Number(countSchluss.value));
 
-                                    costItems.value = parseFloat(costItems.value) - (priceKnayfInternCost[index]);
+                            let Costen = AllPrice.value.replace(/,/g, '.');
 
-                                    AllPrice.value = parseFloat(Costen) - (priceKnayfInternCost[index] * Number(countSchluss.value));
-                                }
-
-                            }
-                            else 
-                            {
-                                iterations++;
-
-                                for (let i = 0; i !== iterations; i++) 
-                                {
-                                    let Costen = AllPrice.value.replace(/,/g, '.');
-
-                                    let index = SelectItemId + i;
-
-                                    costItems.value = parseFloat(costItems.value) - (priceKnayfInternCost[index]);
-
-                                    AllPrice.value = parseFloat(Costen) - (priceKnayfInternCost[index] * Number(countSchluss.value));
-                                }
-                            }
+                            AllPrice.value = Costen;
 
                         }
-
-                        return;
                     }
-                    if (ItemValue >= value) {
-                        iterations++;
+          
+
+                    if (type === "Doppelzylinder") 
+                    {
+                        for (let s = 0; s < SelectItemId;s++) 
+                        {
+                            costItems.value = parseFloat(costItems.value) + (priceDoppelInternCost[s]);
+
+                            AllPrice.value = parseFloat(AllPrice.value) + (priceDoppelInternCost[s] * Number(countSchluss.value));
+
+                            let Costen = AllPrice.value.replace(/,/g, '.');
+
+                            AllPrice.value = Costen;
+
+                      
+                        }
+                    }
+                   
+                    if (type === "Knaufzylinder") 
+                    {
+                        for (let s = 0; s < SelectItemId;s++) 
+                        {
+
+                            costItems.value = parseFloat(costItems.value) + (priceKnayfInternCost[s]);
+
+                            AllPrice.value = parseFloat(AllPrice.value) + (priceKnayfInternCost[s] * Number(countSchluss.value));
+
+                            let Costen = AllPrice.value.replace(/,/g, '.');
+
+                            AllPrice.value = Costen;
+                        }
                     }
 
-
-                }
-
-            }
-
-        });
+                    oldAussen.value = SelectItemId;
 
         if (type === "Doppelzylinder") 
         {
             if (Innen.value >= 55 && Aussen.value >= 55) 
             {
-                if (company.value = "CES")
+                if (company.value = "CES") 
                 {
                     WaitTime.innerHTML = "Lieferzeit:4 Werktage";
                     WaitTime.textContent = "Lieferzeit: 4 Werktage";
@@ -1748,36 +1788,12 @@
                     WaitTime.textContent = "Lieferzeit:7 Tag";
                 }
             }
-            else 
-            {
+            else {
                 WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
                 WaitTime.textContent = "Lieferzeit: 2 Werktage";
             }
         }
-        if (type === "Halbzylinder") 
-        {
-            if (Aussen.value >= 55) 
-            {
-                if (company.value = "CES") 
-                {
-                    WaitTime.innerHTML = "Lieferzeit:4 Werktage";
-                    WaitTime.textContent = "Lieferzeit: 4 Werktage";
-                }
-                else 
-                {
-                    WaitTime.innerHTML = "Lieferzeit:7 Tag";
-                    WaitTime.textContent = "Lieferzeit:7 Tag";
-                }
-            }
-            else 
-            {
-                WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
-                WaitTime.textContent = "Lieferzeit: 2 Werktage";
-            }
-        }
-
-        iterations = 0;
-        serchedItem = 0;
+      
     }
     function goBack() 
     {

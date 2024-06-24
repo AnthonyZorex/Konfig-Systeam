@@ -259,7 +259,6 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
 
             }
-
             string zylinderTyp;
 
             for (int i = 0; i < CountOrders; i++)
@@ -336,7 +335,6 @@ namespace schliessanlagen_konfigurator.Controllers
                     TurnameValue = Turname[i];
                 }
 
-
                 var orders = new Orders
                 {
                     userKey = Key.userKey,
@@ -345,6 +343,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     Created = DateTime.Now,
                     Count = CountTur[i]
                 };
+
 
                 if (innen.Count() > 0)
                 {
@@ -392,11 +391,9 @@ namespace schliessanlagen_konfigurator.Controllers
                 db.Orders.Add(orders);
                 db.SaveChanges();
 
-                var x = db.Orders.Select(x => x.Id).ToList();
-
                 var Open = new isOpen_Order
                 {
-                    OrdersId = x.Last()
+                    OrdersId = orders.Id
                 };
                 db.isOpen_Order.Add(Open);
                 db.SaveChanges();
@@ -406,7 +403,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var d = 0;
 
-            if (CountOrders > 0)
+            if (CountOrders > NameKey.Count())
             {
                 var itemsCount = isOpenList.Count() / CountOrders;
 
@@ -474,6 +471,8 @@ namespace schliessanlagen_konfigurator.Controllers
                     string NameKeyValue;
                     int CountkeyOrders;
 
+                    var itemsCount = CountOrders;
+
                     if (s >= CountKey.Count())
                     {
                         CountkeyOrders = CountKey.Last();
@@ -499,7 +498,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     db.isOpen_value.Add(Open_value);
                     db.SaveChanges();
 
-                    for (var f = 0; f < isOpenList.Count(); f++)
+                    for (var f = 0; f < itemsCount; f++)
                     {
 
                         var KeyValueC = new KeyValue
@@ -1054,6 +1053,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 var rl = query.Distinct().ToList();
 
                 ViewBag.Halb = rl.Distinct().OrderBy(x => x.Cost).ToList();
+
             }
             if (cheked4.Count() > 0 && cheked2.Count == 0 && cheked3.Count == 0 && cheked.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
@@ -4004,6 +4004,17 @@ namespace schliessanlagen_konfigurator.Controllers
             ViewBag.SelectHalb = HalbaussenActual.ToList();
 
             ViewBag.Halb = Halbzylinder.ToList();
+
+            if (Halbzylinder.Count() > 0)
+            {
+                ViewBag.HalbJson = JsonConvert.SerializeObject(Halbzylinder.ToList());
+            }
+            else
+            {
+                var HalbInfo = db.Profil_Halbzylinder.Where(x => x.NameSystem == Systeam).ToList();
+                ViewBag.HalbJson = JsonConvert.SerializeObject(HalbInfo.ToList());
+            }
+
             ViewBag.HalbItem = Halbzylinder.Select(x => x.Id).ToList();
             ViewBag.HalbItemJson = JsonConvert.SerializeObject(Halbzylinder.Select(x => x.Id).ToList());
 
@@ -4013,6 +4024,17 @@ namespace schliessanlagen_konfigurator.Controllers
             ViewBag.CostHalbSize = JsonConvert.SerializeObject(HablAussen.Select(x=>x.costAussen).ToList());
 
             ViewBag.KnayfZelinder = KnayfOrderlist.ToList();
+
+            if (KnayfOrderlist.Count() > 0)
+            {
+                ViewBag.KnayfZelinderJson = JsonConvert.SerializeObject(KnayfOrderlist.ToList());
+            }
+            else
+            {
+                var KnayfInfo = db.Profil_Knaufzylinder.Where(x => x.NameSystem == Systeam).ToList();
+                ViewBag.KnayfZelinderJson = JsonConvert.SerializeObject(KnayfInfo.ToList());
+            }
+
             ViewBag.KnayfItemId = KnayfOrderlist.Select(x => x.Id).ToList();
 
             ViewBag.KnayfItemIdJson = JsonConvert.SerializeObject(KnayfOrderlist.Select(x => x.Id).ToList());
@@ -4044,22 +4066,71 @@ namespace schliessanlagen_konfigurator.Controllers
 
             ViewBag.Dopelzylinder = DopelOrderlist.ToList();
 
+            if (DopelOrderlist.Count() > 0)
+            {
+                ViewBag.DopelzylinderJson = JsonConvert.SerializeObject(DopelOrderlist.ToList());
+            }
+            else
+            {
+                var DoppelInfo = db.Profil_Doppelzylinder.Where(x => x.NameSystem == Systeam).ToList();
+                ViewBag.DopelzylinderJson = JsonConvert.SerializeObject(DoppelInfo.ToList());
+            }
+           
+
             ViewBag.DAussen = DaussenActual.ToList();
 
             ViewBag.DInter = InenActual.ToList();
 
             ViewBag.HelbZ = HelbZ.ToList();
+
+            if (HelbZ.Count() > 0)
+            {
+                ViewBag.HelbZJson = JsonConvert.SerializeObject(HelbZ.ToList());
+            }
+            else
+            {
+                var HelbInfo = db.Hebelzylinder.Where(x => x.NameSystem == Systeam).ToList();
+                ViewBag.HelbZJson = JsonConvert.SerializeObject(HelbInfo.ToList());
+            }
+         
+
             ViewBag.HelbItem = HelbZ.Select(x => x.Id).ToList();
             ViewBag.HelbItemJson = JsonConvert.SerializeObject(HelbZ.Select(x => x.Id).ToList());
 
 
             ViewBag.Vorhanschlos = Vorhanschlos.ToList();
+
+            //if (Vorhanschlos.Count() > 0)
+            //{
+            //    ViewBag.VorhanschlosJson = JsonConvert.SerializeObject(Vorhanschlos.ToList());
+            //}
+            //else
+            //{
+            //    var VorhanInfo = db.Vorhangschloss.Where(x => x.NameSystem == Systeam).ToList();
+            //    ViewBag.VorhanschlosJson = JsonConvert.SerializeObject(VorhanInfo.ToList());
+            //}
+
             ViewBag.VorhanschlosItem = Vorhanschlos.Select(x => x.Id).ToList();
             ViewBag.VorhanschlosItemJson = JsonConvert.SerializeObject(Vorhanschlos.Select(x => x.Id).ToList());
 
             ViewBag.VorhanOrderAussen = key.Where(x => x.ZylinderId == 5).Select(x => x.aussen).ToList();
 
             ViewBag.Aussenzylinder = Aussenzylinder.ToList();
+
+
+            if (Aussenzylinder.Count() > 0)
+            {
+                ViewBag.AussenzylinderJson = JsonConvert.SerializeObject(Aussenzylinder.ToList());
+            }
+            else
+            {
+                var AussenzylinderInfo = db.Aussenzylinder_Rundzylinder.Where(x => x.NameSystem == Systeam).ToList();
+
+                ViewBag.AussenzylinderJson = JsonConvert.SerializeObject(AussenzylinderInfo.ToList());
+            }
+
+            
+
             ViewBag.AussenzylinderItem = Aussenzylinder.Select(x => x.Id).ToList();
             ViewBag.AussenzylinderItemJson = JsonConvert.SerializeObject(Aussenzylinder.Select(x => x.Id).ToList());
 
@@ -4073,7 +4144,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             ViewBag.UserJson = JsonConvert.SerializeObject(key.Select(x => x.userKey).Distinct().ToList());
 
-
+            ViewBag.AllType = db.Schliessanlagen.ToList();
 
             var SumCost = DopelOrderlist.Select(x => x.Price).Sum() + KnaufZelinder.Select(x => x.Price).Sum() + Halbzylinder.Select(x => x.Price).Sum() +
                 HelbZ.Select(x => x.Price).Sum() + Vorhanschlos.Select(x => x.Price).Sum() + Aussenzylinder.Select(x => x.Price).Sum() + DoppelAussenCost
@@ -4796,7 +4867,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     string NameKeyValue;
                     int CountkeyOrders;
 
-                    var itemsCount = isOpenList.Count() / CountOrders;
+                    var itemsCount =  CountOrders;
 
                     if (s >= CountKey.Count())
                     {

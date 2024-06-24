@@ -357,6 +357,18 @@
       "PackagePath": "staticwebassets\\Image\\entfernen.png"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\free-icon-home-with-locked-padlock-15748.png",
+      "PackagePath": "staticwebassets\\Image\\free-icon-home-with-locked-padlock-15748.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\free-icon-house-with-lock-outline-on-a-circular-black-background-20177.png",
+      "PackagePath": "staticwebassets\\Image\\free-icon-house-with-lock-outline-on-a-circular-black-background-20177.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\free-icon-smart-lock-1348357.png",
+      "PackagePath": "staticwebassets\\Image\\free-icon-smart-lock-1348357.png"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\halbzylinder.png",
       "PackagePath": "staticwebassets\\Image\\halbzylinder.png"
     },

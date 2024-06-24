@@ -3113,11 +3113,25 @@
     #FinisherLeft {
         margin-right: auto;
     }
-
-    #FinisherAnderes {
-        text-align: end;
+    #TypeSchlusselPlan {
         margin-top: 20px;
+        gap: 50px;
+        display: grid;
+        grid-template-columns: 50px 50px;
     }
+        #TypeSchlusselPlan > div {
+            align-content: center;
+            height: 60px;
+            text-align: center;
+            width: 60px;
+            background-color: seashell;
+            border-radius:20px;
+        }
+
+        #FinisherAnderes {
+            text-align: end;
+            margin-top: 20px;
+        }
 
     #schopIcons {
         margin-left: 40px;
