@@ -208,7 +208,11 @@
                                 </div>
                                 <div>
                                     <h3>@item.Name</h3>
-                                    <p>@item.description</p>
+                                    <div id="product_desciptions">
+                                        <div>
+                                            @Html.Raw(@item.description)
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                            
@@ -354,7 +358,11 @@
                                 </div>
                                 <div>
                                     <h3>@item.Name</h3>
-                                    <p>@item.description</p>
+                                    <div id="product_desciptions">
+                                        <div>
+                                            @Html.Raw(@item.description)
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -490,7 +498,11 @@
                                 </div>
                                 <div>
                                     <h3>@item.Name</h3>
-                                    <p>@item.description</p>
+                                    <div id="product_desciptions">
+                                        <div>
+                                            @Html.Raw(@item.description)
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -587,7 +599,11 @@
                                 </div>
                                 <div>
                                     <h3>@item.Name</h3>
-                                    <p>@item.description</p>
+                                    <div id="product_desciptions">
+                                        <div>
+                                            @Html.Raw(@item.description)
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -702,7 +718,11 @@
                                 </div>
                                 <div>
                                     <h3>@item.Name</h3>
-                                    <p>@item.description</p>
+                                    <div id="product_desciptions">
+                                        <div>
+                                            @Html.Raw(@item.description)
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -804,7 +824,11 @@
                                 </div>
                                 <div>
                                     <h3>@item.Name</h3>
-                                    <p>@item.description</p>
+                                    <div id="product_desciptions">
+                                        <div>
+                                            @Html.Raw(@item.description)
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -843,7 +867,6 @@
 </div>
 } 
 <script>
-
     let DoppelInfo = @Html.Raw(ViewBag.DopelzylinderJson);
     let KnayfInfo = @Html.Raw(ViewBag.KnayfZelinderJson);
     let HalbInfo = @Html.Raw(ViewBag.HalbJson);
@@ -979,7 +1002,7 @@
                               <div id="Size-${BlockN}" class="SizeProduct">
                         <div>
                               <input style="border: none;" id="compName" type="hidden" value="${[DoppelInfo[0].companyName]}" />
-                                       <select class="form-select" name="DoppelAussen" id="Aussen" onchange="selectParamAussen(${BlockN},'Doppelzylinder',event.target.selectedIndex+1)">
+                              <select class="form-select" name="DoppelAussen" id="Aussen" onchange="selectParamAussen(${BlockN},'Doppelzylinder',event.target.selectedIndex+1)">
 
                                 @for (int i = 0; i < @ViewBag.Dopelzylinderaussen.Count; i++)
                                 {
@@ -1040,16 +1063,14 @@
 
                                     ${waitTime}
                                   
-                                    </div>
-                        
-                                            `;
+                                    </div>`;
         }
         if (value == "Halbzylinder") 
         {
             let waitTime = "";
 
-
-            if (HalbInfo[0].companyName == "CES") {
+            if (HalbInfo[0].companyName == "CES") 
+            {
                 waitTime = `<h6 id="WaitTime" > Lieferzeit: 7 Tag </h6>`
             }
             else {
@@ -2004,64 +2025,87 @@
 
         if (type === "Doppelzylinder") 
         {
-            if (Innen.value >= 55 && Aussen.value >= 55) 
+            if (Innen.value >= 55 || Aussen.value >= 55) 
             {
                 if (company.value = "CES") 
                 {
-                    WaitTime.innerHTML = "Lieferzeit:4 Werktage";
-                    WaitTime.textContent = "Lieferzeit: 4 Werktage";
+                    WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
+                    WaitTime.textContent = "Lieferzeit: 2 Werktage";
+                    
                 }
                 else 
                 {
-                    WaitTime.innerHTML = "Lieferzeit:7 Tag";
-                    WaitTime.textContent = "Lieferzeit:7 Tag";
+                    WaitTime.innerHTML = "Lieferzeit:4 Werktage";
+                    WaitTime.textContent = "Lieferzeit: 4 Werktage";
                 }
             }
             else 
             {
-                WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
-                WaitTime.textContent = "Lieferzeit: 2 Werktage";
-            }
-        }
-        if (type === "Knaufzylinder") 
-        {
-            if (Innen.value >= 55 && Aussen.value >= 55) 
-            {
                 if (company.value = "CES") 
-                {
-                    WaitTime.innerHTML = "Lieferzeit:4 Werktage";
-                    WaitTime.textContent = "Lieferzeit: 4 Werktage";
-                }
-                else 
                 {
                     WaitTime.innerHTML = "Lieferzeit:7 Tag";
                     WaitTime.textContent = "Lieferzeit:7 Tag";
                 }
+                else 
+                {
+                    WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
+                    WaitTime.textContent = "Lieferzeit: 2 Werktage";
+                }
             }
-            else {
-                WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
-                WaitTime.textContent = "Lieferzeit: 2 Werktage";
+        }
+        if (type === "Knaufzylinder") 
+        {
+            if (Innen.value >= 55 || Aussen.value >= 55) 
+            {
+                if (company.value = "CES") 
+                {
+                    WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
+                    WaitTime.textContent = "Lieferzeit: 2 Werktage";
+                }
+                else 
+                {
+                    WaitTime.innerHTML = "Lieferzeit:4 Werktage";
+                    WaitTime.textContent = "Lieferzeit: 4 Werktage";
+                }
+            }
+            else 
+            {
+                if (company.value = "CES") 
+                {
+                    WaitTime.innerHTML = "Lieferzeit:7 Tag";
+                    WaitTime.textContent = "Lieferzeit:7 Tag";
+                }
+                else {
+                    WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
+                    WaitTime.textContent = "Lieferzeit: 2 Werktage";
+                }
             }
         }
         if (type === "Halbzylinder") 
         {
             if (Aussen.value >= 55) 
             {
-                if (company.value = "CES") 
-                {
+                if (company.value = "CES") {
+                    WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
+                    WaitTime.textContent = "Lieferzeit: 2 Werktage";
+                }
+                else {
                     WaitTime.innerHTML = "Lieferzeit:4 Werktage";
                     WaitTime.textContent = "Lieferzeit: 4 Werktage";
                 }
-                else {
+            }
+            else {
+                if (company.value = "CES") {
                     WaitTime.innerHTML = "Lieferzeit:7 Tag";
                     WaitTime.textContent = "Lieferzeit:7 Tag";
                 }
-            }
-            else {
-                WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
-                WaitTime.textContent = "Lieferzeit: 2 Werktage";
+                else {
+                    WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
+                    WaitTime.textContent = "Lieferzeit: 2 Werktage";
+                }
             }
         }
+        
     }
     function selectParamIntern(idBlock,type,selectId) 
     {
@@ -2151,20 +2195,25 @@
 
                     oldAussen.value = SelectItemId;
 
-        if (type === "Doppelzylinder") 
+        if (Innen.value >= 55 || Aussen.value >= 55) 
         {
-            if (Innen.value >= 55 && Aussen.value >= 55) 
+            if (company.value = "CES") 
             {
-                if (company.value = "CES") 
-                {
-                    WaitTime.innerHTML = "Lieferzeit:4 Werktage";
-                    WaitTime.textContent = "Lieferzeit: 4 Werktage";
-                }
-                else 
-                {
-                    WaitTime.innerHTML = "Lieferzeit:7 Tag";
-                    WaitTime.textContent = "Lieferzeit:7 Tag";
-                }
+                WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
+                WaitTime.textContent = "Lieferzeit: 2 Werktage";
+
+            }
+            else {
+                WaitTime.innerHTML = "Lieferzeit:4 Werktage";
+                WaitTime.textContent = "Lieferzeit: 4 Werktage";
+            }
+        }
+        else 
+        {
+            if (company.value = "CES") 
+            {
+                WaitTime.innerHTML = "Lieferzeit:7 Tag";
+                WaitTime.textContent = "Lieferzeit:7 Tag";
             }
             else 
             {
@@ -2172,24 +2221,30 @@
                 WaitTime.textContent = "Lieferzeit: 2 Werktage";
             }
         }
+    
         if (type === "Knaufzylinder") 
         {
-            if (Innen.value >= 55 && Aussen.value >= 55) 
+            if (Innen.value >= 55 || Aussen.value >= 55) 
             {
-                if (company.value = "CES") 
-                {
+                if (company.value = "CES") {
+                    WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
+                    WaitTime.textContent = "Lieferzeit: 2 Werktage";
+                }
+                else {
                     WaitTime.innerHTML = "Lieferzeit:4 Werktage";
                     WaitTime.textContent = "Lieferzeit: 4 Werktage";
                 }
-                else 
-                {
+            }
+            else {
+                if (company.value = "CES") {
+
                     WaitTime.innerHTML = "Lieferzeit:7 Tag";
                     WaitTime.textContent = "Lieferzeit:7 Tag";
                 }
-            }
-            else {
-                WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
-                WaitTime.textContent = "Lieferzeit: 2 Werktage";
+                else {
+                    WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
+                    WaitTime.textContent = "Lieferzeit: 2 Werktage";
+                }
             }
         }
       
