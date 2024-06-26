@@ -1,0 +1,44 @@
+﻿@using Microsoft.AspNetCore.Http;
+
+@{
+    ViewData["Title"] = "AllOrders";
+
+}
+@if (User.IsInRole("admin"))
+{
+
+    <h1>@ViewData["Title"]</h1>
+    <div>
+        <table id="myTable" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th id="rowTable" class="table-info">Order Data</th>
+                    <th id="rowTable" class="table-info"> UserName</th>
+                    <th id="rowTable" class="table-info">Email</th>
+                    <th id="rowTable" class="table-info">Address</th>
+                    <th id="rowTable" class="table-info">ProductName</th>
+                    <th id="rowTable" class="table-info">OrderSum</th>
+                    <th id="rowTable" class="table-info">File</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var list in ViewBag.Order)
+                {
+                    <tr>
+                        <td id="rowTable" class="table-info">@list.createData</td>
+                        <td id="rowTable" class="table-info">@list.FirstName @list.LastName</td>
+                        <td id="rowTable" class="table-info">@list.Email</td>
+                        <td id="rowTable" class="table-info">@list.Address</td>
+                        <td id="rowTable" class="table-info">@list.ProductName</td>
+                        <td id="rowTable" class="table-info">@list.OrderSum</td>
+                        <td id="rowTable" class="table-info">@Html.ActionLink("Download Excel", "Download", "Home", new { id = @list.Id, FirstName = @list.FirstName, LastName = @list.LastName }, new { @class = "btn btn-primary" })</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+<script>
+   
+   
+</script>

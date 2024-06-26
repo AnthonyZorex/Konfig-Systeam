@@ -80,7 +80,7 @@
                     <div id="ExelItem-@d" class="ExelItem">
                         <input value="@item.Id" type="hidden" name="DopelItem" />
                         <div id="productImage">
-                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" onclick="OpenModalInfo(@d)" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                         </div>
                         <div id="productMenuInfo">
                             <div id="ProductNameUndCost">
@@ -139,9 +139,7 @@
                                     <input readonly style="border: none;max-width: 30px;" name="TurCounter" id="countSchlusse-@d" type="number" min="1" value="@ViewBag.CounterTur[@elemNum]" />
                                     <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
                                 </div>
-                                @*   <div style="margin-left: 20px;">
-                    <input type="button" value="?" onclick="OpenModalInfo(@d)" class="btn btn-success" />
-                    </div> *@
+              
                             </div>
 
                             <div id="optionsItems">
@@ -228,7 +226,7 @@
                <input type="hidden" name="Knayf" value="@item.Id" />
                     <div id="ExelItem-@d" class="ExelItem">
                     <div id="productImage">
-                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                            <img decoding="async" onclick="OpenModalInfo(@d)" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                     </div>
                     <div id="productMenuInfo">
                         <div id="ProductNameUndCost">
@@ -285,10 +283,6 @@
                                     <input readonly style="border: none;max-width: 30px;" id="countSchlusse-@d" type="number" min="1" value="@ViewBag.CounterTurKnayf[@elemNum]" name="TurCounter" />
                                     <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
                             </div>
-                                
-                            @* <div style="margin-left: 20px;">
-                                    <input type="button" value="?" onclick="OpenModalInfo(@d)" class="btn btn-success" />
-                                </div> *@ 
                         </div>
 
                             <div id="optionsItems">
@@ -379,7 +373,7 @@
                     <input type="hidden" name="Halb" value="@item.Id" />
                     <div id="ExelItem-@d" class="ExelItem">
                     <div id="productImage">
-                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                            <img decoding="async" onclick="OpenModalInfo(@d)" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                     </div>
                     <div id="productMenuInfo">
                         <div id="ProductNameUndCost">
@@ -427,9 +421,6 @@
                                     <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
                             </div>
 
-                                @* <div style="margin-left: 20px;">
-                                    <input type="button" value="?" onclick="OpenModalInfo(@d)" class="btn btn-success" />
-                                </div> *@
                         </div>
                             <div id="optionsItems">
                             <h3>Weitere Optionen</h3>
@@ -515,7 +506,7 @@
                     <input type="hidden" name="Helb" value="@item.Id" />
                     <div id="ExelItem-@d" class="ExelItem">
                     <div id="productImage">
-                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                            <img decoding="async" onclick="OpenModalInfo(@d)" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                     </div>
                     <div id="productMenuInfo">
                         <div id="ProductNameUndCost">
@@ -550,10 +541,6 @@
                                     <input readonly style="border: none;max-width: 30px;" name="TurCounter" type="number" min="1" value="@ViewBag.CounterTurHebel[@elemNum]" id="countSchlusse-@d" />
                                     <button onclick="CylinderPlus(@d)" type="button" class="btn btn-success">+</button>
                             </div>
-
-                              @*   <div style="margin-left: 20px;">
-                                    <input type="button" value="?" onclick="OpenModalInfo(@d)" class="btn btn-success" />
-                                </div> *@
                         </div>
                             <div id="optionsItems">
                             <h3>Weitere Optionen</h3>
@@ -616,7 +603,7 @@
                     <input type="hidden" name="Vorhan" value="@item.Id" />
                     <div id="ExelItem-@d" class="ExelItem">
                     <div id="productImage">
-                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                            <img decoding="async" onclick="OpenModalInfo(@d)" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                     </div>
                     <div id="productMenuInfo">
                         <div id="ProductNameUndCost">
@@ -655,9 +642,6 @@
                                     <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
                             </div>
 
-                              @*   <div style="margin-left: 20px;">
-                                    <input type="button" value="?" onclick="OpenModalInfo(@d)" class="btn btn-success" />
-                                </div> *@
                         </div>
                             <div id="optionsItems">
                             <h3>Weitere Optionen</h3>
@@ -726,7 +710,7 @@
                     <div id="ExelItem-@d" class="ExelItem">
                         <input type="hidden" name="Aussen" value="@item.Id" />
                         <div id="productImage">
-                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                            <img decoding="async" onclick="OpenModalInfo(@d)" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                         </div>
                         <div id="productMenuInfo">
                             <div id="ProductNameUndCost">
@@ -762,9 +746,7 @@
                                 <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
                                 <input style="border: none;max-width: 30px;" readonly name="TurCounter" type="number" min="1" value="@ViewBag.CounterTurAussen[@elemNum]" id="countSchlusse-@d" />
                                 <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
-                                @*  <div style="margin-left: 20px;">
-                    <input type="button" value="?" onclick="OpenModalInfo(@d)" class="btn btn-success" />
-                    </div> *@
+                              
                             </div>
 
                             <div id="optionsItems">
@@ -850,12 +832,12 @@
 } 
 <script>
 
-    let DoppelInfo = @Html.Raw(ViewBag.DopelzylinderJson);
-    let KnayfInfo = @Html.Raw(ViewBag.KnayfZelinderJson);
-    let HalbInfo = @Html.Raw(ViewBag.HalbJson);
-    let HelbInfo = @Html.Raw(ViewBag.HelbZJson);
+    // let DoppelInfo = @Html.Raw(ViewBag.DopelzylinderJson);
+    // let KnayfInfo = @Html.Raw(ViewBag.KnayfZelinderJson);
+    // let HalbInfo = @Html.Raw(ViewBag.HalbJson);
+    // let HelbInfo = @Html.Raw(ViewBag.HelbZJson);
     // let VorhanschlosInfo = @Html.Raw(ViewBag.VorhanschlosJson);
-    let AussenzylinderInfo = @Html.Raw(ViewBag.AussenzylinderJson);
+    // let AussenzylinderInfo = @Html.Raw(ViewBag.AussenzylinderJson);
 
     let keyPrice = @Html.Raw(ViewBag.KeyCost);
 
@@ -932,7 +914,20 @@
 
         if (value == "Doppelzylinder") 
         {
+            let waitTime = "";
 
+           
+                if (DoppelInfo[0].companyName  == "CES")
+                {
+                   waitTime =   `<h6 id="WaitTime" > Lieferzeit: 4 Werktage </h6>` 
+                }
+               
+                if ( DoppelInfo[0].companyName  == "CES")
+                {
+                waitTime = `<h6 id="WaitTime" > Lieferzeit: 7 Tag </h6>`
+                }
+                 
+            
             AllPrice.value = (parseFloat(AllPrice.value) + DoppelInfo[0].Price);
 
             let img = DoppelInfo[0].ImageName;
@@ -972,7 +967,7 @@
                               <div id="Size-${BlockN}" class="SizeProduct">
                         <div>
                               <input style="border: none;" id="compName" type="hidden" value="${[DoppelInfo[0].companyName]}" />
-                                   <select class="form-select" name="DoppelAussen" id="Aussen" onchange="selectParamAussen(event.target.value,${BlockN},ViewBag.Dopelzylinderaussen[i],'Doppelzylinder',event.target.selectedIndex)">
+                                   <select class="form-select" name="DoppelAussen" id="Aussen" onchange="selectParamAussen(${BlockN},'Doppelzylinder',event.target.selectedIndex)">
 
                                 @for (int i = 0; i < ViewBag.Dopelzylinderaussen.Count; i++)
                                 {
@@ -982,7 +977,7 @@
                                 <input type="hidden" id="Aussen-${BlockN}" />
                         </div>
                         <div>
-                                  <select class="form-select" name="DoppelIntern" id="Intern" onchange="selectParamIntern(event.target.value,${BlockN},ViewBag.DopelzylinderIntern[i],'Doppelzylinder',event.target.selectedIndex)">
+                                  <select class="form-select" name="DoppelIntern" id="Intern" onchange="selectParamIntern(${BlockN},'Doppelzylinder',event.target.selectedIndex)">
 
                                         @for (int i = 0; i < ViewBag.DopelzylinderIntern.Count; i++)
                                         {
@@ -1004,13 +999,35 @@
                                 <div id="optionsItems">
                                     <h3>Weitere Optionen</h3>
                                     <div>
-                              
+                                        @if (ViewBag.countOptionsQuery > 0)
+                                        {
+                                            @for (int i = 0; i < @ViewBag.optionsName.Count; i++)
+                                            {
+                                                   <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.optionsName[i]" />
+
+                                                   <select style="margin-bottom: 10px;" class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Doppel',event.target.id,event.target.value,@valueCount,'@ViewBag.optionsName[i]',@i,@d)">
+
+                                                    @for (int j = 0; j < @ViewBag.countOptionsList[i]; j++)
+                                                    {
+                                                        <option id="@valueCount">@ViewBag.optionsValue[valueCount]</option>
+
+                                                        valueCount++;
+                                                    }
+
+                                                                        </select>
+
+                                                                        <input type="hidden" id="Option-@d + @i" />
+                                                                        <input type="hidden" id="d-@d + @i" />
+                                            }
+                                                                <input type="hidden" name="DoppelOption" id="OptionAll-@d" />
+                                        }
                        
                                     </div>
                                 </div>
 
-                                    
-                                </div>
+                                    ${waitTime}
+                                  
+                                    </div>
                         
                                             `;
         }

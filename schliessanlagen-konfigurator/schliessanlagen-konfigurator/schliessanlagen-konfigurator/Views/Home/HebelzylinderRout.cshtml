@@ -1,0 +1,262 @@
+﻿ @model Hebel;
+
+@{
+    ViewData["Title"] = "Hebelzylinder";
+}
+
+@if (User.IsInRole("admin"))
+{
+    <div class="text-center ">
+        <div id="myModal_NewSchliessanlagen" class="d-grid gap-3">
+            <div id="routBAR">
+                <div id="Bar">
+                    <button class="btn btn-primary"><a href="@Url.Action("Index","Home")">Profil-Doppelzylinder</a></button>
+                    <button class="btn btn-secondary"><a href="@Url.Action("Profil_HalbzylinderRout","Home")">Profil-Halbzylinder</a></button>
+                    <button class="btn btn-success"><a href="@Url.Action("Profil_KnaufzylinderRout","Home")">Profil-Knaufzylinder</a></button>
+                    <button class="btn btn-warning"><a href="@Url.Action("VorhangschlossRout","Home")">Vorhangschloss</a></button>
+                    <button class="btn btn-info"><a href="@Url.Action("Aussenzylinder_RundzylinderRout","Home")">Aussenzylinder / Rundzylinder</a></button>
+                </div>
+            </div>
+            <div>
+                <h2>New Hebelzylinder</h2>
+
+                <form asp-action="Create_Hebelzylinder" enctype="multipart/form-data" asp-controller="Home">
+
+                    <div id="productMenu">
+                        <input style="display:none" asp-for="schliessanlagenId" class="form-control" type="text" value="4" />
+                        <div>
+                            <label asp-for="ImageFile" class="control-label"></label>
+                            <input asp-for="ImageFile" class="btn btn-success" accept="image/*" />
+                            <span asp-validation-for="ImageFile" class="text-danger"></span>
+                            @Html.ValidationMessageFor(m => m.ImageFile, "", new { @class = "error" })
+                        </div>
+                    </div>
+
+                    <div id="product_desciptions">
+
+                        <div style="margin-bottom: 50px;">
+                            <label>Name</label>
+                            <input asp-for="Name" required class="form-control" type="text" name="Name" />
+                        </div>
+
+                        <div style="margin-bottom: 50px;">
+                            <label> Company Name</label>
+                            <input asp-for="companyName" required class="form-control" type="text" />
+                        </div>
+
+                        <div style="margin-bottom: 50px;">
+                            <label>Name System</label>
+                            <input asp-for="NameSystem" required class="form-control" type="text" />
+                        </div>
+
+                        <div style="margin-bottom: 50px;">
+                            <label>Descriptions</label>
+                            <textarea asp-for="description" required class="form-control" id="exampleFormControlTextarea1"></textarea>
+                        </div>
+                        @if (ViewBag.Content != null)
+                        {
+                            <div>
+                                <h3>Submitted Content:</h3>
+                                <div>@Html.Raw(ViewBag.Content)</div>
+                            </div>
+                        }
+
+                        <div style="margin-bottom: 50px;">
+                            <label>Cost</label>
+                            <input asp-for="Price" required class="form-control" />
+                        </div>
+
+                        <div id="productOptions">
+                        </div>
+
+                    </div>
+                    <button id="createBlockBtn" type="button" class="btn btn-success">Add Options</button>
+                    <button id="addInputBtn" type="button" class="btn btn-success">+</button>
+                    <button id="RemoveInputBtn" type="button" class="btn btn-danger">-</button>
+                    <input type="submit" class="btn btn-success" id="input" value="Create Hebelzylinder" />
+                </form>
+
+
+            </div>
+
+        </div>
+        <div>
+
+            <h4 id="input">ALL Hebelzylinder</h4>
+            @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+            {
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr id="Table2">
+                            <th>CompanyName</th>
+                            <th>Systeam</th>
+                            <th>Name</th>
+                            <th>Image</th>
+                            <th>Cost</th>
+
+                            <th>Edit</th>
+                            <th>Options</th>
+                            <th>Delete</th>
+
+                            @foreach (var item in ViewBag.item)
+                            {
+                                <td id="rowTable" class="table-info">@item.companyName</td>
+                                <td id="rowTable" class="table-info">@item.NameSystem</td>
+                                <td id="rowTable" class="table-info">@item.Name</td>
+                                <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
+                                <td id="rowTable " class="table-info"><h6 id="cost">@item.Price</h6></td>
+
+                                <td id="rowTable" class="table-info"><a href="@Url.Action("Edit_Hebel","Home", new { item.Id })"><img src="@("/Image/edit-tools.png")" height="30" width="30" /></a></td>
+                                <td id="rowTable" class="table-info">
+                                    <a class="compItem" href="@Url.Action("ProductHebel","Home", new { item.Id })">
+                                        <img src="@("/Image/options.png")" height="30" width="30" />
+                                    </a>
+                                </td>
+                                <td id="rowTable" class="table-info"><a href="@Url.Action("Delete_Hebel","Home", new { item.Id })"><img src="@("/Image/entfernen.png")" height="30" width="30" /></a></td>
+                            }
+
+                        </tr>
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+
+}
+@section scripts
+{
+    <script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script>
+
+    <script type="text/javascript">
+
+        tinymce.init({
+            selector: '#exampleFormControlTextarea1'
+        });
+
+        let sum = document.querySelectorAll('#cost');
+
+        let costNGF = document.getElementById('costNGF');
+        let valueNGF = document.getElementById('valueNGF');
+
+        let productOptions = document.getElementById('productOptions');
+        let addOptions = document.getElementById('addOptions');
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const container = document.getElementById('productOptions');
+            const createBlockBtn = document.getElementById('createBlockBtn');
+            const addInputBtn = document.getElementById('addInputBtn');
+            const RemoveInputBtn = document.getElementById('RemoveInputBtn');
+
+            let blockCounter = 1;
+
+            createBlockBtn.addEventListener('click', function () {
+                const block = createBlock();
+                container.appendChild(block);
+            });
+
+            addInputBtn.addEventListener('click', function () {
+                const blocks = document.querySelectorAll('.input-block');
+                const lastBlock = blocks[blocks.length - 1];
+
+                if (lastBlock) {
+                    addInputs(lastBlock);
+                } else {
+                    alert('Сначала создайте блок');
+                }
+            });
+
+            RemoveInputBtn.addEventListener('click', function () {
+                const blocks = document.querySelectorAll('.input-block');
+                const lastBlock = blocks[blocks.length - 1];
+
+                if (lastBlock) {
+                    productOptions.removeChild(lastBlock);
+                }
+                else {
+                    alert('Сначала создайте блок');
+                }
+            });
+
+            let counterOptions = 2;
+            function createBlock() {
+
+                counterOptions = 2;
+                const block = document.createElement('div');
+                block.classList.add('input-block');
+                block.id = `block-${blockCounter}`;
+                block.innerHTML = `<div>
+                                                        <h1>Options</h1>
+                                                        <label>Name</label>
+                                                        <input class="form-control" type="text" name="Options" />
+                                                        <div>
+                                                            <p></p>
+                                                            <input name="postedFile" type="file" class="btn btn-success" />
+                                                            <p></p>
+                                                        </div>
+                                                        <label>Descriptions</label>
+                                                        <input class="form-control" type="text" name="NGFDescriptions" />
+                                                        <h1>Value & Cost </h1>
+                                                        <div id="Aussen_Innen_ProfilDopel">
+                                                            <div id="valueNGF">
+                                                                <input type="text" placeholder="valueNGF" step="0.01" name="valueNGF" />
+
+                                                            </div>
+                                                            <div id="costNGF">
+                                                                        <input type="number" placeholder="costNGF" step="0.01" name="costNGF" />
+                                                            </div>
+                                                                        <input type="hidden" id="counter" name="input_counter" />
+                                                        </div>
+                                                    </div>`;
+
+                blockCounter++;
+
+                return block;
+            }
+
+
+
+            function addInputs(block) {
+
+                let d = document.createElement('input');
+                d.setAttribute('name', 'costNGF');
+                d.setAttribute('placeholder', 'costNGF');
+
+                let x = document.createElement('input');
+                x.setAttribute('name', 'valueNGF');
+                x.setAttribute('placeholder', 'valueNGF');
+
+                const div1 = block.querySelector('#valueNGF');
+                const div2 = block.querySelector('#costNGF');
+
+                div1.appendChild(x);
+
+                div2.appendChild(d);
+
+                var counter = document.querySelectorAll('#counter');
+                counter[counter.length - 1].value = counterOptions;
+
+                counterOptions++;
+
+                console.log(counterOptions);
+
+            };
+
+        })
+
+        function interfaice() {
+            sum.forEach((item) => {
+                if (String(item).length < 6) {
+                    item.innerHTML = item.innerHTML.slice(0, 5) + '€';
+                }
+
+                if (String(item).length > 8) {
+                    item.innerHTML = item.innerHTML.slice(0, 6) + '€';
+                }
+
+            })
+        }
+
+        interfaice();
+
+    </script>
+}

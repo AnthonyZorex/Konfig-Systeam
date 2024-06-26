@@ -1,0 +1,534 @@
+﻿@model schliessanlagen_konfigurator.Models.Orders;
+@using Microsoft.AspNetCore.Http;
+﻿@using System.Text.RegularExpressions;
+
+@{
+    ViewData["Title"] = $"System_Auswählen/{@Model.userKey}";
+    int countItem = 0;
+}
+
+<div>
+    <h3>
+        System auswählen
+    </h3>
+
+    <h4 style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;padding: 10px;">
+        Bitte wählen Sie das passende Schließsystem aus.
+    </h4>
+</div>
+<br />
+
+<h5>Systemfilterung</h5>
+<div id="filteblock">
+    <div>
+        <button onclick="clean()" style="border:none;margin-top:15px"><img src="/Image/sort.png" width="40" hight="30" /></button>
+    </div>
+    <div>
+        <label>Hersteller</label>
+        <select id="company-name" onchange="selectCompany(event.target.value)" class="form-control">
+            <option selected></option>
+            <option>CES</option>
+            <option>ABUS</option>
+            <option>BASI</option>
+            <option>EVVA</option>
+        </select>
+    </div>
+
+    <div>
+        <label>Lieferzeit</label>
+
+        <select id="liferzeit" onchange="serchLiferZeit(event.target.value)" class="form-control">
+        </select>
+
+    </div>
+
+    <div>
+        <label>SystemName</label>
+        <input id="serchSystemName" onchange="selectSysteam(event.target.value)" type="text" class="form-control" />
+    </div>
+
+    <div>
+        <div id="Gesamtpreis" style="display:flex;gap: 20px;">
+            <label>Gesamtpreis von </label>
+            <label>Gesamtpreis bis</label>
+        </div>
+
+        <div style="display:flex;gap:20px">
+            <input style="width: 130px;" id="minSelect" type="text" onchange="minPrise(event.target.value)" class="form-control" min="0" step="0,1" />
+
+            <input style="width: 130px;" id="maxSelect" type="text" onchange="maxPrise(event.target.value)" class="form-control" min="0" step="0,1" />
+        </div>
+    </div>
+
+</div>
+
+<div id="ExelMenu">
+    <form asp-action="System_Auswählen" method="post" enctype="multipart/form-data" asp-controller="Konfigurator">
+
+        @Html.HiddenFor(m => m.userKey)
+
+        @{
+            if (ViewBag.Doppel != null)
+            {
+                foreach (var item in ViewBag.Doppel)
+                {
+                    <div class="ExelItem" id="@countItem">
+                        <div id="productImage">
+                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                        </div>
+                        <div id="productMenuInfo">
+                            <div id="ProductNameUndCost">
+                                <div>
+                                    <h3 id="sys">@item.NameSystem</h3>
+                                    <input type="hidden" value="@item.companyName" id="name" />
+                                </div>
+                                <div style="margin-left: auto;">
+                                    <h4 id="cost">ab @item.Cost €</h4>
+                                </div>
+                            </div>
+                            <div id="product_desciptions">
+                                <div>
+                                    @Html.Raw(@item.description)
+                                </div>
+                            </div>
+
+                            <div id="productChek">
+                                <div>
+                                    <div>
+                                        @if (@item.companyName == "CES")
+                                        {
+                                            <h6 id="lifer">7 Tag</h6>
+                                        }
+                                        @if (@item.companyName == "BASIC")
+                                        {
+                                            <h6 id="lifer">2 WochenTag</h6>
+                                        }
+                                        @if (@item.companyName == "ABUS")
+                                        {
+                                            <h6 id="lifer">2 WochenTag</h6>
+                                        }
+                                        @if (@item.companyName == "EVVA")
+                                        {
+                                            <h6 id="lifer">2 WochenTag</h6>
+                                        }
+                                    </div>
+                                    <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    countItem++;
+                }
+            }
+
+            else if (ViewBag.Knaufzylinder != null)
+            {
+                foreach (var item in ViewBag.Knaufzylinder)
+                {
+                    <div class="ExelItem" id="@countItem">
+                        <div id="productImage">
+                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                        </div>
+                        <div id="productMenuInfo">
+                            <div id="ProductNameUndCost">
+                                <div>
+                                    <h3 id="sys">@item.NameSystem</h3>
+                                    <input type="hidden" value="@item.companyName" id="name" />
+                                </div>
+                                <div style="margin-left: auto;">
+                                    <h4 id="cost">ab @item.Cost €</h4>
+                                </div>
+                            </div>
+                            <div id="product_desciptions">
+                                <div>
+                                    @Html.Raw(@item.description)
+                                </div>
+                            </div>
+                            <div id="productChek">
+                                <div>
+                                    @if (@item.companyName == "CES")
+                                    {
+                                        <h6 id="lifer">7 Tag</h6>
+                                    }
+                                    @if (@item.companyName == "BASIC")
+                                    {
+                                        <h6 id="lifer">2 WochenTag</h6>
+                                    }
+                                    @if (@item.companyName == "ABUS")
+                                    {
+                                        <h6 id="lifer">2 WochenTag</h6>
+                                    }
+                                    @if (@item.companyName == "EVVA")
+                                    {
+                                        <h6 id="lifer">2 WochenTag</h6>
+                                    }
+                                </div>
+                                <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Systeam =  @item.NameSystem,DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
+                            </div>
+                        </div>
+                    </div>
+                    countItem++;
+                }
+            }
+            else if (ViewBag.Halb != null)
+            {
+                foreach (var item in ViewBag.Halb)
+                {
+                    <div class="ExelItem" id="@countItem">
+                        <div id="productImage">
+                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                        </div>
+                        <div id="productMenuInfo">
+                            <div id="ProductNameUndCost">
+                                <div>
+                                    <h3 id="sys">@item.NameSystem</h3>
+                                    <input type="hidden" value="@item.companyName" id="name" />
+                                </div>
+                                <div style="margin-left: auto;">
+                                    <h4 id="cost">ab @item.Cost €</h4>
+                                </div>
+                            </div>
+                            <div id="product_desciptions">
+                                <div>
+                                    @Html.Raw(@item.description)
+                                </div>
+                            </div>
+                            <div id="productChek">
+                                <div>
+                                    @if (@item.companyName == "CES")
+                                    {
+                                        <h6 id="lifer">7 Tag</h6>
+                                    }
+                                    @if (@item.companyName == "BASIC")
+                                    {
+                                        <h6 id="lifer">2 WochenTag</h6>
+                                    }
+                                    @if (@item.companyName == "ABUS")
+                                    {
+                                        <h6 id="lifer">2 WochenTag</h6>
+                                    }
+                                    @if (@item.companyName == "EVVA")
+                                    {
+                                        <h6 id="lifer">2 WochenTag</h6>
+                                    }
+                                </div>
+                                <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
+                            </div>
+                        </div>
+                    </div>
+                    countItem++;
+                }
+            }
+            else if (ViewBag.Hebel != null)
+            {
+                foreach (var item in ViewBag.Hebel)
+                {
+                    <div class="ExelItem" id="@countItem">
+                        <div id="productImage">
+                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                        </div>
+                        <div id="productMenuInfo">
+                            <div id="ProductNameUndCost">
+                                <div>
+                                    <h3 id="sys">@item.NameSystem</h3>
+                                    <input type="hidden" value="@item.companyName" id="name" />
+                                </div>
+                                <div style="margin-left: auto;">
+                                    <h4 id="cost">ab @item.Cost €</h4>
+                                </div>
+                            </div>
+                            <div id="product_desciptions">
+                                <div>
+                                    @Html.Raw(@item.description)
+                                </div>
+                            </div>
+                            <div id="productChek">
+                                <div>
+                                    @if (@item.companyName == "CES")
+                                    {
+                                        <h6 id="lifer">7 Tag</h6>
+                                    }
+                                    @if (@item.companyName == "BASIC")
+                                    {
+                                        <h6 id="lifer">2 WochenTag</h6>
+                                    }
+                                    @if (@item.companyName == "ABUS")
+                                    {
+                                        <h6 id="lifer">2 WochenTag</h6>
+                                    }
+                                    @if (@item.companyName == "EVVA")
+                                    {
+                                        <h6 id="lifer">2 WochenTag</h6>
+                                    }
+                                </div>
+                                <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
+                            </div>
+                        </div>
+                    </div>
+                    countItem++;
+                }
+            }
+            else if (ViewBag.VorhanSchloss != null)
+            {
+                foreach (var item in ViewBag.VorhanSchloss)
+                {
+                    <div class="ExelItem" id="@countItem">
+                        <div id="productImage">
+                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                        </div>
+                        <div id="productMenuInfo">
+                            <div id="ProductNameUndCost">
+                                <div>
+                                    <h3 id="sys">@item.NameSystem</h3>
+                                    <input type="hidden" value="@item.companyName" id="name" />
+                                </div>
+                                <div style="margin-left: auto;">
+                                    <h4 id="cost">ab @item.Cost €</h4>
+                                </div>
+                            </div>
+                            <div id="product_desciptions">
+                                <div>
+                                    @Html.Raw(@item.description)
+                                </div>
+                            </div>
+                            <div id="productChek">
+                                <div>
+                                    @if (@item.companyName == "CES")
+                                    {
+                                        <h6 id="lifer">7 Tag</h6>
+                                    }
+                                    @if (@item.companyName == "BASIC")
+                                    {
+                                        <h6 id="lifer">2 WochenTag</h6>
+                                    }
+                                    @if (@item.companyName == "ABUS")
+                                    {
+                                        <h6 id="lifer">2 WochenTag</h6>
+                                    }
+                                    @if (@item.companyName == "EVVA")
+                                    {
+                                        <h6 id="lifer">2 WochenTag</h6>
+                                    }
+                                </div>
+                                <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Systeam =  @item.NameSystem,DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
+                            </div>
+                        </div>
+                    </div>
+                    countItem++;
+                }
+            }
+            else if (ViewBag.Aussen != null)
+            {
+                foreach (var item in ViewBag.Aussen)
+                {
+                    <div class="ExelItem" id="@countItem">
+                        <div id="productImage">
+                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                        </div>
+                        <div id="productMenuInfo">
+                            <div id="ProductNameUndCost">
+                                <div>
+                                    <h3 id="sys">@item.NameSystem</h3>
+                                    <input type="hidden" value="@item.companyName" id="name" />
+                                </div>
+                                <div style="margin-left: auto;">
+                                    <h4 id="cost">ab @item.Cost €</h4>
+                                </div>
+                            </div>
+                            <div id="product_desciptions">
+                                <div>
+                                    @Html.Raw(@item.description)
+                                </div>
+                            </div>
+                            <div id="productChek">
+                                <div>
+                                    @if (@item.companyName == "CES")
+                                    {
+                                        <h6 id="lifer">7 Tag</h6>
+                                    }
+                                    @if (@item.companyName == "BASIC")
+                                    {
+                                        <h6 id="lifer">2 WochenTag</h6>
+                                    }
+                                    @if (@item.companyName == "ABUS")
+                                    {
+                                        <h6 id="lifer">2 WochenTag</h6>
+                                    }
+                                    @if (@item.companyName == "EVVA")
+                                    {
+                                        <h6 id="lifer">2 WochenTag</h6>
+                                    }
+                                </div>
+                                <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Systeam =  @item.NameSystem,DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
+                            </div>
+                        </div>
+                    </div>
+                    countItem++;
+                }
+            }
+        }
+    </form>
+</div>
+<script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script>
+<script>
+
+    let allDoc = document.querySelectorAll(".ExelItem");
+
+    function clean() {
+        allDoc.forEach((item) => {
+            item.style.display = "grid";
+        });
+    }
+
+    let selectLiferzeit = document.getElementById("liferzeit");
+
+    function serchLiferZeit(value) {
+
+        allDoc.forEach((item) => {
+
+            let companyTime = item.querySelectorAll("#lifer")[0];
+
+            if (value.trim() == "") {
+                item.style.display = "grid";
+            }
+            else if (companyTime.textContent != value.trim()) {
+                item.style.display = "none";
+            }
+            else {
+                item.style.display = "grid";
+            }
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+
+        let allvalue = "";
+
+        allDoc.forEach((item) => {
+
+            let lif = item.querySelectorAll("#lifer");
+            allvalue += lif[0].textContent + ",";
+        });
+
+        const items = allvalue.split(',');
+
+        const uniqueItems = [...new Set(items)];
+
+        uniqueItems.forEach((item) => {
+
+            let options = document.createElement("option");
+            options.textContent = item;
+            selectLiferzeit.appendChild(options);
+
+        })
+    });
+
+    function selectCompany(value) {
+        let serchSystemName = document.querySelectorAll("#serchSystemName");
+
+        allDoc.forEach((item) => {
+
+            let companyName = item.querySelectorAll("#name")[0];
+
+            if (value == "") {
+                item.style.display = "grid";
+            }
+            else if (companyName.value != value) {
+                item.style.display = "none";
+            }
+            else {
+                item.style.display = "grid";
+            }
+        });
+
+    }
+    function selectSysteam(value) {
+        allDoc.forEach((item) => {
+
+            let companyName = item.querySelectorAll("#sys")[0];
+
+            if (value == "") {
+                item.style.display = "grid";
+            }
+
+            else if (companyName.textContent != value.trim()) {
+                item.style.display = "none";
+            }
+
+            else {
+                item.style.display = "grid";
+            }
+        });
+
+    }
+    function minPrise(value) {
+        allDoc.forEach((item) => {
+
+            let selectorCompany = document.getElementById("company-name");
+
+            let maxPrise = document.getElementById("maxSelect");
+
+            let cost = item.querySelectorAll("#cost")[0];
+
+            let companyName = item.querySelectorAll("#name")[0];
+
+            let result = cost.textContent.replace(/^ab(.*)€$/g, '$1');
+
+            if (value == "") {
+                if (companyName.textContent == selectorCompany.value && maxPrise.value.trim() == "" || result.trim() <= maxPrise.value.trim() && companyName.textContent == selectorCompany.value) {
+                    item.style.display = "grid";
+                }
+            }
+            else if (maxPrise.value.trim() != "") {
+                if (result.trim() >= value.trim() && result.trim() <= maxPrise.value.trim()) {
+                    item.style.display = "grid";
+                }
+                else {
+                    item.style.display = "none";
+                }
+            }
+            else {
+                if (result.trim() >= value.trim()) {
+                    item.style.display = "grid";
+                }
+                else {
+                    item.style.display = "none";
+                }
+            }
+        });
+    }
+    function maxPrise(value) {
+        allDoc.forEach((item) => {
+
+            let minPrise = document.getElementById("minSelect");
+            let cost = item.querySelectorAll("#cost")[0];
+            let result = cost.textContent.replace(/^ab(.*)€$/g, '$1');
+            let selectorCompany = document.getElementById("company-name");
+            let companyName = item.querySelectorAll("#name")[0];
+
+            if (value == "") {
+                if (companyName.textContent == selectorCompany.value && minPrise.value.trim() == "" || result.trim() >= minPrise.value.trim() && companyName.textContent == selectorCompany.value) {
+                    item.style.display = "grid";
+                }
+            }
+            else if (minPrise.value.trim() != "") {
+                if (result.trim() <= value.trim() && result.trim() >= minPrise.value.trim()) {
+                    item.style.display = "grid";
+                }
+                else {
+                    item.style.display = "none";
+                }
+            }
+            else {
+                if (result.trim() <= value.trim()) {
+                    item.style.display = "grid";
+                }
+                else {
+                    item.style.display = "none";
+                }
+            }
+        });
+    }
+
+</script>

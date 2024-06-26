@@ -1,0 +1,418 @@
+﻿@model schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Profil_Knaufzylinder;
+
+@{
+    ViewData["Title"] = $"ProductProfil_Knayf/{Model.Id}";
+}
+@if (User.IsInRole("admin"))
+{
+    @Html.HiddenFor(m => m.Id)
+    <div>
+        <div id="productMenu">
+            <div>
+                <img decoding="async" src="@("~/image/"+@Model.ImageName)" asp-append-version="true" width="400px" height="400px" />
+            </div>
+
+            <div id="product_desciptions">
+                <div>
+                    <h3>@Model.Name</h3>
+                    <h2><strong id="cost" style="line-height: 200%;">@Model.Price €</strong></h2>
+                    <div>
+                        @Html.Raw(@Model.description)
+                    </div>
+                </div>
+
+                @if (Model.isGround == true)
+                {
+                    <div id="cardOptions">
+                        <h6>
+                            Zylinderlänge A (Außenlänge)
+                            Bitte wählen Sie zunächst die Außenlänge des Zylinders
+                        </h6>
+
+                        <select id="aussen" class="form-select" onchange="selectParamAussen(event.target.value)">
+                            @foreach (var listItem in ViewBag.aussen)
+                            {
+                                <option id="OptionA">@listItem</option>
+                            }
+                        </select>
+
+                        <h6>
+                            Zylinderlänge B (Innenlänge)
+                            Bitte wählen Sie jetzt die Innenlänge des Zylinders
+                        </h6>
+
+                        <select id="Innen" class="form-select" onchange="selectParamIntern(event.target.value)">
+                            @foreach (var listItem in ViewBag.innen)
+                            {
+                                <option id="OptionI">@listItem</option>
+                            }
+                        </select>
+                    </div>
+
+                }
+                else
+                {
+                    <div id="cardOptions">
+                        <h6>
+                            Zylinderlänge A (Außenlänge)
+                            Bitte wählen Sie zunächst die Außenlänge des Zylinders
+                        </h6>
+
+                        <select id="aussen" class="form-select" onchange="selectParamAussenIsGround(event.target.value)">
+                            @foreach (var listItem in ViewBag.aussen)
+                            {
+                                <option id="OptionA">@listItem</option>
+                            }
+                        </select>
+
+                        <h6>
+                            Zylinderlänge B (Innenlänge)
+                            Bitte wählen Sie jetzt die Innenlänge des Zylinders
+                        </h6>
+
+                        <select id="Innen" class="form-select" onchange="selectParamInternIsGround(event.target.value)">
+                            @foreach (var listItem in ViewBag.innen)
+                            {
+                                <option id="OptionI">@listItem</option>
+                            }
+                        </select>
+                    </div>
+                }
+
+                <div id="cardOptions">
+                    @{
+                        int valueCount = 0;
+                    }
+                    @if (ViewBag.countOptionsQuery > 0)
+                    {
+                        @for (int i = 0; i < ViewBag.optionsName.Count; i++)
+                        {
+                            <h6>@ViewBag.optionsName[i]</h6>
+
+                            <select class="form-select" id="ProductOptionsSelector">
+
+                                @for (int j = 0; j < ViewBag.countOptionsList[i]; j++)
+                                {
+                                    <option id="@valueCount">@ViewBag.optionsValue[valueCount]</option>
+                                    valueCount++;
+                                }
+                            </select>
+                        }
+                    }
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <a asp-action="Index" class="btn btn-success">Back to List</a>
+    </div>
+
+}
+<script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script>
+<script>
+
+    let OptionPrice = @Html.Raw(@ViewBag.optionsPrise);
+
+    console.log(OptionPrice);
+
+    let AllPrice = document.getElementById("cost");
+
+    localStorage.setItem("cost", AllPrice.innerHTML);
+    localStorage.sInnen = 0;
+    localStorage.sAussen = 0;
+    localStorage.options = 0;
+
+    let AussenCost = 0;
+    let InternCost = 0;
+    let OptionCost = 0;
+
+    function selectParamAussenIsGround(value) {
+        let iterations = 0;
+        let serchedItem = 0;
+
+        let BlockTur = document.querySelector(`#cardOptions`);
+        let Aussen = BlockTur.querySelector("#aussen");
+        let Aitems = Aussen.querySelectorAll("#OptionA");
+
+        let Intern = BlockTur.querySelector("#Innen");
+        let Iitems = Intern.querySelectorAll("#OptionI");
+
+        Aitems.forEach(function (items) {
+            if (serchedItem == 1) {
+                return;
+            }
+            else {
+                let ItemValue = Number(items.innerHTML);
+                if (ItemValue > 31) {
+                    iterations++;
+
+                    if (ItemValue == value) {
+                        serchedItem++;
+                        return;
+                    }
+                }
+                else {
+                    if (ItemValue == value) {
+                        AussenCost = 0;
+                        let a = Number(localStorage.sInnen);
+                        let b = Number(localStorage.sAussen);
+                        let c = Number(localStorage.options);
+
+                        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
+                        AllPrice.innerHTML = String(sum);
+                        console.log(cost.innerHTML);
+                        serchedItem++;
+                        return;
+                    }
+                }
+
+            }
+
+        });
+
+
+
+
+        AussenCost = 0;
+
+        for (let i = 0; i < iterations; i++) {
+            AussenCost = AussenCost + 4;
+        }
+
+
+        localStorage.sAussen = AussenCost;
+        let a = Number(localStorage.sInnen);
+        let b = Number(localStorage.sAussen);
+        let c = Number(localStorage.options);
+
+        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
+        AllPrice.innerHTML = String(sum);
+
+        iterations = 0;
+        serchedItem = 0;
+
+    }
+    function selectParamInternIsGround(value) {
+        let Iiterations = 0;
+        let IserchedItem = 0;
+
+        let BlockTur = document.querySelector(`#cardOptions`);
+
+        let Intern = BlockTur.querySelector("#Innen");
+        let Iitems = Intern.querySelectorAll("#OptionI");
+
+        Iitems.forEach(function (items) 
+        {
+            if (IserchedItem == 1) 
+            {
+                return;
+            }
+            else {
+                let ItemValue = Number(items.innerHTML);
+
+                if (ItemValue > 31) 
+                {
+                    Iiterations++;
+
+                    if (ItemValue == value) 
+                    {
+                        IserchedItem++;
+                        return;
+                    }
+                }
+                else {
+                    if (ItemValue == value) 
+                    {
+                        InternCost = 0;
+                        let a = Number(localStorage.sInnen);
+                        let b = Number(localStorage.sAussen);
+                        let c = Number(localStorage.options);
+
+                        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
+                        AllPrice.innerHTML = String(sum);
+                        console.log(cost.innerHTML);
+                        IserchedItem++;
+                        return;
+                    }
+                }
+
+            }
+
+        });
+
+        InternCost = 0;
+        for (let i = 0; i < Iiterations; i++) {
+            InternCost = InternCost + 4;
+        }
+        localStorage.sInnen = InternCost;
+
+        let a = Number(localStorage.sInnen);
+        let b = Number(localStorage.sAussen);
+        let c = Number(localStorage.options);
+
+        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
+        AllPrice.innerHTML = String(sum);
+        Iiterations = 0;
+        IserchedItem = 0;
+    }
+    function selectParamAussen(value) {
+        let iterations = 0;
+        let serchedItem = 0;
+
+        let BlockTur = document.querySelector(`#cardOptions`);
+        let Aussen = BlockTur.querySelector("#aussen");
+        let Aitems = Aussen.querySelectorAll("#OptionA");
+
+        let Intern = BlockTur.querySelector("#Innen");
+        let Iitems = Intern.querySelectorAll("#OptionI");
+
+        Aitems.forEach(function (items) {
+            if (serchedItem == 1) {
+                return;
+            }
+            else {
+                let ItemValue = Number(items.innerHTML);
+                if (ItemValue > 31) {
+                    iterations++;
+
+                    if (ItemValue == value) {
+                        serchedItem++;
+                        return;
+                    }
+                }
+                else {
+                    if (ItemValue == value) {
+                        AussenCost = 0;
+                        let a = Number(localStorage.sInnen);
+                        let b = Number(localStorage.sAussen);
+                        let c = Number(localStorage.options);
+
+                        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
+                        AllPrice.innerHTML = String(sum);
+                        console.log(cost.innerHTML);
+                        serchedItem++;
+                        return;
+                    }
+                }
+
+            }
+
+        });
+
+
+
+        let size = Iitems.length - iterations;
+
+        let slicedArray = Array.prototype.slice.call(Iitems, 0, size);
+
+        for (let i = 0; i < Iitems.length; i++) {
+            Iitems[i].style.display = "none";
+        }
+
+        for (let i = 0; i < slicedArray.length; i++) {
+            Iitems[i].style.display = "block";
+        }
+        AussenCost = 0;
+
+        for (let i = 0; i < iterations; i++) {
+            AussenCost = AussenCost + 4;
+        }
+
+
+        localStorage.sAussen = AussenCost;
+        let a = Number(localStorage.sInnen);
+        let b = Number(localStorage.sAussen);
+        let c = Number(localStorage.options);
+
+        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
+        AllPrice.innerHTML = String(sum);
+
+        iterations = 0;
+        serchedItem = 0;
+
+
+    }
+    function selectParamIntern(value) {
+        let Iiterations = 0;
+        let IserchedItem = 0;
+
+        let BlockTur = document.querySelector(`#cardOptions`);
+
+        let Intern = BlockTur.querySelector("#Innen");
+        let Iitems = Intern.querySelectorAll("#OptionI");
+
+        Iitems.forEach(function (items) {
+            if (IserchedItem == 1) {
+                return;
+            }
+            else {
+                let ItemValue = Number(items.innerHTML);
+
+                if (ItemValue > 31) {
+                    Iiterations++;
+
+                    if (ItemValue == value) {
+                        IserchedItem++;
+                        return;
+                    }
+                }
+                else {
+                    if (ItemValue == value) {
+                        InternCost = 0;
+                        let a = Number(localStorage.sInnen);
+                        let b = Number(localStorage.sAussen);
+                        let c = Number(localStorage.options);
+
+                        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
+                        AllPrice.innerHTML = String(sum);
+                        console.log(cost.innerHTML);
+                        IserchedItem++;
+                        return;
+                    }
+                }
+
+            }
+
+        });
+        InternCost = 0;
+        for (let i = 0; i < Iiterations; i++) {
+            InternCost = InternCost + 4;
+        }
+        localStorage.sInnen = InternCost;
+
+        let a = Number(localStorage.sInnen);
+        let b = Number(localStorage.sAussen);
+        let c = Number(localStorage.options);
+
+        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
+        AllPrice.innerHTML = String(sum);
+        Iiterations = 0;
+        IserchedItem = 0;
+    }
+    function selectParamOptions(event, count) {
+        var selectedOptionId = event.target.options[event.target.selectedIndex].id;
+        OptionCost = OptionPrice[selectedOptionId];
+        localStorage.options = OptionCost;
+        let a = Number(localStorage.sInnen);
+        let b = Number(localStorage.sAussen);
+        let c = Number(localStorage.options);
+
+        let sum = parseFloat(localStorage.getItem("cost").replace(',', '.')) + a + b + c;
+        AllPrice.innerHTML = String(sum);
+
+        OptionCost = 0;
+        console.log(OptionPrice[selectedOptionId]);
+    }
+
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+

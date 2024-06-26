@@ -1,0 +1,659 @@
+﻿@model schliessanlagen_konfigurator.Models.Orders;
+@using Microsoft.AspNetCore.Http;
+
+@{
+    ViewData["Title"] = "ChangedKonfigPlan";
+    int countFalse = 0;
+    int chekbox = 1;
+    int chekboxtur = 1;
+    int idHorizont = 1;
+    int idcountTurBlock = 1;
+    int keyId = 1;
+}
+<div>
+    <div id="konfigMenu">
+        <button type="button" class="btn btn-danger">1. Schließplan erstellen</button>
+        <button type="button" class="btn btn-secondary"><a href="@Url.Action("System_Auswählen","Konfigurator",new{ userName = @ViewBag.UserNameItem} )">2. System auswählen</a></button>
+        <button type="button" class="btn btn-secondary">3. Parameter einstellen</button>
+    </div>
+    <form asp-action="ChangedKonfigPlanPost" enctype="multipart/form-data" asp-controller="Konfigurator">
+
+        @Html.HiddenFor(m => m.userKey)
+
+        <input type="hidden" value="@Model.userKey" name="userName" />
+
+        <div id="InformBar">
+            <div id="blockSclussel">
+                <div id="sclusselInfo">
+                    <div id="schlussel">
+                        <h3>Schlüssel</h3>
+                    </div>
+
+                    <div id="schlussel2">
+                        <input id="removeButton" type="button" value="-">
+                        <input id="addButton" type="button" value="+">
+                    </div>
+                </div>
+                <div id="itemKeyBlock">
+                    @{
+                        int countTur = 0;
+                        foreach (var list in ViewBag.key)
+                        {
+                                                                <div class="TexCount" id="TexCount-@keyId">
+                                                                    <input type="text" style="position: relative;" name="FurNameKey" value="@list.ForNameKey" />
+                                                                    <div id="TexInputKey">
+                                                                        <input id="inputS" onchange="chekedNameArienKey(event.target.value,1)" name="NameKey" value='@list.NameKey' type="text" />
+                                                                    </div>
+                                                                    <div>
+                                                                        <input id="inputCount" name="CountKey" value="@list.CountKey" type="text" />
+                                                                    </div>
+                                                                </div>
+                            keyId++;
+                        }
+                    }
+                </div>
+            </div>
+            <div>
+                <div id="sclusselInfo2">
+                    <div id="schlussel">
+                        <h6>Pos</h6>
+                    </div>
+                    <div id="schlussel">
+                        <h6 style="margin-left: 10px;">Türbezeichnung</h6>
+                    </div>
+                    <div id="schlussel" style="margin-left:150px">
+                        <h6>Zylindertyp</h6>
+                    </div>
+                    <div id="schlussel" style="text-align: center;margin-left:80px">
+                        <h6>Zylinderlänge mm</h6>
+
+                    </div>
+                    <div id="schlussel3">
+                        <h6>Stück</h6>
+                    </div>
+                </div>
+                <div>
+                    <div id="turInfo">
+                        <div id="BlockTur-@idcountTurBlock">
+                                @foreach (var info in ViewBag.Orders)
+                                {
+                                    countTur++;
+                                <div id="BlockTur-@idcountTurBlock">
+                                   
+                                    <div class="TexCountTur">
+                                        <div id="ItemTur">
+                                            <div id="position">
+                                                <h6 id="counterTur">@countTur</h6>
+                                            </div>
+                                            <div>
+                                                <input id="inputTur" value="@info.DorName" name="Turname" onchange="chekedNameArientiren(event.target.value,@countTur)" placeholder="Name der Tür" />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            @if (info.ZylinderId == 1)
+                                            {
+                                                <img id="typeSylinder" src="/Image/doppelzylinder.png" height="25" width="40" />
+                                            }
+                                            @if (info.ZylinderId == 2)
+                                            {
+                                                <img id="typeSylinder" src="/Image/halbzylinder.png" height="25" width="40" />
+                                            }
+                                            @if (info.ZylinderId == 3)
+                                            {
+                                                <img id="typeSylinder" src="/Image/knaufzylinder.png" height="25" width="40" />
+                                            }
+                                            @if (info.ZylinderId == 4)
+                                            {
+                                                <img id="typeSylinder" src="/Image/briefkastenzylinder.png" height="25" width="40" />
+                                            }
+                                            @if (info.ZylinderId == 5)
+                                            {
+                                                <img id="typeSylinder" src="/Image/vorhangschloss.png" height="25" width="40" />
+                                            }
+                                            @if (info.ZylinderId == 6)
+                                            {
+                                                <img id="typeSylinder" src="/Image/aussenzylinder.png" height="25" width="40" />
+                                            }
+                                        </div>
+
+                                        <div id="SelectTurItem">
+                                            <select id="TypeSelectTurType" onchange="selectParam(event.target.value,@countTur)" name="ZylinderId">
+                                                @foreach (var list in ViewBag.Zylinder_Typ)
+                                                {
+                                                    if (info.ZylinderId == list.Id)
+                                                    {
+                                                        <option selected>@list.nameType</option>
+                                                    }
+                                                    else
+                                                    {
+                                                          <option>@list.nameType</option>
+                                                    }
+                                                  
+                                                }
+                                            </select>
+                                        </div>
+
+                                        <div id="SelectTurItem">
+                                            <select id="TypeSelectTurItem" class="aussen" name="aussen">
+                                                @foreach (var list in ViewBag.DoppelAussen)
+                                                {
+                                                    if (info.aussen == list)
+                                                    {
+                                                        <option selected id="OptionA">@list</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option id="OptionA">@list</option>
+                                                    }
+                                                   
+                                                }
+                                            </select>
+
+                                        </div>
+                                        <div id="SelectTurItem">
+                                            <select id="TypeSelectTurItem" class="Innen" name="innen">
+                                                @foreach (var list in ViewBag.DoppelIntern)
+                                                {
+                                                    if (info.ZylinderId == 1 || info.ZylinderId == 3)
+                                                    {
+                                                        if (info.innen == list)
+                                                        {
+                                                            <option selected id="OptionI">@list</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option id="OptionI">@list</option>
+                                                        }
+                                                    } 
+                                                }
+                                            </select>
+                                        </div>
+
+                                        <div id="chekerTur">
+                                            <button type="button" onclick="Minus(@countTur)">-</button>
+                                            <input id="infoButten" value="@info.Count" type="text" name="CountTur" />
+                                              <button type="button" onclick="Plus(@countTur)">+</button>
+
+                                        </div>
+                                    </div>
+                                    </div>
+                                 idcountTurBlock++;
+                                }
+                        </div>
+                        <div id="InfoValue1">
+
+                                @for (var list = 0; list < ViewBag.Key.Count; list++)
+                                {
+                                    string idhorizontal = $"{idHorizont}horizontal";
+
+                                    <div class="horizontal1" id="@idhorizontal">
+
+                                        @if (ViewBag.key.Count > ViewBag.Orders.Count)
+                                        {
+                                            @for (int i = 0; i < ViewBag.key.Count; i++)
+                                            {
+                                                string idWithoutSpaces = $"{chekboxtur}checkbox{chekbox}";
+                                                string idIchekbox = $"I{chekboxtur}checkbox{chekbox}";
+                                                string idChekboxContainer = $"{chekboxtur}.checkboxContainer{chekbox}";
+                                                <div class="checkboxContainer" id="@idChekboxContainer">
+
+                                                    @if (@ViewBag.KeyValueFT[countFalse].isOpen == true)
+                                                    {
+                                                        <input type="checkbox" checked id="@idWithoutSpaces">
+                                                        <input type="hidden" value="true" name="IsOppen" id="@idIchekbox">
+                                                        chekboxtur++;
+                                                        countFalse++;
+                                                 
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" id="@idWithoutSpaces">
+                                                        <input type="hidden" value="false" name="IsOppen" id="@idIchekbox">
+                                                        chekboxtur++;
+                                                        countFalse++;
+                                                        
+                                                    }
+                                                
+                                                </div>
+                                           
+                                            }
+                                            chekboxtur = 1;
+                                            chekbox++;
+                                        }
+                                        else
+                                        {
+                                            @for (int i = 0; i < ViewBag.Orders.Count; i++)
+                                            {
+                                                string idWithoutSpaces = $"{chekboxtur}checkbox{chekbox}";
+                                                string idIchekbox = $"I{chekboxtur}checkbox{chekbox}";
+                                                string idChekboxContainer = $"{chekboxtur}.checkboxContainer{chekbox}";
+                                                <div class="checkboxContainer" id="@idChekboxContainer">
+
+                                                    @if (@ViewBag.KeyValueFT[countFalse].isOpen == true)
+                                                    {
+                                                        <input type="checkbox" checked id="@idWithoutSpaces">
+                                                        <input type="hidden" value="true" name="IsOppen" id="@idIchekbox">
+                                                        chekboxtur++;
+                                                        countFalse++;
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" id="@idWithoutSpaces">
+                                                        <input type="hidden" value="false" name="IsOppen" id="@idIchekbox">
+                                                        chekboxtur++;
+                                                        countFalse++;
+                                                    }
+                                                </div>
+                                           
+                                            }
+                                            chekboxtur = 1;
+                                            chekbox++;
+                                        }
+
+                                    </div>
+                                    idHorizont++;
+                                }
+
+                        </div>
+                    </div>
+                </div>
+                <div id="add_And_Minus">
+                    <input id="removeButtonTur" type="button" value="-">
+                    <input id="addButtonTur" type="button" value="+">
+                </div>
+            </div>
+        </div>
+        <input type="text" name="IsOppen" style="display:none"  id="vBool" />
+        <input type="submit" onclick="(bolleanCheked())" class="btn btn-success" id="input" value="Weiter" />
+    </form>
+
+</div>
+<script>
+
+    const scroll1 = document.getElementById('itemKeyBlock');
+    const scroll2 = document.getElementById('InfoValue1');
+
+    // Функция для синхронизации прокрутки
+    function syncScroll(source, target) {
+        target.scrollLeft = source.scrollLeft;
+    }
+
+    // Добавление обработчиков событий прокрутки для обоих элементов
+    scroll1.addEventListener('scroll', () => syncScroll(scroll1, scroll2));
+    scroll2.addEventListener('scroll', () => syncScroll(scroll2, scroll1));
+
+    let blockCount = document.querySelectorAll(".TexCount").length;
+    let blockTur = document.querySelectorAll("#inputTur").length;
+
+    let DoppelAussenSize = @Html.Raw(ViewBag.SizeDoppelAussen);
+    let DoppelInternSize = @Html.Raw(ViewBag.SizeDoppelIntern);
+
+    let KnayfAussenSize = @Html.Raw(ViewBag.SizeKnayfAussen);
+    let KnayfInternSize = @Html.Raw(ViewBag.SizeKnayfIntern);
+
+    let HalbSize = @Html.Raw(ViewBag.SizeHalb);
+    let data = JSON.parse(localStorage.getItem(`${blockTur}checkbox${blockCount}`));
+    let h = 0;
+
+
+    let boolArray = [];
+
+    function bolleanCheked() 
+    {
+        let dorCounter = document.querySelectorAll("#inputTur");
+        let keyCounter = document.querySelectorAll("#inputS");
+        let boolV = document.getElementById('vBool');
+        for (let i = 0; i < keyCounter.length; i++) {
+            h++;
+            let w = 0;
+            for (let j = 0; j < dorCounter.length; j++) {
+                w++;
+                let chekbox = document.getElementById(`I${w}checkbox${h}`);
+
+                boolArray.push(chekbox.value);
+            }
+        }
+        boolV.value = boolArray;
+    }
+
+    function chekedNameArientiren(value, id) 
+    {
+        let allKeyName = document.querySelectorAll("#inputS");
+
+        let cheker = 1;
+        for (let i = 0; i < allKeyName.length; i++) {
+            if (allKeyName[i].value == value) {
+                let checkbox = document.getElementById(`${id}checkbox${cheker}`);
+                checkbox.checked = true;
+                let Icheckbox = document.getElementById(`I${id}checkbox${cheker}`);
+                Icheckbox.value = true;
+            }
+            cheker++;
+        }
+
+    }
+    function chekedNameArienKey(value, id)
+    {
+        let allTurName = document.querySelectorAll("#inputTur");
+        let cheker = 1;
+
+        for (let i = 0; i < allTurName.length; i++) {
+            if (allTurName[i].value == value) {
+                let checkbox = document.getElementById(`${cheker}checkbox${id}`);
+                checkbox.checked = true;
+                let Icheckbox = document.getElementById(`I${cheker}checkbox${id}`);
+                Icheckbox.value = true;
+
+            }
+            cheker++;
+        }
+    }
+    function Plus(turNumber) 
+    {
+        let BlockTur = document.querySelector(`#BlockTur-${turNumber}`);
+        let countTur = BlockTur.querySelector("#infoButten");
+        let count = countTur.value;
+        count++;
+        countTur.value = count;
+    }
+    function Minus(turNumber) 
+    {
+        let BlockTur = document.querySelector(`#BlockTur-${turNumber}`);
+        let countTur = BlockTur.querySelector("#infoButten");
+        let count = countTur.value;
+        count--;
+        countTur.value = count;
+    }
+    function selectParam(value, turNumber) 
+    {
+        let BlockTur = document.querySelector(`#BlockTur-${turNumber}`);
+
+        let Aussen = BlockTur.querySelector(".aussen");
+        let Intern = BlockTur.querySelector(".Innen");
+        let Option = BlockTur.querySelector(".Option");
+
+        let TypeSylinder = BlockTur.querySelector("#typeSylinder");
+
+        console.log(TypeSylinder);
+
+        let Aitems = Aussen.querySelectorAll("#OptionA");
+        let Iitems = Intern.querySelectorAll("#OptionI");
+
+        Aitems.forEach(function (items) {
+            items.parentNode.removeChild(items);
+        });
+
+        Iitems.forEach(function (items) {
+            items.parentNode.removeChild(items);
+        });
+
+
+        if (value == "Doppelzylinder") {
+            for (let i = 0; i < DoppelAussenSize.length; i++) {
+                let option = document.createElement("option");
+                option.id = "OptionA";
+                option.innerHTML = DoppelAussenSize[i];
+                option.innerText = DoppelAussenSize[i];
+                Aussen.appendChild(option);
+
+            }
+            for (let i = 0; i < DoppelInternSize.length; i++) {
+                let option = document.createElement("option");
+                option.id = "OptionI";
+                option.innerHTML = DoppelInternSize[i];
+                option.innerText = DoppelInternSize[i];
+                Intern.appendChild(option);
+            }
+
+            TypeSylinder.src = "/Image/doppelzylinder.png";
+        }
+        if (value == "Halbzylinder") {
+            for (let i = 0; i < HalbSize.length; i++) {
+                let option = document.createElement("option");
+                option.id = "OptionA";
+                option.innerHTML = HalbSize[i];
+                option.innerText = HalbSize[i];
+                Aussen.appendChild(option);
+            }
+
+            TypeSylinder.src = "/Image/halbzylinder.png";
+        }
+        if (value == "Knaufzylinder") {
+            for (let i = 0; i < KnayfAussenSize.length; i++) {
+                let option = document.createElement("option");
+                option.id = "OptionA";
+                option.innerHTML = KnayfAussenSize[i];
+                option.innerText = KnayfAussenSize[i];
+                Aussen.appendChild(option);
+            }
+            for (let i = 0; i < KnayfInternSize.length; i++) {
+                let option = document.createElement("option");
+                option.id = "OptionI";
+                option.innerHTML = KnayfInternSize[i];
+                option.innerText = KnayfInternSize[i];
+                Intern.appendChild(option);
+            }
+
+            TypeSylinder.src = "/Image/knaufzylinder.png";
+
+        }
+        if (value == "Hebelzylinder") {
+
+            TypeSylinder.src = "/Image/briefkastenzylinder.png";
+        }
+        if (value == "Vorhangschloss") {
+            TypeSylinder.src = "/Image/vorhangschloss.png";
+        }
+        if (value == "Aussenzylinder") {
+
+            TypeSylinder.src = "/Image/aussenzylinder.png";
+        }
+
+    }
+
+    function createCustomCheckbox(id) {
+        var checkbox = document.getElementById(id);
+        var checkboxValue = false;
+
+        if (!localStorage.getItem(id)) {
+            if (checkbox.checked == true) {
+                localStorage.setItem(id, 'true');
+            }
+            else {
+                localStorage.setItem(id, 'false');
+            }
+
+        }
+
+        var savedValue = localStorage.getItem(id);
+
+        if (savedValue !== null) {
+
+            checkbox.checked = (savedValue === 'true');
+            checkboxValue = checkbox.checked;
+
+        }
+
+        checkbox.addEventListener('change', function () {
+
+            localStorage.setItem(id, this.checked);
+
+            checkboxValue = this.checked;
+
+            let switches = document.getElementById(`I${id}`);
+
+            if (switches !== null)
+                switches.value = String(this.checked);
+
+        });
+    }
+
+    function foo() 
+    {
+        localStorage.clear();
+        createCustomCheckbox(`${blockTur}checkbox${blockCount}`);
+    }
+
+    window.onload = foo()
+
+    function removeBlockTur() 
+    {
+        let blockToRemove = document.getElementById('BlockTur-' + blockTur);
+
+        if (blockToRemove) {
+            blockToRemove.remove();
+
+            for (let i = 1; i <= blockCount; i++) 
+            {
+                let Horizontal = document.getElementById(`${blockTur}.checkboxContainer${i}`);
+
+                Horizontal.remove();
+            }
+           
+
+            blockTur--;
+        }
+    }
+
+    function addBlockTur() 
+    {
+        blockTur++;
+
+        let newBlock = document.createElement('div');
+        newBlock.id = 'BlockTur-' + blockTur;
+        newBlock.innerHTML = `  <div class="TexCountTur">
+                                    <div id="ItemTur">
+                                        <div id="position">
+                                           <h6 id="counterTur">${blockTur}</h6>
+                                        </div>
+
+                                        <div>
+                                                  <input id="inputTur" required  onchange="chekedNameArientiren(event.target.value,${blockTur})" name="Turname" placeholder="Name der Tür" />
+                                        </div>
+
+                                            <div>
+
+                                                 <img  id="typeSylinder" src="/Image/doppelzylinder.png" height="25" width="40"  />
+
+                                            </div>
+                                    </div>
+
+                                    <div id="SelectTurItem">
+                                            <select id="TypeSelectTurType"  onchange="selectParam(event.target.value,${blockTur})" name="ZylinderId">
+                                            @foreach (var list in ViewBag.Zylinder_Typ)
+                                            {
+                                              <option>@list.nameType</option>
+                                            }
+                                        </select>
+                                    </div>
+
+                                    <div id="SelectTurItem">
+                                            <select id="TypeSelectTurItem"  class="aussen" name="aussen">
+                                            @foreach (var list in ViewBag.DoppelAussen)
+                                            {
+                                                  <option id="OptionA">@list</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div id="SelectTurItem">
+                                                <select id="TypeSelectTurItem" class="Innen" name="innen">
+                                                @foreach (var list in ViewBag.DoppelIntern)
+                                                {
+                                                       <option id="OptionI">@list</option>
+                                                }
+                                        </select>
+                                    </div>
+
+
+                                               <div id="chekerTur">
+                                                <button type="button" onclick="Plus(${blockTur})">+</button>
+                                            <input id="infoButten"  value="1" type="text" name="CountTur" />
+                                                <button type="button" onclick="Minus(${blockTur})">-</button>
+                                        </div>
+                                </div>
+
+                    `;
+
+        document.getElementById('BlockTur-1').appendChild(newBlock);
+
+        for (let i = 1; i <= blockCount; i++) 
+        {
+
+            let newBlockTur = document.createElement('div');
+
+            newBlockTur.innerHTML = ` <input type="checkbox" id=${blockTur}checkbox${i}>
+                    <input type="hidden" value="false" id="I${blockTur}checkbox${i}">`;
+
+            newBlockTur.id = `${blockTur}.checkboxContainer${i}`;
+
+            newBlockTur.classList.add('checkboxContainer');
+
+            document.getElementById(`${i}horizontal`).appendChild(newBlockTur);
+
+            document.getElementById('InfoValue1').appendChild(document.getElementById(`${i}horizontal`));
+
+            createCustomCheckbox(`${blockTur}checkbox${i}`);
+        }
+    }
+    function removeBlock() 
+    {
+        let blockToRemove = document.getElementById('TexCount-' + blockCount);
+        let blockChekbox = document.getElementById("InfoValue1");
+        let allBlock = document.querySelectorAll(".horizontal1");
+
+            blockToRemove.remove();
+            blockChekbox.removeChild(allBlock[allBlock.length - 1]);
+        blockCount--;
+    }
+
+    function addBlock() {
+        blockCount++;
+
+        let newBlock = document.createElement('div');
+        newBlock.id = 'TexCount-' + blockCount;
+        newBlock.innerHTML = `
+                                   <div  class="TexCount">
+                                         <input type="text" required  name="FurNameKey" style="position: relative;" value="${blockCount}" />
+                                <div id="TexInputKey">
+                                        <input id="inputS" required name="NameKey" onchange="chekedNameArienKey(event.target.value,${blockCount})" placeholder="Name des Schlüssels" type="text" />
+                                </div>
+                                <div>
+                                             <input id="inputCount" required name="CountKey" value="1" type="text" />
+                                </div>
+                            </div>
+
+                `;
+        document.getElementById('itemKeyBlock').appendChild(newBlock);
+
+        let horizont = document.createElement('div');
+        horizont.id = `${blockCount}horizontal`;
+        horizont.classList.add('horizontal1');
+
+        for (let i = 1; i <= blockTur; i++) 
+        {
+
+            let newBlockTur = document.createElement('div');
+
+            newBlockTur.innerHTML = ` <input type="checkbox" id=${i}checkbox${blockCount}>
+                                        <input type="hidden"  value="false" id="I${i}checkbox${blockCount}">`;
+
+            newBlockTur.id = `${i}.checkboxContainer${blockCount}`;
+
+            newBlockTur.classList.add('checkboxContainer');
+
+            horizont.appendChild(newBlockTur);
+
+            document.getElementById('InfoValue1').appendChild(horizont);
+
+            createCustomCheckbox(`${i}checkbox${blockCount}`);
+        }
+
+    }
+
+    document.getElementById('removeButton').addEventListener('click', removeBlock);
+    document.getElementById('addButton').addEventListener('click', addBlock);
+
+    document.getElementById('removeButtonTur').addEventListener('click', removeBlockTur);
+    document.getElementById('addButtonTur').addEventListener('click', addBlockTur);
+
+</script>
