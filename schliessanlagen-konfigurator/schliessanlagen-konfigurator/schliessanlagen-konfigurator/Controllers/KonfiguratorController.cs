@@ -3636,7 +3636,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 }
 
-                ViewBag.optionsNameKnayf = ngf.Select(x => x.Name).ToList();
+                ViewBag.optionsNameKnayf = ngf.Select(x => x).ToList();
 
                 ViewBag.OptionsNameKnayfJson = JsonConvert.SerializeObject(ngf.Select(x => x.Name).ToList());
 

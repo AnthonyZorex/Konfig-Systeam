@@ -89,7 +89,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Description</label>
-                                    <input name="Descriptions" value="@options.Description" class="form-control" />
+                                    <textarea name="Descriptions" id="discriptions" class="form-control"> 
+                                        @options.Description
+                                    </textarea>
                                 </div>
 
                                 <h1>Value & Cost </h1>
@@ -139,6 +141,9 @@
 
             tinymce.init({
                 selector: '#exampleFormControlTextarea1'
+            });
+            tinymce.init({
+                selector: '#discriptions'
             });
 
             let plusAussen_Innen = document.getElementById('addAussen_Innen');
