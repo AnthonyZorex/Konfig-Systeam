@@ -8,8 +8,18 @@
     position:absolute;
     align-content: center;
 }
-#html,body{
-    height:100%;
+#countTurSelect {
+    margin-left: 10px;
+    outline:none;
+}
+#hilfeOptionsIcon {
+    position: absolute;
+    margin-top: -28px;
+    margin-left: 830px;
+    cursor:pointer;
+}
+#html, body {
+    height: 100%;
 }
 #optionsItems {
     margin-top: 20px;
@@ -32,6 +42,7 @@
     outline:none;
     margin-right:50px;
 }
+
 
 @media(max-width:900px) and (orientation: portrait) 
 {
@@ -2853,7 +2864,7 @@
         margin-left: 30px;
         margin-right: 10px;
     }
-
+  
     #sclusselInfo2 {
         width: 800px;
         padding: 5px;

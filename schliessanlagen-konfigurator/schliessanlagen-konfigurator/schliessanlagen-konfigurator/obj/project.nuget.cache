@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "T9g6Bx5TPgWudCVn+Q5a4kllKlXUVJ86Kvs5+wBQeCQOa0nUm5HVxHEBI4XOwN+SdqlYhVI4X9gh3f0DObzxuw==",
+  "dgSpecHash": "XMmoPjNVVIoRrXLDapsovkzfWwIYuTrZM1asDjA7RL8tMhJsnOCqGlJcbZ7bYkl+dwLVN49O5XObFpcDNPwbBQ==",
   "success": true,
   "projectFilePath": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj",
   "expectedPackageFiles": [
@@ -8,7 +8,7 @@
     "C:\\Users\\JAKUB\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\JAKUB\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
     "C:\\Users\\JAKUB\\.nuget\\packages\\bouncycastle.cryptography\\2.3.0\\bouncycastle.cryptography.2.3.0.nupkg.sha512",
-    "C:\\Users\\JAKUB\\.nuget\\packages\\buildbundlerminifier2022\\2.9.9\\buildbundlerminifier2022.2.9.9.nupkg.sha512",
+    "C:\\Users\\JAKUB\\.nuget\\packages\\buildbundlerminifier\\3.2.449\\buildbundlerminifier.3.2.449.nupkg.sha512",
     "C:\\Users\\JAKUB\\.nuget\\packages\\epplus\\4.5.3.3\\epplus.4.5.3.3.nupkg.sha512",
     "C:\\Users\\JAKUB\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\JAKUB\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

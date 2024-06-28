@@ -3561,7 +3561,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 }
 
-                ViewBag.optionsName = ngf.Select(x => x.Name).ToList();
+                ViewBag.optionsName = ngf.Select(x => x).ToList();
 
                 ViewBag.DoppelOptionsNameJson = JsonConvert.SerializeObject(ngf.Select(x => x.Name).ToList());
 
@@ -4253,6 +4253,8 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 ViewBag.DopelzylinderJson = JsonConvert.SerializeObject(DopelOrderlist.ToList());
 
+                ViewBag.DoppelzylinderDescriptions = JsonConvert.SerializeObject(DopelOrderlist.Select(x=>x.description).ToList());
+
                 ViewBag.Dopelzylinderaussen = AussenInen.Select(x => x.aussen).ToList();
 
                 ViewBag.CostDoppelAussen = JsonConvert.SerializeObject(AussenInen.Select(x => x.costSizeAussen).ToList());
@@ -4302,14 +4304,15 @@ namespace schliessanlagen_konfigurator.Controllers
                 ViewBag.DoppelOptionsValueI = JsonConvert.SerializeObject(ngfValue.Select(x => x.Value).ToList());
                 ViewBag.optionsPrise = JsonConvert.SerializeObject(ngfValue.Select(x => x.Cost).ToList());
 
-                ViewBag.optionsNameI = ngf.Select(x => x.Name).ToList();
+                ViewBag.optionsNameI = ngf.Select(x => x).ToList();
                 ViewBag.optionsValueI = ngfValue.Select(x => x.Value).ToList();
             }
             else
             {
                 var DoppelInfo = db.Profil_Doppelzylinder.Where(x => x.NameSystem == Systeam).ToList();
                 ViewBag.DopelzylinderJson = JsonConvert.SerializeObject(DoppelInfo);
-
+                ViewBag.DoppelzylinderDescriptions = JsonConvert.SerializeObject(DoppelInfo.Select(x => x.description).ToList());
+                
                 var DSize = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == DoppelInfo[0].Id).ToList();
                 ViewBag.Dopelzylinderaussen = DSize.Select(x=>x.aussen).ToList();
                 ViewBag.DopelzylinderIntern = DSize.Select(x => x.Intern).ToList();
@@ -4358,7 +4361,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 ViewBag.DoppelOptionsValueI = JsonConvert.SerializeObject(ngfValue.Select(x => x.Value).ToList());
                 ViewBag.optionsPrise = JsonConvert.SerializeObject(ngfValue.Select(x => x.Cost).ToList());
 
-                ViewBag.optionsNameI = ngf.Select(x => x.Name).ToList();
+                ViewBag.optionsNameI = ngf.Select(x => x).ToList();
                 ViewBag.optionsValueI = ngfValue.Select(x => x.Value).ToList();
             }
 

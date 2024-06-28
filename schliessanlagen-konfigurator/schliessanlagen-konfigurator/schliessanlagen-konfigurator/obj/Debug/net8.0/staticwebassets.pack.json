@@ -389,8 +389,16 @@
       "PackagePath": "staticwebassets\\Image\\logo_evva.png"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\ohne-ngf.png",
+      "PackagePath": "staticwebassets\\Image\\ohne-ngf.png"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\options.png",
       "PackagePath": "staticwebassets\\Image\\options.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\question.png",
+      "PackagePath": "staticwebassets\\Image\\question.png"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\sort.png",

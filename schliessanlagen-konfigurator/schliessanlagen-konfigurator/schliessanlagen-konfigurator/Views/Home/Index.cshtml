@@ -154,13 +154,12 @@
 
 @section scripts
 {
-    <script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script>
     <script type="text/javascript">
 
         tinymce.init({
             selector: '#exampleFormControlTextarea1'
         });
-
+        
         let plusAussen_Innen = document.getElementById('addAussen_Innen');
         let docInnen = document.getElementById('InnenProfilDopel');
         let docAussen = document.getElementById('AussenProfilDopel');
@@ -217,9 +216,9 @@
             });
 
             let counterOptions = 2;
+
             function createBlock() 
             {
-
                 counterOptions = 2;
                 const block = document.createElement('div');
                 block.classList.add('input-block');
@@ -234,7 +233,7 @@
                                                     <p></p>
                                                 </div>
                                                 <label>Descriptions</label>
-                                                <input class="form-control" type="text" name="NGFDescriptions" />
+                                                  <textarea class="form-control" id="descriptionOptions"  name="NGFDescriptions"></textarea>
                                                 <h1>Value & Cost </h1>
                                                 <div id="Aussen_Innen_ProfilDopel">
                                                     <div id="valueNGF">
@@ -249,11 +248,9 @@
                                             </div>`;
 
                 blockCounter++;
-             
+
                 return block;
             }
-
-
           
             function addInputs(block) 
             {
@@ -277,8 +274,6 @@
                 counter[counter.length - 1].value = counterOptions;
 
                 counterOptions++;
-
-                console.log(counterOptions);
 
             };
 

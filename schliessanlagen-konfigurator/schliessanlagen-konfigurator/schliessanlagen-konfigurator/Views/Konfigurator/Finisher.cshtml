@@ -9,6 +9,33 @@
     int d = 0;
     
 }
+
+<style>
+
+    #modalDiscriptions 
+    {
+        gap: 50px;
+        display: grid;
+        grid-template-columns: auto auto;
+    }
+
+    .closeOptions {
+        margin-left: auto;
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .closeOptions:hover,
+        .closeOptions:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+</style>
+
 @using (Html.BeginForm("SaveUserOrders", "Konfigurator", FormMethod.Post))
 { 
         
@@ -139,7 +166,7 @@
                                     <input readonly style="border: none;max-width: 80px;" name="TurCounter" id="countSchlusse-@d" type="number" min="1" value="@ViewBag.CounterTur[@elemNum]" />
                                     <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
                                 </div>
-              
+                                    
                             </div>
 
                             <div id="optionsItems">
@@ -152,7 +179,9 @@
                                     {
                                         @for (int i = 0; i < ViewBag.optionsName.Count; i++)
                                         {
-                                            <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.optionsName[i]" />
+                                            <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.optionsName[i].Name" />
+                                            
+                                            <img onclick="OpenDescriptions(@i)"  id="hilfeOptionsIcon" src="@("/Image/question.png")" height="20" width="20" />
 
                                             <select style="margin-bottom: 10px;" class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Doppel',event.target.id,event.target.value,@valueCount,'@ViewBag.optionsName[i]',@i,@d)">
 
@@ -162,8 +191,25 @@
 
                                                     valueCount++;
                                                 }
-
                                             </select>
+
+                                            <div id="myModalOptionsDescriptions" class="modal">
+                                                <div class="modal-content">
+                                                    <span onclick="closeOptions(@i)" class="closeOptions">&times;</span>
+                                                   
+                                                    <div id="modalDiscriptions">
+                                                        <div>
+                                                            <h2>@ViewBag.optionsName[i].Name</h2>
+                                                            <img src="@("/Image/"+@ViewBag.optionsName[i].ImageName)" height="300" width="300" />
+                                                        </div>
+
+                                                        <div id="bOptions2">
+                                                            @Html.Raw(@ViewBag.optionsName[i].Description)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
 
                                             <input type="hidden" id="Option-@d + @i" />
                                             <input type="hidden" id="d-@d + @i" />
@@ -196,29 +242,30 @@
                                 }
                             }
                         </div>
-                </div>
-                    <div id="myModal-@d" class="modal">
+                        <div id="myModal-@d" class="modal">
 
-                        <div class="modal-content">
+                            <div class="modal-content">
 
-                            <span onclick="closedModal(@d)" class="close">&times;</span>
-                            <div style="display:grid; grid-template-columns: 450px 500px;">
-                                <div id="productImage">
-                                    <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
-                                </div>
-                                <div>
-                                    <h3>@item.Name</h3>
-                                    <div id="product_desciptions">
-                                        <div>
-                                            @Html.Raw(@item.description)
+                                <span onclick="closedModal(@d)" class="close">&times;</span>
+                                <div style="display:grid; grid-template-columns: 450px 500px;">
+                                    <div id="productImage">
+                                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
+                                    </div>
+                                    <div>
+                                        <h3>@item.Name</h3>
+                                        <div id="product_desciptions">
+                                            <div>
+                                                @Html.Raw(@item.description)
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                           
 
+
+                            </div>
                         </div>
-                    </div>
+                </div>
+                   
 
                     elemNum++;
                 d++;
@@ -932,11 +979,33 @@
 
     let removeButton = document.getElementById("removeOrder");
     let AllOrderID = document.querySelector("#OrderId");
-
+    
     var span = document.getElementsByClassName("close")[0];
+
     let idItem = 0;
     let Dorname = @Html.Raw(ViewBag.DornameJson);
+    function closeOptions(Id) 
+    {
+        const modal = document.querySelectorAll("#myModalOptionsDescriptions");
+        modal[Id].style.display = "none";
+    }
 
+    window.onclick = function (event) 
+    {
+        if (event.target === modal) 
+        {
+            modal.forEach((items) => {
+                items.style.display = "none";
+            });
+        }
+    }
+    function OpenDescriptions(id) 
+    {
+        const modal = document.querySelectorAll("#myModalOptionsDescriptions");
+        modal[id].style.display = "block";
+    }
+
+    let DoppelDescriptions = @Html.Raw(ViewBag.DoppelzylinderDescriptions);
 
     function switchTypeSylinder(BlockN, value, elemNum) 
     {
@@ -1034,36 +1103,81 @@
                                     <div>
                                         @{
                                             int value = 0;
-                                        }
-                                        @if (ViewBag.countOptionsQueryI > 0)
-                                        {
-                                            @for (int i = 0; i < @ViewBag.optionsNameI.Count; i++)
+
+                                            if (ViewBag.countOptionsQueryI > 0)
                                             {
-                                                   <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.optionsNameI[i]" />
+                                                @for (int i = 0; i < @ViewBag.optionsNameI.Count; i++)
+                                                {
+                                                                     <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.optionsNameI[i].Name" />
+                                                       <img onclick="OpenDescriptions(@i)"  id="hilfeOptionsIcon" src="@("/Image/question.png")" height="20" width="20" />
 
-                                                    <select style="margin-bottom: 10px;" class="form-select" id="${BlockN}-Options-@i" onchange="OptionsSelect(${BlockN},'Doppel',event.target.id,event.target.value,@value,'@ViewBag.optionsNameI[i]',@i,${BlockN})">
+                                                                         <select style="margin-bottom: 10px;" class="form-select" id="${BlockN}-Options-@i" onchange="OptionsSelect(${BlockN},'Doppel',event.target.id,event.target.value,@value,'@ViewBag.optionsNameI[i].Name',@i,${BlockN})">
 
-                                                    @for (int j = 0; j < @ViewBag.countOptionsListI[i]; j++)
-                                                    {
-                                                           <option id="@value">@ViewBag.optionsValueI[value]</option>
+                                                        @for (int j = 0; j < @ViewBag.countOptionsListI[i]; j++)
+                                                        {
+                                                             <option id="@value">@ViewBag.optionsValueI[value]</option>
 
-                                                           value++;
-                                                    }
+                                                            value++;
+                                                        }
 
-                                                     </select>
+                                                                                                                  </select>
 
-                                                     <input type="hidden" id="Option-${BlockN} + @i" />
-                                                     <input type="hidden" id="d-${BlockN} + @i" />
+                                                                                                                     <div id="myModalOptionsDescriptions" class="modal">
+                                                                                                                        <div class="modal-content">
+                                                                                                                            <span onclick="closeOptions(@i)" class="closeOptions">&times;</span>
+
+                                                                                                                            <div id="modalDiscriptions">
+                                                                                                                                <div>
+                                                                                                                                    <h2>@ViewBag.optionsNameI[i].Name</h2>
+                                                                                                                                                    <img src="@("/Image/"+@ViewBag.optionsNameI[i].ImageName)" height="300" width="300" />
+                                                                                                                                </div>
+
+                                                                                                                                <div id="bOptions2">
+                                                                
+                                                                                                                                </div>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                    </div>
+
+                                                                                                         <input type="hidden" id="Option-${BlockN} + @i" />
+                                                                                                         <input type="hidden" id="d-${BlockN} + @i" />
+                                                }
+                                                                                                     <input type="hidden" name="DoppelOption" id="OptionAll-${BlockN}" />
                                             }
-                                                     <input type="hidden" name="DoppelOption" id="OptionAll-${BlockN}" />
                                         }
-                       
-                                    </div>
-                                </div>
+                                        
+
+                                      </div>
+                                     </div>
 
                                     ${waitTime}
                                   
-                                    </div>`;
+                                    </div>
+
+                                           <div id="myModal-${BlockN}" class="modal">
+
+                                        <div class="modal-content">
+
+                                                <span onclick="closedModal(${BlockN})" class="close">&times;</span>
+                                            <div style="display:grid; grid-template-columns: 450px 500px;">
+                                                <div id="productImage">
+                                                      <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="/Image/${img}" asp-append-version="true" width="400px" height="400px" />
+                                                </div>
+                                                <div>
+                                                        <h3>${[DoppelInfo[0].Name]}</h3>
+                                                    <div id="product_desciptions">
+
+                                                           <div>
+                                                           ${DoppelDescriptions}
+                                                          </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                        `;
         }
         if (value == "Halbzylinder") 
         {

@@ -131,6 +131,11 @@
                 </div>
             </div>
                 <div id="add_And_Minus">
+
+                    <select id="countTurSelect">
+                       
+                    </select>
+
                     <input id="removeButtonTur" type="button" value="-">
                     <input id="addButtonTur" type="button" value="+">
                 </div>
@@ -249,7 +254,7 @@
     scroll1.addEventListener('scroll', () => syncScroll(scroll1, scroll2));
     scroll2.addEventListener('scroll', () => syncScroll(scroll2, scroll1));
 
-   
+    let countTurSelect = document.getElementById("countTurSelect");
 
     document.addEventListener('DOMContentLoaded', (event) => {
         var modal = document.getElementById("myModal");
@@ -259,6 +264,17 @@
         {
             circle2[i].style.background = "white";
         }
+
+        for (let i = 1; i < 200; i++) 
+        {
+            let option = document.createElement("option");
+            
+            option.innerText = i;
+            option.value = i;
+
+            countTurSelect.append(option);
+        }
+
     });
    
     let circlestep = 0;
