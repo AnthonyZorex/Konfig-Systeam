@@ -1316,7 +1316,7 @@ namespace schliessanlagen_konfigurator.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Save(Profil_Doppelzylinder profil_Doppelzylinder, List<int> SizeAus, List<int> SizeInen, List<string> Options,
+        public async Task<IActionResult> Save(Profil_Doppelzylinder profil_Doppelzylinder, List<int> SizeAus, List<int> SizeInen, List<string> Options,List<string> ImageNameOption,
         List<string> Descriptions, List<string> valueNGF, List<float> costNGF, List<int> inputCounter,string NSysteam,float keyCost, string descriptionsSysteam,List<float> costSizeAussen, List<float> costSizeIntern)
         {
             var Items = db.Profil_Doppelzylinder.Find(profil_Doppelzylinder.Id);
@@ -1389,6 +1389,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         OptionsId = createOptions.Id,
                         Name = Options[i],
                         Description = Descriptions[i],
+                        ImageName = ImageNameOption[i]
                     };
 
                     db.NGF.Add(createOptionsAussen);
@@ -1706,7 +1707,7 @@ namespace schliessanlagen_konfigurator.Controllers
         #endregion
         #region SaveEditForm
         [HttpPost]
-        public ActionResult SaveHalbzylinder(Profil_Halbzylinder profil_Halbzylinder, List<int> Size, List<float> CostSize, List<string> Options,
+        public ActionResult SaveHalbzylinder(Profil_Halbzylinder profil_Halbzylinder, List<int> Size, List<float> CostSize, List<string> Options, List<string> ImageNameOption,
         List<string> Descriptions, List<string> valueNGF, List<float> costNGF, List<int> inputCounter,List<float> costSizeAussen)
         {
             var Items = db.Profil_Halbzylinder.Find(profil_Halbzylinder.Id);
@@ -1777,6 +1778,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         OptionsId = createOptions.Id,
                         Name = Options[i],
                         Description = Descriptions[i],
+                        ImageName = ImageNameOption[i]
                     };
 
                     db.Halbzylinder_Options.Add(createOptionsAussen);
@@ -1820,7 +1822,7 @@ namespace schliessanlagen_konfigurator.Controllers
             return RedirectToAction("Profil_HalbzylinderRout");
         }
         [HttpPost]
-        public ActionResult SaveHebelzylinder(Hebel profil_Halbzylinder, List<string> Options,
+        public ActionResult SaveHebelzylinder(Hebel profil_Halbzylinder, List<string> Options,List<string> ImageNameOption,
         List<string> Descriptions, List<string> valueNGF, List<float> costNGF, List<int> inputCounter)
         {
             var Items = db.Hebelzylinder.Find(profil_Halbzylinder.Id);
@@ -1890,6 +1892,7 @@ namespace schliessanlagen_konfigurator.Controllers
                             OptionId = createOptions.Id,
                             Name = Options[i],
                             Description = Descriptions[i],
+                            ImageName = ImageNameOption[i]
                         };
 
                         db.Options.Add(createOptionsAussen);
@@ -1915,7 +1918,7 @@ namespace schliessanlagen_konfigurator.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveAussenzylinder_Rundzylinder(Aussenzylinder_Rundzylinder profil_Halbzylinder, List<string> Options,
+        public ActionResult SaveAussenzylinder_Rundzylinder(Aussenzylinder_Rundzylinder profil_Halbzylinder, List<string> Options, List<string> ImageNameOption,
         List<string> Descriptions,List<string> Name, List<string> Description, List<string> valueNGF, List<float> costNGF, List<int> inputCounter)
         {
             var Items = db.Aussenzylinder_Rundzylinder.Find(profil_Halbzylinder.Id);
@@ -1966,9 +1969,6 @@ namespace schliessanlagen_konfigurator.Controllers
                         db.Aussen_Rund_options.Remove(optionsList);
                     }
                     db.SaveChanges();
-              
-                
-
             }
             if (Options.Count > 0)
             {
@@ -1988,6 +1988,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         Aussen_Rund_optionsId = createOptions.Id,
                         Name = Options[i],
                         Description = Descriptions[i],
+                        ImageName = ImageNameOption[i]
                     };
 
                     db.Aussen_Rund_all.Add(createOptionsAussen);
@@ -2011,7 +2012,7 @@ namespace schliessanlagen_konfigurator.Controllers
             return RedirectToAction("Aussenzylinder_RundzylinderRout");
         }
         [HttpPost]
-        public ActionResult SaveVorhangschloss(Vorhangschloss profil_Halbzylinder,List<int>Size,List<float> CostSize, List<string> Options,
+        public ActionResult SaveVorhangschloss(Vorhangschloss profil_Halbzylinder,List<int>Size,List<float> CostSize, List<string> Options, List<string> ImageNameOption,
         List<string> Descriptions, List<string> valueNGF, List<float> costNGF, List<int> inputCounter)
         {
             var Items = db.Vorhangschloss.Find(profil_Halbzylinder.Id);
@@ -2081,6 +2082,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         OptionId = createOptions.Id,
                         Name = Options[i],
                         Description = Descriptions[i],
+                        ImageName = ImageNameOption[i]
                     };
 
                     db.OptionsVorhan.Add(createOptionsAussen);
@@ -2092,7 +2094,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         {
                             OptionsId = createOptionsAussen.Id,
                             Value = valueNGF[counter],
-                            Cost = costNGF[counter],
+                            Cost = costNGF[counter]
                         };
                         db.OptionsVorhan_value.Add(costedValue);
                         counter++;
@@ -2123,7 +2125,7 @@ namespace schliessanlagen_konfigurator.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveProfil_Knaufzylinder(Profil_Knaufzylinder profil_Knayf,List<int> SizeAus, List<int> SizeInen, List<string> Options,
+        public ActionResult SaveProfil_Knaufzylinder(Profil_Knaufzylinder profil_Knayf,List<int> SizeAus, List<int> SizeInen, List<string> Options,List<string> ImageNameOption,
         List<string> Descriptions, List<string> valueNGF, List<float> costNGF, List<int> inputCounter, List<float> costSizeAussen, List<float> costSizeIntern)
         {
             var Items = db.Profil_Knaufzylinder.Find(profil_Knayf.Id);
@@ -2194,6 +2196,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         OptionsId = createOptions.Id,
                         Name = Options[i],
                         Description = Descriptions[i],
+                        ImageName = ImageNameOption[i]
                     };
 
                     db.Knayf_Options.Add(createOptionsAussen);

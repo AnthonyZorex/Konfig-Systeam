@@ -904,11 +904,13 @@
             item.innerHTML = "";
         });
 
+        const fragment = document.createDocumentFragment();
+
+        const fragmentChekbox = document.createDocumentFragment();
 
         for (let i = 1; i <= value ;i++) 
         {
             blockCount++;
-          
 
             let newBlock = document.createElement('div');
             newBlock.id = 'TexCount-' + blockCount;
@@ -925,7 +927,7 @@
 
             `;
 
-            document.getElementById('itemKeyBlock').appendChild(newBlock);
+            fragment.appendChild(newBlock);
 
             let horizont = document.getElementById(`${blockTur}horizontal`);
 
@@ -944,13 +946,13 @@
 
                 document.getElementById(`${i}horizontal`).appendChild(newBlockTur);
 
-                document.getElementById('InfoValue').appendChild(horizont);
+                fragmentChekbox.appendChild(horizont);
 
                 createCustomCheckbox(`${i}checkbox${blockCount}`);
             }
         }
-        console.log(blockTur);
-        console.log(blockCount);
+        document.getElementById('itemKeyBlock').append(fragment);
+        document.getElementById('InfoValue').append(fragmentChekbox);
     }
 
     function selectTur(value) 
@@ -959,6 +961,11 @@
         blockTur = 0;
         document.getElementById('InfoValue').innerHTML = '';
         document.getElementById('BlockTur-1').innerHTML = '';
+
+
+        const fragment = document.createDocumentFragment();
+
+        const fragmentChekbox = document.createDocumentFragment();
 
         for (let i = 1; i <= value; i++) 
         {
@@ -1017,8 +1024,8 @@
 
                         `;
 
-            document.getElementById('BlockTur-1').appendChild(newBlock);
-           
+
+            fragment.appendChild(newBlock);
             let horizont = document.createElement('div');
             horizont.id = `${blockTur}horizontal`;
             horizont.classList.add('horizontal');
@@ -1037,11 +1044,13 @@
 
                 horizont.appendChild(newBlockTur);
 
-                document.getElementById('InfoValue').appendChild(horizont);
+                fragmentChekbox.appendChild(horizont)
 
                 createCustomCheckbox(`${blockTur}checkbox${i}`);
             }
         }
+        document.getElementById('BlockTur-1').append(fragment);
+        document.getElementById('InfoValue').append(fragmentChekbox);
     }
 
     document.getElementById('removeButton').addEventListener('click', removeBlock);

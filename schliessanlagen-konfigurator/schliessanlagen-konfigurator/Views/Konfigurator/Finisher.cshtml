@@ -7,8 +7,35 @@
     int z = 0;
     int countFalse = 0;
     int d = 0;
-    int valueCount = 0;
+    
 }
+
+<style>
+
+    #modalDiscriptions 
+    {
+        gap: 50px;
+        display: grid;
+        grid-template-columns: auto auto;
+    }
+
+    .closeOptions {
+        margin-left: auto;
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .closeOptions:hover,
+        .closeOptions:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+</style>
+
 @using (Html.BeginForm("SaveUserOrders", "Konfigurator", FormMethod.Post))
 { 
         
@@ -30,7 +57,7 @@
 
                     <div id="counterKey">
                             <input onclick="minus(@z)" type="button" value="-" class="btn btn-success" />
-                            <input type="text" style="border: none;max-width: 30px;" id="countKey-@z" readonly name="countKey" value="@item.CountKey" />
+                            <input type="text" style="border: none;max-width: 45px;" id="countKey-@z" readonly name="countKey" value="@item.CountKey" />
                             <input onclick="plus(@z)" type="button" value="+" class="btn btn-success" />
                     </div>
 
@@ -93,7 +120,7 @@
                                 </div>
                             </div>
                             <div>
-                                <select id="type-@d" class="form-select" onchange="switchTypeSylinder(@d,event.target.value,@elemNum,@ViewBag.CounterTur[@elemNum])">
+                                <select id="type-@d" class="form-select" onchange="switchTypeSylinder(@d,event.target.value,@elemNum)">
                                     <option selected>Doppelzylinder</option>
                                     @foreach (var i in ViewBag.AllType)
                                     {
@@ -132,25 +159,29 @@
                                             <option id="OptionI">@ViewBag.DopelzylinderIntern[i]</option>
                                         }
                                     </select>
-                                    <input type="hidden" id="Innen-@d" />
+                                    <input type="hidden" id="Innen-@d"  />
                                 </div>
                                 <div style="gap: 10px;display: flex;margin-left: 50px;">
                                     <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
-                                    <input readonly style="border: none;max-width: 30px;" name="TurCounter" id="countSchlusse-@d" type="number" min="1" value="@ViewBag.CounterTur[@elemNum]" />
+                                    <input readonly style="border: none;max-width: 80px;" name="TurCounter" id="countSchlusse-@d" type="number" min="1" value="@ViewBag.CounterTur[@elemNum]" />
                                     <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
                                 </div>
-              
+                                    
                             </div>
 
                             <div id="optionsItems">
                                 <h3>Weitere Optionen</h3>
                                 <div>
-
+                                    @{
+                                        int valueCount = 0;
+                                    }
                                     @if (ViewBag.countOptionsQuery > 0)
                                     {
                                         @for (int i = 0; i < ViewBag.optionsName.Count; i++)
                                         {
-                                            <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.optionsName[i]" />
+                                            <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.optionsName[i].Name" />
+                                            
+                                            <img onclick="OpenDescriptions(@i)"  id="hilfeOptionsIcon" src="@("/Image/question.png")" height="20" width="20" />
 
                                             <select style="margin-bottom: 10px;" class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Doppel',event.target.id,event.target.value,@valueCount,'@ViewBag.optionsName[i]',@i,@d)">
 
@@ -160,8 +191,25 @@
 
                                                     valueCount++;
                                                 }
-
                                             </select>
+
+                                            <div id="myModalOptionsDescriptions" class="modal">
+                                                <div class="modal-content">
+                                                    <span onclick="closeOptions(@i)" class="closeOptions">&times;</span>
+                                                   
+                                                    <div id="modalDiscriptions">
+                                                        <div>
+                                                            <h2>@ViewBag.optionsName[i].Name</h2>
+                                                            <img src="@("/Image/"+@ViewBag.optionsName[i].ImageName)" height="300" width="300" />
+                                                        </div>
+
+                                                        <div id="bOptions2">
+                                                            @Html.Raw(@ViewBag.optionsName[i].Description)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
 
                                             <input type="hidden" id="Option-@d + @i" />
                                             <input type="hidden" id="d-@d + @i" />
@@ -194,25 +242,30 @@
                                 }
                             }
                         </div>
-                </div>
-                    <div id="myModal-@d" class="modal">
+                        <div id="myModal-@d" class="modal">
 
-                        <div class="modal-content">
+                            <div class="modal-content">
 
-                            <span onclick="closedModal(@d)" class="close">&times;</span>
-                            <div style="display:grid; grid-template-columns: 450px 500px;">
-                                <div id="productImage">
-                                    <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
+                                <span onclick="closedModal(@d)" class="close">&times;</span>
+                                <div style="display:grid; grid-template-columns: 450px 500px;">
+                                    <div id="productImage">
+                                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="400px" height="400px" />
+                                    </div>
+                                    <div>
+                                        <h3>@item.Name</h3>
+                                        <div id="product_desciptions">
+                                            <div>
+                                                @Html.Raw(@item.description)
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h3>@item.Name</h3>
-                                    <p>@item.description</p>
-                                </div>
+
+
                             </div>
-                           
-
                         </div>
-                    </div>
+                </div>
+                   
 
                     elemNum++;
                 d++;
@@ -240,7 +293,7 @@
 
                         </div>
                         <div>
-                                <select id="type-@d" class="form-select" onchange="switchTypeSylinder(@d,event.target.value,@elemNum,@ViewBag.CounterTur[@elemNum])">
+                                <select id="type-@d" class="form-select" onchange="switchTypeSylinder(@d,event.target.value,@elemNum)">
                                     <option selected>KnayfZylinder</option>
                                     @foreach (var i in ViewBag.AllType)
                                     {
@@ -280,7 +333,7 @@
                             </div>
                             <div style="gap: 10px;display: flex;margin-left: 50px;">
                                     <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
-                                    <input readonly style="border: none;max-width: 30px;" id="countSchlusse-@d" type="number" min="1" value="@ViewBag.CounterTurKnayf[@elemNum]" name="TurCounter" />
+                                    <input readonly style="border: none;max-width: 80px;" id="countSchlusse-@d" type="number" min="1" value="@ViewBag.CounterTurKnayf[@elemNum]" name="TurCounter" />
                                     <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
                             </div>
                         </div>
@@ -289,15 +342,16 @@
                             <h3>Weitere Optionen</h3>
                             <div>
                                 @{
-                                     valueCount = 0;
+                                    int valueCount = 0;
                                 }
                                 @if (ViewBag.countOptionsQueryKnayf > 0)
                                 {
                                     @for (int i = 0; i < ViewBag.optionsNameKnayf.Count; i++)
                                     {
-                                            <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.optionsNameKnayf[i]" />
+                                            <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.optionsNameKnayf[i].Name" />
+                                             <img onclick="OpenDescriptionsKnayf(@i)"  id="hilfeOptionsIcon" src="@("/Image/question.png")" height="20" width="20" />
 
-                                            <select style="margin-bottom: 10px;"  class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Knayf',event.target.id,event.target.value,@valueCount,'@ViewBag.optionsNameKnayf[i]',@i,@d)">
+                                            <select style="margin-bottom: 10px;" class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Knayf',event.target.id,event.target.value,@valueCount,'@ViewBag.optionsNameKnayf[i].Name',@i,@d)">
 
                                             @for (int j = 0; j < ViewBag.countOptionsListKnayf[i]; j++)
                                             {
@@ -307,6 +361,24 @@
                                             }
 
                                         </select>
+
+                                            <div id="KnayfOptionsDescriptions" class="modal">
+                                                <div class="modal-content">
+                                                    <span onclick="closeOptionsKnayf(@i)" class="closeOptions">&times;</span>
+
+                                                    <div id="modalDiscriptions">
+                                                        <div>
+                                                            <h2>@ViewBag.optionsNameKnayf[i].Name</h2>
+                                                            <img src="@("/Image/"+@ViewBag.optionsNameKnayf[i].ImageName)" height="300" width="300" />
+                                                        </div>
+
+                                                        <div id="bOptions2">
+                                                            @Html.Raw(@ViewBag.optionsNameKnayf[i].Description)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                             <input type="hidden"  id="Option-@d + @i" />
                                             <input type="hidden" id="d-@d + @i" />
                                     }
@@ -352,7 +424,11 @@
                                 </div>
                                 <div>
                                     <h3>@item.Name</h3>
-                                    <p>@item.description</p>
+                                    <div id="product_desciptions">
+                                        <div>
+                                            @Html.Raw(@item.description)
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -370,8 +446,10 @@
            
             foreach (var item in ViewBag.Halb)
             {
-                    <input type="hidden" name="Halb" value="@item.Id" />
+                  
                     <div id="ExelItem-@d" class="ExelItem">
+
+                    <input type="hidden" name="Halb" value="@item.Id" />
                     <div id="productImage">
                             <img decoding="async" onclick="OpenModalInfo(@d)" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                     </div>
@@ -387,7 +465,7 @@
 
                         </div>
                         <div>
-                                <select id="type-@d" class="form-select" onchange="switchTypeSylinder(@d,event.target.value,@elemNum,@ViewBag.CounterTur[@elemNum])">
+                                <select id="type-@d" class="form-select" onchange="switchTypeSylinder(@d,event.target.value,@elemNum)" >
                                 <option selected>Halbzylinder</option>
                                     @foreach (var i in ViewBag.AllType)
                                     {
@@ -403,10 +481,9 @@
                             <h5>Vifile Tür</h5>
                         </div>
                             <div id="Size-@d" class="SizeProduct">
-                               
                             <div>
                                     <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
-                                    <select name="HalbAussen" id="Aussen" class="form-select" onchange="selectParamAussen(event.target.value,@d,@ViewBag.HalbOrderAussen[elemNum],'Halbzylinder',event.target.selectedIndex)">
+                                    <select name="HalbAussen" id="Aussen" class="form-select" onchange="selectParamAussen(@d,'Halbzylinder',event.target.selectedIndex)">
                                     <option style="display:none" selected>@ViewBag.HalbOrderAussen[elemNum]</option>
                                     @for (int i = 0; i < ViewBag.AussenHalb.Count; i++)
                                     {
@@ -417,7 +494,7 @@
                             </div>
                             <div style="gap: 10px;display: flex;margin-left: 50px;">
                                     <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
-                                    <input readonly style="border: none;max-width: 30px;" value="@ViewBag.CounterTurHalb[@elemNum]" type="number" min="1" name="TurCounter" id="countSchlusse-@d" />
+                                    <input readonly style="border: none;max-width: 80px;" value="@ViewBag.CounterTurHalb[@elemNum]" type="number" min="1" name="TurCounter" id="countSchlusse-@d" />
                                     <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
                             </div>
 
@@ -426,7 +503,7 @@
                             <h3>Weitere Optionen</h3>
                             <div>
                                 @{
-                                     valueCount = 0;
+                                   int  valueCount = 0;
                                 }
                                @if (ViewBag.countOptionsQueryHalb > 0)
                                 {
@@ -487,7 +564,11 @@
                                 </div>
                                 <div>
                                     <h3>@item.Name</h3>
-                                    <p>@item.description</p>
+                                    <div id="product_desciptions">
+                                        <div>
+                                            @Html.Raw(@item.description)
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -503,8 +584,8 @@
             int elemNum = 0;
             foreach (var item in ViewBag.HelbZ)
             {
-                    <input type="hidden" name="Helb" value="@item.Id" />
                     <div id="ExelItem-@d" class="ExelItem">
+                        <input type="hidden" name="Helb" value="@item.Id" />
                     <div id="productImage">
                             <img decoding="async" onclick="OpenModalInfo(@d)" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                     </div>
@@ -520,7 +601,7 @@
 
                         </div>
                         <div>
-                                <select id="type-@d" class="form-select" onchange="switchTypeSylinder(@d,event.target.value,@elemNum,@ViewBag.CounterTur[@elemNum])">
+                                <select id="type-@d" class="form-select" onchange="switchTypeSylinder(@d,event.target.value,@elemNum)">
                                 <option>Hebelzylinder</option>
                                     @foreach (var i in ViewBag.AllType)
                                     {
@@ -538,7 +619,7 @@
                             <div id="Size-@d" class="SizeProduct">
                             <div style="gap: 10px;display: flex;margin-left: 50px;">
                                     <button onclick="CylinderMinus(@d)" type="button" class="btn btn-success">-</button>
-                                    <input readonly style="border: none;max-width: 30px;" name="TurCounter" type="number" min="1" value="@ViewBag.CounterTurHebel[@elemNum]" id="countSchlusse-@d" />
+                                    <input readonly style="border: none;max-width: 80px;" name="TurCounter" type="number" min="1" value="@ViewBag.CounterTurHebel[@elemNum]" id="countSchlusse-@d" />
                                     <button onclick="CylinderPlus(@d)" type="button" class="btn btn-success">+</button>
                             </div>
                         </div>
@@ -546,7 +627,7 @@
                             <h3>Weitere Optionen</h3>
                             <div>
                                 @{
-                                     valueCount = 0;
+                                   int  valueCount = 0;
                                 }
 
                                 @if (ViewBag.CountOptionsHebel > 0)
@@ -584,7 +665,11 @@
                                 </div>
                                 <div>
                                     <h3>@item.Name</h3>
-                                    <p>@item.description</p>
+                                    <div id="product_desciptions">
+                                        <div>
+                                            @Html.Raw(@item.description)
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -600,8 +685,9 @@
             int elemNum = 0;
             foreach (var item in ViewBag.Vorhanschlos)
             {
-                    <input type="hidden" name="Vorhan" value="@item.Id" />
+                    
                     <div id="ExelItem-@d" class="ExelItem">
+                        <input type="hidden" name="Vorhan" value="@item.Id" />
                     <div id="productImage">
                             <img decoding="async" onclick="OpenModalInfo(@d)" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                     </div>
@@ -617,8 +703,16 @@
 
                         </div>
                         <div>
-                                <select id="type-@d" class="form-select">
-                                <option>Vorhangschloss</option>
+                          <select id="type-@d" class="form-select" onchange="switchTypeSylinder(@d,event.target.value,@elemNum)">
+                             <option>Vorhangschloss</option>
+                                    @foreach (var i in ViewBag.AllType)
+                                    {
+                                        if (@i.nameType != "Vorhangschloss")
+                                        {
+                                            <option>@i.nameType</option>
+                                        }
+                                    }
+
                             </select>
                         </div>
                         <div id="textInform">
@@ -638,7 +732,7 @@
                             </div>
                             <div style="gap: 10px;display: flex;margin-left: 50px;">
                                     <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
-                                    <input name="TurCounter" readonly style="border: none;max-width: 30px;" type="number" min="1" id="countSchlusse-@d" value="@ViewBag.CounterTurVorhan[@elemNum]" />
+                                    <input name="TurCounter" readonly style="border: none;max-width: 80px;" type="number" min="1" id="countSchlusse-@d" value="@ViewBag.CounterTurVorhan[@elemNum]" />
                                     <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
                             </div>
 
@@ -647,7 +741,7 @@
                             <h3>Weitere Optionen</h3>
                             <div>
                                 @{
-                                   valueCount = 0;
+                                  int valueCount = 0;
                                 }
 
                                 @if (ViewBag.VorhanschlossCount > 0)
@@ -690,7 +784,11 @@
                                 </div>
                                 <div>
                                     <h3>@item.Name</h3>
-                                    <p>@item.description</p>
+                                    <div id="product_desciptions">
+                                        <div>
+                                            @Html.Raw(@item.description)
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -726,7 +824,7 @@
                             </div>
 
                             <div>
-                                <select id="type-@d" class="form-select" onchange="switchTypeSylinder(@d,event.target.value,@elemNum,@ViewBag.CounterTur[@elemNum])">
+                                <select id="type-@d" class="form-select" onchange="switchTypeSylinder(@d,event.target.value,@elemNum)">
 
                                     <option selected>Aussenzylinder</option>
 
@@ -744,7 +842,7 @@
                             </div>
                             <div id="Size-@d" class="SizeProduct">
                                 <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
-                                <input style="border: none;max-width: 30px;" readonly name="TurCounter" type="number" min="1" value="@ViewBag.CounterTurAussen[@elemNum]" id="countSchlusse-@d" />
+                                <input style="border: none;max-width: 80px;" readonly name="TurCounter" type="number" min="1" value="@ViewBag.CounterTurAussen[@elemNum]" id="countSchlusse-@d" />
                                 <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
                               
                             </div>
@@ -753,7 +851,7 @@
                                 <h3>Weitere Optionen</h3>
                                 <div>
                                     @{
-                                         valueCount = 0;
+                                      int   valueCount = 0;
                                     }
                                     @if (ViewBag.AussenCountOption > 0)
                                     {
@@ -792,7 +890,11 @@
                                 </div>
                                 <div>
                                     <h3>@item.Name</h3>
-                                    <p>@item.description</p>
+                                    <div id="product_desciptions">
+                                        <div>
+                                            @Html.Raw(@item.description)
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -831,13 +933,12 @@
 </div>
 } 
 <script>
-
-    // let DoppelInfo = @Html.Raw(ViewBag.DopelzylinderJson);
-    // let KnayfInfo = @Html.Raw(ViewBag.KnayfZelinderJson);
-    // let HalbInfo = @Html.Raw(ViewBag.HalbJson);
-    // let HelbInfo = @Html.Raw(ViewBag.HelbZJson);
-    // let VorhanschlosInfo = @Html.Raw(ViewBag.VorhanschlosJson);
-    // let AussenzylinderInfo = @Html.Raw(ViewBag.AussenzylinderJson);
+    let DoppelInfo = @Html.Raw(ViewBag.DopelzylinderJson);
+    let KnayfInfo = @Html.Raw(ViewBag.KnayfZelinderJson);
+    let HalbInfo = @Html.Raw(ViewBag.HalbJson);
+    let HelbInfo = @Html.Raw(ViewBag.HelbZJson);
+    let VorhanschlosInfo = @Html.Raw(ViewBag.VorhanschlosJson);
+    let AussenzylinderInfo = @Html.Raw(ViewBag.AussenzylinderJson);
 
     let keyPrice = @Html.Raw(ViewBag.KeyCost);
 
@@ -884,6 +985,7 @@
     pris.value = AllPrice.innerHTML;
    
     let NoOptionCost = @Html.Raw(@ViewBag.CostProducted);
+
     let ParamSum = parseFloat(AllPrice.innerHTML.replace(',', '.') - NoOptionCost);
     
     localStorage.setItem("cost", ParamSum);
@@ -896,45 +998,79 @@
 
     let removeButton = document.getElementById("removeOrder");
     let AllOrderID = document.querySelector("#OrderId");
-
+    
     var span = document.getElementsByClassName("close")[0];
+
     let idItem = 0;
     let Dorname = @Html.Raw(ViewBag.DornameJson);
-    
-    function switchTypeSylinder(BlockN, value, elemNum,itemCount) 
+   
+
+    window.onclick = function (event) 
+    {
+        if (event.target === modal) 
+        {
+            modal.forEach((items) => {
+                items.style.display = "none";
+            });
+        }
+    }
+    function OpenDescriptions(id) 
+    {
+        const modal = document.querySelectorAll("#myModalOptionsDescriptions");
+        modal[id].style.display = "block";
+    }
+    function closeOptions(Id) 
+    {
+        const modal = document.querySelectorAll("#myModalOptionsDescriptions");
+        modal[Id].style.display = "none";
+    }
+
+    function OpenDescriptionsKnayf(id) 
+    {
+        const modal = document.querySelectorAll("#KnayfOptionsDescriptions");
+        modal[id].style.display = "block";
+    }
+
+    function closeOptionsKnayf(Id) 
+    {
+        const modal = document.querySelectorAll("#KnayfOptionsDescriptions");
+        modal[Id].style.display = "none";
+    }
+
+    let DoppelDescriptions = @Html.Raw(ViewBag.DoppelzylinderDescriptions);
+
+    function switchTypeSylinder(BlockN, value, elemNum) 
     {
         let block = document.getElementById("ExelItem-" + BlockN);
-        let costedItem = block.querySelectorAll("#costItems-" + BlockN);
 
-        let cost = costedItem[0].defaultValue;
+        let costedItem = block.querySelectorAll("#costItems-" + BlockN)[0].defaultValue;
 
-        AllPrice.value = (parseFloat(AllPrice.value) - (cost * Number(itemCount)));
+        let countItems = block.querySelectorAll("#countSchlusse-" + BlockN)[0];
 
- 
+        let cost = Number(costedItem * countItems.value);
+
+        AllPrice.value = (parseFloat(AllPrice.value) -  cost);
 
         if (value == "Doppelzylinder") 
         {
             let waitTime = "";
 
-           
                 if (DoppelInfo[0].companyName  == "CES")
                 {
-                   waitTime =   `<h6 id="WaitTime" > Lieferzeit: 4 Werktage </h6>` 
+                    waitTime = `<h6 id="WaitTime" > Lieferzeit: 7 Tag </h6>`
+                }
+                else 
+                {
+                waitTime = `<h6 id="WaitTime" > Lieferzeit: 2 Werktage < /h6>`
                 }
                
-                if ( DoppelInfo[0].companyName  == "CES")
-                {
-                waitTime = `<h6 id="WaitTime" > Lieferzeit: 7 Tag </h6>`
-                }
-                 
-            
-            AllPrice.value = (parseFloat(AllPrice.value) + DoppelInfo[0].Price);
+                AllPrice.value = (parseFloat(AllPrice.value) + DoppelInfo[0].Price);
 
-            let img = DoppelInfo[0].ImageName;
+                let img = DoppelInfo[0].ImageName;
 
                 block.innerHTML = ` <input value="${DoppelInfo[0].Id}" type="hidden" name="DopelItem" />
                 <div id="productImage">
-                         <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="/Image/${img}" asp-append-version="true" width="300px" height="300px" />
+                <img onclick="OpenModalInfo(${BlockN})" decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="/Image/${img}" asp-append-version="true" width="300px" height="300px" />
                 </div>
                 <div id="productMenuInfo">
                     <div id="ProductNameUndCost">
@@ -967,88 +1103,495 @@
                               <div id="Size-${BlockN}" class="SizeProduct">
                         <div>
                               <input style="border: none;" id="compName" type="hidden" value="${[DoppelInfo[0].companyName]}" />
-                                   <select class="form-select" name="DoppelAussen" id="Aussen" onchange="selectParamAussen(${BlockN},'Doppelzylinder',event.target.selectedIndex)">
+                              <select class="form-select" name="DoppelAussen" id="Aussen" onchange="selectParamAussen(${BlockN},'Doppelzylinder',event.target.selectedIndex+1)">
 
-                                @for (int i = 0; i < ViewBag.Dopelzylinderaussen.Count; i++)
+                                @for (int i = 0; i < @ViewBag.Dopelzylinderaussen.Count; i++)
                                 {
                                    <option  id="OptionA">@ViewBag.Dopelzylinderaussen[i]</option>
                                 }
                             </select>
-                                <input type="hidden" id="Aussen-${BlockN}" />
+                                    <input type="hidden" id="Aussen-${BlockN}" />
                         </div>
                         <div>
-                                  <select class="form-select" name="DoppelIntern" id="Intern" onchange="selectParamIntern(${BlockN},'Doppelzylinder',event.target.selectedIndex)">
+                                      <select class="form-select" name="DoppelIntern" id="Intern" onchange="selectParamIntern(${BlockN},'Doppelzylinder',event.target.selectedIndex+1)">
 
-                                        @for (int i = 0; i < ViewBag.DopelzylinderIntern.Count; i++)
+                                        @for (int i = 0; i < @ViewBag.DopelzylinderIntern.Count; i++)
                                         {
                                             <option id="OptionI">@ViewBag.DopelzylinderIntern[i]</option>
                                         }
                                         </select>
-                                            <input type="hidden" id="Innen-${BlockN}" />
+                                                <input type="hidden" id="Innen-${BlockN}" />
                                     </div>
                                     <div style="gap: 10px;display: flex;margin-left: 50px;">
                                         <button type="button" onclick="CylinderMinus(${BlockN})" class="btn btn-success">-</button>
-                                            <input readonly style="border: none;max-width: 30px;" name="TurCounter" id="countSchlusse-${BlockN}" type="number" min="1" value="1" />
+                                            <input readonly style="border: none;max-width: 80px;" name="TurCounter" id="countSchlusse-${BlockN}" type="number" min="1" value="1" />
                                             <button type="button" onclick="CylinderPlus(${BlockN})" class="btn btn-success">+</button>
                                     </div>
-                        @*   <div style="margin-left: 20px;">
-                        <input type="button" value="?" onclick="OpenModalInfo(@d)" class="btn btn-success" />
-                        </div> *@
+                      
                                 </div>
 
                                 <div id="optionsItems">
                                     <h3>Weitere Optionen</h3>
                                     <div>
-                                        @if (ViewBag.countOptionsQuery > 0)
-                                        {
-                                            @for (int i = 0; i < @ViewBag.optionsName.Count; i++)
+                                        @{
+                                            int value = 0;
+
+                                            if (ViewBag.countOptionsQueryI > 0)
                                             {
-                                                   <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.optionsName[i]" />
+                                                @for (int i = 0; i < @ViewBag.optionsNameI.Count; i++)
+                                                {
+                                                                     <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.optionsNameI[i].Name" />
+                                                       <img onclick="OpenDescriptions(@i)"  id="hilfeOptionsIcon" src="@("/Image/question.png")" height="20" width="20" />
 
-                                                   <select style="margin-bottom: 10px;" class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Doppel',event.target.id,event.target.value,@valueCount,'@ViewBag.optionsName[i]',@i,@d)">
+                                                                         <select style="margin-bottom: 10px;" class="form-select" id="${BlockN}-Options-@i" onchange="OptionsSelect(${BlockN},'Doppel',event.target.id,event.target.value,@value,'@ViewBag.optionsNameI[i].Name',@i,${BlockN})">
 
-                                                    @for (int j = 0; j < @ViewBag.countOptionsList[i]; j++)
-                                                    {
-                                                        <option id="@valueCount">@ViewBag.optionsValue[valueCount]</option>
+                                                        @for (int j = 0; j < @ViewBag.countOptionsListI[i]; j++)
+                                                        {
+                                                             <option id="@value">@ViewBag.optionsValueI[value]</option>
 
-                                                        valueCount++;
-                                                    }
+                                                            value++;
+                                                        }
 
-                                                                        </select>
+                                                                                                                  </select>
 
-                                                                        <input type="hidden" id="Option-@d + @i" />
-                                                                        <input type="hidden" id="d-@d + @i" />
+                                                                                                                     <div id="myModalOptionsDescriptions" class="modal">
+                                                                                                                        <div class="modal-content">
+                                                                                                                            <span onclick="closeOptions(@i)" class="closeOptions">&times;</span>
+
+                                                                                                                            <div id="modalDiscriptions">
+                                                                                                                                <div>
+                                                                                                                                    <h2>@ViewBag.optionsNameI[i].Name</h2>
+                                                                                                                                                    <img src="@("/Image/"+@ViewBag.optionsNameI[i].ImageName)" height="300" width="300" />
+                                                                                                                                </div>
+
+                                                                                                                                <div id="bOptions2">
+                                                                
+                                                                                                                                </div>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                    </div>
+
+                                                                                                         <input type="hidden" id="Option-${BlockN} + @i" />
+                                                                                                         <input type="hidden" id="d-${BlockN} + @i" />
+                                                }
+                                                                                                     <input type="hidden" name="DoppelOption" id="OptionAll-${BlockN}" />
                                             }
-                                                                <input type="hidden" name="DoppelOption" id="OptionAll-@d" />
                                         }
-                       
-                                    </div>
-                                </div>
+                                        
+
+                                      </div>
+                                     </div>
 
                                     ${waitTime}
                                   
                                     </div>
-                        
-                                            `;
+
+                                           <div id="myModal-${BlockN}" class="modal">
+
+                                        <div class="modal-content">
+
+                                                <span onclick="closedModal(${BlockN})" class="close">&times;</span>
+                                            <div style="display:grid; grid-template-columns: 450px 500px;">
+                                                <div id="productImage">
+                                                      <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="/Image/${img}" asp-append-version="true" width="400px" height="400px" />
+                                                </div>
+                                                <div>
+                                                        <h3>${[DoppelInfo[0].Name]}</h3>
+                                                    <div id="product_desciptions">
+
+                                                           <div>
+                                                           ${DoppelDescriptions}
+                                                          </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                        `;
         }
         if (value == "Halbzylinder") 
         {
-            block.innerHTML = ``;
+            let waitTime = "";
+
+            if (HalbInfo[0].companyName == "CES") 
+            {
+                waitTime = `<h6 id="WaitTime" > Lieferzeit: 7 Tag </h6>`
+            }
+            else {
+                waitTime = `<h6 id="WaitTime" > Lieferzeit: 2 Werktage < /h6>`
+            }
+      
+            AllPrice.value = (parseFloat(AllPrice.value) + HalbInfo[0].Price);
+
+            let img = HalbInfo[0].ImageName;
+
+            block.innerHTML = `   <input type="hidden" name="Halb" value="${HalbInfo[0].Id}" />
+                        <div id="productImage">
+                                    <img onclick="OpenModalInfo(${BlockN})" decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="/Image/${img}" asp-append-version="true" width="300px" height="300px" />
+                        </div>
+                        <div id="productMenuInfo">
+                            <div id="ProductNameUndCost">
+
+                                <div>
+                                            <h3>Tür name: ${Dorname[BlockN]}</h3>
+                                                <input style="border: none;" readonly type="text" name="HalbName" value="${HalbInfo[0].Name}" />
+                                                <input style="border: none;" type="hidden" name="NameSystem" value="${HalbInfo[0].NameSystem}" />
+                                                    <input id="costItems-${BlockN}" type="hidden" value="${HalbInfo[0].Price}" />
+                                </div>
+
+                            </div>
+                            <div>
+                                        <select id="type-${BlockN}" class="form-select" onchange="switchTypeSylinder(${BlockN},event.target.value,${elemNum},1)" >
+                                    <option selected>Halbzylinder</option>
+                                    @foreach (var i in ViewBag.AllType)
+                                    {
+                                        if (@i.nameType != "Halbzylinder")
+                                        {
+                                           <option>@i.nameType</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                                <div id="textInform">
+                                <h5>Zylinder Länge</h5>
+                                <h5>Vifile Tür</h5>
+                            </div>
+                                    <div id="Size-${BlockN}" class="SizeProduct">
+                                <div>
+                                       <input style="border: none;" id="compName" type="hidden" value="${HalbInfo[0].companyName}" />
+                                       <select name="HalbAussen" id="Aussen" class="form-select" onchange="selectParamAussen(${BlockN},'Halbzylinder',event.target.selectedIndex+1)">
+                                    
+                                        @for (int i = 0; i < ViewBag.AussenHalb.Count; i++)
+                                        {
+                                          <option id="OptionA">@ViewBag.AussenHalb[i]</option>
+                                        }
+                                    
+                                        </select>
+                                            <input type="hidden" id="Aussen-${BlockN}" />
+                                </div>
+                                <div style="gap: 10px;display: flex;margin-left: 50px;">
+                                            <button type="button" onclick="CylinderMinus(${BlockN})" class="btn btn-success">-</button>
+                                            <input readonly style="border: none;max-width: 80px;" value="1" type="number" min="1" name="TurCounter" id="countSchlusse-${BlockN}" />
+                                            <button type="button" onclick="CylinderPlus(${BlockN})" class="btn btn-success">+</button>
+                                </div>
+
+                            </div>
+                                <div id="optionsItems">
+                                <h3>Weitere Optionen</h3>
+                                     <div>
+                                    @{
+                                        int valueCountHalb = 0;
+                                    }
+                                    @if (ViewBag.countOptionsQueryHalbI > 0)
+                                    {
+                                        @for (int i = 0; i < ViewBag.HalbOptionsNameI.Count; i++)
+                                        {
+                                               <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.HalbOptionsNameI[i]" />
+
+                                                           <select class="form-select"  id="@d-Options-@i" style="margin-bottom: 10px;" onchange="OptionsSelect(${BlockN},'Halb',event.target.id,event.target.value,@valueCountHalb,'@ViewBag.HalbOptionsNameI[i]',@i,${BlockN})" >
+
+                                                @for (int j = 0; j < ViewBag.HalbOptionsValueICount[i]; j++)
+                                                {
+
+                                                   <option id="@valueCountHalb">@ViewBag.HalbOptionsValueI[valueCountHalb]</option>
+
+                                                    valueCountHalb++;
+                                                }
+                                                                                    </select>
+
+                                                                                                    <input type="hidden"  id="Option-${BlockN} + @i" />
+                                                                                         <input type="hidden" id="d-${BlockN} + @i" />
+                                        }
+                                                                                                <input type="hidden" name="HalbOption" id="OptionAll-${BlockN}" />
+                                    }
+                                </div>
+                                 </div>
+                               ${waitTime}
+                        </div>
+                           `;
         }
         if (value == "Knaufzylinder") 
         {
-             block.innerHTML =``;
-        }
-        if (value == "Hebelzylinder") {
+            let waitTime = "";
 
-            block.innerHTML = ``;
+
+            if (KnayfInfo[0].companyName == "CES") 
+            {
+                waitTime = `<h6 id="WaitTime" > Lieferzeit: 7 Tag </h6>`
+            }
+             else 
+             {
+                waitTime = `<h6 id="WaitTime" > Lieferzeit: 2 Werktage < /h6>`
+             }
+      
+            AllPrice.value = (parseFloat(AllPrice.value) + KnayfInfo[0].Price);
+
+            let img = KnayfInfo[0].ImageName;
+
+            block.innerHTML = ` <input value="${KnayfInfo[0].Id}" type="hidden" name="DopelItem" />
+                    <div id="productImage">
+                    <img onclick="OpenModalInfo(${BlockN})" decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="/Image/${img}" asp-append-version="true" width="300px" height="300px" />
+                    </div>
+                    <div id="productMenuInfo">
+                        <div id="ProductNameUndCost">
+                            <div>
+                                    <h3>Tür name: ${Dorname[BlockN]}</h3>
+                                            <input style="border: none;" readonly type="text" name="DopelName" value="${[KnayfInfo[0].Name]}" />
+                                                <input style="border: none;" type="hidden" name="NameSystem" value="${[KnayfInfo[0].NameSystem]}" />
+
+                                            <input id="costItems-${BlockN}" type="hidden" value="${[KnayfInfo[0].Price]}" />
+                            </div>
+                        </div>
+                        <div>
+
+                                  <select id="type-${BlockN}" class="form-select" onchange="switchTypeSylinder(${BlockN},event.target.value,${elemNum},1)">
+                                    <option selected>KnayfZylinder</option>
+                                @foreach (var i in ViewBag.AllType)
+                                {
+                                    if (@i.nameType != "KnayfZylinder")
+                                    {
+                                        <option>@i.nameType</option>
+                                    }
+                                }
+
+                            </select>
+                        </div>
+                        <div id="textInform">
+                            <h5>Zylinder Länge</h5>
+                            <h5>Vifile Tür</h5>
+                        </div>
+                                       <div id="Size-${BlockN}" class="SizeProduct">
+                                    <div>
+                                                <input style="border: none;" id="compName" type="hidden" value="${[KnayfInfo[0].companyName]}" />
+                               
+                          
+                                         <select class="form-select" name="KnayfAussen" id="Aussen" onchange="selectParamAussen(${BlockN},'Knaufzylinder',event.target.selectedIndex+1)">
+                                        @for (int i = 0; i < ViewBag.KnayfZelinderAussen.Count; i++)
+                                        {
+                                          <option id="OptionA">@ViewBag.KnayfZelinderAussen[i]</option>
+                                        }
+                                                    </select>
+                              
+                                       
+                                         <input type="hidden" id="Aussen-${BlockN}" />
+                                    </div>
+                                    <div>
+
+                                                        <select class="form-select" name="KnayfIntern" id="Intern" onchange="selectParamIntern(${BlockN},'Knaufzylinder',event.target.selectedIndex+1)">
+                                                    
+                                                    @for (int i = 0; i < ViewBag.KnayfZelinderIntern.Count; i++)
+                                                    {
+                                                      <option id="OptionI">@ViewBag.KnayfZelinderIntern[i]</option>
+                                                    }
+                                                    
+                                                    </select>
+                                           
+                                             <input type="hidden" id="Innen-${BlockN}" />
+                                    </div>
+                                    <div style="gap: 10px;display: flex;margin-left: 50px;">
+                                            <button type="button" onclick="CylinderMinus(${BlockN})" class="btn btn-success">-</button>
+                                                <input readonly style="border: none;max-width: 80px;" id="countSchlusse-${BlockN}" type="number" min="1" value="1" name="TurCounter" />
+                                            <button type="button" onclick="CylinderPlus(${BlockN})" class="btn btn-success">+</button>
+                                    </div>
+                                </div>
+                                    <div id="optionsItems">
+                                        <h3>Weitere Optionen</h3>
+                                              <div>
+                                                @{
+                                                    int KnayfValueCount = 0;
+                                                }
+                                                @if (ViewBag.countOptionsQueryKnayfI > 0)
+                                                {
+                                                    @for (int i = 0; i < ViewBag.optionsNameKnayfI.Count; i++)
+                                                    {
+                                                        <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.optionsNameKnayfI[i]" />
+
+                                                         <select style="margin-bottom: 10px;"  class="form-select" id="${BlockN}-Options-@i" onchange="OptionsSelect(${BlockN},'Knayf',event.target.id,event.target.value,@KnayfValueCount,'@ViewBag.optionsNameKnayfI[i]',@i,${BlockN})">
+
+                                                             @for (int j = 0; j < ViewBag.countOptionsListKnayfI[i]; j++)
+                                                             {
+                                                                <option id="@KnayfValueCount">@ViewBag.optionsValueKnayfI[KnayfValueCount]</option>
+
+                                                                KnayfValueCount++;
+                                                             }
+
+                                                         </select>
+                                                        <input type="hidden"  id="Option-${BlockN} + @i" />
+                                                        <input type="hidden" id="d-${BlockN} + @i" />
+                                                    }
+                                                       <input type="hidden" name="KnayfOption" id="OptionAll-${BlockN}" />
+                                                }
+
+                                                 </div>
+                                                                </div>
+
+                                                                    ${waitTime}
+
+                                                                    </div>
+
+                                                `;
+        }
+        if (value == "Hebelzylinder") 
+        {
+
+            let waitTime = "";
+
+
+            if (HelbInfo[0].companyName == "CES") 
+            {
+                waitTime = `<h6 id="WaitTime" > Lieferzeit: 7 Tag</h6>`
+            }
+            else {
+                waitTime = `<h6 id="WaitTime" > Lieferzeit: 2 Werktage < /h6>`
+            }
+
+            AllPrice.value = (parseFloat(AllPrice.value) + HelbInfo[0].Price);
+
+            let img = HelbInfo[0].ImageName;
+
+            block.innerHTML = `<input type="hidden" name="Helb" value="${[HelbInfo[0].Id]}" />
+                        <div id="productImage">
+                                        <img onclick="OpenModalInfo(${BlockN})" decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="/Image/${img}" asp-append-version="true" width="300px" height="300px" />
+                        </div>
+                        <div id="productMenuInfo">
+                            <div id="ProductNameUndCost">
+                                <div>
+                                            <h3>Tür name: ${Dorname[BlockN]}</h3>
+                                            <input style="border: none;" readonly type="text" name="HelbName" value="${[HelbInfo[0].Name]}" />
+                                                <input style="border: none;" type="hidden" name="NameSystem" value="${[HelbInfo[0].NameSystem]}" />
+                                                <input style="border: none;" id="compName" type="hidden" value=${[HelbInfo[0].companyName]}" />
+                                                    <input id="costItems-${BlockN}" type="hidden" value="${[HelbInfo[0].Price]}" />
+                                </div>
+
+                            </div>
+                            <div>
+                                   <select id="type-${BlockN}" class="form-select" onchange="switchTypeSylinder(${BlockN},event.target.value,1)">
+                                    <option>Hebelzylinder</option>
+                                    @foreach (var i in ViewBag.AllType)
+                                    {
+                                        if (@i.nameType != "Hebelzylinder")
+                                        {
+                                            <option>@i.nameType</option>
+                                        }
+                                    }
+
+                                </select>
+                            </div>
+                                <div id="textInform">
+                                <h5>Vifile Tür</h5>
+                            </div>
+                                    <div id="Size-${BlockN}" class="SizeProduct">
+                                <div style="gap: 10px;display: flex;margin-left: 50px;">
+                                            <button onclick="CylinderMinus(${BlockN})" type="button" class="btn btn-success">-</button>
+                                            <input readonly style="border: none;max-width: 80px;" name="TurCounter" type="number" min="1" value="1" id="countSchlusse-${BlockN}" />
+                                        <button onclick="CylinderPlus(${BlockN})" type="button" class="btn btn-success">+</button>
+                                </div>
+                            </div>
+                                <div id="optionsItems">
+                                <h3>Weitere Optionen</h3>
+                                <div>
+
+                                @{
+                                    int valueCountHebel = 0;
+                                }
+
+                               
+                                </div>
+                            </div>
+                                         ${waitTime}
+                        </div>`;
         }
         if (value == "Vorhangschloss") 
         {
-             block.innerHTML =``;
+            let waitTime = "";
+
+            if (VorhanschlosInfo[0].companyName == "CES") 
+            {
+                waitTime = `<h6 id="WaitTime" > Lieferzeit: 7 Tag </h6>`
+            }
+             else 
+             {
+                waitTime = `<h6 id="WaitTime" > Lieferzeit: 2 Werktage < /h6>`
+             }
+
+            AllPrice.value = (parseFloat(AllPrice.value) + VorhanschlosInfo[0].Price);
+
+            let img = VorhanschlosInfo[0].ImageName;
+
+            block.innerHTML = `  <input type="hidden" name="Vorhan" value="${VorhanschlosInfo[0].Id} " />
+                        <div id="productImage">
+                                         <img onclick="OpenModalInfo(${BlockN})" decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="/Image/${img}" asp-append-version="true" width="300px" height="300px" />
+                        </div>
+                        <div id="productMenuInfo">
+                            <div id="ProductNameUndCost">
+                                <div>
+                                            <h3>Tür name: ${Dorname[BlockN]}</h3>
+                                                <input style="border: none;" readonly type="text" name="VorhanName" value="${VorhanschlosInfo[0].Name}" />
+                                                <input style="border: none;" type="hidden" name="NameSystem" value="${VorhanschlosInfo[0].NameSystem}" />
+                                                <input style="border: none;" id="compName" type="hidden" value="${VorhanschlosInfo[0].companyName}" />
+                                                    <input id="costItems-${BlockN}" type="hidden" value="${VorhanschlosInfo[0].Price}" />
+                                </div>
+
+                            </div>
+                            <div>
+                              <select id="type-${BlockN}" class="form-select" onchange="switchTypeSylinder(${BlockN},event.target.value,${elemNum})">
+                                 <option>Vorhangschloss</option>
+                                    @foreach (var i in ViewBag.AllType)
+                                    {
+                                        if (@i.nameType != "Vorhangschloss")
+                                        {
+                                           <option>@i.nameType</option>
+                                        }
+                                    }
+
+                                </select>
+                            </div>
+                            <div id="textInform">
+                                <h5>Zylinder Länge</h5>
+                                <h5>Vifile Tür</h5>
+                            </div>
+                                    <div id="Size-${BlockN}" class="SizeProduct">
+                                <div>
+                                      <select class="form-select" name="VorhanAussen" id="Aussen" onchange="VorhanSchlus(${BlockN},event.target.selectedIndex+1)">
+
+                                        @for (int i = 0; i < ViewBag.VorhanSize.Count; i++)
+                                        {
+                                                 <option id="OptionA">@ViewBag.VorhanSize[i]</option>
+                                        }
+                                   
+                                        </select>
+                                       <input type="hidden" id="Aussen-${BlockN}" />
+                                </div>
+                                <div style="gap: 10px;display: flex;margin-left: 50px;">
+                                  <button type="button" onclick="CylinderMinus(${BlockN})" class="btn btn-success">-</button>
+                                  <input name="TurCounter" readonly style="border: none;max-width: 30px;" type="number" min="1" id="countSchlusse-${BlockN}" value="1" />
+                                  <button type="button" onclick="CylinderPlus(${BlockN})" class="btn btn-success">+</button>
+                                </div>
+
+                            </div>
+                                <div id="optionsItems">
+                                <h3>Weitere Optionen</h3>
+                                <div>
+                                    
+                                </div>
+                            </div>
+                                      ${waitTime}
+                        </div>`;
         }
         if (value == "Aussenzylinder") 
         {
+            let waitTime = "";
+
+            if (VorhanschlosInfo[0].companyName == "CES") 
+            {
+                waitTime = `<h6 id="WaitTime" > Lieferzeit: 7 Tag </h6>`
+            }
+            else 
+            {
+                waitTime = `<h6 id="WaitTime" > Lieferzeit: 2 Werktage < /h6>`
+            }
 
             AllPrice.value = (parseFloat(AllPrice.value) + AussenzylinderInfo[0].Price);
             let img = AussenzylinderInfo[0].ImageName;
@@ -1056,21 +1599,21 @@
             block.innerHTML = `<input type="hidden" name="Aussen" value="${AussenzylinderInfo[0].Id}" />
            
             <div id="productImage">
-                        <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="/Image/${img}" asp-append-version="true" width="300px" height="300px" />
+                <img  onclick="OpenModalInfo(${BlockN})" decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="/Image/${img}" asp-append-version="true" width="300px" height="300px" />
                 </div>
             <div id="productMenuInfo">
                 <div id="ProductNameUndCost">
-                         <div>
-                            <h3>Tür name: ${Dorname[BlockN]}</h3>
+                    <div>
+                       <h3>Tür name: ${Dorname[BlockN]}</h3>
                         <input style="border: none;" readonly type="text" name="AussenName" value="${[AussenzylinderInfo[0].Name]}" />
                             <input style="border: none;" type="hidden" name="NameSystem" value="${[AussenzylinderInfo[0].NameSystem]}" />
-                                    <input style="border: none;" id="compName" type="hidden" value="${[AussenzylinderInfo[0].companyName]}" />
+                               <input style="border: none;" id="compName" type="hidden" value="${[AussenzylinderInfo[0].companyName]}" />
                                 <input id="costItems-${[BlockN]}" type="hidden" value="${[AussenzylinderInfo[0].Price]}" />
                         </div>
                     </div>
                          <div>
                               <div>
-                                <select id="type-${BlockN}" class="form-select" onchange="switchTypeSylinder(${BlockN},event.target.value,${elemNum},1)">
+                                <select id="type-${BlockN}" class="form-select" onchange="switchTypeSylinder(${BlockN},event.target.value,${elemNum})">
 
                         <option selected>Aussenzylinder</option>
 
@@ -1098,20 +1641,25 @@
                      <div id="optionsItems">
             <h3>Weitere Optionen</h3>
             <div>
+                @{
+                    int ValueAussen = 0;
+                }
 
             @if (ViewBag.AussenCountOption > 0)
             {
+
+
                 @for (int i = 0; i < ViewBag.AussenName.Count; i++)
                 {
                                        <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.AussenName[i]" />
 
-                                        <select style="margin-bottom: 10px;"  class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Aussen',event.target.id,event.target.value,@valueCount,'@ViewBag.AussenName[i]',@i,@d)">
+                                                    <select style="margin-bottom: 10px;"  class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Aussen',event.target.id,event.target.value,@ValueAussen,'@ViewBag.AussenName[i]',@i,@d)">
 
                                         @for (int j = 0; j < ViewBag.AussenValue[i]; j++)
                                         {
-                                                                  <option id="@valueCount">@ViewBag.AussenValue[valueCount]</option>
+                                           <option id="@value">@ViewBag.AussenValue[ValueAussen]</option>
 
-                                            valueCount++;
+                                            ValueAussen++;
                                         }
 
                                         </select>
@@ -1123,6 +1671,7 @@
             }
                     </div
                 </div>
+                          ${waitTime}
             </div>
                     `;
         }
@@ -1531,7 +2080,7 @@
 
                     if (type === "Doppelzylinder") 
                     {
-                        for (let i = 0; i < oldAussen.value;i++) 
+                        for (let i = 0; i <= oldAussen.value;i++) 
                         {
 
                             costItems.value = parseFloat(costItems.value) - (priceDoppelAussenCost[i]);
@@ -1546,8 +2095,8 @@
                     }
                     if (type === "Halbzylinder") 
                     {
-                       for (let i = 0; i < oldAussen.value;i++) 
-                       {
+                        for (let i = 0; i <= oldAussen.value; i++) 
+                        {
                             costItems.value = parseFloat(costItems.value) - (halbAussenCost[i]);
 
                             AllPrice.value = parseFloat(AllPrice.value) - (halbAussenCost[i] * Number(countSchluss.value));
@@ -1559,7 +2108,7 @@
                     }
                     if (type === "Knaufzylinder") 
                     {
-                        for (let i = 0; i < oldAussen.value;i++) 
+                        for (let i = 0; i <= oldAussen.value; i++) 
                         {
 
                             costItems.value = parseFloat(costItems.value) - (priceKnayfAussenCost[i]);
@@ -1576,7 +2125,7 @@
 
                     if (type === "Doppelzylinder") 
                     {
-                        for (let s = 0; s < SelectItemId;s++) 
+                        for (let s = 0; s <= SelectItemId;s++) 
                         {
                             costItems.value = parseFloat(costItems.value) + (priceDoppelAussenCost[s]);
 
@@ -1591,7 +2140,7 @@
                     }
                     if (type === "Halbzylinder") 
                     {
-                        for (let s = 0; s < SelectItemId;s++) 
+                        for (let s = 0; s <= SelectItemId; s++)
                         {
                             costItems.value = parseFloat(costItems.value) + (halbAussenCost[s]);
 
@@ -1605,7 +2154,7 @@
                     }
                     if (type === "Knaufzylinder") 
                     {
-                        for (let s = 0; s < SelectItemId;s++) 
+                        for (let s = 0; s <= SelectItemId;s++) 
                         {
 
                             costItems.value = parseFloat(costItems.value) + (priceKnayfAussenCost[s]);
@@ -1622,64 +2171,87 @@
 
         if (type === "Doppelzylinder") 
         {
-            if (Innen.value >= 55 && Aussen.value >= 55) 
+            if (Innen.value >= 55 || Aussen.value >= 55) 
             {
                 if (company.value = "CES") 
                 {
-                    WaitTime.innerHTML = "Lieferzeit:4 Werktage";
-                    WaitTime.textContent = "Lieferzeit: 4 Werktage";
+                    WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
+                    WaitTime.textContent = "Lieferzeit: 2 Werktage";
+                    
                 }
                 else 
                 {
-                    WaitTime.innerHTML = "Lieferzeit:7 Tag";
-                    WaitTime.textContent = "Lieferzeit:7 Tag";
+                    WaitTime.innerHTML = "Lieferzeit:4 Werktage";
+                    WaitTime.textContent = "Lieferzeit: 4 Werktage";
                 }
             }
             else 
             {
-                WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
-                WaitTime.textContent = "Lieferzeit: 2 Werktage";
-            }
-        }
-        if (type === "Knaufzylinder") 
-        {
-            if (Innen.value >= 55 && Aussen.value >= 55) 
-            {
                 if (company.value = "CES") 
-                {
-                    WaitTime.innerHTML = "Lieferzeit:4 Werktage";
-                    WaitTime.textContent = "Lieferzeit: 4 Werktage";
-                }
-                else 
                 {
                     WaitTime.innerHTML = "Lieferzeit:7 Tag";
                     WaitTime.textContent = "Lieferzeit:7 Tag";
                 }
+                else 
+                {
+                    WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
+                    WaitTime.textContent = "Lieferzeit: 2 Werktage";
+                }
             }
-            else {
-                WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
-                WaitTime.textContent = "Lieferzeit: 2 Werktage";
+        }
+        if (type === "Knaufzylinder") 
+        {
+            if (Innen.value >= 55 || Aussen.value >= 55) 
+            {
+                if (company.value = "CES") 
+                {
+                    WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
+                    WaitTime.textContent = "Lieferzeit: 2 Werktage";
+                }
+                else 
+                {
+                    WaitTime.innerHTML = "Lieferzeit:4 Werktage";
+                    WaitTime.textContent = "Lieferzeit: 4 Werktage";
+                }
+            }
+            else 
+            {
+                if (company.value = "CES") 
+                {
+                    WaitTime.innerHTML = "Lieferzeit:7 Tag";
+                    WaitTime.textContent = "Lieferzeit:7 Tag";
+                }
+                else {
+                    WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
+                    WaitTime.textContent = "Lieferzeit: 2 Werktage";
+                }
             }
         }
         if (type === "Halbzylinder") 
         {
             if (Aussen.value >= 55) 
             {
-                if (company.value = "CES") 
-                {
+                if (company.value = "CES") {
+                    WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
+                    WaitTime.textContent = "Lieferzeit: 2 Werktage";
+                }
+                else {
                     WaitTime.innerHTML = "Lieferzeit:4 Werktage";
                     WaitTime.textContent = "Lieferzeit: 4 Werktage";
                 }
-                else {
+            }
+            else {
+                if (company.value = "CES") {
                     WaitTime.innerHTML = "Lieferzeit:7 Tag";
                     WaitTime.textContent = "Lieferzeit:7 Tag";
                 }
-            }
-            else {
-                WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
-                WaitTime.textContent = "Lieferzeit: 2 Werktage";
+                else {
+                    WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
+                    WaitTime.textContent = "Lieferzeit: 2 Werktage";
+                }
             }
         }
+        
     }
     function selectParamIntern(idBlock,type,selectId) 
     {
@@ -1688,7 +2260,7 @@
         let BlockTur = document.getElementById("Size-" + idBlock);
         let countSchluss = BlockTur.querySelector("#countSchlusse-" + idBlock);
 
-        let SelectItemId = selectId - 1;
+        let SelectItemId = selectId-1;
 
         let costItems = document.getElementById("costItems-" + idBlock);
 
@@ -1705,7 +2277,7 @@
 
                     if (type === "Doppelzylinder") 
                     {
-                        for (let i = 0; i < oldAussen.value;i++) 
+                        for (let i = 0; i <= oldAussen.value;i++) 
                         {
 
                             costItems.value = parseFloat(costItems.value) - (priceDoppelInternCost[i]);
@@ -1721,7 +2293,7 @@
                     
                     if (type === "Knaufzylinder") 
                     {
-                        for (let i = 0; i < oldAussen.value;i++) 
+                        for (let i = 0; i <= oldAussen.value;i++) 
                         {
 
                             costItems.value = parseFloat(costItems.value) - (priceKnayfInternCost[i]);
@@ -1738,7 +2310,7 @@
 
                     if (type === "Doppelzylinder") 
                     {
-                        for (let s = 0; s < SelectItemId;s++) 
+                        for (let s = 0; s <= SelectItemId;s++) 
                         {
                             costItems.value = parseFloat(costItems.value) + (priceDoppelInternCost[s]);
 
@@ -1754,7 +2326,7 @@
                    
                     if (type === "Knaufzylinder") 
                     {
-                        for (let s = 0; s < SelectItemId;s++) 
+                        for (let s = 0; s <= SelectItemId;s++) 
                         {
 
                             costItems.value = parseFloat(costItems.value) + (priceKnayfInternCost[s]);
@@ -1769,20 +2341,25 @@
 
                     oldAussen.value = SelectItemId;
 
-        if (type === "Doppelzylinder") 
+        if (Innen.value >= 55 || Aussen.value >= 55) 
         {
-            if (Innen.value >= 55 && Aussen.value >= 55) 
+            if (company.value = "CES") 
             {
-                if (company.value = "CES") 
-                {
-                    WaitTime.innerHTML = "Lieferzeit:4 Werktage";
-                    WaitTime.textContent = "Lieferzeit: 4 Werktage";
-                }
-                else 
-                {
-                    WaitTime.innerHTML = "Lieferzeit:7 Tag";
-                    WaitTime.textContent = "Lieferzeit:7 Tag";
-                }
+                WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
+                WaitTime.textContent = "Lieferzeit: 2 Werktage";
+
+            }
+            else {
+                WaitTime.innerHTML = "Lieferzeit:4 Werktage";
+                WaitTime.textContent = "Lieferzeit: 4 Werktage";
+            }
+        }
+        else 
+        {
+            if (company.value = "CES") 
+            {
+                WaitTime.innerHTML = "Lieferzeit:7 Tag";
+                WaitTime.textContent = "Lieferzeit:7 Tag";
             }
             else 
             {
@@ -1790,24 +2367,30 @@
                 WaitTime.textContent = "Lieferzeit: 2 Werktage";
             }
         }
+    
         if (type === "Knaufzylinder") 
         {
-            if (Innen.value >= 55 && Aussen.value >= 55) 
+            if (Innen.value >= 55 || Aussen.value >= 55) 
             {
-                if (company.value = "CES") 
-                {
+                if (company.value = "CES") {
+                    WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
+                    WaitTime.textContent = "Lieferzeit: 2 Werktage";
+                }
+                else {
                     WaitTime.innerHTML = "Lieferzeit:4 Werktage";
                     WaitTime.textContent = "Lieferzeit: 4 Werktage";
                 }
-                else 
-                {
+            }
+            else {
+                if (company.value = "CES") {
+
                     WaitTime.innerHTML = "Lieferzeit:7 Tag";
                     WaitTime.textContent = "Lieferzeit:7 Tag";
                 }
-            }
-            else {
-                WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
-                WaitTime.textContent = "Lieferzeit: 2 Werktage";
+                else {
+                    WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
+                    WaitTime.textContent = "Lieferzeit: 2 Werktage";
+                }
             }
         }
       

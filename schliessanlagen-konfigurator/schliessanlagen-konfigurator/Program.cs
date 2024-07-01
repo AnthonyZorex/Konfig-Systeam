@@ -26,6 +26,8 @@ builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfi
 
 builder.Services.AddControllersWithViews();
 
+BundleTable.EnableOptimizations = false;
+
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

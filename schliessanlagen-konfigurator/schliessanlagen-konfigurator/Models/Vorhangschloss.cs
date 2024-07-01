@@ -1,6 +1,8 @@
 ﻿using schliessanlagen_konfigurator.Models.Vorhan;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace schliessanlagen_konfigurator.Models
 {
@@ -18,7 +20,12 @@ namespace schliessanlagen_konfigurator.Models
         [DisplayName("Upload your photo")]
         public IFormFile ImageFile { get; set; }
         public Schliessanlagen Schliessanlagen { get; set; }
+       
+        [JsonIgnore]
+        [IgnoreDataMember]
         public ICollection<Vorhan_Options> Vorhan_Options { get; set; }
+        [JsonIgnore]
+        [IgnoreDataMember]
         public ICollection<Size> Size { get; set; }
 
         public Vorhangschloss()

@@ -337,7 +337,9 @@
                                 </div>
                             </div>
                             <div id="product_desciptions">
-                                <h5>@item.description</h5>
+                                <div>
+                                    @Html.Raw(@item.description)
+                                </div>
                             </div>
                             <div id="productChek">
                                 <div>
@@ -368,7 +370,7 @@
         }
     </form>
 </div>
-<script src="https://cdn.tiny.cloud/1/36xh6wgtbftowaj1r6enn4swgnq0bzsp7d0jpkkoz8l97tz3/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script>
 <script>
 
     let allDoc = document.querySelectorAll(".ExelItem");
