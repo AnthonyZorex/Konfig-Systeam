@@ -51,25 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "e4694d4c-4cb7-4c31-965c-492c956d519d",
+                            Id = "9cf200be-4b90-41be-9d16-ac182ab95392",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "cf7421af-95a5-48f6-8e11-fd1d5dfe7c9b",
+                            Id = "7188eb69-2e22-4152-8bd8-56e8aff8bdac",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "9e792da6-c0c6-4a4b-9c9f-97913ae40f7b",
+                            Id = "173c5e0b-864f-4871-8fed-7c54cadfc51f",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "3ee7a871-b23f-4061-9b4b-4742276bf247",
+                            Id = "a19485ea-f762-466e-aa93-61c9aecd107e",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -944,7 +944,9 @@ namespace schliessanlagen_konfigurator.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("DesctiptionsSysteam")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Lieferzeit")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NameSysteam")

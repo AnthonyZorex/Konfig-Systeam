@@ -8,9 +8,20 @@
     position:absolute;
     align-content: center;
 }
+#orderCost {
+    color: red;
+    text-align: end;
+}
+#Allcost {
+    color: #f00;
+    font-size: 24px;
+    outline: none;
+    border: none;
+    width: 200px;
+}
 #countTurSelect {
     margin-left: 10px;
-    outline:none;
+    outline: none;
 }
 #hilfeOptionsIcon {
     position: absolute;
@@ -1300,12 +1311,12 @@
     }
 
     #circle2 {
-        margin-left: 2px;
+        margin-left: 4px;
         margin-top: 2px;
         border-radius: 100%;
         width: 5px;
         height: 5px;
-        background: white;
+        background: #fff;
     }
 
     .clostHilfeModel {
@@ -2019,6 +2030,7 @@
     }
 
     #orderCost {
+        gap:10px;
         justify-content: end;
         text-align: end;
         display: flex;
@@ -2314,7 +2326,7 @@
         padding: 20px;
         border: 1px solid #888;
         width: 20%;
-        margin-top: 280px;
+        margin-top: 360px;
         margin-left: 300px;
         text-align: center;
         border-radius: 20px;
@@ -2388,12 +2400,12 @@
     }
 
     #circle2 {
-        margin-left: 2px;
+        margin-left: 4px;
         margin-top: 2px;
         border-radius: 100%;
         width: 5px;
         height: 5px;
-        background: white;
+        background: #fff;
     }
 
     .clostHilfeModel {
@@ -2810,7 +2822,7 @@
         }
 
     #schlussel2 {
-        margin-left: 250px;
+        margin-left: 220px;
         margin-top: 5px;
     }
 
@@ -3096,8 +3108,9 @@
     .SizeProduct {
         display: flex;
     }
-
+  
     #orderCost {
+        gap: 10px;
         justify-content: end;
         text-align: end;
         display: flex;

@@ -8,7 +8,7 @@
 }
 @if (User.IsInRole("admin"))
 {
-    <h1>Edit</h1>
+    <h1>Bearbeiten</h1>
     <hr />
     <div class="row" style="justify-content: center;">
         <div class="col-md-10">
@@ -63,14 +63,14 @@
                         @foreach (var list in @ViewBag.Size)
                         {
                             <input class="form-control" name="SizeAus" id="aus" value="@list.aussen" />
-                            <input class="form-control" name="costSizeAussen" type="number" step="0.01" id="ausCost" value="@list.costSizeAussen" />
+                            <input class="form-control" name="costSizeAussen" type="text" id="ausCost" value="@list.costSizeAussen" />
                         }
                     </div>
                     <div id="InnenProfilDopel">
                         @foreach (var list in @ViewBag.Size)
                         {
                             <input class="form-control" name="SizeInen" id="inter" value="@list.Intern" />
-                            <input class="form-control" name="costSizeIntern" step="0.01" type="number" id="interCost" value="@list.costSizeIntern" />
+                            <input class="form-control" name="costSizeIntern"  type="text" id="interCost" value="@list.costSizeIntern" />
                         }
                     </div>
                    
@@ -83,20 +83,20 @@
                         {
                             r++;
                             <div class="input-block">
-                                <h2>Options</h2>
+                                <h2>Optionen</h2>
                                 <div class="form-group">
-                                    <label class="control-label">Options Name</label>
+                                    <label class="control-label">Optionen Name</label>
                                     <input name="Options" value="@options.Name" id="opt" class="form-control" />
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Options Image</label>
+                                    <label class="control-label">Optionsbild</label>
                                     <input name="ImageNameOption" type="text" value="@options.ImageName" id="opt" class="form-control" />
                                     <br />
                                     <img src="@("/Image/"+@options.ImageName)" height="300" width="300" />
                                     <br />
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label">Description</label>
+                                    <label class="control-label">Beschreibung</label>
                                     <textarea name="Descriptions" id="discriptions" class="form-control"> 
                                         @options.Description
                                     </textarea>
@@ -109,7 +109,7 @@
                                         @for (int i = 0; i < ViewBag.CountOptions[r]; i++)
                                         {
                                             count++;
-                                            <input type="text" placeholder="valueNGF" name="valueNGF" value="@ViewBag.OptionValue[count].Value" class="form-control" />
+                                            <input type="text" placeholder="Wert" name="valueNGF" value="@ViewBag.OptionValue[count].Value" class="form-control" />
                                         }
                                     </div>
                                     <div class="form-group" id="costNGF">
@@ -117,7 +117,7 @@
                                         @for (int i = 0; i < ViewBag.CountOptions[r]; i++)
                                         {
                                             f++;
-                                            <input type="text" placeholder="costNGF" name="costNGF" value="@ViewBag.OptionValue[f].Cost" class="form-control" />
+                                            <input type="text" placeholder="Price" name="costNGF" value="@ViewBag.OptionValue[f].Cost" class="form-control" />
                                         }
                                     </div>
                                     <input type="hidden" id="counter" name="inputCounter" />
@@ -135,16 +135,20 @@
                 @foreach (var list in ViewBag.KeyCost)
                 {
                     <div class="form-group">
-                        <label class="control-label">System Name</label>
+                        <label class="control-label">Systemname</label>
                         <input required name="NSysteam" value="@list.NameSysteam" id="opt" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label class="control-label">KeyKost</label>
+                        <label class="control-label">Schlüsselkostent</label>
                         <input required name="keyCost" value="@list.Price" id="opt" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label class="control-label">Desctiptions Systeam</label>
-                        <textarea required name="descriptionsSysteam" class="form-control" id="exampleFormControlTextarea2">@list.DesctiptionsSysteam</textarea>
+                        <label class="control-label">Systembeschreibungen</label>
+                        <textarea  name="descriptionsSysteam" class="form-control" id="exampleFormControlTextarea2">@list.DesctiptionsSysteam</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Lieferzeit</label>
+                        <textarea name="Lieferzeit" class="form-control" id="exampleFormControlTextarea2">@list.Lieferzeit</textarea>
                     </div>
                 }
                 <hr />
@@ -405,13 +409,13 @@
                                                                                                 <h1>Value & Cost </h1>
                                                                                                 <div id="Aussen_Innen_ProfilDopel">
                                                                                                     <div id="valueNGF">
-                                                                                                        <input type="text" placeholder="valueNGF" name="valueNGF" />
+                                                                                                                    <input type="text" class="form-control" placeholder="valueNGF" name="valueNGF" />
 
                                                                                                     </div>
                                                                                                     <div id="costNGF">
-                                                                                                                <input type="number" placeholder="costNGF" step="0.01" name="costNGF" />
+                                                                                                         <input type="number" class="form-control" placeholder="costNGF" step="0.01" name="costNGF" />
                                                                                                     </div>
-                                                                                                                            <input type="hidden" id="counter" name="inputCounter" />
+                                                                                                       <input type="hidden" id="counter" name="inputCounter" />
                                                                                                 </div>
                                                                                             </div>`;
 
@@ -425,11 +429,11 @@
                     let d = document.createElement('input');
                     d.setAttribute('name', 'costNGF');
                     d.setAttribute('placeholder', 'costNGF');
-
+                    d.setAttribute('class', 'form-control');
                     let x = document.createElement('input');
                     x.setAttribute('name', 'valueNGF');
                     x.setAttribute('placeholder', 'valueNGF');
-
+                    x.setAttribute('class', 'form-control');
                     const div1 = block.querySelector('#valueNGF');
                     const div2 = block.querySelector('#costNGF');
 

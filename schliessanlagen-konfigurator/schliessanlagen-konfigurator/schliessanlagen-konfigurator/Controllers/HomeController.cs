@@ -1316,7 +1316,7 @@ namespace schliessanlagen_konfigurator.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Save(Profil_Doppelzylinder profil_Doppelzylinder, List<int> SizeAus, List<int> SizeInen, List<string> Options,List<string> ImageNameOption,
+        public async Task<IActionResult> Save(Profil_Doppelzylinder profil_Doppelzylinder, List<int> SizeAus, List<int> SizeInen, List<string> Options,List<string> ImageNameOption,string Lieferzeit,
         List<string> Descriptions, List<string> valueNGF, List<float> costNGF, List<int> inputCounter,string NSysteam,float keyCost, string descriptionsSysteam,List<float> costSizeAussen, List<float> costSizeIntern)
         {
             var Items = db.Profil_Doppelzylinder.Find(profil_Doppelzylinder.Id);
@@ -1329,8 +1329,6 @@ namespace schliessanlagen_konfigurator.Controllers
             Items.ImageName = profil_Doppelzylinder.ImageName;
 
             var option = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == profil_Doppelzylinder.Id).ToList();
-
-           
 
             if (Options.Count() == 0 || option.Count() > 0)
             {
@@ -1387,10 +1385,20 @@ namespace schliessanlagen_konfigurator.Controllers
                     var createOptionsAussen = new NGF
                     {
                         OptionsId = createOptions.Id,
-                        Name = Options[i],
-                        Description = Descriptions[i],
-                        ImageName = ImageNameOption[i]
+                        Name = Options[i]
+                        
                     };
+
+                    if (Descriptions.Count() > 0)
+                    {
+                        createOptionsAussen.Description = Descriptions[i];
+                    }
+                    if (Descriptions.Count() == ImageNameOption.Count())
+                    {
+                      
+                        createOptionsAussen.ImageName = ImageNameOption[i];
+                        
+                    }
 
                     db.NGF.Add(createOptionsAussen);
                     db.SaveChanges();
@@ -1439,6 +1447,7 @@ namespace schliessanlagen_konfigurator.Controllers
             keyItem.NameSysteam = NSysteam;
             keyItem.Price = keyCost;
             keyItem.DesctiptionsSysteam = descriptionsSysteam;
+            keyItem.Lieferzeit = Lieferzeit;
             db.SaveChanges();
 
             return RedirectToAction("Index");

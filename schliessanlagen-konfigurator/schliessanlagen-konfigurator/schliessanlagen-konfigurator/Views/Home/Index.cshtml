@@ -21,7 +21,7 @@
             </div>
 
             <div>
-                <h2>New Profil Doppelzylinder</h2>
+                <h2>Neues Profil Doppelzylinder</h2>
 
                 <form asp-action="Create_Profil_Doppelzylinder" enctype="multipart/form-data" asp-controller="Home">
 
@@ -43,7 +43,7 @@
                         </div>
 
                         <div style="margin-bottom: 50px;">
-                            <label> Company Name</label>
+                            <label>Firmenname</label>
                             <input asp-for="companyName" required class="form-control" type="text" />
                         </div>
 
@@ -51,8 +51,8 @@
                             <label>Name System</label>
                             <input asp-for="NameSystem" required class="form-control" type="text" />
 
-                        <div style="margin-bottom: 50px;">
-                            <label>Descriptions</label>
+                            <div style="margin-bottom: 50px;margin-top: 50px">
+                          <label>Beschreibungen</label>
                                 <textarea asp-for="description"  required class="form-control" id="exampleFormControlTextarea1"></textarea>
                         </div>
                             @if (ViewBag.Content != null)
@@ -63,7 +63,7 @@
                                 </div>
                             }
                         <div style="margin-bottom: 50px;">
-                            <label>Cost</label>
+                            <label>Price</label>
                             <input asp-for="Price" required class="form-control" />
                         </div>
                         <h1>Aussen & Innen <input id="addAussen_Innen" class="btn btn-success" type="button" value="+" /><input id="addAussen_Innen_remove" class="btn btn-danger" type="button" value="-" /></h1>
@@ -72,34 +72,34 @@
 
                             <div id="AussenProfilDopel">
                                 <input type="number" class="form-control" placeholder="Aussen" id="aus" step="0.01" name="aussen" />
-                                    <input class="form-control" name="costSizeAussen" type="number" placeholder="CostAussen" id="ausCost" step="0.01" />
+                                    <input class="form-control" name="costSizeAussen" type="number" placeholder="Price" id="ausCost" step="0.01" />
                             </div>
 
                             <div id="InnenProfilDopel">
-                                <input type="number" class="form-control" placeholder="innen" id="inter" step="0.01" name="innen" />
-                                    <input class="form-control" placeholder="CostInnen" type="number" name="costSizeIntern" step="0.01" id="interCost" />
+                                <input type="number" class="form-control" placeholder="Innen" id="inter" step="0.01" name="innen" />
+                                    <input class="form-control" placeholder="Price" type="number" name="costSizeIntern" step="0.01" id="interCost" />
                             </div>
                         </div>
                         <div id="productOptions">
                         </div>
-
+                        </div>
                     </div>
                     <hr />
                     <h2>Schlüssel</h2>
-                    <div style="margin-bottom: 50px;">
-                        <label>KeyName</label>
+                    <div style="margin-bottom: 50px;margin-top: 50px">
+                        <label>Schlüsselname</label>
                         <input name="KeyName" type="text" class="form-control" />
                     </div>
                     <div style="margin-bottom: 50px;">
-                        <label>KeyCost</label>
+                        <label>Schlüsselkosten</label>
                         <input name="KeyCost" type="number" step="0,1" min="0" class="form-control" />
                     </div>
 
                     <hr />
-                    <button id="createBlockBtn" type="button" class="btn btn-success">Add Options</button>
+                    <button id="createBlockBtn" type="button" class="btn btn-success">Optionen hinzufügen</button>
                     <button id="addInputBtn" type="button" class="btn btn-success">+</button>
                     <button id="RemoveInputBtn" type="button" class="btn btn-danger">-</button>
-                    <input type="submit" class="btn btn-success" id="input" value="Create Profil Doppelzylinder" />
+                    <input type="submit" class="btn btn-success" id="input" value="Erstellen Profil Doppelzylinder" />
                 </form>
 
             </div>
@@ -107,22 +107,22 @@
         </div>
         <div>
 
-            <h4 id="input">ALL Profil Doppelzylinder</h4>
+            <h4 id="input">ALLE Profil Doppelzylinder</h4>
             @using (Html.BeginForm("Index", "Home", FormMethod.Get))
             {
                 <table class="table table-bordered table-sm">
                     <tbody>
                         <tr id="Table">
-                            <th>CompanyName</th>
+                            <th>Firmenname</th>
                             <th>Systeam</th>
                             <th>Name</th>
-                            <th>Image</th>
-                            <th>Cost</th>
-                            <th>KeyCost</th>
+                            <th>Bild</th>
+                            <th>Price</th>
+                            <th>Schlüsselpreis</th>
 
-                            <th>Edit</th>
-                            <th>Options</th>
-                            <th>Delete</th>
+                            <th>Bearbeiten</th>
+                            <th>Optionen</th>
+                            <th>Löschen</th>
 
                             @foreach (var item in ViewBag.item)
                             {
@@ -131,10 +131,8 @@
                                 <td id="rowTable" class="table-info">@item.NameSystem</td>
                                 <td id="rowTable" class="table-info">@item.Name</td>
                                 <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
-                                <td id="rowTable " class="table-info"><h6 id="cost">@Convert.ToDecimal(@item.Price)</h6></td>
-                                <td id="rowTable " class="table-info"><h6 id="cost">@ViewBag.KeyCost[i]</h6></td>
-
-
+                                <td id="rowTable " class="table-info"><h6 id="cost">@item.Price.ToString("C")</h6></td>
+                                <td id="rowTable " class="table-info"><h6 id="cost">@ViewBag.KeyCost[i].ToString("C")</h6></td>
                                 <td id="rowTable" class="table-info"><a href="@Url.Action("Edit_Doppelzylinder","Home", new { item.Id })"><img src="@("/Image/edit-tools.png")" height="30" width="30" /></a></td>
                                 <td id="rowTable" class="table-info">
                                     <a class="compItem" href="@Url.Action("ProductProfil_Doppelzylinder","Home", new { item.Id })">
@@ -211,7 +209,7 @@
                 } 
                 else 
                 {
-                    alert('Сначала создайте блок');
+                    alert('Erstellen Sie zuerst einen Block.');
                 }
             });
 
@@ -224,7 +222,7 @@
                 block.classList.add('input-block');
                 block.id = `block-${blockCounter}`;
                 block.innerHTML = `<div>
-                                                <h1>Options</h1>
+                                                        <h1>Optionen</h1>
                                                 <label>Name</label>
                                                 <input class="form-control" type="text" name="Options" />
                                                 <div>
@@ -232,18 +230,18 @@
                                                     <input name="postedFile" type="file" class="btn btn-success" />
                                                     <p></p>
                                                 </div>
-                                                <label>Descriptions</label>
+                                                        <label>Beschreibungen</label>
                                                   <textarea class="form-control" id="descriptionOptions"  name="NGFDescriptions"></textarea>
-                                                <h1>Value & Cost </h1>
+                                                <h1>Wert & Price </h1>
                                                 <div id="Aussen_Innen_ProfilDopel">
                                                     <div id="valueNGF">
-                                                        <input type="text" placeholder="valueNGF" step="0.01" name="valueNGF" />
+                                                         <input type="text" placeholder="Wert" class="form-control" step="0.01" name="valueNGF" />
 
                                                     </div>
                                                     <div id="costNGF">
-                                                                <input type="number"  placeholder="costNGF" step="0.01" name="costNGF" />
+                                                          <input type="number" class="form-control"  placeholder="Price" step="0.01" name="costNGF" />
                                                     </div>
-                                                                <input type="hidden" id="counter" name="input_counter" />
+                                                      <input type="hidden" id="counter"  name="input_counter" />
                                                 </div>
                                             </div>`;
 
@@ -254,27 +252,26 @@
           
             function addInputs(block) 
             {
-
                 let d = document.createElement('input');
                 d.setAttribute('name', 'costNGF');
-                d.setAttribute('placeholder', 'costNGF');
+                d.setAttribute('placeholder', 'Price');
+                d.setAttribute('class', 'form-control');
 
                 let x = document.createElement('input');
                 x.setAttribute('name', 'valueNGF');
-                x.setAttribute('placeholder', 'valueNGF');
+                x.setAttribute('placeholder', 'Wert');
+                x.setAttribute('class', 'form-control');
 
                 const div1 = block.querySelector('#valueNGF');
                 const div2 = block.querySelector('#costNGF');
 
                 div1.appendChild(x);
-
                 div2.appendChild(d);
 
                 var counter = document.querySelectorAll('#counter');
                 counter[counter.length - 1].value = counterOptions;
 
                 counterOptions++;
-
             };
 
             plusAussen_Innen.addEventListener('click', () => {
@@ -287,7 +284,7 @@
 
                 let costAussen = document.createElement('input');
                 costAussen.setAttribute('name', 'costSizeAussen');
-                costAussen.setAttribute('placeholder', 'costAussen');
+                costAussen.setAttribute('placeholder', 'Price');
                 costAussen.setAttribute('class', 'form-control');
                 costAussen.setAttribute('step', '0.01');
                 costAussen.setAttribute('type', 'number');
@@ -301,7 +298,7 @@
 
                 let costInter = document.createElement('input');
                 costInter.setAttribute('name', 'costSizeIntern');
-                costInter.setAttribute('placeholder', 'costInnen');
+                costInter.setAttribute('placeholder', 'Price');
                 costInter.id = 'interCost';
                 costInter.setAttribute('class', 'form-control');
                 costInter.setAttribute('step', '0.01');
@@ -328,24 +325,7 @@
 
         })
 
-        function interfaice() {
-            sum.forEach((item) => {
-
-                const commaIndex = String(item.innerHTML).indexOf(',');
-
-
-                if (commaIndex < String(item.innerHTML) - 1 && String(item.innerHTML)[commaIndex + 1] !== ' ') 
-                {
-                    item.innerHTML = item.innerHTML + '€';
-                } else 
-                {
-                    item.innerHTML = item.innerHTML + '0€'; 
-                }
-              
-            })
-        }
-
-        interfaice();
+        
 
 
     </script>

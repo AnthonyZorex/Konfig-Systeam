@@ -17,319 +17,627 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = schliessanlagen_konfigurator
 build_property.RootNamespace = schliessanlagen_konfigurator
-build_property.ProjectDir = D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\schliessanlagen-konfigurator\
+build_property.ProjectDir = D:\Anthnony\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\schliessanlagen-konfigurator
+build_property.MSBuildProjectDirectory = D:\Anthnony\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator
 build_property._RazorSourceGeneratorDebug = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/AccessDenied.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/AccessDenied.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxBY2Nlc3NEZW5pZWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ConfirmEmail.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ConfirmEmail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxDb25maXJtRW1haWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ConfirmEmailChange.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ConfirmEmailChange.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxDb25maXJtRW1haWxDaGFuZ2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ExternalLogin.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ExternalLogin.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxFeHRlcm5hbExvZ2luLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ForgotPassword.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ForgotPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxGb3Jnb3RQYXNzd29yZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ForgotPasswordConfirmation.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ForgotPasswordConfirmation.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxGb3Jnb3RQYXNzd29yZENvbmZpcm1hdGlvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Lockout.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Lockout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2Nrb3V0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Login.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/LoginWith2fa.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/LoginWith2fa.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dpbldpdGgyZmEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/LoginWithRecoveryCode.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/LoginWithRecoveryCode.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dpbldpdGhSZWNvdmVyeUNvZGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Logout.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Logout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/ChangePassword.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/ChangePassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcQ2hhbmdlUGFzc3dvcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/DeletePersonalData.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/DeletePersonalData.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcRGVsZXRlUGVyc29uYWxEYXRhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/Disable2fa.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/Disable2fa.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcRGlzYWJsZTJmYS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/DownloadPersonalData.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/DownloadPersonalData.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcRG93bmxvYWRQZXJzb25hbERhdGEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/Email.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/Email.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcRW1haWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/EnableAuthenticator.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/EnableAuthenticator.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcRW5hYmxlQXV0aGVudGljYXRvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/ExternalLogins.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/ExternalLogins.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcRXh0ZXJuYWxMb2dpbnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/GenerateRecoveryCodes.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/GenerateRecoveryCodes.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcR2VuZXJhdGVSZWNvdmVyeUNvZGVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/HistoriOrders.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/HistoriOrders.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcSGlzdG9yaU9yZGVycy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/Index.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/PagePersonalOrders.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/PagePersonalOrders.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcUGFnZVBlcnNvbmFsT3JkZXJzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/PersonalData.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/PersonalData.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcUGVyc29uYWxEYXRhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/ResetAuthenticator.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/ResetAuthenticator.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcUmVzZXRBdXRoZW50aWNhdG9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/SetPassword.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/SetPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcU2V0UGFzc3dvcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/ShowRecoveryCodes.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/ShowRecoveryCodes.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcU2hvd1JlY292ZXJ5Q29kZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/TwoFactorAuthentication.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/TwoFactorAuthentication.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcVHdvRmFjdG9yQXV0aGVudGljYXRpb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/_Layout.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcX0xheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/_ManageNav.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/_ManageNav.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcX01hbmFnZU5hdi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/_StatusMessage.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/_StatusMessage.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcX1N0YXR1c01lc3NhZ2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/_ViewImports.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Register.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/RegisterConfirmation.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/RegisterConfirmation.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxSZWdpc3RlckNvbmZpcm1hdGlvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ResendEmailConfirmation.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ResendEmailConfirmation.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxSZXNlbmRFbWFpbENvbmZpcm1hdGlvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ResetPassword.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ResetPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxSZXNldFBhc3N3b3JkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ResetPasswordConfirmation.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ResetPasswordConfirmation.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxSZXNldFBhc3N3b3JkQ29uZmlybWF0aW9uLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/_StatusMessage.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/_StatusMessage.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxfU3RhdHVzTWVzc2FnZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/_ViewImports.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxfVmlld0ltcG9ydHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/_ValidationScriptsPartial.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZhbGlkYXRpb25TY3JpcHRzUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/_ViewImports.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/_ViewStart.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Pages/_ValidationScriptsPartial.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Pages/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZhbGlkYXRpb25TY3JpcHRzUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Aussenzylinder_Rundzylinder.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/AccessDenied.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XEFjY2Vzc0RlbmllZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ConfirmEmail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XENvbmZpcm1FbWFpbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ConfirmEmailChange.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XENvbmZpcm1FbWFpbENoYW5nZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ExternalLogin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XEV4dGVybmFsTG9naW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ForgotPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XEZvcmdvdFBhc3N3b3JkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ForgotPasswordConfirmation.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XEZvcmdvdFBhc3N3b3JkQ29uZmlybWF0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Lockout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XExvY2tvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XExvZ2luLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/LoginWith2fa.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XExvZ2luV2l0aDJmYS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/LoginWithRecoveryCode.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XExvZ2luV2l0aFJlY292ZXJ5Q29kZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Logout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XExvZ291dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/ChangePassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XE1hbmFnZVxDaGFuZ2VQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/DeletePersonalData.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XE1hbmFnZVxEZWxldGVQZXJzb25hbERhdGEuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/Disable2fa.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XE1hbmFnZVxEaXNhYmxlMmZhLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/DownloadPersonalData.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XE1hbmFnZVxEb3dubG9hZFBlcnNvbmFsRGF0YS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/Email.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XE1hbmFnZVxFbWFpbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/EnableAuthenticator.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XE1hbmFnZVxFbmFibGVBdXRoZW50aWNhdG9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/ExternalLogins.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XE1hbmFnZVxFeHRlcm5hbExvZ2lucy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/GenerateRecoveryCodes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XE1hbmFnZVxHZW5lcmF0ZVJlY292ZXJ5Q29kZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/HistoriOrders.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XE1hbmFnZVxIaXN0b3JpT3JkZXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XE1hbmFnZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/PagePersonalOrders.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XE1hbmFnZVxQYWdlUGVyc29uYWxPcmRlcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/PersonalData.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XE1hbmFnZVxQZXJzb25hbERhdGEuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/ResetAuthenticator.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XE1hbmFnZVxSZXNldEF1dGhlbnRpY2F0b3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/SetPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XE1hbmFnZVxTZXRQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/ShowRecoveryCodes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XE1hbmFnZVxTaG93UmVjb3ZlcnlDb2Rlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/TwoFactorAuthentication.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XE1hbmFnZVxUd29GYWN0b3JBdXRoZW50aWNhdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XE1hbmFnZVxfTGF5b3V0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/_ManageNav.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XE1hbmFnZVxfTWFuYWdlTmF2LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/_StatusMessage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XE1hbmFnZVxfU3RhdHVzTWVzc2FnZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XE1hbmFnZVxfVmlld0ltcG9ydHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XFJlZ2lzdGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/RegisterConfirmation.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XFJlZ2lzdGVyQ29uZmlybWF0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ResendEmailConfirmation.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XFJlc2VuZEVtYWlsQ29uZmlybWF0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ResetPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XFJlc2V0UGFzc3dvcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ResetPasswordConfirmation.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XFJlc2V0UGFzc3dvcmRDb25maXJtYXRpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/_StatusMessage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XF9TdGF0dXNNZXNzYWdlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xBY2NvdW50XF9WaWV3SW1wb3J0cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xfVmFsaWRhdGlvblNjcmlwdHNQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xfVmlld0ltcG9ydHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxBcmVhc1xJZGVudGl0eVxQYWdlc1xfVmlld1N0YXJ0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Pages/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxQYWdlc1xfVmFsaWRhdGlvblNjcmlwdHNQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Aussenzylinder_Rundzylinder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xFZGl0XEVkaXRfQXVzc2VuenlsaW5kZXJfUnVuZHp5bGluZGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Doppelzylinder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xFZGl0XEVkaXRfRG9wcGVsenlsaW5kZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Hebel.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xFZGl0XEVkaXRfSGViZWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Profil_Halbzylinder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xFZGl0XEVkaXRfUHJvZmlsX0hhbGJ6eWxpbmRlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Profil_Knaufzylinder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xFZGl0XEVkaXRfUHJvZmlsX0tuYXVmenlsaW5kZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Vorhangschloss.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xFZGl0XEVkaXRfVm9yaGFuZ3NjaGxvc3MuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/ImageConfig.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xFZGl0XEltYWdlQ29uZmlnLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/AllOrders.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xIb21lXEFsbE9yZGVycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Aussenzylinder_RundzylinderRout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xIb21lXEF1c3Nlbnp5bGluZGVyX1J1bmR6eWxpbmRlclJvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xIb21lXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/HebelzylinderRout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xIb21lXEhlYmVsenlsaW5kZXJSb3V0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Impressum.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xIb21lXEltcHJlc3N1bS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xIb21lXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Message.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xIb21lXE1lc3NhZ2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductAussenzylinder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xIb21lXFByb2R1Y3RBdXNzZW56eWxpbmRlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductHebel.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xIb21lXFByb2R1Y3RIZWJlbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductProfil_Doppelzylinder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xIb21lXFByb2R1Y3RQcm9maWxfRG9wcGVsenlsaW5kZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductProfil_Halb.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xIb21lXFByb2R1Y3RQcm9maWxfSGFsYi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductProfil_Knayf.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xIb21lXFByb2R1Y3RQcm9maWxfS25heWYuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductVorhan.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xIb21lXFByb2R1Y3RWb3JoYW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Profil_HalbzylinderRout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xIb21lXFByb2ZpbF9IYWxienlsaW5kZXJSb3V0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Profil_KnaufzylinderRout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xIb21lXFByb2ZpbF9LbmF1Znp5bGluZGVyUm91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/SendMail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xIb21lXFNlbmRNYWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/VorhangschlossRout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xIb21lXFZvcmhhbmdzY2hsb3NzUm91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Konfigurator/ChangedKonfigPlan.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xLb25maWd1cmF0b3JcQ2hhbmdlZEtvbmZpZ1BsYW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Konfigurator/Finisher.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xLb25maWd1cmF0b3JcRmluaXNoZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Konfigurator/IndexKonfigurator.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xLb25maWd1cmF0b3JcSW5kZXhLb25maWd1cmF0b3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Konfigurator/System_Auswählen.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xLb25maWd1cmF0b3JcU3lzdGVtX0F1c3fDpGhsZW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xTaGFyZWRcRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/_Footer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xTaGFyZWRcX0Zvb3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/_LoginPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xTaGFyZWRcX0xvZ2luUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xTaGFyZWRcX1ZhbGlkYXRpb25TY3JpcHRzUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xfVmlld0ltcG9ydHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xfVmlld1N0YXJ0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Aussenzylinder_Rundzylinder.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdFxFZGl0X0F1c3Nlbnp5bGluZGVyX1J1bmR6eWxpbmRlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Doppelzylinder.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Doppelzylinder.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdFxFZGl0X0RvcHBlbHp5bGluZGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Hebel.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Hebel.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdFxFZGl0X0hlYmVsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Profil_Halbzylinder.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Profil_Halbzylinder.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdFxFZGl0X1Byb2ZpbF9IYWxienlsaW5kZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Profil_Knaufzylinder.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Profil_Knaufzylinder.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdFxFZGl0X1Byb2ZpbF9LbmF1Znp5bGluZGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Vorhangschloss.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Vorhangschloss.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdFxFZGl0X1ZvcmhhbmdzY2hsb3NzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/ImageConfig.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/ImageConfig.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdFxJbWFnZUNvbmZpZy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/AllOrders.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/AllOrders.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBbGxPcmRlcnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Aussenzylinder_RundzylinderRout.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Aussenzylinder_RundzylinderRout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBdXNzZW56eWxpbmRlcl9SdW5kenlsaW5kZXJSb3V0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Error.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFcnJvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/HebelzylinderRout.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/HebelzylinderRout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxIZWJlbHp5bGluZGVyUm91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Impressum.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Impressum.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbXByZXNzdW0uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Index.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Message.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Message.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxNZXNzYWdlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductAussenzylinder.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductAussenzylinder.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9kdWN0QXVzc2VuenlsaW5kZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductHebel.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductHebel.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9kdWN0SGViZWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductProfil_Doppelzylinder.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductProfil_Doppelzylinder.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9kdWN0UHJvZmlsX0RvcHBlbHp5bGluZGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductProfil_Halb.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductProfil_Halb.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9kdWN0UHJvZmlsX0hhbGIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductProfil_Knayf.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductProfil_Knayf.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9kdWN0UHJvZmlsX0tuYXlmLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductVorhan.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductVorhan.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9kdWN0Vm9yaGFuLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Profil_HalbzylinderRout.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Profil_HalbzylinderRout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9maWxfSGFsYnp5bGluZGVyUm91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Profil_KnaufzylinderRout.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Profil_KnaufzylinderRout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9maWxfS25hdWZ6eWxpbmRlclJvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/SendMail.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/SendMail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTZW5kTWFpbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/VorhangschlossRout.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/VorhangschlossRout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxWb3JoYW5nc2NobG9zc1JvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Konfigurator/ChangedKonfigPlan.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Konfigurator/ChangedKonfigPlan.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS29uZmlndXJhdG9yXENoYW5nZWRLb25maWdQbGFuLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Konfigurator/Finisher.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Konfigurator/Finisher.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS29uZmlndXJhdG9yXEZpbmlzaGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Konfigurator/IndexKonfigurator.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Konfigurator/IndexKonfigurator.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS29uZmlndXJhdG9yXEluZGV4S29uZmlndXJhdG9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Konfigurator/System_Auswählen.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Konfigurator/System_Auswählen.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS29uZmlndXJhdG9yXFN5c3RlbV9BdXN3w6RobGVuLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/Error.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/_Footer.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/_Footer.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Gb290ZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/_LoginPartial.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/_LoginPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/_ValidationScriptsPartial.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/_ViewImports.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/_ViewStart.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/_Layout.cshtml]
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = c2NobGllc3NhbmxhZ2VuLWtvbmZpZ3VyYXRvclxWaWV3c1xTaGFyZWRcX0xheW91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = b-t3260vm5r4
+
+[D:/Anthnony/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-rlp7f96r37

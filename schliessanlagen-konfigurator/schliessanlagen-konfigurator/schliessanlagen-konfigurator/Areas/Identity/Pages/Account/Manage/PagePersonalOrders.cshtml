@@ -35,10 +35,10 @@
                         <img src="@("/Image/Schliarticle.jpg")" onclick="OpenModalInfo(@z)" height="150" width="150" />
                         <h4>@orderList[z].ProductName</h4>
                         <div id="costedInfo">
-                                <div style="display:flex"><h4 id="costedI-@z">@orderList[z].OrderSum</h4><span>€</span></div>
+                            <div style="display:flex"><h4 id="costedI-@z">@orderList[z].OrderSum.ToString("C")</h4></div>
                             <input onchange="counterCost(event.target.value,@z)" required id="countOrderSysteam" value="@orderList[z].count" type="number" pattern="[0-9]+" min="1" max="1000" />
 
-                            <h4 id="cost-@z">@orderList[z].OrderSum €</h4>
+                            <h4 id="cost-@z">@orderList[z].OrderSum.ToString("C")</h4>
                         </div>
                         </div>
 
@@ -56,10 +56,10 @@
                             {
                                 <hr/>
                                 <h4>Name: @orderItem[ProudctItemCounter].Name</h4>
-                                <h4>aussen: @orderItem[ProudctItemCounter].Aussen</h4>
-                                <h4>innen: @orderItem[ProudctItemCounter].Intern</h4>
-                                <h4>Option - @orderItem[ProudctItemCounter].Option</h4> 
-                                <h4>Count: @orderItem[ProudctItemCounter].Count</h4> 
+                                <h4>Aussen Länge: @orderItem[ProudctItemCounter].Aussen</h4>
+                                <h4>Innen Länge: @orderItem[ProudctItemCounter].Intern</h4>
+                                <h4>Option - @orderItem[ProudctItemCounter].Option</h4>
+                                <h4>Anzahl: @orderItem[ProudctItemCounter].Count</h4>
                                 UserOrderId = @orderList[z].Id;
                                 ProudctItemCounter++;
                             }
@@ -80,7 +80,7 @@
             }
             <br />
             <hr />
-            <h2 style="color:red">Costed: @costed</h2>
+            <h2 style="color:red">Costed: @costed.ToString("C")</h2>
         </div>
     </div>
 </div>
@@ -105,7 +105,8 @@
 
         var stringWithoutEuro = cost.innerHTML.replace("€", "");
         
-        var costen = parseFloat(stringWithoutEuro);
+        var costen = parseFloat(stringWithoutEuro.replace(',', '.').trim());
+        
         idItem = id;
 
         var modal = document.getElementById(`myModal-${id}`);
@@ -174,8 +175,15 @@
     {
         let costedInfo = document.getElementById(`costedI-${id}`);
         let costed = document.getElementById(`cost-${id}`);
-        let cost = parseFloat(costedInfo.innerHTML * value);
-        costed.innerHTML = cost + "€";
+
+        let stringWithoutEuro = costedInfo.innerHTML.replace("€", "").trim();
+
+        let cost = parseFloat(stringWithoutEuro.replace(',', '.')) * parseFloat(value);
+
+        costed.innerHTML = cost.toLocaleString('de-DE', {
+            style: 'currency',
+            currency: 'EUR'
+        });
     }
 
     function remove(empty) 

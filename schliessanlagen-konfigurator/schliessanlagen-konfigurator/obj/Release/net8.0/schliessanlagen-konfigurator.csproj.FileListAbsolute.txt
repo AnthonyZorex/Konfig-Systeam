@@ -1196,3 +1196,16 @@ D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\schl
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\schliessanlagen-konfigurator.pdb
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\schliessanlagen-konfigurator.genruntimeconfig.cache
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\ref\schliessanlagen-konfigurator.dll
+D:\Anthnony\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\schliessanlagen-konfigurator.csproj.AssemblyReference.cache
+D:\Anthnony\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\schliessanlagen-konfigurator.GeneratedMSBuildEditorConfig.editorconfig
+D:\Anthnony\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\schliessanlagen-konfigurator.AssemblyInfoInputs.cache
+D:\Anthnony\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\schliessanlagen-konfigurator.AssemblyInfo.cs
+D:\Anthnony\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\schliessanlagen-konfigurator.csproj.CoreCompileInputs.cache
+D:\Anthnony\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\schliessanlagen-konfigurator.MvcApplicationPartsAssemblyInfo.cs
+D:\Anthnony\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\schliessanlagen-konfigurator.MvcApplicationPartsAssemblyInfo.cache
+D:\Anthnony\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\schliessanlagen-konfigurator.RazorAssemblyInfo.cache
+D:\Anthnony\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\schliessanlagen-konfigurator.RazorAssemblyInfo.cs
+D:\Anthnony\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\schliessanlagen-konfigurator.sourcelink.json
+D:\Anthnony\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\schliessanlagen-konfigurator.dll
+D:\Anthnony\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\refint\schliessanlagen-konfigurator.dll
+D:\Anthnony\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\schliessanlagen-konfigurator.pdb

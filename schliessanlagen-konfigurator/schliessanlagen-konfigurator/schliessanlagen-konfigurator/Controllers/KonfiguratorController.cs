@@ -3273,7 +3273,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             ViewBag.countOptionsQueryHalb = queryableOptionsHalb.Count();
 
-            ViewBag.HalbOptionsName = OptionsHalb.Select(x => x.Name).ToList();
+            ViewBag.HalbOptionsName = OptionsHalb.Select(x => x).ToList();
 
             ViewBag.HalbOptionsNameJson = JsonConvert.SerializeObject(OptionsHalb.Select(x => x.Name).ToList());
 
@@ -4050,7 +4050,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 ViewBag.HalbOptionsValueICount = L;
 
-                ViewBag.HalbOptionsNameI = halboptions.Select(x => x.Name).ToList();
+                ViewBag.HalbOptionsNameI = halboptions.Select(x => x).ToList();
                 ViewBag.HalbOptionsValueI = halbOptionsValue.Select(x => x.Value).ToList();
 
                 ViewBag.HalbOptionsValueJson = JsonConvert.SerializeObject(halbOptionsValue.Select(x => x.Value).ToList());
@@ -4104,7 +4104,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 ViewBag.HalbOptionsValueICount = L;
 
-                ViewBag.HalbOptionsNameI = halboptions.Select(x => x.Name).ToList();
+                ViewBag.HalbOptionsNameI = halboptions.Select(x => x).ToList();
                 ViewBag.HalbOptionsValueI = halbOptionsValue.Select(x => x.Value).ToList();
 
                 ViewBag.HalbOptionsValueJson = JsonConvert.SerializeObject(halbOptionsValue.Select(x=>x.Value).ToList());
@@ -4155,7 +4155,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
 
                 ViewBag.OptionsNameKnayfJson = JsonConvert.SerializeObject(KnayfOptionList.Select(x => x.Name).ToList());
-                ViewBag.optionsNameKnayfI = KnayfOptionList.Select(x => x.Name).ToList();
+                ViewBag.optionsNameKnayfI = KnayfOptionList.Select(x => x).ToList();
 
                 var KnayfOptionsValue = new List<Knayf_Options_value>();
 
@@ -4212,7 +4212,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
 
                 ViewBag.OptionsNameKnayfJson = JsonConvert.SerializeObject(KnayfOptionList.Select(x => x.Name).ToList());
-                ViewBag.optionsNameKnayfI = KnayfOptionList.Select(x => x.Name).ToList();
+                ViewBag.optionsNameKnayfI = KnayfOptionList.Select(x => x).ToList();
 
                 var KnayfOptionsValue = new List<Knayf_Options_value>();
 
@@ -4504,14 +4504,13 @@ namespace schliessanlagen_konfigurator.Controllers
         List<string> VorhanName, List<float> VorhanAussen, List<string> AussenName, string cost, List<string> key, List<bool> keyIsOpen, List<int> countKey,
         List<int> TurCounter,List<string> FurKey, string NameSystem)
         {
-
             var countItemOrder = DopelName.Count() + AussenName.Count() + VorhanName.Count() + KnayfName.Count() + HelbName.Count() + HalbName.Count();
 
             ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
             string loginInform = ident.Claims.Select(x => x.Value).First();
             var users = db.Users.FirstOrDefault(x => x.Id == loginInform);
 
-            var costed = float.Parse(cost);
+            string result = cost.Replace("€", "");
 
             var Zylinder_Typ = db.Schliessanlagen.ToList();
             var profilD = db.Profil_Doppelzylinder.ToList();
@@ -4560,7 +4559,7 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 UserId = users.Id,
                 ProductName = NameSystem,
-                OrderSum = costed,
+                OrderSum = float.Parse(result.Trim()),
                 OrderStatus = "Nicht bezahlt",
                 count = 1,
                 createData = DateTime.Now,
