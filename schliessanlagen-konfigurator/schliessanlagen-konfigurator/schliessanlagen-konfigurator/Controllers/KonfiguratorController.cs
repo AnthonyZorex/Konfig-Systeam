@@ -737,7 +737,7 @@ namespace schliessanlagen_konfigurator.Controllers
             return View(user);
         }
         [HttpGet]
-        public async Task<ActionResult> System_Auswählen(string Key, string userName, bool isNewKonfig)
+        public async Task<ActionResult> System_Auswählen(string Key, string userName, bool isNewKonfig,bool Biarbeiten)
         {
             var xtr = Key;
 
@@ -745,7 +745,39 @@ namespace schliessanlagen_konfigurator.Controllers
 
             if (userName!=null && isNewKonfig == true)
             {
-                orders = orders.Where(x => x.userKey == userName).ToList();
+               orders = orders.Where(x => x.userKey == userName).ToList();
+                
+                if (Biarbeiten == true)
+                {
+                    ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
+                    string loginInform = ident.Claims.Select(x => x.Value).First();
+                    var users = db.Users.FirstOrDefault(x => x.Id == loginInform);
+
+                    var RemoveOrder = db.UserOrdersShop.Where(x => x.UserOrderKey == userName).ToList();
+
+                    var currentTime = RemoveOrder.First().createData.Value;
+
+                    var OrderProduct = db.ProductSysteam.Where(x => x.UserOrdersShopId == RemoveOrder.First().Id).ToList();
+
+                    foreach (var listProduct in OrderProduct)
+                    {
+                        db.ProductSysteam.Remove(listProduct);
+
+                        foreach (var listOrder in RemoveOrder)
+                        {
+                            db.UserOrdersShop.Remove(listOrder);
+
+                        }
+                    }
+                    string destinationFilePath = @$"wwwroot/Orders/{users.FirstName + users.LastName + currentTime.Minute + currentTime.Hour + currentTime.Day + currentTime.Month + currentTime.Year} OrderFile.xlsx";
+
+                    if (System.IO.File.Exists(destinationFilePath))
+                    {
+                        System.IO.File.Delete(destinationFilePath);
+                    }
+
+                    db.SaveChanges();
+                }
             }
             else
             {
@@ -4467,8 +4499,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
         [HttpPost]
         public ActionResult RemoveOrder(int data)
-        {
-            ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
+        { ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
             string loginInform = ident.Claims.Select(x => x.Value).First();
             var users = db.Users.FirstOrDefault(x => x.Id == loginInform);
 
@@ -4496,6 +4527,7 @@ namespace schliessanlagen_konfigurator.Controllers
             }
 
             db.SaveChanges();
+           
             return Redirect("/Identity/Account/Manage/PagePersonalOrders");
         }
         public async Task<IActionResult> SaveUserOrders(string user, List<string> TurName, List<string> DopelName, List<float> DoppelAussen, List<float> DoppelIntern

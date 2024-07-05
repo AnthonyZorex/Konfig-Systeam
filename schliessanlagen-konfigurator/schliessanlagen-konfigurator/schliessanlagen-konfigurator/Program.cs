@@ -11,6 +11,9 @@ using Microsoft.AspNetCore.ResponseCompression;
 using System.IO;
 using System.IO.Compression;
 using System.Web.Optimization;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,6 +54,15 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequiredUniqueChars = 1;
 });
 
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    var supportedCultures = new[] { new CultureInfo("de-DE") };
+    options.DefaultRequestCulture = new RequestCulture("de-DE");
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+});
+
 builder.Services.AddResponseCompression(options =>
 {
     options.EnableForHttps = true;
@@ -80,6 +92,7 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     SendData.Initialize(services);
 }
+
 
 
 app.UseStaticFiles(new StaticFileOptions

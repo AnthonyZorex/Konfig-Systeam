@@ -8,6 +8,15 @@
     position:absolute;
     align-content: center;
 }
+#schrit {
+    font-weight: 600;
+    font-size: 20px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    text-align: center;
+    border: 2px solid #f00;
+}
 #orderCost {
     color: red;
     text-align: end;
@@ -23,12 +32,7 @@
     margin-left: 10px;
     outline: none;
 }
-#hilfeOptionsIcon {
-    position: absolute;
-    margin-top: -28px;
-    margin-left: 830px;
-    cursor:pointer;
-}
+
 #html, body {
     height: 100%;
 }
@@ -1994,7 +1998,7 @@
         display: grid;
         align-items: center;
         text-align: center;
-        grid-template-columns: 100px 200px 950px;
+        grid-template-columns: 100px 200px auto;
     }
 
     #ItemCounterOrders {
@@ -2163,17 +2167,21 @@
         background: white;
         padding: 40px;
         border-radius: 10px;
-        width: 900px;
+        width: auto;
     }
 
     #AllOrderUser {
-        width: 900px;
+        width: 70vw;
+    }
+    #hilfeOptionsIcon {
+        position: absolute;
+        margin-top: -25px;
+        margin-left: 550px;
+        cursor: pointer;
     }
 }
 @media (min-width:1440px ) 
 {
-
-   
     body {
         margin-bottom: 60px;
         font-family: "Inter", sans-serif;
@@ -3099,7 +3107,12 @@
     #FinisherPage {
         background-color: #e4e4e4;
     }
-
+    #hilfeOptionsIcon {
+        position: absolute;
+        margin-top: -28px;
+        margin-left: 830px;
+        cursor: pointer;
+    }
     #counterKey {
         display: flex;
         gap: 20px;
