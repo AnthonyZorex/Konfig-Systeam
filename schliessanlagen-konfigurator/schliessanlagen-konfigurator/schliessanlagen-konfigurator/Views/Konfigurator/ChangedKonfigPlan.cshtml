@@ -11,11 +11,7 @@
     int keyId = 1;
 }
 <div>
-    <div id="konfigMenu">
-        <button type="button" class="btn btn-danger">1. Schließplan erstellen</button>
-        <button type="button" class="btn btn-secondary"><a href="@Url.Action("System_Auswählen","Konfigurator",new{ userName = @ViewBag.UserNameItem} )">2. System auswählen</a></button>
-        <button type="button" class="btn btn-secondary">3. Parameter einstellen</button>
-    </div>
+
     <form asp-action="ChangedKonfigPlanPost" enctype="multipart/form-data" asp-controller="Konfigurator">
 
         @Html.HiddenFor(m => m.userKey)

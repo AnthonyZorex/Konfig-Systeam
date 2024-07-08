@@ -929,13 +929,10 @@
             <input type="button"  onclick="goBack()" class="btn btn-danger" value="ANDERES SYSTEM WÄHLEN" />
         </div>
         <div id="orderCost">
-                <input readonly type="text" value="@ViewBag.Cost.ToString("C")" id="cost" />
+                <input readonly type="hidden" value="@ViewBag.Cost.ToString("C")" id="cost" />
                 <input name="Sum" id="costed" type="hidden" style="border:none;font-size:24px" value="@ViewBag.Cost" />
         </div>
-       
-        <hr/>
-        <h4 id="Procent"></h4>
-        <hr/>
+     
             <div id="orderCost">
                 <input name="cost" readonly type="text" value="@ViewBag.Cost.ToString("C")" id="Allcost" /> 
             </div>
@@ -1030,32 +1027,16 @@
 
     let idItem = 0;
     let Dorname = @Html.Raw(ViewBag.DornameJson);
-    let chek = 0;
+
 
     function procent()
     {
         let proc = document.getElementById("Procent");
-        let sum = document.getElementById("costed");
         let Allcost = document.getElementById("Allcost");
-        let ProcFormul = (parseFloat(AllPrice.value) * 19) / 100;
-
-        proc.innerText = "19% MwSt:" +" " + ProcFormul;
-       
-        console.log(sum);
-
-        if(chek==1)
-        {
-            Allcost.value = (parseFloat(Allcost.value) - Number(sum.value));
-        }
-        chek = 1;
-
-        Allcost.value = (parseFloat(AllPrice.value) + Number(ProcFormul)).toLocaleString('de-DE', {
+        Allcost.value = (parseFloat(AllPrice.value)).toLocaleString('de-DE', {
             style: 'currency',
             currency: 'EUR'
         });
-
-        sum.value = ProcFormul;
-
     }
 
     document.addEventListener('DOMContentLoaded', function () {

@@ -41,7 +41,7 @@
 
                     <div id="myModal-@z" class="modal">
 
-                        <form method="post">
+                        <form method="post" action="SendRehnung">
                         <div class="modal-content">
 
                             <span onclick="closedModal(@z)" class="close">&times;</span>
@@ -92,8 +92,9 @@
                             </div>
                             <br />
                             <div style="display:flex;gap:10px;">
-                                <select class="form-select" required name="countries" id="countries" placeholder="Land / country *">
-                                    <option value="DE">Deutschland</option>
+                                    <select class="form-select" required onchange="ProcentMwst(event,@z)" name="countries" id="countries" placeholder="Land / country *">
+                                        <option selected></option>
+                                        <option value="DE">Deutschland</option>
                                     <option value="AF">Afghanistan</option>
                                     <option value="EG">Ägypten</option>
                                     <option value="AL">Albanien</option>
@@ -378,7 +379,8 @@
                                 </div>
                                 <br />
                                 <div style="display:flex;gap:10px;">
-                                    <select class="form-select" required name="countries" id="countries" placeholder="Land / country *">
+                                        <select class="form-select" required name="countriesPerson" id="countriesPerson" placeholder="Land / country *">
+                                         <option selected ></option>
                                         <option value="DE">Deutschland</option>
                                         <option value="AF">Afghanistan</option>
                                         <option value="EG">Ägypten</option>
@@ -627,6 +629,12 @@
                                         <option value="CY">Zypern</option>
                                     </select>
 
+                                        @{
+                                            float gram = countProduct[z] * float.Parse("0,400");
+                                        }
+
+                                    <input type="hidden" id="gramWert-@z" value="@gram" />
+
                                     <input class="form-control" required placeholder="Telefonnummer / phone number *" />
                                 </div>
 
@@ -640,16 +648,14 @@
                                     <span id="schrit">3</span>
                                     <h2><strong>Versandarten</strong></h2>
                                 </div>
-                                
                                 <br />
-
                                 <div>
-                                <input type="radio" id="html" name="fav_language" value="DHL">
-                                <label for="html">DHL</label><br>
+                                    <input type="radio" id="dhl-@z"  checked name="fav_language" value="DHL">
+                                    <label for="html"><input type="text" redonly style="border: none;"  value="0" id="CostGram-@z" /> DHL</label><br>
                                 </div>
 
                                 <div style="display: flex;gap: 30px;align-items: center;">
-                                    <input type="radio" id="css" name="fav_language" value="0,00 €">
+                                        <input type="radio" id="Plase-@z"  name="fav_language" value="0,00 €">
                                     <label for="css" style="margin-left: -25px;">0,00 €</label><br>
                                     <h6>
                                         Brunnenstrasse 8
@@ -667,9 +673,15 @@
                                 <div style="display:flex;gap:10px;">
                                     <span id="schrit">4</span>
                                     <h2><strong>Zahlungsart</strong></h2>
+                                        
                                 </div>
                                 <br />
-                                
+                                    <hr />
+                                    <div style="display:flex;gap:50px;"><h4>Steuer:</h4><input redonly style="border: none;outline:none" type="text" value="0" id="aldProcent-@z" /></div>
+                                    <hr />
+                                    <div style="display:flex;gap:50px;"><h4>Versand:</h4><input type="text" redonly style="border: none;outline:none" value="0" id="CostGram-@z" /></div>
+                                    <hr />
+                                    <div style="display:flex;gap:50px;"><h4>Bestellsumme:</h4><h4 id="costedI-@z">@orderList[z].OrderSum.ToString("C")</h4></div>
                             </div>
                             
                             <input type="hidden" id="@z" value="true" />
@@ -699,7 +711,7 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
-<script src="https://www.paypal.com/sdk/js?client-id=AZH15S9JkSTGxqJmoCVcNRfEkiIsWuYBLjaCnAITqmqepVQEmiHP6lAAj-3BdygEs3qh71GxqI39piYa&currency=EUR"></script>
+
 <script>
 
     let removeButton = document.getElementById("removeOrder");
@@ -707,7 +719,858 @@
 
     var span = document.getElementsByClassName("close")[0];
     let idItem = 0;
+    let s = 0;
 
+    function ProcentMwst(value,BlockItem) 
+    {
+        let cost = document.querySelectorAll("#costedI-" + BlockItem);
+        let modalItem = document.getElementById("myModal-" + BlockItem);
+        let proc = document.getElementById("aldProcent-" + BlockItem);
+
+        let mvstr = cost[0].innerHTML.replace("€","");
+        let Gram = document.getElementById("gramWert-" + BlockItem);
+
+        let sendDhl = document.getElementById("dhl-" + BlockItem);
+        
+        let Plase = document.getElementById("Plase-" + BlockItem);
+
+        console.log(Plase.checked);
+
+        let pr = proc.value.replace(".", ",");
+
+        let Sum = parseFloat(mvstr.replace("&nbsp;", "").trim()) - parseFloat(pr.replace("€", ""));
+
+        let costProcent = 0;
+
+        let CostGram = document.querySelectorAll("#CostGram-" + BlockItem);
+          
+        Sum = Sum - parseFloat(CostGram[0].value.replace("€", "").replace(".", ",").trim());
+
+        switch (value.target.value) 
+        {
+            case "AT":
+            {
+                costProcent = (Sum.toFixed(2) * 0.20);
+
+                if(sendDhl.checked == true)
+                {
+                        if (parseFloat(Gram.value) <= 2) 
+                        {
+                            CostGram[0].value = parseFloat("15,00");
+                        }
+                        else if (parseFloat(Gram.value) > 2 && parseFloat(Gram.value) <= 5) 
+                        {
+                            CostGram[0].value = parseFloat("17,00");
+                        }
+                        else if (parseFloat(Gram.value) > 5 && parseFloat(Gram.value) <= 10) 
+                        {
+                            CostGram[0].value = parseFloat("22,00");
+                        }
+                        else if (parseFloat(Gram.value) > 10 && parseFloat(Gram.value) <= 20) 
+                        {
+                            CostGram[0].value = parseFloat("35,00");
+                        }
+                        else if (parseFloat(Gram.value) > 20 && parseFloat(Gram.value) <= 31, 5) 
+                        {
+                            CostGram[0].value = parseFloat("49,00");
+                        }
+                }
+                else{
+                        CostGram[0].value = parseFloat("0,00");
+                }
+                    break;
+            }
+            case "BE":
+            {
+                costProcent = (Sum.toFixed(2) * 0.21);
+
+                    if (sendDhl.checked == true) 
+                    {
+                        if (parseFloat(Gram.value) <= 2) {
+                            CostGram[0].value = parseFloat("15,00");
+                        }
+                        else if (parseFloat(Gram.value) > 2 && parseFloat(Gram.value) <= 5) {
+                            CostGram[0].value = parseFloat("17,00");
+                        }
+                        else if (parseFloat(Gram.value) > 5 && parseFloat(Gram.value) <= 10) {
+                            CostGram[0].value = parseFloat("22,00");
+                        }
+                        else if (parseFloat(Gram.value) > 10 && parseFloat(Gram.value) <= 20) {
+                            CostGram[0].value = parseFloat("35,00");
+                        }
+                        else if (parseFloat(Gram.value) > 20 && parseFloat(Gram.value) <= 31, 5) {
+                            CostGram[0].value = parseFloat("49,00");
+                        }
+                    }
+                    else {
+                        CostGram[0].value = parseFloat("0,00");
+                    }
+
+                break;
+            }
+            case "BG":
+            {
+                    costProcent = (Sum.toFixed(2) * 0.20);
+
+                    if (sendDhl.checked == true) {
+                        if (parseFloat(Gram.value) <= 2) {
+                            CostGram[0].value = parseFloat("15,00");
+                        }
+                        else if (parseFloat(Gram.value) > 2 && parseFloat(Gram.value) <= 5) {
+                            CostGram[0].value = parseFloat("17,00");
+                        }
+                        else if (parseFloat(Gram.value) > 5 && parseFloat(Gram.value) <= 10) {
+                            CostGram[0].value = parseFloat("22,00");
+                        }
+                        else if (parseFloat(Gram.value) > 10 && parseFloat(Gram.value) <= 20) {
+                            CostGram[0].value = parseFloat("35,00");
+                        }
+                        else if (parseFloat(Gram.value) > 20 && parseFloat(Gram.value) <= 31, 5) {
+                            CostGram[0].value = parseFloat("49,00");
+                        }
+                    }
+                    else {
+                        CostGram[0].value = parseFloat("0,00");
+                    }
+                break;
+            }
+            case "CY":
+            {
+                costProcent = (Sum.toFixed(2) * 0.19);
+
+                    if (sendDhl.checked == true) {
+                        if (parseFloat(Gram.value) <= 2) {
+                            CostGram[0].value = parseFloat("15,00");
+                        }
+                        else if (parseFloat(Gram.value) > 2 && parseFloat(Gram.value) <= 5) {
+                            CostGram[0].value = parseFloat("17,00");
+                        }
+                        else if (parseFloat(Gram.value) > 5 && parseFloat(Gram.value) <= 10) {
+                            CostGram[0].value = parseFloat("22,00");
+                        }
+                        else if (parseFloat(Gram.value) > 10 && parseFloat(Gram.value) <= 20) {
+                            CostGram[0].value = parseFloat("35,00");
+                        }
+                        else if (parseFloat(Gram.value) > 20 && parseFloat(Gram.value) <= 31, 5) {
+                            CostGram[0].value = parseFloat("49,00");
+                        }
+                    }
+                    else {
+                        CostGram[0].value = parseFloat("0,00");
+                    }
+                break;
+            }
+            case "CZ":
+            {
+                costProcent = (Sum.toFixed(2) * 0.21);
+
+                    if (sendDhl.checked == true) {
+                        if (parseFloat(Gram.value) <= 2) {
+                            CostGram[0].value = parseFloat("15,00");
+                        }
+                        else if (parseFloat(Gram.value) > 2 && parseFloat(Gram.value) <= 5) {
+                            CostGram[0].value = parseFloat("17,00");
+                        }
+                        else if (parseFloat(Gram.value) > 5 && parseFloat(Gram.value) <= 10) {
+                            CostGram[0].value = parseFloat("22,00");
+                        }
+                        else if (parseFloat(Gram.value) > 10 && parseFloat(Gram.value) <= 20) {
+                            CostGram[0].value = parseFloat("35,00");
+                        }
+                        else if (parseFloat(Gram.value) > 20 && parseFloat(Gram.value) <= 31, 5) {
+                            CostGram[0].value = parseFloat("49,00");
+                        }
+                    }
+                    else {
+                        CostGram[0].value = parseFloat("0,00");
+                    }
+                break;
+            }
+            case "DE":
+            {
+                costProcent = (Sum.toFixed(2) * 0.19);
+
+                    if (sendDhl.checked == true) 
+                    {
+                        if (parseFloat(Gram.value) <= 2) 
+                        {
+                            CostGram[0].value = parseFloat("6");
+                        }
+                        else if (parseFloat(Gram.value) > 2 && parseFloat(Gram.value) <= 5) {
+                            CostGram[0].value = parseFloat("7");
+                        }
+                        else if (parseFloat(Gram.value) > 5 && parseFloat(Gram.value) <= 10) {
+                            CostGram[0].value = parseFloat("12");
+                        }
+                        else if (parseFloat(Gram.value) > 10 && parseFloat(Gram.value) <= 20) {
+                            CostGram[0].value = parseFloat("15");
+                        }
+                        else if (parseFloat(Gram.value) > 21 && parseFloat(Gram.value) <= 31, 5) {
+                            CostGram[0].value = parseFloat("20");
+                        }
+                    }
+                    else {
+                        CostGram[0].value = parseFloat("0,00");
+                    }
+                break;
+            }
+            case "DK":
+            {
+                costProcent = (Sum.toFixed(2) * 0.25);
+
+                    if (sendDhl.checked == true) {
+                        if (parseFloat(Gram.value) <= 2) {
+                            CostGram[0].value = parseFloat("15,00");
+                        }
+                        else if (parseFloat(Gram.value) > 2 && parseFloat(Gram.value) <= 5) {
+                            CostGram[0].value = parseFloat("17,00");
+                        }
+                        else if (parseFloat(Gram.value) > 5 && parseFloat(Gram.value) <= 10) {
+                            CostGram[0].value = parseFloat("22,00");
+                        }
+                        else if (parseFloat(Gram.value) > 10 && parseFloat(Gram.value) <= 20) {
+                            CostGram[0].value = parseFloat("35,00");
+                        }
+                        else if (parseFloat(Gram.value) > 20 && parseFloat(Gram.value) <= 31, 5) {
+                            CostGram[0].value = parseFloat("49,00");
+                        }
+                    }
+                    else {
+                        CostGram[0].value = parseFloat("0,00");
+                    }
+
+                break;
+            }
+            case "EE":
+            {
+          
+                costProcent = (Sum.toFixed(2) * 0.20);
+
+                    if (sendDhl.checked == true) {
+                        if (parseFloat(Gram.value) <= 2) {
+                            CostGram[0].value = parseFloat("15,00");
+                        }
+                        else if (parseFloat(Gram.value) > 2 && parseFloat(Gram.value) <= 5) {
+                            CostGram[0].value = parseFloat("17,00");
+                        }
+                        else if (parseFloat(Gram.value) > 5 && parseFloat(Gram.value) <= 10) {
+                            CostGram[0].value = parseFloat("22,00");
+                        }
+                        else if (parseFloat(Gram.value) > 10 && parseFloat(Gram.value) <= 20) {
+                            CostGram[0].value = parseFloat("35,00");
+                        }
+                        else if (parseFloat(Gram.value) > 20 && parseFloat(Gram.value) <= 31, 5) {
+                            CostGram[0].value = parseFloat("49,00");
+                        }
+                    }
+                    else {
+                        CostGram[0].value = parseFloat("0,00");
+                    }
+
+                break;
+            }
+            case "ES":
+            {
+                costProcent = (Sum.toFixed(2) * 0.21);
+
+                    if (sendDhl.checked == true) {
+                        if (parseFloat(Gram.value) <= 2) {
+                            CostGram[0].value = parseFloat("15,00");
+                        }
+                        else if (parseFloat(Gram.value) > 2 && parseFloat(Gram.value) <= 5) {
+                            CostGram[0].value = parseFloat("17,00");
+                        }
+                        else if (parseFloat(Gram.value) > 5 && parseFloat(Gram.value) <= 10) {
+                            CostGram[0].value = parseFloat("22,00");
+                        }
+                        else if (parseFloat(Gram.value) > 10 && parseFloat(Gram.value) <= 20) {
+                            CostGram[0].value = parseFloat("35,00");
+                        }
+                        else if (parseFloat(Gram.value) > 20 && parseFloat(Gram.value) <= 31, 5) {
+                            CostGram[0].value = parseFloat("49,00");
+                        }
+                    }
+                    else {
+                        CostGram[0].value = parseFloat("0,00");
+                    }
+
+                break;
+            }
+            case "FI":
+            {
+                costProcent = (Sum.toFixed(2) * 0.24);
+
+                    if (sendDhl.checked == true) {
+                        if (parseFloat(Gram.value) <= 2) {
+                            CostGram[0].value = parseFloat("15,00");
+                        }
+                        else if (parseFloat(Gram.value) > 2 && parseFloat(Gram.value) <= 5) {
+                            CostGram[0].value = parseFloat("17,00");
+                        }
+                        else if (parseFloat(Gram.value) > 5 && parseFloat(Gram.value) <= 10) {
+                            CostGram[0].value = parseFloat("22,00");
+                        }
+                        else if (parseFloat(Gram.value) > 10 && parseFloat(Gram.value) <= 20) {
+                            CostGram[0].value = parseFloat("35,00");
+                        }
+                        else if (parseFloat(Gram.value) > 20 && parseFloat(Gram.value) <= 31, 5) {
+                            CostGram[0].value = parseFloat("49,00");
+                        }
+                    }
+                    else {
+                        CostGram[0].value = parseFloat("0,00");
+                    }
+
+                break;
+            }
+            case "FR":
+            {
+                costProcent = (Sum.toFixed(2) * 0.20);
+
+                    if (sendDhl.checked == true) {
+                        if (parseFloat(Gram.value) <= 2) {
+                            CostGram[0].value = parseFloat("15,00");
+                        }
+                        else if (parseFloat(Gram.value) > 2 && parseFloat(Gram.value) <= 5) {
+                            CostGram[0].value = parseFloat("17,00");
+                        }
+                        else if (parseFloat(Gram.value) > 5 && parseFloat(Gram.value) <= 10) {
+                            CostGram[0].value = parseFloat("22,00");
+                        }
+                        else if (parseFloat(Gram.value) > 10 && parseFloat(Gram.value) <= 20) {
+                            CostGram[0].value = parseFloat("35,00");
+                        }
+                        else if (parseFloat(Gram.value) > 20 && parseFloat(Gram.value) <= 31, 5) {
+                            CostGram[0].value = parseFloat("49,00");
+                        }
+                    }
+                    else {
+                        CostGram[0].value = parseFloat("0,00");
+                    }
+
+                break;
+            }
+            case "GR":
+            {
+                costProcent = (Sum.toFixed(2) * 0.24);
+
+                    if (sendDhl.checked == true) {
+                        if (parseFloat(Gram.value) <= 2) {
+                            CostGram[0].value = parseFloat("15,00");
+                        }
+                        else if (parseFloat(Gram.value) > 2 && parseFloat(Gram.value) <= 5) {
+                            CostGram[0].value = parseFloat("17,00");
+                        }
+                        else if (parseFloat(Gram.value) > 5 && parseFloat(Gram.value) <= 10) {
+                            CostGram[0].value = parseFloat("22,00");
+                        }
+                        else if (parseFloat(Gram.value) > 10 && parseFloat(Gram.value) <= 20) {
+                            CostGram[0].value = parseFloat("35,00");
+                        }
+                        else if (parseFloat(Gram.value) > 20 && parseFloat(Gram.value) <= 31, 5) {
+                            CostGram[0].value = parseFloat("49,00");
+                        }
+                    }
+                    else {
+                        CostGram[0].value = parseFloat("0,00");
+                    }
+
+                break;
+            }
+            case "HR":
+            {
+                costProcent = (Sum.toFixed(2) * 0.25);
+
+                    if (sendDhl.checked == true) {
+                        if (parseFloat(Gram.value) <= 2) {
+                            CostGram[0].value = parseFloat("15,00");
+                        }
+                        else if (parseFloat(Gram.value) > 2 && parseFloat(Gram.value) <= 5) {
+                            CostGram[0].value = parseFloat("17,00");
+                        }
+                        else if (parseFloat(Gram.value) > 5 && parseFloat(Gram.value) <= 10) {
+                            CostGram[0].value = parseFloat("22,00");
+                        }
+                        else if (parseFloat(Gram.value) > 10 && parseFloat(Gram.value) <= 20) {
+                            CostGram[0].value = parseFloat("35,00");
+                        }
+                        else if (parseFloat(Gram.value) > 20 && parseFloat(Gram.value) <= 31, 5) {
+                            CostGram[0].value = parseFloat("49,00");
+                        }
+                    }
+                    else {
+                        CostGram[0].value = parseFloat("0,00");
+                    }
+
+                break;
+            }
+            case "HU":
+            {
+                costProcent = (Sum.toFixed(2) * 0.27);
+
+                    if (sendDhl.checked == true) {
+                        if (parseFloat(Gram.value) <= 2) {
+                            CostGram[0].value = parseFloat("15,00");
+                        }
+                        else if (parseFloat(Gram.value) > 2 && parseFloat(Gram.value) <= 5) {
+                            CostGram[0].value = parseFloat("17,00");
+                        }
+                        else if (parseFloat(Gram.value) > 5 && parseFloat(Gram.value) <= 10) {
+                            CostGram[0].value = parseFloat("22,00");
+                        }
+                        else if (parseFloat(Gram.value) > 10 && parseFloat(Gram.value) <= 20) {
+                            CostGram[0].value = parseFloat("35,00");
+                        }
+                        else if (parseFloat(Gram.value) > 20 && parseFloat(Gram.value) <= 31, 5) {
+                            CostGram[0].value = parseFloat("49,00");
+                        }
+                    }
+                    else {
+                        CostGram[0].value = parseFloat("0,00");
+                    }
+
+                break;
+            }
+            case "IE":
+            {
+                costProcent = (Sum.toFixed(2) * 0.23);
+
+                    if (sendDhl.checked == true) {
+                        if (parseFloat(Gram.value) <= 2) {
+                            CostGram[0].value = parseFloat("15,00");
+                        }
+                        else if (parseFloat(Gram.value) > 2 && parseFloat(Gram.value) <= 5) {
+                            CostGram[0].value = parseFloat("17,00");
+                        }
+                        else if (parseFloat(Gram.value) > 5 && parseFloat(Gram.value) <= 10) {
+                            CostGram[0].value = parseFloat("22,00");
+                        }
+                        else if (parseFloat(Gram.value) > 10 && parseFloat(Gram.value) <= 20) {
+                            CostGram[0].value = parseFloat("35,00");
+                        }
+                        else if (parseFloat(Gram.value) > 20 && parseFloat(Gram.value) <= 31, 5) {
+                            CostGram[0].value = parseFloat("49,00");
+                        }
+                    }
+                    else {
+                        CostGram[0].value = parseFloat("0,00");
+                    }
+
+                break;
+            }
+            case "IT":
+            {
+                costProcent = (Sum.toFixed(2) * 0.22);
+
+                    if (sendDhl.checked == true) {
+                        if (parseFloat(Gram.value) <= 2) {
+                            CostGram[0].value = parseFloat("15,00");
+                        }
+                        else if (parseFloat(Gram.value) > 2 && parseFloat(Gram.value) <= 5) {
+                            CostGram[0].value = parseFloat("17,00");
+                        }
+                        else if (parseFloat(Gram.value) > 5 && parseFloat(Gram.value) <= 10) {
+                            CostGram[0].value = parseFloat("22,00");
+                        }
+                        else if (parseFloat(Gram.value) > 10 && parseFloat(Gram.value) <= 20) {
+                            CostGram[0].value = parseFloat("35,00");
+                        }
+                        else if (parseFloat(Gram.value) > 20 && parseFloat(Gram.value) <= 31, 5) {
+                            CostGram[0].value = parseFloat("49,00");
+                        }
+                    }
+                    else {
+                        CostGram[0].value = parseFloat("0,00");
+                    }
+
+                break;
+            }
+            case "LT":
+            {
+                costProcent = (Sum.toFixed(2) * 0.21);
+
+                    if (sendDhl.checked == true) {
+                        if (parseFloat(Gram.value) <= 2) {
+                            CostGram[0].value = parseFloat("15,00");
+                        }
+                        else if (parseFloat(Gram.value) > 2 && parseFloat(Gram.value) <= 5) {
+                            CostGram[0].value = parseFloat("17,00");
+                        }
+                        else if (parseFloat(Gram.value) > 5 && parseFloat(Gram.value) <= 10) {
+                            CostGram[0].value = parseFloat("22,00");
+                        }
+                        else if (parseFloat(Gram.value) > 10 && parseFloat(Gram.value) <= 20) {
+                            CostGram[0].value = parseFloat("35,00");
+                        }
+                        else if (parseFloat(Gram.value) > 20 && parseFloat(Gram.value) <= 31, 5) {
+                            CostGram[0].value = parseFloat("49,00");
+                        }
+                    }
+                    else {
+                        CostGram[0].value = parseFloat("0,00");
+                    }
+
+                break;
+            }
+            case "LU":
+            {
+                costProcent = (Sum.toFixed(2) * 0.17);
+
+                    if (sendDhl.checked == true) {
+                        if (parseFloat(Gram.value) <= 2) {
+                            CostGram[0].value = parseFloat("15,00");
+                        }
+                        else if (parseFloat(Gram.value) > 2 && parseFloat(Gram.value) <= 5) {
+                            CostGram[0].value = parseFloat("17,00");
+                        }
+                        else if (parseFloat(Gram.value) > 5 && parseFloat(Gram.value) <= 10) {
+                            CostGram[0].value = parseFloat("22,00");
+                        }
+                        else if (parseFloat(Gram.value) > 10 && parseFloat(Gram.value) <= 20) {
+                            CostGram[0].value = parseFloat("35,00");
+                        }
+                        else if (parseFloat(Gram.value) > 20 && parseFloat(Gram.value) <= 31, 5) {
+                            CostGram[0].value = parseFloat("49,00");
+                        }
+                    }
+                    else {
+                        CostGram[0].value = parseFloat("0,00");
+                    }
+
+                break;
+            }
+            case "LV":
+            {
+                costProcent = (Sum.toFixed(2) * 0.21);
+
+                    if (sendDhl.checked == true) {
+                        if (parseFloat(Gram.value) <= 2) {
+                            CostGram[0].value = parseFloat("15,00");
+                        }
+                        else if (parseFloat(Gram.value) > 2 && parseFloat(Gram.value) <= 5) {
+                            CostGram[0].value = parseFloat("17,00");
+                        }
+                        else if (parseFloat(Gram.value) > 5 && parseFloat(Gram.value) <= 10) {
+                            CostGram[0].value = parseFloat("22,00");
+                        }
+                        else if (parseFloat(Gram.value) > 10 && parseFloat(Gram.value) <= 20) {
+                            CostGram[0].value = parseFloat("35,00");
+                        }
+                        else if (parseFloat(Gram.value) > 20 && parseFloat(Gram.value) <= 31, 5) {
+                            CostGram[0].value = parseFloat("49,00");
+                        }
+                    }
+                    else {
+                        CostGram[0].value = parseFloat("0,00");
+                    }
+
+                break;
+            }
+            case "MT":
+            {
+                costProcent = (Sum.toFixed(2) * 0.18);
+
+                    if (sendDhl.checked == true) {
+                        if (parseFloat(Gram.value) <= 2) {
+                            CostGram[0].value = parseFloat("15,00");
+                        }
+                        else if (parseFloat(Gram.value) > 2 && parseFloat(Gram.value) <= 5) {
+                            CostGram[0].value = parseFloat("17,00");
+                        }
+                        else if (parseFloat(Gram.value) > 5 && parseFloat(Gram.value) <= 10) {
+                            CostGram[0].value = parseFloat("22,00");
+                        }
+                        else if (parseFloat(Gram.value) > 10 && parseFloat(Gram.value) <= 20) {
+                            CostGram[0].value = parseFloat("35,00");
+                        }
+                        else if (parseFloat(Gram.value) > 20 && parseFloat(Gram.value) <= 31, 5) {
+                            CostGram[0].value = parseFloat("49,00");
+                        }
+                    }
+                    else {
+                        CostGram[0].value = parseFloat("0,00");
+                    }
+
+                break;
+            }
+            case "NL":
+            {
+                costProcent = (Sum.toFixed(2) * 0.21);
+
+                    if (sendDhl.checked == true) {
+                        if (parseFloat(Gram.value) <= 2) {
+                            CostGram[0].value = parseFloat("15,00");
+                        }
+                        else if (parseFloat(Gram.value) > 2 && parseFloat(Gram.value) <= 5) {
+                            CostGram[0].value = parseFloat("17,00");
+                        }
+                        else if (parseFloat(Gram.value) > 5 && parseFloat(Gram.value) <= 10) {
+                            CostGram[0].value = parseFloat("22,00");
+                        }
+                        else if (parseFloat(Gram.value) > 10 && parseFloat(Gram.value) <= 20) {
+                            CostGram[0].value = parseFloat("35,00");
+                        }
+                        else if (parseFloat(Gram.value) > 20 && parseFloat(Gram.value) <= 31, 5) {
+                            CostGram[0].value = parseFloat("49,00");
+                        }
+                    }
+                    else {
+                        CostGram[0].value = parseFloat("0,00");
+                    }
+
+                break;
+            }
+            case "PL":
+            {
+                costProcent = (Sum.toFixed(2) * 0.23);
+
+                    if (sendDhl.checked == true) {
+                        if (parseFloat(Gram.value) <= 2) {
+                            CostGram[0].value = parseFloat("15,00");
+                        }
+                        else if (parseFloat(Gram.value) > 2 && parseFloat(Gram.value) <= 5) {
+                            CostGram[0].value = parseFloat("17,00");
+                        }
+                        else if (parseFloat(Gram.value) > 5 && parseFloat(Gram.value) <= 10) {
+                            CostGram[0].value = parseFloat("22,00");
+                        }
+                        else if (parseFloat(Gram.value) > 10 && parseFloat(Gram.value) <= 20) {
+                            CostGram[0].value = parseFloat("35,00");
+                        }
+                        else if (parseFloat(Gram.value) > 20 && parseFloat(Gram.value) <= 31, 5) {
+                            CostGram[0].value = parseFloat("49,00");
+                        }
+                    }
+                    else {
+                        CostGram[0].value = parseFloat("0,00");
+                    }
+                break;
+            }
+            case "PT":
+            {
+                costProcent = (Sum.toFixed(2) * 0.23);
+
+                    if (sendDhl.checked == true) {
+                        if (parseFloat(Gram.value) <= 2) {
+                            CostGram[0].value = parseFloat("15,00");
+                        }
+                        else if (parseFloat(Gram.value) > 2 && parseFloat(Gram.value) <= 5) {
+                            CostGram[0].value = parseFloat("17,00");
+                        }
+                        else if (parseFloat(Gram.value) > 5 && parseFloat(Gram.value) <= 10) {
+                            CostGram[0].value = parseFloat("22,00");
+                        }
+                        else if (parseFloat(Gram.value) > 10 && parseFloat(Gram.value) <= 20) {
+                            CostGram[0].value = parseFloat("35,00");
+                        }
+                        else if (parseFloat(Gram.value) > 20 && parseFloat(Gram.value) <= 31, 5) {
+                            CostGram[0].value = parseFloat("49,00");
+                        }
+                    }
+                    else {
+                        CostGram[0].value = parseFloat("0,00");
+                    }
+
+                break;
+            }
+            case "RO":
+            {
+                costProcent = (Sum.toFixed(2) * 0.19);
+
+                    if (sendDhl.checked == true) {
+                        if (parseFloat(Gram.value) <= 2) {
+                            CostGram[0].value = parseFloat("15,00");
+                        }
+                        else if (parseFloat(Gram.value) > 2 && parseFloat(Gram.value) <= 5) {
+                            CostGram[0].value = parseFloat("17,00");
+                        }
+                        else if (parseFloat(Gram.value) > 5 && parseFloat(Gram.value) <= 10) {
+                            CostGram[0].value = parseFloat("22,00");
+                        }
+                        else if (parseFloat(Gram.value) > 10 && parseFloat(Gram.value) <= 20) {
+                            CostGram[0].value = parseFloat("35,00");
+                        }
+                        else if (parseFloat(Gram.value) > 20 && parseFloat(Gram.value) <= 31, 5) {
+                            CostGram[0].value = parseFloat("49,00");
+                        }
+                    }
+                    else {
+                        CostGram[0].value = parseFloat("0,00");
+                    }
+                break;
+            }
+            case "SE":
+            {
+                costProcent = (Sum.toFixed(2) * 0.25);
+
+                    if (sendDhl.checked == true) {
+                        if (parseFloat(Gram.value) <= 2) {
+                            CostGram[0].value = parseFloat("15,00");
+                        }
+                        else if (parseFloat(Gram.value) > 2 && parseFloat(Gram.value) <= 5) {
+                            CostGram[0].value = parseFloat("17,00");
+                        }
+                        else if (parseFloat(Gram.value) > 5 && parseFloat(Gram.value) <= 10) {
+                            CostGram[0].value = parseFloat("22,00");
+                        }
+                        else if (parseFloat(Gram.value) > 10 && parseFloat(Gram.value) <= 20) {
+                            CostGram[0].value = parseFloat("35,00");
+                        }
+                        else if (parseFloat(Gram.value) > 20 && parseFloat(Gram.value) <= 31, 5) {
+                            CostGram[0].value = parseFloat("49,00");
+                        }
+                    }
+                    else {
+                        CostGram[0].value = parseFloat("0,00");
+                    }
+
+                break;
+            }
+            case "SI":
+            {
+                costProcent = (Sum.toFixed(2) * 0.22);
+
+                    if (sendDhl.checked == true) {
+                        if (parseFloat(Gram.value) <= 2) {
+                            CostGram[0].value = parseFloat("15,00");
+                        }
+                        else if (parseFloat(Gram.value) > 2 && parseFloat(Gram.value) <= 5) {
+                            CostGram[0].value = parseFloat("17,00");
+                        }
+                        else if (parseFloat(Gram.value) > 5 && parseFloat(Gram.value) <= 10) {
+                            CostGram[0].value = parseFloat("22,00");
+                        }
+                        else if (parseFloat(Gram.value) > 10 && parseFloat(Gram.value) <= 20) {
+                            CostGram[0].value = parseFloat("35,00");
+                        }
+                        else if (parseFloat(Gram.value) > 20 && parseFloat(Gram.value) <= 31, 5) {
+                            CostGram[0].value = parseFloat("49,00");
+                        }
+                    }
+                    else {
+                        CostGram[0].value = parseFloat("0,00");
+                    }
+
+                break;
+            }
+            case "SK":
+            {
+                costProcent = (Sum.toFixed(2) * 0.20);
+
+                    if (sendDhl.checked == true) 
+                    {
+                        if (parseFloat(Gram.value) <= 2) 
+                        {
+                            CostGram[0].value = parseFloat("15,00");
+                        }
+                        else if (parseFloat(Gram.value) > 2 && parseFloat(Gram.value) <= 5) {
+                            CostGram[0].value = parseFloat("17,00");
+                        }
+                        else if (parseFloat(Gram.value) > 5 && parseFloat(Gram.value) <= 10) {
+                            CostGram[0].value = parseFloat("22,00");
+                        }
+                        else if (parseFloat(Gram.value) > 10 && parseFloat(Gram.value) <= 20) {
+                            CostGram[0].value = parseFloat("35,00");
+                        }
+                        else if (parseFloat(Gram.value) > 20 && parseFloat(Gram.value) <= 31, 5) {
+                            CostGram[0].value = parseFloat("49,00");
+                        }
+                    }
+                    else {
+                        CostGram[0].value = parseFloat("0,00");
+                    }
+
+                break;
+            }
+            default:{
+
+                if (value.target.value == "US")
+                {
+                    if (parseFloat(Gram.value) <= 2) 
+                    {
+                        CostGram[0].value = parseFloat("30,00");
+                    }
+                    else if (parseFloat(Gram.value) > 2 && parseFloat(Gram.value) <= 5) 
+                    {
+                        CostGram[0].value = parseFloat("40,00");
+                    }
+                    else if (parseFloat(Gram.value) > 5 && parseFloat(Gram.value) <= 10) {
+                        CostGram[0].value = parseFloat("50,00");
+                    }
+                    else if (parseFloat(Gram.value) > 10 && parseFloat(Gram.value) <= 20) {
+                        CostGram[0].value = parseFloat("60,00");
+                    }
+                    else if (parseFloat(Gram.value) > 20 && parseFloat(Gram.value) <= 31, 5) {
+                        CostGram[0].value = parseFloat("70,00");
+                    }
+                }
+                if (value.target.value == "RU" || value.target.value == "UA" || value.target.value == "BR" || value.target.value == "KZ") 
+                {
+                    if (parseFloat(Gram.value) <= 5) 
+                    {
+                        CostGram[0].value = parseFloat("35,00");
+                    }
+                    else if (parseFloat(Gram.value) > 5 && parseFloat(Gram.value) <= 10) 
+                    {
+                        CostGram[0].value = parseFloat("39,50");
+                    }
+                    else if (parseFloat(Gram.value) > 10 && parseFloat(Gram.value) <= 20) 
+                    {
+                        CostGram[0].value = parseFloat("59,00");
+                    }
+                }
+
+                if (value.target.value == "CHE" ||  value.target.value == "GBR") 
+                {
+                    if (parseFloat(Gram.value) <= 2) 
+                    {
+                        CostGram[0].value = parseFloat("17,00");
+                    }
+                    else if (parseFloat(Gram.value) > 2 && parseFloat(Gram.value) <= 5) 
+                    {
+                        CostGram[0].value = parseFloat("29,00");
+                    }
+                    else if (parseFloat(Gram.value) > 5 && parseFloat(Gram.value) <= 10) 
+                    {
+                        CostGram[0].value = parseFloat("38,00");
+                    }
+                    else if (parseFloat(Gram.value) > 10 && parseFloat(Gram.value) <= 20) 
+                    {
+                        CostGram[0].value = parseFloat("52,00");
+                    }
+                    else if (parseFloat(Gram.value) > 21 && parseFloat(Gram.value) <= 31, 5) 
+                    {
+                        CostGram[0].value = parseFloat("59,00");
+                    }
+                    
+                }
+               
+                break;
+            }
+        }
+        proc.value = costProcent.toLocaleString('de-DE', {
+            style: 'currency',
+            currency: 'EUR'
+        });;
+    
+        let ALLSUM = costProcent + Sum + parseFloat(CostGram[0].value);
+
+        CostGram.forEach((item) => {
+            item.value = parseFloat(CostGram[0].value).toLocaleString('de-DE', {
+                style: 'currency',
+                currency: 'EUR'
+            });
+        });
+
+
+        cost.forEach((item) => {
+            item.innerHTML = ALLSUM.toLocaleString('de-DE', {
+                style: 'currency',
+                currency: 'EUR'
+            });
+        });
+
+    }
     function changeAdress(value) 
     {
         let rechnungSend = document.getElementById("rechnungSend");

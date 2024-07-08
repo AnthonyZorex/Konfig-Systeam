@@ -30,7 +30,7 @@
                         <td id="rowTable" class="table-info">@list.Email</td>
                         <td id="rowTable" class="table-info">@list.Address</td>
                         <td id="rowTable" class="table-info">@list.ProductName</td>
-                        <td id="rowTable" class="table-info">@list.OrderSum</td>
+                        <td id="rowTable" class="table-info">@list.OrderSum.ToString("C")</td>
                         <td id="rowTable" class="table-info">@Html.ActionLink("Download Excel", "Download", "Home", new { id = @list.Id, FirstName = @list.FirstName, LastName = @list.LastName }, new { @class = "btn btn-primary" })</td>
                     </tr>
                 }

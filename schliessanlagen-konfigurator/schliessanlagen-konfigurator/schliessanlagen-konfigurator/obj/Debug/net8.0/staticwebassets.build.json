@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "pBQRW8cFHCYTgAy67DVHV1+64GT/5toNez2tqr5Bk6g=",
+  "Hash": "/e3EEUXhmiKTFxjAZP86/Yjo821fXQEPx0UTLAKPOIg=",
   "Source": "schliessanlagen-konfigurator",
   "BasePath": "_content/schliessanlagen-konfigurator",
   "Mode": "Default",
@@ -6762,12 +6762,12 @@
       "OriginalItemSpec": "wwwroot\\Orders\\SchlüsselDiscount3512472024 OrderFile.xlsx"
     },
     {
-      "Identity": "D:\\Anthnony\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\SchlüsselDiscount5314572024 OrderFile.xlsx",
+      "Identity": "D:\\Anthnony\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\SchlüsselDiscount518872024 OrderFile.xlsx",
       "SourceId": "schliessanlagen-konfigurator",
       "SourceType": "Discovered",
       "ContentRoot": "D:\\Anthnony\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\",
       "BasePath": "_content/schliessanlagen-konfigurator",
-      "RelativePath": "Orders/SchlüsselDiscount5314572024 OrderFile.xlsx",
+      "RelativePath": "Orders/SchlüsselDiscount518872024 OrderFile.xlsx",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -6778,26 +6778,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Orders\\SchlüsselDiscount5314572024 OrderFile.xlsx"
-    },
-    {
-      "Identity": "D:\\Anthnony\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\SchlüsselDiscount5615572024 OrderFile.xlsx",
-      "SourceId": "schliessanlagen-konfigurator",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Anthnony\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\",
-      "BasePath": "_content/schliessanlagen-konfigurator",
-      "RelativePath": "Orders/SchlüsselDiscount5615572024 OrderFile.xlsx",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Orders\\SchlüsselDiscount5615572024 OrderFile.xlsx"
+      "OriginalItemSpec": "wwwroot\\Orders\\SchlüsselDiscount518872024 OrderFile.xlsx"
     }
   ]
 }

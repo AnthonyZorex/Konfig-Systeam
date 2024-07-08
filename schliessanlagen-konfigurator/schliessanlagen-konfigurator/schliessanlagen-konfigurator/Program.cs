@@ -55,6 +55,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 });
 
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
     var supportedCultures = new[] { new CultureInfo("de-DE") };
