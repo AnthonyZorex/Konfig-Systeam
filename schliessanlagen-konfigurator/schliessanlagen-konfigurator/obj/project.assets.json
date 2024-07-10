@@ -12549,11 +12549,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Anthnony\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj",
+      "projectUniqueName": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj",
       "projectName": "schliessanlagen-konfigurator",
-      "projectPath": "D:\\Anthnony\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj",
+      "projectPath": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj",
       "packagesPath": "C:\\Users\\JAKUB\\.nuget\\packages\\",
-      "outputPath": "D:\\Anthnony\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\obj\\",
+      "outputPath": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\JAKUB\\AppData\\Roaming\\NuGet\\NuGet.Config",

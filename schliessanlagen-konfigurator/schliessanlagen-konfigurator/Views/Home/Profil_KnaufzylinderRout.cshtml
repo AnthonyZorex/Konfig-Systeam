@@ -16,7 +16,7 @@
                 </div>
             </div>
             <div>
-                <h2>New Profil Knaufzylinder</h2>
+                <h2>Neues Profil Knaufzylinder</h2>
 
                 <form asp-action="Create_Profil_Knaufzylinder" enctype="multipart/form-data" asp-controller="Home">
 
@@ -38,7 +38,7 @@
                         </div>
 
                         <div style="margin-bottom: 50px;">
-                            <label> Company Name</label>
+                            <label>Firmenname</label>
                             <input asp-for="companyName" required class="form-control" type="text" />
                         </div>
 
@@ -48,7 +48,7 @@
                         </div>
 
                         <div style="margin-bottom: 50px;">
-                            <label>Descriptions</label>
+                            <label>Beschreibungen</label>
                             <textarea asp-for="description" required class="form-control" id="exampleFormControlTextarea1"></textarea>
                         </div>
                         @if (ViewBag.Content != null)
@@ -60,7 +60,7 @@
                         }
 
                         <div style="margin-bottom: 50px;">
-                            <label>Cost</label>
+                            <label>Price</label>
                             <input asp-for="Price" required class="form-control" />
                         </div>
 
@@ -69,43 +69,43 @@
 
                             <div id="AussenProfilDopel">
                                 <input type="number" class="form-control" required placeholder="Aussen" id="aus" step="0.01" name="aussen" />
-                                <input class="form-control" type="number" name="costSizeAussen" id="ausCost" step="0.01" />
+                                <input class="form-control" type="number" placeholder="Price" name="costSizeAussen" id="ausCost" step="0.01" />
                             </div>
 
                             <div id="InnenProfilDopel">
                                 <input type="number" class="form-control" required placeholder="innen" id="inter" step="0.01" name="innen" />
-                                <input type="number" class="form-control" name="costSizeIntern" id="interCost" step="0.01" />
+                                <input type="number" class="form-control" placeholder="Price" name="costSizeIntern" id="interCost" step="0.01" />
                             </div>
                         </div>
                         <div id="productOptions">
                         </div>
 
                     </div>
-                    <button id="createBlockBtn" type="button" class="btn btn-success">Add Options</button>
+                    <button id="createBlockBtn" type="button" class="btn btn-success">Optionen hinzufügen</button>
                     <button id="addInputBtn" type="button" class="btn btn-success">+</button>
                     <button id="RemoveInputBtn" type="button" class="btn btn-danger">-</button>
-                    <input type="submit" class="btn btn-success" id="input" value="Create Profil Kanufzylinder" />
+                    <input type="submit" class="btn btn-success" id="input" value="Erstellen Profil Kanufzylinder" />
                 </form>
             </div>
 
         </div>
         <div>
 
-            <h4 id="input">ALL Profil Knaufzylinder</h4>
+            <h4 id="input">Alle Profil Knaufzylinder</h4>
             @using (Html.BeginForm("Profil_KnaufzylinderRout", "Home", FormMethod.Get))
             {
                 <table class="table table-bordered">
                     <tbody>
                         <tr id="Table2">
-                            <th>CompanyName</th>
+                            <th>Firmenname</th>
                             <th>Systeam</th>
                             <th>Name</th>
-                            <th>Image</th>
-                            <th>Cost</th>
+                            <th>Bild</th>
+                            <th>Price</th>
 
-                            <th>Edit</th>
-                            <th>Options</th>
-                            <th>Delete</th>
+                            <th>Editieren</th>
+                            <th>Optionen</th>
+                            <th>Löschen</th>
 
                             @foreach (var item in ViewBag.item)
                             {
@@ -113,7 +113,7 @@
                                 <td id="rowTable" class="table-info">@item.NameSystem</td>
                                 <td id="rowTable" class="table-info">@item.Name</td>
                                 <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
-                                <td id="rowTable " class="table-info"><h6 id="cost">@item.Price</h6></td>
+                                <td id="rowTable " class="table-info"><h6 id="cost">@item.Price.ToString("C")</h6></td>
 
                                 <td id="rowTable" class="table-info"><a href="@Url.Action("Edit_Profil_Knaufzylinder","Home", new { item.Id })"><img src="@("/Image/edit-tools.png")" height="30" width="30" /></a></td>
                                 <td id="rowTable" class="table-info">
@@ -149,8 +149,8 @@
         let sum = document.querySelectorAll('#cost');
         let Aussen_Innen_ProfilDopel = document.getElementById('Aussen_Innen_ProfilDopel');
 
-        let costNGF = document.getElementById('costNGF');
-        let valueNGF = document.getElementById('valueNGF');
+        let costNGF = document.getElementById('Price');
+        let valueNGF = document.getElementById('Wert');
 
         let productOptions = document.getElementById('productOptions');
         let addOptions = document.getElementById('addOptions');
@@ -201,7 +201,7 @@
                 block.classList.add('input-block');
                 block.id = `block-${blockCounter}`;
                 block.innerHTML = `<div>
-                                                        <h1>Options</h1>
+                                                        <h1>Optionen</h1>
                                                         <label>Name</label>
                                                         <input class="form-control" type="text" name="Options" />
                                                         <div>
@@ -209,18 +209,17 @@
                                                             <input name="postedFile" type="file" class="btn btn-success" />
                                                             <p></p>
                                                         </div>
-                                                        <label>Descriptions</label>
+                                                          <label>Beschreibungen</label>
                                                         <input class="form-control" type="text" name="NGFDescriptions" />
-                                                        <h1>Value & Cost </h1>
+                                                        <h1>Wert & Price </h1>
                                                         <div id="Aussen_Innen_ProfilDopel">
                                                             <div id="valueNGF">
-                                                                <input type="text" placeholder="valueNGF" step="0.01" name="valueNGF" />
-
+                                                                <input type="text" placeholder="Wert" class="form-control" step="0.01" name="valueNGF" />
                                                             </div>
                                                             <div id="costNGF">
-                                                                        <input type="number"  placeholder="costNGF"  step="0.01" name="costNGF" />
+                                                                   <input type="number"  placeholder="Price" class="form-control" step="0.01" name="costNGF" />
                                                             </div>
-                                                                        <input type="hidden" id="counter" name="input_counter" />
+                                                               <input type="hidden" id="counter" name="input_counter" />
                                                         </div>
                                                     </div>`;
 
@@ -235,17 +234,18 @@
 
                 let d = document.createElement('input');
                 d.setAttribute('name', 'costNGF');
-                d.setAttribute('placeholder', 'costNGF');
+                d.setAttribute('placeholder', 'Price');
+                d.setAttribute('class', 'form-control');
 
                 let x = document.createElement('input');
                 x.setAttribute('name', 'valueNGF');
-                x.setAttribute('placeholder', 'valueNGF');
+                x.setAttribute('placeholder', 'Wert');
+                x.setAttribute('class', 'form-control');
 
                 const div1 = block.querySelector('#valueNGF');
                 const div2 = block.querySelector('#costNGF');
 
                 div1.appendChild(x);
-
                 div2.appendChild(d);
 
                 var counter = document.querySelectorAll('#counter');
@@ -257,9 +257,6 @@
 
             };
 
-
-
-
             plusAussen_Innen.addEventListener('click', () => {
 
                 let d = document.createElement('input');
@@ -270,7 +267,7 @@
 
                 let costAussen = document.createElement('input');
                 costAussen.setAttribute('name', 'costSizeAussen');
-                costAussen.setAttribute('placeholder', 'costAussen');
+                costAussen.setAttribute('placeholder', 'Price');
                 costAussen.setAttribute('class', 'form-control');
                 costAussen.setAttribute('step', '0.01');
                 costAussen.setAttribute('type', 'number');
@@ -284,7 +281,7 @@
 
                 let costInter = document.createElement('input');
                 costInter.setAttribute('name', 'costSizeIntern');
-                costInter.setAttribute('placeholder', 'costInnen');
+                costInter.setAttribute('placeholder', 'Price');
                 costInter.id = 'interCost';
                 costInter.setAttribute('class', 'form-control');
                 costInter.setAttribute('step', '0.01');
@@ -311,20 +308,7 @@
 
         })
 
-        function interfaice() {
-            sum.forEach((item) => {
-                if (String(item).length < 6) {
-                    item.innerHTML = item.innerHTML.slice(0, 5) + '€';
-                }
-
-                if (String(item).length > 8) {
-                    item.innerHTML = item.innerHTML.slice(0, 6) + '€';
-                }
-
-            })
-        }
-
-        interfaice();
+      
 
 
     </script>

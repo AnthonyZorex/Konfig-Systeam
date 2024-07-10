@@ -51,25 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "e4694d4c-4cb7-4c31-965c-492c956d519d",
+                            Id = "9dcf8ba6-3c40-4483-aa83-bc9c4e3fb18b",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "cf7421af-95a5-48f6-8e11-fd1d5dfe7c9b",
+                            Id = "8d478bcb-6b3e-4ef1-a8ab-93d4923d3cff",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "9e792da6-c0c6-4a4b-9c9f-97913ae40f7b",
+                            Id = "4353d9c5-45ce-4c41-ac1c-30618c9158db",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "3ee7a871-b23f-4061-9b4b-4742276bf247",
+                            Id = "be7b1563-6da3-4b3e-b7a7-7393e93cc22f",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -262,6 +262,9 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<float?>("Gramm")
+                        .HasColumnType("real");
+
                     b.Property<string>("ImageName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -326,6 +329,9 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     b.Property<string>("Artikelnummer")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<float?>("Gramm")
+                        .HasColumnType("real");
 
                     b.Property<string>("ImageName")
                         .IsRequired()
@@ -434,6 +440,9 @@ namespace schliessanlagen_konfigurator.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<float?>("Gramm")
+                        .HasColumnType("real");
 
                     b.Property<string>("ImageName")
                         .IsRequired()
@@ -676,6 +685,9 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<float?>("Gramm")
+                        .HasColumnType("real");
+
                     b.Property<string>("ImageName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -817,6 +829,9 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<float?>("Gramm")
+                        .HasColumnType("real");
+
                     b.Property<string>("ImageName")
                         .HasColumnType("nvarchar(max)");
 
@@ -944,7 +959,9 @@ namespace schliessanlagen_konfigurator.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("DesctiptionsSysteam")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Lieferzeit")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NameSysteam")
@@ -1216,6 +1233,9 @@ namespace schliessanlagen_konfigurator.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<float?>("Gramm")
+                        .HasColumnType("real");
 
                     b.Property<string>("ImageName")
                         .IsRequired()

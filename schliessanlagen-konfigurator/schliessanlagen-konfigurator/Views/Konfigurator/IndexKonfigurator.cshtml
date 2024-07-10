@@ -12,7 +12,7 @@
         {
             <button type="button" class="btn btn-secondary"><a href="@Url.Action("System_Auswählen","Konfigurator",new{userName = @ViewBag.UserNameItem , isNewKonfig = true} )">2. System auswählen</a></button>
         }
-      @*   <button type="button" class="btn btn-secondary">3. Parameter einstellen</button> *@
+
     </div>
     <div style="display:flex;gap: 20px;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;align-items: center;">
         <button onclick="hilfe()" id="hilfeImg" style="border:none"><img src="/Image/help.png" width="60" hight="60" /></button>
@@ -39,7 +39,7 @@
             </div>
             <div id="itemKeyBlock">
                 <div  class="TexCount">
-                        <input type="text" required style="position: relative;" name="FurNameKey" value="1" />
+                        <input type="text" required readonly style="position: relative;background: gray;" name="FurNameKey" value="1" />
                     <div id="TexInputKey">
                        
                             <input id="inputS" required name="NameKey"  onchange="chekedNameArienKey(event.target.value,1)" placeholder="Name des Schlüssels" type="text" />
@@ -143,7 +143,6 @@
         </div>
     </div>
         <input type="text" name="IsOppen" style="display:none" id="vBool" />
-        <input type="button" onclick="(printDiv())" class="btn btn-success" id="input" value="Print" />
         <input type="submit"  onclick="(bolleanCheked())" class="btn btn-success" id="input" value="Weiter" />
     </form>
 
@@ -189,14 +188,8 @@
                     </div>
                 </div>
 
-                <div id="circle">
-                    <div id="circle2" class="c8">
-                    </div>
-                </div>
-                <div id="circle">
-                    <div id="circle2" class="c9">
-                    </div>
-                </div>
+               
+               
                 <button id="hilfeBack" onclick="next()"> > </button>
             </div>
         </div>
@@ -212,17 +205,7 @@
 
 <script>
 
-    function printDiv() 
-    {
-        var printContents = document.getElementById("InformBar").innerHTML;
-        var originalContents = document.body.innerHTML;
-
-        document.body.innerHTML = printContents;
-
-        window.print();
-
-        document.body.innerHTML = originalContents;
-    }
+   
 
     let blockCount = document.querySelectorAll(".TexCount").length;
     let blockTur = document.querySelectorAll("#inputTur").length;
@@ -296,7 +279,7 @@
         let modalcontent = document.getElementsByClassName("modal-contentLessen")[0];
         let modalArrow = document.getElementsByClassName("arrow-down")[0];
 
-        if (circlestep < 8) 
+        if (circlestep < 6) 
         {
             circle2[circlestep].style.background = "white";
             circlestep++;
@@ -306,85 +289,69 @@
             {
                 case 0:
                 {
-                        hilfeText.innerText = "Hier den Namen der Türen eingeben!";
-                        hilfeText.innerHTML = "Hier den Namen der Türen eingeben!";
+                        hilfeText.innerText = "Hier den Namen der Türen eingeben.";
+                        hilfeText.innerHTML = "Hier den Namen der Türen eingeben.";
                         modalcontent.style.marginLeft = "300px";
                         modalArrow.style.marginLeft = "400px";
-                        modalcontent.style.marginTop = "280px";
+                        modalcontent.style.marginTop = "380px";
                     break;
                 }
                 case 1: 
                 {
-                        hilfeText.innerText = "Wählen Sie den Zylindertyp aus!";
-                        hilfeText.innerHTML = "Wählen Sie den Zylindertyp aus!";
-                        modalcontent.style.marginTop = "280px";
+                        hilfeText.innerText = "Wählen Sie den Zylindertyp aus.";
+                        hilfeText.innerHTML = "Wählen Sie den Zylindertyp aus.";
+                        modalcontent.style.marginTop = "380px";
                         modalcontent.style.marginLeft = "600px";
                         modalArrow.style.marginLeft = "700px";
                     break;
                 }
                 case 2: 
                 {
-                        hilfeText.innerText = "Wählen Sie die Außenabmessung des Zylinders aus!";
-                        hilfeText.innerHTML = "Wählen Sie die Außenabmessung des Zylinders aus!";
-                        modalcontent.style.marginTop = "240px";
+                        hilfeText.innerText = "Wählen Sie die Außenlänge des Zylinders aus.";
+                        hilfeText.innerHTML = "Wählen Sie die Außenlänge des Zylinders aus.";
+                        modalcontent.style.marginTop = "340px";
                         modalcontent.style.marginLeft = "700px";
                         modalArrow.style.marginLeft = "850px";
                     break;
                 }
                  case 3:
                  {
-                        hilfeText.innerText = "Wählen Sie die Innenabmessung des Zylinders aus!";
-                        hilfeText.innerHTML = "Wählen Sie die Innenabmessung des Zylinders aus!";
-                        modalcontent.style.marginTop = "240px";
+                        hilfeText.innerText = "Wählen Sie die Innenlänge des Zylinders aus.";
+                        hilfeText.innerHTML = "Wählen Sie die Innenlänge des Zylinders aus.";
+                        modalcontent.style.marginTop = "340px";
                         modalcontent.style.marginLeft = "700px";
                         modalArrow.style.marginLeft = "890px";
                     break;
                 }
                  case 4:
                  {
-                        hilfeText.innerText = "Geben Sie die Anzahl der Schlösser ein!";
-                        hilfeText.innerHTML = "Geben Sie die Anzahl der Schlösser ein!";
-                        modalcontent.style.marginTop = "280px";
+                        hilfeText.innerText = "Geben Sie die Anzahl der Schlösser ein.";
+                        hilfeText.innerHTML = "Geben Sie die Anzahl der Schlösser ein.";
+                        modalcontent.style.marginTop = "380px";
                         modalcontent.style.marginLeft = "800px";
-                        modalArrow.style.marginLeft = "1025px";
+                        modalArrow.style.marginLeft = "1010px";
                     break;
                 }
                 case 5: 
                 {
-                        hilfeText.innerText = "Wählen Sie hier aus, was dieser Schlüssel öffnet!";
-                        hilfeText.innerHTML = "Wählen Sie hier aus, was dieser Schlüssel öffnet!";
-                        modalcontent.style.marginTop = "250px";
+                        hilfeText.innerText = "Kreuzen Sie an, welche Schlösser der Schlüssel schließen soll.";
+                        hilfeText.innerHTML = "Kreuzen Sie an, welche Schlösser der Schlüssel schließen soll.";
+                        modalcontent.style.marginTop = "350px";
                         modalcontent.style.marginLeft = "950px";
                         modalArrow.style.marginLeft = "1130px";
                     break;
                 }
                 case 6: 
                 {
-                        hilfeText.innerText = "Geben Sie die Anzahl der Schlüssel ein!";
-                        hilfeText.innerHTML = "Geben Sie die Anzahl der Schlüssel ein!";
+                        hilfeText.innerText = "Geben Sie die Anzahl der Schlüssel ein.";
+                        hilfeText.innerHTML = "Geben Sie die Anzahl der Schlüssel ein.";
                         modalcontent.style.marginTop = "230px";
                         modalcontent.style.marginLeft = "950px";
                         modalArrow.style.marginLeft = "1130px";
                     break;
                 }
-                case 7: 
-                {
-                        hilfeText.innerText = "Geben Sie den Namen des Schlüssels ein!";
-                        hilfeText.innerHTML = "Geben Sie den Namen des Schlüssels ein!";
-                        modalcontent.style.marginTop = "80px";
-                        modalcontent.style.marginLeft = "950px";
-                        modalArrow.style.marginLeft = "1130px";
-                    break;
-                }
-                case 8:
-                {
-                        hilfeText.innerText = "Geben Sie ein, wem der Schlüssel gehört!";
-                        hilfeText.innerHTML = "Geben Sie ein, wem der Schlüssel gehört!";
-                        modalcontent.style.marginTop = "40px";
-                        modalcontent.style.marginLeft = "950px";
-                        modalArrow.style.marginLeft = "1130px";
-                        break;
-                }
+                
+               
             }
         }
     }
@@ -402,100 +369,82 @@
             {
                 case 0:
                     {
-                        hilfeText.innerText = "Hier den Namen der Türen eingeben!";
-                        hilfeText.innerHTML = "Hier den Namen der Türen eingeben!";
+                        hilfeText.innerText = "Hier den Namen der Türen eingeben.";
+                        hilfeText.innerHTML = "Hier den Namen der Türen eingeben.";
                         modalcontent.style.marginLeft = "300px";
                         modalArrow.style.marginLeft = "400px";
-                        modalcontent.style.marginTop = "280px";
+                        modalcontent.style.marginTop = "380px";
                         break;
                     }
                 case 1:
                     {
-                        hilfeText.innerText = "Wählen Sie den Zylindertyp aus!";
-                        hilfeText.innerHTML = "Wählen Sie den Zylindertyp aus!";
-                        modalcontent.style.marginTop = "280px";
+                        hilfeText.innerText = "Wählen Sie den Zylindertyp aus.";
+                        hilfeText.innerHTML = "Wählen Sie den Zylindertyp aus.";
+                        modalcontent.style.marginTop = "380px";
                         modalcontent.style.marginLeft = "600px";
                         modalArrow.style.marginLeft = "700px";
                         break;
                     }
                 case 2:
                     {
-                        hilfeText.innerText = "Wählen Sie die Außenabmessung des Zylinders aus!";
-                        hilfeText.innerHTML = "Wählen Sie die Außenabmessung des Zylinders aus!";
-                        modalcontent.style.marginTop = "240px";
+                        hilfeText.innerText = "Wählen Sie die Außenlänge des Zylinders aus.";
+                        hilfeText.innerHTML = "Wählen Sie die Außenlänge des Zylinders aus.";
+                        modalcontent.style.marginTop = "340px";
                         modalcontent.style.marginLeft = "700px";
                         modalArrow.style.marginLeft = "850px";
                         break;
                     }
                 case 3:
                     {
-                        hilfeText.innerText = "Wählen Sie die Innenabmessung des Zylinders aus!";
-                        hilfeText.innerHTML = "Wählen Sie die Innenabmessung des Zylinders aus!";
-                        modalcontent.style.marginTop = "240px";
+                        hilfeText.innerText = "Wählen Sie die Innenlänge des Zylinders aus.";
+                        hilfeText.innerHTML = "Wählen Sie die Innenlänge des Zylinders aus.";
+                        modalcontent.style.marginTop = "340px";
                         modalcontent.style.marginLeft = "700px";
                         modalArrow.style.marginLeft = "890px";
                         break;
                     }
                 case 4:
                     {
-                        hilfeText.innerText = "Geben Sie die Anzahl der Schlösser ein!";
-                        hilfeText.innerHTML = "Geben Sie die Anzahl der Schlösser ein!";
-                        modalcontent.style.marginTop = "280px";
+                        hilfeText.innerText = "Geben Sie die Anzahl der Schlösser ein.";
+                        hilfeText.innerHTML = "Geben Sie die Anzahl der Schlösser ein.";
+                        modalcontent.style.marginTop = "380px";
                         modalcontent.style.marginLeft = "800px";
-                        modalArrow.style.marginLeft = "1025px";
+                        modalArrow.style.marginLeft = "1010px";
                         break;
                     }
                 case 5:
                     {
-                        hilfeText.innerText = "Wählen Sie hier aus, was dieser Schlüssel öffnet!";
-                        hilfeText.innerHTML = "Wählen Sie hier aus, was dieser Schlüssel öffnet!";
-                        modalcontent.style.marginTop = "250px";
+                        hilfeText.innerText = "Kreuzen Sie an, welche Schlösser der Schlüssel schließen soll.";
+                        hilfeText.innerHTML = "Kreuzen Sie an, welche Schlösser der Schlüssel schließen soll.";
+                        modalcontent.style.marginTop = "350px";
                         modalcontent.style.marginLeft = "950px";
                         modalArrow.style.marginLeft = "1130px";
                         break;
                     }
                 case 6:
                     {
-                        hilfeText.innerText = "Geben Sie die Anzahl der Schlüssel ein!";
-                        hilfeText.innerHTML = "Geben Sie die Anzahl der Schlüssel ein!";
+                        hilfeText.innerText = "Geben Sie die Anzahl der Schlüssel ein.";
+                        hilfeText.innerHTML = "Geben Sie die Anzahl der Schlüssel ein.";
                         modalcontent.style.marginTop = "230px";
                         modalcontent.style.marginLeft = "950px";
                         modalArrow.style.marginLeft = "1130px";
                         break;
                     }
-                case 7:
-                    {
-                        hilfeText.innerText = "Geben Sie den Namen des Schlüssels ein!";
-                        hilfeText.innerHTML = "Geben Sie den Namen des Schlüssels ein!";
-                        modalcontent.style.marginTop = "80px";
-                        modalcontent.style.marginLeft = "950px";
-                        modalArrow.style.marginLeft = "1130px";
-                        break;
-                    }
-                case 8:
-                {
-                        hilfeText.innerText = "Geben Sie ein, wem der Schlüssel gehört!";
-                        hilfeText.innerHTML = "Geben Sie ein, wem der Schlüssel gehört!";
-                        modalcontent.style.marginTop = "40px";
-                        modalcontent.style.marginLeft = "950px";
-                        modalArrow.style.marginLeft = "1130px";
-                        break;
-                }
             }
         }
     }
 
-    closeHilfe.addEventListener("click", () => {
+    closeHilfe.addEventListener("click", () => 
+    {
         var modal = document.getElementById("myModal");
         modal.style.display = "none";
     })
 
-    function openModal() {
+    function openModal() 
+    {
         var modal = document.getElementById("myModal");
         modal.style.display = "block";
     }
-    
-    
 
     function hilfe() 
     {
@@ -512,6 +461,7 @@
         {
             h++;
             let w = 0;
+
             for (let j = 0; j < dorCounter.length; j++) 
             {
                 w++;
@@ -528,6 +478,7 @@
         let allKeyName = document.querySelectorAll("#inputS");
        
         let cheker = 1;
+
         for (let i = 0; i < allKeyName.length; i++) 
         {
             if (allKeyName[i].value == value) 
@@ -855,7 +806,7 @@
         newBlock.id = 'TexCount-' + blockCount;
         newBlock.innerHTML = `
                                <div  class="TexCount">
-                                     <input type="text" required  name="FurNameKey" style="position: relative;" value="${blockCount}" />
+                                             <input type="text" readonly required  name="FurNameKey" style="position: relative;background: gray;" value="${blockCount}" />
                             <div id="TexInputKey">
                                     <input id="inputS" required name="NameKey" onchange="chekedNameArienKey(event.target.value,${blockCount})" placeholder="Name des Schlüssels" type="text" />
                             </div>
@@ -916,7 +867,7 @@
             newBlock.id = 'TexCount-' + blockCount;
             newBlock.innerHTML = `
                                    <div  class="TexCount">
-                                         <input type="text" required  name="FurNameKey" style="position: relative;" value="${blockCount}" />
+                                             <input type="text" required  name="FurNameKey" style="position: relative;background: gray;" value="${blockCount}" />
                                 <div id="TexInputKey">
                                         <input id="inputS" required name="NameKey" onchange="chekedNameArienKey(event.target.value,${blockCount})" placeholder="Name des Schlüssels" type="text" />
                                 </div>
@@ -927,7 +878,7 @@
 
             `;
 
-            fragment.appendChild(newBlock);
+            document.getElementById('itemKeyBlock').appendChild(newBlock);
 
             let horizont = document.getElementById(`${blockTur}horizontal`);
 
@@ -946,13 +897,12 @@
 
                 document.getElementById(`${i}horizontal`).appendChild(newBlockTur);
 
-                fragmentChekbox.appendChild(horizont);
+                document.getElementById('InfoValue').appendChild(horizont);
 
                 createCustomCheckbox(`${i}checkbox${blockCount}`);
             }
         }
-        document.getElementById('itemKeyBlock').append(fragment);
-        document.getElementById('InfoValue').append(fragmentChekbox);
+
     }
 
     function selectTur(value) 
@@ -961,11 +911,6 @@
         blockTur = 0;
         document.getElementById('InfoValue').innerHTML = '';
         document.getElementById('BlockTur-1').innerHTML = '';
-
-
-        const fragment = document.createDocumentFragment();
-
-        const fragmentChekbox = document.createDocumentFragment();
 
         for (let i = 1; i <= value; i++) 
         {
@@ -1025,7 +970,7 @@
                         `;
 
 
-            fragment.appendChild(newBlock);
+            document.getElementById('BlockTur-1').appendChild(newBlock);
             let horizont = document.createElement('div');
             horizont.id = `${blockTur}horizontal`;
             horizont.classList.add('horizontal');
@@ -1044,13 +989,12 @@
 
                 horizont.appendChild(newBlockTur);
 
-                fragmentChekbox.appendChild(horizont)
+                document.getElementById('InfoValue').appendChild(horizont)
 
                 createCustomCheckbox(`${blockTur}checkbox${i}`);
             }
         }
-        document.getElementById('BlockTur-1').append(fragment);
-        document.getElementById('InfoValue').append(fragmentChekbox);
+
     }
 
     document.getElementById('removeButton').addEventListener('click', removeBlock);

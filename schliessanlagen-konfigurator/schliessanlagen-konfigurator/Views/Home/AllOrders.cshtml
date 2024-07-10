@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Http;
 
 @{
-    ViewData["Title"] = "AllOrders";
+    ViewData["Title"] = "Alle Bestellungen";
 
 }
 @if (User.IsInRole("admin"))
@@ -12,13 +12,13 @@
         <table id="myTable" class="table table-bordered">
             <thead>
                 <tr>
-                    <th id="rowTable" class="table-info">Order Data</th>
-                    <th id="rowTable" class="table-info"> UserName</th>
-                    <th id="rowTable" class="table-info">Email</th>
+                    <th id="rowTable" class="table-info">Bestelldaten</th>
+                    <th id="rowTable" class="table-info">Benutzername</th>
+                    <th id="rowTable" class="table-info">E-Mail</th>
                     <th id="rowTable" class="table-info">Address</th>
-                    <th id="rowTable" class="table-info">ProductName</th>
-                    <th id="rowTable" class="table-info">OrderSum</th>
-                    <th id="rowTable" class="table-info">File</th>
+                    <th id="rowTable" class="table-info">Produktname</th>
+                    <th id="rowTable" class="table-info">Bestellsumme</th>
+                    <th id="rowTable" class="table-info">Datei</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,8 +30,8 @@
                         <td id="rowTable" class="table-info">@list.Email</td>
                         <td id="rowTable" class="table-info">@list.Address</td>
                         <td id="rowTable" class="table-info">@list.ProductName</td>
-                        <td id="rowTable" class="table-info">@list.OrderSum</td>
-                        <td id="rowTable" class="table-info">@Html.ActionLink("Download Excel", "Download", "Home", new { id = @list.Id, FirstName = @list.FirstName, LastName = @list.LastName }, new { @class = "btn btn-primary" })</td>
+                        <td id="rowTable" class="table-info">@list.OrderSum.ToString("C")</td>
+                        <td id="rowTable" class="table-info">@Html.ActionLink("Excel herunterladen", "Download", "Home", new { id = @list.Id, FirstName = @list.FirstName, LastName = @list.LastName }, new { @class = "btn btn-primary" })</td>
                     </tr>
                 }
             </tbody>

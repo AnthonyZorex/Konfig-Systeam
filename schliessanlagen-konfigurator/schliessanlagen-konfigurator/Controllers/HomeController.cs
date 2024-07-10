@@ -1316,7 +1316,7 @@ namespace schliessanlagen_konfigurator.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Save(Profil_Doppelzylinder profil_Doppelzylinder, List<int> SizeAus, List<int> SizeInen, List<string> Options,List<string> ImageNameOption,
+        public async Task<IActionResult> SaveDoppelZylinder(Profil_Doppelzylinder profil_Doppelzylinder, List<int> SizeAus, List<int> SizeInen, List<string> Options,List<string> ImageNameOption,string Lieferzeit,
         List<string> Descriptions, List<string> valueNGF, List<float> costNGF, List<int> inputCounter,string NSysteam,float keyCost, string descriptionsSysteam,List<float> costSizeAussen, List<float> costSizeIntern)
         {
             var Items = db.Profil_Doppelzylinder.Find(profil_Doppelzylinder.Id);
@@ -1329,8 +1329,6 @@ namespace schliessanlagen_konfigurator.Controllers
             Items.ImageName = profil_Doppelzylinder.ImageName;
 
             var option = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == profil_Doppelzylinder.Id).ToList();
-
-           
 
             if (Options.Count() == 0 || option.Count() > 0)
             {
@@ -1387,10 +1385,20 @@ namespace schliessanlagen_konfigurator.Controllers
                     var createOptionsAussen = new NGF
                     {
                         OptionsId = createOptions.Id,
-                        Name = Options[i],
-                        Description = Descriptions[i],
-                        ImageName = ImageNameOption[i]
+                        Name = Options[i]
+                        
                     };
+
+                    if (Descriptions.Count() > 0)
+                    {
+                        createOptionsAussen.Description = Descriptions[i];
+                    }
+                    if (Descriptions.Count() == ImageNameOption.Count())
+                    {
+                      
+                        createOptionsAussen.ImageName = ImageNameOption[i];
+                        
+                    }
 
                     db.NGF.Add(createOptionsAussen);
                     db.SaveChanges();
@@ -1439,6 +1447,7 @@ namespace schliessanlagen_konfigurator.Controllers
             keyItem.NameSysteam = NSysteam;
             keyItem.Price = keyCost;
             keyItem.DesctiptionsSysteam = descriptionsSysteam;
+            keyItem.Lieferzeit = Lieferzeit;
             db.SaveChanges();
 
             return RedirectToAction("Index");
@@ -1776,10 +1785,17 @@ namespace schliessanlagen_konfigurator.Controllers
                     var createOptionsAussen = new Halbzylinder_Options
                     {
                         OptionsId = createOptions.Id,
-                        Name = Options[i],
-                        Description = Descriptions[i],
-                        ImageName = ImageNameOption[i]
+                        Name = Options[i],                       
                     };
+
+                    if (Descriptions.Count() > 0)
+                    {
+                        createOptionsAussen.Description = Descriptions[i];
+                    }
+                    if (Descriptions.Count() == ImageNameOption.Count())
+                    {
+                        createOptionsAussen.ImageName = ImageNameOption[i];
+                    }
 
                     db.Halbzylinder_Options.Add(createOptionsAussen);
                     db.SaveChanges();
@@ -1891,9 +1907,16 @@ namespace schliessanlagen_konfigurator.Controllers
                         {
                             OptionId = createOptions.Id,
                             Name = Options[i],
-                            Description = Descriptions[i],
-                            ImageName = ImageNameOption[i]
+                           
                         };
+                        if (Descriptions.Count() > 0)
+                        {
+                            createOptionsAussen.Description = Descriptions[i];
+                        }
+                        if (Descriptions.Count() == ImageNameOption.Count())
+                        {
+                            createOptionsAussen.ImageName = ImageNameOption[i];
+                        }
 
                         db.Options.Add(createOptionsAussen);
                         db.SaveChanges();
@@ -1986,11 +2009,16 @@ namespace schliessanlagen_konfigurator.Controllers
                     var createOptionsAussen = new Aussen_Rund_all
                     {
                         Aussen_Rund_optionsId = createOptions.Id,
-                        Name = Options[i],
-                        Description = Descriptions[i],
-                        ImageName = ImageNameOption[i]
+                        Name = Options[i],                       
                     };
-
+                    if (Descriptions.Count() > 0)
+                    {
+                        createOptionsAussen.Description = Descriptions[i];
+                    }
+                    if (Descriptions.Count() == ImageNameOption.Count())
+                    {
+                        createOptionsAussen.ImageName = ImageNameOption[i];
+                    }
                     db.Aussen_Rund_all.Add(createOptionsAussen);
                     db.SaveChanges();
 
@@ -2080,10 +2108,18 @@ namespace schliessanlagen_konfigurator.Controllers
                     var createOptionsAussen = new OptionsVorhan
                     {
                         OptionId = createOptions.Id,
-                        Name = Options[i],
-                        Description = Descriptions[i],
-                        ImageName = ImageNameOption[i]
+                        Name = Options[i],                        
                     };
+
+                    if (Descriptions.Count() > 0)
+                    {
+                        createOptionsAussen.Description = Descriptions[i];
+                    }
+                    if (Descriptions.Count() == ImageNameOption.Count())
+                    {
+                        createOptionsAussen.ImageName = ImageNameOption[i];
+                    }
+
 
                     db.OptionsVorhan.Add(createOptionsAussen);
                     db.SaveChanges();
@@ -2195,9 +2231,17 @@ namespace schliessanlagen_konfigurator.Controllers
                     {
                         OptionsId = createOptions.Id,
                         Name = Options[i],
-                        Description = Descriptions[i],
-                        ImageName = ImageNameOption[i]
                     };
+
+                    if (Descriptions.Count() > 0)
+                    {
+                        createOptionsAussen.Description = Descriptions[i];
+                    }
+                    if (Descriptions.Count() == ImageNameOption.Count())
+                    {
+                        createOptionsAussen.ImageName = ImageNameOption[i];
+                    }
+
 
                     db.Knayf_Options.Add(createOptionsAussen);
                     db.SaveChanges();

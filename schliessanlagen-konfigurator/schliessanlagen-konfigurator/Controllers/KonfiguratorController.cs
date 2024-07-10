@@ -737,7 +737,7 @@ namespace schliessanlagen_konfigurator.Controllers
             return View(user);
         }
         [HttpGet]
-        public async Task<ActionResult> System_Auswählen(string Key, string userName, bool isNewKonfig)
+        public async Task<ActionResult> System_Auswählen(string Key, string userName, bool isNewKonfig,bool Biarbeiten)
         {
             var xtr = Key;
 
@@ -745,7 +745,39 @@ namespace schliessanlagen_konfigurator.Controllers
 
             if (userName!=null && isNewKonfig == true)
             {
-                orders = orders.Where(x => x.userKey == userName).ToList();
+               orders = orders.Where(x => x.userKey == userName).ToList();
+                
+                if (Biarbeiten == true)
+                {
+                    ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
+                    string loginInform = ident.Claims.Select(x => x.Value).First();
+                    var users = db.Users.FirstOrDefault(x => x.Id == loginInform);
+
+                    var RemoveOrder = db.UserOrdersShop.Where(x => x.UserOrderKey == userName).ToList();
+
+                    var currentTime = RemoveOrder.First().createData.Value;
+
+                    var OrderProduct = db.ProductSysteam.Where(x => x.UserOrdersShopId == RemoveOrder.First().Id).ToList();
+
+                    foreach (var listProduct in OrderProduct)
+                    {
+                        db.ProductSysteam.Remove(listProduct);
+
+                        foreach (var listOrder in RemoveOrder)
+                        {
+                            db.UserOrdersShop.Remove(listOrder);
+
+                        }
+                    }
+                    string destinationFilePath = @$"wwwroot/Orders/{users.FirstName + users.LastName + currentTime.Minute + currentTime.Hour + currentTime.Day + currentTime.Month + currentTime.Year} OrderFile.xlsx";
+
+                    if (System.IO.File.Exists(destinationFilePath))
+                    {
+                        System.IO.File.Delete(destinationFilePath);
+                    }
+
+                    db.SaveChanges();
+                }
             }
             else
             {
@@ -3273,7 +3305,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             ViewBag.countOptionsQueryHalb = queryableOptionsHalb.Count();
 
-            ViewBag.HalbOptionsName = OptionsHalb.Select(x => x.Name).ToList();
+            ViewBag.HalbOptionsName = OptionsHalb.Select(x => x).ToList();
 
             ViewBag.HalbOptionsNameJson = JsonConvert.SerializeObject(OptionsHalb.Select(x => x.Name).ToList());
 
@@ -4050,7 +4082,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 ViewBag.HalbOptionsValueICount = L;
 
-                ViewBag.HalbOptionsNameI = halboptions.Select(x => x.Name).ToList();
+                ViewBag.HalbOptionsNameI = halboptions.Select(x => x).ToList();
                 ViewBag.HalbOptionsValueI = halbOptionsValue.Select(x => x.Value).ToList();
 
                 ViewBag.HalbOptionsValueJson = JsonConvert.SerializeObject(halbOptionsValue.Select(x => x.Value).ToList());
@@ -4104,7 +4136,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 ViewBag.HalbOptionsValueICount = L;
 
-                ViewBag.HalbOptionsNameI = halboptions.Select(x => x.Name).ToList();
+                ViewBag.HalbOptionsNameI = halboptions.Select(x => x).ToList();
                 ViewBag.HalbOptionsValueI = halbOptionsValue.Select(x => x.Value).ToList();
 
                 ViewBag.HalbOptionsValueJson = JsonConvert.SerializeObject(halbOptionsValue.Select(x=>x.Value).ToList());
@@ -4155,7 +4187,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
 
                 ViewBag.OptionsNameKnayfJson = JsonConvert.SerializeObject(KnayfOptionList.Select(x => x.Name).ToList());
-                ViewBag.optionsNameKnayfI = KnayfOptionList.Select(x => x.Name).ToList();
+                ViewBag.optionsNameKnayfI = KnayfOptionList.Select(x => x).ToList();
 
                 var KnayfOptionsValue = new List<Knayf_Options_value>();
 
@@ -4212,7 +4244,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
 
                 ViewBag.OptionsNameKnayfJson = JsonConvert.SerializeObject(KnayfOptionList.Select(x => x.Name).ToList());
-                ViewBag.optionsNameKnayfI = KnayfOptionList.Select(x => x.Name).ToList();
+                ViewBag.optionsNameKnayfI = KnayfOptionList.Select(x => x).ToList();
 
                 var KnayfOptionsValue = new List<Knayf_Options_value>();
 
@@ -4381,7 +4413,6 @@ namespace schliessanlagen_konfigurator.Controllers
                 var HelbInfo = db.Hebelzylinder.Where(x => x.NameSystem == Systeam).ToList();
                 ViewBag.HelbZJson = JsonConvert.SerializeObject(HelbInfo.ToList());
             }
-         
 
             ViewBag.HelbItem = HelbZ.Select(x => x.Id).ToList();
             ViewBag.HelbItemJson = JsonConvert.SerializeObject(HelbZ.Select(x => x.Id).ToList());
@@ -4402,11 +4433,14 @@ namespace schliessanlagen_konfigurator.Controllers
                 var VorhanInfo = db.Vorhangschloss.Where(x => x.NameSystem == Systeam).ToList();
                 ViewBag.VorhanschlosJson = JsonConvert.SerializeObject(VorhanInfo.ToList());
 
-                var Vsize = db.Size.Where(x => x.VorhangschlossId == VorhanInfo[0].Id).ToList();
+                if (VorhanInfo.Count() > 0)
+                {
+                    var Vsize = db.Size.Where(x => x.VorhangschlossId == VorhanInfo[0].Id).ToList();
 
-                ViewBag.VorhanSize = Vsize.Select(x => x.sizeVorhangschloss).ToList();
-                ViewBag.VorhanschlosSizeJson = JsonConvert.SerializeObject(Vsize.Select(x => x.sizeVorhangschloss).ToList());
-                ViewBag.VorhanschlosSizeCostedJson = JsonConvert.SerializeObject(Vsize.Select(x => x.Cost).ToList());
+                    ViewBag.VorhanSize = Vsize.Select(x => x.sizeVorhangschloss).ToList();
+                    ViewBag.VorhanschlosSizeJson = JsonConvert.SerializeObject(Vsize.Select(x => x.sizeVorhangschloss).ToList());
+                    ViewBag.VorhanschlosSizeCostedJson = JsonConvert.SerializeObject(Vsize.Select(x => x.Cost).ToList());
+                }
             }
 
             ViewBag.VorhanschlosItem = Vorhanschlos.Select(x => x.Id).ToList();
@@ -4467,8 +4501,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
         [HttpPost]
         public ActionResult RemoveOrder(int data)
-        {
-            ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
+        { ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
             string loginInform = ident.Claims.Select(x => x.Value).First();
             var users = db.Users.FirstOrDefault(x => x.Id == loginInform);
 
@@ -4496,6 +4529,7 @@ namespace schliessanlagen_konfigurator.Controllers
             }
 
             db.SaveChanges();
+           
             return Redirect("/Identity/Account/Manage/PagePersonalOrders");
         }
         public async Task<IActionResult> SaveUserOrders(string user, List<string> TurName, List<string> DopelName, List<float> DoppelAussen, List<float> DoppelIntern
@@ -4504,14 +4538,13 @@ namespace schliessanlagen_konfigurator.Controllers
         List<string> VorhanName, List<float> VorhanAussen, List<string> AussenName, string cost, List<string> key, List<bool> keyIsOpen, List<int> countKey,
         List<int> TurCounter,List<string> FurKey, string NameSystem)
         {
-
             var countItemOrder = DopelName.Count() + AussenName.Count() + VorhanName.Count() + KnayfName.Count() + HelbName.Count() + HalbName.Count();
 
             ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
             string loginInform = ident.Claims.Select(x => x.Value).First();
             var users = db.Users.FirstOrDefault(x => x.Id == loginInform);
 
-            var costed = float.Parse(cost);
+            string result = cost.Replace("€", "");
 
             var Zylinder_Typ = db.Schliessanlagen.ToList();
             var profilD = db.Profil_Doppelzylinder.ToList();
@@ -4560,7 +4593,7 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 UserId = users.Id,
                 ProductName = NameSystem,
-                OrderSum = costed,
+                OrderSum = float.Parse(result.Trim()),
                 OrderStatus = "Nicht bezahlt",
                 count = 1,
                 createData = DateTime.Now,

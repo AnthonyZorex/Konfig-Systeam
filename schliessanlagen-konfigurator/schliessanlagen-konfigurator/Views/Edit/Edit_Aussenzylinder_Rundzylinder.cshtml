@@ -92,7 +92,7 @@
                                         @for (int i = 0; i < ViewBag.CountOptions[r]; i++)
                                         {
                                             f++;
-                                            <input type="text" placeholder="costNGF" name="costNGF" value="@ViewBag.OptionValue[f].Cost" class="form-control" />
+                                            <input type="text" placeholder="costNGF" name="costNGF" value="@ViewBag.OptionValue[f].Cost.ToString("C")" class="form-control" />
                                         }
                                     </div>
                                     <input type="hidden" id="counter" name="inputCounter" />
@@ -137,7 +137,8 @@
             let addOptions = document.getElementById('addOptions');
 
 
-            window.addEventListener('load', function () {
+            window.addEventListener('load', function () 
+            {
                 const blocks = document.querySelectorAll('.input-block');
                 for (let i = 0; i < blocks.length; i++) {
                     let counterBlock = blocks[i].querySelectorAll("#valueNGF  input");
@@ -216,16 +217,15 @@
                                                                                         <h1>Value & Cost </h1>
                                                                                         <div id="Aussen_Innen_ProfilDopel">
                                                                                             <div id="valueNGF">
-                                                                                                <input type="text" placeholder="valueNGF" name="valueNGF" />
+                                                                                               <input type="text" placeholder="valueNGF" class="form-control" name="valueNGF" />
 
                                                                                             </div>
                                                                                             <div id="costNGF">
-                                                                                                        <input type="number" placeholder="costNGF" step="0.01" name="costNGF" />
+                                                                                                <input type="number" placeholder="costNGF" class="form-control" step="0.01" name="costNGF" />
                                                                                             </div>
                                                                                                                     <input type="hidden" id="counter" name="inputCounter" />
                                                                                         </div>
                                                                                     </div>`;
-
                     blockCounter++;
 
                     return block;
@@ -235,10 +235,12 @@
                     let d = document.createElement('input');
                     d.setAttribute('name', 'costNGF');
                     d.setAttribute('placeholder', 'costNGF');
+                    d.setAttribute('class', 'form-control');
 
                     let x = document.createElement('input');
                     x.setAttribute('name', 'valueNGF');
                     x.setAttribute('placeholder', 'valueNGF');
+                    x.setAttribute('class', 'form-control');
 
                     const div1 = block.querySelector('#valueNGF');
                     const div2 = block.querySelector('#costNGF');

@@ -376,13 +376,12 @@
                                                                                         <h1>Value & Cost </h1>
                                                                                         <div id="Aussen_Innen_ProfilDopel">
                                                                                             <div id="valueNGF">
-                                                                                                <input type="text" placeholder="valueNGF" name="valueNGF" />
-
+                                                                                               <input type="text" class="form-control placeholder="valueNGF" name="valueNGF" />
                                                                                             </div>
                                                                                             <div id="costNGF">
-                                                                                                        <input type="number" placeholder="costNGF" step="0.01" name="costNGF" />
+                                                                                                <input type="number" class="form-control" placeholder="costNGF" step="0.01" name="costNGF" />
                                                                                             </div>
-                                                                                                                    <input type="hidden" id="counter" name="inputCounter" />
+                                                                                                <input type="hidden" id="counter" name="inputCounter" />
                                                                                         </div>
                                                                                     </div>`;
 
@@ -396,10 +395,12 @@
                 let d = document.createElement('input');
                 d.setAttribute('name', 'costNGF');
                 d.setAttribute('placeholder', 'costNGF');
+                d.setAttribute('class', 'form-control');
 
                 let x = document.createElement('input');
                 x.setAttribute('name', 'valueNGF');
                 x.setAttribute('placeholder', 'valueNGF');
+                x.setAttribute('class', 'form-control');
 
                 const div1 = block.querySelector('#valueNGF');
                 const div2 = block.querySelector('#costNGF');

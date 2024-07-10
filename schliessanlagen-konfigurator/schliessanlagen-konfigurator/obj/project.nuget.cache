@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "UKocPqvZ8Ec6Yq8isiov1m/6wb6kU8b2gSDc/kUorij7ef3WB7bPf5nQShnr0qwRXulCd/Xyk4VBOjOTDbmm1A==",
+  "dgSpecHash": "IZhp07jUI0pTbVfVe9RAu19kEgbRTojrOLPijk9klIPPc8zU6L94KFhk6oEZja+L7W/9AeblNkgI4Eze0+cQ1A==",
   "success": true,
-  "projectFilePath": "D:\\Anthnony\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj",
+  "projectFilePath": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\JAKUB\\.nuget\\packages\\antlr\\3.4.1.9004\\antlr.3.4.1.9004.nupkg.sha512",
     "C:\\Users\\JAKUB\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",

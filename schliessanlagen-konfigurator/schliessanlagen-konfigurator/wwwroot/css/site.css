@@ -1,4 +1,40 @@
-﻿.footer {
+﻿input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 30px;
+    height: 30px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    background-color: white;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+
+}
+
+    /* Стиль для активного состояния чекбокса */
+    input[type="checkbox"]:checked {
+        background-color: black;
+        border-color: #fff;
+        border:1px solid black;
+    }
+
+        /* Добавление галочки */
+        input[type="checkbox"]:checked::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 14px;
+            height: 7px;
+            border: 4px solid #fff;
+            border-top: none;
+            border-right: none;
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+
+.footer {
     background: #323232;
     padding-top: 50px;
     color: white;
@@ -8,16 +44,31 @@
     position:absolute;
     align-content: center;
 }
+#schrit {
+    font-weight: 600;
+    font-size: 20px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    text-align: center;
+    border: 2px solid #f00;
+}
+#orderCost {
+    color: red;
+    text-align: end;
+}
+#Allcost {
+    color: #f00;
+    font-size: 24px;
+    outline: none;
+    border: none;
+    width: 200px;
+}
 #countTurSelect {
     margin-left: 10px;
-    outline:none;
+    outline: none;
 }
-#hilfeOptionsIcon {
-    position: absolute;
-    margin-top: -28px;
-    margin-left: 830px;
-    cursor:pointer;
-}
+
 #html, body {
     height: 100%;
 }
@@ -33,6 +84,7 @@
     overflow-x: scroll;
 }
 .horizontal1 {
+    border-top: 1px solid black;
     display: block;
     gap: 20px;
     margin-left: 10px;
@@ -52,6 +104,7 @@
     }
 
     .horizontal1 {
+        border-top: 1px solid black;
         display: block;
         gap: 20px;
         margin-left: 10px;
@@ -429,9 +482,8 @@
         margin-top: 5px;
     }
 
-   
-
     .horizontal {
+        border-top: 1px solid black;
         display: flex;
         gap: 20px;
         margin-left: 10px;
@@ -947,6 +999,7 @@
     }
 
     .horizontal {
+        border-top: 1px solid black;
         display: flex;
         gap: 20px;
         margin-left: 10px;
@@ -1300,12 +1353,12 @@
     }
 
     #circle2 {
-        margin-left: 2px;
+        margin-left: 4px;
         margin-top: 2px;
         border-radius: 100%;
         width: 5px;
         height: 5px;
-        background: white;
+        background: #fff;
     }
 
     .clostHilfeModel {
@@ -1946,6 +1999,7 @@
     }
 
     .horizontal {
+        border-top: 1px solid black;
         display: flex;
         gap: 20px;
         margin-left: 10px;
@@ -1983,7 +2037,7 @@
         display: grid;
         align-items: center;
         text-align: center;
-        grid-template-columns: 100px 200px 950px;
+        grid-template-columns: 100px 200px auto;
     }
 
     #ItemCounterOrders {
@@ -2019,6 +2073,7 @@
     }
 
     #orderCost {
+        gap:10px;
         justify-content: end;
         text-align: end;
         display: flex;
@@ -2151,17 +2206,21 @@
         background: white;
         padding: 40px;
         border-radius: 10px;
-        width: 900px;
+        width: auto;
     }
 
     #AllOrderUser {
-        width: 900px;
+        width: 70vw;
+    }
+    #hilfeOptionsIcon {
+        position: absolute;
+        margin-top: -25px;
+        margin-left: 550px;
+        cursor: pointer;
     }
 }
 @media (min-width:1440px ) 
 {
-
-   
     body {
         margin-bottom: 60px;
         font-family: "Inter", sans-serif;
@@ -2314,7 +2373,7 @@
         padding: 20px;
         border: 1px solid #888;
         width: 20%;
-        margin-top: 280px;
+        margin-top: 360px;
         margin-left: 300px;
         text-align: center;
         border-radius: 20px;
@@ -2388,12 +2447,12 @@
     }
 
     #circle2 {
-        margin-left: 2px;
+        margin-left: 4px;
         margin-top: 2px;
         border-radius: 100%;
         width: 5px;
         height: 5px;
-        background: white;
+        background: #fff;
     }
 
     .clostHilfeModel {
@@ -2810,7 +2869,7 @@
         }
 
     #schlussel2 {
-        margin-left: 250px;
+        margin-left: 220px;
         margin-top: 5px;
     }
 
@@ -3026,6 +3085,7 @@
     }
 
     .horizontal {
+        border-top: 1px solid black;
         display: flex;
         gap: 20px;
         margin-left: 10px;
@@ -3087,7 +3147,12 @@
     #FinisherPage {
         background-color: #e4e4e4;
     }
-
+    #hilfeOptionsIcon {
+        position: absolute;
+        margin-top: -28px;
+        margin-left: 830px;
+        cursor: pointer;
+    }
     #counterKey {
         display: flex;
         gap: 20px;
@@ -3096,8 +3161,9 @@
     .SizeProduct {
         display: flex;
     }
-
+  
     #orderCost {
+        gap: 10px;
         justify-content: end;
         text-align: end;
         display: flex;
