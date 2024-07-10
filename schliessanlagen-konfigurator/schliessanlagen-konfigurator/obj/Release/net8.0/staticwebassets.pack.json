@@ -349,6 +349,10 @@
       "PackagePath": "staticwebassets\\Image\\Vitess.4000241729692.png"
     },
     {
+      "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\apple-pay.png",
+      "PackagePath": "staticwebassets\\Image\\apple-pay.png"
+    },
+    {
       "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\aussenzylinder.png",
       "PackagePath": "staticwebassets\\Image\\aussenzylinder.png"
     },
@@ -389,6 +393,10 @@
       "PackagePath": "staticwebassets\\Image\\free-icon-smart-lock-1348357.png"
     },
     {
+      "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\google-pay.png",
+      "PackagePath": "staticwebassets\\Image\\google-pay.png"
+    },
+    {
       "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\halbzylinder.png",
       "PackagePath": "staticwebassets\\Image\\halbzylinder.png"
     },
@@ -417,6 +425,10 @@
       "PackagePath": "staticwebassets\\Image\\options.png"
     },
     {
+      "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\paypal.png",
+      "PackagePath": "staticwebassets\\Image\\paypal.png"
+    },
+    {
       "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\question.png",
       "PackagePath": "staticwebassets\\Image\\question.png"
     },
@@ -443,6 +455,10 @@
     {
       "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\SchlüsselDiscount518872024 OrderFile.xlsx",
       "PackagePath": "staticwebassets\\Orders\\SchlüsselDiscount518872024 OrderFile.xlsx"
+    },
+    {
+      "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Rehnung\\Bestellung_Rechnung_.pdf",
+      "PackagePath": "staticwebassets\\Rehnung\\Bestellung_Rechnung_.pdf"
     },
     {
       "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\css\\site.css",

@@ -45,54 +45,38 @@
                         <div class="modal-content">
 
                             <span onclick="closedModal(@z)" class="close">&times;</span>
-
-                            <img src="@("/Image/Schliarticle.jpg")" height="150" width="150" />
-
-                            <h4>@orderList[z].ProductName</h4>
-
-                            @for (int s = 0; s < countProduct[z]; s++)
-                            {
-                                <hr/>
-                                <h4>Name: @orderItem[ProudctItemCounter].Name</h4>
-                                <h4>Aussen Länge: @orderItem[ProudctItemCounter].Aussen</h4>
-                                <h4>Innen Länge: @orderItem[ProudctItemCounter].Intern</h4>
-                                <h4>Option - @orderItem[ProudctItemCounter].Option</h4>
-                                <h4>Anzahl: @orderItem[ProudctItemCounter].Count</h4>
-                                UserOrderId = @orderList[z].Id;
-                                ProudctItemCounter++;
-                            }
-                            <hr />
+                           <div id="blockSchrite">
                             <div style="display:flex;gap:10px;">
                                 <span id="schrit">1</span>
                                 <h2><strong>Versandadresse</strong></h2>
                             </div>
                             <br />
-                            <input class="form-control" required  placeholder="E-Mail-Adresse" />
+                            <input class="form-control" required name="SendAdresse"  placeholder="E-Mail-Adresse" />
                             <br />
                             <div style="display:flex;gap:10px;">
-                                <input class="form-control" required placeholder="Vorname / first name *" />
-                                <input class="form-control" required placeholder="Nachname / surname *" />
+                                <input class="form-control" required name="SendVorname" placeholder="Vorname / first name *" />
+                                <input class="form-control" required name="SendNachname" placeholder="Nachname / surname *" />
                             </div>
                             <br />
                             <div style="display:flex;gap:10px;">
-                                <input class="form-control"  placeholder="Firma / company" />
-                                <input class="form-control"  placeholder="USt - IdNr. / VAT id" />
+                                <input class="form-control" name="SendFirma"  placeholder="Firma / company" />
+                                <input class="form-control" name="SendVat"  placeholder="USt - IdNr. / VAT id" />
                             </div>
 
                             <br/>
 
-                            <input class="form-control" required placeholder="Straße und Hausnummer / street address *" />
+                            <input class="form-control" required name="SendStrasse" placeholder="Straße und Hausnummer / street address *" />
                             <br />
-                            <input class="form-control"  placeholder="Adresszusatz / address suffix" />
+                            <input class="form-control" name="SemdAdressZusatz"  placeholder="Adresszusatz / address suffix" />
                             <br />
 
                             <div style="display:flex;gap:10px;">
-                                <input class="form-control" required placeholder="Postleitzahl / zip code *" />
-                                <input class="form-control" required placeholder="Stadt / city *" />
+                                <input class="form-control" required name="SendZip" placeholder="Postleitzahl / zip code *" />
+                                <input class="form-control" required name="SendStadt" placeholder="Stadt / city *" />
                             </div>
                             <br />
                             <div style="display:flex;gap:10px;">
-                                    <select class="form-select" required onchange="ProcentMwst(event,@z)" name="countries" id="countries" placeholder="Land / country *">
+                                    <select class="form-select" required onchange="ProcentMwst(event,@z)" name="SendLand" id="countries" placeholder="Land / country *">
                                         <option selected></option>
                                         <option value="DE">Deutschland</option>
                                     <option value="AF">Afghanistan</option>
@@ -342,11 +326,11 @@
                                     <option value="CY">Zypern</option>
                                 </select>
 
-                                <input class="form-control" required placeholder="Telefonnummer / phone number *" />
+                                <input class="form-control" required name="SendTelefon" placeholder="Telefonnummer / phone number *" />
                             </div>
+                          </div>
                             <br />
-                            <hr />
-                            <br />
+                         <div id="blockSchrite">
                             <div style="display:flex;gap:10px;">
                                 <span id="schrit">2</span>
                                 <h2><strong>Rechnungsadresse</strong></h2>
@@ -357,29 +341,27 @@
                             <br />
                             <div id="rechnungSend" style="display:none">
                                 <div style="display:flex;gap:10px;">
-                                    <input class="form-control" required placeholder="Vorname / first name *" />
-                                    <input class="form-control" required placeholder="Nachname / surname *" />
+                                    <input class="form-control" required name="RechnungVorname" placeholder="Vorname / first name *" />
+                                     <input class="form-control" required name="RechnungNachname" placeholder="Nachname / surname *" />
                                 </div>
                                 <br />
                                 <div style="display:flex;gap:10px;">
-                                    <input class="form-control" placeholder="Firma / company" />
-                                    <input class="form-control" placeholder="USt - IdNr. / VAT id" />
+                                   <input class="form-control" name="RechnungFirma" placeholder="Firma / company" />
+                                     <input class="form-control" name="RechnungVAT" placeholder="USt - IdNr. / VAT id" />
                                 </div>
-
                                 <br />
-
-                                <input class="form-control" required placeholder="Straße und Hausnummer / street address *" />
+                                  <input class="form-control" required name="RechnungStrasse" placeholder="Straße und Hausnummer / street address *" />
                                 <br />
-                                <input class="form-control" placeholder="Adresszusatz / address suffix" />
+                                        <input class="form-control" name="RechnungAdresszusatz" placeholder="Adresszusatz / address suffix" />
                                 <br />
 
                                 <div style="display:flex;gap:10px;">
-                                    <input class="form-control" required placeholder="Postleitzahl / zip code *" />
-                                    <input class="form-control" required placeholder="Stadt / city *" />
+                                  <input class="form-control" required name="RechnungZip" placeholder="Postleitzahl / zip code *" />
+                                     <input class="form-control" required name="RechnungStadt" placeholder="Stadt / city *" />
                                 </div>
                                 <br />
                                 <div style="display:flex;gap:10px;">
-                                        <select class="form-select" required name="countriesPerson" id="countriesPerson" placeholder="Land / country *">
+                                        <select class="form-select" required name="RechnungLand" id="countriesPerson" placeholder="Land / country *">
                                          <option selected ></option>
                                         <option value="DE">Deutschland</option>
                                         <option value="AF">Afghanistan</option>
@@ -635,27 +617,27 @@
 
                                     <input type="hidden" id="gramWert-@z" value="@gram" />
 
-                                    <input class="form-control" required placeholder="Telefonnummer / phone number *" />
+                                            <input class="form-control" required name="RechnungTelefon" placeholder="Telefonnummer / phone number *" />
                                 </div>
 
                             </div>
-                            <br />
-                            <hr />
-                             <br />
+                                </div>
 
-                            <div>
+                                <div id="blockSchrite">
                                 <div style="display:flex;gap:10px;">
                                     <span id="schrit">3</span>
                                     <h2><strong>Versandarten</strong></h2>
                                 </div>
-                                <br />
+                                
+                                <br/>
+
                                 <div>
-                                    <input type="radio" id="dhl-@z"  checked name="fav_language" value="DHL">
+                                    <input type="radio" id="dhl-@z"  checked name="DhlSend" value="DHL">
                                     <label for="html"><input type="text" redonly style="border: none;"  value="0" id="CostGram-@z" /> DHL</label><br>
                                 </div>
 
                                 <div style="display: flex;gap: 30px;align-items: center;">
-                                        <input type="radio" id="Plase-@z"  name="fav_language" value="0,00 €">
+                                        <input type="radio" id="Plase-@z" name="DhlSend" value="0,00 €">
                                     <label for="css" style="margin-left: -25px;">0,00 €</label><br>
                                     <h6>
                                         Brunnenstrasse 8
@@ -665,31 +647,76 @@
 
                             </div>
 
-                            <br />
-                            <hr />
-                            <br />
-
-                            <div>
+                            <div id ="blockSchrite">
                                 <div style="display:flex;gap:10px;">
                                     <span id="schrit">4</span>
-                                    <h2><strong>Zahlungsart</strong></h2>
-                                        
+                                    <h2><strong>Zahlungsart</strong></h2>  
                                 </div>
                                 <br />
-                                    <hr />
-                                    <div style="display:flex;gap:50px;"><h4>Steuer:</h4><input redonly style="border: none;outline:none" type="text" value="0" id="aldProcent-@z" /></div>
-                                    <hr />
-                                    <div style="display:flex;gap:50px;"><h4>Versand:</h4><input type="text" redonly style="border: none;outline:none" value="0" id="CostGram-@z" /></div>
-                                    <hr />
-                                    <div style="display:flex;gap:50px;"><h4>Bestellsumme:</h4><h4 id="costedI-@z">@orderList[z].OrderSum.ToString("C")</h4></div>
+                                    <div style="display: flex;gap: 50px;">
+                                        <label >
+                                            <input type="radio" checked name="Pay" value="PayPall">
+                                            <img  src="@("/Image/paypal.png")" height="30" width="30" />
+                                            <h5>PayPall</h5>
+                                        </label><br>
+                                        <label >
+                                            <input type="radio" name="Pay" value="Google Pay">
+                                            <img  src="@("/Image/google-pay.png")" height="40" width="40" />
+                                            <h5>Google Pay</h5>
+                                        </label><br>
+                                        <label >
+                                            <input type="radio" name="Pay" value="Apple Pay">
+                                            <img  src="@("/Image/apple-pay.png")" height="40" width="40" />
+                                            <h5>Apple Pay</h5>
+                                        </label>
+                                </div>
                             </div>
-                            
+                   
+                                <div id="blockSchrite">
+
+                                    <div style="display:flex;gap:150px;">
+                                        <img src="@("/Image/Schliarticle.jpg")" height="150" width="150" />
+
+                                        <h4>@orderList[z].ProductName</h4>
+                                    </div>
+                                   
+                                    <br/>
+                                    <details>
+                                        <summary>Details</summary>
+                                        @for (int s = 0; s < countProduct[z]; s++)
+                                        {
+                                            <hr />
+                                            <h4>Name: @orderItem[ProudctItemCounter].Name</h4>
+                                            <h4>Aussen Länge: @orderItem[ProudctItemCounter].Aussen</h4>
+                                            <h4>Innen Länge: @orderItem[ProudctItemCounter].Intern</h4>
+                                            <h4>Option - @orderItem[ProudctItemCounter].Option</h4>
+                                            <h4>Anzahl: @orderItem[ProudctItemCounter].Count</h4>
+                                            UserOrderId = @orderList[z].Id;
+                                            ProudctItemCounter++;
+                                        }
+                                    </details>
+                                    <hr style="max-width:350px" />
+                                    <br />
+                                    <div style="display:flex;gap:50px;"><h4>Steuer:</h4><input redonly style="border: none;outline:none" type="text" value="0" id="aldProcent-@z" /></div>
+                                    <hr style="max-width:350px" />
+                                    <div style="display:flex;gap:50px;"><h4>Versand:</h4><input type="text" redonly style="border: none;outline:none" value="0" id="CostGram-@z" /></div>
+                                    <hr style="max-width:350px" />
+                                    <div style="display:flex;gap:50px;"><h4>Bestellsumme:</h4><h4 id="costedI-@z">@orderList[z].OrderSum.ToString("C")</h4></div>
+                                    <br />
+
+                                    <div style="align-items:center">
+                                        <input type="submit" class="btn btn-danger" value="Zahlungspflichtig bestellen" />
+                                    </div>
+                                    <div id="paypal-button-container-@z" style="margin-left: auto;margin-right: auto;">
+                                    </div>
+                                </div>
                             <input type="hidden" id="@z" value="true" />
                         </div>
                         </form>
                     </div>  
                      
                     <br />
+                    <a style="color:black" href="@Url.Action("Adobe","Konfigurator" )">PDF</a>
                     <button id="removeOrder" class="btn btn-success" onclick="OpenModalInfo(@z,@orderList[z].Id)">Bezahlen</button>
                     <button class="btn btn-warning text-light">
                         <a href="@Url.Action("System_Auswählen","Konfigurator",new{userName = @orderList[z].UserOrderKey , isNewKonfig = true, Biarbeiten=true} )">Überarbeiten Sie den Plan</a>
@@ -711,7 +738,7 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
-
+<script src="https://www.paypal.com/sdk/js?client-id=BAA1QBdXvuOSyUwVSDlL_bE38W24MqMtf3DXN2aYJTUTUAQ7ZBNRyJHH0qJmQUHf_ZbWCfbiGqR3PahoS8&amp;currency=EUR&amp;integration-date=2024-05-13&amp;components=buttons,funding-eligibility,buttons,applepay,googlepay&amp;vault=false&amp;commit=false&amp;intent=capture&amp;disable-funding=card&amp;enable-funding=venmo,paylater" data-partner-attribution-id="Woo_PPCP" data-uid="uid_rjvdwsjnuismtbznnbpjoatrkssill"></script>
 <script>
 
     let removeButton = document.getElementById("removeOrder");
@@ -720,6 +747,17 @@
     var span = document.getElementsByClassName("close")[0];
     let idItem = 0;
     let s = 0;
+
+    function PlaseSend(BlockItem)
+    {
+        let sendDhl = document.getElementById("dhl-" + BlockItem);
+
+        let Plase = document.getElementById("Plase-" + BlockItem);
+
+        if (sendDhl.checked == true) {
+
+        }
+    }
 
     function ProcentMwst(value,BlockItem) 
     {

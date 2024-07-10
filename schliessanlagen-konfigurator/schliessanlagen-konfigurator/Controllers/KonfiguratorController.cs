@@ -35,6 +35,9 @@ using OfficeOpenXml.FormulaParsing.Excel.Functions.Information;
 using System.Diagnostics;
 using System.Data.SqlClient;
 using Microsoft.Ajax.Utilities;
+using PdfSharp.Pdf;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf.IO;
 namespace schliessanlagen_konfigurator.Controllers
 {
     [EnableCors("*")]
@@ -50,6 +53,14 @@ namespace schliessanlagen_konfigurator.Controllers
             Environment = _environment;
             _contextAccessor = httpContextAccessor;
         }
+
+        public ActionResult SendRehnung()
+        {
+            
+
+            return View();
+        }
+
         [HttpGet]
         public ActionResult ChangedKonfigPlan(string userKey)
         {

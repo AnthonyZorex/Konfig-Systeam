@@ -1,4 +1,48 @@
-﻿input[type="checkbox"] {
+﻿.radio-container input[type="radio"] {
+    display: none;
+}
+
+/* Оформление для кастомных радио кнопок */
+.radio-container label {
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    padding-left: 25px; /* расстояние между кнопкой и текстом */
+    margin-right: 15px; /* расстояние между кнопками */
+    font-size: 16px;
+    line-height: 20px;
+}
+
+    /* Кастомная кнопка (круглый чекбокс) */
+    .radio-container label:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 2px; /* выравнивание по вертикали */
+        width: 16px;
+        height: 16px;
+        border: 1px solid #999;
+        border-radius: 50%; /* делаем круглым */
+        background-color: #fff;
+    }
+
+/* Оформление для выбранной кастомной кнопки */
+.radio-container input[type="radio"]:checked + label:before {
+    background-color: #007bff; /* цвет фона при выборе */
+    border-color: #007bff; /* цвет рамки при выборе */
+}
+
+/* Оформление для текста рядом с кастомной кнопкой */
+.radio-container label:after {
+    content: attr(data-label);
+    position: relative;
+    top: -1px; /* коррекция вертикального выравнивания */
+    left: 10px; /* отступ от кнопки до текста */
+}
+
+
+
+input[type="checkbox"] {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -12,7 +56,14 @@
     position: relative;
 
 }
-
+    #blockSchrite {
+        padding: 50px;
+        border-radius: 20px;
+        -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+        -moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+        box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+        margin-top:50px;
+    }
     /* Стиль для активного состояния чекбокса */
     input[type="checkbox"]:checked {
         background-color: black;
@@ -2165,7 +2216,8 @@
         float: right;
         font-size: 28px;
         font-weight: bold;
-        margin-left: 950px;
+        text-align:end    
+
     }
 
         .close:hover,
@@ -3269,7 +3321,7 @@
         float: right;
         font-size: 28px;
         font-weight: bold;
-        margin-left: 950px;
+        text-align: end;
     }
 
         .close:hover,
