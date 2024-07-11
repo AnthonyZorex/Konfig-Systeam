@@ -82,5 +82,9 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
             return Page();
 
         }
+        public async Task<IActionResult> OnPost()
+        {
+            return Page();
+        }
     }
 }

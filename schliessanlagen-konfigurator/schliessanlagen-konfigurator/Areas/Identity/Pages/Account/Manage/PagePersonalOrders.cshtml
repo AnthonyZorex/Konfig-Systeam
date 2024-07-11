@@ -41,7 +41,8 @@
 
                     <div id="myModal-@z" class="modal">
 
-                        <form method="post" action="SendRehnung">
+                      <form method="post">
+
                         <div class="modal-content">
 
                             <span onclick="closedModal(@z)" class="close">&times;</span>
@@ -716,7 +717,7 @@
                     </div>  
                      
                     <br />
-                    <a style="color:black" href="@Url.Action("Adobe","Konfigurator" )">PDF</a>
+                    <a style="color:black" href="@Url.Action("SendRehnung","Konfigurator" )">PDF</a>
                     <button id="removeOrder" class="btn btn-success" onclick="OpenModalInfo(@z,@orderList[z].Id)">Bezahlen</button>
                     <button class="btn btn-warning text-light">
                         <a href="@Url.Action("System_Auswählen","Konfigurator",new{userName = @orderList[z].UserOrderKey , isNewKonfig = true, Biarbeiten=true} )">Überarbeiten Sie den Plan</a>
@@ -1616,10 +1617,12 @@
         if (value == true) 
         {
             rechnungSend.style.display = "none";
+            // добавить обязательноство при заполнении
         }
         else 
         {
             rechnungSend.style.display = "block";
+            // снять обязательноство при заполнении
         }
        
     }

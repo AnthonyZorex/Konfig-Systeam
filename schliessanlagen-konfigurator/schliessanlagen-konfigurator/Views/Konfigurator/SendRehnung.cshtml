@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "SendRehnung";
+}
+
+<div class="container">
+
+    <div>
+        <img src=" @("/Image/SD_Logo.svg")" width="auto" height="60" />
+
+        <p style="margin-top:10px">
+            OWSD Werbe-und Sicherheitsshop GmbH <br/>
+            Brunnenstraße 8 <br />
+            10119 Berlin <br />
+        </p>
+    </div>
+   
+    <div style="display:flex;gap:400px">
+        <div>
+            <p><strong>Rechnungsadresse</strong></p>
+        </div>
+        <div>
+            <p><strong>Lieferadresse</strong></p>
+        </div>
+    </div>
+    <div style="margin-top: 50px;">
+        <h3><strong>Rechnung</strong></h3>
+        <hr style="height:3px" />
+    </div>
+    <div>
+        <div style="display:grid;grid-template-columns:500px 200px 200px 200px">
+           <h6>Produkt</h6>
+            <h6>Preis</h6>
+            <h6>Merge</h6>
+            <h6>Summe</h6>
+        </div>
+        <hr style="height:3px" />
+    </div>
+</div>
+
+<script>
+
+    let Versandadresse = @Html.Raw(ViewBag.Versandadresse);
+
+    console.log(Versandadresse);
+</script>

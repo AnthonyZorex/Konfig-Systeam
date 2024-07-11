@@ -18,6 +18,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\Image\**" />
+    <Content Remove="Models\Image\**" />
+    <EmbeddedResource Remove="Models\Image\**" />
+    <None Remove="Models\Image\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
     <PackageReference Include="EPPlus" Version="4.5.3.3" />
     <PackageReference Include="Json.Net" Version="1.0.33" />
@@ -44,10 +51,6 @@
 
   <ItemGroup>
     <None Include="wwwroot\Orders\CES_schliessplan_DE_schliessanlagen.xlsx" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\Image\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties wwwroot_4lib_4bootstrap_4dist_4css_4bootstrap_1min_1css_1map__JsonSchema="" /></VisualStudio></ProjectExtensions>

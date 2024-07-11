@@ -38,6 +38,7 @@ using Microsoft.Ajax.Utilities;
 using PdfSharp.Pdf;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf.IO;
+using System.Net.Http.Headers;
 namespace schliessanlagen_konfigurator.Controllers
 {
     [EnableCors("*")]
@@ -52,13 +53,6 @@ namespace schliessanlagen_konfigurator.Controllers
             db = context;
             Environment = _environment;
             _contextAccessor = httpContextAccessor;
-        }
-
-        public ActionResult SendRehnung()
-        {
-            
-
-            return View();
         }
 
         [HttpGet]
@@ -551,132 +545,132 @@ namespace schliessanlagen_konfigurator.Controllers
 
         public ActionResult IndexKonfigurator()
         {
-            ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
+            //ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
 
-            if (ident.IsAuthenticated == true)
-            {
-                string loginInform = ident.Claims.Select(x => x.Value).First();
-                var users = db.Users.FirstOrDefault(x => x.Id == loginInform);
+            //if (ident.IsAuthenticated == true)
+            //{
+            //    string loginInform = ident.Claims.Select(x => x.Value).First();
+            //    var users = db.Users.FirstOrDefault(x => x.Id == loginInform);
 
-                var Ord = db.Orders.ToList();
+            //    var Ord = db.Orders.ToList();
 
-                var userOrders = db.UserOrdersShop.Where(x => x.UserId == users.Id).ToList();
+            //    var userOrders = db.UserOrdersShop.Where(x => x.UserId == users.Id).ToList();
 
-                var ordList = new List<Orders>();
+            //    var ordList = new List<Orders>();
 
-                    foreach (var list in userOrders)
-                    {
-                        var lastOrder = Ord.Where(x => x.userKey == list.UserOrderKey).ToList();
+            //    foreach (var list in userOrders)
+            //    {
+            //        var lastOrder = Ord.Where(x => x.userKey == list.UserOrderKey).ToList();
 
-                        foreach (var item in lastOrder)
-                        {
-                            ordList.Add(item);
-                        }
-                    }
-                if (ordList.Count() > 0)
-                {
-                    var lastlist = ordList.OrderBy(x => x.Created).Last();
+            //        foreach (var item in lastOrder)
+            //        {
+            //            ordList.Add(item);
+            //        }
+            //    }
+            //    if (ordList.Count() > 0)
+            //    {
+            //        var lastlist = ordList.OrderBy(x => x.Created).Last();
 
-                    ViewBag.UserNameItem = lastlist.userKey;
-                }
-            }
-            else
-            {
-                ViewBag.UserNameItem = "";
-            }
-            
-            var UserOList = new List<UserOrdersShop>();
+            //        ViewBag.UserNameItem = lastlist.userKey;
+            //    }
+            //}
+            //else
+            //{
+            //    ViewBag.UserNameItem = "";
+            //}
 
-            var oldData = db.UserOrdersShop.Where(e => e.OrderStatus == "Nicht bezahlt").ToList();
+            //var UserOList = new List<UserOrdersShop>();
 
-            foreach(var order in oldData)
-            {
-                var item = DateTime.Now.Month - order.createData.Value.Month;
-                
-                var ChekedWik = DateTime.Now.Day - order.createData.Value.Day;
+            //var oldData = db.UserOrdersShop.Where(e => e.OrderStatus == "Nicht bezahlt").ToList();
 
-                if (item > 0)
-                {
-                    var users = db.Users.FirstOrDefault(x=>x.Id==order.UserId);
-                    UserOList.Add(order);
+            //foreach (var order in oldData)
+            //{
+            //    var item = DateTime.Now.Month - order.createData.Value.Month;
 
-                    string destinationFilePath = @$"wwwroot/Orders/{users.FirstName + users.LastName + order.createData.Value.Minute + order.createData.Value.Hour  + order.createData.Value.Day + order.createData.Value.Month + order.createData.Value.Year} OrderFile.xlsx";
+            //    var ChekedWik = DateTime.Now.Day - order.createData.Value.Day;
 
-                    var message = new MimeMessage();
-                    message.From.Add(new MailboxAddress("Schlüssel Discount Store", "info@schluessel.discount"));
-                    message.To.Add(new MailboxAddress(users.FirstName + users.LastName, users.UserName));
-                    message.Subject = "Schlüssel Discount Store";
-                    
-                    var bodyBuilder = new BodyBuilder();
-                    bodyBuilder.TextBody = "Ваша система была удалена так как истёк срок ожидания!";
+            //    if (item > 0)
+            //    {
+            //        var users = db.Users.FirstOrDefault(x => x.Id == order.UserId);
+            //        UserOList.Add(order);
 
-                  
-                    using (var wc = new WebClient())
-                    {
-                        byte[] fileBytes = wc.DownloadData(destinationFilePath);
-                        bodyBuilder.Attachments.Add("Email.xlsx", fileBytes);
-                    }
+            //        string destinationFilePath = @$"wwwroot/Orders/{users.FirstName + users.LastName + order.createData.Value.Minute + order.createData.Value.Hour + order.createData.Value.Day + order.createData.Value.Month + order.createData.Value.Year} OrderFile.xlsx";
 
-                    message.Body = bodyBuilder.ToMessageBody();
-                    using (var client = new SmtpClient())
-                    {
-                        client.Connect("sslout.de", 25, false);
-                        client.Authenticate("info@schluessel.discount", "qvVH$ipz2BNdWy");
-                        client.Send(message);
+            //        var message = new MimeMessage();
+            //        message.From.Add(new MailboxAddress("Schlüssel Discount Store", "info@schluessel.discount"));
+            //        message.To.Add(new MailboxAddress(users.FirstName + users.LastName, users.UserName));
+            //        message.Subject = "Schlüssel Discount Store";
 
-                        client.Disconnect(true);
-                    }
-
-                    var data = db.ProductSysteam.Where(x => x.UserOrdersShopId == order.Id).ToList();
-
-                    foreach (var x in data)
-                    {
-                        db.ProductSysteam.Remove(x);
-                        db.SaveChanges();
-                    }
-
-                    // Удаление данных
-                    db.UserOrdersShop.RemoveRange(order);
-                    db.SaveChanges();
+            //        var bodyBuilder = new BodyBuilder();
+            //        bodyBuilder.TextBody = "Ваша система была удалена так как истёк срок ожидания!";
 
 
-                    if (System.IO.File.Exists(destinationFilePath))
-                    {
-                        System.IO.File.Delete(destinationFilePath);
-                    }
+            //        using (var wc = new WebClient())
+            //        {
+            //            byte[] fileBytes = wc.DownloadData(destinationFilePath);
+            //            bodyBuilder.Attachments.Add("Email.xlsx", fileBytes);
+            //        }
 
-                }
-                else if (ChekedWik >= 7)
-                {
-                    var users = db.Users.FirstOrDefault(x => x.Id == order.UserId);
+            //        message.Body = bodyBuilder.ToMessageBody();
+            //        using (var client = new SmtpClient())
+            //        {
+            //            client.Connect("sslout.de", 25, false);
+            //            client.Authenticate("info@schluessel.discount", "qvVH$ipz2BNdWy");
+            //            client.Send(message);
 
-                    string destinationFilePath = @$"wwwroot/Orders/{users.FirstName + users.LastName + order.createData.Value.Minute + order.createData.Value.Hour + order.createData.Value.Day + order.createData.Value.Month + order.createData.Value.Year} OrderFile.xlsx";
+            //            client.Disconnect(true);
+            //        }
 
-                    var message = new MimeMessage();
-                    message.From.Add(new MailboxAddress("Schlüssel Discount Store", "bonettaanthony466@gmail.com"));
-                    message.To.Add(new MailboxAddress(users.FirstName + users.LastName, users.UserName));
-                    message.Subject = "Schlüssel Discount Store";
+            //        var data = db.ProductSysteam.Where(x => x.UserOrdersShopId == order.Id).ToList();
 
-                    var bodyBuilder = new BodyBuilder();
-                    bodyBuilder.TextBody = $"Прошло {ChekedWik} дней с даты создания системы { order.ProductName}!";
+            //        foreach (var x in data)
+            //        {
+            //            db.ProductSysteam.Remove(x);
+            //            db.SaveChanges();
+            //        }
 
-                    using (var wc = new WebClient())
-                    {
-                        byte[] fileBytes = wc.DownloadData(destinationFilePath);
-                        bodyBuilder.Attachments.Add("Email.xlsx", fileBytes);
-                    }
+            //        Удаление данных
+            //        db.UserOrdersShop.RemoveRange(order);
+            //        db.SaveChanges();
 
-                    message.Body = bodyBuilder.ToMessageBody();
-                    using (var client = new SmtpClient())
-                    {
-                        client.Connect("smtp.gmail.com", 587, false);
-                        client.Authenticate("bonettaanthony466@gmail.com", "huqf ddvv mnba lcug ");
-                        client.Send(message);
 
-                        client.Disconnect(true);
-                    }  
-                }
-            }
+            //        if (System.IO.File.Exists(destinationFilePath))
+            //        {
+            //            System.IO.File.Delete(destinationFilePath);
+            //        }
+
+            //    }
+            //    else if (ChekedWik >= 7)
+            //    {
+            //        var users = db.Users.FirstOrDefault(x => x.Id == order.UserId);
+
+            //        string destinationFilePath = @$"wwwroot/Orders/{users.FirstName + users.LastName + order.createData.Value.Minute + order.createData.Value.Hour + order.createData.Value.Day + order.createData.Value.Month + order.createData.Value.Year} OrderFile.xlsx";
+
+            //        var message = new MimeMessage();
+            //        message.From.Add(new MailboxAddress("Schlüssel Discount Store", "bonettaanthony466@gmail.com"));
+            //        message.To.Add(new MailboxAddress(users.FirstName + users.LastName, users.UserName));
+            //        message.Subject = "Schlüssel Discount Store";
+
+            //        var bodyBuilder = new BodyBuilder();
+            //        bodyBuilder.TextBody = $"Прошло {ChekedWik} дней с даты создания системы {order.ProductName}!";
+
+            //        using (var wc = new WebClient())
+            //        {
+            //            byte[] fileBytes = wc.DownloadData(destinationFilePath);
+            //            bodyBuilder.Attachments.Add("Email.xlsx", fileBytes);
+            //        }
+
+            //        message.Body = bodyBuilder.ToMessageBody();
+            //        using (var client = new SmtpClient())
+            //        {
+            //            client.Connect("smtp.gmail.com", 587, false);
+            //            client.Authenticate("bonettaanthony466@gmail.com", "huqf ddvv mnba lcug ");
+            //            client.Send(message);
+
+            //            client.Disconnect(true);
+            //        }
+            //    }
+            //}
 
             ViewBag.Zylinder_Typ = db.Schliessanlagen.ToList();
 
