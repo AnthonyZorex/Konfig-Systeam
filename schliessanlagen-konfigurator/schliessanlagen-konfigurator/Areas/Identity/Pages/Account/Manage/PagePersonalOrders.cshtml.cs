@@ -20,6 +20,7 @@ using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.General;
 using schliessanlagen_konfigurator.Models.Users;
+using System.Net.Http.Headers;
 
 namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
 {
@@ -82,9 +83,49 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
             return Page();
 
         }
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPost(string SendAdresse,string SendVorname, string SendNachname,string SendFirma,
+        string SendVat,string SendStrasse, string SemdAdressZusatz, string SendZip, string SendStadt, string SendLand, string SendTelefon,
+        string DhlSend,string Pay,string Steuer, string Versand, string OrderSum,string Rehnung, string RechnungAdresse,string RechnungVorname,
+        string RechnungNachname, string RechnungFirma, string RechnungVat, string RechnungStrasse, string RechnungAdressZusatz, string RechnungZip,
+        string RechnungStadt, string RechnungLand, string RechnungTelefon, string userKey)
         {
-            return Page();
+
+            var model = new
+            {
+                SendAdresse = SendAdresse,
+                SendVorname = SendVorname,
+                SendNachname = SendNachname,
+                SendFirma = SendFirma,
+                SendVat = SendVat,
+                SendStrasse = SendStrasse,
+                SemdAdressZusatz = SemdAdressZusatz,
+                SendZip = SendZip,
+                SendStadt = SendStadt,
+                SendLand = SendLand,
+                Steuer = Steuer,
+                Versand = Versand,
+                OrderSum = OrderSum,
+                SendTelefon = SendTelefon,
+                DhlSend = DhlSend,
+                Rehnung = Rehnung,
+                Pay = Pay,
+
+                RechnungAdresse = SendAdresse,
+                RechnungVorname = RechnungVorname,
+                RechnungNachname = RechnungNachname,
+                RechnungFirma = RechnungFirma,
+                RechnungVat = RechnungVat,
+                RechnungStrasse = RechnungStrasse,
+                RechnungAdressZusatz = RechnungAdressZusatz,
+                RechnungZip = RechnungZip,
+                RechnungStadt = RechnungStadt,
+                RechnungLand = RechnungLand,
+                RechnungTelefon = RechnungTelefon,
+
+            };
+
+            var JsonObject = JsonConvert.SerializeObject(model, Formatting.Indented);
+            return RedirectToAction("SendRehnung","Konfigurator", new { info = JsonObject, Product = userKey });
         }
     }
 }

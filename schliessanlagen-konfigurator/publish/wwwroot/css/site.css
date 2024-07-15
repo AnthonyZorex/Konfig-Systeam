@@ -12,7 +12,28 @@
     font-size: 16px;
     line-height: 20px;
 }
-
+#RehnungPdf{
+    font-size:10px;
+}
+    #RehnungPdf > h6 
+    {
+        font-size: 10px;
+    }
+    #RehnungPdf > div > h6 
+    {
+        font-size: 10px;
+    }
+    #RehnungPdf > hr 
+    {
+        color: black;
+        height: 2px;
+    }
+    #RehnungPdf > h3 {
+        font-size: 12px !important;
+    }
+    #RehnungPdf > strong {
+        font-size: 10px !important;
+    }
     /* Кастомная кнопка (круглый чекбокс) */
     .radio-container label:before {
         content: '';
@@ -32,6 +53,9 @@
     border-color: #007bff; /* цвет рамки при выборе */
 }
 
+#rechnungSend{
+    display:none;
+}
 /* Оформление для текста рядом с кастомной кнопкой */
 .radio-container label:after {
     content: attr(data-label);
@@ -40,9 +64,7 @@
     left: 10px; /* отступ от кнопки до текста */
 }
 
-
-
-input[type="checkbox"] {
+.konfiguratorSelect input[type="checkbox"] {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -54,8 +76,25 @@ input[type="checkbox"] {
     outline: none;
     cursor: pointer;
     position: relative;
-
 }
+.konfiguratorSelect input[type="checkbox"]:checked {
+    background-color: black;
+    border-color: #fff;
+    border: 1px solid black;
+}
+
+    .konfiguratorSelect input[type="checkbox"]:checked::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 14px;
+        height: 7px;
+        border: 4px solid #fff;
+        border-top: none;
+        border-right: none;
+        transform: translate(-50%, -50%) rotate(-45deg);
+    }
     #blockSchrite {
         padding: 50px;
         border-radius: 20px;
@@ -65,25 +104,7 @@ input[type="checkbox"] {
         margin-top:50px;
     }
     /* Стиль для активного состояния чекбокса */
-    input[type="checkbox"]:checked {
-        background-color: black;
-        border-color: #fff;
-        border:1px solid black;
-    }
 
-        /* Добавление галочки */
-        input[type="checkbox"]:checked::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 14px;
-            height: 7px;
-            border: 4px solid #fff;
-            border-top: none;
-            border-right: none;
-            transform: translate(-50%, -50%) rotate(-45deg);
-        }
 
 .footer {
     background: #323232;
@@ -2886,7 +2907,10 @@ input[type="checkbox"] {
         border: none;
         margin-left: 10px;
     }
-
+    #position {
+        width: 60px;
+        gap:10px;
+    }
     #addButtonTur {
         height: 30px;
         width: 30px;
@@ -3036,7 +3060,7 @@ input[type="checkbox"] {
         margin-right: 20px;
         margin-top: 10px;
         float: left;
-        width: 26px;
+        width: 50px;
         text-align: center;
     }
 

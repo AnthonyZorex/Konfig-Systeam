@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.ResponseCompression;
 using System.IO;
 using System.IO.Compression;
 using System.Web.Optimization;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -80,6 +82,14 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     SendData.Initialize(services);
 }
+
+var supportedCultures = new[] { new CultureInfo("de-De") };
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture("de-De"),
+    SupportedCultures = supportedCultures,
+    SupportedUICultures = supportedCultures
+});
 
 
 app.UseStaticFiles(new StaticFileOptions

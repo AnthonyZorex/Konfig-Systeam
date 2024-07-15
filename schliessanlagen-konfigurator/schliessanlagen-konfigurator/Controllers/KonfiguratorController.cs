@@ -35,10 +35,8 @@ using OfficeOpenXml.FormulaParsing.Excel.Functions.Information;
 using System.Diagnostics;
 using System.Data.SqlClient;
 using Microsoft.Ajax.Utilities;
-using PdfSharp.Pdf;
-using PdfSharp.Drawing;
-using PdfSharp.Pdf.IO;
 using System.Net.Http.Headers;
+using System.Text.Json.Nodes;
 namespace schliessanlagen_konfigurator.Controllers
 {
     [EnableCors("*")]
@@ -521,6 +519,21 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             db.SaveChanges();
             return RedirectToAction("System_Auswählen", "Konfigurator", new { userName });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> SendRehnung (string info,string Product)
+        {
+            ViewBag.Info = info;
+
+            var ProductOrder = db.UserOrdersShop.Where(x => x.UserId == Product).ToList();
+
+            var ItemsInfo = db.ProductSysteam.Where(x => x.UserOrdersShopId == ProductOrder.First().Id).ToList();
+
+            ViewBag.Product = ProductOrder.ToList();
+            ViewBag.ProductItem = ItemsInfo.ToList();
+
+            return View();
         }
        public ActionResult endOrder(int data)
        {

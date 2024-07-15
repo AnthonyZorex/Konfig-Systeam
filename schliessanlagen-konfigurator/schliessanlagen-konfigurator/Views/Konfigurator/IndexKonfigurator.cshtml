@@ -70,17 +70,17 @@
                         <h5>Stück</h5>
                 </div>
             </div>
-            <div>
+            <div> 
                 <div id="turInfo">
                         <div id="BlockTur-1">
                         <div class="TexCountTur">
                             <div id="ItemTur">
                                     <div id="position">
-                                    <h6 id="counterTur">1</h6>
+                                        <h6 id="counterTur"><img src="@("/Image/options.png")" height="20" width="20" style="margin-right: 10px;" />1</h6>
                                 </div>
-                                            <div>
+                                     <div>
                                         <input id="inputTur" required name="Turname" onchange="chekedNameArientiren(event.target.value,1)" placeholder="Name der Tür" />
-                                            </div>
+                                      </div>
                             </div>
                                     <div>
 
@@ -124,7 +124,7 @@
                 <div id="InfoValue">
                             <div class="horizontal" id="1horizontal">
                                 <div class="checkboxContainer">
-                                    <input type="checkbox" style="" id="1checkbox1">
+                                    <input class="konfiguratorSelect" type="checkbox" id="1checkbox1">
                                     <input type="hidden"  value="false" id="I1checkbox1">
                                 </div>
                     </div>
@@ -694,7 +694,7 @@
             newBlock.innerHTML = `  <div class="TexCountTur">
                                     <div id="ItemTur">
                                         <div id="position">
-                                           <h6 id="counterTur">${blockTur}</h6>
+                                                   <h6 id="counterTur"><img src="@("/Image/options.png")" height="20" width="20" style="margin-right: 10px;" /> ${blockTur}</h6>
                                         </div>
 
                                         <div>
@@ -752,8 +752,8 @@
                 {
 
                     let newBlockTur = document.createElement('div');
-               
-                    newBlockTur.innerHTML = ` <input type="checkbox" id=${blockTur}checkbox${i}>
+
+                     newBlockTur.innerHTML = ` <input type="checkbox" class="konfiguratorSelect" id=${blockTur}checkbox${i}>
                     <input type="hidden" value="false" id="I${blockTur}checkbox${i}">`;
 
                     newBlockTur.id = `${blockTur}.checkboxContainer${i}`;
@@ -825,7 +825,7 @@
           
             let newBlockTur = document.createElement('div');
 
-            newBlockTur.innerHTML = ` <input type="checkbox" id=${i}checkbox${blockCount}>
+            newBlockTur.innerHTML = ` <input type="checkbox" class="konfiguratorSelect" id=${i}checkbox${blockCount}>
                                     <input type="hidden"  value="false" id="I${i}checkbox${blockCount}">`;
 
             newBlockTur.id = `${i}.checkboxContainer${blockCount}`;
@@ -888,7 +888,7 @@
 
                 let newBlockTur = document.createElement('div');
 
-                newBlockTur.innerHTML = ` <input type="checkbox" id=${i}checkbox${blockCount}>
+                newBlockTur.innerHTML = ` <input type="checkbox" class="konfiguratorSelect" id=${i}checkbox${blockCount}>
                                         <input type="hidden"  value="false" id="I${i}checkbox${blockCount}">`;
 
                 newBlockTur.id = `${i}.checkboxContainer${blockCount}`;

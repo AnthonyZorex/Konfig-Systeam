@@ -1798,6 +1798,7 @@ D:\Anthnony\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator
 D:\Anthnony\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\schliessanlagen-konfigurator.MvcApplicationPartsAssemblyInfo.cache
 D:\Anthnony\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\schliessanlagen-konfigurator.RazorAssemblyInfo.cache
 D:\Anthnony\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\schliessanlagen-konfigurator.RazorAssemblyInfo.cs
+D:\Anthnony\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\schliessanlagen-konfigurator.sourcelink.json
 D:\Anthnony\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\staticwebassets.build.json
 D:\Anthnony\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\staticwebassets.development.json
 D:\Anthnony\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\staticwebassets\msbuild.schliessanlagen-konfigurator.Microsoft.AspNetCore.StaticWebAssets.props
@@ -1814,12 +1815,3 @@ D:\Anthnony\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator
 D:\Anthnony\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\schliessanlagen-konfigurator.pdb
 D:\Anthnony\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\schliessanlagen-konfigurator.genruntimeconfig.cache
 D:\Anthnony\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\ref\schliessanlagen-konfigurator.dll
-D:\Anthnony\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\schliessanlagen-konfigurator.sourcelink.json
-D:\Anthnony\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\PdfSharp.Charting.dll
-D:\Anthnony\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\PdfSharp.Quality.dll
-D:\Anthnony\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\PdfSharp.Snippets.dll
-D:\Anthnony\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\PdfSharp.System.dll
-D:\Anthnony\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\PdfSharp.WPFonts.dll
-D:\Anthnony\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\PdfSharp.dll
-D:\Anthnony\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\de\PdfSharp.Charting.resources.dll
-D:\Anthnony\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\de\PdfSharp.resources.dll
