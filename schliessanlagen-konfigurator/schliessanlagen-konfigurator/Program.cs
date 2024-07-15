@@ -83,13 +83,7 @@ using (var scope = app.Services.CreateScope())
     SendData.Initialize(services);
 }
 
-var supportedCultures = new[] { new CultureInfo("de-De") };
-app.UseRequestLocalization(new RequestLocalizationOptions
-{
-    DefaultRequestCulture = new RequestCulture("de-De"),
-    SupportedCultures = supportedCultures,
-    SupportedUICultures = supportedCultures
-});
+
 
 
 app.UseStaticFiles(new StaticFileOptions
@@ -110,7 +104,18 @@ app.UseDefaultFiles();
 
 app.UseResponseCompression();
 
-app.UseRequestLocalization();
+
+var supportedCultures = new[] { new CultureInfo("de-DE") };
+
+var localizationOptions = new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture("de-DE"),
+    SupportedCultures = supportedCultures,
+    SupportedUICultures = supportedCultures
+};
+
+app.UseRequestLocalization(localizationOptions);
+
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseSession();
