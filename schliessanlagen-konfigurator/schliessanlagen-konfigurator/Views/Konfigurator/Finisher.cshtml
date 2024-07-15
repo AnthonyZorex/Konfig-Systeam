@@ -222,29 +222,9 @@
                                     }
                                 </div>
                             </div>
-                            @if (@ViewBag.DAussen[elemNum] >= 55 && @ViewBag.DInter[elemNum] >= 55)
-                            {
-                                if (@item.companyName == "CES")
-                                {
-                                    <h6 id="WaitTime">Lieferzeit: 4 Werktage</h6>
-                                }
-                                else
-                                {
-                                    <h6 id="WaitTime">Lieferzeit: 2 Werktage</h6>
-
-                                }
-                            }
-                            else
-                            {
-                                if (@item.companyName == "CES")
-                                {
-                                    <h6 id="WaitTime">Lieferzeit: 7 Tag</h6>
-                                }
-                                else
-                                {
-                                    <h6 id="WaitTime">Lieferzeit: 2 Werktage</h6>
-                                }
-                            }
+                            <div>
+                                @Html.Raw(ViewBag.Lieferzeit)
+                            </div>
                         </div>
                         <div id="myModal-@d" class="modal">
 
@@ -391,30 +371,9 @@
 
                             </div>
                         </div>
-                            @if (@ViewBag.KAussen[elemNum] >= 55 && @ViewBag.KInter[elemNum] >= 55)
-                            {
-                                if (@item.companyName == "CES")
-                                {
-                                    <h6 id="WaitTime">Lieferzeit: 4 Werktage</h6>
-                                }
-                                else
-                                {
-                                    <h6 id="WaitTime">Lieferzeit: 2 Werktage</h6>
-
-                                }
-
-                            }
-                            else
-                            {
-                                if (@item.companyName == "CES")
-                                {
-                                    <h6 id="WaitTime">Lieferzeit: 7 Tag</h6>
-                                }
-                                else
-                                {
-                                    <h6 id="WaitTime">Lieferzeit: 2 Werktage</h6>
-                                }
-                            }
+                            <div>
+                                @Html.Raw(ViewBag.Lieferzeit)
+                            </div>
                     </div>
                 </div>
                     <div id="myModal-@d" class="modal">
@@ -550,28 +509,9 @@
                                 } 
                             </div>
                         </div>
-                            @if (@ViewBag.HalbOrderAussen[elemNum] >= 55)
-                            {
-                                if (@item.companyName == "CES")
-                                {
-                                    <h6 id="WaitTime">Lieferzeit: 4 Werktage</h6>
-                                }
-                                else
-                                {
-                                    <h6 id="WaitTime">Lieferzeit: 2 Werktage</h6>
-                                }
-                            }
-                            else
-                            {
-                                if (@item.companyName == "CES")
-                                {
-                                    <h6 id="WaitTime">Lieferzeit: 7 Tag</h6>
-                                }
-                                else
-                                {
-                                    <h6 id="WaitTime">Lieferzeit: 2 Werktage</h6>
-                                }
-                            }
+                            <div>
+                                @Html.Raw(ViewBag.Lieferzeit)
+                            </div>
                     </div>
                        
                 </div>
@@ -672,6 +612,9 @@
                                 } 
                             </div>
                         </div>
+                            <div>
+                                @Html.Raw(ViewBag.Lieferzeit)
+                            </div>
                     </div>
                 </div>
                     <div id="myModal-@d" class="modal">
@@ -790,7 +733,10 @@
                                         <input type="hidden" name="VorhnaOption" id="OptionAll-@d" />
                                 }
                             </div> 
-                        </div>      
+                        </div>
+                            <div>
+                                @Html.Raw(ViewBag.Lieferzeit)
+                            </div>
                     </div>
                 </div>
                     <div id="myModal-@d" class="modal">
@@ -896,6 +842,9 @@
                                         <input type="hidden" name="AussenOption" id="OptionAll-@d" />
                                     }
                                 </div>
+                            </div>
+                            <div>
+                                @Html.Raw(ViewBag.Lieferzeit)
                             </div>
                         </div>
                 </div>

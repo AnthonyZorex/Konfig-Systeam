@@ -41,14 +41,13 @@
                 <div  class="TexCount">
                         <input type="text" required readonly style="position: relative;background: gray;" name="FurNameKey" value="1" />
                     <div id="TexInputKey">
-                       
-                            <input id="inputS" required name="NameKey"  onchange="chekedNameArienKey(event.target.value,1)" placeholder="Name des Schlüssels" type="text" />
+                       <input id="inputS" required name="NameKey"  onchange="chekedNameArienKey(event.target.value,1)" placeholder="Name des Schlüssels" type="text" />
                     </div>
                     <div>
-                            <input id="inputCount" required name="CountKey" value="1" type="text" />
+                       <input id="inputCount" required name="CountKey" value="1" type="text" />
                     </div>
                 </div>
-             
+                
             </div>
         </div>
         <div>
@@ -186,10 +185,7 @@
                 <div id="circle">
                     <div id="circle2" class="c7">
                     </div>
-                </div>
-
-               
-               
+                </div>  
                 <button id="hilfeBack" onclick="next()"> > </button>
             </div>
         </div>
@@ -204,8 +200,6 @@
 </div>
 
 <script>
-
-   
 
     let blockCount = document.querySelectorAll(".TexCount").length;
     let blockTur = document.querySelectorAll("#inputTur").length;
@@ -229,12 +223,11 @@
     const scroll1 = document.getElementById('itemKeyBlock');
     const scroll2 = document.getElementById('InfoValue');
 
-    // Функция для синхронизации прокрутки
     function syncScroll(source, target) {
         target.scrollLeft = source.scrollLeft;
     }
 
-    // Добавление обработчиков событий прокрутки для обоих элементов
+    
     scroll1.addEventListener('scroll', () => syncScroll(scroll1, scroll2));
     scroll2.addEventListener('scroll', () => syncScroll(scroll2, scroll1));
 
@@ -536,8 +529,6 @@
         
         let TypeSylinder = BlockTur.querySelector("#typeSylinder");
 
-        console.log(TypeSylinder);
-
         let Aitems = Aussen.querySelectorAll("#OptionA");
         let Iitems = Intern.querySelectorAll("#OptionI");
         
@@ -551,7 +542,6 @@
             items.parentNode.removeChild(items);
         });
 
-
         if (value == "Doppelzylinder") 
         {
             for (let i = 0; i < DoppelAussenSize.length; i++) 
@@ -561,7 +551,6 @@
                 option.innerHTML = DoppelAussenSize[i];
                 option.innerText = DoppelAussenSize[i];
                 Aussen.appendChild(option);
-               
             }
             for (let i = 0; i < DoppelInternSize.length; i++) 
             {
@@ -628,7 +617,6 @@
 
     function createCustomCheckbox(id) 
     {
-        
         var checkbox = document.getElementById(id);
         var checkboxValue = false;
 
@@ -641,15 +629,12 @@
 
         if (savedValue !== null) 
         {
-   
             checkbox.checked = (savedValue === 'true'); 
             checkboxValue = checkbox.checked;
-
         }
 
         checkbox.addEventListener('change', function () 
         {
-         
             localStorage.setItem(id, this.checked);
            
             checkboxValue = this.checked;
@@ -671,6 +656,11 @@
 
     function removeBlockTur() 
     {
+        let countKeySelect = document.getElementById("countTurSelect");
+        let x = Number(countKeySelect.value);
+        x--;
+        countKeySelect.value = x;
+
                 let blockToRemove = document.getElementById('BlockTur-' + blockTur);
                     
                 if (blockToRemove) 
@@ -687,8 +677,12 @@
 
         function addBlockTur() 
         {
-            blockTur++;
+            let countKeySelect = document.getElementById("countTurSelect");
+            let x = Number(countKeySelect.value);
+            x++;
+            countKeySelect.value = x;
 
+            blockTur++;
             let newBlock = document.createElement('div');
             newBlock.id = 'BlockTur-' + blockTur;
             newBlock.innerHTML = `  <div class="TexCountTur">
@@ -770,7 +764,11 @@
         function removeBlock() 
         {
             let blockToRemove = document.getElementById('TexCount-' + blockCount);
-        
+            let countKeySelect = document.getElementById("countKeySelect");
+            let x = Number(countKeySelect.value);
+            x--;
+            countKeySelect.value = x;
+
             if (blockToRemove) 
             {
                 blockToRemove.remove();
@@ -801,7 +799,12 @@
     function addBlock() 
     {
         blockCount++;
-    
+
+        let countKeySelect = document.getElementById("countKeySelect");
+        let x =  Number(countKeySelect.value);
+        x++;
+        countKeySelect.value = x;
+
         let newBlock = document.createElement('div');
         newBlock.id = 'TexCount-' + blockCount;
         newBlock.innerHTML = `
@@ -843,8 +846,7 @@
     function selectKey(value) 
     {
         localStorage.clear();
-      
-        
+
         document.getElementById('itemKeyBlock').innerHTML = "";
         // blockTur = 0;
         blockCount = 0;
@@ -854,10 +856,6 @@
         hor.forEach((item) => {
             item.innerHTML = "";
         });
-
-        const fragment = document.createDocumentFragment();
-
-        const fragmentChekbox = document.createDocumentFragment();
 
         for (let i = 1; i <= value ;i++) 
         {
@@ -884,7 +882,6 @@
 
             for (let i = 1; i <= blockTur; i++) 
             {
-               
 
                 let newBlockTur = document.createElement('div');
 
@@ -921,7 +918,7 @@
             newBlock.innerHTML = `  <div class="TexCountTur">
                                         <div id="ItemTur">
                                             <div id="position">
-                                               <h6 id="counterTur">${blockTur}</h6>
+                                                     <h6 id="counterTur"><img src="@("/Image/options.png")" height="20" width="20" style="margin-right: 10px;" />${blockTur}</h6>
                                             </div>
 
                                             <div>
@@ -929,9 +926,7 @@
                                             </div>
 
                                                 <div>
-
                                                      <img  id="typeSylinder" src="/Image/doppelzylinder.png" height="25" width="40"  />
-
                                                 </div>
                                         </div>
 

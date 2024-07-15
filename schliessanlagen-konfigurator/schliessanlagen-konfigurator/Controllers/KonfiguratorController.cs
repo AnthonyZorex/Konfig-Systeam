@@ -544,6 +544,7 @@ namespace schliessanlagen_konfigurator.Controllers
             db.SaveChanges();
 
             return Redirect("/Identity/Account/Manage/PagePersonalOrders");
+
        }
 
         [HttpPost]
@@ -1023,6 +1024,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     aussen = t2.aussen,
+                                     innen = t2.innen,
+                                     Lieferzeit = t3.Lieferzeit,
                                      cheked3 = 0,
                                      cheked2 = 0,
                                      cheked4 = 0,
@@ -1054,6 +1058,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     aussen = t2.aussen,
+                                     innen = t2.innen,
+                                     Lieferzeit = t3.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = 0,
                                      cheked2 = t1.Id,
@@ -1085,6 +1092,9 @@ namespace schliessanlagen_konfigurator.Controllers
                             join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                             select new
                             {
+                                aussen = t2.aussen,
+                                innen = t2.innen,
+                                Lieferzeit = t3.Lieferzeit,
                                 cheked = 0,
                                 cheked3 = t1.Id,
                                 cheked2 = 0,
@@ -1117,6 +1127,9 @@ namespace schliessanlagen_konfigurator.Controllers
                             join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                             select new
                             {
+                                aussen = t2.aussen,
+                                innen = t2.innen,
+                                Lieferzeit = t3.Lieferzeit,
                                 cheked = 0,
                                 cheked3 = 0,
                                 cheked2 = 0,
@@ -1148,6 +1161,9 @@ namespace schliessanlagen_konfigurator.Controllers
                             join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                             select new
                             {
+                                aussen = t2.aussen,
+                                innen = t2.innen,
+                                Lieferzeit = t3.Lieferzeit,
                                 cheked = 0,
                                 cheked3 = 0,
                                 cheked2 = 0,
@@ -1178,6 +1194,9 @@ namespace schliessanlagen_konfigurator.Controllers
                             join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                             select new
                             {
+                                aussen = t2.aussen,
+                                innen = t2.innen,
+                                Lieferzeit = t3.Lieferzeit,
                                 cheked = 0,
                                 cheked3 = 0,
                                 cheked2 = 0,
@@ -1208,6 +1227,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t2.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x=>x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t3.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = 0,
                                      cheked4 = 0,
@@ -1240,6 +1262,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t2.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t3.Lieferzeit,
                                      userKey = keyUser.userKey,
                                      cheked = t1.Id,
                                      cheked3 = t2.Id,
@@ -1270,6 +1295,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t2.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t3.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = 0,
                                      cheked4 = t2.Id,
@@ -1300,6 +1328,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t2.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t3.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = 0,
                                      cheked4 = 0,
@@ -1330,6 +1361,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t3.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = 0,
                                      cheked4 = 0,
@@ -1361,6 +1395,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t3.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = t2.Id,
                                      cheked4 = 0,
@@ -1391,6 +1428,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t3.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = 0,
                                      cheked4 = t2.Id,
@@ -1421,6 +1461,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t3.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = 0,
                                      cheked4 = 0,
@@ -1451,6 +1494,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t3.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = 0,
                                      cheked4 = 0,
@@ -1481,6 +1527,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t3.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = t1.Id,
                                      cheked4 = t2.Id,
@@ -1512,6 +1561,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t3.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = t1.Id,
                                      cheked4 = 0,
@@ -1544,6 +1596,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t3.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = t1.Id,
                                      cheked4 = 0,
@@ -1575,6 +1630,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t3.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = 0,
                                      cheked4 = t1.Id,
@@ -1606,6 +1664,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t3.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = 0,
                                      cheked4 = t1.Id,
@@ -1638,6 +1699,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t3.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = 0,
                                      cheked4 = 0,
@@ -1671,6 +1735,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t4.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = t3.Id,
                                      cheked4 = 0,
@@ -1703,6 +1770,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t4.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = 0,
                                      cheked4 = t3.Id,
@@ -1735,6 +1805,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t4.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = 0,
                                      cheked4 = 0,
@@ -1767,6 +1840,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t4.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = 0,
                                      cheked4 = 0,
@@ -1799,6 +1875,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t4.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = t2.Id,
                                      cheked4 = t3.Id,
@@ -1831,6 +1910,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t4.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = t2.Id,
                                      cheked4 = 0,
@@ -1863,6 +1945,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t4.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = t2.Id,
                                      cheked4 = 0,
@@ -1896,6 +1981,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t4.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = 0,
                                      cheked4 = t2.Id,
@@ -1928,6 +2016,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t4.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = 0,
                                      cheked4 = t2.Id,
@@ -1960,6 +2051,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t4.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = 0,
                                      cheked4 = 0,
@@ -1993,6 +2087,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t4.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = t2.Id,
                                      cheked4 = t3.Id,
@@ -2025,6 +2122,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t4.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = t2.Id,
                                      cheked4 = 0,
@@ -2057,6 +2157,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t4.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = t2.Id,
                                      cheked4 = 0,
@@ -2089,6 +2192,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t4.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = 0,
                                      cheked4 = t2.Id,
@@ -2121,6 +2227,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t4.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = 0,
                                      cheked4 = t2.Id,
@@ -2153,6 +2262,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t4.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = 0,
                                      cheked4 = 0,
@@ -2185,6 +2297,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t4.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = t1.Id,
                                      cheked4 = t2.Id,
@@ -2217,6 +2332,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t4.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = t1.Id,
                                      cheked4 = t2.Id,
@@ -2249,6 +2367,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t4.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = t1.Id,
                                      cheked4 = 0,
@@ -2281,6 +2402,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t4.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = 0,
                                      cheked4 = t1.Id,
@@ -2315,6 +2439,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t5.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = t3.Id,
                                      cheked4 = t4.Id,
@@ -2349,6 +2476,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t5.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = t3.Id,
                                      cheked4 = 0,
@@ -2384,6 +2514,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t5.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = t3.Id,
                                      cheked4 = 0,
@@ -2419,6 +2552,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t5.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 =0,
                                      cheked4 = t3.Id,
@@ -2454,6 +2590,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t5.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = 0,
                                      cheked4 = t3.Id,
@@ -2489,6 +2628,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t5.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = 0,
                                      cheked4 = 0,
@@ -2525,6 +2667,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t5.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = t2.Id,
                                      cheked4 = t3.Id,
@@ -2560,6 +2705,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t5.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = t2.Id,
                                      cheked4 = t3.Id,
@@ -2596,6 +2744,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t5.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = t2.Id,
                                      cheked4 = 0,
@@ -2631,6 +2782,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t5.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked4 = t2.Id,
                                      cheked3 = 0,
@@ -2666,6 +2820,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t5.Lieferzeit,
                                      cheked = 0,
                                      cheked4 = t3.Id,
                                      cheked3 = t2.Id,
@@ -2701,6 +2858,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t5.Lieferzeit,
                                      cheked = 0,
                                      cheked4 = t3.Id,
                                      cheked3 = t2.Id,
@@ -2736,6 +2896,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t5.Lieferzeit,
                                      cheked = 0,
                                      cheked4 = 0,
                                      cheked3 = t2.Id,
@@ -2771,6 +2934,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t5.Lieferzeit,
                                      cheked = 0,
                                      cheked4 = t2.Id,
                                      cheked3 = 0,
@@ -2806,6 +2972,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t5.Lieferzeit,
                                      cheked = 0,
                                      cheked4 = t2.Id,
                                      cheked3 = t1.Id,
@@ -2842,6 +3011,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t6 in keySum on t5.NameSystem equals t6.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t6.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked4 = t4.Id,
                                      cheked3 = t3.Id,
@@ -2880,6 +3052,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t6 in keySum on t5.NameSystem equals t6.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t6.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked4 = t4.Id,
                                      cheked3 = t3.Id,
@@ -2918,6 +3093,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t6 in keySum on t5.NameSystem equals t6.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t6.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked4 = 0,
                                      cheked3 = t3.Id,
@@ -2956,6 +3134,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t6 in keySum on t5.NameSystem equals t6.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t6.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked4 = t4.Id,
                                      cheked3 = 0,
@@ -2994,6 +3175,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t6 in keySum on t5.NameSystem equals t6.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t6.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked4 = t4.Id,
                                      cheked3 = t2.Id,
@@ -3032,6 +3216,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t6 in keySum on t5.NameSystem equals t6.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t6.Lieferzeit,
                                      cheked = 0,
                                      cheked4 = t4.Id,
                                      cheked3 = t2.Id,
@@ -3071,6 +3258,9 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t7 in keySum on t6.NameSystem equals t7.NameSysteam
                                  select new
                                  {
+                                     aussen = allUserListOrder.Max(x => x.aussen),
+                                     innen = allUserListOrder.Max(x => x.innen),
+                                     Lieferzeit = t7.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked4 = t4.Id,
                                      cheked3 = t3.Id,
@@ -3102,7 +3292,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
 
         [HttpGet]
-        public IActionResult OrdersKey(string Systeam, int DopelId, List<string> dopelOption, string param2, int KnayfID, int Halb, int Hebel, int Aussen, int Vorhan)
+        public IActionResult OrdersKey(string Lieferzeit, string Systeam, int DopelId, List<string> dopelOption, string param2, int KnayfID, int Halb, int Hebel, int Aussen, int Vorhan)
         {
             var key = db.Orders.Where(x => x.userKey == param2).Distinct().ToList();
 
@@ -3132,6 +3322,8 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var listVorHanOptions = new List<int>();
 
+            ViewBag.Lieferzeit = Lieferzeit;
+
             foreach (var list in SelectVorhanschlos)
             {
                 var VorhanOptions = db.Vorhan_Options.Where(x => x.VorhangschlossId == list.Id).Select(x => x.Id).ToList();
@@ -3143,7 +3335,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
 
             ViewBag.VorhanschlossCount = listVorHanOptions.Count();
-
 
             var listVorHanOptionsValueName = new List<OptionsVorhan>();
 

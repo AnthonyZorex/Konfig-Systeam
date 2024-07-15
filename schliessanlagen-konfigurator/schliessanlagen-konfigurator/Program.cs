@@ -53,17 +53,17 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequiredUniqueChars = 1;
 });
 
-builder.Services.AddResponseCompression(options =>
-{
-    options.EnableForHttps = true;
-    options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[]
-    {
-        "image/svg+xml+png",
-        "application/atom+xml"
-    });
-    options.Providers.Add<BrotliCompressionProvider>();
-    options.Providers.Add<GzipCompressionProvider>();
-});
+//builder.Services.AddResponseCompression(options =>
+//{
+//    options.EnableForHttps = true;
+//    options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[]
+//    {
+//        "image/svg+xml+png",
+//        "application/atom+xml"
+//    });
+//    options.Providers.Add<BrotliCompressionProvider>();
+//    options.Providers.Add<GzipCompressionProvider>();
+//});
 
 builder.Services.Configure<BrotliCompressionProviderOptions>(options =>
 {
@@ -84,8 +84,6 @@ using (var scope = app.Services.CreateScope())
 }
 
 
-
-
 app.UseStaticFiles(new StaticFileOptions
 {
     OnPrepareResponse = ctx =>
@@ -102,7 +100,7 @@ app.UseDefaultFiles();
 //    app.UseHsts();
 //}
 
-app.UseResponseCompression();
+//app.UseResponseCompression();
 
 
 var supportedCultures = new[] { new CultureInfo("de-DE") };
