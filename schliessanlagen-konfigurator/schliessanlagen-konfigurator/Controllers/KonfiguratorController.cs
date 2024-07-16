@@ -522,18 +522,39 @@ namespace schliessanlagen_konfigurator.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> SendRehnung (string info,string Product)
+        public async Task<IActionResult> SendRehnung (string info,string Product,string OrderSum)
         {
             ViewBag.Info = info;
 
+            ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
+
+            string loginInform = ident.Claims.Select(x => x.Value).First();
+            
+            var users = db.Users.FirstOrDefault(x => x.Id == loginInform);
+
             var ProductOrder = db.UserOrdersShop.Where(x => x.UserOrderKey == Product).ToList();
 
+            var Order = db.Orders.Where(x => x.userKey == Product).ToList();
+
             var ItemsInfo = db.ProductSysteam.Where(x => x.UserOrdersShopId == ProductOrder.First().Id).ToList();
+
+            var OrderStatus = new OrderStatus {
+                Order = Convert.ToString(Order.First().Id) + " " + users.FirstName + users.LastName,
+                BezalenDate = DateTime.Now.ToLocalTime(),
+                Status = "Bezalen",
+                ShippingStatus = "Nicht gesendet",
+                Total = OrderSum
+            };
+
+            db.OrderStatus.Add(OrderStatus);
+            db.SaveChanges();
 
             ViewBag.Key = ProductOrder.First().Id;
 
             ViewBag.Product = ProductOrder.ToList();
             ViewBag.ProductItem = ItemsInfo.ToList();
+
+
 
             return View();
         }

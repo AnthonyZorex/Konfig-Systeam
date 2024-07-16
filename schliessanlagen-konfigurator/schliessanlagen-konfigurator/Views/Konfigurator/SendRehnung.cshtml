@@ -271,13 +271,37 @@
 
         Email.textContent = Info.RechnungAdresse;
     }
-    var element = document.getElementById('RehnungPdf');
-    html2pdf(element, {
-        margin: 1,
-        filename: 'Rehnung.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-    });
+    // var element = document.getElementById('RehnungPdf');
+    // html2pdf(element, {
+    //     margin: 1,
+    //     filename: 'Rehnung.pdf',
+    //     image: { type: 'jpeg', quality: 0.98 },
+    //     html2canvas: { scale: 2 },
+    //     jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    // });
     
+    function generateAndUploadPDF() 
+    {
+        var element = document.getElementById('Rehnung.pdf');
+
+        html2pdf().from(element).toPdf().get('pdf').then(function (pdf) {
+            var pdfData = pdf.output('blob');
+
+            var formData = new FormData();
+            formData.append('file', pdfData, 'Rehnung.pdf');
+
+            fetch('Konfigurator/HistorOrders', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+    }
+    generateAndUploadPDF()
 </script>

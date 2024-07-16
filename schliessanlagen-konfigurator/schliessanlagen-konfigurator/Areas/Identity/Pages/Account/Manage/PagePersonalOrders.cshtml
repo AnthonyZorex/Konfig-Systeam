@@ -433,6 +433,7 @@
                                     <hr style="max-width:350px" />
                                     <div style="display:flex;gap:50px;"><h4>Bestellsumme:</h4><input name="OrderSum" redonly style="border:none;outline:none" value="@orderList[z].OrderSum.ToString("C")" id="costedI-@z" /></div>
                                     <br />
+                                    <input type="submit" value="Submit" />
 
                                     <div id="paypal-button-container-@z">
 
@@ -440,6 +441,7 @@
                                     <input type="hidden" value="@orderList[z].UserOrderKey" name="userName" />
                                 </div>
                             <input type="hidden" id="@z" value="true" />
+                          
                         </div>
                            
                         </form>
@@ -1721,7 +1723,7 @@
     function remove(empty) 
     {
         $.ajax({
-            type: "POST",
+            type: "GET",
             url: "/Konfigurator/RemoveOrder",
             data: { data: empty},
             success: function (response) {

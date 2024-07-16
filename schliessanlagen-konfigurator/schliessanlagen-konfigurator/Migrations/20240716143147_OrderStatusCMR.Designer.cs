@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using schliessanlagen_konfigurator.Data;
 
@@ -11,9 +12,11 @@ using schliessanlagen_konfigurator.Data;
 namespace schliessanlagen_konfigurator.Migrations
 {
     [DbContext(typeof(schliessanlagen_konfiguratorContext))]
-    partial class schliessanlagen_konfiguratorContextModelSnapshot : ModelSnapshot
+    [Migration("20240716143147_OrderStatusCMR")]
+    partial class OrderStatusCMR
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,25 +54,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "03fa25a3-0ab7-4d50-8521-24e56f4de827",
+                            Id = "2bc9d552-0f98-4746-bee8-a1cc11e01feb",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "8c0b8765-b21e-4d7e-b939-834d39b7a163",
+                            Id = "111c9eea-0080-486d-a436-1366081bc4f4",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "cb86e25d-aea8-4dcf-9ba3-0c30a46766b3",
+                            Id = "da0d7162-6942-4c54-b8bc-621793107880",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "2ef68c42-e198-490e-8b0b-5a1a350dabed",
+                            Id = "57d70ebd-3eb9-43ed-8aa6-19a9d9b1359c",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -555,6 +558,10 @@ namespace schliessanlagen_konfigurator.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Order")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Origin")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

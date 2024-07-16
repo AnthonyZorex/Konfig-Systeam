@@ -2670,6 +2670,7 @@ namespace schliessanlagen_konfigurator.Controllers
             return View("ProductAussenzylinder", profilInfo);
         }
         #endregion
+
         [HttpGet]
         public ActionResult AllOrders()
         {
@@ -2677,6 +2678,18 @@ namespace schliessanlagen_konfigurator.Controllers
             var UserProduct = db.ProductSysteam.Select(x => x).ToList();
             var UserOrders = db.UserOrdersShop.Select(x => x).ToList();
             
+            var OrderStatus = db.OrderStatus.Select(x => x).ToList();
+
+            var OrderMans = new List<string>();
+
+            foreach(var list in OrderStatus)
+            {
+                string result = new string(list.Order.Where(c => !char.IsDigit(c)).ToArray());
+               
+                OrderMans.Add(result);
+            }
+           
+
             var users = db.Users.Select(x => x).ToList();
 
             var queryOrder = from t1 in users

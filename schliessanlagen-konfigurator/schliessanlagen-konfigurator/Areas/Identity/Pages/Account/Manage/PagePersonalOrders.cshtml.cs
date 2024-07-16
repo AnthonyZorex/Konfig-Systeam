@@ -125,7 +125,7 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
             };
 
             var JsonObject = JsonConvert.SerializeObject(model, Formatting.Indented);
-            return RedirectToAction("SendRehnung","Konfigurator", new { info = JsonObject, Product = userName });
+            return RedirectToAction("SendRehnung","Konfigurator", new { info = JsonObject, Product = userName , OrderSum = OrderSum });
         }
     }
 }
