@@ -1,6 +1,4 @@
-﻿
-
-@{
+﻿@{
     ViewData["Title"] = "SendRehnung";
 }
 
@@ -210,10 +208,9 @@
                 <strong>BIC</strong>:COBADEFFXXX <br />
             </p>
         </div>
-
     </div>
 </div>
-<button class="accordion-button">Zurük</button>
+<a href="@Url.Action("HistorOrders", "Konfigurator", new{userKey =  @ViewBag.Key})" role="button" class="btn btn-info">Weiter</a>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 <script>

@@ -437,19 +437,18 @@
                                     <div style="align-items:center">
                                         <input type="submit" class="btn btn-danger" value="Zahlungspflichtig bestellen" />
                                     </div>
-                                    <div id="paypal-button-container-@z" style="margin-left: auto;margin-right: auto;">
-                                    </div>
+                                    <input type="hidden" value="@orderList[z].UserOrderKey" name="userName" />
                                 </div>
                             <input type="hidden" id="@z" value="true" />
                         </div>
+                            <div id="paypal-button-container"></div>
                         </form>
                     </div>  
                      
                     <br />
-              @*       <a style="color:black" href="@Url.Action("SendRehnung","Konfigurator" )">PDF</a> *@
                     <button id="removeOrder" class="btn btn-success" onclick="OpenModalInfo(@z,@orderList[z].Id)">Bezahlen</button>
                     <button class="btn btn-warning text-light">
-                        <a href="@Url.Action("System_Auswählen","Konfigurator",new{userName = @orderList[z].UserOrderKey , isNewKonfig = true, Biarbeiten=true} )">Überarbeiten Sie den Plan</a>
+                        <a href="@Url.Action("System_Auswählen","Konfigurator",new{userName = @orderList[z].UserOrderKey , isNewKonfig = true, Biarbeiten = true} )">Überarbeiten Sie den Plan</a>
                     </button>
 
                         <button id="removeOrder" class="btn btn-danger" onclick="(remove(@UserOrderId))">RemovaOrder</button>
@@ -465,10 +464,7 @@
     </div>
 </div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
-<script src="https://www.paypal.com/sdk/js?client-id=BAA1QBdXvuOSyUwVSDlL_bE38W24MqMtf3DXN2aYJTUTUAQ7ZBNRyJHH0qJmQUHf_ZbWCfbiGqR3PahoS8&amp;currency=EUR&amp;integration-date=2024-05-13&amp;components=buttons,funding-eligibility,buttons,applepay,googlepay&amp;vault=false&amp;commit=false&amp;intent=capture&amp;disable-funding=card&amp;enable-funding=venmo,paylater" data-partner-attribution-id="Woo_PPCP" data-uid="uid_rjvdwsjnuismtbznnbpjoatrkssill"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=AZH15S9JkSTGxqJmoCVcNRfEkiIsWuYBLjaCnAITqmqepVQEmiHP6lAAj-3BdygEs3qh71GxqI39piYa&currency=EUR"></script>
 <script>
 
     let removeButton = document.getElementById("removeOrder");
@@ -501,8 +497,6 @@
         let sendDhl = document.getElementById("dhl-" + BlockItem);
         
         let Plase = document.getElementById("Plase-" + BlockItem);
-
-        console.log(Plase.checked);
 
         let pr = proc.value.replace(".", ",");
 
@@ -1330,13 +1324,24 @@
             });
         });
 
-
-        cost.forEach((item) => {
-            item.innerHTML = ALLSUM.toLocaleString('de-DE', {
+        for (let i = 0;i < cost.length;i++) 
+        {
+            cost[i].innerHTML = ALLSUM.toLocaleString('de-DE', {
                 style: 'currency',
                 currency: 'EUR'
             });
-        });
+
+            cost[i].textContent = ALLSUM.toLocaleString('de-DE', {
+                style: 'currency',
+                currency: 'EUR'
+            });
+
+            cost[i].value = ALLSUM.toLocaleString('de-DE', {
+                style: 'currency',
+                currency: 'EUR'
+            });
+        }
+       
 
     }
     function changeAdress(value) 
@@ -1647,6 +1652,30 @@
         idItem = id;
         var modal = document.getElementById(`myModal-${id}`);
         modal.style.display = "block";
+
+
+        paypal.Buttons({
+            createOrder: function (data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '0.01' // Укажите сумму заказа
+                        }
+                    }]
+                });
+            },
+            onApprove: function (data, actions) {
+                return actions.order.capture().then(function (details) {
+                    alert('Transaction completed by ' + details.payer.name.given_name);
+                    // Вы можете добавить логику для обработки успешной оплаты
+                    console.log(details); // Вывод информации о платеже в консоль
+                });
+            },
+            onError: function (err) {
+                console.error(err); // Обработка ошибок
+                alert('An error occurred during the transaction.');
+            }
+        }).render('#paypal-button-container');
     }
 
     function closedModal(id) 
@@ -1673,8 +1702,6 @@
             item.value = 1;
         })
     });
-
-   
 
     function remove(empty) 
     {

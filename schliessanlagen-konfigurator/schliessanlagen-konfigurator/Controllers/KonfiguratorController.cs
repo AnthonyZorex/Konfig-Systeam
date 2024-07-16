@@ -526,37 +526,18 @@ namespace schliessanlagen_konfigurator.Controllers
         {
             ViewBag.Info = info;
 
-            var ProductOrder = db.UserOrdersShop.Where(x => x.UserId == Product).ToList();
+            var ProductOrder = db.UserOrdersShop.Where(x => x.UserOrderKey == Product).ToList();
 
             var ItemsInfo = db.ProductSysteam.Where(x => x.UserOrdersShopId == ProductOrder.First().Id).ToList();
+
+            ViewBag.Key = ProductOrder.First().Id;
 
             ViewBag.Product = ProductOrder.ToList();
             ViewBag.ProductItem = ItemsInfo.ToList();
 
             return View();
         }
-       public ActionResult endOrder(int data)
-       {
-            var PaymentOrder = db.UserOrdersShop.Find(data);
-
-            PaymentOrder.OrderStatus = "Bezahlt";
-
-            db.SaveChanges();
-
-            return Redirect("/Identity/Account/Manage/PagePersonalOrders");
-
-       }
-
-        [HttpPost]
-        public async Task<IActionResult> SetInfo(string data)
-        {
-            var setI = db.SysteamPriceKey.Where(x => x.NameSysteam == data).Select(x => x).ToList();
-
-            ViewBag.System = setI.ToList();
-
-            return View();
-        }
-
+      
         public ActionResult IndexKonfigurator()
         {
             //ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
@@ -3290,6 +3271,17 @@ namespace schliessanlagen_konfigurator.Controllers
             return View("System_Auswählen", keyUser);
         }
 
+        [HttpGet]
+        public IActionResult HistorOrders(string userKey)
+        {
+            var PaymentOrder = db.UserOrdersShop.Where(x=>x.Id == Convert.ToInt32(userKey)).First();
+
+            PaymentOrder.OrderStatus = "Bezahlt";
+
+            db.SaveChanges();
+
+            return Redirect("/Identity/Account/Manage/HistoriOrders");
+        }
 
         [HttpGet]
         public IActionResult OrdersKey(string Lieferzeit, string Systeam, int DopelId, List<string> dopelOption, string param2, int KnayfID, int Halb, int Hebel, int Aussen, int Vorhan)

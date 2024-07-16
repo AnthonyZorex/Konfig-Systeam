@@ -87,7 +87,7 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
         string SendVat,string SendStrasse, string SemdAdressZusatz, string SendZip, string SendStadt, string SendLand, string SendTelefon,
         string DhlSend,string Pay,string Steuer, string Versand, string OrderSum,string Rehnung, string RechnungAdresse,string RechnungVorname,
         string RechnungNachname, string RechnungFirma, string RechnungVat, string RechnungStrasse, string RechnungAdressZusatz, string RechnungZip,
-        string RechnungStadt, string RechnungLand, string RechnungTelefon, string userKey)
+        string RechnungStadt, string RechnungLand, string RechnungTelefon, string userName)
         {
 
             var model = new
@@ -125,7 +125,7 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
             };
 
             var JsonObject = JsonConvert.SerializeObject(model, Formatting.Indented);
-            return RedirectToAction("SendRehnung","Konfigurator", new { info = JsonObject, Product = userKey });
+            return RedirectToAction("SendRehnung","Konfigurator", new { info = JsonObject, Product = userName });
         }
     }
 }
