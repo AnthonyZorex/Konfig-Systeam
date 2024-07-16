@@ -42,7 +42,7 @@
 
                     <div id="myModal-@z" class="modal">
 
-                      <form method="post">
+                    <form id="myForm" method="post">
 
                         <div class="modal-content">
                                 
@@ -434,14 +434,14 @@
                                     <div style="display:flex;gap:50px;"><h4>Bestellsumme:</h4><input name="OrderSum" redonly style="border:none;outline:none" value="@orderList[z].OrderSum.ToString("C")" id="costedI-@z" /></div>
                                     <br />
 
-                                    <div style="align-items:center">
-                                        <input type="submit" class="btn btn-danger" value="Zahlungspflichtig bestellen" />
+                                    <div id="paypal-button-container-@z">
+
                                     </div>
                                     <input type="hidden" value="@orderList[z].UserOrderKey" name="userName" />
                                 </div>
                             <input type="hidden" id="@z" value="true" />
                         </div>
-                            <div id="paypal-button-container"></div>
+                           
                         </form>
                     </div>  
                      
@@ -464,8 +464,10 @@
     </div>
 </div>
 
-<script src="https://www.paypal.com/sdk/js?client-id=AZH15S9JkSTGxqJmoCVcNRfEkiIsWuYBLjaCnAITqmqepVQEmiHP6lAAj-3BdygEs3qh71GxqI39piYa&currency=EUR"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=AcBDGr9EZyKwRHBxrvvXq2u-vFWhg-e2l09CS97O5fbcwx0JYkjJRfsNUS_lJ6QjdTOwGe830IkBill9&currency=EUR"></script>
 <script>
+
+    var paypalButton;
 
     let removeButton = document.getElementById("removeOrder");
     let AllOrderID = document.querySelector("#OrderId");
@@ -1341,9 +1343,23 @@
                 currency: 'EUR'
             });
         }
-       
 
+        // updateAmount(ALLSUM);
     }
+
+    function updateAmount(newAmount) 
+    {
+        paypalButton.order.update({
+            purchase_units: [{
+                amount: {
+                    value: newAmount.toString() // Новая сумма в виде строки
+                }
+            }]
+        });
+
+        console.log(newAmount.toString());
+    }
+
     function changeAdress(value) 
     {
         let rechnungSend = document.getElementById("rechnungSend");
@@ -1641,41 +1657,40 @@
 
     function OpenModalInfo(id,IdOrder) 
     {
-        let cost = document.getElementById("costedI-" + id);
 
         let cheker = document.getElementById(id);
 
+        let cost = document.getElementById("costedI-" + id);
         var stringWithoutEuro = cost.innerHTML.replace("€", "");
-        
         var costen = parseFloat(stringWithoutEuro.replace(',', '.').trim());
-        
+
+
         idItem = id;
         var modal = document.getElementById(`myModal-${id}`);
-        modal.style.display = "block";
 
+        modal.style.display = "block";
 
         paypal.Buttons({
             createOrder: function (data, actions) {
                 return actions.order.create({
                     purchase_units: [{
                         amount: {
-                            value: '0.01' // Укажите сумму заказа
+                            value: `${costen}`
                         }
                     }]
                 });
             },
+            onInit: function (data, actions) {
+                paypalButton = actions;
+            },
             onApprove: function (data, actions) {
                 return actions.order.capture().then(function (details) {
                     alert('Transaction completed by ' + details.payer.name.given_name);
-                    // Вы можете добавить логику для обработки успешной оплаты
-                    console.log(details); // Вывод информации о платеже в консоль
+                    document.getElementById('myForm').submit();
                 });
-            },
-            onError: function (err) {
-                console.error(err); // Обработка ошибок
-                alert('An error occurred during the transaction.');
             }
-        }).render('#paypal-button-container');
+        }).render(`#paypal-button-container-${id}`);
+        
     }
 
     function closedModal(id) 
