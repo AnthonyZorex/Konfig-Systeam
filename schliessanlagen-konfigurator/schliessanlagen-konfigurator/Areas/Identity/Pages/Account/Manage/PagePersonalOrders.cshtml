@@ -433,11 +433,10 @@
                                     <hr style="max-width:350px" />
                                     <div style="display:flex;gap:50px;"><h4>Bestellsumme:</h4><input name="OrderSum" redonly style="border:none;outline:none" value="@orderList[z].OrderSum.ToString("C")" id="costedI-@z" /></div>
                                     <br />
-                                    <input type="submit" value="Submit" />
+                                        <div id="paypal-button-container-@z">
+                                        </div>
 
-                                    <div id="paypal-button-container-@z">
-
-                                    </div>
+                                    <input type="hidden" value="@orderList[z].Id" id="invoiceNumber-@z" />
                                     <input type="hidden" value="@orderList[z].UserOrderKey" name="userName" />
                                 </div>
                             <input type="hidden" id="@z" value="true" />
@@ -469,8 +468,6 @@
 <script src="https://www.paypal.com/sdk/js?client-id=AcBDGr9EZyKwRHBxrvvXq2u-vFWhg-e2l09CS97O5fbcwx0JYkjJRfsNUS_lJ6QjdTOwGe830IkBill9&currency=EUR"></script>
 <script>
 
-    var paypalButton;
-
     let removeButton = document.getElementById("removeOrder");
     let AllOrderID = document.querySelector("#OrderId");
 
@@ -478,6 +475,9 @@
     let idItem = 0;
     let s = 0;
 
+    let currentPrice = '10.00'; 
+
+   
     function PlaseSend(BlockItem)
     {
         let sendDhl = document.getElementById("dhl-" + BlockItem);
@@ -1346,20 +1346,11 @@
             });
         }
 
-        // updateAmount(ALLSUM);
+        changePrice(ALLSUM);
     }
 
-    function updateAmount(newAmount) 
-    {
-        paypalButton.order.update({
-            purchase_units: [{
-                amount: {
-                    value: newAmount.toString() // Новая сумма в виде строки
-                }
-            }]
-        });
-
-        console.log(newAmount.toString());
+    function changePrice(newPrice) {
+        currentPrice = newPrice;
     }
 
     function changeAdress(value) 
@@ -1660,6 +1651,12 @@
     function OpenModalInfo(id,IdOrder) 
     {
 
+        let OrderNum = document.getElementById("invoiceNumber-" + id);
+        
+        let invoiceNumber = OrderNum.value;
+
+        console.log(invoiceNumber);
+
         let cheker = document.getElementById(id);
 
         let cost = document.getElementById("costedI-" + id);
@@ -1677,19 +1674,22 @@
                 return actions.order.create({
                     purchase_units: [{
                         amount: {
-                            value: `${costen}`
-                        }
+                            value: currentPrice
+                        },
+                        invoice_id: invoiceNumber
                     }]
                 });
             },
-            onInit: function (data, actions) {
-                paypalButton = actions;
-            },
-            onApprove: function (data, actions) {
+            onApprove: function (data, actions) 
+            {
                 return actions.order.capture().then(function (details) {
                     alert('Transaction completed by ' + details.payer.name.given_name);
                     document.getElementById('myForm').submit();
                 });
+            },
+            onError: function (err) {
+                console.error('Произошла ошибка при выполнении транзакции:', err);
+                
             }
         }).render(`#paypal-button-container-${id}`);
         

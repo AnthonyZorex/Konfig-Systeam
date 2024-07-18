@@ -927,37 +927,44 @@ namespace schliessanlagen_konfigurator.Controllers
         public async Task<IActionResult> Delete_Hebel(int id)
         {
             var hebel = db.Hebelzylinder.Find(id);
-            var a = db.Hebelzylinder_Options.Where(x => x.HebelzylinderId == hebel.Id).First();
 
-            string sourceFilePath = @"wwwroot/Image/";
+            var OptionsCount = db.Hebelzylinder_Options.ToList();
 
-            string imagePathToDelete = Path.Combine(sourceFilePath, hebel.ImageName);
-
-            if (System.IO.File.Exists(imagePathToDelete))
+            if (OptionsCount.Count() > 0)
             {
-                System.IO.File.Delete(imagePathToDelete);
+                var a = db.Hebelzylinder_Options.Where(x => x.HebelzylinderId == hebel.Id).First();
+
+                string sourceFilePath = @"wwwroot/Image/";
+
+                string imagePathToDelete = Path.Combine(sourceFilePath, hebel.ImageName);
+
+                if (System.IO.File.Exists(imagePathToDelete))
+                {
+                    System.IO.File.Delete(imagePathToDelete);
+                }
+                var option = db.Options.Where(x => x.OptionId == a.Id).First();
+
+                var optionV = db.Options_value.Where(x => x.OptionsId == option.Id).ToList();
+
+
+                db.SaveChanges();
+                for (int i = 0; i < optionV.Count(); i++)
+                {
+                    db.Options_value.Remove(optionV[i]);
+                    db.SaveChanges();
+                }
+                if (option != null)
+                {
+                    db.Options.Remove(option);
+                    db.SaveChanges();
+                    db.Hebelzylinder_Options.Remove(a);
+                    db.SaveChanges();
+                }
             }
+           
 
-            var option = db.Options.Where(x => x.OptionId == a.Id).First();
-
-            var optionV = db.Options_value.Where(x => x.OptionsId == option.Id).ToList();
             db.Hebelzylinder.Remove(hebel);
-
             db.SaveChanges();
-            for (int i = 0; i < optionV.Count(); i++)
-            {
-                db.Options_value.Remove(optionV[i]);
-                db.SaveChanges();
-            }
-            if (option != null)
-            {
-                db.Options.Remove(option);
-                db.SaveChanges();
-                db.Hebelzylinder_Options.Remove(a);
-                db.SaveChanges();
-            }
-
-
             return RedirectToAction("HebelzylinderRout");
 
         }

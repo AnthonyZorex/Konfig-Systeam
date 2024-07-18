@@ -288,7 +288,7 @@
                         </div>
                             <div id="textInform">
                             <h5>Zylinder Länge</h5>
-                            <h5>Vifile Tür</h5>
+                                <h5>Stück</h5>
                         </div>
 
                             <div id="Size-@d" class="SizeProduct">
@@ -439,7 +439,7 @@
                         </div>
                             <div id="textInform">
                             <h5>Zylinder Länge</h5>
-                            <h5>Vifile Tür</h5>
+                                <h5>Stück</h5>
                         </div>
                             <div id="Size-@d" class="SizeProduct">
                             <div>
@@ -572,10 +572,10 @@
                             </select>
                         </div>
                             <div id="textInform">
-                            <h5>Vifile Tür</h5>
+                                <h5>Stück</h5>
                         </div>
                             <div id="Size-@d" class="SizeProduct">
-                            <div style="gap: 10px;display: flex;margin-left: 50px;">
+                            <div style="gap: 10px;display: flex;">
                                     <button onclick="CylinderMinus(@d)" type="button" class="btn btn-success">-</button>
                                     <input readonly style="border: none;max-width: 80px;" name="TurCounter" type="number" min="1" value="@ViewBag.CounterTurHebel[@elemNum]" id="countSchlusse-@d" />
                                     <button onclick="CylinderPlus(@d)" type="button" class="btn btn-success">+</button>
@@ -678,7 +678,7 @@
                         </div>
                         <div id="textInform">
                             <h5>Zylinder Länge</h5>
-                            <h5>Vifile Tür</h5>
+                                <h5>Stück</h5>
                         </div>
                             <div id="Size-@d" class="SizeProduct">
                             <div>
@@ -802,7 +802,7 @@
                                 </select>
                             </div>
                             <div>
-                                <h5>Vifile Tür</h5>
+                                <h5>Stück</h5>
                             </div>
                             <div id="Size-@d" class="SizeProduct">
                                 <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
@@ -1776,7 +1776,7 @@
                         {
                             for (let i = 0; i < QueryNameOptions.length; i++) 
                             {
-                                if (QueryNameOptions[i].value === '\u2713' + "Freilauffunktion") 
+                                if (QueryNameOptions[i].value === '\u2713' + "Freilauffunktion" || QueryNameOptions[i].value === '\u2713' + "Freilauf")
                                 {
                                      let OptionOldCheker = document.getElementById(`d-${idBlock} + ${i}`);
 
@@ -1804,7 +1804,8 @@
 
                         if (item.value === '\u2713' + "Freilauffunktion" && hasFreilauffunktion === true && hasNotUndGefahrenfunktion === true || item.value === '\u2713' + "Freilauf" && hasFreilauffunktion === true && hasNotUndGefahrenfunktion === true) {
                             for (let i = 0; i < QueryNameOptions.length; i++) {
-                                if (QueryNameOptions[i].value === '\u2713' + "Not- und Gefahrenfunktion" || QueryNameOptions[i].value === '\u2713' + "NGF") {
+                                if (QueryNameOptions[i].value === '\u2713' + "Not- und Gefahrenfunktion" || QueryNameOptions[i].value === '\u2713' + "NGF") 
+                                {
                                     let OptionOldCheker = document.getElementById(`d-${idBlock} + ${i}`);
 
                                     costItems.value = parseFloat(costItems.value) - (OptionOldCheker.value);

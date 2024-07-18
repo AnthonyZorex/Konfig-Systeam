@@ -136,10 +136,7 @@
     border: none;
     width: 200px;
 }
-#countTurSelect {
-    transform: scale(0.7);
-    outline: none;
-}
+
 
 #html, body {
     height: 100%;
@@ -2854,7 +2851,10 @@
         margin-right: auto;
         border-radius: 5px;
     }
-
+    #countTurSelect {
+        outline: none;
+        margin-left:5px;
+    }
     #ExelMenu {
         background-color: #EDEDED;
         padding: 5px;
