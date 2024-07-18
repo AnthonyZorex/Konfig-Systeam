@@ -42,7 +42,7 @@ namespace schliessanlagen_konfigurator.Controllers
         {
             string sourceFilePath = @"wwwroot/Image/";
 
-            IEnumerable<string> imageFiles = Directory.GetFiles(sourceFilePath, "*.png").Select(Path.GetFileName);
+            IEnumerable<string> imageFiles = Directory.GetFiles(sourceFilePath, "*").Select(Path.GetFileName);
 
             return View("../Edit/ImageConfig", imageFiles);
 
@@ -138,7 +138,7 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpGet]
         public ActionResult Delete(string imageName)
         {
-            string sourceFilePath = @"wwwroot/Image/";
+            string sourceFilePath = @"wwwroot/image/";
 
             string imagePathToDelete = Path.Combine(sourceFilePath, imageName);
 
@@ -156,7 +156,7 @@ namespace schliessanlagen_konfigurator.Controllers
             if (file != null && file.Length > 0)
             {
                 // Путь для сохранения файла на сервере (например, папка "uploads" в корне вашего веб-приложения)
-                string uploadFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Image");
+                string uploadFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "image");
 
                 // Создаем папку, если она не существует
                 if (!Directory.Exists(uploadFolderPath))
@@ -203,6 +203,8 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
                 
             }
+
+            
 
             ViewBag.KeyCost =  listPriceKey.Select(x => x.Price).ToList();
 

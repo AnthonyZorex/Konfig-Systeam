@@ -10,7 +10,7 @@
         <div id="myModal_NewSchliessanlagen" class="d-grid gap-3">
             <div id="routBAR">
                 <div id="Bar">
-                    <button class="btn btn-danger"><a href="@Url.Action("ImageConfig","Home")">Bilde</a></button>
+                    <button class="btn btn-danger"><a href="@Url.Action("ImageConfig","Home")">Bilder</a></button>
                     <button class="btn btn-info"><a href="@Url.Action("SendMail","Home")">E-Mail senden</a></button>
                     <button class="btn btn-secondary"><a href="@Url.Action("Profil_HalbzylinderRout","Home")">Profil-Halbzylinder</a></button>
                     <button class="btn btn-success"><a href="@Url.Action("Profil_KnaufzylinderRout","Home")">Profil-Knaufzylinder</a></button>
@@ -133,13 +133,13 @@
                                 <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
                                 <td id="rowTable " class="table-info"><h6 id="cost">@item.Price.ToString("C")</h6></td>
                                 <td id="rowTable " class="table-info"><h6 id="cost">@ViewBag.KeyCost[i].ToString("C")</h6></td>
-                                <td id="rowTable" class="table-info"><a href="@Url.Action("Edit_Doppelzylinder","Home", new { item.Id })"><img src="@("/Image/edit-tools.png")" height="30" width="30" /></a></td>
+                                <td id="rowTable" class="table-info"><a href="@Url.Action("Edit_Doppelzylinder","Home", new { item.Id })"><img src="@("/image/edit-tools.png")" height="30" width="30" /></a></td>
                                 <td id="rowTable" class="table-info">
                                     <a class="compItem" href="@Url.Action("ProductProfil_Doppelzylinder","Home", new { item.Id })">
                                         <img src="@("/Image/options.png")" height="30" width="30" />
                                     </a>
                                 </td>
-                                <td id="rowTable" class="table-info"><a href="@Url.Action("Delete_Doppelzylinder","Home", new { item.Id })"><img src="@("/Image/entfernen.png")" height="30" width="30" /></a></td>
+                                <td id="rowTable" class="table-info"><a href="@Url.Action("Delete_Doppelzylinder","Home", new { item.Id })"><img src="@("/image/entfernen.png")" height="30" width="30" /></a></td>
 
                             }
                         </tr>

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "4tVACVIUbc6Zxp9CrivAFb+ji3OZAt6AXjE8ITL0JvE=",
+  "Hash": "RcCaY9S6coO8YwaTMI7RIKoAM3VRCH22viv/aToBhNE=",
   "Source": "schliessanlagen-konfigurator",
   "BasePath": "_content/schliessanlagen-konfigurator",
   "Mode": "Default",
@@ -1440,6 +1440,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Image\\ABUS Zolit.1000 Halbzylinder245047502.png"
+    },
+    {
+      "Identity": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\ABUS Zolit.1000 Hebelzylinder245110747.png",
+      "SourceId": "schliessanlagen-konfigurator",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\",
+      "BasePath": "_content/schliessanlagen-konfigurator",
+      "RelativePath": "Image/ABUS Zolit.1000 Hebelzylinder245110747.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Image\\ABUS Zolit.1000 Hebelzylinder245110747.png"
     },
     {
       "Identity": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\ABUS Zolit.1000 Hebelzylinder245222419.png",
