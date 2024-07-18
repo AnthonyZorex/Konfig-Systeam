@@ -12,27 +12,66 @@
             <form asp-action="SaveSysteamInfo" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
-                    <label asp-for="NameSysteam" class="control-label"></label>
+                    <label>Systemname</label>
                     <input required asp-for="NameSysteam" class="form-control" />
                     <span asp-validation-for="NameSysteam" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Price" class="control-label"></label>
+                    <label>Preis</label>
                     <input required asp-for="Price" class="form-control" />
                     <span asp-validation-for="Price" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="DesctiptionsSysteam" class="control-label"></label>
-                    <input required asp-for="DesctiptionsSysteam" class="form-control" />
+                    <label class="control-label">Systembeschreibung</label>
+                    <textarea asp-for="DesctiptionsSysteam" required class="form-control" id="exampleFormControlTextarea1"></textarea>
                     <span asp-validation-for="DesctiptionsSysteam" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Lieferzeit" class="control-label"></label>
-                    <input required asp-for="Lieferzeit" class="form-control" />
+                    <textarea asp-for="Lieferzeit" required class="form-control" id="exampleFormControlTextarea1"></textarea>
                     <span asp-validation-for="Lieferzeit" class="text-danger"></span>
-                </div>       
+                </div>
+                <input value="@Model.NameSysteam" type="hidden" name="AltName" class="form-control" />
                 <input type="submit" value="Save" class="btn btn-primary" />
             </form>
         </div>
     </div>
+}
+ @section Scripts
+ {
+    <script>
+        tinymce.init({
+            selector: '#exampleFormControlTextarea1',
+            plugins: [
+                'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
+                'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen', 'insertdatetime',
+                'media', 'table', 'emoticons', 'help'
+            ],
+            toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
+                'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
+                'forecolor backcolor emoticons | help',
+            menu: {
+                favs: { title: 'Discriptions', items: 'code visualaid | searchreplace | emoticons' }
+            },
+            menubar: 'favs file edit view insert format tools table help',
+            content_css: 'css/content.css'
+        });
+
+        tinymce.init({
+            selector: '#exampleFormControlTextarea1',
+            plugins: [
+                'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
+                'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen', 'insertdatetime',
+                'media', 'table', 'emoticons', 'help'
+            ],
+            toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
+                'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
+                'forecolor backcolor emoticons | help',
+            menu: {
+                favs: { title: 'Discriptions', items: 'code visualaid | searchreplace | emoticons' }
+            },
+            menubar: 'favs file edit view insert format tools table help',
+            content_css: 'css/content.css'
+        });
+    </script>
 }

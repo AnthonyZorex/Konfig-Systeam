@@ -200,10 +200,79 @@ namespace schliessanlagen_konfigurator.Controllers
             return View("../Edit/Edit_System", item);
         }
         [HttpPost]
-        public async Task<IActionResult> SaveSysteamInfo(SysteamPriceKey systeam)
+        public async Task<IActionResult> SaveSysteamInfo(SysteamPriceKey systeam, string AltName)
         {
-            db.SysteamPriceKey.Update(systeam);
+            var dopple = db.Profil_Doppelzylinder.Where(x => x.NameSystem == AltName).First();
+            if (dopple != null)
+            {
+                dopple.NameSystem = systeam.NameSysteam;
+
+                db.Profil_Doppelzylinder.Update(dopple);
+                db.SaveChanges();
+            }
+           
+            var knayf = db.Profil_Knaufzylinder.Where(x => x.NameSystem == AltName).First();
+
+            if (knayf != null)
+            {
+                knayf.NameSystem = systeam.NameSysteam;
+
+                db.Profil_Knaufzylinder.Update(knayf);
+                db.SaveChanges();
+            }
+
+            var halb = db.Profil_Halbzylinder.Where(x => x.NameSystem == AltName).First();
+
+            if (halb != null)
+            {
+                halb.NameSystem = systeam.NameSysteam;
+
+                db.Profil_Halbzylinder.Update(halb);
+                db.SaveChanges();
+            }
+
+            var hebel = db.Hebelzylinder.Where(x => x.NameSystem == AltName).First();
+
+            if (hebel != null)
+            {
+                hebel.NameSystem = systeam.NameSysteam;
+
+                db.Hebelzylinder.Update(hebel);
+                db.SaveChanges();
+            }
+          
+            var vorhang = db.Vorhangschloss.Where(x => x.NameSystem == AltName).First();
+
+            if (vorhang != null)
+            {
+                vorhang.NameSystem = systeam.NameSysteam;
+
+                db.Vorhangschloss.Update(vorhang);
+                db.SaveChanges();
+            }
+
+            var Aussen = db.Aussenzylinder_Rundzylinder.Where(x => x.NameSystem == AltName).First();
+
+            if (Aussen != null)
+            {
+                Aussen.NameSystem = systeam.NameSysteam;
+
+                db.Aussenzylinder_Rundzylinder.Update(Aussen);
+                db.SaveChanges();
+            }
+           
+
+            var sys = db.SysteamPriceKey.Where(x => x.NameSysteam == AltName).First();
+
+            sys.NameSysteam = systeam.NameSysteam;
+            sys.Price = systeam.Price;
+            sys.DesctiptionsSysteam = systeam.DesctiptionsSysteam;
+            sys.Lieferzeit = systeam.Lieferzeit;
+
+            db.SysteamPriceKey.Update(sys);
+
             db.SaveChanges();
+
             return RedirectToAction("SystemInfo", "Home");
         }
         public async Task<IActionResult> Index()
