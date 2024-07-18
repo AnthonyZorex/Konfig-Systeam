@@ -214,6 +214,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdFxFZGl0X1Byb2ZpbF9LbmF1Znp5bGluZGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Anthnony/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_System.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdFxFZGl0X1N5c3RlbS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Anthnony/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Vorhangschloss.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdFxFZGl0X1ZvcmhhbmdzY2hsb3NzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -284,6 +288,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Anthnony/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/SendMail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTZW5kTWFpbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Anthnony/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/SystemInfo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTeXN0ZW1JbmZvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Anthnony/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/VorhangschlossRout.cshtml]

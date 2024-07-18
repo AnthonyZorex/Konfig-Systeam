@@ -185,6 +185,27 @@ namespace schliessanlagen_konfigurator.Controllers
         }
 
         #region ViewZylinder
+        [HttpGet]
+        public async Task<IActionResult> SystemInfo()
+        {
+            var System = db.SysteamPriceKey.ToList();
+            ViewBag.item = System;
+            return View();
+        }
+        public async Task<IActionResult> Edit_System(int id)
+        {
+
+            var item = db.SysteamPriceKey.Find(id);
+
+            return View("../Edit/Edit_System", item);
+        }
+        [HttpPost]
+        public async Task<IActionResult> SaveSysteamInfo(SysteamPriceKey systeam)
+        {
+            db.SysteamPriceKey.Update(systeam);
+            db.SaveChanges();
+            return RedirectToAction("SystemInfo", "Home");
+        }
         public async Task<IActionResult> Index()
         {
             var AllDoppel = await db.Profil_Doppelzylinder.OrderBy(x => x.Price).Select(x=>x.NameSystem).ToListAsync();

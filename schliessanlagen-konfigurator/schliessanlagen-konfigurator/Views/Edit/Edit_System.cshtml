@@ -1,0 +1,38 @@
+﻿@model schliessanlagen_konfigurator.Models.SysteamPriceKey;
+@{
+    ViewData["Title"] = "EditSystem";
+    int i = -1;
+}
+@if (User.IsInRole("admin"))
+{
+    <h1>Edit Aussenzylinder \ Rundzylinder</h1>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-action="SaveSysteamInfo" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="NameSysteam" class="control-label"></label>
+                    <input required asp-for="NameSysteam" class="form-control" />
+                    <span asp-validation-for="NameSysteam" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input required asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DesctiptionsSysteam" class="control-label"></label>
+                    <input required asp-for="DesctiptionsSysteam" class="form-control" />
+                    <span asp-validation-for="DesctiptionsSysteam" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Lieferzeit" class="control-label"></label>
+                    <input required asp-for="Lieferzeit" class="form-control" />
+                    <span asp-validation-for="Lieferzeit" class="text-danger"></span>
+                </div>       
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </form>
+        </div>
+    </div>
+}

@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "SystemInfo";
+}
+<div>
+    <h1>@ViewData["Title"]</h1>
+    @using (Html.BeginForm("EditSystem", "Home", FormMethod.Get))
+    {
+        <table class="table table-bordered table-sm">
+            <tbody>
+                <tr id="Table3">
+                    <th>NameSysteam</th>
+                    <th>Price</th>
+                    <th>Lieferzeit</th>
+                    <th>Bearbeiten</th>
+                    @foreach (var item in ViewBag.item)
+                    {
+                        <td id="rowTable " class="table-info"><h6 >@item.NameSysteam</h6></td>
+                        <td id="rowTable " class="table-info"><h6 id="cost">@item.Price</h6></td>
+                        <td id="rowTable " class="table-info"><h6 >@item.Lieferzeit</h6></td>
+                        <td id="rowTable" class="table-info"><a href="@Url.Action("Edit_System","Home", new { id = item.Id })"><img src="@("/image/edit-tools.png")" height="30" width="30" /></a></td>
+                    }
+                </tr>
+            </tbody>
+        </table>
+    }
+</div>
