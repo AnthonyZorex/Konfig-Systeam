@@ -30,61 +30,150 @@
                         </div>
                     </div>
 
-                    <div id="product_desciptions">
+                    @if (ViewBag.Knayf != null)
+                    {
+                        <div id="product_desciptions">
 
-                        <div style="margin-bottom: 50px;">
-                            <label>Name</label>
-                            <input asp-for="Name" required class="form-control" type="text" name="Name" />
-                        </div>
-
-                        <div style="margin-bottom: 50px;">
-                            <label>Firmenname</label>
-                            <input asp-for="companyName" required class="form-control" type="text" />
-                        </div>
-
-                        <div style="margin-bottom: 50px;">
-                            <label>Name System</label>
-                            <input asp-for="NameSystem" required class="form-control" type="text" />
-                        </div>
-
-                        <div style="margin-bottom: 50px;">
-                            <label>Beschreibungen</label>
-                            <textarea asp-for="description"  class="form-control" id="exampleFormControlTextarea1"></textarea>
-                        </div>
-                        @if (ViewBag.Content != null)
-                        {
-                            <div>
-                                <h3>Submitted Content:</h3>
-                                <div>@Html.Raw(ViewBag.Content)</div>
-                            </div>
-                        }
-
-                        <div style="margin-bottom: 50px;">
-                            <label>Price</label>
-                            <input asp-for="Price" required class="form-control" />
-                        </div>
-
-                        <h1>Aussen & Innen <input id="addAussen_Innen" class="btn btn-success" type="button" value="+" /><input id="addAussen_Innen_remove" class="btn btn-danger" type="button" value="-" /></h1>
-                        <div id="Aussen_Innen_ProfilDopel">
-
-                            <div id="AussenProfilDopel">
-                                <input type="number" class="form-control" required placeholder="Aussen" id="aus" step="0.01" name="aussen" />
-                                <input class="form-control" type="number" placeholder="Price" name="costSizeAussen" id="ausCost" step="0.01" />
+                            <div style="margin-bottom: 50px;">
+                                <label>Name</label>
+                                <input asp-for="Name" value="@ViewBag.Knayf.Name" required class="form-control" type="text" name="Name" />
                             </div>
 
-                            <div id="InnenProfilDopel">
-                                <input type="number" class="form-control" required placeholder="innen" id="inter" step="0.01" name="innen" />
-                                <input type="number" class="form-control" placeholder="Price" name="costSizeIntern" id="interCost" step="0.01" />
+                            <div style="margin-bottom: 50px;">
+                                <label>Firmenname</label>
+                                <input asp-for="companyName" value="@ViewBag.Knayf.companyName" required class="form-control" type="text" />
                             </div>
-                        </div>
-                        <div id="productOptions">
-                        </div>
 
-                    </div>
-                    <button id="createBlockBtn" type="button" class="btn btn-success">Optionen hinzufügen</button>
-                    <button id="addInputBtn" type="button" class="btn btn-success">+</button>
-                    <button id="RemoveInputBtn" type="button" class="btn btn-danger">-</button>
-                    <input type="submit" class="btn btn-success" id="input" value="Erstellen Profil Kanufzylinder" />
+                            <div style="margin-bottom: 50px;">
+                                <label>Name System</label>
+                                <select asp-for="NameSystem" required id="DoppelSys" class="form-select">
+
+                                    @foreach (var list in ViewBag.System)
+                                    {
+                                        if (ViewBag.Knayf.NameSystem == list)
+                                        {
+                                            <option selected>@list</option>
+                                        }
+                                        else
+                                        {
+                                            <option>@list</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+
+                            <div style="margin-bottom: 50px;">
+                                <label>Beschreibungen</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1">@ViewBag.Knayf.description</textarea>
+                            </div>
+
+                            <div style="margin-bottom: 50px;">
+                                <label>Price</label>
+                                <input asp-for="Price" value="@ViewBag.Knayf.Price" required class="form-control" />
+                            </div>
+
+                            <h1>Aussen & Innen <input id="addAussen_Innen" class="btn btn-success" type="button" value="+" /><input id="addAussen_Innen_remove" class="btn btn-danger" type="button" value="-" /></h1>
+                            <div id="Aussen_Innen_ProfilDopel">
+
+                                <div id="AussenProfilDopel">
+
+                                    @if (ViewBag.Size!=null)
+                                    {
+                                        @foreach (var item in ViewBag.Size)
+                                        {
+                                            <input type="number" class="form-control" required value="@item.aussen" id="aus" step="0.01" name="aussen" />
+                                            <input class="form-control" type="number" value="@item.costSizeAussen" name="costSizeAussen" id="ausCost" step="0.01" />
+                                        }
+                                       
+                                    }
+                                    else
+                                    {
+                                        <input type="number" class="form-control" required placeholder="Aussen" id="aus" step="0.01" name="aussen" />
+                                        <input class="form-control" type="number" placeholder="Price" name="costSizeAussen" id="ausCost" step="0.01" />
+                                    }
+                                    
+                                </div>
+
+                                <div id="InnenProfilDopel">
+
+                                    @if (ViewBag.Size != null)
+                                    {
+                                        @foreach (var item in ViewBag.Size)
+                                        {
+                                            <input type="number" class="form-control" required value="@item.Intern" id="inter" step="0.01" name="innen" />
+                                            <input type="number" class="form-control" value="@item.costSizeIntern" name="costSizeIntern" id="interCost" step="0.01" />
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <input type="number" class="form-control" required placeholder="innen" id="inter" step="0.01" name="innen" />
+                                        <input type="number" class="form-control" placeholder="Price" name="costSizeIntern" id="interCost" step="0.01" />
+                                    }
+                                   
+                                </div>
+                            </div>
+                            <div id="productOptions">
+                            </div>
+
+                        </div>
+                        <button id="createBlockBtn" type="button" class="btn btn-success">Optionen hinzufügen</button>
+                        <button id="addInputBtn" type="button" class="btn btn-success">+</button>
+                        <button id="RemoveInputBtn" type="button" class="btn btn-danger">-</button>
+                        <input type="submit" class="btn btn-success" id="input" value="Erstellen Profil Kanufzylinder" />
+                    }
+                    else
+                    {
+                        <div id="product_desciptions">
+
+                            <div style="margin-bottom: 50px;">
+                                <label>Name</label>
+                                <input asp-for="Name" required class="form-control" type="text" name="Name" />
+                            </div>
+
+                            <div style="margin-bottom: 50px;">
+                                <label>Firmenname</label>
+                                <input asp-for="companyName" required class="form-control" type="text" />
+                            </div>
+
+                            <div style="margin-bottom: 50px;">
+                                <label>Name System</label>
+                                <input asp-for="NameSystem" id="DoppelSys" required class="form-control" type="text" />
+                            </div>
+
+                            <div style="margin-bottom: 50px;">
+                                <label>Beschreibungen</label>
+                                <textarea asp-for="description" class="form-control" id="exampleFormControlTextarea1"></textarea>
+                            </div>
+
+
+                            <div style="margin-bottom: 50px;">
+                                <label>Price</label>
+                                <input asp-for="Price" required class="form-control" />
+                            </div>
+
+                            <h1>Aussen & Innen <input id="addAussen_Innen" class="btn btn-success" type="button" value="+" /><input id="addAussen_Innen_remove" class="btn btn-danger" type="button" value="-" /></h1>
+                            <div id="Aussen_Innen_ProfilDopel">
+
+                                <div id="AussenProfilDopel">
+                                    <input type="number" class="form-control" required placeholder="Aussen" id="aus" step="0.01" name="aussen" />
+                                    <input class="form-control" type="number" placeholder="Price" name="costSizeAussen" id="ausCost" step="0.01" />
+                                </div>
+
+                                <div id="InnenProfilDopel">
+                                    <input type="number" class="form-control" required placeholder="innen" id="inter" step="0.01" name="innen" />
+                                    <input type="number" class="form-control" placeholder="Price" name="costSizeIntern" id="interCost" step="0.01" />
+                                </div>
+                            </div>
+                            <div id="productOptions">
+                            </div>
+
+                        </div>
+                        <button id="createBlockBtn" type="button" class="btn btn-success">Optionen hinzufügen</button>
+                        <button id="addInputBtn" type="button" class="btn btn-success">+</button>
+                        <button id="RemoveInputBtn" type="button" class="btn btn-danger">-</button>
+                        <input type="submit" class="btn btn-success" id="input" value="Erstellen Profil Kanufzylinder" />
+                    }
+                    
                 </form>
             </div>
 
@@ -106,6 +195,7 @@
                             <th>Editieren</th>
                             <th>Optionen</th>
                             <th>Löschen</th>
+                            <th>Vorlage</th>
 
                             @foreach (var item in ViewBag.item)
                             {
@@ -122,6 +212,7 @@
                                     </a>
                                 </td>
                                 <td id="rowTable" class="table-info"><a href="@Url.Action("Delete_KnayfZylinder","Home", new { item.Id })"><img src="@("/Image/entfernen.png")" height="30" width="30" /></a></td>
+                                <td id="rowTable" class="table-info"><a href="@Url.Action("Profil_KnaufzylinderRout","Home", new { id = item.Id })"><img src="@("/image/3d-modeling.png")" height="30" width="30" /></a></td>
                             }
 
                         </tr>

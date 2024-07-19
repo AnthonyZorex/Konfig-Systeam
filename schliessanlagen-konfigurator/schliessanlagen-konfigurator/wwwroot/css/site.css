@@ -764,7 +764,7 @@
 
     #Table {
         display: grid;
-        grid-template-columns: repeat(9, auto);
+        grid-template-columns: repeat(10, auto);
     }
     #Table3 {
         display: grid;
@@ -1519,7 +1519,7 @@
     #Table {
         transform: scale(0.99);
         display: grid;
-        grid-template-columns: repeat(9,auto);
+        grid-template-columns: repeat(10,auto);
     }
     #Table3 {
         display: grid;
@@ -1527,7 +1527,7 @@
     }
     #Table2 {
         display: grid;
-        grid-template-columns: repeat(8,auto);
+        grid-template-columns: repeat(9,auto);
     }
 
     #TableOptions {
@@ -2618,7 +2618,7 @@
 
     #Table {
         display: grid;
-        grid-template-columns: repeat(9,auto);
+        grid-template-columns: repeat(10,auto);
     }
     #Table3 {
         display: grid;
@@ -2626,7 +2626,7 @@
     }
     #Table2 {
         display: grid;
-        grid-template-columns: repeat(8,auto);
+        grid-template-columns: repeat(9,auto);
     }
 
     #TableOptions {

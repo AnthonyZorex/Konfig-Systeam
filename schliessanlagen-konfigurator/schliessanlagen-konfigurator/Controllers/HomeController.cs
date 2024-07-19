@@ -275,60 +275,176 @@ namespace schliessanlagen_konfigurator.Controllers
 
             return RedirectToAction("SystemInfo", "Home");
         }
-        public async Task<IActionResult> Index()
+
+        public async Task<IActionResult> Index(int id)
         {
-            var AllDoppel = await db.Profil_Doppelzylinder.OrderBy(x => x.Price).Select(x=>x.NameSystem).ToListAsync();
-
-            ViewBag.item = await db.Profil_Doppelzylinder.OrderBy(x=>x.Price).ToListAsync();
-
-            var listPriceKey = new List<SysteamPriceKey>();
-            
-            foreach (var System in AllDoppel)
+            if (id != 0)
             {
-                var itemKey = await db.SysteamPriceKey.Where(x => x.NameSysteam == System).ToListAsync();
-               
-                foreach(var i in itemKey)
-                {
-                    listPriceKey.Add(i);
-                }
+
+                var allSystem = db.SysteamPriceKey.Select(x => x.NameSysteam).ToList();
+
+                ViewBag.System = allSystem;
+
+                var Example = db.Profil_Doppelzylinder.Where(x => x.Id == id).First();
+
+                ViewBag.Dopple = Example;
+
+                var Size = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == Example.Id).ToList();
                 
+                ViewBag.Size = Size;
+
+                var AllDoppel = await db.Profil_Doppelzylinder.OrderBy(x => x.Price).Select(x => x.NameSystem).ToListAsync();
+
+                ViewBag.item = await db.Profil_Doppelzylinder.OrderBy(x => x.Price).ToListAsync();
+
+                var listPriceKey = new List<SysteamPriceKey>();
+
+                foreach (var System in AllDoppel)
+                {
+                    var itemKey = await db.SysteamPriceKey.Where(x => x.NameSysteam == System).ToListAsync();
+
+                    foreach (var i in itemKey)
+                    {
+                        listPriceKey.Add(i);
+                    }
+
+                }
+                ViewBag.KeyCost = listPriceKey.Select(x => x.Price).ToList();
+            }
+            else
+            {
+                var AllDoppel = await db.Profil_Doppelzylinder.OrderBy(x => x.Price).Select(x => x.NameSystem).ToListAsync();
+
+                ViewBag.item = await db.Profil_Doppelzylinder.OrderBy(x => x.Price).ToListAsync();
+
+                var listPriceKey = new List<SysteamPriceKey>();
+
+                foreach (var System in AllDoppel)
+                {
+                    var itemKey = await db.SysteamPriceKey.Where(x => x.NameSysteam == System).ToListAsync();
+
+                    foreach (var i in itemKey)
+                    {
+                        listPriceKey.Add(i);
+                    }
+
+                }
+                ViewBag.KeyCost = listPriceKey.Select(x => x.Price).ToList();
+            }
+            return View();
+        }
+
+
+        public async Task<IActionResult> Profil_KnaufzylinderRout(int id)
+        {
+            if (id != 0)
+            {
+                var Knauf = db.Profil_Knaufzylinder.Where(x => x.Id == id).First();
+                
+                ViewBag.item = db.Profil_Knaufzylinder.OrderBy(x => x.Price).ToList();
+
+                ViewBag.Knayf = Knauf;
+
+                var Size = db.Aussen_Innen_Knauf.Where(x => x.Profil_KnaufzylinderId == id).ToList();
+
+                ViewBag.Size = Size;
+
+                ViewBag.System = db.SysteamPriceKey.Select(x => x.NameSysteam).ToList();
+
+            }
+            else
+            {
+                ViewBag.item = db.Profil_Knaufzylinder.OrderBy(x => x.Price).ToList();
+            }
+           
+            return View();
+        }
+        [HttpGet]
+        public IActionResult HebelzylinderRout(int id)
+        {
+            if (id != 0)
+            {
+                var Hebelzylinder = db.Hebelzylinder.Where(x => x.Id == id).First();
+                
+                ViewBag.Hebel = Hebelzylinder;
+
+                ViewBag.System = db.SysteamPriceKey.Select(x => x.NameSysteam).ToList();
+
+                ViewBag.item = db.Hebelzylinder.OrderBy(x => x.Price).ToList();
+            }
+            else
+            {
+                ViewBag.item = db.Hebelzylinder.OrderBy(x => x.Price).ToList();
+            }
+           
+            return View();
+        }
+        [HttpGet]
+        public IActionResult VorhangschlossRout(int id)
+        {
+            if (id !=0)
+            {
+                var Vorhangschloss = db.Vorhangschloss.Where(x => x.Id == id).First();
+
+                ViewBag.Vorhang = Vorhangschloss;
+
+                ViewBag.item = db.Vorhangschloss.OrderBy(x => x.Price).ToList();
+
+                var Size = db.Size.Where(x => x.VorhangschlossId == id).ToList();
+
+                ViewBag.Groze = Size;
+
+                ViewBag.System = db.SysteamPriceKey.Select(x => x.NameSysteam).ToList();
+            }
+            else
+            {
+                ViewBag.item = db.Vorhangschloss.OrderBy(x => x.Price).ToList();
+            }
+           
+            return View();
+        }
+        [HttpGet]
+        public IActionResult Aussenzylinder_RundzylinderRout(int id)
+        {
+            if(id!=0)
+            {
+                var Aussenzylinder = db.Aussenzylinder_Rundzylinder.Where(x => x.Id == id).First();
+
+                ViewBag.AussenZyl = Aussenzylinder;
+
+                ViewBag.System = db.SysteamPriceKey.Select(x => x.NameSysteam).ToList();
+
+                ViewBag.item = db.Aussenzylinder_Rundzylinder.OrderBy(x => x.Price).ToList();
+            }
+            else
+            {
+                ViewBag.item = db.Aussenzylinder_Rundzylinder.OrderBy(x => x.Price).ToList();
+            }
+           
+            return View();
+        }
+        [HttpGet]
+        public IActionResult Profil_HalbzylinderRout(int id)
+        {
+            if (id != 0)
+            {
+                var Example = db.Profil_Halbzylinder.Where(x => x.Id == id).First();
+                
+                ViewBag.Habel = Example;
+
+                var Size = db.Aussen_Innen_Halbzylinder.Where(x => x.Profil_HalbzylinderId == Example.Id).ToList();
+
+                ViewBag.Size = Size;
+
+                ViewBag.System = db.SysteamPriceKey.Select(x=>x.NameSysteam).ToList();  
+
+                ViewBag.item = db.Profil_Halbzylinder.OrderBy(x => x.Price).ToList();
+            }
+            else
+            {
+                ViewBag.item = db.Profil_Halbzylinder.OrderBy(x => x.Price).ToList();
             }
 
-            
-
-            ViewBag.KeyCost =  listPriceKey.Select(x => x.Price).ToList();
-
-            return View();
-        }
-
-
-        public async Task<IActionResult> Profil_KnaufzylinderRout()
-        {
-            ViewBag.item = db.Profil_Knaufzylinder.OrderBy(x => x.Price).ToList();
-            return View();
-        }
-        [HttpGet]
-        public IActionResult HebelzylinderRout()
-        {
-            ViewBag.item = db.Hebelzylinder.OrderBy(x => x.Price).ToList();
-            return View();
-        }
-        [HttpGet]
-        public IActionResult VorhangschlossRout()
-        {
-            ViewBag.item = db.Vorhangschloss.OrderBy(x => x.Price).ToList();
-            return View();
-        }
-        [HttpGet]
-        public IActionResult Aussenzylinder_RundzylinderRout()
-        {
-            ViewBag.item = db.Aussenzylinder_Rundzylinder.OrderBy(x => x.Price).ToList();
-            return View();
-        }
-        [HttpGet]
-        public IActionResult Profil_HalbzylinderRout()
-        {
-            ViewBag.item = db.Profil_Halbzylinder.OrderBy(x => x.Price).ToList();
             return View();
         }
         [HttpPost]   
@@ -975,7 +1091,6 @@ namespace schliessanlagen_konfigurator.Controllers
         #endregion
         #region DelitZylinderItem
         [HttpGet]
-        [Route("Home/Delete_Doppelzylinder")]
         public async Task<IActionResult> Delete_KnayfZylinder(int id)
         {
             var Knaufzylinder = db.Profil_Knaufzylinder.Find(id);

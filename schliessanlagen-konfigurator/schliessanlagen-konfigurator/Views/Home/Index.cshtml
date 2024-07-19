@@ -35,72 +35,177 @@
                             @Html.ValidationMessageFor(m => m.ImageFile, "", new { @class = "error" })
                         </div>
                     </div>
+                    @if (ViewBag.Dopple != null)
+                    {
+                        <div id="product_desciptions">
 
-                    <div id="product_desciptions">
+                            <div style="margin-bottom: 50px;">
+                                <label>Name</label>
+                                <input asp-for="Name" value="@ViewBag.Dopple.Name" required class="form-control" type="text" name="Name" />
+                            </div>
 
-                        <div style="margin-bottom: 50px;">
-                            <label>Name</label>
-                            <input asp-for="Name" required class="form-control" type="text" name="Name" />
-                        </div>
+                            <div style="margin-bottom: 50px;">
+                                <label>Firmenname</label>
+                                <input asp-for="companyName" value="@ViewBag.Dopple.companyName" required class="form-control" type="text" />
+                            </div>
 
-                        <div style="margin-bottom: 50px;">
-                            <label>Firmenname</label>
-                            <input asp-for="companyName" required class="form-control" type="text" />
-                        </div>
+                            <div style="margin-bottom: 50px;">
+                                <label>Name System</label>
+                               
+                                <select asp-for="NameSystem" onchange="systemSwitch(event.target.value)" required id="DoppelSys" class="form-select">
 
-                        <div style="margin-bottom: 50px;">
-                            <label>Name System</label>
-                            <input asp-for="NameSystem" required class="form-control" type="text" />
+                                    @foreach (var list in ViewBag.System)
+                                    {
+                                        if (ViewBag.Dopple.NameSystem == list)
+                                        {
+                                            <option selected>@list</option>
+                                        }
+                                        else
+                                        {
+                                            <option>@list</option>
+                                        }
+                                    }
+                                </select>
 
-                            <div style="margin-bottom: 50px;margin-top: 50px">
-                          <label>Beschreibungen</label>
-                                <textarea asp-for="description"   class="form-control" id="exampleFormControlTextarea1"></textarea>
-                        </div>
-                            @if (ViewBag.Content != null)
-                            {
-                                <div>
-                                    <h3>Submitted Content:</h3>
-                                    <div>@Html.Raw(ViewBag.Content)</div>
+                                <div style="margin-bottom: 50px;margin-top: 50px">
+                                    <label>Beschreibungen</label>
+                                    <textarea  class="form-control" id="exampleFormControlTextarea1">@ViewBag.Dopple.description</textarea>
                                 </div>
-                            }
+                             
+                                <div style="margin-bottom: 50px;">
+                                    <label>Price</label>
+                                    <input asp-for="Price" value="@ViewBag.Dopple.Price" required class="form-control" />
+                                </div>
+                                <h1>Aussen & Innen <input id="addAussen_Innen" class="btn btn-success" type="button" value="+" /><input id="addAussen_Innen_remove" class="btn btn-danger" type="button" value="-" /></h1>
+
+                                <div id="Aussen_Innen_ProfilDopel">
+
+                                    <div id="AussenProfilDopel">
+
+                                        @if (ViewBag.Size != null)
+                                        {
+                                            @foreach (var aussen in ViewBag.Size)
+                                            {
+                                                <input type="number" class="form-control" value="@aussen.aussen" id="aus" step="0.01" name="aussen" />
+                                                <input class="form-control" name="costSizeAussen" type="number" value="@aussen.costSizeAussen" id="ausCost" step="0.01" />
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <input type="number" class="form-control" placeholder="Aussen" id="aus" step="0.01" name="aussen" />
+                                            <input class="form-control" name="costSizeAussen" type="number" placeholder="Price" id="ausCost" step="0.01" />
+                                        }
+                                       
+                                        
+                                    </div>
+
+                                    <div id="InnenProfilDopel">
+
+                                        @if (ViewBag.Size != null)
+                                        {
+                                            @foreach (var aussen in ViewBag.Size)
+                                            {
+                                                <input type="number" class="form-control" value="@aussen.Intern" id="inter" step="0.01" name="innen" />
+                                                <input class="form-control" value="@aussen.costSizeIntern" type="number" name="costSizeIntern" step="0.01" id="interCost" />
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <input type="number" class="form-control" placeholder="Innen" id="inter" step="0.01" name="innen" />
+                                            <input class="form-control" placeholder="Price" type="number" name="costSizeIntern" step="0.01" id="interCost" />
+                                        } 
+                                    </div>
+                                </div>
+                                <div id="productOptions">
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <h2>Schlüssel</h2>
+                        <div style="margin-bottom: 50px;margin-top: 50px">
+                            <label>Schlüsselname</label>
+                            <input name="KeyName" id="NameSys" type="text" class="form-control" />
+                        </div>
                         <div style="margin-bottom: 50px;">
-                            <label>Price</label>
-                            <input asp-for="Price" required class="form-control" />
+                            <label>Schlüsselkosten</label>
+                            <input name="KeyCost" type="number" step="0,1" min="0" class="form-control" />
                         </div>
-                        <h1>Aussen & Innen <input id="addAussen_Innen" class="btn btn-success" type="button" value="+" /><input id="addAussen_Innen_remove" class="btn btn-danger" type="button" value="-" /></h1>
 
-                        <div id="Aussen_Innen_ProfilDopel">
+                        <hr />
+                        <button id="createBlockBtn" type="button" class="btn btn-success">Optionen hinzufügen</button>
+                        <button id="addInputBtn" type="button" class="btn btn-success">+</button>
+                        <button id="RemoveInputBtn" type="button" class="btn btn-danger">-</button>
+                        <input type="submit" class="btn btn-success" id="input" value="Erstellen Profil Doppelzylinder" />
+                    }
+                    else
+                    {
+                        <div id="product_desciptions">
 
-                            <div id="AussenProfilDopel">
-                                <input type="number" class="form-control" placeholder="Aussen" id="aus" step="0.01" name="aussen" />
-                                    <input class="form-control" name="costSizeAussen" type="number" placeholder="Price" id="ausCost" step="0.01" />
+                            <div style="margin-bottom: 50px;">
+                                <label>Name</label>
+                                <input asp-for="Name" required class="form-control" type="text" name="Name" />
                             </div>
 
-                            <div id="InnenProfilDopel">
-                                <input type="number" class="form-control" placeholder="Innen" id="inter" step="0.01" name="innen" />
-                                    <input class="form-control" placeholder="Price" type="number" name="costSizeIntern" step="0.01" id="interCost" />
+                            <div style="margin-bottom: 50px;">
+                                <label>Firmenname</label>
+                                <input asp-for="companyName" required class="form-control" type="text" />
+                            </div>
+
+                            <div style="margin-bottom: 50px;">
+                                <label>Name System</label>
+                                <input asp-for="NameSystem" onchange="systemSwitch(event.target.value)" id="DoppelSys" required class="form-control" type="text" />
+
+                                <div style="margin-bottom: 50px;margin-top: 50px">
+                                    <label>Beschreibungen</label>
+                                    <textarea asp-for="description" class="form-control" id="exampleFormControlTextarea1"></textarea>
+                                </div>
+                                @if (ViewBag.Content != null)
+                                {
+                                    <div>
+                                        <h3>Submitted Content:</h3>
+                                        <div>@Html.Raw(ViewBag.Content)</div>
+                                    </div>
+                                }
+                                <div style="margin-bottom: 50px;">
+                                    <label>Price</label>
+                                    <input asp-for="Price" required class="form-control" />
+                                </div>
+                                <h1>Aussen & Innen <input id="addAussen_Innen" class="btn btn-success" type="button" value="+" /><input id="addAussen_Innen_remove" class="btn btn-danger" type="button" value="-" /></h1>
+
+                                <div id="Aussen_Innen_ProfilDopel">
+
+                                    <div id="AussenProfilDopel">
+                                        <input type="number" class="form-control" placeholder="Aussen" id="aus" step="0.01" name="aussen" />
+                                        <input class="form-control" name="costSizeAussen" type="number" placeholder="Price" id="ausCost" step="0.01" />
+                                    </div>
+
+                                    <div id="InnenProfilDopel">
+                                        <input type="number" class="form-control" placeholder="Innen" id="inter" step="0.01" name="innen" />
+                                        <input class="form-control" placeholder="Price" type="number" name="costSizeIntern" step="0.01" id="interCost" />
+                                    </div>
+                                </div>
+                                <div id="productOptions">
+                                </div>
                             </div>
                         </div>
-                        <div id="productOptions">
+                        <hr />
+                        <h2>Schlüssel</h2>
+                        <div style="margin-bottom: 50px;margin-top: 50px">
+                            <label>Schlüsselname</label>
+                            <input name="KeyName" id="NameSys" type="text" class="form-control" />
                         </div>
+                        <div style="margin-bottom: 50px;">
+                            <label>Schlüsselkosten</label>
+                            <input name="KeyCost" type="number" step="0,1" min="0" class="form-control" />
                         </div>
-                    </div>
-                    <hr />
-                    <h2>Schlüssel</h2>
-                    <div style="margin-bottom: 50px;margin-top: 50px">
-                        <label>Schlüsselname</label>
-                        <input name="KeyName" type="text" class="form-control" />
-                    </div>
-                    <div style="margin-bottom: 50px;">
-                        <label>Schlüsselkosten</label>
-                        <input name="KeyCost" type="number" step="0,1" min="0" class="form-control" />
-                    </div>
 
-                    <hr />
-                    <button id="createBlockBtn" type="button" class="btn btn-success">Optionen hinzufügen</button>
-                    <button id="addInputBtn" type="button" class="btn btn-success">+</button>
-                    <button id="RemoveInputBtn" type="button" class="btn btn-danger">-</button>
-                    <input type="submit" class="btn btn-success" id="input" value="Erstellen Profil Doppelzylinder" />
+                        <hr />
+                        <button id="createBlockBtn" type="button" class="btn btn-success">Optionen hinzufügen</button>
+                        <button id="addInputBtn" type="button" class="btn btn-success">+</button>
+                        <button id="RemoveInputBtn" type="button" class="btn btn-danger">-</button>
+                        <input type="submit" class="btn btn-success" id="input" value="Erstellen Profil Doppelzylinder" />
+                    }
+                    
                 </form>
 
             </div>
@@ -124,6 +229,7 @@
                             <th>Bearbeiten</th>
                             <th>Optionen</th>
                             <th>Löschen</th>
+                            <th>Vorlage</th>
 
                             @foreach (var item in ViewBag.item)
                             {
@@ -141,7 +247,7 @@
                                     </a>
                                 </td>
                                 <td id="rowTable" class="table-info"><a href="@Url.Action("Delete_Doppelzylinder","Home", new { item.Id })"><img src="@("/image/entfernen.png")" height="30" width="30" /></a></td>
-
+                                <td id="rowTable" class="table-info"><a href="@Url.Action("Index","Home", new { id = item.Id })"><img src="@("/image/3d-modeling.png")" height="30" width="30" /></a></td>
                             }
                         </tr>
                     </tbody>
@@ -154,6 +260,13 @@
 @section scripts
 {
     <script type="text/javascript">
+
+
+        function systemSwitch(value) 
+        {
+            let nameSys = document.getElementById("NameSys");
+            nameSys.value = value;
+        }
 
         tinymce.init({
             selector: '#exampleFormControlTextarea1',

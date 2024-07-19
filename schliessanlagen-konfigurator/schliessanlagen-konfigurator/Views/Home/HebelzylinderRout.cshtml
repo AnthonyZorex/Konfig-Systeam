@@ -32,48 +32,104 @@
                         </div>
                     </div>
 
-                    <div id="product_desciptions">
+                    @if (ViewBag.Hebel!=null)
+                    {
+                        <div id="product_desciptions">
 
-                        <div style="margin-bottom: 50px;">
-                            <label>Name</label>
-                            <input asp-for="Name" required class="form-control" type="text" name="Name" />
-                        </div>
-
-                        <div style="margin-bottom: 50px;">
-                            <label>Firmenname</label>
-                            <input asp-for="companyName" required class="form-control" type="text" />
-                        </div>
-
-                        <div style="margin-bottom: 50px;">
-                            <label>Name System</label>
-                            <input asp-for="NameSystem" required class="form-control" type="text" />
-                        </div>
-
-                        <div style="margin-bottom: 50px;">
-                            <label>Beschreibungen</label>
-                            <textarea asp-for="description" class="form-control" id="exampleFormControlTextarea1"></textarea>
-                        </div>
-                        @if (ViewBag.Content != null)
-                        {
-                            <div>
-                                <h3>Submitted Content:</h3>
-                                <div>@Html.Raw(ViewBag.Content)</div>
+                            <div style="margin-bottom: 50px;">
+                                <label>Name</label>
+                                <input asp-for="Name" value="ViewBag.Hebel.Name" required class="form-control" type="text" name="Name" />
                             </div>
-                        }
 
-                        <div style="margin-bottom: 50px;">
-                            <label>Price</label>
-                            <input asp-for="Price" required class="form-control" />
+                            <div style="margin-bottom: 50px;">
+                                <label>Firmenname</label>
+                                <input asp-for="companyName" value="ViewBag.Hebel.companyName" required class="form-control" type="text" />
+                            </div>
+
+                            <div style="margin-bottom: 50px;">
+                                <label>Name System</label>
+                                <select asp-for="NameSystem" required id="DoppelSys" class="form-select">
+
+                                    @foreach (var list in ViewBag.System)
+                                    {
+                                        if (ViewBag.Hebel.NameSystem == list)
+                                        {
+                                            <option selected>@list</option>
+                                        }
+                                        else
+                                        {
+                                            <option>@list</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+
+                            <div style="margin-bottom: 50px;">
+                                <label>Beschreibungen</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1">@ViewBag.Hebel.description</textarea>
+                            </div>
+                           
+                            <div style="margin-bottom: 50px;">
+                                <label>Price</label>
+
+                                <input asp-for="Price" value="@ViewBag.Hebel.Price" required class="form-control" />
+                            </div>
+
+                            <div id="productOptions">
+                            </div>
+
                         </div>
+                        <button id="createBlockBtn" type="button" class="btn btn-success">Optionen hinzufügen</button>
+                        <button id="addInputBtn" type="button" class="btn btn-success">+</button>
+                        <button id="RemoveInputBtn" type="button" class="btn btn-danger">-</button>
+                        <input type="submit" class="btn btn-success" id="input" value="Hebelzylinder erstellen" />
+                    }
+                    else
+                    {
+                        <div id="product_desciptions">
 
-                        <div id="productOptions">
+                            <div style="margin-bottom: 50px;">
+                                <label>Name</label>
+                                <input asp-for="Name" required class="form-control" type="text" name="Name" />
+                            </div>
+
+                            <div style="margin-bottom: 50px;">
+                                <label>Firmenname</label>
+                                <input asp-for="companyName" required class="form-control" type="text" />
+                            </div>
+
+                            <div style="margin-bottom: 50px;">
+                                <label>Name System</label>
+                                <input asp-for="NameSystem" required class="form-control" type="text" />
+                            </div>
+
+                            <div style="margin-bottom: 50px;">
+                                <label>Beschreibungen</label>
+                                <textarea asp-for="description" class="form-control" id="exampleFormControlTextarea1"></textarea>
+                            </div>
+                            @if (ViewBag.Content != null)
+                            {
+                                <div>
+                                    <h3>Submitted Content:</h3>
+                                    <div>@Html.Raw(ViewBag.Content)</div>
+                                </div>
+                            }
+
+                            <div style="margin-bottom: 50px;">
+                                <label>Price</label>
+                                <input asp-for="Price" required class="form-control" />
+                            </div>
+
+                            <div id="productOptions">
+                            </div>
+
                         </div>
-
-                    </div>
-                    <button id="createBlockBtn" type="button" class="btn btn-success">Optionen hinzufügen</button>
-                    <button id="addInputBtn" type="button" class="btn btn-success">+</button>
-                    <button id="RemoveInputBtn" type="button" class="btn btn-danger">-</button>
-                    <input type="submit" class="btn btn-success" id="input" value="Hebelzylinder erstellen" />
+                        <button id="createBlockBtn" type="button" class="btn btn-success">Optionen hinzufügen</button>
+                        <button id="addInputBtn" type="button" class="btn btn-success">+</button>
+                        <button id="RemoveInputBtn" type="button" class="btn btn-danger">-</button>
+                        <input type="submit" class="btn btn-success" id="input" value="Hebelzylinder erstellen" />
+                    }
+                   
                 </form>
             </div>
         </div>
@@ -94,7 +150,7 @@
                             <th>Editieren</th>
                             <th>Optionen</th>
                             <th>Löschen</th>
-
+                            <th>Vorlage</th>
                             @foreach (var item in ViewBag.item)
                             {
                                 <td id="rowTable" class="table-info">@item.companyName</td>
@@ -110,6 +166,7 @@
                                     </a>
                                 </td>
                                 <td id="rowTable" class="table-info"><a href="@Url.Action("Delete_Hebel","Home", new { item.Id })"><img src="@("/Image/entfernen.png")" height="30" width="30" /></a></td>
+                                <td id="rowTable" class="table-info"><a href="@Url.Action("HebelzylinderRout","Home", new { id = item.Id })"><img src="@("/image/3d-modeling.png")" height="30" width="30" /></a></td>
                             }
 
                         </tr>
