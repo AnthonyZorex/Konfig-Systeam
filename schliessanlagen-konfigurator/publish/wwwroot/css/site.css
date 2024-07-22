@@ -468,9 +468,7 @@
     #chekerTur > button {
         border-radius: 20%;
         font-size: 8px;
-        color: white;
         border: none;
-        background: red;
     }
 
     #TypeSelectTurType {
@@ -527,7 +525,6 @@
         text-align: center;
         display: grid;
         grid-template-columns: 30px;
-        background-color: #EDEDED;
         padding: 5px;
     }
 
@@ -543,13 +540,14 @@
     }
 
     #sclusselInfo2 {
+        height: 100px;
         width: 240px;
         padding: 5px;
         background: red;
         color: white;
         align-items: center;
         display: flex;
-        margin-top: -45px;
+        margin-top: -100px;
     }
     #textInform {
         display: flex;
@@ -641,11 +639,11 @@
         width: 20px;
         font-size: 8px;
         border-radius: 55px;
-        background: white;
         transform: scale(0.7);
         font-weight: bold;
-        color: red;
         border: none;
+        background: red;
+        color:white;
     }
 
     #addButtonTur {
@@ -654,10 +652,10 @@
         transform: scale(0.7);
         font-size: 8px;
         border-radius: 55px;
-        background: white;
         font-weight: bold;
-        color: red;
         border: none;
+        background: red;
+        color: white;
     }
 
     #turInfo {
@@ -690,9 +688,9 @@
         width: 20px;
         font-size: 8px;
         border-radius: 55px;
-        background: white;
         font-weight: bold;
-        color: red;
+        background: red;
+        color: white;
         border: none;
         margin-left: 10px;
     }
@@ -1000,12 +998,10 @@
 
     #chekerTur > button {
         border-radius: 20%;
-        color: white;
        font-size:8px;
        height:20px;
         width: 20px;
         border: none;
-        background: red;
     }
 
     #TypeSelectTurType 
@@ -1056,7 +1052,6 @@
         text-align: center;
         display: grid;
         grid-template-columns: 30px;
-        background-color: #EDEDED;
         padding: 5px;
     }
 
@@ -1072,13 +1067,14 @@
     }
 
     #sclusselInfo2 {
+        height: 100px;
         width: 500px;
         padding: 5px;
         background: red;
         color: white;
         align-items: center;
         display: flex;
-        margin-top: -45px;
+        margin-top: -100px;
     }
 
     #infoButten {
@@ -1167,23 +1163,23 @@
         height: 20px;
         width: 20px;
         border-radius: 55px;
-        background: white;
         font-weight: bold;
-        color: red;
+        background: red;
+        color: white;
         font-size: 8px;
         border: none;
         margin-left: 10px;
     }
 
     #addButtonTur {
-        transform:scale(0.7);
-        font-size:8px;
+        transform: scale(0.7);
+        font-size: 8px;
         height: 20px;
         width: 20px;
         border-radius: 55px;
-        background: white;
         font-weight: bold;
-        color: red;
+        background: red;
+        color:white;
         border: none;
         margin-left: 10px;
     }
@@ -1829,10 +1825,10 @@
         height: 30px;
         width: 30px;
         border-radius: 55px;
-        background: white;
+        background: red;
+        color: white;
         font-size: 16px;
         font-weight: bold;
-        color: red;
         border: none;
         margin-left: 10px;
     }
@@ -1841,10 +1837,10 @@
         height: 30px;
         width: 30px;
         border-radius: 55px;
-        background: white;
         font-size: 16px;
         font-weight: bold;
-        color: red;
+        background: red;
+        color: white;
         border: none;
         margin-left: 10px;
     }
@@ -1853,10 +1849,10 @@
         height: 30px;
         width: 30px;
         border-radius: 55px;
-        background: white;
-        font-size: 16px;
+        font-size: 24px;
         font-weight: bold;
-        color: red;
+        background: red;
+        color: white;
         border: none;
         margin-left: 10px;
     }
@@ -1865,10 +1861,10 @@
         height: 30px;
         width: 30px;
         border-radius: 55px;
-        background: white;
-        font-size: 16px;
+        background: red;
+        font-size: 24px;
         font-weight: bold;
-        color: red;
+        color: white;
         border: none;
         margin-left: 10px;
     }
@@ -1885,7 +1881,6 @@
 
     #schlussel2 {
         margin-left: auto;
-        margin-top: 5px;
     }
 
     #TexInputKey {
@@ -1918,7 +1913,6 @@
         text-align: center;
         display: grid;
         grid-template-columns: 30px;
-        background-color: #EDEDED;
         padding: 5px;
     }
 
@@ -1941,13 +1935,14 @@
     }
 
     #sclusselInfo2 {
+        height: 100px;
         width: 570px;
         padding: 5px;
         background: red;
         color: white;
         align-items: center;
         display: flex;
-        margin-top: -45px;
+        margin-top: -100px;
     }
 
     #schlussel3 {
@@ -2017,10 +2012,8 @@
         #chekerTur > button {
             font-size: 24px;
             border-radius: 20%;
-            color: white;
             width: 30px;
             border: none;
-            background: red;
         }
 
     #infoButten {
@@ -2930,10 +2923,10 @@
         height: 30px;
         width: 30px;
         border-radius: 55px;
-        background: white;
-        font-size: 16px;
+        background: red;
+        color: white;
+        font-size: 24px;
         font-weight: bold;
-        color: red;
         border: none;
         margin-left: 10px;
     }
@@ -2942,10 +2935,10 @@
         height: 30px;
         width: 30px;
         border-radius: 55px;
-        background: white;
-        font-size: 16px;
+        background: red;
+        font-size: 24px;
         font-weight: bold;
-        color: red;
+        color: white;
         border: none;
         margin-left: 10px;
     }
@@ -2957,10 +2950,10 @@
         height: 30px;
         width: 30px;
         border-radius: 55px;
-        background: white;
-        font-size: 16px;
+        font-size: 24px;
         font-weight: bold;
-        color: red;
+        background: red;
+        color: white;
         border: none;
         margin-left: 10px;
     }
@@ -2969,10 +2962,10 @@
         height: 30px;
         width: 30px;
         border-radius: 55px;
-        background: white;
-        font-size: 16px;
+        background: red;
+        color: white;
+        font-size: 24px;
         font-weight: bold;
-        color: red;
         border: none;
         margin-left: 10px;
     }
@@ -2988,7 +2981,6 @@
 
     #schlussel2 {
         margin-left: 220px;
-        margin-top: 5px;
     }
 
     #TexInputKey {
@@ -3021,7 +3013,6 @@
         text-align: center;
         display: grid;
         grid-template-columns: 30px;
-        background-color: #EDEDED;
         padding: 5px;
     }
 
@@ -3041,20 +3032,22 @@
         margin-left: 30px;
         margin-right: 10px;
     }
-  
+
     #sclusselInfo2 {
+        height: 100px;
         width: 800px;
         padding: 5px;
         background: red;
         color: white;
         align-items: center;
-        display: flex;
-        margin-top: -45px;
+        display: grid;
+        grid-template-columns: 100px 250px 180px 140px 50px;
+        margin-top: -100px;
     }
 
     #schlussel3 {
         margin-top: 5px;
-        margin-left: 65px;
+        margin-left: 25px;
     }
 
     #ItemTur {
@@ -3117,10 +3110,8 @@
         #chekerTur > button {
             font-size: 24px;
             border-radius: 20%;
-            color: white;
             width: 40px;
             border: none;
-            background: red;
         }
 
     #infoButten {

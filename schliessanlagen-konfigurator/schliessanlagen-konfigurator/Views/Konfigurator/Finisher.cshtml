@@ -1054,11 +1054,11 @@
 
                 if (DoppelInfo[0].companyName  == "CES")
                 {
-                    waitTime = `<h6 id="WaitTime" > Lieferzeit: 7 Tag </h6>`
+                waitTime = `<h6 id="lifer" > Lieferzeit: 7 Tag </h6>`
                 }
                 else 
                 {
-                waitTime = `<h6 id="WaitTime" > Lieferzeit: 2 Werktage < /h6>`
+                waitTime = `<h6 id="lifer" > Lieferzeit: 2 Woche < /h6>`
                 }
                
                 AllPrice.value = (parseFloat(AllPrice.value) + DoppelInfo[0].Price);
@@ -1214,10 +1214,10 @@
 
             if (HalbInfo[0].companyName == "CES") 
             {
-                waitTime = `<h6 id="WaitTime" > Lieferzeit: 7 Tag </h6>`
+                waitTime = `<h6 id="lifer" > Lieferzeit: 7 Werktage </h6>`
             }
             else {
-                waitTime = `<h6 id="WaitTime" > Lieferzeit: 2 Werktage < /h6>`
+                waitTime = `<h6 id="lifer" > Lieferzeit: 2 Woche < /h6>`
             }
       
             AllPrice.value = (parseFloat(AllPrice.value) + HalbInfo[0].Price);
@@ -1333,11 +1333,11 @@
 
             if (KnayfInfo[0].companyName == "CES") 
             {
-                waitTime = `<h6 id="WaitTime" > Lieferzeit: 7 Tag </h6>`
+                waitTime = `<h6 id="lifer" > Lieferzeit: 7 Werktage </h6>`
             }
              else 
              {
-                waitTime = `<h6 id="WaitTime" > Lieferzeit: 2 Werktage < /h6>`
+                waitTime = `<h6 id="lifer" > Lieferzeit: 2 Woche < /h6>`
              }
       
             AllPrice.value = (parseFloat(AllPrice.value) + KnayfInfo[0].Price);
@@ -1473,10 +1473,10 @@
 
             if (HelbInfo[0].companyName == "CES") 
             {
-                waitTime = `<h6 id="WaitTime" > Lieferzeit: 7 Tag</h6>`
+                waitTime = `<h6 id="lifer" > Lieferzeit: 7 Werktage</h6>`
             }
             else {
-                waitTime = `<h6 id="WaitTime" > Lieferzeit: 2 Werktage < /h6>`
+                waitTime = `<h6 id="lifer" > Lieferzeit: 2 Woche < /h6>`
             }
 
             AllPrice.value = (parseFloat(AllPrice.value) + HelbInfo[0].Price);
@@ -1541,11 +1541,11 @@
 
             if (VorhanschlosInfo[0].companyName == "CES") 
             {
-                waitTime = `<h6 id="WaitTime" > Lieferzeit: 7 Tag </h6>`
+                waitTime = `<h6 id="lifer" > Lieferzeit: 7 Werktage </h6>`
             }
              else 
              {
-                waitTime = `<h6 id="WaitTime" > Lieferzeit: 2 Werktage < /h6>`
+                waitTime = `<h6 id="lifer" > Lieferzeit: 2 Woche < /h6>`
              }
 
             AllPrice.value = (parseFloat(AllPrice.value) + VorhanschlosInfo[0].Price);
@@ -1618,11 +1618,11 @@
 
             if (VorhanschlosInfo[0].companyName == "CES") 
             {
-                waitTime = `<h6 id="WaitTime" > Lieferzeit: 7 Tag </h6>`
+                waitTime = `<h6 id="lifer" > Lieferzeit: 7 Werktage </h6>`
             }
             else 
             {
-                waitTime = `<h6 id="WaitTime" > Lieferzeit: 2 Werktage < /h6>`
+                waitTime = `<h6 id="lifer" > Lieferzeit: 2 Woche < /h6>`
             }
 
             AllPrice.value = (parseFloat(AllPrice.value) + AussenzylinderInfo[0].Price);
@@ -1768,15 +1768,16 @@
                 {
                     item.value = '\u2713' + OptionsName;
                     item.style.color = "green";
-                   
-                   if (item.value === '\u2713' + "Not- und Gefahrenfunktion" || item.value === '\u2713' + "NGF") {
+
+                    if (item.value === '\u2713' + "NGF = Not- und Gefahrenfunktion" ) 
+                    {
                         hasNotUndGefahrenfunktion = true;
                         
-                        if (item.value === '\u2713' + "Not- und Gefahrenfunktion" && hasFreilauffunktion === true && hasNotUndGefahrenfunktion === true || item.value === '\u2713' + "NGF" && hasFreilauffunktion === true && hasNotUndGefahrenfunktion === true) 
+                        if (item.value === '\u2713' + "NGF = Not- und Gefahrenfunktion" && hasFreilauffunktion === true && hasNotUndGefahrenfunktion === true) 
                         {
                             for (let i = 0; i < QueryNameOptions.length; i++) 
                             {
-                                if (QueryNameOptions[i].value === '\u2713' + "Freilauffunktion" || QueryNameOptions[i].value === '\u2713' + "Freilauf")
+                                if (QueryNameOptions[i].value === '\u2713' + "FL = Freilauffunktion") 
                                 {
                                      let OptionOldCheker = document.getElementById(`d-${idBlock} + ${i}`);
 
@@ -1798,13 +1799,14 @@
                             
                         }
                     }
-                    if (item.value === '\u2713' + "Freilauffunktion" || item.value === '\u2713' + "Freilauf") 
-                    {
+                    if (item.value === '\u2713' + "FL = Freilauffunktion") {
                         hasFreilauffunktion = true;
 
-                        if (item.value === '\u2713' + "Freilauffunktion" && hasFreilauffunktion === true && hasNotUndGefahrenfunktion === true || item.value === '\u2713' + "Freilauf" && hasFreilauffunktion === true && hasNotUndGefahrenfunktion === true) {
-                            for (let i = 0; i < QueryNameOptions.length; i++) {
-                                if (QueryNameOptions[i].value === '\u2713' + "Not- und Gefahrenfunktion" || QueryNameOptions[i].value === '\u2713' + "NGF") 
+                        if (item.value === '\u2713' + "FL = Freilauffunktion" && hasFreilauffunktion === true && hasNotUndGefahrenfunktion === true) 
+                        {
+                            for (let i = 0; i < QueryNameOptions.length; i++) 
+                            {
+                                if (QueryNameOptions[i].value === '\u2713' + "NGF = Not- und Gefahrenfunktion") 
                                 {
                                     let OptionOldCheker = document.getElementById(`d-${idBlock} + ${i}`);
 
@@ -2099,7 +2101,7 @@
         let company = BlockTur.querySelector("#compName");
 
         let ProductBlock = document.getElementById("ExelItem-" + idBlock);
-        let WaitTime = ProductBlock.querySelector("#WaitTime");
+        let WaitTime = ProductBlock.querySelector("#lifer");
         let Innen = BlockTur.querySelector("#Intern");
 
         let Aussen = BlockTur.querySelector("#Aussen");
@@ -2212,27 +2214,27 @@
             {
                 if (company.value = "CES") 
                 {
-                    WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
-                    WaitTime.textContent = "Lieferzeit: 2 Werktage";
+                    WaitTime.innerHTML = "Lieferzeit: 2 Woche";
+                    WaitTime.textContent = "Lieferzeit: 2 Woche";
                     
                 }
                 else 
                 {
-                    WaitTime.innerHTML = "Lieferzeit:4 Werktage";
-                    WaitTime.textContent = "Lieferzeit: 4 Werktage";
+                    WaitTime.innerHTML = "Lieferzeit:4 Woche";
+                    WaitTime.textContent = "Lieferzeit: 4 Woche";
                 }
             }
             else 
             {
                 if (company.value = "CES") 
                 {
-                    WaitTime.innerHTML = "Lieferzeit:7 Tag";
-                    WaitTime.textContent = "Lieferzeit:7 Tag";
+                    WaitTime.innerHTML = "Lieferzeit:7 Werktage";
+                    WaitTime.textContent = "Lieferzeit:7 Werktage";
                 }
                 else 
                 {
-                    WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
-                    WaitTime.textContent = "Lieferzeit: 2 Werktage";
+                    WaitTime.innerHTML = "Lieferzeit: 2 Woche";
+                    WaitTime.textContent = "Lieferzeit: 2 Woche";
                 }
             }
         }
@@ -2242,25 +2244,25 @@
             {
                 if (company.value = "CES") 
                 {
-                    WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
-                    WaitTime.textContent = "Lieferzeit: 2 Werktage";
+                    WaitTime.innerHTML = "Lieferzeit: 2 Woche";
+                    WaitTime.textContent = "Lieferzeit: 2 Woche";
                 }
                 else 
                 {
-                    WaitTime.innerHTML = "Lieferzeit:4 Werktage";
-                    WaitTime.textContent = "Lieferzeit: 4 Werktage";
+                    WaitTime.innerHTML = "Lieferzeit:4 Woche";
+                    WaitTime.textContent = "Lieferzeit: 4 Woche";
                 }
             }
             else 
             {
                 if (company.value = "CES") 
                 {
-                    WaitTime.innerHTML = "Lieferzeit:7 Tag";
-                    WaitTime.textContent = "Lieferzeit:7 Tag";
+                    WaitTime.innerHTML = "Lieferzeit:7 Werktage";
+                    WaitTime.textContent = "Lieferzeit:7 Werktage";
                 }
                 else {
-                    WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
-                    WaitTime.textContent = "Lieferzeit: 2 Werktage";
+                    WaitTime.innerHTML = "Lieferzeit: 2 Woche";
+                    WaitTime.textContent = "Lieferzeit: 2 Woche";
                 }
             }
         }
@@ -2269,22 +2271,22 @@
             if (Aussen.value >= 55) 
             {
                 if (company.value = "CES") {
-                    WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
-                    WaitTime.textContent = "Lieferzeit: 2 Werktage";
+                    WaitTime.innerHTML = "Lieferzeit: 2 Woche";
+                    WaitTime.textContent = "Lieferzeit: 2 Woche";
                 }
                 else {
-                    WaitTime.innerHTML = "Lieferzeit:4 Werktage";
-                    WaitTime.textContent = "Lieferzeit: 4 Werktage";
+                    WaitTime.innerHTML = "Lieferzeit:4 Woche";
+                    WaitTime.textContent = "Lieferzeit: 4 Woche";
                 }
             }
             else {
                 if (company.value = "CES") {
-                    WaitTime.innerHTML = "Lieferzeit:7 Tag";
-                    WaitTime.textContent = "Lieferzeit:7 Tag";
+                    WaitTime.innerHTML = "Lieferzeit:7 Werktage";
+                    WaitTime.textContent = "Lieferzeit:7 Werktage";
                 }
                 else {
-                    WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
-                    WaitTime.textContent = "Lieferzeit: 2 Werktage";
+                    WaitTime.innerHTML = "Lieferzeit: 2 Woche";
+                    WaitTime.textContent = "Lieferzeit: 2 Woche";
                 }
             }
         }
@@ -2293,7 +2295,7 @@
     function selectParamIntern(idBlock,type,selectId) 
     {
         let ProductBlock = document.getElementById("ExelItem-" + idBlock);
-        let WaitTime = ProductBlock.querySelector("#WaitTime");
+        let WaitTime = ProductBlock.querySelector("#lifer");
         let BlockTur = document.getElementById("Size-" + idBlock);
         let countSchluss = BlockTur.querySelector("#countSchlusse-" + idBlock);
 
@@ -2382,26 +2384,26 @@
         {
             if (company.value = "CES") 
             {
-                WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
-                WaitTime.textContent = "Lieferzeit: 2 Werktage";
+                WaitTime.innerHTML = "Lieferzeit: 2 Woche";
+                WaitTime.textContent = "Lieferzeit: 2 Woche";
 
             }
             else {
-                WaitTime.innerHTML = "Lieferzeit:4 Werktage";
-                WaitTime.textContent = "Lieferzeit: 4 Werktage";
+                WaitTime.innerHTML = "Lieferzeit:4 Woche";
+                WaitTime.textContent = "Lieferzeit: 4 Woche";
             }
         }
         else 
         {
             if (company.value = "CES") 
             {
-                WaitTime.innerHTML = "Lieferzeit:7 Tag";
-                WaitTime.textContent = "Lieferzeit:7 Tag";
+                WaitTime.innerHTML = "Lieferzeit:7 Werktage";
+                WaitTime.textContent = "Lieferzeit:7 Werktage";
             }
             else 
             {
-                WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
-                WaitTime.textContent = "Lieferzeit: 2 Werktage";
+                WaitTime.innerHTML = "Lieferzeit: 2 Woche";
+                WaitTime.textContent = "Lieferzeit: 2 Woche";
             }
         }
     
@@ -2410,23 +2412,23 @@
             if (Innen.value >= 55 || Aussen.value >= 55) 
             {
                 if (company.value = "CES") {
-                    WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
-                    WaitTime.textContent = "Lieferzeit: 2 Werktage";
+                    WaitTime.innerHTML = "Lieferzeit: 2 Woche";
+                    WaitTime.textContent = "Lieferzeit: 2 Woche";
                 }
                 else {
-                    WaitTime.innerHTML = "Lieferzeit:4 Werktage";
-                    WaitTime.textContent = "Lieferzeit: 4 Werktage";
+                    WaitTime.innerHTML = "Lieferzeit:4 Woche";
+                    WaitTime.textContent = "Lieferzeit: 4 Woche";
                 }
             }
             else {
                 if (company.value = "CES") {
 
-                    WaitTime.innerHTML = "Lieferzeit:7 Tag";
-                    WaitTime.textContent = "Lieferzeit:7 Tag";
+                    WaitTime.innerHTML = "Lieferzeit:7 Werktage";
+                    WaitTime.textContent = "Lieferzeit:7 Werktage";
                 }
                 else {
-                    WaitTime.innerHTML = "Lieferzeit: 2 Werktage";
-                    WaitTime.textContent = "Lieferzeit: 2 Werktage";
+                    WaitTime.innerHTML = "Lieferzeit: 2 Woche";
+                    WaitTime.textContent = "Lieferzeit: 2 Woche";
                 }
             }
         }

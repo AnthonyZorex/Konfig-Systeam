@@ -217,6 +217,8 @@
 
     let Info = @Html.Raw(ViewBag.Info);
 
+
+
     let Versand = parseFloat(Info.Versand.replace("€", "").trim());
     let SumALL = parseFloat(Info.OrderSum.replace("€", "").trim());
 
@@ -245,8 +247,8 @@
 
     let Rechnungsadresse = document.getElementById("Rechnungsadresse");
     Rechnungsadresse.innerHTML = `${Info.SendVorname + " " + Info.SendNachname} <br>
-     ${Info.SendStrasse} ${Info.SemdAdressZusatz},<br>
-     ${Info.SendZip} ${Info.SendStadt} , ${Info.SendLand} `;
+    ${Info.SendStrasse} ${Info.SemdAdressZusatz},<br>
+    ${Info.SendZip} ${Info.SendStadt} , ${Info.SendLand} `;
 
     let Lieferadresse = document.getElementById("Lieferadresse");
 
@@ -271,37 +273,46 @@
 
         Email.textContent = Info.RechnungAdresse;
     }
-    // var element = document.getElementById('RehnungPdf');
-    // html2pdf(element, {
-    //     margin: 1,
-    //     filename: 'Rehnung.pdf',
-    //     image: { type: 'jpeg', quality: 0.98 },
-    //     html2canvas: { scale: 2 },
-    //     jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-    // });
-    
-    function generateAndUploadPDF() 
+
+    let element2 = document.getElementById('RehnungPdf');
+    html2pdf(element2, {
+        margin: 1,
+        filename: 'Rehnung.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    });
+
+    function generateAndSendPdf() 
     {
-        var element = document.getElementById('Rehnung.pdf');
-
-        html2pdf().from(element).toPdf().get('pdf').then(function (pdf) {
-            var pdfData = pdf.output('blob');
-
+        let element = document.getElementById('RehnungPdf');
+        html2pdf(element, {
+            margin: 1,
+            filename: 'Rehnung.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        }).then(function (pdf) {
             var formData = new FormData();
-            formData.append('file', pdfData, 'Rehnung.pdf');
+            formData.append('file', pdf.output('blob'), 'Rehnung.pdf');
 
-            fetch('Konfigurator/HistorOrders', {
+            fetch('/Konfigurator/UploadPdf', {
                 method: 'POST',
                 body: formData
             })
                 .then(response => response.json())
                 .then(data => {
-                    console.log('Success:', data);
+                    if (data.success) {
+                        alert('Файл успешно загружен!');
+                    } else {
+                        alert('Ошибка при загрузке файла.');
+                    }
                 })
                 .catch(error => {
-                    console.error('Error:', error);
+                    console.error('Ошибка:', error);
                 });
         });
     }
-    generateAndUploadPDF()
+
+    document.getElementById('generatePdfButton').addEventListener('click', generateAndSendPdf);
 </script>

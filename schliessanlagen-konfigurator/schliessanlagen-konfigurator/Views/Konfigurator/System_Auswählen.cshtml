@@ -381,22 +381,12 @@
 
     document.addEventListener("DOMContentLoaded", () => {
 
-        let allvalue = "";
-
-        allDoc.forEach((item) => {
-
-            let lif = item.querySelectorAll("#lifer");
-            allvalue += lif[0].textContent + ",";
-        });
-
-        const items = allvalue.split(',');
-
-        const uniqueItems = [...new Set(items)];
+        let uniqueItems = @Html.Raw(ViewBag.SortLiferzeit);
 
         uniqueItems.forEach((item) => {
 
             let options = document.createElement("option");
-            options.textContent = item;
+            options.innerHTML = item;
             selectLiferzeit.appendChild(options);
 
         })
@@ -470,15 +460,17 @@
 
             let companyName = item.querySelectorAll("#name")[0];
 
-            let result = cost.textContent.replace(/^ab(.*)€$/g, '$1');
+            let result = cost.textContent.replace(/^ab(.*)€$/g, '$1').trim();
 
-            if (value == "") {
-                if (companyName.textContent == selectorCompany.value && maxPrise.value.trim() == "" || result.trim() <= maxPrise.value.trim() && companyName.textContent == selectorCompany.value) {
+            if (value == "") 
+            {
+                if (companyName.textContent == selectorCompany.value && maxPrise.value.trim() == "" || parseFloat(value.replace(",", ".").trim()) <= maxPrise.value.trim() && companyName.textContent == selectorCompany.value) {
                     item.style.display = "grid";
                 }
             }
-            else if (maxPrise.value.trim() != "") {
-                if (result.trim() >= value.trim() && result.trim() <= maxPrise.value.trim()) {
+            else if (maxPrise.value.trim() != "") 
+            {
+                if (parseFloat(result.replace(",", ".").trim()) >= parseFloat(value.replace(",", ".").trim()) && parseFloat(result.replace(",", ".").trim()) <= parseFloat(maxPrise.value.trim())) {
                     item.style.display = "grid";
                 }
                 else {
@@ -486,7 +478,7 @@
                 }
             }
             else {
-                if (result.trim() >= value.trim()) {
+                if (parseFloat(result.replace(",", ".").trim()) >= parseFloat(value.replace(",", ".").trim())) {
                     item.style.display = "grid";
                 }
                 else {
@@ -500,7 +492,7 @@
 
             let minPrise = document.getElementById("minSelect");
             let cost = item.querySelectorAll("#cost")[0];
-            let result = cost.textContent.replace(/^ab(.*)€$/g, '$1');
+            let result = cost.textContent.replace(/^ab(.*)€$/g, '$1').trim();
             let selectorCompany = document.getElementById("company-name");
             let companyName = item.querySelectorAll("#name")[0];
 
@@ -509,8 +501,9 @@
                     item.style.display = "grid";
                 }
             }
-            else if (minPrise.value.trim() != "") {
-                if (result.trim() <= value.trim() && result.trim() >= minPrise.value.trim()) {
+            else if (minPrise.value.trim() != "") 
+            {
+                if (parseFloat(result.replace(",", ".").trim()) <= parseFloat(value.replace(",", ".").trim()) && parseFloat(result.replace(",", ".").trim()) >= parseFloat(minPrise.value(",", ".").trim())) {
                     item.style.display = "grid";
                 }
                 else {
@@ -518,7 +511,7 @@
                 }
             }
             else {
-                if (result.trim() <= value.trim()) {
+                if (parseFloat(result.replace(",", ".").trim()) <= parseFloat(value.replace(",", ".").trim())) {
                     item.style.display = "grid";
                 }
                 else {

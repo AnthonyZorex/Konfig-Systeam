@@ -202,7 +202,7 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveSysteamInfo(SysteamPriceKey systeam, string AltName)
         {
-            var dopple = db.Profil_Doppelzylinder.Where(x => x.NameSystem == AltName).First();
+            var dopple = db.Profil_Doppelzylinder.FirstOrDefault(x => x.NameSystem == AltName);
             if (dopple != null)
             {
                 dopple.NameSystem = systeam.NameSysteam;
@@ -211,7 +211,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 db.SaveChanges();
             }
            
-            var knayf = db.Profil_Knaufzylinder.Where(x => x.NameSystem == AltName).First();
+            var knayf = db.Profil_Knaufzylinder.FirstOrDefault(x => x.NameSystem == AltName);
 
             if (knayf != null)
             {
@@ -221,7 +221,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 db.SaveChanges();
             }
 
-            var halb = db.Profil_Halbzylinder.Where(x => x.NameSystem == AltName).First();
+            var halb = db.Profil_Halbzylinder.FirstOrDefault(x => x.NameSystem == AltName);
 
             if (halb != null)
             {
@@ -231,7 +231,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 db.SaveChanges();
             }
 
-            var hebel = db.Hebelzylinder.Where(x => x.NameSystem == AltName).First();
+            var hebel = db.Hebelzylinder.FirstOrDefault(x => x.NameSystem == AltName);
 
             if (hebel != null)
             {
@@ -241,7 +241,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 db.SaveChanges();
             }
           
-            var vorhang = db.Vorhangschloss.Where(x => x.NameSystem == AltName).First();
+            var vorhang = db.Vorhangschloss.FirstOrDefault(x => x.NameSystem == AltName);
 
             if (vorhang != null)
             {
@@ -251,7 +251,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 db.SaveChanges();
             }
 
-            var Aussen = db.Aussenzylinder_Rundzylinder.Where(x => x.NameSystem == AltName).First();
+            var Aussen = db.Aussenzylinder_Rundzylinder.FirstOrDefault(x => x.NameSystem == AltName);
 
             if (Aussen != null)
             {

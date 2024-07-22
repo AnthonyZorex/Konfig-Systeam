@@ -18,6 +18,9 @@ using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.General;
 using OfficeOpenXml;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 using System.Security.Claims;
 using Newtonsoft.Json.Linq;
 using Microsoft.Extensions.Hosting;
@@ -757,10 +760,39 @@ namespace schliessanlagen_konfigurator.Controllers
 
             return View(user);
         }
+        [HttpPost]
+        public async Task<IActionResult> UploadPdf()
+        {
+            try
+            {
+                var file = Request.Form.Files[0];
+                if (file != null && file.Length > 0)
+                {
+                    var fileName = Path.GetFileName(file.FileName);
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Rehnung", fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+
+                    return Json(new { success = true });
+                }
+                return Json(new { success = false, message = "Нет файлов для загрузки." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
         [HttpGet]
         public async Task<ActionResult> System_Auswählen(string Key, string userName, bool isNewKonfig,bool Biarbeiten)
         {
             var xtr = Key;
+
+            var Liferzeit = db.SysteamPriceKey.Select(x => x.Lieferzeit).Distinct().ToList();
+
+            ViewBag.SortLiferzeit = JsonConvert.SerializeObject(Liferzeit.Distinct().ToList());
 
             var orders = await db.Orders.ToListAsync();
 
