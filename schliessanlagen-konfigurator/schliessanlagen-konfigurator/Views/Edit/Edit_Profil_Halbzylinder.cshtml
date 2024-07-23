@@ -74,7 +74,7 @@
                         @foreach (var options in ViewBag.Options)
                         {
                             r++;
-                            <div class="input-block">
+                            <div class="input-block-@r">
                                 <h2>Options</h2>
                                 <div class="form-group">
                                     <label class="control-label">Options Name</label>
@@ -114,6 +114,11 @@
                                     </div>
                                     <input type="hidden" id="counter" name="inputCounter" />
                                 </div>
+                                <hr />
+                                <br />
+                                <button class="btn btn-danger" onclick="deleteOption(@r)" type="button">Löschen</button>
+                                <hr />
+                                <br />
                             </div>
                         }
                     }
@@ -312,10 +317,11 @@
                     }
                 });
 
-                function createBlock() {
+                function createBlock() 
+                {
+                    let countItem = @r+blockCounter;
                     const block = document.createElement('div');
-                    block.classList.add('input-block');
-                    block.id = `block-${blockCounter}`;
+                    block.classList.add(`input-block-${countItem}`);
                     block.innerHTML = `<div>
                                                                                         <h1>Options</h1>
                                                                                         <label>Name</label>
@@ -337,7 +343,13 @@
                                                                                             </div>
                                                                                                  <input type="hidden" id="counter" name="inputCounter" />
                                                                                         </div>
-                                                                                    </div>`;
+                                                                                    </div>
+                                                                                                <hr/>
+                                                                                      <br />
+                                                                                          <button class="btn btn-danger" onclick="deleteOption(${countItem})" 	type="button">Löschen</button>
+                                                                                      <hr />
+                                                                                      <br />
+                                                                                    `;
 
                     blockCounter++;
 

@@ -1,7 +1,9 @@
 ﻿@model schliessanlagen_konfigurator.Models.SysteamPriceKey;
 @{
     ViewData["Title"] = "EditSystem";
-    int i = -1;
+    int count = -1;
+    int f = -1;
+    int r = -1;
 }
 @if (User.IsInRole("admin"))
 {
@@ -31,7 +33,79 @@
                     <textarea asp-for="Lieferzeit" required class="form-control" id="exampleFormControlTextarea1"></textarea>
                     <span asp-validation-for="Lieferzeit" class="text-danger"></span>
                 </div>
+
+                <div id="productOptions">
+                    @if (ViewBag.optionV == true)
+                    {
+                        @foreach (var options in ViewBag.Options)
+                        {
+                            r++;
+                            <div class="input-block">
+                                <h2>Optionen</h2>
+                                <div class="form-group">
+                                    <label class="control-label">Optionen Name</label>
+                                    <input name="Options" value="@options.Name" id="opt" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Optionsbild</label>
+                                    <input name="ImageNameOption" type="text" value="@options.ImageName" id="opt" class="form-control" />
+                                    <br />
+                                    <img src="@("/Image/"+@options.ImageName)" height="300" width="300" />
+                                    <br />
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Beschreibung</label>
+                                    <textarea name="Descriptions" id="discriptions" class="form-control"> 
+                                        @options.Description
+                                                </textarea>
+                                </div>
+
+                                <h1>Value & Cost </h1>
+                                <div id="Aussen_Innen_ProfilDopel">
+                                    <div id="valueNGF" class="form-group">
+
+                                        @for (int i = 0; i < ViewBag.CountOptions[r]; i++)
+                                        {
+                                            count++;
+                                            <input type="text" placeholder="Wert" name="value" value="@ViewBag.OptionValue[count].Value" class="form-control" />
+                                        }
+                                    </div>
+                                    <div class="form-group" id="costNGF">
+
+                                        @for (int i = 0; i < ViewBag.CountOptions[r]; i++)
+                                        {
+                                            f++;
+                                            <input type="text" placeholder="Preis" name="cost" value="@ViewBag.OptionValue[f].Cost" class="form-control" />
+                                        }
+                                    </div>
+                                    <input type="hidden" id="counter" name="inputCounter" />
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+                <hr />
+                <button id="createBlockBtn" type="button" class="btn btn-success">Add Options</button>
+                <button id="addInputBtn" type="button" class="btn btn-success">+</button>
+                <button id="RemoveInputBtn" type="button" class="btn btn-danger">-</button>
+
                 <input value="@Model.NameSysteam" type="hidden" name="AltName" class="form-control" />
+                <hr />
+                <br />
+                <div >
+
+                    <h3>Wählen Sie aus, auf was diese Optionen angewendet werden sollen.</h3>
+
+                    <ul>
+                        <ol> <input type="checkbox" name="doppel" /> Doppelzylinder </ol>
+                        <ol><input type="checkbox" name="Halb" /> Halbzylinder</ol>
+                        <ol><input type="checkbox" name="Knayf" /> Knaufzylinder</ol>
+                        <ol><input type="checkbox" name="Hebel" /> Hebelzylinder</ol>
+                        <ol><input type="checkbox" name="Vorhang" /> Vorhangschloss</ol>
+                        <ol><input type="checkbox" name="Aussen" /> Aussenzylinder</ol>
+                    </ul>
+
+                </div>
                 <input type="submit" value="Save" class="btn btn-primary" />
             </form>
         </div>
@@ -73,5 +147,123 @@
             menubar: 'favs file edit view insert format tools table help',
             content_css: 'css/content.css'
         });
+
+
+
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const container = document.getElementById('productOptions');
+            const createBlockBtn = document.getElementById('createBlockBtn');
+            const addInputBtn = document.getElementById('addInputBtn');
+            const RemoveInputBtn = document.getElementById('RemoveInputBtn');
+
+            let blockCounter = document.querySelectorAll('.input-block').length > 0 ? document.querySelectorAll('.input-block').length : 1;
+
+            createBlockBtn.addEventListener('click', function () {
+                const block = createBlock();
+                container.appendChild(block);
+            });
+
+            addInputBtn.addEventListener('click', function () {
+                const blocks = document.querySelectorAll('.input-block');
+                const lastBlock = blocks[blocks.length - 1];
+
+                if (lastBlock) {
+                    addInputs(lastBlock);
+                } else {
+                    alert('Сначала создайте блок');
+                }
+            });
+
+            RemoveInputBtn.addEventListener('click', function () {
+                const blocks = document.querySelectorAll('.input-block');
+                const lastBlock = blocks[blocks.length - 1];
+
+                let inputProductValue = lastBlock.querySelectorAll("#valueNGF  input");
+                let inputProductPrice = lastBlock.querySelectorAll("#costNGF  input");
+
+                if (lastBlock) {
+                    if (inputProductValue.length < 2) {
+                        productOptions.removeChild(lastBlock);
+                    }
+                    else {
+                        inputProductValue[inputProductValue.length - 1].parentNode.removeChild(inputProductValue[inputProductValue.length - 1]);
+                        inputProductPrice[inputProductPrice.length - 1].parentNode.removeChild(inputProductPrice[inputProductPrice.length - 1]);
+                    }
+                }
+                else {
+                    alert('Сначала создайте блок');
+                }
+            });
+
+            window.addEventListener('load', function () {
+                const blocks = document.querySelectorAll('.input-block');
+                for (let i = 0; i < blocks.length; i++) {
+                    let counterBlock = blocks[i].querySelectorAll("#valueNGF  input");
+
+                    let counter = blocks[i].querySelectorAll("#counter");
+
+                    counter[0].value = counterBlock.length;
+
+                }
+            });
+
+            function createBlock() {
+                const block = document.createElement('div');
+                block.classList.add('input-block');
+                block.id = `block-${blockCounter}`;
+                block.innerHTML = `<div>
+                                                                                                        <h1>Options</h1>
+                                                                                                        <label>Name</label>
+                                                                                                        <input class="form-control" type="text" name="Options" />
+                                                                                                        <div>
+                                                                                                            <p></p>
+                                                                                                            <input name="postedFile" type="file" class="btn btn-success" />
+                                                                                                            <p></p>
+                                                                                                        </div>
+                                                                                                        <label>Descriptions</label>
+                                                                                                        <input class="form-control" type="text" name="Descriptions" />
+                                                                                                        <h1>Value & Cost </h1>
+                                                                                                        <div id="Aussen_Innen_ProfilDopel">
+                                                                                                            <div id="valueNGF">
+                                                                                                                            <input type="text" class="form-control" placeholder="Wert" name="valueNGF" />
+
+                                                                                                            </div>
+                                                                                                            <div id="costNGF">
+                                                                                                                 <input type="number" class="form-control" placeholder="Preis" step="0.01" name="costNGF" />
+                                                                                                            </div>
+                                                                                                               <input type="hidden" id="counter" name="inputCounter" />
+                                                                                                        </div>
+                                                                                                    </div>`;
+
+                blockCounter++;
+
+                return block;
+            }
+
+            function addInputs(block) {
+
+                let d = document.createElement('input');
+                d.setAttribute('name', 'cost');
+                d.setAttribute('placeholder', 'Preis');
+                d.setAttribute('class', 'form-control');
+                let x = document.createElement('input');
+                x.setAttribute('name', 'value');
+                x.setAttribute('placeholder', 'Wert');
+                x.setAttribute('class', 'form-control');
+                const div1 = block.querySelector('#valueNGF');
+                const div2 = block.querySelector('#costNGF');
+
+                div1.appendChild(x);
+
+                div2.appendChild(d);
+
+                var counter = document.querySelectorAll('#counter');
+                counter[counter.length - 1].value = block.querySelectorAll("#valueNGF  input").length;
+            };
+
+        })
+
     </script>
 }

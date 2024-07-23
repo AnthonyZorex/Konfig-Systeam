@@ -64,11 +64,13 @@
                </div>
 
                     <div id="schlussel">
-                        <h5>Zylinderlänge mm</h5>
-                        <div style="display:flex;gap: 20px;">
+                        <h5>Zylinderlänge  mm</h5>
+                        
+                        <div style="width: 140px;justify-content: center;display:flex;gap: 20px;">
                             <h6>außen  </h6>
                             <h6>innen  </h6>
                         </div>
+                       
                     </div>
                 <div id="schlussel3">
                         <h5>Stück</h5>
@@ -88,7 +90,7 @@
                             </div>
                                     <div>
 
-                                    <img  id="typeSylinder" src="/Image/doppelzylinder.png" height="40" width="40" />
+                                    <img  id="typeSylinder" src="/Image/doppelzylinder.png" style="margin-top:10px" height="40" width="40" />
                                     
                                     </div>
 
@@ -128,7 +130,7 @@
                 <div id="InfoValue">
                             <div class="horizontal" id="1horizontal">
                                 <div class="checkboxContainer">
-                                    <input class="konfiguratorSelect" onmouseover="drawLines(1,1)" @* onmouseout="hideLines(1,1)" *@ type="checkbox" id="1checkbox1">
+                                    <input class="konfiguratorSelect" onmouseover="drawLines(1,1)"  onmouseout="hideLines(1,1)"  type="checkbox" id="1checkbox1">
                                     <input type="hidden"  value="false" id="I1checkbox1">
                                 </div>
                     </div>
@@ -247,17 +249,49 @@
 
         const intersectionY = rectY.top < rectX.bottom && rectY.bottom > rectX.top;
 
-        if (intersectionY) {
-            elemX.style.background = "blue";
-            elemY.style.background = "blue";
+        const chekboxSelect = document.getElementById(id + ".checkboxContainer" + row);
+
+        const elemxItem = elemX.querySelectorAll(".TexCountTur")[0];
+
+        if (intersectionY) 
+        {
+            elemxItem.style.background = "#8CC4E7";
+            elemY.style.background = "#8CC4E7";
+
+            const horizont = document.getElementById(`${id}horizontal`);
+            horizont.style.background = "#8CC4E7";
+
+            for (let i = 1; i<id; i++) 
+            {
+                const chekboxSelect = document.getElementById(i + ".checkboxContainer" + row);
+                chekboxSelect.style.background = "red";
+               
+            }
+            
+            
         } 
     }
 
-    function hideLines(id,row) {
+    function hideLines(id,row) 
+    {
         const verticalLine = document.getElementById('BlockTur-'+id);
+        const elemxItem = verticalLine.querySelectorAll(".TexCountTur")[0];
+        
+       
         const horizontalLine = document.getElementById(id + 'checkbox' + row);
-        verticalLine.style.background = '#ededed';
+        elemxItem.style.background = '#ededed';
         horizontalLine.style.background = '#ededed';
+
+        const horizont = document.getElementById(`${id}horizontal`);
+        horizont.style.background = "#ededed";
+        
+        for (let i = 1; i < id; i++) 
+        {
+            const chekboxSelect = document.getElementById(i + ".checkboxContainer" + row);
+            chekboxSelect.style.background = "none";
+        }
+        
+        
     }
    
 
@@ -776,7 +810,7 @@
 
                     let newBlockTur = document.createElement('div');
 
-                     newBlockTur.innerHTML = ` <input type="checkbox" class="konfiguratorSelect" id=${blockTur}checkbox${i}>
+                    newBlockTur.innerHTML = ` <input type="checkbox" class="konfiguratorSelect" onmouseover="drawLines(${blockTur},${i})"  onmouseout="hideLines(${blockTur},${i})" id=${blockTur}checkbox${i}>
                     <input type="hidden" value="false" id="I${blockTur}checkbox${i}">`;
 
                     newBlockTur.id = `${blockTur}.checkboxContainer${i}`;
@@ -857,7 +891,7 @@
           
             let newBlockTur = document.createElement('div');
 
-            newBlockTur.innerHTML = ` <input type="checkbox" class="konfiguratorSelect" id=${i}checkbox${blockCount}>
+            newBlockTur.innerHTML = ` <input type="checkbox" class="konfiguratorSelect" onmouseover="drawLines(${i},${blockCount})"  onmouseout="hideLines(${i},${blockCount})" id=${i}checkbox${blockCount}>
                                     <input type="hidden"  value="false" id="I${i}checkbox${blockCount}">`;
 
             newBlockTur.id = `${i}.checkboxContainer${blockCount}`;
@@ -914,7 +948,7 @@
 
                 let newBlockTur = document.createElement('div');
 
-                newBlockTur.innerHTML = ` <input type="checkbox" class="konfiguratorSelect" id=${i}checkbox${blockCount}>
+                newBlockTur.innerHTML = ` <input type="checkbox" class="konfiguratorSelect" onmouseover="drawLines(${i},${blockCount})"  onmouseout="hideLines(${i},${blockCount})" id=${i}checkbox${blockCount}>
                                         <input type="hidden"  value="false" id="I${i}checkbox${blockCount}">`;
 
                 newBlockTur.id = `${i}.checkboxContainer${blockCount}`;
@@ -1004,7 +1038,7 @@
 
                 let newBlockTur = document.createElement('div');
 
-                newBlockTur.innerHTML = ` <input type="checkbox" id=${blockTur}checkbox${i}>
+                newBlockTur.innerHTML = ` <input type="checkbox" onmouseover="drawLines(${blockTur},${i})"  onmouseout="hideLines(${blockTur},${i})" id=${blockTur}checkbox${i}>
                 <input type="hidden" value="false" id="I${blockTur}checkbox${i}">`;
 
                 newBlockTur.id = `${blockTur}.checkboxContainer${i}`;

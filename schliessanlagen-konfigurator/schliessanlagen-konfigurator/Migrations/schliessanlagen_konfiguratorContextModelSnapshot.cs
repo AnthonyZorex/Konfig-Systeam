@@ -51,25 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "03fa25a3-0ab7-4d50-8521-24e56f4de827",
+                            Id = "0f6f636b-b9ce-4970-8523-ca732b1e2e27",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "8c0b8765-b21e-4d7e-b939-834d39b7a163",
+                            Id = "f02b1488-4e2e-445a-8fd4-69c198f7dfeb",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "cb86e25d-aea8-4dcf-9ba3-0c30a46766b3",
+                            Id = "032ff40b-fc5b-4c8f-bbd1-6672847a1e9b",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "2ef68c42-e198-490e-8b0b-5a1a350dabed",
+                            Id = "e041b2b2-eb65-4cb1-8ce4-6cde225e0fb5",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -1008,6 +1008,77 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.ToTable("SysteamPriceKey");
                 });
 
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.SystemOptionInfo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("OptionsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OptionsId");
+
+                    b.ToTable("SystemOptionInfo");
+                });
+
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.SystemOptionValue", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<float?>("Cost")
+                        .HasColumnType("real");
+
+                    b.Property<int?>("SysteamPriceKeyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SysteamPriceKeyId");
+
+                    b.ToTable("SystemOptionValue");
+                });
+
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.SystemOptionen", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("SystemId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SystemId");
+
+                    b.ToTable("SystemOptionen");
+                });
+
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Users.ProductSysteam", b =>
                 {
                     b.Property<int>("Id")
@@ -1600,6 +1671,35 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Navigation("Knayf_Options");
                 });
 
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.SystemOptionInfo", b =>
+                {
+                    b.HasOne("schliessanlagen_konfigurator.Models.SystemOptionen", "Options")
+                        .WithMany("SystemOptionInfo")
+                        .HasForeignKey("OptionsId");
+
+                    b.Navigation("Options");
+                });
+
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.SystemOptionValue", b =>
+                {
+                    b.HasOne("schliessanlagen_konfigurator.Models.SystemOptionInfo", "SysteamPriceKey")
+                        .WithMany()
+                        .HasForeignKey("SysteamPriceKeyId");
+
+                    b.Navigation("SysteamPriceKey");
+                });
+
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.SystemOptionen", b =>
+                {
+                    b.HasOne("schliessanlagen_konfigurator.Models.SysteamPriceKey", "System")
+                        .WithMany("SystemOptionen")
+                        .HasForeignKey("SystemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("System");
+                });
+
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Users.ProductSysteam", b =>
                 {
                     b.HasOne("schliessanlagen_konfigurator.Models.Users.UserOrdersShop", "UserOrdersShop")
@@ -1776,6 +1876,16 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Navigation("Profil_Knaufzylinder");
 
                     b.Navigation("Vorhangschloss");
+                });
+
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.SysteamPriceKey", b =>
+                {
+                    b.Navigation("SystemOptionen");
+                });
+
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.SystemOptionen", b =>
+                {
+                    b.Navigation("SystemOptionInfo");
                 });
 
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Users.User", b =>

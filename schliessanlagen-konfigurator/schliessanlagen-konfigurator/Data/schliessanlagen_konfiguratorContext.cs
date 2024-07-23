@@ -54,6 +54,10 @@ namespace schliessanlagen_konfigurator.Data
 
             builder.Entity<IdentityRole>().HasData(admin, client);
         }
+        public DbSet<SystemOptionValue> SystemOptionValue { get; set; }
+        public DbSet<SystemOptionen> SystemOptionen { get; set; }
+        public DbSet<SystemOptionInfo> SystemOptionInfo { get; set; }
+
 
         public DbSet<OrderStatus> OrderStatus { get; set; }
         public DbSet<User> User { get; set; }

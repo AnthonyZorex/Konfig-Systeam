@@ -190,18 +190,57 @@ namespace schliessanlagen_konfigurator.Controllers
         {
             var System = db.SysteamPriceKey.ToList();
             ViewBag.item = System;
+
             return View();
         }
         public async Task<IActionResult> Edit_System(int id)
         {
-
             var item = db.SysteamPriceKey.Find(id);
 
+            var OptionItem = db.SystemOptionen.Where(x => x.SystemId == item.Id).ToList();
+
+            if (OptionItem.Count > 0)
+            {
+                var Options = new List<SystemOptionInfo>();
+
+                ViewBag.optionV = true;
+
+                foreach (var option in OptionItem)
+                {
+                    var Params = db.SystemOptionInfo.Where(x => x.OptionsId == option.Id).ToList();
+
+                    foreach (var list in Params)
+                    {
+                        Options.Add(list);
+                    }
+                }
+
+                ViewBag.Options = Options;
+
+                var OptionsValue = new List<SystemOptionValue>();
+
+                foreach (var option in Options)
+                {
+                    var Value = db.SystemOptionValue.Where(x => x.SysteamPriceKeyId == option.Id).ToList();
+
+                    foreach (var list in Value)
+                    {
+                        OptionsValue.Add(list);
+                    }
+                }
+            }
+            else
+            {
+                ViewBag.optionV = false;
+            }
             return View("../Edit/Edit_System", item);
         }
         [HttpPost]
-        public async Task<IActionResult> SaveSysteamInfo(SysteamPriceKey systeam, string AltName)
+        public async Task<IActionResult> SaveSysteamInfo(SysteamPriceKey systeam, string AltName,string doppel, string Halb, string Knayf,
+        string Hebel, string Vorhang, string Aussen,  List<string> Options, List<string> ImageNameOption, List<string> Descriptions,List<int> inputCounter,
+        List<string> value , List<string> cost)
         {
+
             var dopple = db.Profil_Doppelzylinder.FirstOrDefault(x => x.NameSystem == AltName);
             if (dopple != null)
             {
@@ -251,13 +290,13 @@ namespace schliessanlagen_konfigurator.Controllers
                 db.SaveChanges();
             }
 
-            var Aussen = db.Aussenzylinder_Rundzylinder.FirstOrDefault(x => x.NameSystem == AltName);
+            var Aus= db.Aussenzylinder_Rundzylinder.FirstOrDefault(x => x.NameSystem == AltName);
 
-            if (Aussen != null)
+            if (Aus != null)
             {
-                Aussen.NameSystem = systeam.NameSysteam;
+                Aus.NameSystem = systeam.NameSysteam;
 
-                db.Aussenzylinder_Rundzylinder.Update(Aussen);
+                db.Aussenzylinder_Rundzylinder.Update(Aus);
                 db.SaveChanges();
             }
            

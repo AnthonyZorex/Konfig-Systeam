@@ -3,8 +3,12 @@
   "WorkspaceRootPath": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|d:\\anthnony\\konfig-systeam-main\\konfig-systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\views\\konfigurator\\indexkonfigurator.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|solutionrelative:schliessanlagen-konfigurator\\views\\konfigurator\\indexkonfigurator.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|d:\\anthnony\\konfig-systeam-main\\konfig-systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\views\\edit\\edit_profil_halbzylinder.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|solutionrelative:schliessanlagen-konfigurator\\views\\edit\\edit_profil_halbzylinder.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|d:\\anthnony\\konfig-systeam-main\\konfig-systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\views\\edit\\edit_hebel.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|solutionrelative:schliessanlagen-konfigurator\\views\\edit\\edit_hebel.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
@@ -15,24 +19,12 @@
       "RelativeMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|solutionrelative:schliessanlagen-konfigurator\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\controllers\\konfiguratorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|solutionrelative:schliessanlagen-konfigurator\\controllers\\konfiguratorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|d:\\anthnony\\konfig-systeam-main\\konfig-systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\views\\edit\\edit_system.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|solutionrelative:schliessanlagen-konfigurator\\views\\edit\\edit_system.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\areas\\identity\\pages\\account\\manage\\pagepersonalorders.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|solutionrelative:schliessanlagen-konfigurator\\areas\\identity\\pages\\account\\manage\\pagepersonalorders.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\areas\\identity\\pages\\account\\manage\\pagepersonalorders.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|solutionrelative:schliessanlagen-konfigurator\\areas\\identity\\pages\\account\\manage\\pagepersonalorders.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\views\\konfigurator\\sendrehnung.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|solutionrelative:schliessanlagen-konfigurator\\views\\konfigurator\\sendrehnung.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\views\\home\\allorders.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|solutionrelative:schliessanlagen-konfigurator\\views\\home\\allorders.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|d:\\anthnony\\konfig-systeam-main\\konfig-systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\views\\konfigurator\\indexkonfigurator.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|solutionrelative:schliessanlagen-konfigurator\\views\\konfigurator\\indexkonfigurator.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,17 +34,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "site.css",
               "DocumentMoniker": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\css\\site.css",
               "RelativeDocumentMoniker": "schliessanlagen-konfigurator\\wwwroot\\css\\site.css",
               "ToolTip": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\css\\site.css",
               "RelativeToolTip": "schliessanlagen-konfigurator\\wwwroot\\css\\site.css",
-              "ViewState": "AQIAAAwAAAAAAAAAAAAAACIAAAAWAAAA",
+              "ViewState": "AQIAAH8MAAAAAAAAAAAswIgMAAASAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
               "WhenOpened": "2024-07-17T08:21:46.577Z",
               "IsPinned": true,
@@ -60,13 +52,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "IndexKonfigurator.cshtml",
               "DocumentMoniker": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Views\\Konfigurator\\IndexKonfigurator.cshtml",
               "RelativeDocumentMoniker": "schliessanlagen-konfigurator\\Views\\Konfigurator\\IndexKonfigurator.cshtml",
               "ToolTip": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Views\\Konfigurator\\IndexKonfigurator.cshtml",
               "RelativeToolTip": "schliessanlagen-konfigurator\\Views\\Konfigurator\\IndexKonfigurator.cshtml",
-              "ViewState": "AQIAANUAAAAAAAAAAAAAAOIAAAA8AAAA",
+              "ViewState": "AQIAAAIBAAAAAAAAAAAAAB0BAAAgAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-07-22T14:55:03.529Z",
               "IsPinned": true,
@@ -74,13 +66,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "HomeController.cs",
               "DocumentMoniker": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "schliessanlagen-konfigurator\\Controllers\\HomeController.cs",
               "ToolTip": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Controllers\\HomeController.cs",
               "RelativeToolTip": "schliessanlagen-konfigurator\\Controllers\\HomeController.cs",
-              "ViewState": "AQIAAKMJAAAAAAAAAAAUwLsJAAA3AAAA",
+              "ViewState": "AQIAAOUAAAAAAAAAAAAYwPUAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-22T14:13:35.567Z",
               "IsPinned": true,
@@ -88,70 +80,47 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "SendRehnung.cshtml",
-              "DocumentMoniker": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Views\\Konfigurator\\SendRehnung.cshtml",
-              "RelativeDocumentMoniker": "schliessanlagen-konfigurator\\Views\\Konfigurator\\SendRehnung.cshtml",
-              "ToolTip": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Views\\Konfigurator\\SendRehnung.cshtml",
-              "RelativeToolTip": "schliessanlagen-konfigurator\\Views\\Konfigurator\\SendRehnung.cshtml",
-              "ViewState": "AQIAACsBAAAAAAAAAIAwwDoBAAAFAAAA",
+              "DocumentIndex": 4,
+              "Title": "Edit_System.cshtml",
+              "DocumentMoniker": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Views\\Edit\\Edit_System.cshtml",
+              "RelativeDocumentMoniker": "schliessanlagen-konfigurator\\Views\\Edit\\Edit_System.cshtml",
+              "ToolTip": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Views\\Edit\\Edit_System.cshtml",
+              "RelativeToolTip": "schliessanlagen-konfigurator\\Views\\Edit\\Edit_System.cshtml",
+              "ViewState": "AQIAAFQAAAAAAAAAAAAAAGMAAAAzAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-07-16T15:25:55.086Z",
-              "IsPinned": true
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "AllOrders.cshtml",
-              "DocumentMoniker": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Views\\Home\\AllOrders.cshtml",
-              "RelativeDocumentMoniker": "schliessanlagen-konfigurator\\Views\\Home\\AllOrders.cshtml",
-              "ToolTip": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Views\\Home\\AllOrders.cshtml",
-              "RelativeToolTip": "schliessanlagen-konfigurator\\Views\\Home\\AllOrders.cshtml",
-              "ViewState": "AQIAABQAAAAAAAAAAAAAAA0AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-07-16T15:09:25.375Z",
-              "IsPinned": true
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "KonfiguratorController.cs",
-              "DocumentMoniker": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Controllers\\KonfiguratorController.cs",
-              "RelativeDocumentMoniker": "schliessanlagen-konfigurator\\Controllers\\KonfiguratorController.cs",
-              "ToolTip": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Controllers\\KonfiguratorController.cs",
-              "RelativeToolTip": "schliessanlagen-konfigurator\\Controllers\\KonfiguratorController.cs",
-              "ViewState": "AQIAAPMCAAAAAAAAAAAWwPkCAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-22T13:05:48.317Z",
+              "WhenOpened": "2024-07-23T13:08:37.21Z",
+              "IsPinned": true,
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "PagePersonalOrders.cshtml",
-              "DocumentMoniker": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Areas\\Identity\\Pages\\Account\\Manage\\PagePersonalOrders.cshtml",
-              "RelativeDocumentMoniker": "schliessanlagen-konfigurator\\Areas\\Identity\\Pages\\Account\\Manage\\PagePersonalOrders.cshtml",
-              "ToolTip": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Areas\\Identity\\Pages\\Account\\Manage\\PagePersonalOrders.cshtml",
-              "RelativeToolTip": "schliessanlagen-konfigurator\\Areas\\Identity\\Pages\\Account\\Manage\\PagePersonalOrders.cshtml",
-              "ViewState": "AQIAAJ8BAAAAAAAAAAAAALMBAABNAAAA",
+              "DocumentIndex": 0,
+              "Title": "Edit_Profil_Halbzylinder.cshtml",
+              "DocumentMoniker": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Views\\Edit\\Edit_Profil_Halbzylinder.cshtml",
+              "RelativeDocumentMoniker": "schliessanlagen-konfigurator\\Views\\Edit\\Edit_Profil_Halbzylinder.cshtml",
+              "ToolTip": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Views\\Edit\\Edit_Profil_Halbzylinder.cshtml",
+              "RelativeToolTip": "schliessanlagen-konfigurator\\Views\\Edit\\Edit_Profil_Halbzylinder.cshtml",
+              "ViewState": "AQIAAE0BAAAAAAAAAAAAAFsBAABcAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-07-22T11:42:22.394Z"
+              "WhenOpened": "2024-07-23T15:20:10.246Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "PagePersonalOrders.cshtml.cs",
-              "DocumentMoniker": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Areas\\Identity\\Pages\\Account\\Manage\\PagePersonalOrders.cshtml.cs",
-              "RelativeDocumentMoniker": "schliessanlagen-konfigurator\\Areas\\Identity\\Pages\\Account\\Manage\\PagePersonalOrders.cshtml.cs",
-              "ToolTip": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Areas\\Identity\\Pages\\Account\\Manage\\PagePersonalOrders.cshtml.cs",
-              "RelativeToolTip": "schliessanlagen-konfigurator\\Areas\\Identity\\Pages\\Account\\Manage\\PagePersonalOrders.cshtml.cs",
-              "ViewState": "AQIAAFkAAAAAAAAAAAAwwFsAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-22T11:42:13.882Z"
+              "DocumentIndex": 1,
+              "Title": "Edit_Hebel.cshtml",
+              "DocumentMoniker": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Views\\Edit\\Edit_Hebel.cshtml",
+              "RelativeDocumentMoniker": "schliessanlagen-konfigurator\\Views\\Edit\\Edit_Hebel.cshtml",
+              "ToolTip": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Views\\Edit\\Edit_Hebel.cshtml",
+              "RelativeToolTip": "schliessanlagen-konfigurator\\Views\\Edit\\Edit_Hebel.cshtml",
+              "ViewState": "AQIAAPMAAAAAAAAAAAAAABABAABVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-07-23T15:20:08.365Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
             }
           ]
         }

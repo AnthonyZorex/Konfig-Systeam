@@ -57,7 +57,7 @@
                         @foreach (var options in ViewBag.Options)
                         {
                             r++;
-                            <div class="input-block">
+                            <div class="input-block-@r">
                                 <h2>Options</h2>
                                 <div class="form-group">
                                     <label class="control-label">Options Name</label>
@@ -97,6 +97,11 @@
                                     </div>
                                     <input type="hidden" id="counter" name="inputCounter" />
                                 </div>
+                                <hr />
+                                <br />
+                                <button class="btn btn-danger" onclick="deleteOption(@r)" type="button">Löschen</button>
+                                <hr />
+                                <br />
                             </div>
                         }
                     }
@@ -121,6 +126,13 @@
                 await Html.RenderPartialAsync("_ValidationScriptsPartial");
             }
         <script>
+
+            function deleteOption(id) 
+            {
+                let optionBlock = document.getElementsByClassName("input-block-" + id)[0];
+
+                optionBlock.remove();
+            }
 
             tinymce.init({
                 selector: '#exampleFormControlTextarea1',
@@ -225,9 +237,13 @@
 
 
 
-                function createBlock() {
+                function createBlock() 
+                {
+                    let countItem = @r+blockCounter;
+
                     const block = document.createElement('div');
-                    block.classList.add('input-block');
+
+                    block.classList.add(`input-block-${countItem}`);
                     block.id = `block-${blockCounter}`;
                     block.innerHTML = `<div>
                                                                                         <h1>Options</h1>
@@ -251,7 +267,13 @@
                                                                                             </div>
                                                                                                                     <input type="hidden" id="counter" name="inputCounter" />
                                                                                         </div>
-                                                                                    </div>`;
+                                                                                    </div>
+                                                                                                <hr/>
+                                                                                      <br />
+                                                                                        <button class="btn btn-danger" onclick="deleteOption(${countItem})" 	type="button">Löschen</button>
+                                                                                      <hr />
+                                                                                      <br />
+                                                                                    `;
                     blockCounter++;
 
                     return block;
