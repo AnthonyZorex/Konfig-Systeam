@@ -3199,7 +3199,7 @@
 
     .horizontal {
         align-items: flex-end;
-        height: 40px;
+        height: 45px;
         display: flex;
         gap: 10px;
     }

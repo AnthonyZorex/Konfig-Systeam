@@ -74,7 +74,7 @@
                         @foreach (var options in ViewBag.Options)
                         {
                             r++;
-                            <div class="input-block-@r">
+                            <div class="input-block" id="block-@r">
                                 <h2>Options</h2>
                                 <div class="form-group">
                                     <label class="control-label">Options Name</label>
@@ -143,6 +143,15 @@
             await Html.RenderPartialAsync("_ValidationScriptsPartial");
         }
         <script>
+
+            function deleteOption(id) 
+            {
+                let optionBlock = document.getElementById("block-" + id);
+
+                optionBlock.remove();
+            }
+
+
 
             tinymce.init({
                 selector: '#exampleFormControlTextarea1',
@@ -319,9 +328,8 @@
 
                 function createBlock() 
                 {
-                    let countItem = @r+blockCounter;
                     const block = document.createElement('div');
-                    block.classList.add(`input-block-${countItem}`);
+                    block.classList.add(`input-block`);
                     block.innerHTML = `<div>
                                                                                         <h1>Options</h1>
                                                                                         <label>Name</label>
@@ -346,7 +354,7 @@
                                                                                     </div>
                                                                                                 <hr/>
                                                                                       <br />
-                                                                                          <button class="btn btn-danger" onclick="deleteOption(${countItem})" 	type="button">Löschen</button>
+                                                                                         <button class="btn btn-danger" onclick="deleteOption(${blockCounter})" 	type="button">Löschen</button>
                                                                                       <hr />
                                                                                       <br />
                                                                                     `;

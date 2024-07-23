@@ -83,7 +83,7 @@
                         @foreach (var options in ViewBag.Options)
                         {
                             r++;
-                            <div class="input-block-@r">
+                            <div class="input-block" id="block-@r">
                                 <h2>Optionen</h2>
                                 <div class="form-group">
                                     <label class="control-label">Optionen Name</label>
@@ -176,7 +176,7 @@
 
             function deleteOption(id) 
             {
-                let optionBlock = document.getElementsByClassName("input-block-" + id)[0];
+                let optionBlock = document.getElementById("block-"+id);
 
                 optionBlock.remove();
             }
@@ -412,7 +412,8 @@
                     container.appendChild(block);
                 });
 
-                addInputBtn.addEventListener('click', function () {
+                addInputBtn.addEventListener('click', function () 
+                {
                     const blocks = document.querySelectorAll('.input-block');
                     const lastBlock = blocks[blocks.length - 1];
 
@@ -423,7 +424,8 @@
                     }
                 });
 
-                RemoveInputBtn.addEventListener('click', function () {
+                RemoveInputBtn.addEventListener('click', function () 
+                {
                     const blocks = document.querySelectorAll('.input-block');
                     const lastBlock = blocks[blocks.length - 1];
 
@@ -446,12 +448,9 @@
 
                 function createBlock() 
                 {
-                    let countItem = @r + blockCounter;
                     const block = document.createElement('div');
-                    block.classList.add(`input-block-${countItem}`);
+                    block.classList.add(`input-block`);
                     block.id = `block-${blockCounter}`;
-
-
                     block.innerHTML = `<div>
                                                                                                 <h1>Options</h1>
                                                                                                 <label>Name</label>
@@ -477,7 +476,7 @@
                                                                                             </div>
                                                                                                          <hr/>
                                                                                                           <br />
-                                                                                                           <button class="btn btn-danger" onclick="deleteOption(${countItem})" 	type="button">Löschen</button>
+                                                                                                                       <button class="btn btn-danger" onclick="deleteOption(${blockCounter})" 	type="button">Löschen</button>
                                                                                                           <hr />
                                                                                                           <br />
 

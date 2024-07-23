@@ -71,7 +71,7 @@
                         @foreach (var options in ViewBag.Options)
                         {
                             r++;
-                            <div class="input-block-@r">
+                            <div class="input-block" id="block-@r">
                                 <h2>Options</h2>
                                 <div class="form-group">
                                     <label class="control-label">Options Name</label>
@@ -143,7 +143,7 @@
 
             function deleteOption(id) 
             {
-                let optionBlock = document.getElementsByClassName("input-block-" + id)[0];
+                let optionBlock = document.getElementById("block-" + id);
 
                 optionBlock.remove();
             }
@@ -187,7 +187,8 @@
 
             let docAussen = document.getElementById('AussenProfilDopel');
 
-            window.addEventListener('load', function () {
+            window.addEventListener('load', function () 
+            {
                 const blocks = document.querySelectorAll('.input-block');
                 for (let i = 0; i < blocks.length; i++) {
                     let counterBlock = blocks[i].querySelectorAll("#valueNGF  input");
@@ -279,9 +280,8 @@
 
                 function createBlock() 
                 {
-                    let countItem = @r+blockCounter;
                     const block = document.createElement('div');
-                    block.classList.add(`input-block-${countItem}`);
+                    block.classList.add(`input-block`);
                     block.id = `block-${blockCounter}`;
                     block.innerHTML = `<div>
                                                                                     <h1>Options</h1>
@@ -307,7 +307,7 @@
                                                                                 </div>
                                                                                             <hr/>
                                                                                                               <br />
-                                                                                                                       <button class="btn btn-danger" onclick="deleteOption(${countItem})" 	type="button">Löschen</button>
+                                                                                                             <button class="btn btn-danger" onclick="deleteOption(${blockCounter})" 	type="button">Löschen</button>
                                                                                                               <hr />
                                                                                                               <br />
                                                                                 `;
