@@ -64,10 +64,10 @@
                </div>
 
                     <div id="schlussel">
-                        <h5>Zylinderlänge </h5>
+                        <h5>Zylinderlänge mm</h5>
                         <div style="display:flex;gap: 20px;">
-                            <h6>außen <br /> mm</h6>
-                            <h6>innen  <br /> mm</h6>
+                            <h6>außen  </h6>
+                            <h6>innen  </h6>
                         </div>
                     </div>
                 <div id="schlussel3">
@@ -128,7 +128,7 @@
                 <div id="InfoValue">
                             <div class="horizontal" id="1horizontal">
                                 <div class="checkboxContainer">
-                                    <input class="konfiguratorSelect" type="checkbox" id="1checkbox1">
+                                    <input class="konfiguratorSelect" onmouseover="drawLines(1,1)" @* onmouseout="hideLines(1,1)" *@ type="checkbox" id="1checkbox1">
                                     <input type="hidden"  value="false" id="I1checkbox1">
                                 </div>
                     </div>
@@ -136,11 +136,12 @@
                 </div>
             </div>
                 <div id="add_And_Minus">
-
-                    <input id="removeButtonTur" type="button" value="-">
-                    <select id="countTurSelect" onchange="selectTur(event.target.value)">
-                    </select>
-                    <input id="addButtonTur" type="button" value="+">
+                    <div style="align-items: flex-start;">
+                        <input id="removeButtonTur" type="button" value="-">
+                        <select id="countTurSelect" onchange="selectTur(event.target.value)">
+                        </select>
+                        <input id="addButtonTur" type="button" value="+">
+                    </div>
                 </div>
         </div>
     </div>
@@ -230,13 +231,38 @@
         target.scrollLeft = source.scrollLeft;
     }
 
-    
     scroll1.addEventListener('scroll', () => syncScroll(scroll1, scroll2));
     scroll2.addEventListener('scroll', () => syncScroll(scroll2, scroll1));
 
     let countTurSelect = document.getElementById("countTurSelect");
 
-    document.addEventListener('DOMContentLoaded', (event) => {
+
+    function drawLines(id, row) {
+
+        const elemX = document.getElementById('BlockTur-' + id);
+        const elemY = document.getElementById(id + 'checkbox' + row);
+
+        const rectX = elemX.getBoundingClientRect();
+        const rectY = elemY.getBoundingClientRect();
+
+        const intersectionY = rectY.top < rectX.bottom && rectY.bottom > rectX.top;
+
+        if (intersectionY) {
+            elemX.style.background = "blue";
+            elemY.style.background = "blue";
+        } 
+    }
+
+    function hideLines(id,row) {
+        const verticalLine = document.getElementById('BlockTur-'+id);
+        const horizontalLine = document.getElementById(id + 'checkbox' + row);
+        verticalLine.style.background = '#ededed';
+        horizontalLine.style.background = '#ededed';
+    }
+   
+
+    document.addEventListener('DOMContentLoaded', (event) => 
+    {
         var modal = document.getElementById("myModal");
         modal.style.display = "none";
 
