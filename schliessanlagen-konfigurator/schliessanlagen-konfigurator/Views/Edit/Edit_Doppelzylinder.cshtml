@@ -142,20 +142,28 @@
                 @foreach (var list in ViewBag.KeyCost)
                 {
                     <div class="form-group">
-                        <label class="control-label">Systemname</label>
+                        <h5 class="control-label">Systemname</h5>
                         <input required name="NSysteam" value="@list.NameSysteam" id="opt" class="form-control" />
                     </div>
+                    <br/>
                     <div class="form-group">
-                        <label class="control-label">Schlüsselkostent</label>
+                        <h5 class="control-label">Schlüsselkostent</h5>
                         <input required name="keyCost" value="@list.Price" id="opt" class="form-control" />
                     </div>
+                    <br />
                     <div class="form-group">
-                        <label class="control-label">Systembeschreibungen</label>
+                        <h5 class="control-label">Systembeschreibungen</h5>
                         <textarea  name="descriptionsSysteam" class="form-control" id="exampleFormControlTextarea2">@list.DesctiptionsSysteam</textarea>
                     </div>
+                    <br />
                     <div class="form-group">
-                        <label class="control-label">Lieferzeit</label>
+                        <h5 class="control-label">Lieferzeit</h5>
                         <textarea name="Lieferzeit" class="form-control" id="exampleFormControlTextarea2">@list.Lieferzeit</textarea>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <h5 class="control-label">LieferzeitGrosse</h5>
+                        <textarea name="LieferzeitGrosse" class="form-control" id="exampleFormControlTextarea2">@list.LieferzeitGrosse</textarea>
                     </div>
                 }
                 <hr />

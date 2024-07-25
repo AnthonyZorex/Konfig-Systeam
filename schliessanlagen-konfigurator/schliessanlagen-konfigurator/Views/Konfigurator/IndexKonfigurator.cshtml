@@ -82,7 +82,7 @@
                         <div class="TexCountTur">
                             <div id="ItemTur">
                                     <div id="position">
-                                        <h6 id="counterTur"><img src="@("/Image/options.png")" height="20" width="20" style="margin-right: 10px;" />1</h6>
+                                        <h6 id="counterTur"><img src="@("/Image/options.png")" onmouseover="controlPannel(1)" height="20" width="20" style="margin-right: 10px;" />1</h6>
                                 </div>
                                      <div>
                                         <input id="inputTur" required name="Turname" onchange="chekedNameArientiren(event.target.value,1)" placeholder="Name der Tür" />
@@ -90,7 +90,7 @@
                             </div>
                                     <div>
 
-                                    <img  id="typeSylinder" src="/Image/doppelzylinder.png" style="margin-top:10px" height="40" width="40" />
+                                    <img  id="typeSylinder" src="/Image/doppelzylinder.png" style="margin-top:10px" height="30" width="30" />
                                     
                                     </div>
 
@@ -151,6 +151,28 @@
         <input type="submit"  onclick="(bolleanCheked())" class="btn btn-success" id="input" value="Weiter" />
     </form>
 
+    <div id="zylinderMenu" onmouseleave="closeControlPannel()">
+       
+        <div style="display:flex;gap:10px">
+
+            <img src="@("/Image/arrows.png")" width="20" height="20" />
+            <h5 id="infoControlPanelTur" class="Up">nach oben verschieben</h5>
+        </div>
+        <div style="display:flex;gap:10px">
+            <img src="@("/Image/arrow.png")" width="20" height="20" />
+            <h5 id="infoControlPanelTur" class="Down">nach unten verschieben</h5>
+        </div>
+        <div style="display:flex;gap:10px">
+            <img src="@("/Image/files.png")" width="20" height="20" />
+            <h5 id="infoControlPanelTur" class="koppi">kopieren</h5>
+        </div>
+        <div style="display:flex;gap:10px">
+            <img src="@("/Image/delete.png")" width="20" height="20" />
+            <h5 id="infoControlPanelTur" class="deleted">löschen</h5>
+        </div>
+
+    </div>
+
     <div id="myModal" class="modalLessen">
         <div class="modal-contentLessen ">
             <span class="clostHilfeModel">&times;</span>
@@ -206,6 +228,54 @@
 </div>
 
 <script>
+
+
+    function TurUp(Id) 
+    {
+        let dor = document.getElementById("BlockTur-" + Id);
+        let schritt = Number(Id) + 1;
+
+        let uP = document.getElementById("BlockTur-" + schritt);
+        var parent = dor.parentNode;
+
+        parent.insertBefore(uP, dor);
+    }
+    function TurDown(Id) 
+    {
+        let dor = document.getElementById("BlockTur-" + Id);
+        let schritt = Number(Id) - 1;
+
+        let uP = document.getElementById("BlockTur-" + schritt);
+        var parent = dor.parentNode;
+
+        parent.insertBefore(dor, uP);
+    }
+
+    function controlPannel(Id) 
+    {
+        let dor = document.getElementById("BlockTur-" + Id);
+        let controlPannel = document.getElementById("zylinderMenu");
+
+        document.getElementsByClassName('Up')[0].addEventListener('click', function () {
+            TurUp(Id);
+        });
+        document.getElementsByClassName('Down')[0].addEventListener('click', function () {
+            TurDown(Id);
+        });
+
+        console.log(dor);
+
+        controlPannel.style.display = "block";
+    }
+
+    function closeControlPannel() 
+    {
+        let controlPannel = document.getElementById("zylinderMenu");
+
+        controlPannel.style.display = "none";
+    }
+
+
 
     let blockCount = document.querySelectorAll(".TexCount").length;
     let blockTur = document.querySelectorAll("#inputTur").length;
@@ -751,7 +821,7 @@
             newBlock.innerHTML = `  <div class="TexCountTur">
                                     <div id="ItemTur">
                                         <div id="position">
-                                                   <h6 id="counterTur"><img src="@("/Image/options.png")" height="20" width="20" style="margin-right: 10px;" /> ${blockTur}</h6>
+                                                           <h6 id="counterTur"><img src="@("/Image/options.png")" onmouseover="controlPannel(${blockTur})" height="20" width="20" style="margin-right: 10px;" /> ${blockTur}</h6>
                                         </div>
 
                                         <div>
@@ -760,7 +830,7 @@
 
                                             <div>
 
-                                                 <img  id="typeSylinder" src="/Image/doppelzylinder.png" height="40" width="40"  />
+                                                 <img  id="typeSylinder" src="/Image/doppelzylinder.png" height="30" width="30"  />
 
                                             </div>
                                     </div>
@@ -981,7 +1051,7 @@
             newBlock.innerHTML = `  <div class="TexCountTur">
                                         <div id="ItemTur">
                                             <div id="position">
-                                                     <h6 id="counterTur"><img src="@("/Image/options.png")" height="20" width="20" style="margin-right: 10px;" />${blockTur}</h6>
+                                                  <h6 id="counterTur"><img src="@("/Image/options.png")" height="20" width="20" onmouseover="controlPannel(${blockTur})" style="margin-right: 10px;" />${blockTur}</h6>
                                             </div>
 
                                             <div>
@@ -989,7 +1059,7 @@
                                             </div>
 
                                                 <div>
-                                                     <img  id="typeSylinder" src="/Image/doppelzylinder.png" height="40" width="40"  />
+                                                     <img  id="typeSylinder" src="/Image/doppelzylinder.png" height="30" width="30"  />
                                                 </div>
                                         </div>
 

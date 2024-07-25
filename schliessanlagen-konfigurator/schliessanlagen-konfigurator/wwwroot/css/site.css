@@ -6,7 +6,6 @@
     background-color: red;
 }
 
-/* Оформление для кастомных радио кнопок */
 .radio-container label {
     display: inline-block;
     cursor: pointer;
@@ -585,7 +584,6 @@
        margin-right:20px;
     }
     #InfoValue {
-        grid-template-rows: 50px;
         display: grid;
         border-left: 2px solid #808080;
         border-right: 2px solid #808080;
@@ -768,7 +766,7 @@
     }
     #Table3 {
         display: grid;
-        grid-template-columns: repeat(4, auto);
+        grid-template-columns: repeat(5, auto);
     }
     #routBAR {
         display: grid;
@@ -1108,7 +1106,6 @@
     }
 
     #InfoValue {
-        grid-template-rows: 50px;
         display: grid;
         border-left: 2px solid #808080;
         border-right: 2px solid #808080;
@@ -1521,7 +1518,7 @@
     }
     #Table3 {
         display: grid;
-        grid-template-columns: repeat(4, auto);
+        grid-template-columns: repeat(5, auto);
     }
     #Table2 {
         display: grid;
@@ -1544,7 +1541,6 @@
 
 
     #InfoValue {
-        grid-template-rows: 50px;
         display: grid;
         border-left: 2px solid #808080;
         border-right: 2px solid #808080;
@@ -2325,7 +2321,7 @@
 {
     body {
         margin-bottom: 60px;
-        font-family: "Inter", sans-serif;
+        font-family: "Fira Sans", sans-serif;
         font-optical-sizing: auto;
         font-style: normal;
         font-variation-settings: "slnt" 0;
@@ -2616,7 +2612,7 @@
     }
     #Table3 {
         display: grid;
-        grid-template-columns: repeat(4, auto);
+        grid-template-columns: repeat(5, auto);
     }
     #Table2 {
         display: grid;
@@ -2639,7 +2635,6 @@
 
 
     #InfoValue {
-        grid-template-rows: 50px;
         display: grid;
         border-left: 2px solid #808080;
         border-right: 2px solid #808080;
@@ -3057,13 +3052,13 @@
         align-items: flex-end;
     }
 
+
     .TexCountTur {
         max-width: 850px;
         text-align: center;
         display: flex;
         grid-template-columns: 30px;
-        background-color: #EDEDED;
-        padding: 5px;
+        background-color: #ededed;
         align-items: self-end;
     }
 
@@ -3106,15 +3101,14 @@
     }
 
     #chekerTur {
-        margin-left: 30px;
+        align-items: center;
+        margin-left: 65px;
         display: flex;
         gap: 5px;
     }
 
         #chekerTur > button {
-            font-size: 24px;
-            border-radius: 20%;
-            width: 40px;
+            font-size: 18px;
             border: none;
         }
 
@@ -3122,7 +3116,6 @@
         height: 30px;
         width: 30px;
         padding: 5px;
-        margin-top: 5px;
     }
 
     #positio {
@@ -3131,22 +3124,39 @@
     }
 
     #TypeSelectTurItem {
-        margin-top: 5px;
         height: 30px;
         width: 50px;
         margin-left: 5px;
     }
 
     #TypeSelectTurType {
-        margin-top: 5px;
         height: 30px;
         width: 150px;
         margin-right: 20px;
     }
-
-    .custom-checkbox {
-        display: block;
+    #zylinderMenu {
+        margin-left: 0px;
+        margin-top: -200px;
+        background: lightblue;
+        position: absolute;
+        width: 250px;
+        height: 150px;
+        display: none;
+        border-radius: 10px;
+        padding: 15px;
     }
+    #infoControlPanelTur{
+        cursor:pointer;
+    }
+        #infoControlPanelTur:hover {
+            background: #F363AC;
+            color: white;
+        }
+
+
+        .custom-checkbox {
+            display: block;
+        }
 
         .custom-checkbox input {
             display: none;
@@ -3199,7 +3209,6 @@
 
     .horizontal {
         align-items: flex-end;
-        height: 45px;
         display: flex;
         gap: 10px;
     }

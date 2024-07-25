@@ -10,6 +10,7 @@ namespace schliessanlagen_konfigurator.Models
         public float Price { get; set; }
         public string? DesctiptionsSysteam { get; set; }
         public string? Lieferzeit { get; set; }
+        public string? LieferzeitGrosse { get; set; }
         public ICollection<SystemOptionen>? SystemOptionen { get; set; }
         public SysteamPriceKey()
         {

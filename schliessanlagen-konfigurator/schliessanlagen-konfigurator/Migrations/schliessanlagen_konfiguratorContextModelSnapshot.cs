@@ -51,25 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "0f6f636b-b9ce-4970-8523-ca732b1e2e27",
+                            Id = "1d2d5479-9624-4057-9d70-79b11d989a69",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "f02b1488-4e2e-445a-8fd4-69c198f7dfeb",
+                            Id = "405b0283-475f-46be-8e0b-8a7e2192399d",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "032ff40b-fc5b-4c8f-bbd1-6672847a1e9b",
+                            Id = "c083d473-d43e-4b50-8500-6eff455d1fc7",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "e041b2b2-eb65-4cb1-8ce4-6cde225e0fb5",
+                            Id = "5830f115-b03d-4cbf-b79a-8e085a5d9d7c",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -994,6 +994,9 @@ namespace schliessanlagen_konfigurator.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Lieferzeit")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LieferzeitGrosse")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NameSysteam")

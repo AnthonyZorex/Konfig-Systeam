@@ -21,6 +21,8 @@ using MimeKit;
 using System;
 using System.Text;
 using System.Text.RegularExpressions;
+using Microsoft.CodeAnalysis.Options;
+using schliessanlagen_konfigurator.Models.CustomModel;
 namespace schliessanlagen_konfigurator.Controllers
 {
     public class HomeController : Controller
@@ -196,8 +198,39 @@ namespace schliessanlagen_konfigurator.Controllers
         public async Task<IActionResult> Edit_System(int id)
         {
             var item = db.SysteamPriceKey.Find(id);
+            
+            var InfoItem = new List<SystemChekedItem>();
 
             var OptionItem = db.SystemOptionen.Where(x => x.SystemId == item.Id).ToList();
+
+            var Doppel = db.Profil_Doppelzylinder.FirstOrDefault(x => x.NameSystem == item.NameSysteam);
+
+            var DoppelO = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == Doppel.Id).ToList();
+
+            var DoppelOptions = new List<NGF>();
+
+            foreach(var list in DoppelO)
+            {
+                var itemD = db.NGF.Where(x => x.OptionsId == list.Id).ToList();
+
+                foreach(var I in itemD)
+                {
+                    DoppelOptions.Add(I);
+                }
+            }
+
+
+            //var Knayf = db.Profil_Knaufzylinder.FirstOrDefault(x => x.NameSystem == item.NameSysteam);
+
+            //var Halb = db.Profil_Halbzylinder.FirstOrDefault(x => x.NameSystem == item.NameSysteam);
+
+            //var Hebel = db.Hebelzylinder.FirstOrDefault(x => x.NameSystem == item.NameSysteam);
+
+            //var Vorhang = db.Vorhangschloss.FirstOrDefault(x => x.NameSystem == item.NameSysteam);
+
+            //var Aussen = db.Aussenzylinder_Rundzylinder.FirstOrDefault(x => x.NameSystem == item.NameSysteam);
+
+
 
             if (OptionItem.Count > 0)
             {
@@ -214,10 +247,16 @@ namespace schliessanlagen_konfigurator.Controllers
                         Options.Add(list);
                     }
                 }
+               
+                var queryDoppel = Options.Select(x=>x.Name).Intersect(DoppelOptions.Select(x => x.Name)).ToList();
+
+                ViewBag.InformSelect = queryDoppel;
 
                 ViewBag.Options = Options;
 
                 var OptionsValue = new List<SystemOptionValue>();
+
+                var countV = new List<int>();
 
                 foreach (var option in Options)
                 {
@@ -227,7 +266,17 @@ namespace schliessanlagen_konfigurator.Controllers
                     {
                         OptionsValue.Add(list);
                     }
+                    countV.Add(Value.Count());
                 }
+
+
+              
+
+
+                ViewBag.InfoSelected = InfoItem;
+
+                ViewBag.OptionValue = OptionsValue;
+                ViewBag.CountOptions = countV.ToList();
             }
             else
             {
@@ -236,18 +285,118 @@ namespace schliessanlagen_konfigurator.Controllers
             return View("../Edit/Edit_System", item);
         }
         [HttpPost]
-        public async Task<IActionResult> SaveSysteamInfo(SysteamPriceKey systeam, string AltName,string doppel, string Halb, string Knayf,
-        string Hebel, string Vorhang, string Aussen,  List<string> Options, List<string> ImageNameOption, List<string> Descriptions,List<int> inputCounter,
-        List<string> value , List<string> cost)
+        public async Task<IActionResult> SaveSysteamInfo(SysteamPriceKey systeam, string AltName, List<string> Halb, List<string> Knayf,List<string> doppel,
+        List<string> Hebel, List<string> Vorhang, List<string> Aussen,  List<string> Options, List<string> ImageNameOption, List<string> Descriptions,List<int> inputCounter,
+        List<string> value , List<float> cost)
         {
-
             var dopple = db.Profil_Doppelzylinder.FirstOrDefault(x => x.NameSystem == AltName);
+           
             if (dopple != null)
             {
                 dopple.NameSystem = systeam.NameSysteam;
 
                 db.Profil_Doppelzylinder.Update(dopple);
                 db.SaveChanges();
+
+                    var option = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == dopple.Id).ToList();
+
+                    if (Options.Count() == 0 || option.Count() > 0)
+                    {
+                        var listAllOption = new List<NGF>();
+
+                        foreach (var item in option)
+                        {
+                            var OptionDescription = db.NGF.Where(x => x.OptionsId == item.Id).ToList();
+
+                            foreach (var item2 in OptionDescription)
+                            {
+                                listAllOption.Add(item2);
+                            }
+                        }
+
+                        foreach (var item in listAllOption)
+                        {
+                            var optionsValue = db.NGF_Value.Where(x => x.NGFId == item.Id).ToList();
+
+                            foreach (var item2 in optionsValue)
+                            {
+                                db.NGF_Value.Remove(item2);
+                            }
+                        }
+                        db.SaveChanges();
+
+                        foreach (var list in listAllOption)
+                        {
+                            db.NGF.Remove(list);
+                        }
+
+                        db.SaveChanges();
+
+                        foreach (var optionsList in option)
+                        {
+                            db.Profil_Doppelzylinder_Options.Remove(optionsList);
+                        }
+                        db.SaveChanges();
+                    }
+                    if (Options.Count > 0)
+                    {
+                        int counter = 0;
+
+                        for (var i = 0; i < Options.Count(); i++)
+                        {
+                            if (doppel[i] != "false")
+                            {
+                                var createOptions = new Profil_Doppelzylinder_Options
+                                {
+                                    DoppelzylinderId = dopple.Id,
+                                };
+
+                                db.Profil_Doppelzylinder_Options.Add(createOptions);
+                                db.SaveChanges();
+
+                                var createOptionsAussen = new NGF
+                                {
+                                    OptionsId = createOptions.Id,
+                                    Name = Options[i]
+
+                                };
+
+                                if (Descriptions.Count() > 0)
+                                {
+                                    createOptionsAussen.Description = Descriptions[i];
+                                }
+                                if (Descriptions.Count() == ImageNameOption.Count())
+                                {
+
+                                    createOptionsAussen.ImageName = ImageNameOption[i];
+
+                                }
+
+                                db.NGF.Add(createOptionsAussen);
+                                db.SaveChanges();
+
+                                for (int f = 0; f < inputCounter[i]; f++)
+                                {
+                                    var costedValue = new NGF_Value
+                                    {
+                                        NGFId = createOptionsAussen.Id,
+                                        Value = value[counter],
+                                        Cost = cost[counter],
+                                    };
+                                    db.NGF_Value.Add(costedValue);
+                                    counter++;
+                                }
+                                db.SaveChanges();
+                            }
+                            else
+                            {
+
+                            } 
+                        }
+
+                    }
+               
+               
             }
            
             var knayf = db.Profil_Knaufzylinder.FirstOrDefault(x => x.NameSystem == AltName);
@@ -255,9 +404,101 @@ namespace schliessanlagen_konfigurator.Controllers
             if (knayf != null)
             {
                 knayf.NameSystem = systeam.NameSysteam;
-
                 db.Profil_Knaufzylinder.Update(knayf);
                 db.SaveChanges();
+
+                var option = db.Profil_Knaufzylinder_Options.Where(x => x.Profil_KnaufzylinderId == knayf.Id).ToList();
+
+                if (Options.Count() == 0 || option.Count() > 0)
+                {
+                    var listAllOption = new List<Knayf_Options>();
+
+                    foreach (var item in option)
+                    {
+                        var OptionDescription = db.Knayf_Options.Where(x => x.OptionsId == item.Id).ToList();
+
+                        foreach (var item2 in OptionDescription)
+                        {
+                            listAllOption.Add(item2);
+                        }
+                    }
+
+                    foreach (var item in listAllOption)
+                    {
+                        var optionsValue = db.Knayf_Options_value.Where(x => x.Knayf_OptionsId == item.Id).ToList();
+
+                        foreach (var item2 in optionsValue)
+                        {
+                            db.Knayf_Options_value.Remove(item2);
+                        }
+                    }
+                    db.SaveChanges();
+
+                    foreach (var list in listAllOption)
+                    {
+                        db.Knayf_Options.Remove(list);
+                    }
+
+                    db.SaveChanges();
+
+                    foreach (var optionsList in option)
+                    {
+                        db.Profil_Knaufzylinder_Options.Remove(optionsList);
+                    }
+                    db.SaveChanges();
+                }
+                if (Options.Count > 0)
+                {
+                        int counter = 0;
+
+                        for (var i = 0; i < Options.Count(); i++)
+                        {
+                            if (Knayf[i] != "false")
+                            {
+                                    var createOptions = new Profil_Knaufzylinder_Options
+                                    {
+                                        Profil_KnaufzylinderId = knayf.Id,
+                                    };
+
+                                    db.Profil_Knaufzylinder_Options.Add(createOptions);
+                                    db.SaveChanges();
+
+                                    var createOptionsAussen = new Knayf_Options
+                                    {
+                                        OptionsId = createOptions.Id,
+                                        Name = Options[i],
+                                    };
+
+                                    if (Descriptions.Count() > 0)
+                                    {
+                                        createOptionsAussen.Description = Descriptions[i];
+                                    }
+                                    if (Descriptions.Count() == ImageNameOption.Count())
+                                    {
+                                        createOptionsAussen.ImageName = ImageNameOption[i];
+                                    }
+
+
+                                    db.Knayf_Options.Add(createOptionsAussen);
+                                    db.SaveChanges();
+
+                                    for (int f = 0; f < inputCounter[i]; f++)
+                                    {
+                                        var costedValue = new Knayf_Options_value
+                                        {
+                                            Knayf_OptionsId = createOptionsAussen.Id,
+                                            Value = value[counter],
+                                            Cost = cost[counter],
+                                        };
+                                        db.Knayf_Options_value.Add(costedValue);
+                                        counter++;
+                                    }
+                                    db.SaveChanges();
+                            }
+  
+                        }
+                    
+                }
             }
 
             var halb = db.Profil_Halbzylinder.FirstOrDefault(x => x.NameSystem == AltName);
@@ -265,9 +506,99 @@ namespace schliessanlagen_konfigurator.Controllers
             if (halb != null)
             {
                 halb.NameSystem = systeam.NameSysteam;
-
                 db.Profil_Halbzylinder.Update(halb);
                 db.SaveChanges();
+
+                var option = db.Profil_Halbzylinder_Options.Where(x => x.Profil_HalbzylinderId == halb.Id).ToList();
+
+                if (Options.Count() == 0 || option.Count() > 0)
+                {
+                    var listAllOption = new List<Halbzylinder_Options>();
+
+                    foreach (var item in option)
+                    {
+                        var OptionDescription = db.Halbzylinder_Options.Where(x => x.OptionsId == item.Id).ToList();
+
+                        foreach (var item2 in OptionDescription)
+                        {
+                            listAllOption.Add(item2);
+                        }
+                    }
+
+                    foreach (var item in listAllOption)
+                    {
+                        var optionsValue = db.Halbzylinder_Options_value.Where(x => x.Halbzylinder_OptionsId == item.Id).ToList();
+
+                        foreach (var item2 in optionsValue)
+                        {
+                            db.Halbzylinder_Options_value.Remove(item2);
+                        }
+                    }
+                    db.SaveChanges();
+
+                    foreach (var list in listAllOption)
+                    {
+                        db.Halbzylinder_Options.Remove(list);
+                    }
+
+                    db.SaveChanges();
+
+                    foreach (var optionsList in option)
+                    {
+                        db.Profil_Halbzylinder_Options.Remove(optionsList);
+                    }
+                    db.SaveChanges();
+                }
+                if (Options.Count > 0)
+                {
+                    int counter = 0;
+
+                    for (var i = 0; i < Options.Count(); i++)
+                    {
+                        if (Halb[i] != "false")
+                        {
+                            var createOptions = new Profil_Halbzylinder_Options
+                            {
+                                Profil_HalbzylinderId = halb.Id,
+                            };
+
+                            db.Profil_Halbzylinder_Options.Add(createOptions);
+                            db.SaveChanges();
+
+                            var createOptionsAussen = new Halbzylinder_Options
+                            {
+                                OptionsId = createOptions.Id,
+                                Name = Options[i],
+                            };
+
+                            if (Descriptions.Count() > 0)
+                            {
+                                createOptionsAussen.Description = Descriptions[i];
+                            }
+                            if (Descriptions.Count() == ImageNameOption.Count())
+                            {
+                                createOptionsAussen.ImageName = ImageNameOption[i];
+                            }
+
+                            db.Halbzylinder_Options.Add(createOptionsAussen);
+                            db.SaveChanges();
+
+                            for (int f = 0; f < inputCounter[i]; f++)
+                            {
+                                var costedValue = new Halbzylinder_Options_value
+                                {
+                                    Halbzylinder_OptionsId = createOptionsAussen.Id,
+                                    Value = value[counter],
+                                    Cost = cost[counter],
+                                };
+                                db.Halbzylinder_Options_value.Add(costedValue);
+                                counter++;
+                            }
+                            db.SaveChanges();
+                        }
+                    }
+
+                }
             }
 
             var hebel = db.Hebelzylinder.FirstOrDefault(x => x.NameSystem == AltName);
@@ -278,6 +609,98 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 db.Hebelzylinder.Update(hebel);
                 db.SaveChanges();
+
+                var option = db.Hebelzylinder_Options.Where(x => x.HebelzylinderId == hebel.Id).ToList();
+
+                if (Options.Count() == 0 || option.Count() > 0)
+                {
+                    var listAllOption = new List<Options>();
+
+                    foreach (var item in option)
+                    {
+                        var OptionDescription = db.Options.Where(x => x.OptionId == item.Id).ToList();
+
+                        foreach (var item2 in OptionDescription)
+                        {
+                            listAllOption.Add(item2);
+                        }
+                    }
+
+                    foreach (var item in listAllOption)
+                    {
+                        var optionsValue = db.Options_value.Where(x => x.OptionsId == item.Id).ToList();
+
+                        foreach (var item2 in optionsValue)
+                        {
+                            db.Options_value.Remove(item2);
+                        }
+                    }
+                    db.SaveChanges();
+
+                    foreach (var list in listAllOption)
+                    {
+                        db.Options.Remove(list);
+                    }
+
+                    db.SaveChanges();
+
+                    foreach (var optionsList in option)
+                    {
+                        db.Hebelzylinder_Options.Remove(optionsList);
+                    }
+                    db.SaveChanges();
+                }
+                if (Options.Count > 0)
+                {
+                    int counter = 0;
+
+                    for (var i = 0; i < Options.Count(); i++)
+                    {
+                        if (Hebel[i] != "false")
+                        {
+                            var createOptions = new Hebelzylinder_Options
+                            {
+                                HebelzylinderId = hebel.Id,
+                            };
+
+                            db.Hebelzylinder_Options.Add(createOptions);
+                            db.SaveChanges();
+
+                            var createOptionsAussen = new Options
+                            {
+                                OptionId = createOptions.Id,
+                                Name = Options[i],
+
+                            };
+                            if (Descriptions.Count() > 0)
+                            {
+                                createOptionsAussen.Description = Descriptions[i];
+                            }
+                            if (Descriptions.Count() == ImageNameOption.Count())
+                            {
+                                createOptionsAussen.ImageName = ImageNameOption[i];
+                            }
+
+                            db.Options.Add(createOptionsAussen);
+                            db.SaveChanges();
+
+                            for (int f = 0; f < inputCounter[i]; f++)
+                            {
+                                var costedValue = new Options_value
+                                {
+                                    OptionsId = createOptionsAussen.Id,
+                                    Value = value[counter],
+                                    Cost = cost[counter],
+                                };
+                                db.Options_value.Add(costedValue);
+                                counter++;
+                            }
+                            db.SaveChanges();
+                        }
+                        
+                    }
+
+                }
             }
           
             var vorhang = db.Vorhangschloss.FirstOrDefault(x => x.NameSystem == AltName);
@@ -288,9 +711,99 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 db.Vorhangschloss.Update(vorhang);
                 db.SaveChanges();
+
+                var option = db.Vorhan_Options.Where(x => x.VorhangschlossId == vorhang.Id).ToList();
+
+                if (Options.Count() == 0 || option.Count() > 0)
+                {
+                    var listAllOption = new List<OptionsVorhan>();
+
+                    foreach (var item in option)
+                    {
+                        var OptionDescription = db.OptionsVorhan.Where(x => x.OptionId == item.Id).ToList();
+
+                        foreach (var item2 in OptionDescription)
+                        {
+                            listAllOption.Add(item2);
+                        }
+                    }
+
+                    foreach (var item in listAllOption)
+                    {
+                        var optionsValue = db.OptionsVorhan_value.Where(x => x.OptionsId == item.Id).ToList();
+
+                        foreach (var item2 in optionsValue)
+                        {
+                            db.OptionsVorhan_value.Remove(item2);
+                        }
+                    }
+                    db.SaveChanges();
+
+                    foreach (var list in listAllOption)
+                    {
+                        db.OptionsVorhan.Remove(list);
+                    }
+
+                    db.SaveChanges();
+
+                    foreach (var optionsList in option)
+                    {
+                        db.Vorhan_Options.Remove(optionsList);
+                    }
+                    db.SaveChanges();
+                }
+                else
+                {
+                    int counter = 0;
+                    for (var i = 0; i < Options.Count(); i++)
+                    {
+                        if (Vorhang[i] != "false")
+                        {
+                            var createOptions = new Vorhan_Options
+                            {
+                                VorhangschlossId = vorhang.Id,
+                            };
+
+                            db.Vorhan_Options.Add(createOptions);
+                            db.SaveChanges();
+
+                            var createOptionsAussen = new OptionsVorhan
+                            {
+                                OptionId = createOptions.Id,
+                                Name = Options[i],
+                            };
+
+                            if (Descriptions.Count() > 0)
+                            {
+                                createOptionsAussen.Description = Descriptions[i];
+                            }
+                            if (Descriptions.Count() == ImageNameOption.Count())
+                            {
+                                createOptionsAussen.ImageName = ImageNameOption[i];
+                            }
+
+                            db.OptionsVorhan.Add(createOptionsAussen);
+                            db.SaveChanges();
+
+                            for (int f = 0; f < inputCounter[i]; f++)
+                            {
+                                var costedValue = new OptionsVorhan_value
+                                {
+                                    OptionsId = createOptionsAussen.Id,
+                                    Value = value[counter],
+                                    Cost = cost[counter]
+                                };
+                                db.OptionsVorhan_value.Add(costedValue);
+                                counter++;
+                            }
+                            db.SaveChanges();
+                        }
+                        
+                    }
+                }
             }
 
-            var Aus= db.Aussenzylinder_Rundzylinder.FirstOrDefault(x => x.NameSystem == AltName);
+            var Aus = db.Aussenzylinder_Rundzylinder.FirstOrDefault(x => x.NameSystem == AltName);
 
             if (Aus != null)
             {
@@ -298,6 +811,91 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 db.Aussenzylinder_Rundzylinder.Update(Aus);
                 db.SaveChanges();
+
+                var option = db.Aussen_Rund_options.Where(x => x.Aussenzylinder_RundzylinderId == Aus.Id).ToList();
+
+                if (Options.Count() == 0 || option.Count() > 0)
+                {
+                    var listAllOption = new List<Aussen_Rund_all>();
+
+                    foreach (var item in option)
+                    {
+                        var OptionDescription = db.Aussen_Rund_all.Where(x => x.Aussen_Rund_optionsId == item.Id).ToList();
+
+                        foreach (var item2 in OptionDescription)
+                        {
+                            listAllOption.Add(item2);
+                        }
+                    }
+
+                    foreach (var item in listAllOption)
+                    {
+                        var optionsValue = db.Aussen_Rouns_all_value.Where(x => x.Aussen_Rund_allId == item.Id).ToList();
+
+                        foreach (var item2 in optionsValue)
+                        {
+                            db.Aussen_Rouns_all_value.Remove(item2);
+                        }
+                    }
+                    db.SaveChanges();
+
+                    foreach (var list in listAllOption)
+                    {
+                        db.Aussen_Rund_all.Remove(list);
+                    }
+
+                    db.SaveChanges();
+
+                    foreach (var optionsList in option)
+                    {
+                        db.Aussen_Rund_options.Remove(optionsList);
+                    }
+                    db.SaveChanges();
+                }
+                if (Options.Count > 0)
+                {
+                    int counter = 0;
+                    for (var i = 0; i < Options.Count(); i++)
+                    {
+                        var createOptions = new Aussen_Rund_options
+                        {
+                            Aussenzylinder_RundzylinderId = Aus.Id,
+                        };
+
+                        db.Aussen_Rund_options.Add(createOptions);
+                        db.SaveChanges();
+
+                        var createOptionsAussen = new Aussen_Rund_all
+                        {
+                            Aussen_Rund_optionsId = createOptions.Id,
+                            Name = Options[i],
+                        };
+                        if (Descriptions.Count() > 0)
+                        {
+                            createOptionsAussen.Description = Descriptions[i];
+                        }
+                        if (Descriptions.Count() == ImageNameOption.Count())
+                        {
+                            createOptionsAussen.ImageName = ImageNameOption[i];
+                        }
+                        db.Aussen_Rund_all.Add(createOptionsAussen);
+                        db.SaveChanges();
+
+                        for (int f = 0; f < inputCounter[i]; f++)
+                        {
+                            var costedValue = new Aussen_Rouns_all_value
+                            {
+                                Aussen_Rund_allId = createOptionsAussen.Id,
+                                Value = value[counter],
+                                Cost = cost[counter],
+                            };
+                            db.Aussen_Rouns_all_value.Add(costedValue);
+                            counter++;
+                        }
+                        db.SaveChanges();
+                    }
+
+                }
             }
            
 
@@ -307,11 +905,100 @@ namespace schliessanlagen_konfigurator.Controllers
             sys.Price = systeam.Price;
             sys.DesctiptionsSysteam = systeam.DesctiptionsSysteam;
             sys.Lieferzeit = systeam.Lieferzeit;
-
+            sys.LieferzeitGrosse = systeam.LieferzeitGrosse;
             db.SysteamPriceKey.Update(sys);
-
             db.SaveChanges();
 
+            var SystemOptionen = db.SystemOptionen.Where(x=>x.SystemId==sys.Id).ToList();
+
+            if (Options.Count() == 0 || SystemOptionen.Count() > 0)
+            {
+                var listAllOption = new List<SystemOptionInfo>();
+
+                foreach (var item in SystemOptionen)
+                {
+                    var OptionDescription = db.SystemOptionInfo.Where(x => x.OptionsId == item.Id).ToList();
+
+                    foreach (var item2 in OptionDescription)
+                    {
+                        listAllOption.Add(item2);
+                    }
+                }
+
+                foreach (var item in listAllOption)
+                {
+                    var optionsValue = db.SystemOptionValue.Where(x => x.SysteamPriceKeyId == item.Id).ToList();
+
+                    foreach (var item2 in optionsValue)
+                    {
+                        db.SystemOptionValue.Remove(item2);
+                    }
+                }
+                db.SaveChanges();
+
+                foreach (var list in listAllOption)
+                {
+                    db.SystemOptionInfo.Remove(list);
+                }
+                db.SaveChanges();
+
+                foreach (var optionsList in SystemOptionen)
+                {
+                    db.SystemOptionen.Remove(optionsList);
+                }
+                db.SaveChanges();
+            }
+            if (Options.Count > 0)
+            {
+                int counter = 0;
+
+                for (var i = 0; i < Options.Count(); i++)
+                {
+
+                        var createOptions = new SystemOptionen
+                        {
+                            SystemId = sys.Id,
+                        };
+
+                        db.SystemOptionen.Add(createOptions);
+                        db.SaveChanges();
+
+                        var createOptionsAussen = new SystemOptionInfo
+                        {
+                            OptionsId = createOptions.Id,
+                            Name = Options[i]
+
+                        };
+
+                        if (Descriptions.Count() > 0)
+                        {
+                            createOptionsAussen.Description = Descriptions[i];
+                        }
+                        if (Descriptions.Count() == ImageNameOption.Count())
+                        {
+
+                            createOptionsAussen.ImageName = ImageNameOption[i];
+
+                        }
+
+                        db.SystemOptionInfo.Add(createOptionsAussen);
+                        db.SaveChanges();
+
+                        for (int f = 0; f < inputCounter[i]; f++)
+                        {
+                            var costedValue = new SystemOptionValue
+                            {
+                                SysteamPriceKeyId = createOptionsAussen.Id,
+                                Value = value[counter],
+                                Cost = cost[counter],
+                            };
+                            db.SystemOptionValue.Add(costedValue);
+                            counter++;
+                        }
+                        db.SaveChanges();
+                }
+
+            }
             return RedirectToAction("SystemInfo", "Home");
         }
 
@@ -1569,7 +2256,7 @@ namespace schliessanlagen_konfigurator.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SaveDoppelZylinder(Profil_Doppelzylinder profil_Doppelzylinder, List<int> SizeAus, List<int> SizeInen, List<string> Options,List<string> ImageNameOption,string Lieferzeit,
+        public async Task<IActionResult> SaveDoppelZylinder(Profil_Doppelzylinder profil_Doppelzylinder, List<int> SizeAus, List<int> SizeInen, List<string> Options,List<string> ImageNameOption,string Lieferzeit,string LieferzeitGrosse,
         List<string> Descriptions, List<string> valueNGF, List<float> costNGF, List<int> inputCounter,string NSysteam,float keyCost, string descriptionsSysteam,List<float> costSizeAussen, List<float> costSizeIntern)
         {
             var Items = db.Profil_Doppelzylinder.Find(profil_Doppelzylinder.Id);
@@ -1701,6 +2388,7 @@ namespace schliessanlagen_konfigurator.Controllers
             keyItem.Price = keyCost;
             keyItem.DesctiptionsSysteam = descriptionsSysteam;
             keyItem.Lieferzeit = Lieferzeit;
+            keyItem.LieferzeitGrosse = LieferzeitGrosse;
             db.SaveChanges();
 
             return RedirectToAction("Index");
