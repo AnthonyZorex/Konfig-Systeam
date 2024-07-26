@@ -22,7 +22,7 @@ using System;
 using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis.Options;
-using schliessanlagen_konfigurator.Models.CustomModel;
+using Microsoft.AspNetCore.Mvc.TagHelpers;
 namespace schliessanlagen_konfigurator.Controllers
 {
     public class HomeController : Controller
@@ -197,9 +197,7 @@ namespace schliessanlagen_konfigurator.Controllers
         }
         public async Task<IActionResult> Edit_System(int id)
         {
-            var item = db.SysteamPriceKey.Find(id);
-            
-            var InfoItem = new List<SystemChekedItem>();
+            var item = db.SysteamPriceKey.Find(id);          
 
             var OptionItem = db.SystemOptionen.Where(x => x.SystemId == item.Id).ToList();
 
@@ -220,17 +218,81 @@ namespace schliessanlagen_konfigurator.Controllers
             }
 
 
-            //var Knayf = db.Profil_Knaufzylinder.FirstOrDefault(x => x.NameSystem == item.NameSysteam);
+            var Knayf = db.Profil_Knaufzylinder.FirstOrDefault(x => x.NameSystem == item.NameSysteam);
 
-            //var Halb = db.Profil_Halbzylinder.FirstOrDefault(x => x.NameSystem == item.NameSysteam);
+            var KnayfO = db.Profil_Knaufzylinder_Options.Where(x => x.Profil_KnaufzylinderId == Knayf.Id).ToList();
 
-            //var Hebel = db.Hebelzylinder.FirstOrDefault(x => x.NameSystem == item.NameSysteam);
+            var KnayfOptions = new List<Knayf_Options>();
 
-            //var Vorhang = db.Vorhangschloss.FirstOrDefault(x => x.NameSystem == item.NameSysteam);
+            foreach (var list in KnayfO)
+            {
+                var itemD = db.Knayf_Options.Where(x => x.OptionsId == list.Id).ToList();
 
-            //var Aussen = db.Aussenzylinder_Rundzylinder.FirstOrDefault(x => x.NameSystem == item.NameSysteam);
+                foreach (var I in itemD)
+                {
+                    KnayfOptions.Add(I);
+                }
+            }
 
 
+            var Halb = db.Profil_Halbzylinder.FirstOrDefault(x => x.NameSystem == item.NameSysteam);
+
+            var HalbO = db.Profil_Halbzylinder_Options.Where(x => x.Profil_HalbzylinderId == Halb.Id).ToList();
+
+            var HalbOptions = new List<Halbzylinder_Options>();
+
+            foreach (var list in HalbO)
+            {
+                var itemD = db.Halbzylinder_Options.Where(x => x.OptionsId == list.Id).ToList();
+
+                foreach (var I in itemD)
+                {
+                    HalbOptions.Add(I);
+                }
+            }
+
+            var Hebel = db.Hebelzylinder.FirstOrDefault(x => x.NameSystem == item.NameSysteam);
+            var HebelO = db.Hebelzylinder_Options.Where(x => x.HebelzylinderId == Halb.Id).ToList();
+
+            var HebelOptions = new List<Options>();
+
+            foreach (var list in HebelO)
+            {
+                var itemD = db.Options.Where(x => x.OptionId == list.Id).ToList();
+
+                foreach (var I in itemD)
+                {
+                    HebelOptions.Add(I);
+                }
+            }
+
+            var Vorhang = db.Vorhangschloss.FirstOrDefault(x => x.NameSystem == item.NameSysteam);
+            var VorhangO = db.Vorhan_Options.Where(x => x.VorhangschlossId == Vorhang.Id).ToList();
+            var VorhangOptions = new List<OptionsVorhan>();
+
+            foreach (var list in VorhangO)
+            {
+                var itemD = db.OptionsVorhan.Where(x => x.OptionId == list.Id).ToList();
+
+                foreach (var I in itemD)
+                {
+                    VorhangOptions.Add(I);
+                }
+            }
+
+            var Aussen = db.Aussenzylinder_Rundzylinder.FirstOrDefault(x => x.NameSystem == item.NameSysteam);
+            var AussenO = db.Aussen_Rund_options.Where(x => x.Aussenzylinder_RundzylinderId == Aussen.Id).ToList();
+            var AussenOptions = new List<Aussen_Rund_all>();
+
+            foreach (var list in AussenO)
+            {
+                var itemD = db.Aussen_Rund_all.Where(x => x.Aussen_Rund_optionsId == list.Id).ToList();
+
+                foreach (var I in itemD)
+                {
+                    AussenOptions.Add(I);
+                }
+            }
 
             if (OptionItem.Count > 0)
             {
@@ -249,8 +311,18 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
                
                 var queryDoppel = Options.Select(x=>x.Name).Intersect(DoppelOptions.Select(x => x.Name)).ToList();
+                var queryKnayf = Options.Select(x => x.Name).Intersect(KnayfOptions.Select(x => x.Name)).ToList();
+                var queryHalb = Options.Select(x => x.Name).Intersect(HalbOptions.Select(x => x.Name)).ToList();
+                var queryHebel = Options.Select(x => x.Name).Intersect(HebelOptions.Select(x => x.Name)).ToList();
+                var queryVorhang = Options.Select(x => x.Name).Intersect(VorhangOptions.Select(x => x.Name)).ToList();
+                var queryAussen = Options.Select(x => x.Name).Intersect(AussenOptions.Select(x => x.Name)).ToList();
 
                 ViewBag.InformSelect = queryDoppel;
+                ViewBag.InformSelectKnayf = queryKnayf;
+                ViewBag.InformSelectHalb = queryHalb;
+                ViewBag.InformSelectHebel = queryHebel;
+                ViewBag.Vorhan = queryVorhang;
+                ViewBag.InformSelectAussen = queryAussen;
 
                 ViewBag.Options = Options;
 
@@ -269,12 +341,6 @@ namespace schliessanlagen_konfigurator.Controllers
                     countV.Add(Value.Count());
                 }
 
-
-              
-
-
-                ViewBag.InfoSelected = InfoItem;
-
                 ViewBag.OptionValue = OptionsValue;
                 ViewBag.CountOptions = countV.ToList();
             }
@@ -283,6 +349,12 @@ namespace schliessanlagen_konfigurator.Controllers
                 ViewBag.optionV = false;
             }
             return View("../Edit/Edit_System", item);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Schipeed()
+        {
+            return View();
         }
         [HttpPost]
         public async Task<IActionResult> SaveSysteamInfo(SysteamPriceKey systeam, string AltName, List<string> Halb, List<string> Knayf,List<string> doppel,
@@ -752,9 +824,10 @@ namespace schliessanlagen_konfigurator.Controllers
                     }
                     db.SaveChanges();
                 }
-                else
+                if (Options.Count > 0)
                 {
                     int counter = 0;
+
                     for (var i = 0; i < Options.Count(); i++)
                     {
                         if (Vorhang[i] != "false")
@@ -855,44 +928,49 @@ namespace schliessanlagen_konfigurator.Controllers
                 if (Options.Count > 0)
                 {
                     int counter = 0;
+
                     for (var i = 0; i < Options.Count(); i++)
                     {
-                        var createOptions = new Aussen_Rund_options
+                        if (Aussen[i] != "false")
                         {
-                            Aussenzylinder_RundzylinderId = Aus.Id,
-                        };
-
-                        db.Aussen_Rund_options.Add(createOptions);
-                        db.SaveChanges();
-
-                        var createOptionsAussen = new Aussen_Rund_all
-                        {
-                            Aussen_Rund_optionsId = createOptions.Id,
-                            Name = Options[i],
-                        };
-                        if (Descriptions.Count() > 0)
-                        {
-                            createOptionsAussen.Description = Descriptions[i];
-                        }
-                        if (Descriptions.Count() == ImageNameOption.Count())
-                        {
-                            createOptionsAussen.ImageName = ImageNameOption[i];
-                        }
-                        db.Aussen_Rund_all.Add(createOptionsAussen);
-                        db.SaveChanges();
-
-                        for (int f = 0; f < inputCounter[i]; f++)
-                        {
-                            var costedValue = new Aussen_Rouns_all_value
+                            var createOptions = new Aussen_Rund_options
                             {
-                                Aussen_Rund_allId = createOptionsAussen.Id,
-                                Value = value[counter],
-                                Cost = cost[counter],
+                                Aussenzylinder_RundzylinderId = Aus.Id,
                             };
-                            db.Aussen_Rouns_all_value.Add(costedValue);
-                            counter++;
+
+                            db.Aussen_Rund_options.Add(createOptions);
+                            db.SaveChanges();
+
+                            var createOptionsAussen = new Aussen_Rund_all
+                            {
+                                Aussen_Rund_optionsId = createOptions.Id,
+                                Name = Options[i],
+                            };
+                            if (Descriptions.Count() > 0)
+                            {
+                                createOptionsAussen.Description = Descriptions[i];
+                            }
+                            if (Descriptions.Count() == ImageNameOption.Count())
+                            {
+                                createOptionsAussen.ImageName = ImageNameOption[i];
+                            }
+                            db.Aussen_Rund_all.Add(createOptionsAussen);
+                            db.SaveChanges();
+
+                            for (int f = 0; f < inputCounter[i]; f++)
+                            {
+                                var costedValue = new Aussen_Rouns_all_value
+                                {
+                                    Aussen_Rund_allId = createOptionsAussen.Id,
+                                    Value = value[counter],
+                                    Cost = cost[counter],
+                                };
+                                db.Aussen_Rouns_all_value.Add(costedValue);
+                                counter++;
+                            }
+                            db.SaveChanges();
                         }
-                        db.SaveChanges();
+                          
                     }
 
                 }

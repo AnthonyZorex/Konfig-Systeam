@@ -66,11 +66,13 @@
                     <div id="schlussel">
                         <h5>Zylinderlänge  mm</h5>
                         
-                        <div style="width: 140px;justify-content: center;display:flex;gap: 20px;">
+                        <div style="width: 140px;display:flex;gap: 20px;">
                             <h6>außen  </h6>
                             <h6>innen  </h6>
                         </div>
-                       
+                        <div>
+                            <img src="@("/Image/zylinderlaenge.png")" height="20" width="20" />
+                        </div>
                     </div>
                 <div id="schlussel3">
                         <h5>Stück</h5>
@@ -78,7 +80,7 @@
             </div>
             <div> 
                 <div id="turInfo">
-                        <div id="BlockTur-1">
+                        <div id="BlockTur-0">
                         <div class="TexCountTur">
                             <div id="ItemTur">
                                     <div id="position">
@@ -128,7 +130,7 @@
                         </div>
                     </div>
                 <div id="InfoValue">
-                            <div class="horizontal" id="1horizontal">
+                            <div class="horizontal" draggable="true" id="1horizontal">
                                 <div class="checkboxContainer">
                                     <input class="konfiguratorSelect" onmouseover="drawLines(1,1)"  onmouseout="hideLines(1,1)"  type="checkbox" id="1checkbox1">
                                     <input type="hidden"  value="false" id="I1checkbox1">
@@ -151,7 +153,7 @@
         <input type="submit"  onclick="(bolleanCheked())" class="btn btn-success" id="input" value="Weiter" />
     </form>
 
-    <div id="zylinderMenu" onmouseleave="closeControlPannel()">
+   @*  <div id="zylinderMenu" onmouseleave="closeControlPannel()">
        
         <div style="display:flex;gap:10px">
 
@@ -171,7 +173,7 @@
             <h5 id="infoControlPanelTur" class="deleted">löschen</h5>
         </div>
 
-    </div>
+    </div> *@
 
     <div id="myModal" class="modalLessen">
         <div class="modal-contentLessen ">
@@ -228,7 +230,145 @@
 </div>
 
 <script>
+    const containerKey = document.getElementById('InfoValue');
+    let blocksKey;
+    let dragSrcElkey = null;
 
+    const container = document.getElementById('BlockTur-0');
+    let blocks;
+    let dragSrcEl = null;
+
+    function handleDragStart(e) 
+    {
+        console.log(e);
+        dragSrcEl = this;
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/html', this.innerHTML);
+        this.classList.add('dragging');
+
+
+        // handleDragStartKey(e)
+    }
+
+    function handleDragOver(e) 
+    {
+        if (e.preventDefault) {
+            e.preventDefault(); // Necessary. Allows us to drop.
+        }
+
+        e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
+        return false;
+    }
+
+    function handleDrop(e) 
+    {
+        if (e.stopPropagation) 
+        {
+            e.stopPropagation(); // Stops some browsers from redirecting.
+        }
+
+        if (dragSrcEl !== this) 
+        {
+            const dragSrcSelectValues = Array.from(dragSrcEl.querySelectorAll('select')).map(select => select.value);
+            const dropSelectValues = Array.from(this.querySelectorAll('select')).map(select => select.value);
+
+            const dragSrcInputValues = Array.from(dragSrcEl.querySelectorAll('input')).map(select => select.value);
+            const dropInputValues = Array.from(this.querySelectorAll('input')).map(select => select.value);
+
+            // Замена содержимого блоков
+            dragSrcEl.innerHTML = this.innerHTML;
+            
+            let b = dragSrcEl.id;
+
+            dragSrcEl.id = this.id;
+
+            this.id = b;
+
+            this.innerHTML = e.dataTransfer.getData('text/html');
+
+            // Восстановление значений select элементов
+            Array.from(dragSrcEl.querySelectorAll('select')).forEach((select, index) => select.value = dropSelectValues[index]);
+            Array.from(this.querySelectorAll('select')).forEach((select, index) => select.value = dragSrcSelectValues[index]);
+
+            Array.from(dragSrcEl.querySelectorAll('input')).forEach((input, index) => input.value = dropInputValues[index]);
+            Array.from(this.querySelectorAll('input')).forEach((input, index) => input.value = dragSrcInputValues[index]);
+
+
+        }
+
+        return false;
+    }
+
+    function handleDragEnd(e) {
+        this.classList.remove('dragging');
+        let blocks = container.querySelectorAll('.block');
+        blocks.forEach(block => {
+            block.classList.remove('over');
+        });
+    }
+   
+
+
+    function handleDragStartKey(e) {
+        dragSrcElkey = this;
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/html', this.innerHTML);
+        this.classList.add('dragging');
+
+    }
+
+    function handleDragOverKey(e) {
+        if (e.preventDefault) {
+            e.preventDefault(); // Necessary. Allows us to drop.
+        }
+
+        e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
+        return false;
+    }
+
+    function handleDropKey(e) {
+        if (e.stopPropagation) {
+            e.stopPropagation(); // Stops some browsers from redirecting.
+        }
+
+        if (dragSrcElkey !== this) 
+        {
+            const dragSrcInputValues = Array.from(dragSrcElkey.querySelectorAll('input')).map(select => select.value);
+            const dropInputValues = Array.from(this.querySelectorAll('input')).map(select => select.value);
+
+            const dragSrcCheckboxValues = Array.from(dragSrcElkey.querySelectorAll('.konfiguratorSelect')).map(checkbox => checkbox.checked);
+            const dropCheckboxValues = Array.from(this.querySelectorAll('.konfiguratorSelect')).map(checkbox => checkbox.checked);
+
+            // Замена содержимого блоков
+            dragSrcElkey.innerHTML = this.innerHTML;
+
+            let b = dragSrcElkey.id;
+
+            dragSrcElkey.id = this.id;
+
+            this.id = b;
+
+            this.innerHTML = e.dataTransfer.getData('text/html');
+
+            Array.from(dragSrcElkey.querySelectorAll('input')).forEach((input, index) => input.value = dropInputValues[index]);
+            Array.from(this.querySelectorAll('input')).forEach((input, index) => input.value = dragSrcInputValues[index]);
+
+            Array.from(dragSrcElkey.querySelectorAll('.konfiguratorSelect')).forEach((checkbox, index) => checkbox.checked = dropCheckboxValues[index]);
+            Array.from(this.querySelectorAll('.konfiguratorSelect')).forEach((checkbox, index) => checkbox.checked = dragSrcCheckboxValues[index]);
+
+        }
+
+        return false;
+    }
+
+    function handleDragEndKey(e) 
+    {
+        this.classList.remove('dragging');
+        let blocksKey = containerKey.querySelectorAll('.block');
+        blocksKey.forEach(block => {
+            block.classList.remove('over');
+        });
+    }
 
     function TurUp(Id) 
     {
@@ -818,6 +958,8 @@
             blockTur++;
             let newBlock = document.createElement('div');
             newBlock.id = 'BlockTur-' + blockTur;
+            newBlock.className = "block";
+            newBlock.draggable = "true";
             newBlock.innerHTML = `  <div class="TexCountTur">
                                     <div id="ItemTur">
                                         <div id="position">
@@ -869,11 +1011,29 @@
                               
                     `;
 
-                document.getElementById('BlockTur-1').appendChild(newBlock);
+                document.getElementById('BlockTur-0').appendChild(newBlock);
+
+                blocks = container.querySelectorAll('.block');
+                blocks.forEach(block => {
+                    block.addEventListener('dragstart', handleDragStart);
+                    block.addEventListener('dragover', handleDragOver);
+                    block.addEventListener('drop', handleDrop);
+                    block.addEventListener('dragend', handleDragEnd);
+                });
+
 
                 let horizont = document.createElement('div');
                 horizont.id = `${blockTur}horizontal`;
                 horizont.classList.add('horizontal');
+                horizont.draggable = "true";
+
+                blocksKey = containerKey.querySelectorAll('.horizontal');
+                blocksKey.forEach(block => {
+                block.addEventListener('dragstart', handleDragStartKey);
+                block.addEventListener('dragover', handleDragOverKey);
+                block.addEventListener('drop', handleDropKey);
+                block.addEventListener('dragend', handleDragEndKey);
+                });
 
                 for (let i = 1; i <= blockCount; i++) 
                 {
@@ -961,7 +1121,7 @@
           
             let newBlockTur = document.createElement('div');
 
-            newBlockTur.innerHTML = ` <input type="checkbox" class="konfiguratorSelect" onmouseover="drawLines(${i},${blockCount})"  onmouseout="hideLines(${i},${blockCount})" id=${i}checkbox${blockCount}>
+            newBlockTur.innerHTML = ` <input type="checkbox"  class="konfiguratorSelect" onmouseover="drawLines(${i},${blockCount})"  onmouseout="hideLines(${i},${blockCount})" id=${i}checkbox${blockCount}>
                                     <input type="hidden"  value="false" id="I${i}checkbox${blockCount}">`;
 
             newBlockTur.id = `${i}.checkboxContainer${blockCount}`;
@@ -1013,6 +1173,8 @@
 
             let horizont = document.getElementById(`${blockTur}horizontal`);
 
+            horizont.draggable = "true";
+
             for (let i = 1; i <= blockTur; i++) 
             {
 
@@ -1031,6 +1193,16 @@
 
                 createCustomCheckbox(`${i}checkbox${blockCount}`);
             }
+
+            blocksKey = containerKey.querySelectorAll('.horizontal');
+
+            blocksKey.forEach(block => {
+                block.addEventListener('dragstart', handleDragStartKey);
+                block.addEventListener('dragover', handleDragOverKey);
+                block.addEventListener('drop', handleDropKey);
+                block.addEventListener('dragend', handleDragEndKey);
+            });
+
         }
 
     }
@@ -1040,13 +1212,15 @@
         localStorage.clear();
         blockTur = 0;
         document.getElementById('InfoValue').innerHTML = '';
-        document.getElementById('BlockTur-1').innerHTML = '';
+        document.getElementById('BlockTur-0').innerHTML = '';
 
         for (let i = 1; i <= value; i++) 
         {
             blockTur++;
 
             let newBlock = document.createElement('div');
+            newBlock.className = "block";
+            newBlock.draggable = "true";
             newBlock.id = 'BlockTur-' + blockTur;
             newBlock.innerHTML = `  <div class="TexCountTur">
                                         <div id="ItemTur">
@@ -1098,8 +1272,20 @@
                         `;
 
 
-            document.getElementById('BlockTur-1').appendChild(newBlock);
+            document.getElementById('BlockTur-0').appendChild(newBlock);
+
+            let blocks = container.querySelectorAll('.block');
+            blocks.forEach(block => {
+                block.addEventListener('dragstart', handleDragStart);
+                block.addEventListener('dragover', handleDragOver);
+                block.addEventListener('drop', handleDrop);
+                block.addEventListener('dragend', handleDragEnd);
+            });
+
+            console.log(blocks);
+
             let horizont = document.createElement('div');
+            horizont.draggable = "true";
             horizont.id = `${blockTur}horizontal`;
             horizont.classList.add('horizontal');
 
@@ -1121,6 +1307,14 @@
 
                 createCustomCheckbox(`${blockTur}checkbox${i}`);
             }
+            let blocksKey = containerKey.querySelectorAll('.horizontal');
+
+            blocksKey.forEach(block => {
+                block.addEventListener('dragstart', handleDragStartKey);
+                block.addEventListener('dragover', handleDragOverKey);
+                block.addEventListener('drop', handleDropKey);
+                block.addEventListener('dragend', handleDragEndKey);
+            });
         }
 
     }
