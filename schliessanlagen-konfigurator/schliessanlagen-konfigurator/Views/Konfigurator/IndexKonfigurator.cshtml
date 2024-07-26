@@ -28,7 +28,7 @@
         <div id="blockSclussel" >
             <div id="sclusselInfo">
                 <div id="schlussel">
-                    <h3>Schlüssel</h3>
+                    <h5>Schlüssel</h5>
                 </div>
                     <div id ="schlussel2">
                         <input id="removeButton" type="button" value="-">
@@ -64,14 +64,11 @@
                </div>
 
                     <div id="schlussel">
-                        <h5>Zylinderlänge  mm</h5>
-                        
-                        <div style="width: 140px;display:flex;gap: 20px;">
-                            <h6>außen  </h6>
-                            <h6>innen  </h6>
-                        </div>
-                        <div>
-                            <img src="@("/Image/zylinderlaenge.png")" height="20" width="20" />
+                        <h5>Zylinderlänge mm</h5>
+                        <div style="align-items: end;justify-content: start;font-size: 11px;display: flex;gap: 5px;">
+                            <p>außen  </p>
+                            <img src="/Image/zylinderlaenge.png" height="40" width="40">
+                            <p>innen  </p>
                         </div>
                     </div>
                 <div id="schlussel3">
@@ -789,7 +786,12 @@
         let BlockTur = document.querySelector(`#BlockTur-${turNumber}`);
         let countTur = BlockTur.querySelector("#infoButten");
         let count = countTur.value;
-        count--;
+
+        if (countTur.value != 0) 
+        {
+            count--;
+        }
+       
         countTur.value = count;
     }
     function selectParam(value,turNumber) 

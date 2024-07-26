@@ -763,11 +763,11 @@
 
     #Table {
         display: grid;
-        grid-template-columns: repeat(10, auto);
+        grid-template-columns: repeat(9, auto);
     }
     #Table3 {
         display: grid;
-        grid-template-columns: repeat(5, auto);
+        grid-template-columns: repeat(6, auto);
     }
     #routBAR {
         display: grid;
@@ -1516,11 +1516,11 @@
     #Table {
         transform: scale(0.99);
         display: grid;
-        grid-template-columns: repeat(10,auto);
+        grid-template-columns: repeat(9,auto);
     }
     #Table3 {
         display: grid;
-        grid-template-columns: repeat(5, auto);
+        grid-template-columns: repeat(6, auto);
     }
     #Table2 {
         display: grid;
@@ -2611,11 +2611,11 @@
 
     #Table {
         display: grid;
-        grid-template-columns: repeat(10,auto);
+        grid-template-columns: repeat(9,auto);
     }
     #Table3 {
         display: grid;
-        grid-template-columns: repeat(5, auto);
+        grid-template-columns: repeat(6, auto);
     }
     #Table2 {
         display: grid;

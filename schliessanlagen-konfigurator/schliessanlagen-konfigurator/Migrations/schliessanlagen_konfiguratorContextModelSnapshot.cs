@@ -51,25 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1d2d5479-9624-4057-9d70-79b11d989a69",
+                            Id = "f873163e-6812-4c26-b6f1-7967785eb4a6",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "405b0283-475f-46be-8e0b-8a7e2192399d",
+                            Id = "5d7f7bbc-8724-4d72-866d-d4755ccaee18",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "c083d473-d43e-4b50-8500-6eff455d1fc7",
+                            Id = "c48a17d9-8cc9-4496-b21d-4a08ecbc932b",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "5830f115-b03d-4cbf-b79a-8e085a5d9d7c",
+                            Id = "6499d62c-de97-4bb3-9aff-dd795ac380b9",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -1082,6 +1082,42 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.ToTable("SystemOptionen");
                 });
 
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.SystemScheker", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Aussen")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Halb")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Hebel")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Knayf")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Vorhang")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("chekerId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("doppel")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("chekerId");
+
+                    b.ToTable("SystemScheker");
+                });
+
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Users.ProductSysteam", b =>
                 {
                     b.Property<int>("Id")
@@ -1703,6 +1739,15 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Navigation("System");
                 });
 
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.SystemScheker", b =>
+                {
+                    b.HasOne("schliessanlagen_konfigurator.Models.SystemOptionInfo", "cheker")
+                        .WithMany("SystemScheker")
+                        .HasForeignKey("chekerId");
+
+                    b.Navigation("cheker");
+                });
+
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Users.ProductSysteam", b =>
                 {
                     b.HasOne("schliessanlagen_konfigurator.Models.Users.UserOrdersShop", "UserOrdersShop")
@@ -1884,6 +1929,11 @@ namespace schliessanlagen_konfigurator.Migrations
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.SysteamPriceKey", b =>
                 {
                     b.Navigation("SystemOptionen");
+                });
+
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.SystemOptionInfo", b =>
+                {
+                    b.Navigation("SystemScheker");
                 });
 
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.SystemOptionen", b =>

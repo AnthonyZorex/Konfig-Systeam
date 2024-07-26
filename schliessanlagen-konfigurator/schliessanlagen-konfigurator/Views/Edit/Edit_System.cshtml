@@ -98,21 +98,10 @@
 
                                     <ul>
 
-                                        @if (@ViewBag.InformSelect.Count > @select)
+                                        @if (@ViewBag.SystemCheker[select].doppel == true)
                                         {
-                                            @if (@ViewBag.InformSelect[select] != null)
-                                            {
-                                                @if (@ViewBag.InformSelect[select] == @options.Name)
-                                                {
-                                                    <ol> <input type="checkbox" class="doplV" checked onchange="doppelChange(event.target.checked,@select)" /> Doppelzylinder </ol>
-                                                    <input type="hidden" id="chekDV-@select" value="true" name="doppel" />
-                                                }
-                                                else
-                                                {
-                                                    <ol> <input type="checkbox" class="doplV" onchange="doppelChange(event.target.checked,@select)" /> Doppelzylinder </ol>
-                                                    <input type="hidden" id="chekDV-@select" value="false" name="doppel" />
-                                                }
-                                            }
+                                            <ol> <input type="checkbox" class="doplV" checked onchange="doppelChange(event.target.checked,@select)" /> Doppelzylinder </ol>
+                                            <input type="hidden" id="chekDV-@select" value="true" name="doppel" />
                                         }
                                         else
                                         {
@@ -120,111 +109,56 @@
                                             <input type="hidden" id="chekDV-@select" value="false" name="doppel" />
                                         }
 
-                                        @if (@ViewBag.InformSelectHalb.Count > @select)
+
+                                        @if (@ViewBag.SystemCheker[select].Halb == true)
                                         {
-                                            @if (@ViewBag.InformSelectHalb[select] != null)
-                                            {
-                                                @if (@ViewBag.InformSelectHalb[select] == @options.Name)
-                                                {
                                                     <ol><input type="checkbox" checked class="HalbV" onchange="HalbChange(@select,event.target.checked)" /> Halbzylinder</ol>
                                                     <input type="hidden" id="chekHV-@select" value="false" name="Halb" />
-                                                }
-                                                else
-                                                {
-                                                    <ol><input type="checkbox" class="HalbV" onchange="HalbChange(@select,event.target.checked)" /> Halbzylinder</ol>
-                                                    <input type="hidden" id="chekHV-@select" value="false" name="Halb" />
-
-                                                }
-                                            }
-                                        }
+                                        }      
                                         else
                                         {
                                             <ol><input type="checkbox" class="HalbV" onchange="HalbChange(@select,event.target.checked)" /> Halbzylinder</ol>
                                             <input type="hidden" id="chekHV-@select" value="false" name="Halb" />
                                         }
 
-                                        @if (@ViewBag.InformSelectKnayf.Count > @select)
+
+                                        @if (@ViewBag.SystemCheker[select].Knayf == true)
                                         {
-                                            @if (@ViewBag.InformSelectKnayf[select] != null)
-                                            {
-                                                @if (@ViewBag.InformSelectKnayf[select] == @options.Name)
-                                                {
                                                     <ol><input type="checkbox" checked class="KnayfV" onchange="KnayfChange(@select,event.target.checked)" /> Knaufzylinder</ol>
                                                     <input type="hidden" id="chekKV-@select" value="false" name="Knayf" />
-                                                }
-                                                else
-                                                {
-                                                    <ol><input type="checkbox" class="KnayfV" onchange="KnayfChange(@select,event.target.checked)" /> Knaufzylinder</ol>
-                                                    <input type="hidden" id="chekKV-@select" value="false" name="Knayf" />
-                                                }
-                                            }
-                                        }
+                                        }     
                                         else
                                         {
                                             <ol><input type="checkbox" class="KnayfV" onchange="KnayfChange(@select,event.target.checked)" /> Knaufzylinder</ol>
                                             <input type="hidden" id="chekKV-@select" value="false" name="Knayf" />
                                         }
 
-                                        @if (@ViewBag.InformSelectHebel.Count > @select)
+
+                                        @if (@ViewBag.SystemCheker[select].Hebel == true)
                                         {
-                                            @if (@ViewBag.InformSelectHebel[select] != null)
-                                            {
-                                                @if (@ViewBag.InformSelectHebel[select] == @options.Name)
-                                                {
-                                                    <ol><input type="checkbox" checked class="HebelV" onchange="HebelChange(@select,event.target.checked)" /> Hebelzylinder</ol>
-                                                    <input type="hidden" id="chekHeV-@select" value="false" name="Hebel" />
-                                                }
-                                                else
-                                                {
-                                                    <ol><input type="checkbox" class="HebelV" onchange="HebelChange(@select,event.target.checked)" /> Hebelzylinder</ol>
-                                                    <input type="hidden" id="chekHeV-@select" value="false" name="Hebel" />
-                                                }
-                                            }
-                                        }
+                                           <ol><input type="checkbox" checked class="HebelV" onchange="HebelChange(@select,event.target.checked)" /> Hebelzylinder</ol>
+                                           <input type="hidden" id="chekHeV-@select" value="false" name="Hebel" />
+                                        }     
                                         else
                                         {
                                             <ol><input type="checkbox" class="HebelV" onchange="HebelChange(@select,event.target.checked)" /> Hebelzylinder</ol>
                                             <input type="hidden" id="chekHeV-@select" value="false" name="Hebel" />
                                         }
-
-                                        @if (@ViewBag.Vorhan.Count > @select)
+                                        @if (@ViewBag.SystemCheker[select].Vorhang == true)
                                         {
-                                            @if (@ViewBag.Vorhan[select] != null)
-                                            {
-                                                @if (@ViewBag.Vorhan[select] == @options.Name)
-                                                {
-                                                    <ol><input type="checkbox" checked class="VorhangV" onchange="VorhangChange(@select,event.target.checked)" /> Vorhangschloss</ol>
-                                                    <input type="hidden" id="chekVV-@select" value="false" name="Vorhang" />
-                                                }
-                                                else
-                                                {
-                                                    <ol><input type="checkbox" class="VorhangV" onchange="VorhangChange(@select,event.target.checked)" /> Vorhangschloss</ol>
-                                                    <input type="hidden" id="chekVV-@select" value="false" name="Vorhang" />
-                                                }
-                                            }
-                                        }
+                                           <ol><input type="checkbox" checked class="VorhangV" onchange="VorhangChange(@select,event.target.checked)" /> Vorhangschloss</ol>
+                                           <input type="hidden" id="chekVV-@select" value="false" name="Vorhang" />
+                                        }     
                                         else
                                         {
                                             <ol><input type="checkbox" class="VorhangV" onchange="VorhangChange(@select,event.target.checked)" /> Vorhangschloss</ol>
                                             <input type="hidden" id="chekVV-@select" value="false" name="Vorhang" />
                                         }
-
-                                        @if (@ViewBag.InformSelectAussen.Count > @select)
+                                        @if (@ViewBag.SystemCheker[select].Aussen == true)
                                         {
-                                            @if (@ViewBag.InformSelectAussen[select] != null)
-                                            {
-                                                @if (@ViewBag.InformSelectAussen[select] == @options.Name)
-                                                {
-                                                    <ol><input type="checkbox" class="AussenV" checked onchange="AussenChange(@select,event.target.checked)" /> Aussenzylinder</ol>
-                                                    <input type="hidden" id="chekAV-@select" value="false" name="Aussen" />
-                                                }
-                                                else
-                                                {
-                                                    <ol><input type="checkbox" class="AussenV" onchange="AussenChange(@select,event.target.checked)" /> Aussenzylinder</ol>
-                                                    <input type="hidden" id="chekAV-@select" value="false" name="Aussen" />
-                                                }
-                                            }
-                                        }
+                                           <ol><input type="checkbox" class="AussenV" checked onchange="AussenChange(@select,event.target.checked)" /> Aussenzylinder</ol>
+                                           <input type="hidden" id="chekAV-@select" value="false" name="Aussen" />
+                                        }    
                                         else
                                         {
                                             <ol><input type="checkbox" class="AussenV" onchange="AussenChange(@select,event.target.checked)" /> Aussenzylinder</ol>

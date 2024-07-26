@@ -117,6 +117,7 @@
                                     </div>
                                 </div>
                                 <div id="productOptions">
+
                                 </div>
                             </div>
                         </div>
@@ -189,17 +190,6 @@
                             </div>
                         </div>
                         <hr />
-                        <h2>Schlüssel</h2>
-                        <div style="margin-bottom: 50px;margin-top: 50px">
-                            <label>Schlüsselname</label>
-                            <input name="KeyName" id="NameSys" type="text" class="form-control" />
-                        </div>
-                        <div style="margin-bottom: 50px;">
-                            <label>Schlüsselkosten</label>
-                            <input name="KeyCost" type="number" step="0,1" min="0" class="form-control" />
-                        </div>
-
-                        <hr />
                         <button id="createBlockBtn" type="button" class="btn btn-success">Optionen hinzufügen</button>
                         <button id="addInputBtn" type="button" class="btn btn-success">+</button>
                         <button id="RemoveInputBtn" type="button" class="btn btn-danger">-</button>
@@ -224,8 +214,6 @@
                             <th>Name</th>
                             <th>Bild</th>
                             <th>Preis</th>
-                            <th>Schlüsselpreis</th>
-
                             <th>Bearbeiten</th>
                             <th>Optionen</th>
                             <th>Löschen</th>
@@ -239,7 +227,6 @@
                                 <td id="rowTable" class="table-info">@item.Name</td>
                                 <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
                                 <td id="rowTable " class="table-info"><h6 id="cost">@item.Price.ToString("C")</h6></td>
-                                <td id="rowTable " class="table-info"><h6 id="cost">@ViewBag.KeyCost[i].ToString("C")</h6></td>
                                 <td id="rowTable" class="table-info"><a href="@Url.Action("Edit_Doppelzylinder","Home", new { item.Id })"><img src="@("/image/edit-tools.png")" height="30" width="30" /></a></td>
                                 <td id="rowTable" class="table-info">
                                     <a class="compItem" href="@Url.Action("ProductProfil_Doppelzylinder","Home", new { item.Id })">

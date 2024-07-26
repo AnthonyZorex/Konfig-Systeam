@@ -23,6 +23,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis.Options;
 using Microsoft.AspNetCore.Mvc.TagHelpers;
+using schliessanlagen_konfigurator.Migrations;
 namespace schliessanlagen_konfigurator.Controllers
 {
     public class HomeController : Controller
@@ -151,6 +152,73 @@ namespace schliessanlagen_konfigurator.Controllers
 
             return RedirectToAction("ImageConfig", "Home");
         }
+        [HttpPost]
+        public ActionResult Create_Sys(string KeyName, float KeyCost)
+        {
+            var key = new SysteamPriceKey
+            {
+                NameSysteam = KeyName,
+                Price = KeyCost,
+            };
+            db.SysteamPriceKey.Add(key);
+            db.SaveChanges();
+
+            return RedirectToAction("SystemInfo", "Home");
+        }
+        public ActionResult Delete_System(int id)
+        {
+            var item = db.SysteamPriceKey.FirstOrDefault(x => x.Id == id);
+
+            var OPtions = db.SystemOptionen.Where(x=>x.SystemId == item.Id).ToList();
+
+            var optionsInfo = new List<SystemOptionInfo>();
+
+            foreach (var option in OPtions)
+            {
+                var list = db.SystemOptionInfo.Where(x => x.OptionsId == option.Id).ToList();
+
+                foreach(var i in list)
+                {
+                    optionsInfo.Add(i);
+                }
+            }
+
+            foreach (var option in optionsInfo)
+            {
+                var list = db.SystemOptionValue.Where(x => x.SysteamPriceKeyId == option.Id).ToList();
+
+                foreach (var i in list)
+                {
+                    db.SystemOptionValue.Remove(i);
+                    db.SaveChanges();
+                }
+            }
+
+            foreach (var option in optionsInfo)
+            {
+                var list = db.SystemScheker.Where(x => x.chekerId == option.Id).ToList();
+
+                foreach (var i in list)
+                {
+                    db.SystemScheker.Remove(i);
+                    db.SaveChanges();
+                }
+                db.SystemOptionInfo.Remove(option);
+                db.SaveChanges();
+            }
+
+            foreach(var list in OPtions)
+            {
+                db.SystemOptionen.Remove(list);
+                db.SaveChanges();
+            }
+
+            db.SysteamPriceKey.Remove(item);
+            db.SaveChanges();
+
+            return RedirectToAction("SystemInfo", "Home");
+        }
+
 
         [HttpPost]
         public ActionResult Upload(IFormFile file)
@@ -201,98 +269,6 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var OptionItem = db.SystemOptionen.Where(x => x.SystemId == item.Id).ToList();
 
-            var Doppel = db.Profil_Doppelzylinder.FirstOrDefault(x => x.NameSystem == item.NameSysteam);
-
-            var DoppelO = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == Doppel.Id).ToList();
-
-            var DoppelOptions = new List<NGF>();
-
-            foreach(var list in DoppelO)
-            {
-                var itemD = db.NGF.Where(x => x.OptionsId == list.Id).ToList();
-
-                foreach(var I in itemD)
-                {
-                    DoppelOptions.Add(I);
-                }
-            }
-
-
-            var Knayf = db.Profil_Knaufzylinder.FirstOrDefault(x => x.NameSystem == item.NameSysteam);
-
-            var KnayfO = db.Profil_Knaufzylinder_Options.Where(x => x.Profil_KnaufzylinderId == Knayf.Id).ToList();
-
-            var KnayfOptions = new List<Knayf_Options>();
-
-            foreach (var list in KnayfO)
-            {
-                var itemD = db.Knayf_Options.Where(x => x.OptionsId == list.Id).ToList();
-
-                foreach (var I in itemD)
-                {
-                    KnayfOptions.Add(I);
-                }
-            }
-
-
-            var Halb = db.Profil_Halbzylinder.FirstOrDefault(x => x.NameSystem == item.NameSysteam);
-
-            var HalbO = db.Profil_Halbzylinder_Options.Where(x => x.Profil_HalbzylinderId == Halb.Id).ToList();
-
-            var HalbOptions = new List<Halbzylinder_Options>();
-
-            foreach (var list in HalbO)
-            {
-                var itemD = db.Halbzylinder_Options.Where(x => x.OptionsId == list.Id).ToList();
-
-                foreach (var I in itemD)
-                {
-                    HalbOptions.Add(I);
-                }
-            }
-
-            var Hebel = db.Hebelzylinder.FirstOrDefault(x => x.NameSystem == item.NameSysteam);
-            var HebelO = db.Hebelzylinder_Options.Where(x => x.HebelzylinderId == Halb.Id).ToList();
-
-            var HebelOptions = new List<Options>();
-
-            foreach (var list in HebelO)
-            {
-                var itemD = db.Options.Where(x => x.OptionId == list.Id).ToList();
-
-                foreach (var I in itemD)
-                {
-                    HebelOptions.Add(I);
-                }
-            }
-
-            var Vorhang = db.Vorhangschloss.FirstOrDefault(x => x.NameSystem == item.NameSysteam);
-            var VorhangO = db.Vorhan_Options.Where(x => x.VorhangschlossId == Vorhang.Id).ToList();
-            var VorhangOptions = new List<OptionsVorhan>();
-
-            foreach (var list in VorhangO)
-            {
-                var itemD = db.OptionsVorhan.Where(x => x.OptionId == list.Id).ToList();
-
-                foreach (var I in itemD)
-                {
-                    VorhangOptions.Add(I);
-                }
-            }
-
-            var Aussen = db.Aussenzylinder_Rundzylinder.FirstOrDefault(x => x.NameSystem == item.NameSysteam);
-            var AussenO = db.Aussen_Rund_options.Where(x => x.Aussenzylinder_RundzylinderId == Aussen.Id).ToList();
-            var AussenOptions = new List<Aussen_Rund_all>();
-
-            foreach (var list in AussenO)
-            {
-                var itemD = db.Aussen_Rund_all.Where(x => x.Aussen_Rund_optionsId == list.Id).ToList();
-
-                foreach (var I in itemD)
-                {
-                    AussenOptions.Add(I);
-                }
-            }
 
             if (OptionItem.Count > 0)
             {
@@ -309,20 +285,20 @@ namespace schliessanlagen_konfigurator.Controllers
                         Options.Add(list);
                     }
                 }
-               
-                var queryDoppel = Options.Select(x=>x.Name).Intersect(DoppelOptions.Select(x => x.Name)).ToList();
-                var queryKnayf = Options.Select(x => x.Name).Intersect(KnayfOptions.Select(x => x.Name)).ToList();
-                var queryHalb = Options.Select(x => x.Name).Intersect(HalbOptions.Select(x => x.Name)).ToList();
-                var queryHebel = Options.Select(x => x.Name).Intersect(HebelOptions.Select(x => x.Name)).ToList();
-                var queryVorhang = Options.Select(x => x.Name).Intersect(VorhangOptions.Select(x => x.Name)).ToList();
-                var queryAussen = Options.Select(x => x.Name).Intersect(AussenOptions.Select(x => x.Name)).ToList();
 
-                ViewBag.InformSelect = queryDoppel;
-                ViewBag.InformSelectKnayf = queryKnayf;
-                ViewBag.InformSelectHalb = queryHalb;
-                ViewBag.InformSelectHebel = queryHebel;
-                ViewBag.Vorhan = queryVorhang;
-                ViewBag.InformSelectAussen = queryAussen;
+                var SysCheker = new List<SystemScheker>();
+
+                foreach (var option in Options)
+                {
+                    var Params = db.SystemScheker.Where(x => x.chekerId == option.Id).ToList();
+
+                    foreach (var list in Params)
+                    {
+                        SysCheker.Add(list);
+                    }
+                }
+
+                ViewBag.SystemCheker = SysCheker;
 
                 ViewBag.Options = Options;
 
@@ -788,7 +764,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 if (Options.Count() == 0 || option.Count() > 0)
                 {
-                    var listAllOption = new List<OptionsVorhan>();
+                    var listAllOption = new List<Models.Vorhan.OptionsVorhan>();
 
                     foreach (var item in option)
                     {
@@ -840,7 +816,7 @@ namespace schliessanlagen_konfigurator.Controllers
                             db.Vorhan_Options.Add(createOptions);
                             db.SaveChanges();
 
-                            var createOptionsAussen = new OptionsVorhan
+                            var createOptionsAussen = new Models.Vorhan.OptionsVorhan
                             {
                                 OptionId = createOptions.Id,
                                 Name = Options[i],
@@ -975,7 +951,6 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 }
             }
-           
 
             var sys = db.SysteamPriceKey.Where(x => x.NameSysteam == AltName).First();
 
@@ -1000,6 +975,16 @@ namespace schliessanlagen_konfigurator.Controllers
                     foreach (var item2 in OptionDescription)
                     {
                         listAllOption.Add(item2);
+                    }
+                }
+
+                foreach (var item in listAllOption)
+                {
+                    var optionsValue = db.SystemScheker.Where(x => x.chekerId == item.Id).ToList();
+
+                    foreach (var item2 in optionsValue)
+                    {
+                        db.SystemScheker.Remove(item2);
                     }
                 }
 
@@ -1062,7 +1047,70 @@ namespace schliessanlagen_konfigurator.Controllers
                         db.SystemOptionInfo.Add(createOptionsAussen);
                         db.SaveChanges();
 
-                        for (int f = 0; f < inputCounter[i]; f++)
+                  
+                        SystemScheker SysCheker = new SystemScheker
+                        {
+                            chekerId = createOptionsAussen.Id,
+                        };
+
+                        if (doppel[i] == "true")
+                        {
+                            SysCheker.doppel = true;
+                        }
+                        else
+                        {
+                            SysCheker.doppel = false;
+                        }
+
+                        if (Knayf[i] == "true")
+                        {
+                            SysCheker.Knayf = true;
+                        }
+                        else
+                        {
+                            SysCheker.Knayf = false;
+                        }
+
+                        if (Halb[i] == "true")
+                        {
+                            SysCheker.Halb = true;
+                        }
+                        else
+                        {
+                            SysCheker.Halb = false;
+                        }
+
+                        if (Hebel[i] == "true")
+                        {
+                            SysCheker.Hebel = true;
+                        }
+                        else
+                        {
+                            SysCheker.Hebel = false;
+                        }
+
+                        if (Vorhang[i] == "true")
+                        {
+                            SysCheker.Vorhang = true;
+                        }
+                        else
+                        {
+                            SysCheker.Vorhang = false;
+                        }
+
+                        if (Aussen[i] == "true")
+                        {
+                            SysCheker.Aussen = true;
+                        }
+                        else
+                        {
+                            SysCheker.Aussen = false;
+                        }
+                        db.SystemScheker.Add(SysCheker);
+                        db.SaveChanges();
+                    
+
+                    for (int f = 0; f < inputCounter[i]; f++)
                         {
                             var costedValue = new SystemOptionValue
                             {
@@ -1075,7 +1123,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         }
                         db.SaveChanges();
                 }
-
+               
             }
             return RedirectToAction("SystemInfo", "Home");
         }
@@ -1092,6 +1140,36 @@ namespace schliessanlagen_konfigurator.Controllers
                 var Example = db.Profil_Doppelzylinder.Where(x => x.Id == id).First();
 
                 ViewBag.Dopple = Example;
+
+                var OptionsId = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == Example.Id).ToList();
+
+                var InfoOptions = new List<NGF>();
+
+                foreach(var option in OptionsId)
+                {
+                    var item = db.NGF.Where(x => x.OptionsId == option.Id).ToList();
+
+                    foreach(var list in item)
+                    {
+                        InfoOptions.Add(list);
+                    }
+                }
+
+                var OptionsValue = new List<NGF_Value>();
+
+                foreach(var list in InfoOptions)
+                {
+                    var item = db.NGF_Value.Where(x => x.NGFId == list.Id).ToList();
+                   
+                    foreach(var li in item)
+                    {
+                        OptionsValue.Add(li);
+                    }
+                }
+
+                ViewBag.DoppelOptions = InfoOptions;
+
+                ViewBag.OptionsValue = OptionsValue;
 
                 var Size = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == Example.Id).ToList();
                 
@@ -1264,16 +1342,35 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpPost]
         public async Task<IActionResult> Create_Profil_Doppelzylinder(Profil_Doppelzylinder Profil_Doppelzylinder,
         List<string> Options, List<string> NGFDescriptions, IFormFile postedFile, List<float> aussen,
-        List<float> innen,List<float> costSizeAussen, List<float> costSizeIntern, List<string> valueNGF, List<float> costNGF, List<int> input_counter,string KeyName, float KeyCost)
+        List<float> innen,List<float> costSizeAussen, List<float> costSizeIntern, List<string> valueNGF, List<float> costNGF, List<int> input_counter)
         {
 
-            var key = new SysteamPriceKey
-            {
-                NameSysteam = KeyName,
-                Price = KeyCost,
-            };
-            db.SysteamPriceKey.Add(key);
-            db.SaveChanges();
+            //var SysOptionen = db.SystemOptionen.Where(x => x.SystemId == key.Id).ToList();
+
+            //var SysOptionInfo = new List<SystemOptionInfo>();
+
+            //foreach(var list in SysOptionen)
+            //{
+            //    var item = db.SystemOptionInfo.Where(x => x.OptionsId == list.Id).ToList();
+
+            //    foreach(var i in item)
+            //    {
+            //        SysOptionInfo.Add(i);
+            //    }
+            //}
+
+            //var SystemScherek = new List<SystemScheker>();
+
+            //foreach (var list in SysOptionInfo)
+            //{
+            //    var item = db.SystemScheker.Where(x => x.chekerId == list.Id).ToList();
+
+            //    foreach (var i in item)
+            //    {
+            //        SystemScherek.Add(i);
+            //    }
+            //}
+
 
             if (Profil_Doppelzylinder.ImageFile != null)
             {
@@ -1305,13 +1402,12 @@ namespace schliessanlagen_konfigurator.Controllers
                     Profil_DoppelzylinderId = s.Last(),
                     aussen = aussen[i],
                     Intern = innen[i],
-                    costSizeAussen = costSizeIntern[i],
+                    costSizeAussen = costSizeAussen[i],
                     costSizeIntern = costSizeIntern[i]
                 };
                 db.Aussen_Innen.Add(ausse_innen);
                 db.SaveChanges();
             }
-
 
             int counter = 0;
             for (var i = 0; i < Options.Count(); i++)
@@ -1748,7 +1844,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var x = db.Vorhan_Options.Select(x => x.Id).ToList();
 
-                var ngf = new OptionsVorhan
+                var ngf = new Models.Vorhan.OptionsVorhan
                 {
                     OptionId = x.Last(),
                     Name = Options[i],
@@ -2579,7 +2675,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             if (options != null)
             {
-                var OptionsSylinder = new List<OptionsVorhan>();
+                var OptionsSylinder = new List<Models.Vorhan.OptionsVorhan>();
 
                 foreach (var item in options)
                 {
@@ -3075,7 +3171,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             if (Options.Count() == 0 || option.Count() > 0)
             {
-                var listAllOption = new List<OptionsVorhan>();
+                var listAllOption = new List<Models.Vorhan.OptionsVorhan>();
 
                 foreach (var item in option)
                 {
@@ -3124,7 +3220,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     db.Vorhan_Options.Add(createOptions);
                     db.SaveChanges();
 
-                    var createOptionsAussen = new OptionsVorhan
+                    var createOptionsAussen = new Models.Vorhan.OptionsVorhan
                     {
                         OptionId = createOptions.Id,
                         Name = Options[i],                        
@@ -3581,7 +3677,7 @@ namespace schliessanlagen_konfigurator.Controllers
             if (queryableOptions.Count() > 0)
             {
 
-                List<OptionsVorhan> ngf = new List<OptionsVorhan>();
+                List<Models.Vorhan.OptionsVorhan> ngf = new List<Models.Vorhan.OptionsVorhan>();
 
                 for (int z = 0; z < queryableOptions.Count(); z++)
                 {

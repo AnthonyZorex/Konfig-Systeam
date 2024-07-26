@@ -1,6 +1,7 @@
 ﻿using schliessanlagen_konfigurator.Models.ProfilDopelZylinder;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel;
+using schliessanlagen_konfigurator.Models.OrdersOpen;
 
 namespace schliessanlagen_konfigurator.Models
 {
@@ -15,6 +16,10 @@ namespace schliessanlagen_konfigurator.Models
         [DisplayName("Upload your photo")]
         public IFormFile? ImageFile { get; set; }
         public string? Description { get; set; }
-
+        public ICollection<SystemScheker> SystemScheker { get; set; }
+        public SystemOptionInfo()
+        {
+            SystemScheker = new List<SystemScheker>();
+        }
     }
 }
