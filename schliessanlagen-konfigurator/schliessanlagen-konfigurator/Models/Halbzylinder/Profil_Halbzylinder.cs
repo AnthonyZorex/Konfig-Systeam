@@ -22,10 +22,12 @@ namespace schliessanlagen_konfigurator.Models.Halbzylinder
         public Schliessanlagen Schliessanlagen { get; set; }
         public ICollection<Profil_Halbzylinder_Options> Profil_Halbzylinder_Options { get; set; }
         public ICollection<Aussen_Innen_Halbzylinder> Aussen_Innen_Halbzylinder { get; set; }
+        public ICollection<ProductGalery> ProductGalery { get; set; }
         public Profil_Halbzylinder()
         {
             Profil_Halbzylinder_Options = new List<Profil_Halbzylinder_Options>();
             Aussen_Innen_Halbzylinder = new List<Aussen_Innen_Halbzylinder>();
+            ProductGalery = new List<ProductGalery>();
         }
 
     }

@@ -28,11 +28,12 @@ namespace schliessanlagen_konfigurator.Models
         [JsonIgnore]
         [IgnoreDataMember]
         public ICollection<Size> Size { get; set; }
-
+        public ICollection<ProductGalery> ProductGalery { get; set; }
         public Vorhangschloss()
         {
             Vorhan_Options = new List<Vorhan_Options>();
             Size = new List<Size>();
+            ProductGalery = new List<ProductGalery>();
         }
     }
 }

@@ -29,6 +29,11 @@
                             <span asp-validation-for="ImageFile" class="text-danger"></span>
                             @Html.ValidationMessageFor(m => m.ImageFile, "", new { @class = "error" })
                         </div>
+                        <br />
+                        <div>
+                            <label for="Images">Bilder auswählen:</label>
+                            <input type="file" name="Images" multiple class="form-control" />
+                        </div>
                     </div>
 
                     @if (ViewBag.Vorhang != null)

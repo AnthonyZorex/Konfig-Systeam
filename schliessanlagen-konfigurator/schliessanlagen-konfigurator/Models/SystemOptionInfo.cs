@@ -17,9 +17,11 @@ namespace schliessanlagen_konfigurator.Models
         public IFormFile? ImageFile { get; set; }
         public string? Description { get; set; }
         public ICollection<SystemScheker> SystemScheker { get; set; }
+        public ICollection<SystemOptionValue> SystemOptionValue { get; set; }
         public SystemOptionInfo()
         {
             SystemScheker = new List<SystemScheker>();
+            SystemOptionValue = new List<SystemOptionValue>();
         }
     }
 }

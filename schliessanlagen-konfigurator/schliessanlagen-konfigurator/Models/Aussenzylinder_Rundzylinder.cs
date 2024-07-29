@@ -20,11 +20,11 @@ namespace schliessanlagen_konfigurator.Models
         public IFormFile ImageFile { get; set; }
         public Schliessanlagen Schliessanlagen { get; set; }
         public ICollection<Aussen_Rund_options> Aussen_Rund_options { get; set; }
-
+        public ICollection<ProductGalery> ProductGalery { get; set; }
         public Aussenzylinder_Rundzylinder()
         {
             Aussen_Rund_options = new List<Aussen_Rund_options>();
-
+            ProductGalery = new List<ProductGalery>();  
         }
     }
 }

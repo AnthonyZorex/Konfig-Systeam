@@ -19,10 +19,11 @@ namespace schliessanlagen_konfigurator.Models
         public IFormFile ImageFile { get; set; }
         public Schliessanlagen Schliessanlagen { get; set; }
         public ICollection<Hebelzylinder_Options> Hebelzylinder_Options { get; set; }
+        public ICollection<ProductGalery> ProductGalery { get; set; }
         public Hebel()
         {
             Hebelzylinder_Options = new List<Hebelzylinder_Options>();
-
+            ProductGalery = new List<ProductGalery>();
         }
 
     }

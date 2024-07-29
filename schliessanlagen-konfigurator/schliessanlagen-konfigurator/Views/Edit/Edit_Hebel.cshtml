@@ -5,6 +5,7 @@
     int count = -1;
     int f = -1;
     int r = -1;
+    int galeryCheker = 0;
 }
 @if (User.IsInRole("admin"))
 {
@@ -17,6 +18,34 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 @Html.HiddenFor(x => x.Id)
 
+                <div class="form-group">
+                    <label asp-for="ImageName" class="control-label"></label>
+                    <input asp-for="ImageName" type="text" class="form-control" />
+                    <span asp-validation-for="ImageName" class="text-danger"></span>
+                </div>
+                <label asp-for="ImageFile" class="control-label"></label>
+                <div class="form-group" id="Galerry">
+                    <label class="control-label">Produkt-Galerie</label>
+                    <br />
+
+                    @foreach (var list in ViewBag.Galry)
+                    {
+                        <div id="galeryItem-@galeryCheker">
+                            <input name="GalleryImages" type="text" value="@list.ImageName" id="opt" class="form-control" />
+                            <br />
+                            <img src="@("/Image/"+@list.ImageName)" height="300" width="300" />
+                            <br />
+                            <button class="btn btn-success" onclick="AddImage(@galeryCheker)" type="button">Bilder hinzufügen</button>
+                            <button class="btn btn-danger" onclick="deleteImage(@galeryCheker)" type="button">Löschen</button>
+                        </div>
+                        galeryCheker++;
+                    }
+                </div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
                 <div class="form-group">
                     
                     <input id="HebelType" asp-for="schliessanlagenId" type="hidden" class="form-control" />
@@ -31,11 +60,7 @@
                     <input required asp-for="NameSystem" class="form-control" />
                     <span asp-validation-for="NameSystem" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
+                
                 <div class="form-group">
                     <label asp-for="Price" class="control-label"></label>
                     <input asp-for="Price" type="text" step="0.001" class="form-control" />
@@ -46,13 +71,6 @@
                     <textarea asp-for="description" required class="form-control" id="exampleFormControlTextarea1"></textarea>
                     <span asp-validation-for="description" class="text-danger"></span>
                 </div>
-              
-                <div class="form-group">
-                    <label asp-for="ImageName" class="control-label"></label>
-                    <input asp-for="ImageName" type="text" class="form-control" />
-                    <span asp-validation-for="ImageName" class="text-danger"></span>
-                </div>
-                <label asp-for="ImageFile" class="control-label"></label>
                 <br />
                 <hr />
 
@@ -130,6 +148,29 @@
             await Html.RenderPartialAsync("_ValidationScriptsPartial");
         }
         <script>
+
+            let Galery = document.getElementById("Galerry");
+
+            function AddImage(imageBlock) {
+                let addBlock = `<div>
+                                    <label for="Images">Bilder auswählen:</label>
+                                        <input type="file" name="UploadGalleryImages" multiple class="form-control" />
+                                </div>`;
+
+                document.getElementById('Galerry').innerHTML += addBlock;
+            }
+
+            function deleteImage(imageBlock) {
+                let imgBlock = document.getElementById("galeryItem-" + imageBlock);
+
+                if (Galery.childElementCount == 3) {
+                    imgBlock.remove();
+                    Galery.remove();
+                }
+                else {
+                    imgBlock.remove();
+                }
+            }
 
             function deleteOption(id) 
             {

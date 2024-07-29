@@ -21,10 +21,12 @@ namespace schliessanlagen_konfigurator.Models.ProfilDopelZylinder
         public Schliessanlagen Schliessanlagen { get; set; }
         public ICollection<Profil_Doppelzylinder_Options> Profil_Doppelzylinder_Options { get; set; }
         public ICollection<Aussen_Innen> Aussen_Innen { get; set; }
+        public ICollection<ProductGalery> ProductGalery { get; set; }
         public Profil_Doppelzylinder()
         {
             Profil_Doppelzylinder_Options = new List<Profil_Doppelzylinder_Options>();
             Aussen_Innen = new List<Aussen_Innen>();
+            ProductGalery = new List<ProductGalery>();
         }
     }
 }

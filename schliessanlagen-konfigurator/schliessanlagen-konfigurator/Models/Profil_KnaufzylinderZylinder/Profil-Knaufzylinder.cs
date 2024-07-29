@@ -21,10 +21,12 @@ namespace schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder
         public Schliessanlagen Schliessanlagen { get; set; }
         public ICollection<Profil_Knaufzylinder_Options> Profil_Knaufzylinder_Options { get; set; }
         public ICollection<Aussen_Innen_Knauf> Aussen_Innen_Knauf { get; set; }
+        public ICollection<ProductGalery> ProductGalery { get; set; }
         public Profil_Knaufzylinder()
         {
             Profil_Knaufzylinder_Options = new List<Profil_Knaufzylinder_Options>();
             Aussen_Innen_Knauf = new List<Aussen_Innen_Knauf>();
+            ProductGalery = new List<ProductGalery>();
         }
     }
 }

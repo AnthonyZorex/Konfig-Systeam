@@ -365,14 +365,6 @@
       "PackagePath": "staticwebassets\\Image\\apple-pay.png"
     },
     {
-      "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\arrow.png",
-      "PackagePath": "staticwebassets\\Image\\arrow.png"
-    },
-    {
-      "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\arrows.png",
-      "PackagePath": "staticwebassets\\Image\\arrows.png"
-    },
-    {
       "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\aussenzylinder.png",
       "PackagePath": "staticwebassets\\Image\\aussenzylinder.png"
     },
@@ -389,10 +381,6 @@
       "PackagePath": "staticwebassets\\Image\\ces.png"
     },
     {
-      "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\delete.png",
-      "PackagePath": "staticwebassets\\Image\\delete.png"
-    },
-    {
       "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\doppelzylinder.png",
       "PackagePath": "staticwebassets\\Image\\doppelzylinder.png"
     },
@@ -403,10 +391,6 @@
     {
       "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\entfernen.png",
       "PackagePath": "staticwebassets\\Image\\entfernen.png"
-    },
-    {
-      "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\files.png",
-      "PackagePath": "staticwebassets\\Image\\files.png"
     },
     {
       "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\free-icon-home-with-locked-padlock-15748.png",
@@ -463,6 +447,14 @@
     {
       "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\sort.png",
       "PackagePath": "staticwebassets\\Image\\sort.png"
+    },
+    {
+      "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\test.png",
+      "PackagePath": "staticwebassets\\Image\\test.png"
+    },
+    {
+      "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\test242740783.png",
+      "PackagePath": "staticwebassets\\Image\\test242740783.png"
     },
     {
       "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\vorhangschloss.png",
