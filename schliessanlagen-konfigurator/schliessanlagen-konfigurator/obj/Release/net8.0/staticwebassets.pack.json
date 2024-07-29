@@ -365,6 +365,14 @@
       "PackagePath": "staticwebassets\\Image\\apple-pay.png"
     },
     {
+      "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\arrow.png",
+      "PackagePath": "staticwebassets\\Image\\arrow.png"
+    },
+    {
+      "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\arrows.png",
+      "PackagePath": "staticwebassets\\Image\\arrows.png"
+    },
+    {
       "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\aussenzylinder.png",
       "PackagePath": "staticwebassets\\Image\\aussenzylinder.png"
     },
@@ -447,6 +455,10 @@
     {
       "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\sort.png",
       "PackagePath": "staticwebassets\\Image\\sort.png"
+    },
+    {
+      "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\up-arrow.png",
+      "PackagePath": "staticwebassets\\Image\\up-arrow.png"
     },
     {
       "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\vorhangschloss.png",

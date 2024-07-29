@@ -15,6 +15,8 @@ namespace schliessanlagen_konfigurator.Models
         public List<IFormFile> Images { get; set; }
         public int? DopelZylinderId { get; set; }
         public Profil_Doppelzylinder DopelZylinder { get; set; }
+        public int? SysteamPriceKeyId { get; set; }
+        public SysteamPriceKey SysteamPriceKey { get; set; }
         public int? Profil_KnaufzylinderId { get; set; }
         public Profil_Knaufzylinder Profil_Knaufzylinder { get; set; }
         public int? Profil_HalbzylinderId { get; set; }

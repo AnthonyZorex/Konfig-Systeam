@@ -12,9 +12,11 @@ namespace schliessanlagen_konfigurator.Models
         public string? Lieferzeit { get; set; }
         public string? LieferzeitGrosse { get; set; }
         public ICollection<SystemOptionen>? SystemOptionen { get; set; }
+        public ICollection<ProductGalery>? ProductGalery { get; set; }
         public SysteamPriceKey()
         {
             SystemOptionen = new List<SystemOptionen>();
+            ProductGalery = new List<ProductGalery>();
         }
     }
 }

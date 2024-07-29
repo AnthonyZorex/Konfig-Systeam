@@ -51,25 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d7fbb5c4-9c2a-4eb7-a6da-c850ade0668d",
+                            Id = "cc6355c4-8fa0-4752-8769-670663449990",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "1fb39fd2-6244-48c7-9439-2f69a68a412c",
+                            Id = "deee7005-da85-4400-a604-4375b13b3ccc",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "534f9e97-46d0-42b6-a46e-7aeea77b2c33",
+                            Id = "9e0e3f27-9446-4980-9b2c-e7b03befa223",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "30d45146-8255-4826-97ee-50684b521e43",
+                            Id = "70e08af8-b877-4007-a5ab-466a9111c028",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -706,6 +706,9 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Property<int?>("Profil_KnaufzylinderId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("SysteamPriceKeyId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("VorhangschlossId")
                         .HasColumnType("int");
 
@@ -720,6 +723,8 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasIndex("Profil_HalbzylinderId");
 
                     b.HasIndex("Profil_KnaufzylinderId");
+
+                    b.HasIndex("SysteamPriceKeyId");
 
                     b.HasIndex("VorhangschlossId");
 
@@ -1681,6 +1686,10 @@ namespace schliessanlagen_konfigurator.Migrations
                         .WithMany("ProductGalery")
                         .HasForeignKey("Profil_KnaufzylinderId");
 
+                    b.HasOne("schliessanlagen_konfigurator.Models.SysteamPriceKey", "SysteamPriceKey")
+                        .WithMany("ProductGalery")
+                        .HasForeignKey("SysteamPriceKeyId");
+
                     b.HasOne("schliessanlagen_konfigurator.Models.Vorhangschloss", "Vorhangschloss")
                         .WithMany("ProductGalery")
                         .HasForeignKey("VorhangschlossId");
@@ -1694,6 +1703,8 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Navigation("Profil_Halbzylinder");
 
                     b.Navigation("Profil_Knaufzylinder");
+
+                    b.Navigation("SysteamPriceKey");
 
                     b.Navigation("Vorhangschloss");
                 });
@@ -2024,6 +2035,8 @@ namespace schliessanlagen_konfigurator.Migrations
 
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.SysteamPriceKey", b =>
                 {
+                    b.Navigation("ProductGalery");
+
                     b.Navigation("SystemOptionen");
                 });
 

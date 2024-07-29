@@ -5,8 +5,7 @@
     int f = -1;
     int r = -1;
     int select = 0;
-
-
+    int galeryCheker = 0;
 }
 @if (User.IsInRole("admin"))
 {
@@ -21,6 +20,32 @@
                     <input required asp-for="NameSysteam" class="form-control" />
                     <span asp-validation-for="NameSysteam" class="text-danger"></span>
                 </div>
+                <div class="form-group" id="Galerry">
+                    <label class="control-label">Produkt-Galerie:</label>
+                    <br />
+
+                    @foreach (var list in ViewBag.Galry)
+                    {
+                        <div id="galeryItem-@galeryCheker">
+                            <input name="GalleryImages" type="text" value="@list.ImageName" id="opt" class="form-control" />
+                            <br />
+                            <img src="@("/Image/"+@list.ImageName)" height="300" width="300" />
+                            <br />
+                            <button class="btn btn-success" onclick="AddImage(@galeryCheker)" type="button">Bilder hinzufügen</button>
+                            <button class="btn btn-danger" onclick="deleteImage(@galeryCheker)" type="button">Löschen</button>
+                        </div>
+                        galeryCheker++;
+                    }
+                    @if (ViewBag.Galry.Count == 0)
+                    {
+                        <div>
+                            <label for="Images">Bilder auswählen:</label>
+                            <input type="file" name="UploadGalleryImages" multiple class="form-control" />
+                        </div>
+                    }
+                </div>
+                <br />
+               
                 <div class="form-group">
                     <label>Preis</label>
                     <input required asp-for="Price" class="form-control" />
@@ -195,6 +220,33 @@
  @section Scripts
  {
     <script>
+
+         let Galery = document.getElementById("Galerry");
+
+            function AddImage(imageBlock)
+            {
+                let addBlock = `<div>
+                                        <label for="Images">Bilder auswählen:</label>
+                                            <input type="file" name="UploadGalleryImages" multiple class="form-control" />
+                                    </div>`;
+
+                document.getElementById('Galerry').innerHTML += addBlock;
+            }
+
+            function deleteImage(imageBlock) 
+            {
+                let imgBlock = document.getElementById("galeryItem-" + imageBlock);
+
+                if (Galery.childElementCount == 3) 
+                {
+                    imgBlock.remove();
+                    Galery.remove();
+                }
+                else {
+                    imgBlock.remove();
+                }
+            }
+
         tinymce.init({
             selector: '#exampleFormControlTextarea1',
             plugins: [

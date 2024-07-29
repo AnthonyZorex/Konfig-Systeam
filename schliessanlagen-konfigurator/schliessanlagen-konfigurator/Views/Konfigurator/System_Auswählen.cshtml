@@ -76,6 +76,16 @@
                     <div class="ExelItem" id="@countItem">
                         <div id="productImage">
                             <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+ 
+                                <div>
+                                    @foreach (var list in ViewBag.Gallery)
+                                    {
+                                        @if (item.SystemId == list.SysteamPriceKeyId)
+                                        {
+                                            <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
+                                        }        
+                                    }
+                                </div>
                         </div>
                         <div id="productMenuInfo">
                             <div id="ProductNameUndCost">
@@ -120,6 +130,7 @@
                         </div>
                     </div>
                     countItem++;
+                   
                 }
             }
 
@@ -130,7 +141,16 @@
                     <div class="ExelItem" id="@countItem">
                         <div id="productImage">
                             <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                        </div>
+                            <div>
+                                @foreach (var list in ViewBag.Gallery)
+                                {
+                                    @if (item.SystemId == list.SysteamPriceKeyId)
+                                    {
+                                        <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
+                                    }
+                                }
+                            </div>
+                         </div>
                         <div id="productMenuInfo">
                             <div id="ProductNameUndCost">
                                 <div>
@@ -178,7 +198,17 @@
                     <div class="ExelItem" id="@countItem">
                         <div id="productImage">
                             <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                        </div>
+                            <div>
+                                @foreach (var list in ViewBag.Gallery)
+                                {
+                                    @if (item.SystemId == list.SysteamPriceKeyId)
+                                    {
+                                        <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
+                                    }
+                                }
+                            </div>
+                            
+                            </div>
                         <div id="productMenuInfo">
                             <div id="ProductNameUndCost">
                                 <div>
@@ -226,7 +256,16 @@
                     <div class="ExelItem" id="@countItem">
                         <div id="productImage">
                             <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                        </div>
+                            <div>
+                                @foreach (var list in ViewBag.Gallery)
+                                {
+                                    @if (item.SystemId == list.SysteamPriceKeyId)
+                                    {
+                                        <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
+                                    }
+                                }
+                            </div>
+                          </div>
                         <div id="productMenuInfo">
                             <div id="ProductNameUndCost">
                                 <div>
@@ -274,6 +313,16 @@
                     <div class="ExelItem" id="@countItem">
                         <div id="productImage">
                             <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+
+                            <div>
+                                @foreach (var list in ViewBag.Gallery)
+                                {
+                                    @if (item.SystemId == list.SysteamPriceKeyId)
+                                    {
+                                        <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
+                                    }
+                                }
+                            </div>
                         </div>
                         <div id="productMenuInfo">
                             <div id="ProductNameUndCost">
@@ -322,7 +371,17 @@
                     <div class="ExelItem" id="@countItem">
                         <div id="productImage">
                             <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                        </div>
+
+                            <div>
+                                @foreach (var list in ViewBag.Gallery)
+                                {
+                                    @if (item.SystemId == list.SysteamPriceKeyId)
+                                    {
+                                        <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
+                                    }
+                                }
+                            </div>
+                         </div>
                         <div id="productMenuInfo">
                             <div id="ProductNameUndCost">
                                 <div>

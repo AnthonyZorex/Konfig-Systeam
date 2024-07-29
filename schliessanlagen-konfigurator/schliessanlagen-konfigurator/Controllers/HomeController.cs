@@ -27,6 +27,7 @@ using schliessanlagen_konfigurator.Migrations;
 using System.Diagnostics.Metrics;
 using System.Collections.Generic;
 using System.Collections;
+using Microsoft.DotNet.Scaffolding.Shared;
 namespace schliessanlagen_konfigurator.Controllers
 {
     public class HomeController : Controller
@@ -156,7 +157,7 @@ namespace schliessanlagen_konfigurator.Controllers
             return RedirectToAction("ImageConfig", "Home");
         }
         [HttpPost]
-        public ActionResult Create_Sys(string KeyName, float KeyCost)
+        public async Task<IActionResult> Create_Sys(string KeyName, List<IFormFile> Images, float KeyCost)
         {
             var key = new SysteamPriceKey
             {
@@ -166,11 +167,60 @@ namespace schliessanlagen_konfigurator.Controllers
             db.SysteamPriceKey.Add(key);
             db.SaveChanges();
 
+            if (Images != null && Images.Count > 0)
+            {
+                foreach (var image in Images)
+                {
+                    var itemGalary = new ProductGalery
+                    {
+                        SysteamPriceKeyId = key.Id,
+                    };
+                    if (image.Length > 0)
+                    {
+                        string wwwRootPath = Environment.WebRootPath;
+
+                        string fileName = Path.GetFileNameWithoutExtension(image.FileName);
+
+                        string extension = Path.GetExtension(image.FileName);
+
+                        string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
+
+                        itemGalary.ImageName = fileName = fileName + extension;
+
+                        using (var fileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await image.CopyToAsync(fileStream);
+                        }
+
+                        db.ProductGalery.Add(itemGalary);
+                        db.SaveChanges();
+                    }
+                }
+            }
+
             return RedirectToAction("SystemInfo", "Home");
         }
         public ActionResult Delete_System(int id)
         {
             var item = db.SysteamPriceKey.FirstOrDefault(x => x.Id == id);
+
+            var Gallery = db.ProductGalery.Where(x => x.SysteamPriceKeyId == item.Id).ToList();
+
+            foreach (var list in Gallery)
+            {
+                string sourceFilePathGallery = @"wwwroot/image/";
+
+                string imagePathToDeleteGallery = Path.Combine(sourceFilePathGallery, list.ImageName);
+
+                if (System.IO.File.Exists(imagePathToDeleteGallery))
+                {
+                    System.IO.File.Delete(imagePathToDeleteGallery);
+                }
+
+                var deletItem = Gallery.FirstOrDefault(x => x.ImageName == list.ImageName);
+                db.ProductGalery.Remove(deletItem);
+                db.SaveChanges();
+            }
 
             var OPtions = db.SystemOptionen.Where(x=>x.SystemId == item.Id).ToList();
 
@@ -272,6 +322,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var OptionItem = db.SystemOptionen.Where(x => x.SystemId == item.Id).ToList();
 
+            var Galery = db.ProductGalery.Where(x => x.SysteamPriceKeyId == item.Id).ToList();
+
+            ViewBag.Galry = Galery;
 
             if (OptionItem.Count > 0)
             {
@@ -338,10 +391,10 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveSysteamInfo(SysteamPriceKey systeam, string AltName, List<string> Halb, List<string> Knayf,List<string> doppel,
         List<string> Hebel, List<string> Vorhang, List<string> Aussen,  List<string> Options, List<string> ImageNameOption, List<string> Descriptions,List<int> inputCounter,
-        List<string> value , List<float> cost)
+        List<string> value , List<float> cost, List<string> GalleryImages,List<IFormFile> UploadGalleryImages)
         {
-            var dopple = db.Profil_Doppelzylinder.FirstOrDefault(x => x.NameSystem == AltName);
-           
+            var dopple = db.Profil_Doppelzylinder.FirstOrDefault(x => x.NameSystem == AltName);          
+
             if (dopple != null)
             {
                 dopple.NameSystem = systeam.NameSysteam;
@@ -956,6 +1009,49 @@ namespace schliessanlagen_konfigurator.Controllers
             }
 
             var sys = db.SysteamPriceKey.Where(x => x.NameSysteam == AltName).First();
+
+            var Gallery = db.ProductGalery.Where(x => x.SysteamPriceKeyId == sys.Id).ToList();
+
+            var listN = Gallery.Select(x => x.ImageName).Except(GalleryImages).ToList();
+
+            foreach (var list in listN)
+            {
+                var deletItem = Gallery.FirstOrDefault(x => x.ImageName == list);
+                db.ProductGalery.Remove(deletItem);
+                db.SaveChanges();
+            }
+
+
+            if (UploadGalleryImages != null && UploadGalleryImages.Count > 0)
+            {
+                foreach (var image in UploadGalleryImages)
+                {
+                    var itemGalary = new ProductGalery
+                    {
+                        SysteamPriceKeyId = sys.Id,
+                    };
+                    if (image.Length > 0)
+                    {
+                        string wwwRootPath = Environment.WebRootPath;
+
+                        string fileName = Path.GetFileNameWithoutExtension(image.FileName);
+
+                        string extension = Path.GetExtension(image.FileName);
+
+                        string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
+
+                        itemGalary.ImageName = fileName = fileName + extension;
+
+                        using (var fileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await image.CopyToAsync(fileStream);
+                        }
+
+                        db.ProductGalery.Add(itemGalary);
+                        db.SaveChanges();
+                    }
+                }
+            }
 
             sys.NameSysteam = systeam.NameSysteam;
             sys.Price = systeam.Price;

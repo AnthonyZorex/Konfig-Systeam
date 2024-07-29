@@ -6,6 +6,11 @@
 
     <form asp-action="Create_Sys" enctype="multipart/form-data" asp-controller="Home">
 
+        <div>
+            <label for="Images">Bilder auswählen:</label>
+            <input type="file" name="Images" multiple class="form-control" />
+        </div>
+
     <div style="margin-bottom: 50px;margin-top: 50px">
      <label>Systemname</label>
     <input name="KeyName" id="NameSys" type="text" class="form-control" />

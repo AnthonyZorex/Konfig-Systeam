@@ -1053,11 +1053,14 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var keySum = db.SysteamPriceKey.ToList();
 
+                var Gallery = db.ProductGalery.ToList();
+
                 var queryOrder = from t1 in cheked
                                  join t2 in allUserListOrder on t1.schliessanlagenId equals t2.ZylinderId
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     SystemId = t3.Id,
                                      aussen = t2.aussen,
                                      innen = t2.innen,
                                      Lieferzeit = t3.Lieferzeit,
@@ -1079,11 +1082,17 @@ namespace schliessanlagen_konfigurator.Controllers
 
                                 var ListOrder = queryOrder.Distinct().ToList();
                                 ViewBag.Doppel = ListOrder.Distinct().OrderBy(x => x.Cost).ToList();
+
+
+                ViewBag.Gallery = Gallery;
             }
 
            if (cheked2.Count() > 0 && cheked.Count == 0 && cheked3.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
            {
                 int precision = 2;
+
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
 
                 var keySum = db.SysteamPriceKey.ToList();
 
@@ -1092,6 +1101,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     SystemId = t3.Id,
                                      aussen = t2.aussen,
                                      innen = t2.innen,
                                      Lieferzeit = t3.Lieferzeit,
@@ -1119,6 +1129,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var query = from t1 in cheked3
@@ -1126,6 +1139,7 @@ namespace schliessanlagen_konfigurator.Controllers
                             join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                             select new
                             {
+                                SystemId = t3.Id,
                                 aussen = t2.aussen,
                                 innen = t2.innen,
                                 Lieferzeit = t3.Lieferzeit,
@@ -1154,6 +1168,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var query = from t1 in cheked4
@@ -1161,6 +1178,7 @@ namespace schliessanlagen_konfigurator.Controllers
                             join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                             select new
                             {
+                                SystemId = t3.Id,
                                 aussen = t2.aussen,
                                 innen = t2.innen,
                                 Lieferzeit = t3.Lieferzeit,
@@ -1188,6 +1206,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var query = from t1 in cheked5
@@ -1195,6 +1216,7 @@ namespace schliessanlagen_konfigurator.Controllers
                             join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                             select new
                             {
+                                SystemId = t3.Id,
                                 aussen = t2.aussen,
                                 innen = t2.innen,
                                 Lieferzeit = t3.Lieferzeit,
@@ -1220,7 +1242,10 @@ namespace schliessanlagen_konfigurator.Controllers
             if (cheked6.Count() > 0 && cheked2.Count == 0 && cheked3.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked.Count == 0)
             {
                 int precision = 2;
-                
+
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var query = from t1 in cheked6
@@ -1228,6 +1253,7 @@ namespace schliessanlagen_konfigurator.Controllers
                             join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                             select new
                             {
+                                SystemId = t3.Id,
                                 aussen = t2.aussen,
                                 innen = t2.innen,
                                 Lieferzeit = t3.Lieferzeit,
@@ -1254,6 +1280,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked
@@ -1261,6 +1290,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t2.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     SystemId = t3.Id,
                                      aussen = allUserListOrder.Max(x=>x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t3.Lieferzeit,
@@ -1289,6 +1319,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked
@@ -1296,6 +1329,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t2.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     SystemId = t3.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t3.Lieferzeit,
@@ -1321,7 +1355,10 @@ namespace schliessanlagen_konfigurator.Controllers
             if (cheked.Count() > 0 && cheked4.Count() > 0 && cheked2.Count == 0 && cheked3.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
                 int precision = 2;
-                
+
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked
@@ -1329,6 +1366,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t2.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     SystemId = t3.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t3.Lieferzeit,
@@ -1355,6 +1393,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked
@@ -1362,6 +1403,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t2.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     SystemId = t3.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t3.Lieferzeit,
@@ -1388,6 +1430,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked
@@ -1395,6 +1440,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     SystemId = t3.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t3.Lieferzeit,
@@ -1421,7 +1467,10 @@ namespace schliessanlagen_konfigurator.Controllers
             if (cheked2.Count() > 0 && cheked3.Count() > 0 && cheked.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
                 int precision = 2;
-                
+
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked2
@@ -1429,6 +1478,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     SystemId = t3.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t3.Lieferzeit,
@@ -1455,6 +1505,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked2
@@ -1462,6 +1515,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     SystemId = t3.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t3.Lieferzeit,
@@ -1488,6 +1542,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked2
@@ -1495,6 +1552,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     SystemId = t3.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t3.Lieferzeit,
@@ -1521,6 +1579,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked2
@@ -1528,6 +1589,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     SystemId = t3.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t3.Lieferzeit,
@@ -1561,6 +1623,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     SystemId = t3.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t3.Lieferzeit,
@@ -1587,6 +1650,8 @@ namespace schliessanlagen_konfigurator.Controllers
             if (cheked3.Count() > 0 && cheked5.Count() > 0 && cheked.Count == 0 && cheked2.Count == 0 && cheked6.Count == 0 && cheked4.Count == 0)
             {
                 int precision = 2;
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
 
                 var keySum = db.SysteamPriceKey.ToList();
 
@@ -1595,6 +1660,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     SystemId = t3.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t3.Lieferzeit,
@@ -1623,6 +1689,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked3
@@ -1630,6 +1699,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     SystemId = t3.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t3.Lieferzeit,
@@ -1657,6 +1727,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked4
@@ -1664,6 +1737,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     SystemId = t3.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t3.Lieferzeit,
@@ -1691,6 +1765,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked4
@@ -1698,6 +1775,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     SystemId = t3.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t3.Lieferzeit,
@@ -1726,6 +1804,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked5
@@ -1733,6 +1814,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
                                  select new
                                  {
+                                     SystemId = t3.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t3.Lieferzeit,
@@ -1761,6 +1843,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked
@@ -1769,6 +1854,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t4.Lieferzeit,
@@ -1797,13 +1883,17 @@ namespace schliessanlagen_konfigurator.Controllers
                 int precision = 2;
 
                 var keySum = db.SysteamPriceKey.ToList();
-                
+
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t4.Lieferzeit,
@@ -1831,6 +1921,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked
@@ -1839,6 +1932,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t4.Lieferzeit,
@@ -1866,6 +1960,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked
@@ -1874,6 +1971,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t4.Lieferzeit,
@@ -1901,6 +1999,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked
@@ -1909,6 +2010,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t4.Lieferzeit,
@@ -1936,6 +2038,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked
@@ -1944,6 +2049,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t4.Lieferzeit,
@@ -1973,12 +2079,16 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var keySum = db.SysteamPriceKey.ToList();
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t4.Lieferzeit,
@@ -2007,6 +2117,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked
@@ -2015,6 +2128,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t4.Lieferzeit,
@@ -2042,6 +2156,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked
@@ -2050,6 +2167,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t4.Lieferzeit,
@@ -2077,6 +2195,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked
@@ -2085,6 +2206,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t4.Lieferzeit,
@@ -2113,6 +2235,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked2
@@ -2121,6 +2246,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t4.Lieferzeit,
@@ -2148,6 +2274,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked2
@@ -2156,6 +2285,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t4.Lieferzeit,
@@ -2183,6 +2313,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked2
@@ -2191,6 +2324,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t4.Lieferzeit,
@@ -2218,6 +2352,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked2
@@ -2226,6 +2363,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t4.Lieferzeit,
@@ -2253,6 +2391,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked2
@@ -2261,6 +2402,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t4.Lieferzeit,
@@ -2288,6 +2430,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
                 
                 var queryOrder = from t1 in cheked2
@@ -2296,6 +2441,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t4.Lieferzeit,
@@ -2323,6 +2469,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked3
@@ -2331,6 +2480,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t4.Lieferzeit,
@@ -2357,7 +2507,10 @@ namespace schliessanlagen_konfigurator.Controllers
             if (cheked4.Count() > 0 && cheked3.Count() > 0 && cheked6.Count() > 0 && cheked.Count == 0 && cheked2.Count == 0 && cheked5.Count == 0)
             {
                 int precision = 2;
-                
+
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked3
@@ -2366,6 +2519,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t4.Lieferzeit,
@@ -2393,6 +2547,10 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked3
@@ -2401,6 +2559,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t4.Lieferzeit,
@@ -2430,12 +2589,16 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var keySum = db.SysteamPriceKey.ToList();
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var queryOrder = from t1 in cheked4
                                  join t2 in cheked5 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
                                  join t4 in keySum on t3.NameSystem equals t4.NameSysteam
                                  select new
                                  {
+                                     SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t4.Lieferzeit,
@@ -2464,6 +2627,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked
@@ -2473,6 +2639,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
+                                     SystemId = t5.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t5.Lieferzeit,
@@ -2503,6 +2670,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var keySum = db.SysteamPriceKey.ToList();
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
@@ -2510,6 +2680,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
+                                     SystemId = t5.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t5.Lieferzeit,
@@ -2541,6 +2712,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var keySum = db.SysteamPriceKey.ToList();
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
@@ -2548,6 +2722,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
+                                     SystemId = t5.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t5.Lieferzeit,
@@ -2577,6 +2752,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked
@@ -2586,6 +2764,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
+                                     SystemId = t5.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t5.Lieferzeit,
@@ -2615,6 +2794,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked
@@ -2624,6 +2806,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
+                                     SystemId = t5.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t5.Lieferzeit,
@@ -2654,6 +2837,9 @@ namespace schliessanlagen_konfigurator.Controllers
                 int precision = 2;
 
                 var keySum = db.SysteamPriceKey.ToList();
+               
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
 
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
@@ -2662,6 +2848,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
+                                     SystemId = t5.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t5.Lieferzeit,
@@ -2694,6 +2881,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var keySum = db.SysteamPriceKey.ToList();
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
@@ -2701,6 +2891,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
+                                     SystemId = t5.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t5.Lieferzeit,
@@ -2732,6 +2923,10 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var keySum = db.SysteamPriceKey.ToList();
 
+
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
@@ -2739,6 +2934,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
+                                     SystemId = t5.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t5.Lieferzeit,
@@ -2771,6 +2967,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var keySum = db.SysteamPriceKey.ToList();
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
@@ -2778,6 +2977,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
+                                     SystemId = t5.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t5.Lieferzeit,
@@ -2807,6 +3007,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked
@@ -2816,6 +3019,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
+                                     SystemId = t5.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t5.Lieferzeit,
@@ -2846,6 +3050,9 @@ namespace schliessanlagen_konfigurator.Controllers
                 int precision = 2;
 
                 var keySum = db.SysteamPriceKey.ToList();
+                
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
 
                 var queryOrder = from t1 in cheked2
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
@@ -2854,6 +3061,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
+                                     SystemId = t5.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t5.Lieferzeit,
@@ -2885,6 +3093,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var keySum = db.SysteamPriceKey.ToList();
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var queryOrder = from t1 in cheked2
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
@@ -2892,6 +3103,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
+                                     SystemId = t5.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t5.Lieferzeit,
@@ -2923,6 +3135,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var keySum = db.SysteamPriceKey.ToList();
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var queryOrder = from t1 in cheked2
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
@@ -2930,6 +3145,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
+                                     SystemId = t5.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t5.Lieferzeit,
@@ -2959,6 +3175,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked2
@@ -2968,6 +3187,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
+                                     SystemId = t5.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t5.Lieferzeit,
@@ -2999,6 +3219,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var keySum = db.SysteamPriceKey.ToList();
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var queryOrder = from t1 in cheked3
                                  join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
@@ -3006,6 +3229,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t5 in keySum on t4.NameSystem equals t5.NameSysteam
                                  select new
                                  {
+                                     SystemId = t5.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t5.Lieferzeit,
@@ -3037,6 +3261,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var keySum = db.SysteamPriceKey.ToList();
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
@@ -3045,6 +3272,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t6 in keySum on t5.NameSystem equals t6.NameSysteam
                                  select new
                                  {
+                                     SystemId = t6.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t6.Lieferzeit,
@@ -3078,6 +3306,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var keySum = db.SysteamPriceKey.ToList();
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
@@ -3086,6 +3317,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t6 in keySum on t5.NameSystem equals t6.NameSysteam
                                  select new
                                  {
+                                     SystemId = t6.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t6.Lieferzeit,
@@ -3119,6 +3351,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var keySum = db.SysteamPriceKey.ToList();
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
@@ -3127,6 +3362,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t6 in keySum on t5.NameSystem equals t6.NameSysteam
                                  select new
                                  {
+                                     SystemId = t6.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t6.Lieferzeit,
@@ -3160,6 +3396,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var keySum = db.SysteamPriceKey.ToList();
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
@@ -3168,6 +3407,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t6 in keySum on t5.NameSystem equals t6.NameSysteam
                                  select new
                                  {
+                                     SystemId = t6.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t6.Lieferzeit,
@@ -3201,6 +3441,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var keySum = db.SysteamPriceKey.ToList();
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
@@ -3209,6 +3452,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t6 in keySum on t5.NameSystem equals t6.NameSysteam
                                  select new
                                  {
+                                     SystemId = t6.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t6.Lieferzeit,
@@ -3240,6 +3484,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked2
@@ -3250,6 +3497,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t6 in keySum on t5.NameSystem equals t6.NameSysteam
                                  select new
                                  {
+                                     SystemId = t6.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t6.Lieferzeit,
@@ -3281,6 +3529,9 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 int precision = 2;
 
+                var Gallery = db.ProductGalery.ToList();
+                ViewBag.Gallery = Gallery;
+
                 var keySum = db.SysteamPriceKey.ToList();
 
                 var queryOrder = from t1 in cheked.Distinct()
@@ -3292,6 +3543,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                  join t7 in keySum on t6.NameSystem equals t7.NameSysteam
                                  select new
                                  {
+                                     SystemId = t7.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
                                      Lieferzeit = t7.Lieferzeit,
@@ -3320,6 +3572,7 @@ namespace schliessanlagen_konfigurator.Controllers
              
             }
             #endregion
+
 
             return View("System_Auswählen", keyUser);
         }
