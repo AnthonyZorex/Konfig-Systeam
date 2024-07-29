@@ -110,6 +110,12 @@
                         <input value="@item.Id" type="hidden" name="DopelItem" />
                         <div id="productImage">
                             <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" onclick="OpenModalInfo(@d)" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                            <div>
+                                @foreach(var list in ViewBag.DoppelGalery)
+                                {
+                                    <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
+                                }
+                            </div>
                         </div>
                         <div id="productMenuInfo">
                             <div id="ProductNameUndCost">

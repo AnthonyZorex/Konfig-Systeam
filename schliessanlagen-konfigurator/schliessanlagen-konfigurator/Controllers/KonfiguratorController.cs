@@ -3345,6 +3345,10 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var OrderList = db.Profil_Doppelzylinder.Where(x => x.Id == Convert.ToInt32(DopelId)).ToList();
 
+            var DoppelGalery = db.ProductGalery.Where(x => x.DopelZylinderId == DopelId).ToList();
+
+            ViewBag.DoppelGalery = DoppelGalery;
+
             var AussenInen = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == Convert.ToInt32(DopelId)).Select(x => new { x.aussen, x.Intern, x.costSizeIntern,x.costSizeAussen }).ToList();
 
             var Halbzylinder = new List<Profil_Halbzylinder>();

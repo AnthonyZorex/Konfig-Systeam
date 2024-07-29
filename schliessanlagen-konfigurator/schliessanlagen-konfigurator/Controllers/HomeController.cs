@@ -3253,15 +3253,6 @@ namespace schliessanlagen_konfigurator.Controllers
 
             foreach (var list in listN)
             {
-                string sourceFilePath = @"wwwroot/image/";
-
-                string imagePathToDelete = Path.Combine(sourceFilePath, list);
-
-                if (System.IO.File.Exists(imagePathToDelete))
-                {
-                    System.IO.File.Delete(imagePathToDelete);
-                }
-
                 var deletItem = Gallery.FirstOrDefault(x => x.ImageName == list);
                 db.ProductGalery.Remove(deletItem);
                 db.SaveChanges();
@@ -3718,14 +3709,14 @@ namespace schliessanlagen_konfigurator.Controllers
 
             foreach (var list in listN)
             {
-                string sourceFilePath = @"wwwroot/image/";
+                //string sourceFilePath = @"wwwroot/image/";
 
-                string imagePathToDelete = Path.Combine(sourceFilePath, list);
+                //string imagePathToDelete = Path.Combine(sourceFilePath, list);
 
-                if (System.IO.File.Exists(imagePathToDelete))
-                {
-                    System.IO.File.Delete(imagePathToDelete);
-                }
+                //if (System.IO.File.Exists(imagePathToDelete))
+                //{
+                //    System.IO.File.Delete(imagePathToDelete);
+                //}
 
                 var deletItem = Gallery.FirstOrDefault(x => x.ImageName == list);
                 db.ProductGalery.Remove(deletItem);
@@ -3884,16 +3875,7 @@ namespace schliessanlagen_konfigurator.Controllers
             var listN = Gallery.Select(x => x.ImageName).Except(GalleryImages).ToList();
 
             foreach (var list in listN)
-            {
-                string sourceFilePath = @"wwwroot/image/";
-
-                string imagePathToDelete = Path.Combine(sourceFilePath, list);
-
-                if (System.IO.File.Exists(imagePathToDelete))
-                {
-                    System.IO.File.Delete(imagePathToDelete);
-                }
-
+            {               
                 var deletItem = Gallery.FirstOrDefault(x => x.ImageName == list);
                 db.ProductGalery.Remove(deletItem);
                 db.SaveChanges();
@@ -4042,15 +4024,6 @@ namespace schliessanlagen_konfigurator.Controllers
 
             foreach (var list in listN)
             {
-                string sourceFilePath = @"wwwroot/image/";
-
-                string imagePathToDelete = Path.Combine(sourceFilePath, list);
-
-                if (System.IO.File.Exists(imagePathToDelete))
-                {
-                    System.IO.File.Delete(imagePathToDelete);
-                }
-
                 var deletItem = Gallery.FirstOrDefault(x => x.ImageName == list);
                 db.ProductGalery.Remove(deletItem);
                 db.SaveChanges();
@@ -4194,16 +4167,7 @@ namespace schliessanlagen_konfigurator.Controllers
             var listN = Gallery.Select(x => x.ImageName).Except(GalleryImages).ToList();
 
             foreach (var list in listN)
-            {
-                string sourceFilePath = @"wwwroot/image/";
-
-                string imagePathToDelete = Path.Combine(sourceFilePath, list);
-
-                if (System.IO.File.Exists(imagePathToDelete))
-                {
-                    System.IO.File.Delete(imagePathToDelete);
-                }
-
+            {               
                 var deletItem = Gallery.FirstOrDefault(x => x.ImageName == list);
                 db.ProductGalery.Remove(deletItem);
                 db.SaveChanges();
@@ -4375,16 +4339,7 @@ namespace schliessanlagen_konfigurator.Controllers
             var listN = Gallery.Select(x => x.ImageName).Except(GalleryImages).ToList();
 
             foreach (var list in listN)
-            {
-                string sourceFilePath = @"wwwroot/image/";
-
-                string imagePathToDelete = Path.Combine(sourceFilePath, list);
-
-                if (System.IO.File.Exists(imagePathToDelete))
-                {
-                    System.IO.File.Delete(imagePathToDelete);
-                }
-
+            {              
                 var deletItem = Gallery.FirstOrDefault(x => x.ImageName == list);
                 db.ProductGalery.Remove(deletItem);
                 db.SaveChanges();
