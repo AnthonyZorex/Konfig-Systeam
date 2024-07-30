@@ -1490,9 +1490,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 string extension = Path.GetExtension(Profil_Doppelzylinder.ImageFile.FileName);
 
-                Profil_Doppelzylinder.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                Profil_Doppelzylinder.ImageName = fileName = fileName + extension;
 
-                string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
 
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
@@ -1625,9 +1625,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         string extension = Path.GetExtension(ngf.ImageFile.FileName);
 
-                        ngf.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                        ngf.ImageName = fileName = fileName + extension;
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                        string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
 
                         using (var fileStream = new FileStream(path, FileMode.Create))
                         {
@@ -1714,9 +1714,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 string extension = Path.GetExtension(Profil_Doppelzylinder.ImageFile.FileName);
 
-                Profil_Doppelzylinder.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                Profil_Doppelzylinder.ImageName = fileName = fileName + extension;
 
-                string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
 
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
@@ -1845,9 +1845,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
                             string extension = Path.GetExtension(ngf.ImageFile.FileName);
 
-                            ngf.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                            ngf.ImageName = fileName = fileName + extension;
 
-                            string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                            string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
 
                             using (var fileStream = new FileStream(path, FileMode.Create))
                             {
@@ -1932,9 +1932,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 string extension = Path.GetExtension(Profil_Doppelzylinder.ImageFile.FileName);
 
-                Profil_Doppelzylinder.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                Profil_Doppelzylinder.ImageName = fileName = fileName + extension;
 
-                string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
 
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
@@ -2066,7 +2066,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                             ngf.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
 
-                            string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                            string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
 
                             using (var fileStream = new FileStream(path, FileMode.Create))
                             {
@@ -2152,9 +2152,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 string extension = Path.GetExtension(Profil_Doppelzylinder.ImageFile.FileName);
 
-                Profil_Doppelzylinder.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                Profil_Doppelzylinder.ImageName = fileName = fileName + extension;
 
-                string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
 
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
@@ -2267,9 +2267,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         string extension = Path.GetExtension(ngf.ImageFile.FileName);
 
-                        ngf.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                        ngf.ImageName = fileName = fileName + extension;
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                        string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
 
                         using (var fileStream = new FileStream(path, FileMode.Create))
                         {
@@ -2352,9 +2352,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 string extension = Path.GetExtension(Profil_Doppelzylinder.ImageFile.FileName);
 
-                Profil_Doppelzylinder.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                Profil_Doppelzylinder.ImageName = fileName = fileName + extension;
 
-                string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
 
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
@@ -2479,9 +2479,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         string extension = Path.GetExtension(ngf.ImageFile.FileName);
 
-                        ngf.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                        ngf.ImageName = fileName = fileName + extension;
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                        string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
 
                         using (var fileStream = new FileStream(path, FileMode.Create))
                         {
@@ -2565,9 +2565,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 string extension = Path.GetExtension(Profil_Doppelzylinder.ImageFile.FileName);
 
-                Profil_Doppelzylinder.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                Profil_Doppelzylinder.ImageName = fileName = fileName + extension;
 
-                string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
 
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
@@ -2683,9 +2683,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         string extension = Path.GetExtension(ngf.ImageFile.FileName);
 
-                        ngf.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                        ngf.ImageName = fileName = fileName + extension;
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                        string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
 
                         using (var fileStream = new FileStream(path, FileMode.Create))
                         {

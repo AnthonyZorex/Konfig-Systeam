@@ -268,7 +268,13 @@
                     <div id="ExelItem-@d" class="ExelItem">
                     <div id="productImage">
                             <img decoding="async" onclick="OpenModalInfo(@d)" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                    </div>
+                            <div>
+                                @foreach (var list in ViewBag.KnaufGalery)
+                                {
+                                    <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
+                                }
+                            </div>
+                        </div>
                     <div id="productMenuInfo">
                         <div id="ProductNameUndCost">
 
@@ -419,7 +425,14 @@
                     <input type="hidden" name="Halb" value="@item.Id" />
                     <div id="productImage">
                             <img decoding="async" onclick="OpenModalInfo(@d)" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                    </div>
+                            
+                            <div>
+                                @foreach (var list in ViewBag.HalbGalery)
+                                {
+                                    <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
+                                }
+                            </div>
+                        </div>
                     <div id="productMenuInfo">
                         <div id="ProductNameUndCost">
 
@@ -552,7 +565,13 @@
                         <input type="hidden" name="Helb" value="@item.Id" />
                     <div id="productImage">
                             <img decoding="async" onclick="OpenModalInfo(@d)" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                    </div>
+                            <div>
+                                @foreach (var list in ViewBag.HebelzylinderGalery)
+                                {
+                                    <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
+                                }
+                            </div>
+                        </div>
                     <div id="productMenuInfo">
                         <div id="ProductNameUndCost">
                             <div>
@@ -657,7 +676,13 @@
                         <input type="hidden" name="Vorhan" value="@item.Id" />
                     <div id="productImage">
                             <img decoding="async" onclick="OpenModalInfo(@d)" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                    </div>
+                            <div>
+                                @foreach (var list in ViewBag.VorhanGalery)
+                                {
+                                    <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
+                                }
+                            </div>
+                        </div>
                     <div id="productMenuInfo">
                         <div id="ProductNameUndCost">
                             <div>
@@ -779,6 +804,12 @@
                         <input type="hidden" name="Aussen" value="@item.Id" />
                         <div id="productImage">
                             <img decoding="async" onclick="OpenModalInfo(@d)" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                            <div>
+                                @foreach (var list in ViewBag.VorhanGalery)
+                                {
+                                    <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
+                                }
+                            </div>
                         </div>
                         <div id="productMenuInfo">
                             <div id="ProductNameUndCost">
@@ -1775,16 +1806,14 @@
                     item.value = '\u2713' + OptionsName;
                     item.style.color = "green";
 
-                    if (item.value === '\u2713' + "NGF = Not- und Gefahrenfunktion" ) 
+                    if (item.value === '\u2713' + "NGF = Not- und Gefahrenfunktion") 
                     {
                         hasNotUndGefahrenfunktion = true;
                         
-                        if (item.value === '\u2713' + "NGF = Not- und Gefahrenfunktion" && hasFreilauffunktion === true && hasNotUndGefahrenfunktion === true) 
-                        {
+                        if (item.value === '\u2713' + "NGF = Not- und Gefahrenfunktion" && hasFreilauffunktion === true && hasNotUndGefahrenfunktion === true) {
                             for (let i = 0; i < QueryNameOptions.length; i++) 
                             {
-                                if (QueryNameOptions[i].value === '\u2713' + "FL = Freilauffunktion") 
-                                {
+                                if (QueryNameOptions[i].value === '\u2713' + "F = Freilauffunktion") {
                                      let OptionOldCheker = document.getElementById(`d-${idBlock} + ${i}`);
 
                                      costItems.value = parseFloat(costItems.value) - (OptionOldCheker.value);
@@ -1805,15 +1834,13 @@
                             
                         }
                     }
-                    if (item.value === '\u2713' + "FL = Freilauffunktion") {
+                    if (item.value === '\u2713' + "F = Freilauffunktion") {
                         hasFreilauffunktion = true;
 
-                        if (item.value === '\u2713' + "FL = Freilauffunktion" && hasFreilauffunktion === true && hasNotUndGefahrenfunktion === true) 
-                        {
+                        if (item.value === '\u2713' + "F = Freilauffunktion" && hasFreilauffunktion === true && hasNotUndGefahrenfunktion === true) {
                             for (let i = 0; i < QueryNameOptions.length; i++) 
                             {
-                                if (QueryNameOptions[i].value === '\u2713' + "NGF = Not- und Gefahrenfunktion") 
-                                {
+                                if (QueryNameOptions[i].value === '\u2713' + "NGF = Not- und Gefahrenfunktion") {
                                     let OptionOldCheker = document.getElementById(`d-${idBlock} + ${i}`);
 
                                     costItems.value = parseFloat(costItems.value) - (OptionOldCheker.value);

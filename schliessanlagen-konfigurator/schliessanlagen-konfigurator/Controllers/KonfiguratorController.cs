@@ -3608,9 +3608,17 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var SelectHalbzylinder = db.Profil_Halbzylinder.Where(x => x.Id == Halb).ToList();
 
+            var HalbGalery = db.ProductGalery.Where(x => x.Profil_HalbzylinderId == Halb).ToList();
+
+            ViewBag.HalbGalery = HalbGalery;
+
             var halbAussen_Inter = db.Aussen_Innen_Halbzylinder.Where(x => x.Profil_HalbzylinderId == Halb).ToList();
 
             var KnaufZelinder = db.Profil_Knaufzylinder.Where(x => x.Id == KnayfID).ToList();
+
+            var KnaufGalery = db.ProductGalery.Where(x => x.Profil_KnaufzylinderId == KnayfID).ToList();
+
+            ViewBag.KnaufGalery = KnaufGalery;
 
             var Kanyf_AussenInen = db.Aussen_Innen_Knauf.Where(x => x.Profil_KnaufzylinderId == Convert.ToInt32(KnayfID)).ToList();
 
@@ -3621,6 +3629,10 @@ namespace schliessanlagen_konfigurator.Controllers
             var SelectVorhanschlos = db.Vorhangschloss.Where(x => x.Id == Vorhan).ToList();
 
             var SizeVorhanschloss = db.Size.Where(x => x.VorhangschlossId == Vorhan).Select(x => x.sizeVorhangschloss).ToList();
+
+            var VorhanGalery = db.ProductGalery.Where(x => x.VorhangschlossId == Vorhan).ToList();
+
+            ViewBag.VorhanGalery = VorhanGalery;
 
             var listVorHanOptions = new List<int>();
 
@@ -3682,6 +3694,10 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var SelectAussenzylinder = db.Aussenzylinder_Rundzylinder.Where(x => x.Id == Aussen).ToList();
 
+            var AussenzylinderGalery = db.ProductGalery.Where(x => x.Aussenzylinder_RundzylinderId == Aussen).ToList();
+
+            ViewBag.AussenzylinderGalery = AussenzylinderGalery;
+
             var AussenOption = new List<int>();
 
             foreach (var x in SelectAussenzylinder)
@@ -3733,6 +3749,11 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var HelbZ = new List<Hebel>();
             var HebelZylinder = db.Hebelzylinder.Where(x => x.Id == Hebel).ToList();
+
+            var HebelzylinderGalery = db.ProductGalery.Where(x => x.HebelId == Hebel).ToList();
+
+            ViewBag.HebelzylinderGalery = HebelzylinderGalery;
+
             var HebelOption = new List<Hebelzylinder_Options>();
 
             foreach (var list in HebelZylinder)
