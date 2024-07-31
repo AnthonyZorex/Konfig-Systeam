@@ -1,67 +1,465 @@
 ﻿@{
     ViewData["Title"] = "SendRehnung";
+    string s = Convert.ToString(DateTime.Now.Date.ToString("dd.MM.yyyy"));
 }
+<div>
 
-<div id="RehnungPdf" style="padding: 5px;background: white;max-width: 794px !important;">
-
-    <button onclick="generatePDF()">Скачать PDF</button>
 </div>
-<a href="@Url.Action("HistorOrders", "Konfigurator", new{userKey =  @ViewBag.Key})" role="button" class="btn btn-info">Weiter</a>
+@section Scripts 
+{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-<script>
+        let OrderInfo = @Html.Raw(@ViewBag.AllOrderInfo);
 
-    let Info = @Html.Raw(ViewBag.Info);
+        let Info = @Html.Raw(ViewBag.Info);
 
-    let meinAdress = `OWSD Werbe-und Sicherheitsshop GmbH
-    Brunnenstraße 8
-    10119 Berlin`;
+        let KeyInfo = @Html.Raw(ViewBag.KeyInfo);
 
-    let Rechnungsadresse = `${Info.SendVorname + " " + Info.SendNachname} 
-        ${Info.SendStrasse} ${Info.SemdAdressZusatz},
-        ${Info.SendZip} ${Info.SendStadt} , ${Info.SendLand} `;
+        let Summ = "";
 
-    let Lieferadresse = "";
-    if (Info.Rehnung == "on") 
-    {
-        Lieferadresse = `${Info.SendVorname + " " + Info.SendNachname} 
-            ${Info.SendStrasse} ${Info.SemdAdressZusatz},
-            ${Info.SendZip} ${Info.SendStadt} , ${Info.SendLand} `;
-    }
-    else {
-        Lieferadresse = `${Info.RechnungVorname + " " + Info.RechnungNachname} 
-            ${Info.RechnungStrasse} ${Info.RechnungAdressZusatz},
-            ${Info.RechnungZip} ${Info.RechnungSendStadt} , ${Info.RechnungLand} `;
-    }
+        let Email = "";
 
-    function generatePDF() {
-        const docDefinition = {
-            header: function (currentPage, pageCount) {
-                return {
-                    text: `Header - Page ${currentPage} of ${pageCount}`,
-                    alignment: 'center',
-                    margin: [0, 10]
-                };
-            },
-            footer: function (currentPage, pageCount) {
-                return {
-                    text: `Footer - Page ${currentPage} of ${pageCount}`,
-                    alignment: 'center',
-                    margin: [0, 10]
-                };
-            },
-            content: [
-                { text: 'Main content of the document', margin: [0, 20] },
-                { text: 'More content that will be automatically split into multiple pages if necessary...', margin: [0, 20] },
-                { text: 'More text to demonstrate automatic page breaking...', margin: [0, 20] },
-            ],
-            pageSize: 'A4',
-            pageMargins: [40, 60, 40, 60] // Margins: [left, top, right, bottom]
+        let meinAdress = `OWSD Werbe-und Sicherheitsshop GmbH
+            Brunnenstraße 8
+            10119 Berlin`;
+
+        let Rechnungsadresse = `${Info.SendVorname + " " + Info.SendNachname}
+                ${Info.SendStrasse} ${Info.SemdAdressZusatz},
+                ${Info.SendZip} ${Info.SendStadt} , ${Info.SendLand} `;
+
+        let Lieferadresse = "";
+        if (Info.Rehnung == "on") {
+            Lieferadresse = `${Info.SendVorname + " " + Info.SendNachname}
+                    ${Info.SendStrasse} ${Info.SemdAdressZusatz},
+                    ${Info.SendZip} ${Info.SendStadt} , ${Info.SendLand} `;
+            Email = Info.SendAdresse;
+        }
+        else {
+            Lieferadresse = `${Info.RechnungVorname + " " + Info.RechnungNachname}
+                    ${Info.RechnungStrasse} ${Info.RechnungAdressZusatz},
+                    ${Info.RechnungZip} ${Info.RechnungSendStadt} , ${Info.RechnungLand} `;
+
+            Email = Info.RechnungAdresse;
+        }
+        const logoBase64 = 'data:image/png;base64,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';
+
+        let Versand = parseFloat(Info.Versand.replace("€", "").trim());
+        let SumALL = parseFloat(Info.OrderSum.replace("€", "").trim());
+        let Steuer = parseFloat(Info.Steuer.replace("€", "").trim());
+
+        let Zwischesumme = SumALL - (Versand + Steuer);
+
+        Summ = Zwischesumme.toLocaleString('de-DE', {
+            style: 'currency',
+            currency: 'EUR'
+        });
+
+        const userKey = {
+            documentTitle: @ViewBag.Key,
+            userkey: @Html.Raw(ViewBag.userKey) ,
         };
 
-        pdfMake.createPdf(docDefinition).open();
-    }
+        const tableBody = OrderInfo.map(item => [
 
-  
-</script>
+            {
+                text: `Product Name: ${item.ProductName}
+                Name: ${item.Name}
+                ZylinderlängeA (Außenlänge): ${item.ZylinderlängeA != null ? item.ZylinderlängeA : ""}
+                ZylinderlängeB (Innenlänge)): ${item.ZylinderlängeB != null ? item.ZylinderlängeB : ""}
+                Options:${item.Options != null ? item.Options : ""}
+                    `, style: 'bodyrs'
+            },
+            {
+                text: item.Price + ",00 €", style: 'bodyrs'
+            },
+            {
+                text: item.Count, style: 'bodyrs'
+            },
+            {
+                text: `${item.Price * item.Count},00 €`, style: 'bodyrs'
+            }
+        ]);
+
+        let einSchlüesselPriec = KeyInfo[0].KeyCost / KeyInfo[0].KeyCount;
+
+        const tableKey = [
+            {
+                text: `Schlüessel`, style: 'bodyrs'
+            },
+            {
+                text: `${einSchlüesselPriec},00 €`,
+                style: 'bodyrs'
+            },
+            {
+                text: `${KeyInfo[0].KeyCount}`,
+                style: 'bodyrs'
+            },
+            {
+                text: `${einSchlüesselPriec * KeyInfo[0].KeyCount},00 €`,
+                style: 'bodyrs'
+            }
+        ];
+
+        tableBody.unshift(tableKey);
+
+        const text = `Zahlungsziel:sofort fälligohne Abzug
+                Sofern Sie diese Rechnung noch nicht beglichen haben, muss diese
+                innerhalb von 7 Tagen perangegebenerZahlungsart bezahlt werden.
+                BeimÜberweisen bitte immerdie Rechnungsnummerangeben.`;
+
+
+        const text2 = `Es gelten unsere AGB. Die Ware bleibt bis zur restlosen Bezahlung unser Eigentum. Sofern nicht anderes angegeben, entspricht das Lieferdatum dem
+            Rechnungsdatum.`;
+
+
+        const text3 = `OWSD Werbe- und
+            Sicherheitsshop GmbH
+            Brunnenstr. 8, 10119 Berlin
+            Tel.:+49 30 4508 7619
+            Fax:+49 30 4508 7629
+            E-mail:info@schluessel.discount`;
+
+        const text4 = `HReg:AG Charlottenburg Berlin
+            HRB 202933B
+            StNr:30/463/50215
+            USt-ID:DE322169544`;
+
+
+        const text5 = `PayPal-Konto:pay@owsd.de
+            Bankverbindung:Commerzbank AG
+            IBAN:DE62 1004 0048 0382 2749 00
+            BIC:COBADEFFXXX`;
+
+        function generatePDF() {
+
+            const docDefinition = {
+                header: function (currentPage, pageCount) {
+                    return {
+                        margin: [40, 40, 0, 0], // Отступы для верхнего колонтитула
+                        stack: [
+                            {
+                                columns: [
+                                    {
+                                        image: logoBase64,
+                                        width: 120, // Ширина изображения
+                                        height: 60, // Высота изображения
+                                        alignment: 'left',
+                                        style: 'headerR',
+                                    }
+                                ],
+                                columnGap: 10
+                            },
+                            {
+                                text: meinAdress,
+                                margin: [0, 30, 0, 0],
+                                alignment: 'left',
+                                style: 'headerR',
+                            },
+                            {
+                                columns: [
+                                    {
+                                        width: '50%',
+                                        stack: [
+                                            {
+                                                text: 'Rechnungsadresse',
+                                                margin: [0, 20, 0, 5],
+                                                alignment: 'left',
+                                                style: 'headerR',
+                                            },
+                                        ]
+                                    },
+                                    {
+                                        width: '40%',
+                                        stack: [
+                                            {
+                                                text: 'Lieferadresse',
+                                                margin: [0, 20, 0, 5],
+                                                alignment: 'right',
+                                                style: 'headerR',
+                                            }
+                                        ]
+                                    }
+                                ],
+                                columnGap: 20
+                            },
+                            {
+                                columns: [
+                                    {
+                                        width: '50%',
+                                        stack: [
+                                            {
+                                                text: Rechnungsadresse,
+                                                margin: [0, 10, 0, 5],
+                                                alignment: 'left',
+                                                style: 'headerR',
+                                            },
+                                        ]
+                                    },
+                                    {
+                                        width: '40%',
+                                        stack: [
+                                            {
+                                                text: Lieferadresse,
+                                                margin: [0, 10, 0, 5],
+                                                alignment: 'right',
+                                                style: 'headerR',
+                                            }
+                                        ]
+                                    }
+                                ],
+                                columnGap: 20
+                            },
+                        ]
+                    };
+                },
+                footer: function (currentPage, pageCount) {
+                    return {
+                        margin: [40, 40, 0, 0], // Отступы для верхнего колонтитула
+                        stack: [
+                            {
+                                columns: [
+                                    {
+                                        text: text,
+                                        margin: [250, 0, 0, 5],
+                                        alignment: 'left',
+                                        style: 'footerR',
+                                    }
+                                ],
+                                columnGap: 10 // Промежуток между основными колонками
+                            },
+
+                            {
+                                text: text2,
+                                margin: [10, 10, 40, 5],
+                                style: 'footerR',
+                            },
+                            {
+                                canvas: [
+                                    {
+                                        type: 'line',
+                                        x1: 10, // Начальная точка по X
+                                        y1: 0, // Начальная точка по Y
+                                        y2: 0, // Конечная точка по X
+                                        x2: 500, // Конечная точка по Y
+                                        lineWidth: 2, // Ширина линии
+                                        lineColor: 'black' // Цвет линии
+                                    }
+                                ]
+                            },
+                            {
+                                columns: [
+                                    {
+                                        width: '30%',
+                                        stack: [
+                                            {
+                                                text: text3,
+                                                margin: [10, 10, 0, 5],
+                                                alignment: 'left',
+                                                style: 'footerR',
+                                            },
+                                        ]
+                                    },
+                                    {
+                                        width: '30%',
+                                        stack: [
+                                            {
+                                                text: text4,
+                                                margin: [0, 10, 0, 5],
+                                                alignment: 'left',
+                                                style: 'footerR',
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        width: '30%',
+                                        stack: [
+                                            {
+                                                text: text5,
+                                                margin: [0, 10, 0, 5],
+                                                alignment: 'left',
+                                                style: 'footerR',
+                                            }
+                                        ]
+                                    }
+                                ],
+                                columnGap: 20
+                            },
+                            {
+                                text: `${currentPage}/${pageCount}`,
+                                alignment: 'right',
+                                margin: [0, 0, 50, 5],
+                                style: 'footerR',
+                            },
+                        ]
+                    };
+                },
+                styles:
+                {
+                    footerR: {
+                        fontSize: 8,
+                        bold: true,
+                    },
+                    headerR: {
+                        fontSize: 8,
+                        bold: true,
+                    },
+                    bodyrs: {
+                        fontSize: 8
+                    }
+                },
+                content: [
+                    {
+                        text: "Rechnung",
+                        margin: [0, 20, 0, 0],
+                        alignment: 'left',
+
+                    },
+                    {
+                        table: {
+                            headerRows: 1,
+                            widths: ['30%', '70%'],
+                            body: [
+
+                                ['', ''],
+
+                                [
+                                    { text: 'Rechnungsnummer', style: 'bodyrs' },
+                                    { text: `SK${@ViewBag.Key}`, style: 'bodyrs' },
+                                ],
+                                [
+                                    { text: 'Bestellnummer', style: 'bodyrs' },
+                                    { text: @ViewBag.Key, style: 'bodyrs' },
+                                ],
+                                [
+                                    { text: 'Bestelldatum', style: 'bodyrs' },
+                                    { text: @Html.Raw(ViewBag.Date), style: 'bodyrs' },
+                                ],
+                                [
+                                    { text: 'Zahlungsart', style: 'bodyrs' },
+                                    { text: Info.Pay, style: 'bodyrs' },
+                                ],
+                                [
+                                    { text: 'E-Mail', style: 'bodyrs' },
+                                    { text: Email, style: 'bodyrs' },
+                                ]
+                            ]
+                        },
+                        layout: {
+                            hLineWidth: function (i, node) {
+                                return (i === 0 || i === node.table.body.length) ? 0 : 1; // Убирает горизонтальные линии в первой и последней строках
+                            },
+                            vLineWidth: function (i) {
+                                return 0; // Убирает вертикальные линии
+                            },
+                            hLineColor: function (i) {
+                                return '#000000'; // Цвет горизонтальных линий, если они есть
+                            },
+                            vLineColor: function (i) {
+                                return '#000000'; // Цвет вертикальных линий, если они есть
+                            },
+                            paddingLeft: function (i) {
+                                return 4; // Отступ слева
+                            },
+                            paddingRight: function (i) {
+                                return 4; // Отступ справа
+                            }
+                        }
+                    },
+                    {
+                        margin: [0, 20, 0, 0],
+                        table: {
+                            headerRows: 1,
+                            widths: ['*', '*', '*', '*',], // Ширина столбцов: равная ширина для обоих столбцов
+                            body:
+                                [
+                                    [
+                                        { text: 'Produkt', style: 'bodyrs' },
+                                        { text: 'Erster Preis', style: 'bodyrs' },
+                                        { text: 'Menge', style: 'bodyrs' },
+                                        { text: 'Summe', style: 'bodyrs' },
+                                    ],
+
+                                    ...tableBody,
+
+                                    [
+                                        { text: 'Zwischensumme', style: 'bodyrs' },
+                                        { text: '', style: 'bodyrs' },
+                                        { text: '', style: 'bodyrs' },
+                                        { text: Summ, style: 'bodyrs' }
+                                    ],
+
+                                    [
+                                        { text: 'Lieferung', style: 'bodyrs' },
+                                        { text: '', style: 'bodyrs' },
+                                        { text: '', style: 'bodyrs' },
+                                        { text: Info.Versand, style: 'bodyrs' },
+                                    ],
+                                    [
+                                        { text: Info.procent, style: 'bodyrs' },
+                                        { text: '', style: 'bodyrs' },
+                                        { text: '', style: 'bodyrs' },
+                                        { text: Info.Steuer, style: 'bodyrs' },
+                                    ],
+                                    [
+                                        { text: 'Gesamt', style: 'bodyrs' },
+                                        { text: '', style: 'bodyrs' },
+                                        { text: '', style: 'bodyrs' },
+                                        { text: Info.OrderSum, style: 'bodyrs' },
+                                    ]
+                                ]
+                        },
+                        layout: {
+                            hLineWidth: function (i, node) {
+                                return i === 0 || i === node.table.body.length ? 2 : 0.5;
+                            },
+                            vLineWidth: function (i, node) {
+                                return 0; // Убрать вертикальные линии
+                            },
+                            hLineColor: function (i, node) {
+                                return '#000000';
+                            },
+                            vLineColor: function (i, node) {
+                                return '#000000';
+                            }
+                        }
+                    }
+                ],
+
+                pageSize: 'A4',
+                pageMargins: [40, 250, 40, 250] // Margins: [left, top, right, bottom]
+            };
+
+            pdfMake.createPdf(docDefinition).getBlob((blob) => {
+                uploadPdf(blob, userKey);
+            });
+        }
+
+        generatePDF();
+
+        function uploadPdf(blob, userKey) {
+            const formData = new FormData();
+            formData.append('file', blob, `SK${@ViewBag.Key}.pdf`);
+
+            for (const key in userKey) {
+                if (userKey.hasOwnProperty(key)) {
+                    formData.append(key, userKey[key]);
+                }
+            }
+
+            fetch('/Konfigurator/UploadPdf', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+
+    </script>
+}

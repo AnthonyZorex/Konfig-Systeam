@@ -40,6 +40,7 @@ using System.Data.SqlClient;
 using Microsoft.Ajax.Utilities;
 using System.Net.Http.Headers;
 using System.Text.Json.Nodes;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
 namespace schliessanlagen_konfigurator.Controllers
 {
     [EnableCors("*")]
@@ -525,7 +526,7 @@ namespace schliessanlagen_konfigurator.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> SendRehnung (string info,string Product,string OrderSum)
+        public async Task<IActionResult> SendRehnung (string info,string userName, string OrderSum)
         {
             ViewBag.Info = info;
 
@@ -535,9 +536,9 @@ namespace schliessanlagen_konfigurator.Controllers
             
             var users = db.Users.FirstOrDefault(x => x.Id == loginInform);
 
-            var ProductOrder = db.UserOrdersShop.Where(x => x.UserOrderKey == Product).ToList();
+            var ProductOrder = db.UserOrdersShop.Where(x => x.UserOrderKey == userName).ToList();
 
-            var Order = db.Orders.Where(x => x.userKey == Product).ToList();
+            var Order = db.Orders.Where(x => x.userKey == userName).ToList();
 
             var ItemsInfo = db.ProductSysteam.Where(x => x.UserOrdersShopId == ProductOrder.First().Id).ToList();
 
@@ -554,10 +555,48 @@ namespace schliessanlagen_konfigurator.Controllers
 
             ViewBag.Key = ProductOrder.First().Id;
 
+            ViewBag.userKey = JsonConvert.SerializeObject(userName);
+
+            ViewBag.Date = JsonConvert.SerializeObject(DateOnly.FromDateTime(DateTime.Now));
             ViewBag.Product = ProductOrder.ToList();
             ViewBag.ProductItem = ItemsInfo.ToList();
 
+            var FullOrder = new List<object>();
 
+            var KeyOrder = new List<object>();
+
+            foreach (var list in ProductOrder)
+            {
+                var modelKey = new
+                {
+                    KeyCost = list.KeyCost,
+                    KeyCount = list.KeyCount
+                };
+                KeyOrder.Add(modelKey);
+
+                foreach (var listItem in ItemsInfo)
+                {
+                    var model = new
+                    {
+                        ProductName = list.ProductName,
+                        Name = listItem.Name,
+                        ZylinderlängeA = listItem.Aussen,
+                        ZylinderlängeB = listItem.Intern,
+                        Options = listItem.Option,
+                        Count = listItem.Count,
+                        Price = listItem.Price
+                    };
+                    FullOrder.Add(model);
+                }
+            }
+
+            var JsonObject = JsonConvert.SerializeObject(FullOrder, Formatting.Indented);
+
+            var KeyObject = JsonConvert.SerializeObject(KeyOrder, Formatting.Indented);
+
+            ViewBag.AllOrderInfo = JsonObject;
+
+            ViewBag.KeyInfo = KeyObject;
 
             return View();
         }
@@ -769,16 +808,30 @@ namespace schliessanlagen_konfigurator.Controllers
                 if (file != null && file.Length > 0)
                 {
                     var fileName = Path.GetFileName(file.FileName);
+
                     var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Rehnung", fileName);
 
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
                         await file.CopyToAsync(stream);
                     }
+                    var documentTitle = Request.Form["documentTitle"];
 
-                    return Json(new { success = true });
+                    var userkey = Request.Form["userkey"];
+
+                    var rehnung = new Rehnungs
+                    {
+                        UserOrdersShopId = Convert.ToInt32(documentTitle),
+                       RehnungsId = file.FileName,
+                        FileName = file.FileName
+                    };
+
+                    db.Rehnungs.Add(rehnung);
+                    db.SaveChanges();
+
+                    return RedirectToAction("HistorOrders", "Konfigurator", new {userkey = documentTitle });
                 }
-                return Json(new { success = false, message = "Нет файлов для загрузки." });
+                return Json(new { success = true, message = "File uploaded successfully" });
             }
             catch (Exception ex)
             {
@@ -5068,7 +5121,7 @@ namespace schliessanlagen_konfigurator.Controllers
         ,List<string> DoppelOption, List<string> KnayfOption, List<string> HalbOption, List<string> HebelOption, List<string> VorhnaOption, List<string> AussenOption,
         List<string> KnayfName, List<float> KnayfAussen, List<float> KnayfIntern, List<string> HalbName, List<float> HalbAussen, List<string> HelbName,
         List<string> VorhanName, List<float> VorhanAussen, List<string> AussenName, string cost, List<string> key, List<bool> keyIsOpen, List<int> countKey,
-        List<int> TurCounter,List<string> FurKey, string NameSystem)
+        List<int> TurCounter,List<string> FurKey, string NameSystem, List<float> ProductCosted)
         {
             var countItemOrder = DopelName.Count() + AussenName.Count() + VorhanName.Count() + KnayfName.Count() + HelbName.Count() + HalbName.Count();
 
@@ -5121,6 +5174,8 @@ namespace schliessanlagen_konfigurator.Controllers
 
             FileInfo fileInfo = new FileInfo(destinationFilePath);
 
+            var sysKey = db.SysteamPriceKey.FirstOrDefault(x => x.NameSysteam == NameSystem).Price;
+
             var UserOrder = new Models.Users.UserOrdersShop
             {
                 UserId = users.Id,
@@ -5130,6 +5185,8 @@ namespace schliessanlagen_konfigurator.Controllers
                 count = 1,
                 createData = DateTime.Now,
                 UserOrderKey = user,
+                KeyCount = countKey.Max(),
+                KeyCost = sysKey * countKey.Max(),
             };
             db.UserOrdersShop.Add(UserOrder);
             db.SaveChanges();
@@ -5242,7 +5299,8 @@ namespace schliessanlagen_konfigurator.Controllers
                             Name = DopelName[DoppelCounter],
                             Aussen = DoppelAussen[DoppelCounter],
                             Intern = DoppelIntern[DoppelCounter],
-                            Count = countT
+                            Count = countT,
+                            Price = ProductCosted[i]
                         };
 
                         if (Option != "")
@@ -5277,7 +5335,8 @@ namespace schliessanlagen_konfigurator.Controllers
                             Name = KnayfName[KnayfCounter],
                             Aussen = KnayfAussen[KnayfCounter],
                             Intern = KnayfIntern[KnayfCounter],
-                            Count = countT
+                            Count = countT,
+                            Price = ProductCosted[i]
                         };
                         if (Option!="")
                         {
@@ -5313,7 +5372,8 @@ namespace schliessanlagen_konfigurator.Controllers
                             UserOrdersShopId = UserOrder.Id,
                             Name = HalbName[HablCounter],
                             Aussen = HalbAussen[HablCounter],
-                            Count = countT
+                            Count = countT,
+                            Price = ProductCosted[i]
                         };
                         if (Option != "")
                         {
@@ -5347,7 +5407,8 @@ namespace schliessanlagen_konfigurator.Controllers
                         {
                             UserOrdersShopId = UserOrder.Id,
                             Name = HelbName[HebelCounter],
-                            Count = countT
+                            Count = countT,
+                            Price = ProductCosted[i]
                         };
 
                         if (Option != "")
@@ -5383,7 +5444,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                 UserOrdersShopId = UserOrder.Id,
                                 Name = VorhanName[VorhanCounter],
                                 Aussen = VorhanAussen[VorhanCounter],
-                                Count = countT
+                                Count = countT,
+                                Price = ProductCosted[i]
                             };
                             if (Option != "")
                             {
@@ -5403,7 +5465,8 @@ namespace schliessanlagen_konfigurator.Controllers
                             {
                                 UserOrdersShopId = UserOrder.Id,
                                 Name = VorhanName[VorhanCounter],
-                                Count = countT
+                                Count = countT,
+                                Price = ProductCosted[i]
                             };
                             if (Option != "")
                             {
@@ -5438,6 +5501,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         {
                             UserOrdersShopId = UserOrder.Id,
                             Name = AussenName[AussenCounter],
+                            Price = ProductCosted[i]
                         };
                         if (Option != "")
                         {

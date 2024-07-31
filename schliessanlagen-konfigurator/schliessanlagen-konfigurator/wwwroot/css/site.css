@@ -15,28 +15,7 @@
     font-size: 16px;
     line-height: 20px;
 }
-#RehnungPdf{
-    font-size:10px;
-}
-    #RehnungPdf > h6 
-    {
-        font-size: 10px;
-    }
-    #RehnungPdf > div > h6 
-    {
-        font-size: 10px;
-    }
-    #RehnungPdf > hr 
-    {
-        color: black;
-        height: 2px;
-    }
-    #RehnungPdf > h3 {
-        font-size: 12px !important;
-    }
-    #RehnungPdf > strong {
-        font-size: 10px !important;
-    }
+
     /* Кастомная кнопка (круглый чекбокс) */
     .radio-container label:before {
         content: '';

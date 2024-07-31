@@ -21,6 +21,7 @@ using System.Text.RegularExpressions;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.General;
 using schliessanlagen_konfigurator.Models.Users;
 using System.Net.Http.Headers;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 
 namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
 {
@@ -45,41 +46,45 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
             string loginInform = ident.Claims.Select(x => x.Value).First();
             var users = db.Users.Find(loginInform);
 
-            var ListItem = new List<UserOrdersShop>();
+            var userOrder = db.UserOrdersShop.Where(x => x.UserId == users.Id).ToList();
 
-            var OrderList = db.UserOrdersShop.Where(x => x.UserId == users.Id && x.OrderStatus == "Nicht bezahlt").Distinct().ToList();
-
-            foreach (var list in OrderList)
+            if (userOrder.Count()>0)
             {
-                ListItem.Add(list);
-            }
+                var ListItem = new List<UserOrdersShop>();
 
-            var ListItemProduct = new List<Models.Users.ProductSysteam>();
+                var OrderList = db.UserOrdersShop.Where(x => x.UserId == users.Id && x.OrderStatus == "Nicht bezahlt").Distinct().ToList();
 
-            for (int f = 0; f < ListItem.Count(); f++)
-            {
-                var ProductList = db.ProductSysteam.Where(x => x.UserOrdersShopId == ListItem[f].Id).Distinct().ToList();
-
-                foreach (var list in ProductList)
+                foreach (var list in OrderList)
                 {
-                    ListItemProduct.Add(list);
+                    ListItem.Add(list);
                 }
+
+                var ListItemProduct = new List<Models.Users.ProductSysteam>();
+
+                for (int f = 0; f < ListItem.Count(); f++)
+                {
+                    var ProductList = db.ProductSysteam.Where(x => x.UserOrdersShopId == ListItem[f].Id).Distinct().ToList();
+
+                    foreach (var list in ProductList)
+                    {
+                        ListItemProduct.Add(list);
+                    }
+                }
+
+                ViewData["OrderLis"] = ListItem;
+                ViewData["OrderItem"] = ListItemProduct.OrderBy(x => x.UserOrdersShopId).ToList();
+
+                var countIterationProduct = new List<int>();
+
+                foreach (var list in ListItem)
+                {
+                    var p = ListItemProduct.Where(x => x.UserOrdersShopId == list.Id).ToList();
+                    countIterationProduct.Add(p.Count);
+                }
+
+                ViewData["CounterProduct"] = countIterationProduct;
             }
 
-            ViewData["OrderLis"] = ListItem;
-            ViewData["OrderItem"] = ListItemProduct.OrderBy(x => x.UserOrdersShopId).ToList();
-
-            var countIterationProduct = new List<int>();
-
-            foreach (var list in ListItem)
-            {
-                var p = ListItemProduct.Where(x => x.UserOrdersShopId == list.Id).ToList();
-                countIterationProduct.Add(p.Count);
-            }
-
-            ViewData["CounterProduct"] = countIterationProduct;
-
-          
             return Page();
 
         }
@@ -87,9 +92,8 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
         string SendVat,string SendStrasse, string SemdAdressZusatz, string SendZip, string SendStadt, string SendLand, string SendTelefon,
         string DhlSend,string Pay,string Steuer, string Versand, string OrderSum,string Rehnung, string RechnungAdresse,string RechnungVorname,
         string RechnungNachname, string RechnungFirma, string RechnungVat, string RechnungStrasse, string RechnungAdressZusatz, string RechnungZip,
-        string RechnungStadt, string RechnungLand, string RechnungTelefon, string userName)
+        string RechnungStadt, string RechnungLand, string RechnungTelefon, string userName,string procent)
         {
-
             var model = new
             {
                 SendAdresse = SendAdresse,
@@ -109,6 +113,7 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
                 DhlSend = DhlSend,
                 Rehnung = Rehnung,
                 Pay = Pay,
+                procent = procent,
 
                 RechnungAdresse = SendAdresse,
                 RechnungVorname = RechnungVorname,
@@ -125,7 +130,7 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
             };
 
             var JsonObject = JsonConvert.SerializeObject(model, Formatting.Indented);
-            return RedirectToAction("SendRehnung","Konfigurator", new { info = JsonObject, Product = userName , OrderSum = OrderSum });
+            return RedirectToAction("SendRehnung","Konfigurator", new { info = JsonObject, userName = userName , OrderSum = OrderSum });
         }
     }
 }

@@ -59,7 +59,7 @@ namespace schliessanlagen_konfigurator.Data
         public DbSet<SystemOptionInfo> SystemOptionInfo { get; set; }
         public DbSet<SystemScheker> SystemScheker {  get; set; }
         public DbSet<ProductGalery> ProductGalery { get; set; }
-
+        public DbSet<Rehnungs> Rehnungs { get; set; }
         public DbSet<OrderStatus> OrderStatus { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<UserOrdersShop> UserOrdersShop { get; set; }

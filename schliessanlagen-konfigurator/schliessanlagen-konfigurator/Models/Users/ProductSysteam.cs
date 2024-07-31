@@ -8,7 +8,8 @@
         public float? Intern { get; set; }
         public string? Option { get; set; }
         public int? UserOrdersShopId { get; set; }
-        public int? Count { get; set; }
+        public int? Count { get; set; }  
+        public float? Price { get; set; }
         public UserOrdersShop UserOrdersShop { get; set; }
       
     }
