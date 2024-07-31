@@ -8,87 +8,22 @@
     <button onclick="trackShipment()">Track Shipment</button>
     <pre id="result"></pre>
 
-
-    <div class="container" id="container">
-        <div class="block" id="block-1" draggable="true">Block 1</div>
-        <div class="block" id="block-2" draggable="true">Block 2</div>
-        <div class="block" id="block-3" draggable="true">Block 3</div>
-        <div class="block" id="block-4" draggable="true">Block 4</div>
-    </div>
 </div>
 
 <script>
-    const container = document.getElementById('container');
-    const blocks = container.querySelectorAll('.block');
-    let dragSrcEl = null;
 
-    blocks.forEach(block => {
-        block.addEventListener('dragstart', handleDragStart);
-        block.addEventListener('dragover', handleDragOver);
-        block.addEventListener('drop', handleDrop);
-        block.addEventListener('dragend', handleDragEnd);
-    });
 
-    function handleDragStart(e) {
-        dragSrcEl = this;
-        e.dataTransfer.effectAllowed = 'move';
-        e.dataTransfer.setData('text/html', this.innerHTML);
-        this.classList.add('dragging');
-    }
-
-    function handleDragOver(e) {
-        if (e.preventDefault) {
-            e.preventDefault(); // Necessary. Allows us to drop.
-        }
-
-        e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
-        return false;
-    }
-
-    function handleDrop(e) {
-        if (e.stopPropagation) {
-            e.stopPropagation(); // Stops some browsers from redirecting.
-        }
-
-        if (dragSrcEl !== this) {
-            dragSrcEl.innerHTML = this.innerHTML;
-            this.innerHTML = e.dataTransfer.getData('text/html');
-        }
-
-        return false;
-    }
-
-    function handleDragEnd(e) {
-        this.classList.remove('dragging');
-        blocks.forEach(block => {
-            block.classList.remove('over');
-        });
-    }
-    async  function trackShipment() 
+   async  function trackShipment() 
    {
         const trackingNumber = document.getElementById('trackingNumber').value;
-        const apiKey = '65CDhvbUFz9mtAiX7AHW7HLWQVJ4Zy59'; // Замените на ваш API ключ
+        const apiKey = 'De3J4WAmQXKxAhoAQx04bDUGeTmVgpK4'; // Замените на ваш API ключ
 
-        const url = `https://api.dhl.com/track/shipments?trackingNumber=${trackingNumber}`;
+        const options = { method: 'GET', headers: { 'DHL-API-Key': apiKey } };
 
-        try {
-            const response = await fetch(url, {
-                method: 'GET',
-                headers: {
-                    'DHL-API-Key': apiKey
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-            const data = await response.json();
-            document.getElementById('result').textContent = JSON.stringify(data, null, 2);
-        } catch (error) {
-            console.error('Error:', error);
-            document.getElementById('result').textContent = `Error: ${error.message}`;
-        }
+        fetch(`https://api-test.dhl.com/track/shipments?trackingNumber=${trackingNumber}`, options)
+            .then(response => response.json())
+            .then(response => console.log(response))
+            .catch(err => console.error(err))
     }
     
 </script>

@@ -524,6 +524,16 @@ namespace schliessanlagen_konfigurator.Controllers
             db.SaveChanges();
             return RedirectToAction("System_Auswählen", "Konfigurator", new { userName });
         }
+        public ActionResult DowloadRehnung(int? Id)
+        {
+            var UserOrder = db.UserOrdersShop.FirstOrDefault(x => x.Id == Id).createData;
+
+            var Rehnung = db.Rehnungs.FirstOrDefault(x => x.UserOrdersShopId == Id);
+
+            var filepath = Path.Combine($"~/Rehnung", $"{Rehnung.RehnungsId}");
+
+            return File(filepath, "application/pdf", $"{Rehnung.RehnungsId}");
+        }
 
         [HttpGet]
         public async Task<IActionResult> SendRehnung (string info,string userName, string OrderSum)
@@ -839,9 +849,9 @@ namespace schliessanlagen_konfigurator.Controllers
             }
         }
         [HttpGet]
-        public async Task<ActionResult> System_Auswählen(string Key, string userName, bool isNewKonfig,bool Biarbeiten)
+        public async Task<ActionResult> System_Auswählen(string Key, string userName, bool isNewKonfig,bool Biarbeiten,bool Reorder)
         {
-            var xtr = Key;
+            //var xtr = Key;
 
             var Liferzeit = db.SysteamPriceKey.Select(x => x.Lieferzeit).Distinct().ToList();
 
@@ -849,7 +859,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var orders = await db.Orders.ToListAsync();
 
-            if (userName!=null && isNewKonfig == true)
+            if (userName!=null && isNewKonfig == true )
             {
                orders = orders.Where(x => x.userKey == userName).ToList();
                 
@@ -883,6 +893,12 @@ namespace schliessanlagen_konfigurator.Controllers
                     }
 
                     db.SaveChanges();
+                }
+                if (Reorder == true)
+                {
+                    var UserOrder = db.UserOrdersShop.FirstOrDefault(x => x.UserOrderKey == userName);
+                    orders = orders.Where(x => x.userKey == UserOrder.UserOrderKey).ToList();
+               
                 }
             }
             else
