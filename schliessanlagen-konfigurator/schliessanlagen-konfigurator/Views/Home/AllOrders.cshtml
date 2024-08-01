@@ -2,7 +2,8 @@
 
 @{
     ViewData["Title"] = "Alle Bestellungen";
-
+    int v = 0;
+    int i = 0;
 }
 @if (User.IsInRole("admin"))
 {
@@ -26,7 +27,12 @@
                     <th id="rowTable" class="table-info">Address</th>
                     <th id="rowTable" class="table-info">Produktname</th>
                     <th id="rowTable" class="table-info">Bestellsumme</th>
+                    <th id="rowTable" class="table-info">Status der Bestellung</th>
+                    <th id="rowTable" class="table-info">Datum der Zahlung</th>
+                    <th id="rowTable" class="table-info">Status der Versendung</th>
                     <th id="rowTable" class="table-info">Datei</th>
+                    <th id="rowTable" class="table-info">Rechnungs</th>
+                    <th id="rowTable" class="table-info">Bestellung bearbeiten</th>
                 </tr>
             </thead>
             <tbody>
@@ -39,14 +45,85 @@
                         <td id="rowTable" class="table-info">@list.Address</td>
                         <td id="rowTable" class="table-info">@list.ProductName</td>
                         <td id="rowTable" class="table-info">@list.OrderSum.ToString("C")</td>
+                        <td id="rowTable" class="table-info">@list.Status</td>
+                        <td id="rowTable" class="table-info">@list.BezalenDate</td>
+                        <td id="rowTable" class="table-info">@list.ShippingStatus</td>
                         <td id="rowTable" class="table-info">@Html.ActionLink("Excel herunterladen", "Download", "Home", new { id = @list.Id, FirstName = @list.FirstName, LastName = @list.LastName }, new { @class = "btn btn-primary" })</td>
+                        <td id="rowTable" class="table-info">@Html.ActionLink("Rechnung herunterladen", "DowloadRehnung", "Home", new { id = @list.Id}, new { @class = "btn btn-primary" })</td>
+                        <td id="rowTable" class="table-info"><img onclick="editOrder(@i)" src="@("/image/edit-tools.png")" height="30" width="30" /></td>
                     </tr>
+                    i++;
                 }
             </tbody>
         </table>
+
+        @foreach (var list in ViewBag.Order)
+        {
+            <div id="modal-@v" class="modal">
+                <div class="modal-content">
+                    <span class="close-@v" onclick="closeS(@v)">&times;</span>
+                    <h2>Bestellung bearbeiten</h2>
+                    <form method="post">
+
+                        <input type="hidden" name="id" value="@list.Id" />
+
+                        <div>
+                            <h3>Status der Versendung</h3>
+                            <br />
+                            <select name="ShippingStatus">
+                                <option>Nicht gesendet</option>
+                                <option>Gesendet</option>
+                                <option>Geliefert</option>
+                            </select>
+                        </div>
+                        <br />
+                        <div>
+                            <h3>Status der Bestellung</h3>
+                            <br />
+                            <select name="OrderStatus">
+                                <option>Bezahlt</option>
+                                <option>Aufrechnung</option>
+                                <option>Nicht bezahlt</option>
+                            </select>
+                        </div>
+                        <br />
+                        <input type="submit" value="Speichern" />
+                    </form>
+                </div>
+            </div>
+            v++;
+        }
+
     </div>
 }
-<script>
-   
-   
-</script>
+@section scripts
+{
+    <script>
+
+       var modal = document.querySelectorAll(".modal");
+
+       var span = document.getElementsByClassName("close")[0];
+
+        function closeS(modal) {
+            let modalSelect = document.getElementById("modal-" + modal);
+            modalSelect.style.display = "none";
+        }
+
+        window.onclick = function (event) 
+        {
+            if (event.target == modal) 
+            {
+                modal.style.display = "none";
+            }
+        }
+
+        function editOrder(modal) 
+        {
+            let modalSelect = document.getElementById("modal-" + modal);
+
+            modalSelect.style.display = "block";
+
+        }
+
+    </script>
+}

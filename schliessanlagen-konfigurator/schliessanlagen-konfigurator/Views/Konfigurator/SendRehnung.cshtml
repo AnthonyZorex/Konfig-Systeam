@@ -1,6 +1,5 @@
 ﻿@{
     ViewData["Title"] = "SendRehnung";
-    string s = Convert.ToString(DateTime.Now.Date.ToString("dd.MM.yyyy"));
 }
 <div>
 
@@ -30,13 +29,15 @@
                 ${Info.SendZip} ${Info.SendStadt} , ${Info.SendLand} `;
 
         let Lieferadresse = "";
-        if (Info.Rehnung == "on") {
+        if (Info.Rehnung == "on") 
+        {
             Lieferadresse = `${Info.SendVorname + " " + Info.SendNachname}
                     ${Info.SendStrasse} ${Info.SemdAdressZusatz},
                     ${Info.SendZip} ${Info.SendStadt} , ${Info.SendLand} `;
             Email = Info.SendAdresse;
         }
-        else {
+        else 
+        {
             Lieferadresse = `${Info.RechnungVorname + " " + Info.RechnungNachname}
                     ${Info.RechnungStrasse} ${Info.RechnungAdressZusatz},
                     ${Info.RechnungZip} ${Info.RechnungSendStadt} , ${Info.RechnungLand} `;
@@ -49,7 +50,7 @@
         let SumALL = parseFloat(Info.OrderSum.replace("€", "").trim());
         let Steuer = parseFloat(Info.Steuer.replace("€", "").trim());
 
-        let Zwischesumme = SumALL - (Versand + Steuer);
+        let Zwischesumme = SumALL - Steuer;
 
         Summ = Zwischesumme.toLocaleString('de-DE', {
             style: 'currency',
@@ -62,13 +63,12 @@
         };
 
         const tableBody = OrderInfo.map(item => [
-
             {
-                text: `Product Name: ${item.ProductName}
-                Name: ${item.Name}
+                text: `System Name: ${item.ProductName}
+                Produkt Name: ${item.Name}
                 ZylinderlängeA (Außenlänge): ${item.ZylinderlängeA != null ? item.ZylinderlängeA : ""}
-                ZylinderlängeB (Innenlänge)): ${item.ZylinderlängeB != null ? item.ZylinderlängeB : ""}
-                Options:${item.Options != null ? item.Options : ""}
+                ZylinderlängeB (Innenlänge): ${item.ZylinderlängeB != null ? item.ZylinderlängeB : ""}
+                Zusatz:${item.Options != null ? item.Options : ""}
                     `, style: 'bodyrs'
             },
             {
@@ -86,7 +86,7 @@
 
         const tableKey = [
             {
-                text: `Schlüessel`, style: 'bodyrs'
+                text: `Schlüssel`, style: 'bodyrs'
             },
             {
                 text: `${einSchlüesselPriec},00 €`,
@@ -102,7 +102,27 @@
             }
         ];
 
+        const tableLifferung = [
+            {
+                text: 'Lieferung', style: 'bodyrs'
+            },
+            {
+                text: ``,
+                style: 'bodyrs'
+            },
+            {
+                text: ``,
+                style: 'bodyrs'
+            },
+            {
+                text: `${Info.Versand}`,
+                style: 'bodyrs'
+            }
+        ];
+
         tableBody.unshift(tableKey);
+
+        tableBody.push(tableLifferung);
 
         const text = `Zahlungsziel:sofort fälligohne Abzug
                 Sofern Sie diese Rechnung noch nicht beglichen haben, muss diese
@@ -307,6 +327,10 @@
                     },
                     bodyrs: {
                         fontSize: 8
+                    },
+                    costed: {
+                        fontSize: 10,
+                        bold: true,
                     }
                 },
                 content: [
@@ -376,7 +400,7 @@
                                 [
                                     [
                                         { text: 'Produkt', style: 'bodyrs' },
-                                        { text: 'Erster Preis', style: 'bodyrs' },
+                                        { text: 'E-Preis', style: 'bodyrs' },
                                         { text: 'Menge', style: 'bodyrs' },
                                         { text: 'Summe', style: 'bodyrs' },
                                     ],
@@ -384,17 +408,10 @@
                                     ...tableBody,
 
                                     [
-                                        { text: 'Zwischensumme', style: 'bodyrs' },
+                                        { text: 'Nettowert', style: 'bodyrs' },
                                         { text: '', style: 'bodyrs' },
                                         { text: '', style: 'bodyrs' },
                                         { text: Summ, style: 'bodyrs' }
-                                    ],
-
-                                    [
-                                        { text: 'Lieferung', style: 'bodyrs' },
-                                        { text: '', style: 'bodyrs' },
-                                        { text: '', style: 'bodyrs' },
-                                        { text: Info.Versand, style: 'bodyrs' },
                                     ],
                                     [
                                         { text: Info.procent, style: 'bodyrs' },
@@ -403,10 +420,10 @@
                                         { text: Info.Steuer, style: 'bodyrs' },
                                     ],
                                     [
-                                        { text: 'Gesamt', style: 'bodyrs' },
+                                        { text: 'Rechnungsbetrag ', style: 'bodyrs' },
                                         { text: '', style: 'bodyrs' },
                                         { text: '', style: 'bodyrs' },
-                                        { text: Info.OrderSum, style: 'bodyrs' },
+                                        { text: Info.OrderSum, style: 'costed' },
                                     ]
                                 ]
                         },
@@ -454,10 +471,10 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    console.log('Success:', data);
+                    window.location.href = '/Identity/Account/Manage/HistoriOrders';
                 })
                 .catch((error) => {
-                    console.error('Error:', error);
+                    window.location.href = '/Identity/Account/Manage/HistoriOrders';
                 });
         }
 

@@ -28,6 +28,10 @@ using System.Diagnostics.Metrics;
 using System.Collections.Generic;
 using System.Collections;
 using Microsoft.DotNet.Scaffolding.Shared;
+using System.ComponentModel;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
+using System.Reflection;
 namespace schliessanlagen_konfigurator.Controllers
 {
     public class HomeController : Controller
@@ -4971,26 +4975,16 @@ namespace schliessanlagen_konfigurator.Controllers
         }
         #endregion
 
+       
         [HttpGet]
         public ActionResult AllOrders()
         {
             var User = db.Users.Select(x => x).ToList();
             var UserProduct = db.ProductSysteam.Select(x => x).ToList();
-            var UserOrders = db.UserOrdersShop.Select(x => x).ToList();
+            var UserOrders = db.UserOrdersShop.Select(x => x).Distinct().ToList();
             
-            var OrderStatus = db.OrderStatus.Select(x => x).ToList();
-
-            var OrderMans = new List<string>();
-
-            foreach(var list in OrderStatus)
-            {
-                string result = new string(list.Order.Where(c => !char.IsDigit(c)).ToArray());
-               
-                OrderMans.Add(result);
-            }
-           
-
-            var users = db.Users.Select(x => x).ToList();
+          
+            var users = db.Users.Select(x => x).Distinct().ToList();
 
             var queryOrder = from t1 in users
                              join t2 in UserOrders
@@ -5004,17 +4998,74 @@ namespace schliessanlagen_konfigurator.Controllers
                                  Email = t1.UserName,
                                  ProductName = t2.ProductName,
                                  OrderSum = t2.OrderSum,
-                                 createData = t2.createData
+                                 createData = t2.createData,
+                                 Status = t2.OrderStatus,
+                                 BezalenDate = t2.BezalenDate,
+                                 ShippingStatus = t2.ShippingStatus
                              };
 
-            var Order = queryOrder.Distinct().ToList();
+            var Order = queryOrder.ToList();
 
-            ViewBag.Order = Order.ToList();
+            ViewBag.Order = Order.Distinct().ToList();
 
 
             return View();
         }
-        
+
+        [HttpPost]
+        public ActionResult AllOrders(int id, string ShippingStatus,string OrderStatus)
+        {
+            var UserOrderItem = db.UserOrdersShop.FirstOrDefault(x => x.Id == id);
+
+            UserOrderItem.ShippingStatus = ShippingStatus;
+
+            if (OrderStatus== "Bezahlt")
+            {
+                UserOrderItem.BezalenDate = DateTime.Now.ToLocalTime();
+            }
+            else
+            {
+                UserOrderItem.BezalenDate = null;
+            }
+
+            UserOrderItem.OrderStatus = OrderStatus;
+
+            db.UserOrdersShop.Update(UserOrderItem);
+
+            db.SaveChanges();
+
+            var User = db.Users.Select(x => x).ToList();
+            var UserProduct = db.ProductSysteam.Select(x => x).ToList();
+            var UserOrders = db.UserOrdersShop.Select(x => x).Distinct().ToList();
+
+
+            var users = db.Users.Select(x => x).Distinct().ToList();
+
+            var queryOrder = from t1 in users
+                             join t2 in UserOrders
+                             on t1.Id equals t2.UserId
+                             select new
+                             {
+                                 Id = t2.Id,
+                                 FirstName = t1.FirstName,
+                                 LastName = t1.LastName,
+                                 Address = t1.Address,
+                                 Email = t1.UserName,
+                                 ProductName = t2.ProductName,
+                                 OrderSum = t2.OrderSum,
+                                 createData = t2.createData,
+                                 Status = t2.OrderStatus,
+                                 BezalenDate = t2.BezalenDate,
+                                 ShippingStatus = t2.ShippingStatus
+                             };
+
+            var Order = queryOrder.ToList();
+
+            ViewBag.Order = Order.Distinct().ToList();
+
+            return View();
+        }
+
         public ActionResult Download(int? Id,string FirstName,string LastName)
         {
             var UserOrder = db.UserOrdersShop.FirstOrDefault(x => x.Id == Id).createData;
@@ -5033,7 +5084,17 @@ namespace schliessanlagen_konfigurator.Controllers
             return File(filepath, "xlsx/plain", $"{users.FirstName + users.LastName + day + month + year} OrderFile.xlsx");
 
         }
+        public ActionResult DowloadRehnung(int? Id)
+        {
+            var UserOrder = db.UserOrdersShop.FirstOrDefault(x => x.Id == Id).createData;
 
+            var Rehnung = db.Rehnungs.FirstOrDefault(x => x.UserOrdersShopId == Id);
+
+            var filepath = Path.Combine($"~/Rehnung", $"{Rehnung.RehnungsId}");
+
+            return File(filepath, "application/pdf", $"{Rehnung.RehnungsId}");
+
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

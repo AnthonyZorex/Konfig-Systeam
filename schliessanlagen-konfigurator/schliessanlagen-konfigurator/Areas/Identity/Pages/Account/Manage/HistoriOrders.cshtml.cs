@@ -27,7 +27,7 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
 
             var ListItem = new List<UserOrdersShop>();
 
-            var OrderList = db.UserOrdersShop.Where(x => x.UserId == users.Id && x.OrderStatus == "Bezahlt").Distinct().ToList();
+            var OrderList = db.UserOrdersShop.Where(x => x.UserId == users.Id && x.OrderStatus != "Nicht bezahlt").Distinct().ToList();
 
             foreach (var list in OrderList)
             {

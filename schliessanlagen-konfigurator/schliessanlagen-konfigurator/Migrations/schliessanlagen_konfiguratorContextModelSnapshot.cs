@@ -51,25 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "18bc0469-0f26-4c9b-bb76-e3e913181e96",
+                            Id = "f7d2154c-0776-4cae-888b-6414001f2dc3",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "4982cafa-b3c6-482c-ba1f-f16ac1933e5f",
+                            Id = "ac2391fe-1283-4321-8fd4-cc58f0db50f2",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "03492971-44e0-4ea0-b9ca-bb00eb826243",
+                            Id = "75adcd64-044b-4f83-8e4e-8da54f28ae1a",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "8f6a48de-016d-4fe1-b128-979b8584f083",
+                            Id = "9aab218d-d134-41f9-a352-627966888852",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -541,38 +541,6 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasIndex("OptionsId");
 
                     b.ToTable("Options_value");
-                });
-
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.OrderStatus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("BezalenDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Order")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ShippingStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Total")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("OrderStatus");
                 });
 
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Orders", b =>
@@ -1323,6 +1291,9 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("BezalenDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<float?>("KeyCost")
                         .HasColumnType("real");
 
@@ -1337,6 +1308,9 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     b.Property<string>("ProductName")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShippingStatus")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")

@@ -41,6 +41,7 @@ using Microsoft.Ajax.Utilities;
 using System.Net.Http.Headers;
 using System.Text.Json.Nodes;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
+using System.Globalization;
 namespace schliessanlagen_konfigurator.Controllers
 {
     [EnableCors("*")]
@@ -536,9 +537,11 @@ namespace schliessanlagen_konfigurator.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> SendRehnung (string info,string userName, string OrderSum)
+        public async Task<IActionResult> SendRehnung (string info,string userName, string OrderSum,bool aufRechnung)
         {
             ViewBag.Info = info;
+
+            string cleanedString = OrderSum.Replace("€", "").Trim();
 
             ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
 
@@ -551,17 +554,33 @@ namespace schliessanlagen_konfigurator.Controllers
             var Order = db.Orders.Where(x => x.userKey == userName).ToList();
 
             var ItemsInfo = db.ProductSysteam.Where(x => x.UserOrdersShopId == ProductOrder.First().Id).ToList();
-
-            var OrderStatus = new OrderStatus {
-                Order = Convert.ToString(Order.First().Id) + " " + users.FirstName + users.LastName,
-                BezalenDate = DateTime.Now.ToLocalTime(),
-                Status = "Bezalen",
-                ShippingStatus = "Nicht gesendet",
-                Total = OrderSum
-            };
-
-            db.OrderStatus.Add(OrderStatus);
-            db.SaveChanges();
+            
+            if (aufRechnung == false)
+            {
+                ProductOrder.First().OrderSum = float.Parse(cleanedString);
+                ProductOrder.First().BezalenDate = DateTime.Now.ToLocalTime();
+                ProductOrder.First().OrderStatus = "Bezalen";
+                ProductOrder.First().ShippingStatus = "Nicht gesendet";
+                db.UserOrdersShop.Update(ProductOrder.First());
+                db.SaveChanges();
+            }
+            if (aufRechnung == true)
+            {
+                ProductOrder.First().OrderSum = float.Parse(cleanedString);
+                ProductOrder.First().OrderStatus = "Aufrechnung";
+                ProductOrder.First().ShippingStatus = "Nicht gesendet";
+                db.UserOrdersShop.Update(ProductOrder.First());
+                db.SaveChanges();
+            }
+            else
+            {
+                ProductOrder.First().OrderSum = float.Parse(cleanedString);
+                ProductOrder.First().OrderStatus = "Nicht bezahlt";
+                ProductOrder.First().ShippingStatus = "Nicht gesendet";
+                db.UserOrdersShop.Update(ProductOrder.First());
+                db.SaveChanges();
+            }
+          
 
             ViewBag.Key = ProductOrder.First().Id;
 
@@ -815,6 +834,7 @@ namespace schliessanlagen_konfigurator.Controllers
             try
             {
                 var file = Request.Form.Files[0];
+
                 if (file != null && file.Length > 0)
                 {
                     var fileName = Path.GetFileName(file.FileName);
@@ -831,15 +851,53 @@ namespace schliessanlagen_konfigurator.Controllers
 
                     var rehnung = new Rehnungs
                     {
-                        UserOrdersShopId = Convert.ToInt32(documentTitle),
+                       UserOrdersShopId = Convert.ToInt32(documentTitle),
                        RehnungsId = file.FileName,
-                        FileName = file.FileName
+                       FileName = file.FileName
                     };
 
                     db.Rehnungs.Add(rehnung);
                     db.SaveChanges();
 
-                    return RedirectToAction("HistorOrders", "Konfigurator", new {userkey = documentTitle });
+                    ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
+
+                    string loginInform = ident.Claims.Select(x => x.Value).First();
+
+                    var users = db.Users.FirstOrDefault(x => x.Id == loginInform);
+
+                    var message = new MimeMessage();
+                    message.From.Add(new MailboxAddress("Schlüssel Discount Store", "oceanwerbung@googlemail.com"));
+                    message.To.Add(new MailboxAddress(users.FirstName + users.LastName, users.UserName));
+                    message.Subject = "Schlüssel Discount Store";
+                    message.Body = new TextPart("plain")
+                    {
+                        Text = "Vielen Dank für Ihre Bestellung!",
+                    };
+
+                    MemoryStream memoryStream = new MemoryStream();
+
+                    BodyBuilder bb = new BodyBuilder();
+
+                    using (var wc = new WebClient())
+                    {
+
+                        bb.Attachments.Add(file.FileName,
+
+                        wc.DownloadData(filePath));
+
+                    }
+
+                    message.Body = bb.ToMessageBody();
+
+                    using (var client = new SmtpClient())
+                    {
+                        client.Connect("smtp.gmail.com", 587, false);
+                        client.Authenticate("oceanwerbung@googlemail.com", "bouo yqop xsdl qpar");
+                        client.Send(message);
+                        client.Disconnect(true);
+                    }
+
+                    return Redirect("/Identity/Account/Manage/HistoriOrders");
                 }
                 return Json(new { success = true, message = "File uploaded successfully" });
             }
@@ -3646,16 +3704,25 @@ namespace schliessanlagen_konfigurator.Controllers
             return View("System_Auswählen", keyUser);
         }
 
-        [HttpGet]
-        public IActionResult HistorOrders(string userKey)
+        public ActionResult Download(int? Id)
         {
-            var PaymentOrder = db.UserOrdersShop.Where(x=>x.Id == Convert.ToInt32(userKey)).First();
+            var UserOrder = db.UserOrdersShop.FirstOrDefault(x => x.Id == Id).createData;
 
-            PaymentOrder.OrderStatus = "Bezahlt";
+            var day = UserOrder.Value.Day;
+            var month = UserOrder.Value.Month;
+            var year = UserOrder.Value.Year;
+            var hour = UserOrder.Value.Hour;
+            var minuten = UserOrder.Value.Minute;
 
-            db.SaveChanges();
+            ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
+            string loginInform = ident.Claims.Select(x => x.Value).First();
 
-            return Redirect("/Identity/Account/Manage/HistoriOrders");
+            var users = db.Users.FirstOrDefault(x => x.Id == loginInform);
+
+            var filepath = Path.Combine($"~/Orders", $"{users.FirstName + users.LastName + minuten + hour + day + month + year} OrderFile.xlsx");
+
+            return File(filepath, "xlsx/plain", $"{users.FirstName + users.LastName + day + month + year} OrderFile.xlsx");
+
         }
 
         [HttpGet]

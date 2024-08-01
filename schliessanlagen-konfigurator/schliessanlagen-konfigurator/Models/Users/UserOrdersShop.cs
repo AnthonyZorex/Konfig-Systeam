@@ -14,6 +14,8 @@ namespace schliessanlagen_konfigurator.Models.Users
         public string? UserId { get; set; }
         public User User { get; set; }
         public string? OrderStatus { get; set; }
+        public DateTime? BezalenDate { get; set; }
+        public string? ShippingStatus { get; set; }
         public int? count { get; set; }
         public ICollection<ProductSysteam> ProductSysteam { get; set; }
         public ICollection<Rehnungs> Rehnungs { get; set; }

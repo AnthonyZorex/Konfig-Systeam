@@ -389,6 +389,10 @@
       "PackagePath": "staticwebassets\\Image\\briefkastenzylinder.png"
     },
     {
+      "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\cash-on-delivery.png",
+      "PackagePath": "staticwebassets\\Image\\cash-on-delivery.png"
+    },
+    {
       "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\ces.png",
       "PackagePath": "staticwebassets\\Image\\ces.png"
     },
@@ -477,48 +481,12 @@
       "PackagePath": "staticwebassets\\Orders\\CES_schliessplan_DE_schliessanlagen.xlsx"
     },
     {
-      "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\SchlüsselDiscount34123172024 OrderFile.xlsx",
-      "PackagePath": "staticwebassets\\Orders\\SchlüsselDiscount34123172024 OrderFile.xlsx"
+      "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\SchlüsselDiscount5813182024 OrderFile.xlsx",
+      "PackagePath": "staticwebassets\\Orders\\SchlüsselDiscount5813182024 OrderFile.xlsx"
     },
     {
-      "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\SchlüsselDiscount41153172024 OrderFile.xlsx",
-      "PackagePath": "staticwebassets\\Orders\\SchlüsselDiscount41153172024 OrderFile.xlsx"
-    },
-    {
-      "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\SchlüsselDiscount51123172024 OrderFile.xlsx",
-      "PackagePath": "staticwebassets\\Orders\\SchlüsselDiscount51123172024 OrderFile.xlsx"
-    },
-    {
-      "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\SchlüsselDiscount51143172024 OrderFile.xlsx",
-      "PackagePath": "staticwebassets\\Orders\\SchlüsselDiscount51143172024 OrderFile.xlsx"
-    },
-    {
-      "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\SchlüsselDiscount52133172024 OrderFile.xlsx",
-      "PackagePath": "staticwebassets\\Orders\\SchlüsselDiscount52133172024 OrderFile.xlsx"
-    },
-    {
-      "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\SchlüsselDiscount6133172024 OrderFile.xlsx",
-      "PackagePath": "staticwebassets\\Orders\\SchlüsselDiscount6133172024 OrderFile.xlsx"
-    },
-    {
-      "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Rehnung\\SK2218.pdf",
-      "PackagePath": "staticwebassets\\Rehnung\\SK2218.pdf"
-    },
-    {
-      "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Rehnung\\SK2219.pdf",
-      "PackagePath": "staticwebassets\\Rehnung\\SK2219.pdf"
-    },
-    {
-      "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Rehnung\\SK2220.pdf",
-      "PackagePath": "staticwebassets\\Rehnung\\SK2220.pdf"
-    },
-    {
-      "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Rehnung\\SK2221.pdf",
-      "PackagePath": "staticwebassets\\Rehnung\\SK2221.pdf"
-    },
-    {
-      "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Rehnung\\SK2222.pdf",
-      "PackagePath": "staticwebassets\\Rehnung\\SK2222.pdf"
+      "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Rehnung\\SK2231.pdf",
+      "PackagePath": "staticwebassets\\Rehnung\\SK2231.pdf"
     },
     {
       "Id": "D:\\Anthnony\\Konfig-Systeam-main\\Konfig-Systeam-main\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\css\\site.css",

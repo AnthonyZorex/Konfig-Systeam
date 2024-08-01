@@ -383,21 +383,26 @@
                                             <h2><strong>Zahlungsart</strong></h2>
                                         </div>
                                         <br />
-                                        <div style="display: flex;gap: 50px;">
+                                        <div style="display: flex;gap: 50px;" id="bezalenMethod-@z">
                                             <label>
-                                                <input type="radio" checked name="Pay" value="PayPall">
+                                                <input type="radio" onchange="BezaleMethod(@z)" checked name="Pay" value="PayPall">
                                                 <img src="@("/Image/paypal.png")" height="30" width="30" />
                                                 <h5>PayPall</h5>
                                             </label><br>
                                             <label>
-                                                <input type="radio" name="Pay" value="Google Pay">
+                                                <input type="radio" onchange="BezaleMethod(@z)" name="Pay" value="Google Pay">
                                                 <img src="@("/Image/google-pay.png")" height="40" width="40" />
                                                 <h5>Google Pay</h5>
                                             </label><br>
                                             <label>
-                                                <input type="radio" name="Pay" value="Apple Pay">
+                                                <input type="radio" onchange="BezaleMethod(@z)" name="Pay" value="Apple Pay">
                                                 <img src="@("/Image/apple-pay.png")" height="40" width="40" />
                                                 <h5>Apple Pay</h5>
+                                            </label>
+                                            <label>
+                                                <input type="radio" onchange="BezaleMethod(@z)" name="Pay" value="auf Rechnung">
+                                                <img src="@("/Image/cash-on-delivery.png")" height="40" width="40" />
+                                                <h5>auf Rechnung</h5>
                                             </label>
                                         </div>
                                     </div>
@@ -437,7 +442,9 @@
                                         <hr style="max-width:350px" />
                                         <div style="display:flex;gap:50px;"><h4>Bestellsumme:</h4><input name="OrderSum" redonly style="border:none;outline:none" value="@orderList[z].OrderSum.ToString("C")" id="costedI-@z" /></div>
                                         <br />
-                                        <input type="submit" value="submit" />
+                                        <input type="hidden" id="Aufrechnung-@z" name="aufRechnung" value="false"/>
+                                        <input type="submit" class="btn btn-success" id="SendRechnung-@z" style="display:none; padding:10px 20px 10px 20px" value="Bezahlen an der Kasse" />
+                                        <br />
                                         <div id="paypal-button-container-@z">
                                         </div>
 
@@ -453,7 +460,7 @@
 
                         <br />
                         <button id="removeOrder" class="btn btn-success" onclick="OpenModalInfo(@z,@orderList[z].Id)">Bezahlen</button>
-                        <button class="btn btn-warning text-light">
+                        <button  class="btn btn-warning text-light">
                             <a href="@Url.Action("System_Auswählen","Konfigurator",new{userName = @orderList[z].UserOrderKey , isNewKonfig = true, Biarbeiten = true} )">Überarbeiten Sie den Plan</a>
                         </button>
 
@@ -487,8 +494,42 @@
     let idItem = 0;
     let s = 0;
 
-    let currentPrice = '0.00'; 
+    let currentPrice = '0.00';
 
+    function BezaleMethod(id) 
+    {
+
+        const div = document.getElementById("bezalenMethod-" + id);
+        const selectedRadio = div.querySelectorAll('input[name="Pay"]:checked');
+        
+        const submitRechnung = document.getElementById("SendRechnung-" + id);
+        
+        const Inputrechnung = document.getElementById("Aufrechnung-" + id);
+
+        if (selectedRadio) 
+        {
+            if (selectedRadio[0].value === "PayPall") 
+            {
+                submitRechnung.style.display = "none";
+                Inputrechnung.value = false;
+            }
+            if (selectedRadio[0].value === "Google Pay") 
+            {
+                submitRechnung.style.display = "none";
+                Inputrechnung.value = false;
+            }
+            if (selectedRadio[0].value === "Apple Pay")
+            {
+                submitRechnung.style.display = "none";
+                Inputrechnung.value = false;
+            }
+            if (selectedRadio[0].value === "auf Rechnung") 
+            {
+                submitRechnung.style.display = "block";
+                Inputrechnung.value = true;
+            }
+        }
+    }
    
     function changeSend(BlockItem) 
     {
@@ -568,7 +609,7 @@
             {
                 costProcent = (Sum.toFixed(2) * 0.20);
 
-                    procent.value = "Steuer 20%";
+                    procent.value = "20% MwSt";
 
                 if(sendDhl.checked == true)
                 {
@@ -601,7 +642,7 @@
             case "BE":
             {
                 costProcent = (Sum.toFixed(2) * 0.21);
-                    procent.value = "Steuer 21%";
+                    procent.value = "21% MwSt";
 
                     if (sendDhl.checked == true) 
                     {
@@ -630,7 +671,7 @@
             case "BG":
             {
                     costProcent = (Sum.toFixed(2) * 0.20);
-                    procent.value = "Steuer 20%";
+                    procent.value = "20% MwSt";
 
                     if (sendDhl.checked == true) {
                         if (parseFloat(Gram.value) <= 2) {
@@ -657,7 +698,7 @@
             case "CY":
             {
                 costProcent = (Sum.toFixed(2) * 0.19);
-                    procent.value = "Steuer 19%";
+                    procent.value = "19% MwSt";
 
                     if (sendDhl.checked == true) {
                         if (parseFloat(Gram.value) <= 2) {
@@ -684,7 +725,7 @@
             case "CZ":
             {
                 costProcent = (Sum.toFixed(2) * 0.21);
-                    procent.value = "Steuer 21%";
+                    procent.value = "21% MwSt";
                     if (sendDhl.checked == true) {
                         if (parseFloat(Gram.value) <= 2) {
                             CostGram[0].value = parseFloat("15,00");
@@ -710,7 +751,7 @@
             case "DE":
             {
                 costProcent = (Sum.toFixed(2) * 0.19);
-                    procent.value = "Steuer 19%";
+                    procent.value = "19% MwSt";
                     if (sendDhl.checked == true) 
                     {
                         if (parseFloat(Gram.value) <= 2) 
@@ -738,7 +779,7 @@
             case "DK":
             {
                 costProcent = (Sum.toFixed(2) * 0.25);
-                    procent.value = "Steuer 25%";
+                    procent.value = "25% MwSt";
                     if (sendDhl.checked == true) {
                         if (parseFloat(Gram.value) <= 2) {
                             CostGram[0].value = parseFloat("15,00");
@@ -766,7 +807,7 @@
             {
           
                 costProcent = (Sum.toFixed(2) * 0.20);
-                    procent.value = "Steuer 20%";
+                    procent.value = "20% MwSt";
                     if (sendDhl.checked == true) 
                     {
                         if (parseFloat(Gram.value) <= 2) {
@@ -794,7 +835,7 @@
             case "ES":
             {
                 costProcent = (Sum.toFixed(2) * 0.21);
-                    procent.value = "Steuer 21%";
+                    procent.value = "21% MwSt";
 
                     if (sendDhl.checked == true) {
                         if (parseFloat(Gram.value) <= 2) {
@@ -822,7 +863,7 @@
             case "FI":
             {
                 costProcent = (Sum.toFixed(2) * 0.24);
-                    procent.value = "Steuer 24%";
+                    procent.value = "24% MwSt";
 
                     if (sendDhl.checked == true) {
                         if (parseFloat(Gram.value) <= 2) {
@@ -850,7 +891,7 @@
             case "FR":
             {
                 costProcent = (Sum.toFixed(2) * 0.20);
-                    procent.value = "Steuer 20%";
+                    procent.value = "20% MwSt";
 
                     if (sendDhl.checked == true) {
                         if (parseFloat(Gram.value) <= 2) {
@@ -878,7 +919,7 @@
             case "GR":
             {
                 costProcent = (Sum.toFixed(2) * 0.24);
-                    procent.value = "Steuer 24%";
+                    procent.value = "24% MwSt";
 
                     if (sendDhl.checked == true) {
                         if (parseFloat(Gram.value) <= 2) {
@@ -906,7 +947,7 @@
             case "HR":
             {
                 costProcent = (Sum.toFixed(2) * 0.25);
-                    procent.value = "Steuer 25%";
+                    procent.value = "25% MwSt";
 
                     if (sendDhl.checked == true) {
                         if (parseFloat(Gram.value) <= 2) {
@@ -934,7 +975,7 @@
             case "HU":
             {
                 costProcent = (Sum.toFixed(2) * 0.27);
-                    procent.value = "Steuer 27%";
+                    procent.value = "27% MwSt";
 
                     if (sendDhl.checked == true) {
                         if (parseFloat(Gram.value) <= 2) {
@@ -962,7 +1003,7 @@
             case "IE":
             {
                 costProcent = (Sum.toFixed(2) * 0.23);
-                    procent.value = "Steuer 23%";
+                    procent.value = "23% MwSt";
 
 
                     if (sendDhl.checked == true) {
@@ -991,7 +1032,7 @@
             case "IT":
             {
                 costProcent = (Sum.toFixed(2) * 0.22);
-                    procent.value = "Steuer 22%";
+                    procent.value = "22% MwSt";
 
                     if (sendDhl.checked == true) {
                         if (parseFloat(Gram.value) <= 2) {
@@ -1019,7 +1060,7 @@
             case "LT":
             {
                 costProcent = (Sum.toFixed(2) * 0.21);
-                    procent.value = "Steuer 21%";
+                    procent.value = "21% MwSt";
 
                     if (sendDhl.checked == true) {
                         if (parseFloat(Gram.value) <= 2) {
@@ -1047,7 +1088,7 @@
             case "LU":
             {
                 costProcent = (Sum.toFixed(2) * 0.17);
-                    procent.value = "Steuer 17%";
+                    procent.value = "17% MwSt";
 
                     if (sendDhl.checked == true) {
                         if (parseFloat(Gram.value) <= 2) {
@@ -1075,7 +1116,7 @@
             case "LV":
             {
                 costProcent = (Sum.toFixed(2) * 0.21);
-                    procent.value = "Steuer 21%";
+                    procent.value = "21% MwSt";
 
                     if (sendDhl.checked == true) {
                         if (parseFloat(Gram.value) <= 2) {
@@ -1103,7 +1144,7 @@
             case "MT":
             {
                 costProcent = (Sum.toFixed(2) * 0.18);
-                    procent.value = "Steuer 18%";
+                    procent.value = "18% MwSt";
 
                     if (sendDhl.checked == true) {
                         if (parseFloat(Gram.value) <= 2) {
@@ -1131,7 +1172,7 @@
             case "NL":
             {
                 costProcent = (Sum.toFixed(2) * 0.21);
-                    procent.value = "Steuer 21%";
+                    procent.value = "21% MwSt";
 
                     if (sendDhl.checked == true) {
                         if (parseFloat(Gram.value) <= 2) {
@@ -1159,7 +1200,7 @@
             case "PL":
             {
                 costProcent = (Sum.toFixed(2) * 0.23);
-                    procent.value = "Steuer 23%";
+                    procent.value = "23% MwSt";
 
                     if (sendDhl.checked == true) {
                         if (parseFloat(Gram.value) <= 2) {
@@ -1186,7 +1227,7 @@
             case "PT":
             {
                 costProcent = (Sum.toFixed(2) * 0.23);
-                    procent.value = "Steuer 23%";
+                    procent.value = "23% MwSt";
 
                     if (sendDhl.checked == true) {
                         if (parseFloat(Gram.value) <= 2) {
@@ -1214,7 +1255,7 @@
             case "RO":
             {
                 costProcent = (Sum.toFixed(2) * 0.19);
-                    procent.value = "Steuer 19%";
+                    procent.value = "19% MwSt";
 
                     if (sendDhl.checked == true) {
                         if (parseFloat(Gram.value) <= 2) {
@@ -1241,7 +1282,7 @@
             case "SE":
             {
                 costProcent = (Sum.toFixed(2) * 0.25);
-                    procent.value = "Steuer 25%";
+                    procent.value = "25% MwSt";
 
                     if (sendDhl.checked == true) {
                         if (parseFloat(Gram.value) <= 2) {
@@ -1269,7 +1310,7 @@
             case "SI":
             {
                 costProcent = (Sum.toFixed(2) * 0.22);
-                    procent.value = "Steuer 22%";
+                    procent.value = "22% MwSt";
 
                     if (sendDhl.checked == true) {
                         if (parseFloat(Gram.value) <= 2) {
@@ -1297,7 +1338,7 @@
             case "SK":
             {
                 costProcent = (Sum.toFixed(2) * 0.20);
-                    procent.value = "Steuer 20%";
+                    procent.value = "20% MwSt";
 
                     if (sendDhl.checked == true) 
                     {
@@ -1725,7 +1766,7 @@
 
         let OrderNum = document.getElementById("invoiceNumber-" + id);
         
-        let invoiceNumber = OrderNum.value;
+        let invoiceNumber = `SK${OrderNum.value}`;
 
         console.log(invoiceNumber);
 
@@ -1755,13 +1796,11 @@
             onApprove: function (data, actions) 
             {
                 return actions.order.capture().then(function (details) {
-                    alert('Transaction completed by ' + details.payer.name.given_name);
                     document.getElementById('myForm').submit();
                 });
             },
             onError: function (err) {
-                console.error('Произошла ошибка при выполнении транзакции:', err);
-                
+                alert('Transaktion fehlgeschlagen');
             }
         }).render(`#paypal-button-container-${id}`);
         

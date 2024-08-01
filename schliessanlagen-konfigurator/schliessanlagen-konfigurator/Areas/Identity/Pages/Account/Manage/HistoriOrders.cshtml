@@ -59,20 +59,28 @@
                                 UserOrderId = @orderList[z].Id;
                                 ProudctItemCounter++;
                             }
+                            <hr />
+                            <h5>Zahlungsstatus: @orderList[z].OrderStatus</h5>
+                            <br />
+                            <h5>Lieferstatus: @orderList[z].ShippingStatus</h5>
+
                         </div>
                     </div>
                     <br />
                     <hr />
                     <br />
-                    <button class="btn btn-warning text-light">
+                    <button class="btn btn-danger">
                         <a href="@Url.Action("System_Auswählen","Konfigurator",new{userName = @orderList[z].UserOrderKey , isNewKonfig = true, Biarbeiten = false, Reorder=true} )">Überarbeiten Sie den Plan</a>
                     </button>
                     <button id="removeOrder" class="btn btn-danger" onclick="(remove(@UserOrderId))">
                         <a href="@Url.Action("DowloadRehnung","Konfigurator",new{Id = @UserOrderId} )">Rechnung herunterladen</a>
                         </button>
+                    <button id="removeOrder" class="btn btn-danger" onclick="(remove(@UserOrderId))">
+                        <a href="@Url.Action("Download","Konfigurator",new{Id = @UserOrderId} )">Den Plan herunterladen</a>
+                    </button>
                 </div>
             }
-
+            <br />
         </div>
     </div>
 </div>
