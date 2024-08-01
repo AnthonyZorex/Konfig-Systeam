@@ -70,7 +70,7 @@
                     <hr />
                     <br />
                     <button class="btn btn-danger">
-                        <a href="@Url.Action("System_Auswählen","Konfigurator",new{userName = @orderList[z].UserOrderKey , isNewKonfig = true, Biarbeiten = false, Reorder=true} )">Überarbeiten Sie den Plan</a>
+                        <a href="@Url.Action("System_Auswählen","Konfigurator",new{Id = @orderList[z].Id ,userName = @orderList[z].UserOrderKey , isNewKonfig = true, Biarbeiten = false, Reorder=true} )">Überarbeiten Sie den Plan</a>
                     </button>
                     <button id="removeOrder" class="btn btn-danger" onclick="(remove(@UserOrderId))">
                         <a href="@Url.Action("DowloadRehnung","Konfigurator",new{Id = @UserOrderId} )">Rechnung herunterladen</a>

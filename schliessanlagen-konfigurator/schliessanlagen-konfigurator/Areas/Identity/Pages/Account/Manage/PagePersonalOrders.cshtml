@@ -461,7 +461,7 @@
                         <br />
                         <button id="removeOrder" class="btn btn-success" onclick="OpenModalInfo(@z,@orderList[z].Id)">Bezahlen</button>
                         <button  class="btn btn-warning text-light">
-                            <a href="@Url.Action("System_Auswählen","Konfigurator",new{userName = @orderList[z].UserOrderKey , isNewKonfig = true, Biarbeiten = true} )">Überarbeiten Sie den Plan</a>
+                            <a href="@Url.Action("System_Auswählen","Konfigurator",new{Id = @orderList[z].Id ,userName = @orderList[z].UserOrderKey , isNewKonfig = true, Biarbeiten = true} )">Überarbeiten Sie den Plan</a>
                         </button>
 
                         <button id="removeOrder" class="btn btn-danger" onclick="(remove(@UserOrderId))">RemovaOrder</button>

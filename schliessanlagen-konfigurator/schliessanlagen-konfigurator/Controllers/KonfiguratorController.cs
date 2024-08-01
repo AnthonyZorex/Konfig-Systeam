@@ -907,9 +907,9 @@ namespace schliessanlagen_konfigurator.Controllers
             }
         }
         [HttpGet]
-        public async Task<ActionResult> System_Auswählen(string Key, string userName, bool isNewKonfig,bool Biarbeiten,bool Reorder)
+        public async Task<ActionResult> System_Auswählen(int Id, string Key, string userName, bool isNewKonfig,bool Biarbeiten,bool Reorder)
         {
-            //var xtr = Key;
+            var xtr = Key;
 
             var Liferzeit = db.SysteamPriceKey.Select(x => x.Lieferzeit).Distinct().ToList();
 
@@ -927,7 +927,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     string loginInform = ident.Claims.Select(x => x.Value).First();
                     var users = db.Users.FirstOrDefault(x => x.Id == loginInform);
 
-                    var RemoveOrder = db.UserOrdersShop.Where(x => x.UserOrderKey == userName).ToList();
+                    var RemoveOrder = db.UserOrdersShop.Where(x => x.UserOrderKey == userName && x.Id==Id).ToList();
 
                     var currentTime = RemoveOrder.First().createData.Value;
 
@@ -954,7 +954,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
                 if (Reorder == true)
                 {
-                    var UserOrder = db.UserOrdersShop.FirstOrDefault(x => x.UserOrderKey == userName);
+                    var UserOrder = db.UserOrdersShop.FirstOrDefault(x => x.UserOrderKey == userName && x.Id == Id);
                     orders = orders.Where(x => x.userKey == UserOrder.UserOrderKey).ToList();
                
                 }

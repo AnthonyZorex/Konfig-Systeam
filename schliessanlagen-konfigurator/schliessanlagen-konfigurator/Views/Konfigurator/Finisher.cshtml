@@ -1172,43 +1172,43 @@
 
                                             if (ViewBag.countOptionsQueryI > 0)
                                             {
-                                                                    @for (int i = 0; i < @ViewBag.optionsNameI.Count; i++)
+                                                                                @for (int i = 0; i < @ViewBag.optionsNameI.Count; i++)
                                                 {
-                                                                            <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.optionsNameI[i].Name" />
-                                                                           <img onclick="OpenDescriptions(@i)"  id="hilfeOptionsIcon" src="@("/Image/question.png")" height="20" width="20" />
+                                                                                        <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.optionsNameI[i].Name" />
+                                                                                       <img onclick="OpenDescriptions(@i)"  id="hilfeOptionsIcon" src="@("/Image/question.png")" height="20" width="20" />
 
-                                                                          <select style="margin-bottom: 10px;" class="form-select" id="${BlockN}-Options-@i" onchange="OptionsSelect(${BlockN},'Doppel',event.target.id,event.target.value,@value,'@ViewBag.optionsNameI[i].Name',@i,${BlockN})">
+                                                                                      <select style="margin-bottom: 10px;" class="form-select" id="${BlockN}-Options-@i" onchange="OptionsSelect(${BlockN},'Doppel',event.target.id,event.target.value,@value,'@ViewBag.optionsNameI[i].Name',@i,${BlockN})">
 
-                                                                            @for (int j = 0; j < @ViewBag.countOptionsListI[i]; j++)
+                                                                                        @for (int j = 0; j < @ViewBag.countOptionsListI[i]; j++)
                                                         {
-                                                                                 <option id="@value">@ViewBag.optionsValueI[value]</option>
+                                                                                             <option id="@value">@ViewBag.optionsValueI[value]</option>
 
                                                             value++;
                                                         }
 
-                                                                                                                                      </select>
+                                                                                                                                                  </select>
 
-                                                                                                                                         <div id="myModalOptionsDescriptions" class="modal">
-                                                                                                                                            <div class="modal-content">
-                                                                                                                                                <span onclick="closeOptions(@i)" class="closeOptions">&times;</span>
+                                                                                                                                                     <div id="myModalOptionsDescriptions" class="modal">
+                                                                                                                                                        <div class="modal-content">
+                                                                                                                                                            <span onclick="closeOptions(@i)" class="closeOptions">&times;</span>
 
-                                                                                                                                                <div id="modalDiscriptions">
-                                                                                                                                                    <div>
-                                                                                                                                                        <h2>@ViewBag.optionsNameI[i].Name</h2>
-                                                                                                                                                                        <img src="@("/Image/"+@ViewBag.optionsNameI[i].ImageName)" height="300" width="300" />
+                                                                                                                                                            <div id="modalDiscriptions">
+                                                                                                                                                                <div>
+                                                                                                                                                                    <h2>@ViewBag.optionsNameI[i].Name</h2>
+                                                                                                                                                                                    <img src="@("/Image/"+@ViewBag.optionsNameI[i].ImageName)" height="300" width="300" />
+                                                                                                                                                                </div>
+
+                                                                                                                                                                <div id="bOptions2">
+                                                                                                
+                                                                                                                                                                </div>
+                                                                                                                                                            </div>
+                                                                                                                                                        </div>
                                                                                                                                                     </div>
 
-                                                                                                                                                    <div id="bOptions2">
-                                                                                    
-                                                                                                                                                    </div>
-                                                                                                                                                </div>
-                                                                                                                                            </div>
-                                                                                                                                        </div>
-
-                                                                                                                             <input type="hidden" id="Option-${BlockN} + @i" />
-                                                                                                                             <input type="hidden" id="d-${BlockN} + @i" />
+                                                                                                                                         <input type="hidden" id="Option-${BlockN} + @i" />
+                                                                                                                                         <input type="hidden" id="d-${BlockN} + @i" />
                                                 }
-                                                                                                                         <input type="hidden" name="DoppelOption" id="OptionAll-${BlockN}" />
+                                                                                                                                     <input type="hidden" name="DoppelOption" id="OptionAll-${BlockN}" />
                                             }
                                         }
                                         
@@ -1821,9 +1821,9 @@
                                     AllPrice.value = (parseFloat(AllPrice.value) - (OptionOldCheker.value * Number(countSchluss.value)));
                                     QueryNameOptions[i].value = QueryNameOptions[i].defaultValue;
 
-                                    let regex = item.defaultValue;
+                                    let regex = QueryNameOptions[i].value;
 
-                                    TotalOptions.value = TotalOptions.value.replace(regex + ':  JA, ', '');
+                                    TotalOptions.value = TotalOptions.value.replace(regex + ':  Ja, ', '');
 
                                     QueryNameOptions[i].style.color = "black";
                                     var chekedSelect = document.getElementById(idBlock + "-Options-" + i);
@@ -1840,7 +1840,8 @@
                         if (item.value === '\u2713' + "F = Freilauffunktion" && hasFreilauffunktion === true && hasNotUndGefahrenfunktion === true) {
                             for (let i = 0; i < QueryNameOptions.length; i++) 
                             {
-                                if (QueryNameOptions[i].value === '\u2713' + "NGF = Not- und Gefahrenfunktion") {
+                                if (QueryNameOptions[i].value === '\u2713' + "NGF = Not- und Gefahrenfunktion") 
+                                {
                                     let OptionOldCheker = document.getElementById(`d-${idBlock} + ${i}`);
 
                                     costItems.value = parseFloat(costItems.value) - (OptionOldCheker.value);
@@ -1849,9 +1850,9 @@
                                     QueryNameOptions[i].value = QueryNameOptions[i].defaultValue;
                                     QueryNameOptions[i].style.color = "black";
 
-                                    let regex = item.defaultValue;
+                                    let regex = QueryNameOptions[i].value;
 
-                                    TotalOptions.value = TotalOptions.value.replace(regex + ':  JA, ', '');
+                                     TotalOptions.value = TotalOptions.value.replace(regex + ':  Ja, ', '');
 
                                     var chekedSelect = document.getElementById(idBlock + "-Options-" + i);
                                     chekedSelect.value = "Nein";
@@ -1873,6 +1874,7 @@
                             AllPrice.value = parseFloat(AllPrice.value) + (DoppelCostValue[selectedOption] * Number(countSchluss.value));
                             
                             OptionOldCheker.value = DoppelCostValue[selectedOption];
+
                     }
                     if (TypeSylinder === "Knayf") 
                     {
@@ -1940,7 +1942,12 @@
 
                         let regex = item.defaultValue;
                         
-                        TotalOptions.value = TotalOptions.value.replace(regex + ':  JA, ', '');
+
+                        let info = TotalOptions.value;
+
+                        let str = info.replace(`${regex}:  Ja, `, ' ');
+
+                        TotalOptions.value = str;
 
                         let OptionDoppel = document.getElementById(`Option-${idBlock} + ${N}`);
                         
@@ -1958,7 +1965,7 @@
                         let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
 
                         let regex = item.defaultValue;
-                        TotalOptions.value = TotalOptions.value.replace(regex + ':  JA, ', '');
+                        TotalOptions.value = TotalOptions.value.replace(regex + ':  Ja, ', '');
 
                         let OptionKnayf = document.getElementById(`Option-${idBlock} + ${N}`);
                         OptionKnayf.value = ``;
@@ -1974,7 +1981,7 @@
                         let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
 
                         let regex = item.defaultValue;
-                        TotalOptions.value = TotalOptions.value.replace(regex + ':  JA, ', '');
+                        TotalOptions.value = TotalOptions.value.replace(regex + ':  Ja, ', '');
 
                         let OptionHalb = document.getElementById(`Option-${idBlock} + ${N}`);
                         OptionHalb.value = ``;
@@ -1990,7 +1997,7 @@
                         let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
 
                         let regex = item.defaultValue;
-                        TotalOptions.value = TotalOptions.value.replace(regex + ':  JA, ', '');
+                        TotalOptions.value = TotalOptions.value.replace(regex + ':  Ja, ', '');
 
                         let OptionHelb = document.getElementById(`Option-${idBlock} + ${N}`);
                         OptionHelb.value = ``;
@@ -2006,7 +2013,7 @@
                         let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
 
                         let regex = item.defaultValue;
-                        TotalOptions.value = TotalOptions.value.replace(regex + ':  JA, ', '');
+                        TotalOptions.value = TotalOptions.value.replace(regex + ':  Ja, ', '');
 
                         let OptionVorhan = document.getElementById(`Option-${idBlock} + ${N}`);
                         OptionVorhan.value = ``;
@@ -2022,7 +2029,7 @@
                         let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
 
                         let regex = item.defaultValue;
-                        TotalOptions.value = TotalOptions.value.replace(regex + ':  JA, ', '');
+                        TotalOptions.value = TotalOptions.value.replace(regex + ':  Ja, ', '');
 
                         let OptionAussen = document.getElementById(`Option-${idBlock} + ${N}`);
                         OptionAussen.value = ``;
