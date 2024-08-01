@@ -367,50 +367,50 @@
         });
     }
 
-    function TurUp(Id) 
-    {
-        let dor = document.getElementById("BlockTur-" + Id);
-        let schritt = Number(Id) + 1;
+    // function TurUp(Id) 
+    // {
+    //     let dor = document.getElementById("BlockTur-" + Id);
+    //     let schritt = Number(Id) + 1;
 
-        let uP = document.getElementById("BlockTur-" + schritt);
-        var parent = dor.parentNode;
+    //     let uP = document.getElementById("BlockTur-" + schritt);
+    //     var parent = dor.parentNode;
 
-        parent.insertBefore(uP, dor);
-    }
-    function TurDown(Id) 
-    {
-        let dor = document.getElementById("BlockTur-" + Id);
-        let schritt = Number(Id) - 1;
+    //     parent.insertBefore(uP, dor);
+    // }
+    // function TurDown(Id) 
+    // {
+    //     let dor = document.getElementById("BlockTur-" + Id);
+    //     let schritt = Number(Id) - 1;
 
-        let uP = document.getElementById("BlockTur-" + schritt);
-        var parent = dor.parentNode;
+    //     let uP = document.getElementById("BlockTur-" + schritt);
+    //     var parent = dor.parentNode;
 
-        parent.insertBefore(dor, uP);
-    }
+    //     parent.insertBefore(dor, uP);
+    // }
 
-    function controlPannel(Id) 
-    {
-        let dor = document.getElementById("BlockTur-" + Id);
-        let controlPannel = document.getElementById("zylinderMenu");
+    // function controlPannel(Id) 
+    // {
+    //     let dor = document.getElementById("BlockTur-" + Id);
+    //     let controlPannel = document.getElementById("zylinderMenu");
 
-        document.getElementsByClassName('Up')[0].addEventListener('click', function () {
-            TurUp(Id);
-        });
-        document.getElementsByClassName('Down')[0].addEventListener('click', function () {
-            TurDown(Id);
-        });
+    //     document.getElementsByClassName('Up')[0].addEventListener('click', function () {
+    //         TurUp(Id);
+    //     });
+    //     document.getElementsByClassName('Down')[0].addEventListener('click', function () {
+    //         TurDown(Id);
+    //     });
 
-        console.log(dor);
+    //     console.log(dor);
 
-        controlPannel.style.display = "block";
-    }
+    //     controlPannel.style.display = "block";
+    // }
 
-    function closeControlPannel() 
-    {
-        let controlPannel = document.getElementById("zylinderMenu");
+    // function closeControlPannel() 
+    // {
+    //     let controlPannel = document.getElementById("zylinderMenu");
 
-        controlPannel.style.display = "none";
-    }
+    //     controlPannel.style.display = "none";
+    // }
 
 
 
@@ -444,7 +444,6 @@
     scroll2.addEventListener('scroll', () => syncScroll(scroll2, scroll1));
 
     let countTurSelect = document.getElementById("countTurSelect");
-
 
     function drawLines(id, row) {
 
@@ -714,11 +713,35 @@
         openModal();
     }
 
+    function Test() 
+    {
+        let AllDor = document.querySelectorAll(".block");
+        let AllKey = document.querySelectorAll(".itemKeyBlock");
+        let AllChekbox = document.querySelectorAll(".itemKeyBlock");
+
+        for (let i = 0; i < AllKey.length; i++) 
+        {
+            const itemDiv = AllChekbox.querySelectorAll("input[type=checkbox]");
+            const elemX = document.getElementById('BlockTur-' + id);
+            const elemY = itemDiv.getBoundingClientRect();
+
+            const rectX = elemX.getBoundingClientRect();
+            const rectY = elemY.getBoundingClientRect();
+            const intersectionY = rectY.top < rectX.bottom && rectY.bottom > rectX.top;
+        }
+
+        console.log(AllDor);
+        console.log(AllKey);
+    }
+    
+
     function bolleanCheked() 
     {
         let dorCounter = document.querySelectorAll("#inputTur");
         let keyCounter = document.querySelectorAll("#inputS");
         let boolV = document.getElementById('vBool');
+
+        Test();
 
         for (let i = 0; i < keyCounter.length; i++) 
         {
