@@ -69,6 +69,7 @@ namespace schliessanlagen_konfigurator.Data
         public DbSet<Profil_Doppelzylinder> Profil_Doppelzylinder { get; set; }
         public DbSet<Profil_Doppelzylinder_Options> Profil_Doppelzylinder_Options { get; set; }
         public DbSet<Aussen_Innen> Aussen_Innen { get; set; }
+        public DbSet<Doppel_Innen_klein> Doppel_Innen_klein { get; set; }
         public DbSet<NGF> NGF { get; set; }
         public DbSet<NGF_Value> NGF_Value { get; set; }
 

@@ -51,25 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f7d2154c-0776-4cae-888b-6414001f2dc3",
+                            Id = "79e88742-cfd2-497a-91a3-81ca7c002963",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "ac2391fe-1283-4321-8fd4-cc58f0db50f2",
+                            Id = "8fdbaae1-ed08-455b-b2e9-43992bfa792d",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "75adcd64-044b-4f83-8e4e-8da54f28ae1a",
+                            Id = "36f1fddf-ef5e-47a2-8fd0-ecd688acf65c",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "9aab218d-d134-41f9-a352-627966888852",
+                            Id = "3e7caf72-107f-4d5b-8948-c2fc08411fa9",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -727,6 +727,30 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasIndex("Profil_DoppelzylinderId");
 
                     b.ToTable("Aussen_Innen");
+                });
+
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.Doppel_Innen_klein", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Aussen_InnenId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("Intern")
+                        .HasColumnType("real");
+
+                    b.Property<float>("costSizeIntern")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Aussen_InnenId");
+
+                    b.ToTable("Doppel_Innen_klein");
                 });
 
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.Profil_Doppelzylinder", b =>
@@ -1729,6 +1753,17 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Navigation("Profil_Doppelzylinder");
                 });
 
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.Doppel_Innen_klein", b =>
+                {
+                    b.HasOne("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.Aussen_Innen", "Aussen_Innen")
+                        .WithMany("Doppel_Innen_klein")
+                        .HasForeignKey("Aussen_InnenId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Aussen_Innen");
+                });
+
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.Profil_Doppelzylinder", b =>
                 {
                     b.HasOne("schliessanlagen_konfigurator.Models.Schliessanlagen", "Schliessanlagen")
@@ -1998,6 +2033,11 @@ namespace schliessanlagen_konfigurator.Migrations
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.OrdersOpen.isOpen_value", b =>
                 {
                     b.Navigation("KeyValue");
+                });
+
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.Aussen_Innen", b =>
+                {
+                    b.Navigation("Doppel_Innen_klein");
                 });
 
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.Profil_Doppelzylinder", b =>

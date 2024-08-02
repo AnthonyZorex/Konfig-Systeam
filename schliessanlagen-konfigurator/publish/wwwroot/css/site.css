@@ -5,7 +5,22 @@
     width: 1px;
     background-color: red;
 }
-
+.arrow-right {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #000;
+    margin-top: 30px;
+}
+#kleinGrose {
+    grid-template-columns: 200px 20px auto;
+    text-align: center;
+    justify-content: center;
+    align-self: self-end;
+    display: grid;
+}
 .radio-container label {
     display: inline-block;
     cursor: pointer;
@@ -1066,7 +1081,7 @@
 
     .horizontal {
         display: flex;
-        gap: 20px;
+        gap: 10px;
         align-items: center;
     }
 
@@ -1898,17 +1913,18 @@
 
     #typeSylinder {
         margin-left: -15px;
-        margin-right: 5px;
     }
 
     #sclusselInfo2 {
+        justify-content: end;
+        grid-template-columns: 40px 170px 100px 130px 120px;
         height: 100px;
         width: 570px;
         padding: 5px;
-        background: red;
-        color: white;
+        background: #f00;
+        color: #fff;
         align-items: center;
-        display: flex;
+        display: grid;
         margin-top: -100px;
     }
 
@@ -1924,12 +1940,11 @@
     }
 
     .TexCountTur {
+        justify-content: center;
         max-width: 570px;
         text-align: center;
         display: flex;
-        grid-template-columns: 30px;
-        background-color: #EDEDED;
-        padding: 5px;
+        background-color: #ededed;
     }
 
     .TexCountTurFinisher {
@@ -2069,7 +2084,7 @@
     .horizontal {
         align-items: center;
         display: flex;
-        gap: 20px;
+        gap: 10px;
     }
 
     .horizontal1 {

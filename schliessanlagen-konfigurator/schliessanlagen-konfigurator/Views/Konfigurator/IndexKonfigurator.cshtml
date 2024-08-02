@@ -719,13 +719,15 @@
     }
 
 
-    function bolleanCheked() 
+    async function bolleanCheked()
     {
         const form = document.getElementById('content');
 
         form.addEventListener('submit', async function (event) 
         {
-            event.preventDefault(); 
+            event.preventDefault();
+
+            await new Promise(resolve => setTimeout(resolve, 100));
 
             let AllDor = document.querySelectorAll(".block");
             let AllKey = document.querySelector("#itemKeyBlock");
@@ -741,7 +743,8 @@
                 let array = [];
                 cheker = 1;
 
-                for (let i = 0; i < AllDor.length; i++) {
+                for (let i = 0; i < AllDor.length; i++) 
+                {
                     let str = `${cheker}checkbox${row}`;
                     const chekboxSelect = AllChekbox.querySelector(`[id="${str}"]`);
 

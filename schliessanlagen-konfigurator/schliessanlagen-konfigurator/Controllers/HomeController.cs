@@ -1446,8 +1446,11 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpPost]
         public async Task<IActionResult> Create_Profil_Doppelzylinder(Profil_Doppelzylinder Profil_Doppelzylinder,
         List<string> Options, List<string> NGFDescriptions, IFormFile postedFile, List<float> aussen, List<IFormFile> Images,
-        List<float> innen,List<float> costSizeAussen, List<float> costSizeIntern, List<string> valueNGF, List<float> costNGF, List<int> input_counter)
+        List<float> innen,List<float> costSizeAussen, List<float> costSizeIntern, List<string> valueNGF, List<float> costNGF, List<int> input_counter,
+        List<float> internDoppelKlein, List<float> priesDoppelKlein, float ausKlein,float ausKleinPreis)
         {
+
+            var ftr = aussen.Count();
 
             var System = db.SysteamPriceKey.FirstOrDefault(x => x.NameSysteam == Profil_Doppelzylinder.NameSystem);
 
@@ -1538,7 +1541,32 @@ namespace schliessanlagen_konfigurator.Controllers
                     }
                 }
             }
+            
+            if (ausKlein != null)
+            {
+                var ausse_innenklein = new Aussen_Innen
+                {
+                    Profil_DoppelzylinderId = Profil_Doppelzylinder.Id,
+                    aussen = ausKlein,
+                    costSizeAussen = ausKleinPreis,
+                    costSizeIntern = 0,
+                    Intern = 0
+                };
+                db.Aussen_Innen.Add(ausse_innenklein);
+                db.SaveChanges();
 
+                for (int f = 0; f < internDoppelKlein.Count(); f++)
+                {
+                    var DoppelInternKlein = new Doppel_Innen_klein
+                    {
+                        Aussen_InnenId = ausse_innenklein.Id,
+                        Intern = internDoppelKlein[f],
+                        costSizeIntern = priesDoppelKlein[f]
+                    };
+                    db.Doppel_Innen_klein.Add(DoppelInternKlein);
+                    db.SaveChanges();
+                }
+            }
 
             for (int i = 0; i < aussen.Count(); i++)
             {
@@ -3148,6 +3176,17 @@ namespace schliessanlagen_konfigurator.Controllers
 
             for (int i = 0; i < a.Count(); i++)
             {
+                if (i == 0)
+                {
+                    var klein = db.Doppel_Innen_klein.Where(x => x.Aussen_InnenId == Size[i].Id).ToList();
+                    
+                    foreach(var list in klein)
+                    {
+                        db.Doppel_Innen_klein.Remove(list);
+                        db.SaveChanges();
+                    }
+                }
+                
                 db.Aussen_Innen.Remove(Size[i]);
                 db.SaveChanges();
             }
@@ -3199,6 +3238,10 @@ namespace schliessanlagen_konfigurator.Controllers
                 var SizeDoppel = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == profil_Doppelzylinder.Id).ToList();
                 
                 var options = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == Doppel.Id).ToList();
+
+                var kleidDoppelSize = db.Doppel_Innen_klein.Where(x => x.Aussen_InnenId == SizeDoppel[0].Id).ToList();
+
+                ViewBag.DoppelKleinSize = kleidDoppelSize;
 
                 if (options != null)
                 {
@@ -3336,8 +3379,9 @@ namespace schliessanlagen_konfigurator.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SaveDoppelZylinder(Profil_Doppelzylinder profil_Doppelzylinder, List<int> SizeAus, List<int> SizeInen, List<string> Options,List<string> ImageNameOption,
-        List<string> Descriptions, List<string> valueNGF, List<float> costNGF, List<int> inputCounter,List<float> costSizeAussen, List<float> costSizeIntern, List<IFormFile> UploadGalleryImages, List<string> GalleryImages)
+        public async Task<IActionResult> SaveDoppelZylinder(Profil_Doppelzylinder profil_Doppelzylinder, List<int> SizeAus, List<int> SizeInen, List<string> Options, List<string> ImageNameOption,
+        List<string> Descriptions, List<string> valueNGF, List<float> costNGF, List<int> inputCounter, List<float> costSizeAussen, List<float> costSizeIntern, List<IFormFile> UploadGalleryImages, List<string> GalleryImages,
+        List<float> internDoppelKlein, List<float> priesDoppelKlein, float ausKlein, float ausKleinPreis)
         {
             var Items = db.Profil_Doppelzylinder.Find(profil_Doppelzylinder.Id);
             Items.schliessanlagenId = profil_Doppelzylinder.schliessanlagenId;
@@ -3483,13 +3527,46 @@ namespace schliessanlagen_konfigurator.Controllers
 
             }
 
-            var KnayfItemSize_Cost = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == profil_Doppelzylinder.Id).ToList();
-           
-            foreach (var list in KnayfItemSize_Cost)
+            var DoppeltemSize_Cost = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == profil_Doppelzylinder.Id).ToList();
+            var DoppelKleinIten = db.Doppel_Innen_klein.Where(x => x.Aussen_InnenId == DoppeltemSize_Cost[0].Id).ToList();
+
+            foreach (var list in DoppelKleinIten)
+            {
+                db.Doppel_Innen_klein.Remove(list);
+            }
+            db.SaveChanges();
+
+            foreach (var list in DoppeltemSize_Cost)
             {
                 db.Aussen_Innen.Remove(list);
             }
             db.SaveChanges();
+
+            if (ausKlein != null)
+            {
+                var ausse_innenklein = new Aussen_Innen
+                {
+                    Profil_DoppelzylinderId = Items.Id,
+                    aussen = ausKlein,
+                    costSizeAussen = ausKleinPreis,
+                    costSizeIntern = 0,
+                    Intern = 0
+                };
+                db.Aussen_Innen.Add(ausse_innenklein);
+                db.SaveChanges();
+
+                for (int f = 0; f < internDoppelKlein.Count(); f++)
+                {
+                    var DoppelInternKlein = new Doppel_Innen_klein
+                    {
+                        Aussen_InnenId = ausse_innenklein.Id,
+                        Intern = internDoppelKlein[f],
+                        costSizeIntern = priesDoppelKlein[f]
+                    };
+                    db.Doppel_Innen_klein.Add(DoppelInternKlein);
+                    db.SaveChanges();
+                }
+            }
 
             for (int i = 0; i < SizeAus.Count(); i++)
             {
