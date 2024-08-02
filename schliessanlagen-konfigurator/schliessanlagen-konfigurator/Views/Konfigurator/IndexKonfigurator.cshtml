@@ -39,16 +39,17 @@
                 </div>
             </div>
             <div id="itemKeyBlock">
-                <div  class="TexCount">
-                        <input type="text" required readonly style="position: relative;background:none;border:none;text-align: center; " name="FurNameKey" value="1" />
-                    <div id="TexInputKey">
-                            <input id="inputS" required name="NameKey" value="Schlüssel 1" onchange="chekedNameArienKey(event.target.value,1)" placeholder="Name des Schlüssels" type="text" />
+                    <div id="TexCount-1">
+                        <div class="TexCount">
+                            <input type="text" required readonly style="position: relative;background:none;border:none;text-align: center; " name="FurNameKey" value="1" />
+                            <div id="TexInputKey">
+                                <input id="inputS" required name="NameKey" value="Schlüssel 1" onchange="chekedNameArienKey(event.target.value,1)" placeholder="Name des Schlüssels" type="text" />
+                            </div>
+                            <div>
+                                <input id="inputCount" required name="CountKey" value="1" type="text" />
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                       <input id="inputCount" required name="CountKey" value="1" type="text" />
-                    </div>
-                </div>
-                
             </div>
         </div>
         <div>
@@ -78,57 +79,59 @@
             <div> 
                 <div id="turInfo">
                         <div id="BlockTur-0">
-                        <div class="TexCountTur">
-                            <div id="ItemTur">
-                                    <div id="position">
-                                        <h6 id="counterTur"><img src="@("/Image/options.png")" onmouseover="controlPannel(1)" height="20" width="20" style="margin-right: 10px;" />1</h6>
-                                </div>
-                                     <div>
-                                        <input id="inputTur" required name="Turname" value="Tür 1" onchange="chekedNameArientiren(event.target.value,1)" placeholder="Name der Tür" />
-                                      </div>
-                            </div>
+                            <div id="BlockTur-1" class="block">
+                                <div class="TexCountTur">
+                                    <div id="ItemTur">
+                                        <div id="position">
+                                            <h6 id="counterTur"><img src="@("/Image/options.png")" onmouseover="controlPannel(1)" height="20" width="20" style="margin-right: 10px;" />1</h6>
+                                        </div>
+                                        <div>
+                                            <input id="inputTur" required name="Turname" value="Tür 1" onchange="chekedNameArientiren(event.target.value,1)" placeholder="Name der Tür" />
+                                        </div>
+                                    </div>
                                     <div>
 
-                                    <img  id="typeSylinder" src="/Image/doppelzylinder.png" style="margin-top:10px" height="30" width="30" />
-                                    
+                                        <img id="typeSylinder" src="/Image/doppelzylinder.png" style="margin-top:10px" height="30" width="30" />
+
                                     </div>
 
-                                <div id="SelectTurItem">
-                                    <select id="TypeSelectTurType" onchange="selectParam(event.target.value,1)" name="ZylinderId">
-                                    @foreach (var list in ViewBag.Zylinder_Typ)
-                                    {
-                                        <option>@list.nameType</option>
-                                    }
-                                </select>
-                            </div>
-                                   
-                            <div id="SelectTurItem">
-                                     <select id="TypeSelectTurItem" class="aussen" name="aussen">
-                                     @foreach (var list in ViewBag.DoppelAussen)
-                                    {
-                                        <option id="OptionA">@list</option>
-                                    }
-                                </select>
-                                    
-                            </div>
-                            <div id="SelectTurItem">
+                                    <div id="SelectTurItem">
+                                        <select id="TypeSelectTurType" onchange="selectParam(event.target.value,1)" name="ZylinderId">
+                                            @foreach (var list in ViewBag.Zylinder_Typ)
+                                            {
+                                                <option>@list.nameType</option>
+                                            }
+                                        </select>
+                                    </div>
+
+                                    <div id="SelectTurItem">
+                                        <select id="TypeSelectTurItem" class="aussen" name="aussen">
+                                            @foreach (var list in ViewBag.DoppelAussen)
+                                            {
+                                                <option id="OptionA">@list</option>
+                                            }
+                                        </select>
+
+                                    </div>
+                                    <div id="SelectTurItem">
                                         <select id="TypeSelectTurItem" class="Innen" name="innen">
-                                    @foreach (var list in ViewBag.DoppelIntern)
-                                    {
-                                       <option id="OptionI">@list</option>
-                                    }
-                                </select>
-                            </div>
-                                <div id="chekerTur">
-                                     <button type="button" onclick="Minus(1)">-</button>
-                                    <input id="infoButten"  value="1"   type="text" name="CountTur" />
-                                    <button type="button" onclick="Plus(1)">+</button>
+                                            @foreach (var list in ViewBag.DoppelIntern)
+                                            {
+                                                <option id="OptionI">@list</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div id="chekerTur">
+                                        <button type="button" onclick="Minus(1)">-</button>
+                                        <input id="infoButten" value="1" type="text" name="CountTur" />
+                                        <button type="button" onclick="Plus(1)">+</button>
+                                    </div>
                                 </div>
-                        </div>
+                            </div>
                     </div>
                 <div id="InfoValue">
                             <div class="horizontal" draggable="true" id="1horizontal">
-                                <div class="checkboxContainer">
+                                <div id="1.checkboxContainer1" class="checkboxContainer">
                                     <input class="konfiguratorSelect" onmouseover="drawLines(1,1)"  onmouseout="hideLines(1,1)"  type="checkbox" id="1checkbox1">
                                     <input type="hidden"  value="false" id="I1checkbox1">
                                 </div>
@@ -246,7 +249,7 @@
 
         // handleDragStartKey(e)
     }
-
+  
     function handleDragOver(e) 
     {
         if (e.preventDefault) {
@@ -469,7 +472,9 @@
 
             for (let i = 1; i<id; i++) 
             {
-                const chekboxSelect = document.getElementById(i + ".checkboxContainer" + row);
+                let str = `${i}.checkboxContainer${row}`;
+
+                const chekboxSelect = document.getElementById(str);
                 chekboxSelect.style.background = "red";
                
             }
@@ -713,50 +718,103 @@
         openModal();
     }
 
-    function Test() 
-    {
-        let AllDor = document.querySelectorAll(".block");
-        let AllKey = document.querySelectorAll(".itemKeyBlock");
-        let AllChekbox = document.querySelectorAll(".itemKeyBlock");
-
-        for (let i = 0; i < AllKey.length; i++) 
-        {
-            const itemDiv = AllChekbox.querySelectorAll("input[type=checkbox]");
-            const elemX = document.getElementById('BlockTur-' + id);
-            const elemY = itemDiv.getBoundingClientRect();
-
-            const rectX = elemX.getBoundingClientRect();
-            const rectY = elemY.getBoundingClientRect();
-            const intersectionY = rectY.top < rectX.bottom && rectY.bottom > rectX.top;
-        }
-
-        console.log(AllDor);
-        console.log(AllKey);
-    }
-    
 
     function bolleanCheked() 
     {
-        let dorCounter = document.querySelectorAll("#inputTur");
-        let keyCounter = document.querySelectorAll("#inputS");
-        let boolV = document.getElementById('vBool');
+        const form = document.getElementById('content');
 
-        Test();
-
-        for (let i = 0; i < keyCounter.length; i++) 
+        form.addEventListener('submit', async function (event) 
         {
-            h++;
-            let w = 0;
+            event.preventDefault(); 
 
-            for (let j = 0; j < dorCounter.length; j++) 
+            let AllDor = document.querySelectorAll(".block");
+            let AllKey = document.querySelector("#itemKeyBlock");
+            let AllChekbox = document.querySelector("#InfoValue");
+
+            let key = AllKey.querySelectorAll(".TexCount");
+            let row = 1;
+            let cheker = 1;
+
+
+            for (let s = 0; s < key.length; s++) 
             {
-                w++;
-                let chekbox = document.getElementById(`I${w}checkbox${h}`);
-  
-                boolArray.push(chekbox.value);
+                let array = [];
+                cheker = 1;
+
+                for (let i = 0; i < AllDor.length; i++) {
+                    let str = `${cheker}checkbox${row}`;
+                    const chekboxSelect = AllChekbox.querySelector(`[id="${str}"]`);
+
+                    const elemX = key[s];
+                    const elemY = chekboxSelect;
+                    const rectX = elemX.getBoundingClientRect();
+                    const rectY = elemY ? elemY.getBoundingClientRect() : { top: 0, bottom: 0 };
+
+                    const intersectionY = elemY && rectY.top < rectX.bottom && rectY.bottom > rectX.top;
+
+                    array.push(elemY);
+
+                    cheker++;
+                }
+
+                let hasChecked = Array.from(array).some(checkbox => checkbox.checked);
+
+                if (!hasChecked) {
+                    key[s].remove();
+
+                    array.forEach((item) => {
+                        if (item) item.remove();
+                    });
+                }
+                row++;
             }
-        }
-        boolV.value = boolArray;
+
+            cheker = 1;
+
+            for (let i = 0; i < AllDor.length; i++) 
+            {
+                let str = `${cheker}horizontal`;
+                const chekboxSelect = AllChekbox.querySelector(`[id="${str}"]`);
+                const input = chekboxSelect ? chekboxSelect.querySelectorAll('input[type=checkbox]') : [];
+
+                const elemX = AllDor[i];
+                const elemY = chekboxSelect;
+                const rectX = elemX.getBoundingClientRect();
+                const rectY = elemY ? elemY.getBoundingClientRect() : { top: 0, bottom: 0 };
+
+                const intersectionY = elemY && rectY.top < rectX.bottom && rectY.bottom > rectX.top;
+
+                let hasChecked = Array.from(input).some(checkbox => checkbox.checked);
+                if (intersectionY) {
+                    if (!hasChecked) {
+                        AllDor[i].remove();
+                        if (elemY) elemY.remove();
+                    }
+                }
+                cheker++;
+            }
+
+           
+
+            let dorCounter = document.querySelectorAll("#inputTur");
+            let keyCounter = document.querySelectorAll("#inputS");
+            let boolV = document.getElementById('vBool');
+            let boolArray = [];
+
+            for (let i = 0; i < keyCounter.length; i++) {
+                let w = 0;
+
+                for (let j = 0; j < dorCounter.length; j++) {
+                    w++;
+                    let chekbox = document.getElementById(`I${w}checkbox${i + 1}`);
+                    if (chekbox) boolArray.push(chekbox.value);
+                }
+            }
+            boolV.value = boolArray.join(',');
+
+            // Отправляем форму вручную после выполнения логики
+            form.submit();
+        });
     }
 
     function chekedNameArientiren(value,id) 

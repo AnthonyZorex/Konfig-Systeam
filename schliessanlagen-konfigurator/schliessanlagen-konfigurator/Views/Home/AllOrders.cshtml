@@ -65,29 +65,38 @@
                     <h2>Bestellung bearbeiten</h2>
                     <form method="post">
 
+                        <hr />
+                        <h3>Kunde</h3>
+
+                        <input type="text" class="form-control" name="Name" value="@list.FirstName @list.LastName" />
+
+                        <br />
+
+                        <input type="text" class="form-control" name="email" value="@list.Email" />
+
                         <input type="hidden" name="id" value="@list.Id" />
 
                         <div>
                             <h3>Status der Versendung</h3>
-                            <br />
-                            <select name="ShippingStatus">
+            
+                            <select class="form-select" name="ShippingStatus">
                                 <option>Nicht gesendet</option>
                                 <option>Gesendet</option>
                                 <option>Geliefert</option>
                             </select>
                         </div>
-                        <br />
+  
                         <div>
                             <h3>Status der Bestellung</h3>
-                            <br />
-                            <select name="OrderStatus">
+    
+                            <select class="form-select" name="OrderStatus">
                                 <option>Bezahlt</option>
                                 <option>Aufrechnung</option>
                                 <option>Nicht bezahlt</option>
                             </select>
                         </div>
-                        <br />
-                        <input type="submit" value="Speichern" />
+
+                        <input class="btn btn-info" type="submit" value="Speichern" />
                     </form>
                 </div>
             </div>

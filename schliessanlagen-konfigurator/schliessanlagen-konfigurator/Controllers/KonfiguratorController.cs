@@ -866,12 +866,12 @@ namespace schliessanlagen_konfigurator.Controllers
                     var users = db.Users.FirstOrDefault(x => x.Id == loginInform);
 
                     var message = new MimeMessage();
-                    message.From.Add(new MailboxAddress("Schlüssel Discount Store", "oceanwerbung@googlemail.com"));
+                    message.From.Add(new MailboxAddress("Schliessanlagen Store", "oceanwerbung@googlemail.com"));
                     message.To.Add(new MailboxAddress(users.FirstName + users.LastName, users.UserName));
                     message.Subject = "Schlüssel Discount Store";
                     message.Body = new TextPart("plain")
                     {
-                        Text = "Vielen Dank für Ihre Bestellung!",
+                        Text = $"Online bestellt unter  https://schliessanlagen.discount/  \n\n Kunde:{users.FirstName + users.LastName}",
                     };
 
                     MemoryStream memoryStream = new MemoryStream();
@@ -896,6 +896,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         client.Send(message);
                         client.Disconnect(true);
                     }
+
 
                     return Redirect("/Identity/Account/Manage/HistoriOrders");
                 }

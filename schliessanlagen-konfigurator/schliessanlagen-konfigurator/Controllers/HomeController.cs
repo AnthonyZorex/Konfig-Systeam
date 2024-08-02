@@ -32,6 +32,7 @@ using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 using System.Reflection;
+using System.Net;
 namespace schliessanlagen_konfigurator.Controllers
 {
     public class HomeController : Controller
@@ -5013,19 +5014,88 @@ namespace schliessanlagen_konfigurator.Controllers
         }
 
         [HttpPost]
-        public ActionResult AllOrders(int id, string ShippingStatus,string OrderStatus)
+        public ActionResult AllOrders(int id, string ShippingStatus,string OrderStatus,string Name, string email)
         {
             var UserOrderItem = db.UserOrdersShop.FirstOrDefault(x => x.Id == id);
 
-            UserOrderItem.ShippingStatus = ShippingStatus;
-
-            if (OrderStatus== "Bezahlt")
+            if (OrderStatus == "Bezahlt" && UserOrderItem.OrderStatus != "Bezahlt")
             {
+                var Rehnung = db.Rehnungs.FirstOrDefault(x => x.UserOrdersShopId == UserOrderItem.Id);
+
+                var filepath = Path.Combine($"~/Rehnung", $"{Rehnung.RehnungsId}");
+
+                User user = db.User.FirstOrDefault(x => x.UserName == email);
+
                 UserOrderItem.BezalenDate = DateTime.Now.ToLocalTime();
+
+                var message = new MimeMessage();
+                message.From.Add(new MailboxAddress("Schliessanlagen Store", "oceanwerbung@googlemail.com"));
+                message.To.Add(new MailboxAddress(user.FirstName + user.LastName, "info@schluessel.discount"));
+                message.Subject = "Schlüssel Discount Store";
+                message.Body = new TextPart("plain")
+                {
+                    Text = $"Online bestellt unter  https://schliessanlagen.discount/  \n\n Kunde:{user.FirstName + user.LastName}",
+                };
+
+                using (var client = new SmtpClient())
+                {
+                    client.Connect("smtp.gmail.com", 587, false);
+                    client.Authenticate("oceanwerbung@googlemail.com", "bouo yqop xsdl qpar");
+                    client.Send(message);
+                    client.Disconnect(true);
+                }
+
+                var message2 = new MimeMessage();
+                message2.From.Add(new MailboxAddress("Schliessanlagen Store", "oceanwerbung@googlemail.com"));
+                message2.To.Add(new MailboxAddress(user.FirstName + user.LastName, user.UserName));
+                message2.Subject = "Schlüssel Discount Store";
+                message2.Body = new TextPart("plain")
+                {
+                    Text = $"Ihre Bestellung {Rehnung.UserOrdersShopId} wird gerade bearbeitet\r\n",
+                };
+
+                using (var client = new SmtpClient())
+                {
+                    client.Connect("smtp.gmail.com", 587, false);
+                    client.Authenticate("oceanwerbung@googlemail.com", "bouo yqop xsdl qpar");
+                    client.Send(message2);
+                    client.Disconnect(true);
+                }
+
             }
             else
             {
-                UserOrderItem.BezalenDate = null;
+                if (UserOrderItem.OrderStatus == "Bezahlt")
+                {
+                    UserOrderItem.ShippingStatus = ShippingStatus;
+                    var Rehnung = db.Rehnungs.FirstOrDefault(x => x.UserOrdersShopId == UserOrderItem.Id);
+
+                    User user = db.User.FirstOrDefault(x => x.UserName == email);
+
+                    UserOrderItem.BezalenDate = DateTime.Now.ToLocalTime();
+
+                   
+                    var message2 = new MimeMessage();
+                    message2.From.Add(new MailboxAddress("Schliessanlagen Store", "oceanwerbung@googlemail.com"));
+                    message2.To.Add(new MailboxAddress(user.FirstName + user.LastName, user.UserName));
+                    message2.Subject = "Schlüssel Discount Store";
+                    message2.Body = new TextPart("plain")
+                    {
+                        Text = $"Ihr Auftrag {Rehnung.UserOrdersShopId} ist erfüllt!\r\nVersandstatus: {ShippingStatus} ",
+                    };
+
+                    using (var client = new SmtpClient())
+                    {
+                        client.Connect("smtp.gmail.com", 587, false);
+                        client.Authenticate("oceanwerbung@googlemail.com", "bouo yqop xsdl qpar");
+                        client.Send(message2);
+                        client.Disconnect(true);
+                    }
+                }
+                else
+                {
+                    UserOrderItem.BezalenDate = null;
+                }    
             }
 
             UserOrderItem.OrderStatus = OrderStatus;
@@ -5033,6 +5103,7 @@ namespace schliessanlagen_konfigurator.Controllers
             db.UserOrdersShop.Update(UserOrderItem);
 
             db.SaveChanges();
+
 
             var User = db.Users.Select(x => x).ToList();
             var UserProduct = db.ProductSysteam.Select(x => x).ToList();
