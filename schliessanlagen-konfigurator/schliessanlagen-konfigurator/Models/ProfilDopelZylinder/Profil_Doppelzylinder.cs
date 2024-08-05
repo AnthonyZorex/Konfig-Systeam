@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using schliessanlagen_konfigurator.Models.System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace schliessanlagen_konfigurator.Models.ProfilDopelZylinder
@@ -28,5 +29,42 @@ namespace schliessanlagen_konfigurator.Models.ProfilDopelZylinder
             Aussen_Innen = new List<Aussen_Innen>();
             ProductGalery = new List<ProductGalery>();
         }
+    }
+    public class Profil_Doppelzylinder_Options
+    {
+        public int Id { get; set; }
+        public int? DoppelzylinderId { get; set; }
+        public Profil_Doppelzylinder Doppelzylinder { get; set; }
+        public ICollection<NGF> NGF { get; set; }
+        public Profil_Doppelzylinder_Options()
+        {
+            NGF = new List<NGF>();
+        }
+    }
+    public class NGF
+    {
+        public int Id { get; set; }
+        public int? OptionsId { get; set; }
+        public Profil_Doppelzylinder_Options Options { get; set; }
+        public string? Name { get; set; }
+        public string? ImageName { get; set; }
+        [NotMapped]
+        [DisplayName("Upload your photo")]
+        public IFormFile? ImageFile { get; set; }
+        public string? Description { get; set; }
+        public ICollection<NGF_Value> NGF_Value { get; set; }
+        public NGF()
+        {
+            NGF_Value = new List<NGF_Value>();
+        }
+    }
+    public class NGF_Value
+    {
+        public int Id { get; set; }
+        public int? NGFId { get; set; }
+        public NGF NGF { get; set; }
+        public string Value { get; set; }
+        public float? Cost { get; set; }
+
     }
 }

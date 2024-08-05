@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder;
+using schliessanlagen_konfigurator.Models.System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder
@@ -29,4 +31,43 @@ namespace schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder
             ProductGalery = new List<ProductGalery>();
         }
     }
+    public class Profil_Knaufzylinder_Options
+    {
+        public int Id { get; set; }
+        public int? Profil_KnaufzylinderId { get; set; }
+        public Profil_Knaufzylinder Profil_Knaufzylinder { get; set; }
+        public ICollection<Knayf_Options> options { get; set; }
+
+        public Profil_Knaufzylinder_Options()
+        {
+            options = new List<Knayf_Options>();
+        }
+    }
+    public class Knayf_Options
+    {
+        public int Id { get; set; }
+        public int? OptionsId { get; set; }
+        public Profil_Knaufzylinder_Options Options { get; set; }
+        public string? Name { get; set; }
+        public string? ImageName { get; set; }
+        [NotMapped]
+        [DisplayName("Upload your photo")]
+        public IFormFile? ImageFile { get; set; }
+        public string? Description { get; set; }
+
+        public ICollection<Knayf_Options_value> Knayf_Options_value { get; set; }
+        public Knayf_Options()
+        {
+            Knayf_Options_value = new List<Knayf_Options_value>();
+        }
+    }
+    public class Knayf_Options_value
+    {
+        public int Id { get; set; }
+        public int? Knayf_OptionsId { get; set; }
+        public Knayf_Options Knayf_Options { get; set; }
+        public string? Value { get; set; }
+        public float? Cost { get; set; }
+    }
 }
+

@@ -3,16 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using schliessanlagen_konfigurator.Data;
-using schliessanlagen_konfigurator.Models;
 using schliessanlagen_konfigurator.Models.Aussen_Rund;
 using schliessanlagen_konfigurator.Models.Halbzylinder;
-using schliessanlagen_konfigurator.Models.Halbzylinder.ValueOptions;
-using schliessanlagen_konfigurator.Models.Hebelzylinder;
 using schliessanlagen_konfigurator.Models.OrdersOpen;
 using schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder;
-using schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.ValueOptions;
 using schliessanlagen_konfigurator.Models.ProfilDopelZylinder;
-using schliessanlagen_konfigurator.Models.ProfilDopelZylinder.ValueOptions;
 using schliessanlagen_konfigurator.Models.Vorhan;
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;
@@ -42,6 +37,7 @@ using System.Net.Http.Headers;
 using System.Text.Json.Nodes;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
 using System.Globalization;
+using schliessanlagen_konfigurator.Models.Hebel;
 namespace schliessanlagen_konfigurator.Controllers
 {
     [EnableCors("*")]

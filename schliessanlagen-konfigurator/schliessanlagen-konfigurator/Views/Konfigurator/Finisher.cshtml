@@ -1,5 +1,7 @@
-﻿@model schliessanlagen_konfigurator.Models.Orders;
+﻿@using schliessanlagen_konfigurator.Models.OrdersOpen
+@model Orders;
 @using Microsoft.AspNetCore.Http;
+    using schliessanlagen_konfigurator.Models.OrdersOpen;
 
 @{
     ViewData["Title"] = $"Finisher/{Model.userKey}";

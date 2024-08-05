@@ -1,5 +1,7 @@
-﻿@model schliessanlagen_konfigurator.Models.Orders;
+﻿@using schliessanlagen_konfigurator.Models.OrdersOpen
+@model Orders;
 @using Microsoft.AspNetCore.Http;
+    using schliessanlagen_konfigurator.Models.OrdersOpen;
 
 @{
     ViewData["Title"] = "Konfigurator";
@@ -719,83 +721,83 @@
     }
 
 
-    async function bolleanCheked()
+    function bolleanCheked()
     {
-        const form = document.getElementById('content');
+        // const form = document.getElementById('content');
 
-        form.addEventListener('submit', async function (event) 
-        {
-            event.preventDefault();
+        // form.addEventListener('submit', async function (event) 
+        // {
+            // event.preventDefault();
 
-            await new Promise(resolve => setTimeout(resolve, 100));
+            // await new Promise(resolve => setTimeout(resolve, 100));
 
-            let AllDor = document.querySelectorAll(".block");
-            let AllKey = document.querySelector("#itemKeyBlock");
-            let AllChekbox = document.querySelector("#InfoValue");
+            // let AllDor = document.querySelectorAll(".block");
+            // let AllKey = document.querySelector("#itemKeyBlock");
+            // let AllChekbox = document.querySelector("#InfoValue");
 
-            let key = AllKey.querySelectorAll(".TexCount");
-            let row = 1;
-            let cheker = 1;
+            // let key = AllKey.querySelectorAll(".TexCount");
+            // let row = 1;
+            // let cheker = 1;
 
 
-            for (let s = 0; s < key.length; s++) 
-            {
-                let array = [];
-                cheker = 1;
+            // for (let s = 0; s < key.length; s++) 
+            // {
+            //     let array = [];
+            //     cheker = 1;
 
-                for (let i = 0; i < AllDor.length; i++) 
-                {
-                    let str = `${cheker}checkbox${row}`;
-                    const chekboxSelect = AllChekbox.querySelector(`[id="${str}"]`);
+            //     for (let i = 0; i < AllDor.length; i++) 
+            //     {
+            //         let str = `${cheker}checkbox${row}`;
+            //         const chekboxSelect = AllChekbox.querySelector(`[id="${str}"]`);
 
-                    const elemX = key[s];
-                    const elemY = chekboxSelect;
-                    const rectX = elemX.getBoundingClientRect();
-                    const rectY = elemY ? elemY.getBoundingClientRect() : { top: 0, bottom: 0 };
+            //         const elemX = key[s];
+            //         const elemY = chekboxSelect;
+            //         const rectX = elemX.getBoundingClientRect();
+            //         const rectY = elemY ? elemY.getBoundingClientRect() : { top: 0, bottom: 0 };
 
-                    const intersectionY = elemY && rectY.top < rectX.bottom && rectY.bottom > rectX.top;
+            //         const intersectionY = elemY && rectY.top < rectX.bottom && rectY.bottom > rectX.top;
 
-                    array.push(elemY);
+            //         array.push(elemY);
 
-                    cheker++;
-                }
+            //         cheker++;
+            //     }
 
-                let hasChecked = Array.from(array).some(checkbox => checkbox.checked);
+            //     let hasChecked = Array.from(array).some(checkbox => checkbox.checked);
 
-                if (!hasChecked) {
-                    key[s].remove();
+            //     if (!hasChecked) {
+            //         key[s].remove();
 
-                    array.forEach((item) => {
-                        if (item) item.remove();
-                    });
-                }
-                row++;
-            }
+            //         array.forEach((item) => {
+            //             if (item) item.remove();
+            //         });
+            //     }
+            //     row++;
+            // }
 
-            cheker = 1;
+            // cheker = 1;
 
-            for (let i = 0; i < AllDor.length; i++) 
-            {
-                let str = `${cheker}horizontal`;
-                const chekboxSelect = AllChekbox.querySelector(`[id="${str}"]`);
-                const input = chekboxSelect ? chekboxSelect.querySelectorAll('input[type=checkbox]') : [];
+            // for (let i = 0; i < AllDor.length; i++) 
+            // {
+            //     let str = `${cheker}horizontal`;
+            //     const chekboxSelect = AllChekbox.querySelector(`[id="${str}"]`);
+            //     const input = chekboxSelect ? chekboxSelect.querySelectorAll('input[type=checkbox]') : [];
 
-                const elemX = AllDor[i];
-                const elemY = chekboxSelect;
-                const rectX = elemX.getBoundingClientRect();
-                const rectY = elemY ? elemY.getBoundingClientRect() : { top: 0, bottom: 0 };
+            //     const elemX = AllDor[i];
+            //     const elemY = chekboxSelect;
+            //     const rectX = elemX.getBoundingClientRect();
+            //     const rectY = elemY ? elemY.getBoundingClientRect() : { top: 0, bottom: 0 };
 
-                const intersectionY = elemY && rectY.top < rectX.bottom && rectY.bottom > rectX.top;
+            //     const intersectionY = elemY && rectY.top < rectX.bottom && rectY.bottom > rectX.top;
 
-                let hasChecked = Array.from(input).some(checkbox => checkbox.checked);
-                if (intersectionY) {
-                    if (!hasChecked) {
-                        AllDor[i].remove();
-                        if (elemY) elemY.remove();
-                    }
-                }
-                cheker++;
-            }
+            //     let hasChecked = Array.from(input).some(checkbox => checkbox.checked);
+            //     if (intersectionY) {
+            //         if (!hasChecked) {
+            //             AllDor[i].remove();
+            //             if (elemY) elemY.remove();
+            //         }
+            //     }
+            //     cheker++;
+            // }
 
            
 
@@ -816,8 +818,8 @@
             boolV.value = boolArray.join(',');
 
             // Отправляем форму вручную после выполнения логики
-            form.submit();
-        });
+        //     form.submit();
+        // });
     }
 
     function chekedNameArientiren(value,id) 
