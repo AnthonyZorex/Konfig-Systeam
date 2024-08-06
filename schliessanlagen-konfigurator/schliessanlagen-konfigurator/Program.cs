@@ -13,6 +13,7 @@ using System.IO.Compression;
 using System.Web.Optimization;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +25,6 @@ builder.Services.AddDbContext<schliessanlagen_konfiguratorContext>(options =>
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<schliessanlagen_konfiguratorContext>();
-
 
 builder.Services.AddControllersWithViews();
 

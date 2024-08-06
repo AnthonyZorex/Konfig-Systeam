@@ -987,7 +987,11 @@
     let priceDoppelAussenCost = @Html.Raw(ViewBag.CostDoppelAussen);
     
     let priceKnayfAussenCost = @Html.Raw(ViewBag.KnayfAussenCost);
+    
     let priceKnayfInternCost = @Html.Raw(ViewBag.KnayfInternCost);
+    let kleinKnayf = @Html.Raw(ViewBag.KnayfInternKlein);
+    let kleinKnayfPrice = @Html.Raw(ViewBag.KnayfzylinderInternKleinPreis);
+    let KnayfZiseNormal = @Html.Raw(ViewBag.KnayfzylinderInternNormal);
 
     let halbAussenCost = @Html.Raw(ViewBag.CostHalbSize);
 
@@ -2410,6 +2414,123 @@
                     }
                     if (type === "Knaufzylinder") 
                     {
+                            if (kleinKnayf.length > 0) 
+                            {
+                                if (Aussen.value > 29 && is_GrossSize == false) 
+                                {
+                                    for (let i = 0; i < KnayfZiseNormal.length; i++) 
+                                    {
+                                        if (i >= InnenItem.length) {
+                                            let options = document.createElement("option");
+                                            options.id = "OptionI";
+                                            options.value = KnayfZiseNormal[i];
+                                            options.textContent = KnayfZiseNormal[i];
+                                            Innen.appendChild(options);
+                                        }
+                                        else {
+                                            InnenItem[i].value = KnayfZiseNormal[i];
+                                            InnenItem[i].textContent = KnayfZiseNormal[i];
+                                            InnenItem[i].style.display = "block";
+                                        }
+
+                                    }
+                                    for (let i = 0; i <= oldIntern.value; i++) 
+                                    {
+                                        if (kleinKnayf.length > 0) 
+                                        {
+                                            if (Aussen.value > 29) 
+                                            {
+
+                                                costItems.value = parseFloat(costItems.value) - (priceKnayfInternCost[i]);
+
+                                                AllPrice.value = parseFloat(AllPrice.value) - (priceKnayfInternCost[i] * Number(countSchluss.value));
+
+                                                let Costen = AllPrice.value.replace(/,/g, '.');
+
+                                                AllPrice.value = Costen;
+                                            }
+                                            else {
+                                                costItems.value = parseFloat(costItems.value) - (kleinKnayfPrice[i]);
+
+                                                AllPrice.value = parseFloat(AllPrice.value) - (kleinKnayfPrice[i] * Number(countSchluss.value));
+
+                                                let Costen = AllPrice.value.replace(/,/g, '.');
+
+                                                AllPrice.value = Costen;
+
+                                            }
+                                        }
+                                        else {
+                                            costItems.value = parseFloat(costItems.value) - (priceKnayfInternCost[i]);
+
+                                            AllPrice.value = parseFloat(AllPrice.value) - (priceKnayfInternCost[i] * Number(countSchluss.value));
+
+                                            let Costen = AllPrice.value.replace(/,/g, '.');
+
+                                            AllPrice.value = Costen;
+                                        }
+                                    }
+                                    is_GrossSize = true;
+                                    Innen.value = InnenItem[0].value;
+                                    oldIntern.value = 0;
+                                }
+                                else {
+
+                                    for (let i = 0; i < InnenItem.length; i++) 
+                                    {
+                                        if (i >= kleinKnayf.length) 
+                                        {
+                                            InnenItem[i].style.display = "none";
+                                        }
+                                        else {
+                                            InnenItem[i].value = kleinKnayf[i];
+                                            InnenItem[i].textContent = kleinKnayf[i];
+                                        }
+
+                                    }
+
+                                    for (let i = 0; i <= oldIntern.value; i++) 
+                                    {
+                                        if (kleinKnayf.length > 0 && oldIntern.value > 0) 
+                                        {
+                                            if (Aussen.value > 29 || oldIntern.value > kleinKnayfPrice.length) 
+                                            {
+                                                costItems.value = parseFloat(costItems.value) - (KnayfZiseNormal[i]);
+
+                                                AllPrice.value = parseFloat(AllPrice.value) - (KnayfZiseNormal[i] * Number(countSchluss.value));
+
+                                                let Costen = AllPrice.value.replace(/,/g, '.');
+
+                                                AllPrice.value = Costen;
+                                            }
+                                            else {
+                                                costItems.value = parseFloat(costItems.value) - (kleinKnayfPrice[i]);
+
+                                                AllPrice.value = parseFloat(AllPrice.value) - (kleinKnayfPrice[i] * Number(countSchluss.value));
+
+                                                let Costen = AllPrice.value.replace(/,/g, '.');
+
+                                                AllPrice.value = Costen;
+                                            }
+                                        }
+                                        else {
+                                            costItems.value = parseFloat(costItems.value) - (priceKnayfInternCost[i]);
+
+                                            AllPrice.value = parseFloat(AllPrice.value) - (priceKnayfInternCost[i] * Number(countSchluss.value));
+
+                                            let Costen = AllPrice.value.replace(/,/g, '.');
+
+                                            AllPrice.value = Costen;
+                                        }
+                                    }
+
+                                    Innen.value = InnenItem[0].value;
+                                    is_GrossSize = false;
+                                    oldIntern.value = 0;
+
+                                }
+                            }
+
                         for (let s = 0; s <= SelectItemId;s++) 
                         {
 
@@ -2573,18 +2694,44 @@
                     
                     if (type === "Knaufzylinder") 
                     {
-                        for (let i = 0; i <= oldAussen.value;i++) 
-                        {
+                            for (let i = 0; i <= oldAussen.value; i++) 
+                            {
+                                if (kleinSize.length > 0) 
+                                {
+                                    if (Aussen.value > 29) 
+                                    {
+                                        costItems.value = parseFloat(costItems.value) - (priceKnayfInternCost[i]);
 
-                            costItems.value = parseFloat(costItems.value) - (priceKnayfInternCost[i]);
+                                        AllPrice.value = parseFloat(AllPrice.value) - (priceKnayfInternCost[i] * Number(countSchluss.value));
 
-                            AllPrice.value = parseFloat(AllPrice.value) - (priceKnayfInternCost[i] * Number(countSchluss.value));
+                                        let Costen = AllPrice.value.replace(/,/g, '.');
 
-                            let Costen = AllPrice.value.replace(/,/g, '.');
+                                        AllPrice.value = Costen;
+                                    }
+                                    else 
+                                    {
+                                        costItems.value = parseFloat(costItems.value) - (kleinKnayfPrice[i]);
 
-                            AllPrice.value = Costen;
+                                        AllPrice.value = parseFloat(AllPrice.value) - (kleinKnayfPrice[i] * Number(countSchluss.value));
 
-                        }
+                                        let Costen = AllPrice.value.replace(/,/g, '.');
+
+                                        AllPrice.value = Costen;
+
+                                    }
+                                }
+                                else 
+                                {
+                                    costItems.value = parseFloat(costItems.value) - (priceKnayfInternCost[i]);
+
+                                    AllPrice.value = parseFloat(AllPrice.value) - (priceKnayfInternCost[i] * Number(countSchluss.value));
+
+                                    let Costen = AllPrice.value.replace(/,/g, '.');
+
+                                    AllPrice.value = Costen;
+                                }
+                            }
+                       
                     }
           
 
@@ -2633,17 +2780,46 @@
                    
                     if (type === "Knaufzylinder") 
                     {
-                        for (let s = 0; s <= SelectItemId;s++) 
-                        {
+                                for (let s = 0; s <= SelectItemId; s++) 
+                                {
+                                    if (kleinSize.length > 0) 
+                                    {
+                                        if (Aussen.value > 29) 
+                                        {
+                                           costItems.value = parseFloat(costItems.value) + (priceKnayfInternCost[s]);
 
-                            costItems.value = parseFloat(costItems.value) + (priceKnayfInternCost[s]);
+                                            AllPrice.value = parseFloat(AllPrice.value) + (priceKnayfInternCost[s] * Number(countSchluss.value));
 
-                            AllPrice.value = parseFloat(AllPrice.value) + (priceKnayfInternCost[s] * Number(countSchluss.value));
+                                            let Costen = AllPrice.value.replace(/,/g, '.');
 
-                            let Costen = AllPrice.value.replace(/,/g, '.');
+                                            AllPrice.value = Costen;
+                                        }
+                                        else 
+                                        {
+                                            costItems.value = parseFloat(costItems.value) + (kleinPrice[s]);
 
-                            AllPrice.value = Costen;
-                        }
+                                            AllPrice.value = parseFloat(AllPrice.value) + (kleinPrice[s] * Number(countSchluss.value));
+
+                                            let Costen = AllPrice.value.replace(/,/g, '.');
+
+                                            AllPrice.value = Costen;
+
+                                        }
+                                    }
+                                    else 
+                                    {
+                                       costItems.value = parseFloat(costItems.value) + (priceKnayfInternCost[s]);
+
+                                        AllPrice.value = parseFloat(AllPrice.value) + (priceKnayfInternCost[s] * Number(countSchluss.value));
+
+                                        let Costen = AllPrice.value.replace(/,/g, '.');
+
+                                        AllPrice.value = Costen;
+                                    }
+
+
+                                }
+   
                     }
 
                     oldAussen.value = SelectItemId;

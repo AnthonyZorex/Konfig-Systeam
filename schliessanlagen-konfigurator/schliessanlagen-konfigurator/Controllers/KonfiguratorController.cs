@@ -923,8 +923,6 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpGet]
         public async Task<ActionResult> System_Auswählen(int Id, string Key, string userName, bool isNewKonfig,bool Biarbeiten,bool Reorder)
         {
-            var xtr = Key;
-
             var Liferzeit = db.SysteamPriceKey.Select(x => x.Lieferzeit).Distinct().ToList();
 
             ViewBag.SortLiferzeit = JsonConvert.SerializeObject(Liferzeit.Distinct().ToList());
@@ -1049,10 +1047,8 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var dopelProduct = new List<Profil_Doppelzylinder>();
 
-                var products = await db.Aussen_Innen.ToListAsync();
-
-                var doppelklei = await db.Doppel_Innen_klein.ToListAsync();
-                
+                var products = await db.Aussen_Innen.Include(x=>x.Doppel_Innen_klein).ToListAsync();
+                    
                     var items = products.Where(x => x.aussen >= maxAussenParameter).Select(x => x).Distinct().ToList();
 
                     var safeDoppelItem = new List<Profil_Doppelzylinder>();
@@ -1109,17 +1105,51 @@ namespace schliessanlagen_konfigurator.Controllers
 
             if (allOderKnayf.Count() > 0)
             {
-
                 var maxInnenParameter = allOderKnayf.Max(x => x.innen);
                 var maxAussenParameter = allOderKnayf.Max(x => x.aussen);
 
                 var KnayfProduct = new List<Profil_Knaufzylinder>();
 
-                var products = await db.Aussen_Innen_Knauf.ToListAsync();
+                var products = await db.Aussen_Innen_Knauf.Include(x => x.Aussen_Innen_Knauf_klein).ToListAsync();
 
                 var item = products.Where(x => x.aussen >= maxAussenParameter & x.Intern >= maxInnenParameter).Select(x => x.Profil_KnaufzylinderId).Distinct().ToList();
 
                 var safeDoppelItem = new List<Profil_Knaufzylinder>();
+
+                for (int i = 0; i < item.Count(); i++)
+                {
+                    var f = item[i];
+
+                    //if (f.Aussen_Innen_Knauf_klein.Count() > 0)
+                    //{
+                    //    foreach (var list in f.Aussen_Innen_Knauf_klein)
+                    //    {
+                    //        if (list.Intern >= maxInnenParameter)
+                    //        {
+                    //            var chekedItem = db.Profil_Knaufzylinder.Where(x => x.Id == item[i]).ToList();
+
+                    //            for (int g = 0; g < chekedItem.Count(); g++)
+                    //            {
+                    //                safeDoppelItem.Add(chekedItem[g]);
+                    //            }
+                    //        }
+                    //    }
+
+                    //}
+                    //else
+                    //{
+                    //    if (item[i].Intern >= maxInnenParameter)
+                    //    {
+                            var chekedItem = db.Profil_Knaufzylinder.Where(x => x.Id == item[i]).ToList();
+
+                            for (int g = 0; g < chekedItem.Count(); g++)
+                            {
+                                safeDoppelItem.Add(chekedItem[g]);
+                            }
+                    //    }
+
+                    //}
+            }
 
                 for (int i = 0; i < item.Count(); i++)
                 {
@@ -4553,11 +4583,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                 {
                                     nÍtem.Price = nÍtem.Price + list.costSizeIntern;
                                 }
-                                else
-                                {
-                                    nÍtem.Price = nÍtem.Price + list.costSizeIntern;
-                                    break;
-                                }
                             }
                         }
                         else
@@ -4733,20 +4758,120 @@ namespace schliessanlagen_konfigurator.Controllers
                             aussen = aus;
                             break;
                         }
+
                     }
-                    foreach (var ine in innenSize)
+                    var doppelklei = db.Aussen_Innen_Knauf_klein.ToList();
+
+                    var queryOrder = from t1 in KnayfSize
+                                     join t2 in doppelklei on t1.Id equals t2.Aussen_Innen_KnaufId
+                                     select new
+                                     {
+                                         Id = t2.Aussen_Innen_KnaufId
+                                     };
+
+                    var ListOrder = queryOrder.Distinct().ToList();
+
+                    if (ListOrder.Count() > 0)
                     {
-                        if (ine < order.innen)
+                        var f = db.Aussen_Innen_Knauf.FirstOrDefault(x => x.Id == ListOrder[0].Id);
+
+                        if (f.aussen == aussen)
                         {
-                            var costIntern = KnayfSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
-                            nÍtem.Price = nÍtem.Price + costIntern;
+                            foreach (var list in f.Aussen_Innen_Knauf_klein)
+                            {
+                                if (list.Intern <= order.innen)
+                                {
+                                    nÍtem.Price = nÍtem.Price + list.costSizeIntern;
+                                }
+                            }
                         }
                         else
                         {
-                            var costIntern = KnayfSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
-                            nÍtem.Price = nÍtem.Price + costIntern;
-                            innen = ine;
-                            break;
+                            foreach (var ine in innenSize)
+                            {
+                                if (ine < order.innen)
+                                {
+                                    if (countZylinder.Count() > CountAussenDoppel)
+                                    {
+                                        for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
+                                        {
+                                            var costIntern = KnayfSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
+                                            nÍtem.Price = nÍtem.Price + costIntern;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        var costIntern = KnayfSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
+                                        nÍtem.Price = nÍtem.Price + costIntern;
+                                    }
+                                }
+                                else
+                                {
+                                    if (countZylinder.Count() > CountAussenDoppel)
+                                    {
+                                        for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
+                                        {
+                                            var costIntern = KnayfSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
+                                            nÍtem.Price = nÍtem.Price + costIntern;
+                                            innen = ine;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        var costIntern = KnayfSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
+                                        nÍtem.Price = nÍtem.Price + costIntern;
+                                        innen = ine;
+                                    }
+
+                                    break;
+                                }
+
+                            }
+                        }
+
+
+                    }
+                    else
+                    {
+                        foreach (var ine in innenSize)
+                        {
+                            if (ine < order.innen)
+                            {
+                                if (countZylinder.Count() > CountAussenDoppel)
+                                {
+                                    for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
+                                    {
+                                        var costIntern = KnayfSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
+                                        nÍtem.Price = nÍtem.Price + costIntern;
+                                    }
+                                }
+                                else
+                                {
+                                    var costIntern = KnayfSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
+                                    nÍtem.Price = nÍtem.Price + costIntern;
+                                }
+                            }
+                            else
+                            {
+                                if (countZylinder.Count() > CountAussenDoppel)
+                                {
+                                    for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
+                                    {
+                                        var costIntern = KnayfSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
+                                        nÍtem.Price = nÍtem.Price + costIntern;
+                                        innen = ine;
+                                    }
+                                }
+                                else
+                                {
+                                    var costIntern = KnayfSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
+                                    nÍtem.Price = nÍtem.Price + costIntern;
+                                    innen = ine;
+                                }
+
+                                break;
+                            }
+
                         }
                     }
 
@@ -4787,13 +4912,52 @@ namespace schliessanlagen_konfigurator.Controllers
 
             foreach (var list in KnayfSizeItem)
             {
+                var inter = new List<float>();
                 var KnayfSize = db.Aussen_Innen_Knauf.Where(x => x.Profil_KnaufzylinderId == KnayfOrderlist.First().Id).ToList();
                 var Aussenitem = KnayfSize.Where(x => x.aussen > list.aussen || x.aussen == list.aussen).Min(x => x.aussen);
                 var Innenitem = KnayfSize.Where(x => x.aussen > list.innen || x.aussen == list.innen).Min(x => x.Intern);
 
+                var doppelklei = db.Aussen_Innen_Knauf_klein.ToList();
+
+                var queryOrder = from t1 in KnayfSize
+                                 join t2 in doppelklei on t1.Id equals t2.Aussen_Innen_KnaufId
+                                 select new
+                                 {
+                                     Id = t2.Aussen_Innen_KnaufId
+                                 };
+
+                var ListDoppelKlein = queryOrder.Distinct().ToList();
+
+                if (ListDoppelKlein.Count() > 0)
+                {
+                    var f = db.Aussen_Innen_Knauf.FirstOrDefault(x => x.Id == ListDoppelKlein[0].Id);
+
+                    if (f.aussen == Aussenitem)
+                    {
+                        foreach (var s in f.Aussen_Innen_Knauf_klein)
+                        {
+                            inter.Add(s.Intern);
+                        }
+                         Innenitem = f.Aussen_Innen_Knauf_klein.Where(x => x.Intern > list.innen || x.Intern == list.innen).Min(x => x.Intern);
+
+                        KnayfInenActual.Add(Innenitem);
+                    }
+                    else
+                    {
+                         Innenitem = KnayfSize.Where(x => x.Intern > list.innen || x.Intern == list.innen).Min(x => x.Intern);
+                        KnayfInenActual.Add(Innenitem);
+                    }
+                }
+                else
+                {
+                    Innenitem = KnayfSize.Where(x => x.Intern > list.innen || x.Intern == list.innen).Min(x => x.Intern);
+
+                    KnayfInenActual.Add(Innenitem);
+                }
+
                 KnayfaussenActual.Add(Aussenitem);
 
-                KnayfInenActual.Add(Innenitem);
+               
             }
             foreach (var list in AussenD)
             {
@@ -4986,10 +5150,31 @@ namespace schliessanlagen_konfigurator.Controllers
                 ViewBag.KnayfZelinderJson = JsonConvert.SerializeObject(KnayfOrderlist.ToList());
 
                 ViewBag.KnayfZelinderAussen = Kanyf_AussenInen.Select(x => x.aussen).Distinct().ToList();
-                ViewBag.KnayfZelinderIntern = Kanyf_AussenInen.Select(x => x.Intern).Distinct().ToList();
+           
+                var KnayfKleinSize = Kanyf_AussenInen.First().Aussen_Innen_Knauf_klein;
+
+                if (KnayfKleinSize.Count() > 0 && Kanyf_AussenInen.First().aussen == KnayfaussenActual.First())
+                {
+                    ViewBag.KnayfZelinderIntern = KnayfKleinSize.Select(x => x.Intern).Distinct().ToList();
+                    ViewBag.KnayfInternCost = JsonConvert.SerializeObject(Kanyf_AussenInen.Select(x => x.costSizeIntern).Skip(1).ToList());
+
+                    ViewBag.KnayfzylinderInternNormal = JsonConvert.SerializeObject(Kanyf_AussenInen.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
+                    ViewBag.KnayfInternKlein = JsonConvert.SerializeObject(KnayfKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
+                    ViewBag.KnayfzylinderInternKleinPreis = JsonConvert.SerializeObject(KnayfKleinSize.Select(x => x.costSizeIntern).ToList());
+
+                }
+                else
+                {
+                    ViewBag.KnayfZelinderIntern = Kanyf_AussenInen.Where(x => x.Intern > 0).Select(x => x.Intern).ToList();
+                    ViewBag.KnayfInternCost = JsonConvert.SerializeObject(Kanyf_AussenInen.Select(x => x.costSizeIntern).ToList());
+
+                    ViewBag.KnayfzylinderInternNormal = JsonConvert.SerializeObject(Kanyf_AussenInen.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
+                    ViewBag.KnayfInternKlein = JsonConvert.SerializeObject(KnayfKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
+                    ViewBag.KnayfzylinderInternKleinPreis = JsonConvert.SerializeObject(KnayfKleinSize.Select(x => x.costSizeIntern).Skip(1).ToList());
+                }
 
                 ViewBag.KnayfAussenCost = JsonConvert.SerializeObject(Kanyf_AussenInen.Select(x => x.costSizeAussen).ToList());
-                ViewBag.KnayfInternCost = JsonConvert.SerializeObject(Kanyf_AussenInen.Select(x => x.costSizeIntern).ToList());
+               
 
                 ViewBag.KAussen = KnayfaussenActual.ToList();
                 ViewBag.KInter = KnayfInenActual.ToList();

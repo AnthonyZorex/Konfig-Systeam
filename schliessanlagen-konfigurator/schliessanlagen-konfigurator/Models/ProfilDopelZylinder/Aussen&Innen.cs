@@ -1,6 +1,4 @@
-﻿
-
-namespace schliessanlagen_konfigurator.Models.ProfilDopelZylinder
+﻿namespace schliessanlagen_konfigurator.Models.ProfilDopelZylinder
 {
     public class Aussen_Innen
     {
