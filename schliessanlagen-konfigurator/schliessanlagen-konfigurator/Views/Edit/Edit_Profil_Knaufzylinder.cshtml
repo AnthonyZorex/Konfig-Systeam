@@ -1,11 +1,14 @@
 ﻿@model schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Profil_Knaufzylinder;
 
 @{
+    var kleinAussen = ViewBag.KleinAussen;
     ViewData["Title"] = "Edit";
     int count = -1;
     int f = -1;
     int r = -1;
     int galeryCheker = 0;
+    var resultAussen = (kleinAussen != null) ? kleinAussen.aussen : 0;
+    var resultPreis = (kleinAussen != null) ? kleinAussen.costSizeAussen : 0;
 }
        
 @if (User.IsInRole("admin"))
@@ -101,7 +104,46 @@
                         }
                     </div>
                 </div>
+                <div id="Aussen_innen_klein">
+                    <h5>Für zylinder aussen klein</h5>
+                    <div id="kleinGrose">
+                        <div>
+                            <div>
+                                <h5>Aussen</h5>
+                                <input type="number" value="@resultAussen" name="ausKlein" />
+                            </div>
+                            <div>
+                                <h5>Preis</h5>
+                                <input type="number" step="0,00" value="@resultPreis" name="ausKleinPreis" />
+                            </div>
+                        </div>
+                        <div class="arrow-right">
+                        </div>
+                        <div>
+                            <table class="table">
+                                <thead>
+                                    <tr class="table-dark">
+                                        <th scope="col">Wert</th>
+                                        <th scope="col">Preis</th>
+                                        <th scope="col"><button type="button" onclick="PlusKleinIntert()" class="btn btn-success">+</button><button type="button" class="btn btn-danger" onclick="MinusKleinIntern()">-</button></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="kleiIntern">
 
+                                    @foreach (var list in ViewBag.KnayfKleinSize)
+                                    {
+                                        <tr class="table-info">
+                                            <th scope="row"><input name="internDoppelKlein" value="@list.Intern" type="number" step="0,01" /></th>
+                                            <td><input name="priesDoppelKlein" type="number" value="@list.costSizeIntern" step="0,01" /></td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
                 <div id="productOptions">
                     @if (ViewBag.optionV == true)
                     {
@@ -179,6 +221,32 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script>
+
+          let table = document.getElementById("kleiIntern");
+
+            function PlusKleinIntert() {
+                let row = `   <tr class="table-info">
+                                        <th scope="row"><input
+                                       name="internDoppelKlein" type="number" step="0,01" /></th>
+                                           <td><input name="priesDoppelKlein" step="0,01" type="number" /></td>
+                                </tr> `;
+
+                table.insertAdjacentHTML('beforeend', row);
+            }
+
+            function MinusKleinIntern() 
+            {
+                let countelem = table.querySelectorAll("tr");
+
+                let kleinSize = document.getElementById("Aussen_innen_klein");
+
+                if (countelem.length == 0) {
+                    kleinSize.remove();
+                }
+                else {
+                    countelem[countelem.length - 1].remove();
+                }
+            }
 
         let Galery = document.getElementById("Galerry");
 

@@ -51,25 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "79e88742-cfd2-497a-91a3-81ca7c002963",
+                            Id = "70ef42ce-a67d-4f66-a24b-c36f9ad8b03f",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "8fdbaae1-ed08-455b-b2e9-43992bfa792d",
+                            Id = "0a7ceb5b-6826-40ee-a458-268222ade998",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "36f1fddf-ef5e-47a2-8fd0-ecd688acf65c",
+                            Id = "bbb9d7a7-c8c1-44eb-86bb-449257efd9d5",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "3e7caf72-107f-4d5b-8948-c2fc08411fa9",
+                            Id = "068a24a2-eacc-4e9d-beb6-ba94aeaf2279",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -254,7 +254,7 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.ToTable("Aussen_Rund_options");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Aussenzylinder_Rundzylinder", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Aussen_Rund.Aussenzylinder_Rundzylinder", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -319,6 +319,58 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.ToTable("Aussen_Innen_Halbzylinder");
                 });
 
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Halbzylinder.Halbzylinder_Options", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("OptionsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OptionsId");
+
+                    b.ToTable("Halbzylinder_Options");
+                });
+
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Halbzylinder.Halbzylinder_Options_value", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<float?>("Cost")
+                        .HasColumnType("real");
+
+                    b.Property<int?>("Halbzylinder_OptionsId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Halbzylinder_OptionsId");
+
+                    b.ToTable("Halbzylinder_Options_value");
+                });
+
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Halbzylinder.Profil_Halbzylinder", b =>
                 {
                     b.Property<int>("Id")
@@ -381,59 +433,7 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.ToTable("Profil_Halbzylinder_Options");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Halbzylinder.ValueOptions.Halbzylinder_Options", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("OptionsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OptionsId");
-
-                    b.ToTable("Halbzylinder_Options");
-                });
-
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Halbzylinder.ValueOptions.Halbzylinder_Options_value", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<float?>("Cost")
-                        .HasColumnType("real");
-
-                    b.Property<int?>("Halbzylinder_OptionsId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Halbzylinder_OptionsId");
-
-                    b.ToTable("Halbzylinder_Options_value");
-                });
-
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Hebel", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Hebel.Hebel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -474,7 +474,7 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.ToTable("Hebelzylinder");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Hebelzylinder.Hebelzylinder_Options", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Hebel.Hebelzylinder_Options", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -492,7 +492,7 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.ToTable("Hebelzylinder_Options");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Hebelzylinder.Options", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Hebel.Options", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -519,7 +519,7 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.ToTable("Options");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Hebelzylinder.Options_value", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Hebel.Options_value", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -543,7 +543,28 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.ToTable("Options_value");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Orders", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.OrdersOpen.KeyValue", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("OpenKeyId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("isOpen")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OpenKeyId");
+
+                    b.ToTable("KeyValue");
+                });
+
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.OrdersOpen.Orders", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -579,27 +600,6 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.OrdersOpen.KeyValue", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("OpenKeyId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("isOpen")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OpenKeyId");
-
-                    b.ToTable("KeyValue");
                 });
 
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.OrdersOpen.isOpen_Order", b =>
@@ -645,58 +645,6 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasIndex("isOpen_OrderId");
 
                     b.ToTable("isOpen_value");
-                });
-
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.ProductGalery", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("Aussenzylinder_RundzylinderId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DopelZylinderId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("HebelId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ImageName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Profil_HalbzylinderId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Profil_KnaufzylinderId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SysteamPriceKeyId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("VorhangschlossId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Aussenzylinder_RundzylinderId");
-
-                    b.HasIndex("DopelZylinderId");
-
-                    b.HasIndex("HebelId");
-
-                    b.HasIndex("Profil_HalbzylinderId");
-
-                    b.HasIndex("Profil_KnaufzylinderId");
-
-                    b.HasIndex("SysteamPriceKeyId");
-
-                    b.HasIndex("VorhangschlossId");
-
-                    b.ToTable("ProductGalery");
                 });
 
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.Aussen_Innen", b =>
@@ -751,6 +699,58 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasIndex("Aussen_InnenId");
 
                     b.ToTable("Doppel_Innen_klein");
+                });
+
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.NGF", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("OptionsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OptionsId");
+
+                    b.ToTable("NGF");
+                });
+
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.NGF_Value", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<float?>("Cost")
+                        .HasColumnType("real");
+
+                    b.Property<int?>("NGFId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NGFId");
+
+                    b.ToTable("NGF_Value");
                 });
 
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.Profil_Doppelzylinder", b =>
@@ -815,58 +815,6 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.ToTable("Profil_Doppelzylinder_Options");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.ValueOptions.NGF", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("OptionsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OptionsId");
-
-                    b.ToTable("NGF");
-                });
-
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.ValueOptions.NGF_Value", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<float?>("Cost")
-                        .HasColumnType("real");
-
-                    b.Property<int?>("NGFId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NGFId");
-
-                    b.ToTable("NGF_Value");
-                });
-
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Aussen_Innen_Knauf", b =>
                 {
                     b.Property<int>("Id")
@@ -895,6 +843,81 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasIndex("Profil_KnaufzylinderId");
 
                     b.ToTable("Aussen_Innen_Knauf");
+                });
+
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Aussen_Innen_Knauf_klein", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Aussen_Innen_KnaufId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("Intern")
+                        .HasColumnType("real");
+
+                    b.Property<float>("costSizeIntern")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Aussen_Innen_KnaufId");
+
+                    b.ToTable("Aussen_Innen_Knauf_klein");
+                });
+
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Knayf_Options", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("OptionsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OptionsId");
+
+                    b.ToTable("Knayf_Options");
+                });
+
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Knayf_Options_value", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<float?>("Cost")
+                        .HasColumnType("real");
+
+                    b.Property<int?>("Knayf_OptionsId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Knayf_OptionsId");
+
+                    b.ToTable("Knayf_Options_value");
                 });
 
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Profil_Knaufzylinder", b =>
@@ -958,7 +981,7 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.ToTable("Profil_Knaufzylinder_Options");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.ValueOptions.Knayf_Options", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.System.ProductGalery", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -966,50 +989,51 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("Aussenzylinder_RundzylinderId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DopelZylinderId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("HebelId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ImageName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("Profil_HalbzylinderId")
+                        .HasColumnType("int");
 
-                    b.Property<int?>("OptionsId")
+                    b.Property<int?>("Profil_KnaufzylinderId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SysteamPriceKeyId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("VorhangschlossId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OptionsId");
+                    b.HasIndex("Aussenzylinder_RundzylinderId");
 
-                    b.ToTable("Knayf_Options");
+                    b.HasIndex("DopelZylinderId");
+
+                    b.HasIndex("HebelId");
+
+                    b.HasIndex("Profil_HalbzylinderId");
+
+                    b.HasIndex("Profil_KnaufzylinderId");
+
+                    b.HasIndex("SysteamPriceKeyId");
+
+                    b.HasIndex("VorhangschlossId");
+
+                    b.ToTable("ProductGalery");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.ValueOptions.Knayf_Options_value", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<float?>("Cost")
-                        .HasColumnType("real");
-
-                    b.Property<int?>("Knayf_OptionsId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Knayf_OptionsId");
-
-                    b.ToTable("Knayf_Options_value");
-                });
-
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Schliessanlagen", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.System.Schliessanlagen", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1026,7 +1050,7 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.ToTable("Schliessanlagen");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.SysteamPriceKey", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.System.SysteamPriceKey", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1055,7 +1079,7 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.ToTable("SysteamPriceKey");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.SystemOptionInfo", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.System.SystemOptionInfo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1083,7 +1107,7 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.ToTable("SystemOptionInfo");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.SystemOptionValue", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.System.SystemOptionValue", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1108,7 +1132,7 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.ToTable("SystemOptionValue");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.SystemOptionen", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.System.SystemOptionen", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1126,7 +1150,7 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.ToTable("SystemOptionen");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.SystemScheker", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.System.SystemScheker", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1453,7 +1477,7 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.ToTable("Vorhan_Options");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Vorhangschloss", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Vorhan.Vorhangschloss", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1565,16 +1589,16 @@ namespace schliessanlagen_konfigurator.Migrations
 
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Aussen_Rund.Aussen_Rund_options", b =>
                 {
-                    b.HasOne("schliessanlagen_konfigurator.Models.Aussenzylinder_Rundzylinder", "Aussenzylinder_Rundzylinder")
+                    b.HasOne("schliessanlagen_konfigurator.Models.Aussen_Rund.Aussenzylinder_Rundzylinder", "Aussenzylinder_Rundzylinder")
                         .WithMany("Aussen_Rund_options")
                         .HasForeignKey("Aussenzylinder_RundzylinderId");
 
                     b.Navigation("Aussenzylinder_Rundzylinder");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Aussenzylinder_Rundzylinder", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Aussen_Rund.Aussenzylinder_Rundzylinder", b =>
                 {
-                    b.HasOne("schliessanlagen_konfigurator.Models.Schliessanlagen", "Schliessanlagen")
+                    b.HasOne("schliessanlagen_konfigurator.Models.System.Schliessanlagen", "Schliessanlagen")
                         .WithMany("Aussenzylinder_Rundzylinder")
                         .HasForeignKey("schliessanlagenId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1594,9 +1618,27 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Navigation("Profil_Halbzylinder");
                 });
 
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Halbzylinder.Halbzylinder_Options", b =>
+                {
+                    b.HasOne("schliessanlagen_konfigurator.Models.Halbzylinder.Profil_Halbzylinder_Options", "Options")
+                        .WithMany("Halbzylinder_Options")
+                        .HasForeignKey("OptionsId");
+
+                    b.Navigation("Options");
+                });
+
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Halbzylinder.Halbzylinder_Options_value", b =>
+                {
+                    b.HasOne("schliessanlagen_konfigurator.Models.Halbzylinder.Halbzylinder_Options", "Halbzylinder_Options")
+                        .WithMany("Halbzylinder_Options_value")
+                        .HasForeignKey("Halbzylinder_OptionsId");
+
+                    b.Navigation("Halbzylinder_Options");
+                });
+
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Halbzylinder.Profil_Halbzylinder", b =>
                 {
-                    b.HasOne("schliessanlagen_konfigurator.Models.Schliessanlagen", "Schliessanlagen")
+                    b.HasOne("schliessanlagen_konfigurator.Models.System.Schliessanlagen", "Schliessanlagen")
                         .WithMany("Profil_Halbzylinder")
                         .HasForeignKey("schliessanlagenId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1614,27 +1656,9 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Navigation("Profil_Halbzylinder");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Halbzylinder.ValueOptions.Halbzylinder_Options", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Hebel.Hebel", b =>
                 {
-                    b.HasOne("schliessanlagen_konfigurator.Models.Halbzylinder.Profil_Halbzylinder_Options", "Options")
-                        .WithMany("Halbzylinder_Options")
-                        .HasForeignKey("OptionsId");
-
-                    b.Navigation("Options");
-                });
-
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Halbzylinder.ValueOptions.Halbzylinder_Options_value", b =>
-                {
-                    b.HasOne("schliessanlagen_konfigurator.Models.Halbzylinder.ValueOptions.Halbzylinder_Options", "Halbzylinder_Options")
-                        .WithMany("Halbzylinder_Options_value")
-                        .HasForeignKey("Halbzylinder_OptionsId");
-
-                    b.Navigation("Halbzylinder_Options");
-                });
-
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Hebel", b =>
-                {
-                    b.HasOne("schliessanlagen_konfigurator.Models.Schliessanlagen", "Schliessanlagen")
+                    b.HasOne("schliessanlagen_konfigurator.Models.System.Schliessanlagen", "Schliessanlagen")
                         .WithMany("Hebelzylinder")
                         .HasForeignKey("schliessanlagenId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1643,27 +1667,27 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Navigation("Schliessanlagen");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Hebelzylinder.Hebelzylinder_Options", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Hebel.Hebelzylinder_Options", b =>
                 {
-                    b.HasOne("schliessanlagen_konfigurator.Models.Hebel", "Hebelzylinder")
+                    b.HasOne("schliessanlagen_konfigurator.Models.Hebel.Hebel", "Hebelzylinder")
                         .WithMany("Hebelzylinder_Options")
                         .HasForeignKey("HebelzylinderId");
 
                     b.Navigation("Hebelzylinder");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Hebelzylinder.Options", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Hebel.Options", b =>
                 {
-                    b.HasOne("schliessanlagen_konfigurator.Models.Hebelzylinder.Hebelzylinder_Options", "Option")
+                    b.HasOne("schliessanlagen_konfigurator.Models.Hebel.Hebelzylinder_Options", "Option")
                         .WithMany("Options")
                         .HasForeignKey("OptionId");
 
                     b.Navigation("Option");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Hebelzylinder.Options_value", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Hebel.Options_value", b =>
                 {
-                    b.HasOne("schliessanlagen_konfigurator.Models.Hebelzylinder.Options", "Options")
+                    b.HasOne("schliessanlagen_konfigurator.Models.Hebel.Options", "Options")
                         .WithMany("Options_value")
                         .HasForeignKey("OptionsId");
 
@@ -1681,7 +1705,7 @@ namespace schliessanlagen_konfigurator.Migrations
 
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.OrdersOpen.isOpen_Order", b =>
                 {
-                    b.HasOne("schliessanlagen_konfigurator.Models.Orders", "Orders")
+                    b.HasOne("schliessanlagen_konfigurator.Models.OrdersOpen.Orders", "Orders")
                         .WithMany("isOpen_Order")
                         .HasForeignKey("OrdersId");
 
@@ -1695,51 +1719,6 @@ namespace schliessanlagen_konfigurator.Migrations
                         .HasForeignKey("isOpen_OrderId");
 
                     b.Navigation("isOpen_Order");
-                });
-
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.ProductGalery", b =>
-                {
-                    b.HasOne("schliessanlagen_konfigurator.Models.Aussenzylinder_Rundzylinder", "Aussenzylinder_Rundzylinder")
-                        .WithMany("ProductGalery")
-                        .HasForeignKey("Aussenzylinder_RundzylinderId");
-
-                    b.HasOne("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.Profil_Doppelzylinder", "DopelZylinder")
-                        .WithMany("ProductGalery")
-                        .HasForeignKey("DopelZylinderId");
-
-                    b.HasOne("schliessanlagen_konfigurator.Models.Hebel", "Hebel")
-                        .WithMany("ProductGalery")
-                        .HasForeignKey("HebelId");
-
-                    b.HasOne("schliessanlagen_konfigurator.Models.Halbzylinder.Profil_Halbzylinder", "Profil_Halbzylinder")
-                        .WithMany("ProductGalery")
-                        .HasForeignKey("Profil_HalbzylinderId");
-
-                    b.HasOne("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Profil_Knaufzylinder", "Profil_Knaufzylinder")
-                        .WithMany("ProductGalery")
-                        .HasForeignKey("Profil_KnaufzylinderId");
-
-                    b.HasOne("schliessanlagen_konfigurator.Models.SysteamPriceKey", "SysteamPriceKey")
-                        .WithMany("ProductGalery")
-                        .HasForeignKey("SysteamPriceKeyId");
-
-                    b.HasOne("schliessanlagen_konfigurator.Models.Vorhangschloss", "Vorhangschloss")
-                        .WithMany("ProductGalery")
-                        .HasForeignKey("VorhangschlossId");
-
-                    b.Navigation("Aussenzylinder_Rundzylinder");
-
-                    b.Navigation("DopelZylinder");
-
-                    b.Navigation("Hebel");
-
-                    b.Navigation("Profil_Halbzylinder");
-
-                    b.Navigation("Profil_Knaufzylinder");
-
-                    b.Navigation("SysteamPriceKey");
-
-                    b.Navigation("Vorhangschloss");
                 });
 
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.Aussen_Innen", b =>
@@ -1764,9 +1743,27 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Navigation("Aussen_Innen");
                 });
 
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.NGF", b =>
+                {
+                    b.HasOne("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.Profil_Doppelzylinder_Options", "Options")
+                        .WithMany("NGF")
+                        .HasForeignKey("OptionsId");
+
+                    b.Navigation("Options");
+                });
+
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.NGF_Value", b =>
+                {
+                    b.HasOne("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.NGF", "NGF")
+                        .WithMany("NGF_Value")
+                        .HasForeignKey("NGFId");
+
+                    b.Navigation("NGF");
+                });
+
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.Profil_Doppelzylinder", b =>
                 {
-                    b.HasOne("schliessanlagen_konfigurator.Models.Schliessanlagen", "Schliessanlagen")
+                    b.HasOne("schliessanlagen_konfigurator.Models.System.Schliessanlagen", "Schliessanlagen")
                         .WithMany("Profil_Doppelzylinder")
                         .HasForeignKey("schliessanlagenId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1784,24 +1781,6 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Navigation("Doppelzylinder");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.ValueOptions.NGF", b =>
-                {
-                    b.HasOne("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.Profil_Doppelzylinder_Options", "Options")
-                        .WithMany("NGF")
-                        .HasForeignKey("OptionsId");
-
-                    b.Navigation("Options");
-                });
-
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.ValueOptions.NGF_Value", b =>
-                {
-                    b.HasOne("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.ValueOptions.NGF", "NGF")
-                        .WithMany("NGF_Value")
-                        .HasForeignKey("NGFId");
-
-                    b.Navigation("NGF");
-                });
-
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Aussen_Innen_Knauf", b =>
                 {
                     b.HasOne("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Profil_Knaufzylinder", "Profil_Knaufzylinder")
@@ -1813,9 +1792,38 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Navigation("Profil_Knaufzylinder");
                 });
 
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Aussen_Innen_Knauf_klein", b =>
+                {
+                    b.HasOne("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Aussen_Innen_Knauf", "Aussen_Innen_Knauf")
+                        .WithMany("Aussen_Innen_Knauf_klein")
+                        .HasForeignKey("Aussen_Innen_KnaufId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Aussen_Innen_Knauf");
+                });
+
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Knayf_Options", b =>
+                {
+                    b.HasOne("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Profil_Knaufzylinder_Options", "Options")
+                        .WithMany("options")
+                        .HasForeignKey("OptionsId");
+
+                    b.Navigation("Options");
+                });
+
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Knayf_Options_value", b =>
+                {
+                    b.HasOne("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Knayf_Options", "Knayf_Options")
+                        .WithMany("Knayf_Options_value")
+                        .HasForeignKey("Knayf_OptionsId");
+
+                    b.Navigation("Knayf_Options");
+                });
+
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Profil_Knaufzylinder", b =>
                 {
-                    b.HasOne("schliessanlagen_konfigurator.Models.Schliessanlagen", "Schliessanlagen")
+                    b.HasOne("schliessanlagen_konfigurator.Models.System.Schliessanlagen", "Schliessanlagen")
                         .WithMany("Profil_Knaufzylinder")
                         .HasForeignKey("schliessanlagenId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1833,45 +1841,72 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Navigation("Profil_Knaufzylinder");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.ValueOptions.Knayf_Options", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.System.ProductGalery", b =>
                 {
-                    b.HasOne("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Profil_Knaufzylinder_Options", "Options")
-                        .WithMany("options")
-                        .HasForeignKey("OptionsId");
+                    b.HasOne("schliessanlagen_konfigurator.Models.Aussen_Rund.Aussenzylinder_Rundzylinder", "Aussenzylinder_Rundzylinder")
+                        .WithMany("ProductGalery")
+                        .HasForeignKey("Aussenzylinder_RundzylinderId");
 
-                    b.Navigation("Options");
+                    b.HasOne("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.Profil_Doppelzylinder", "DopelZylinder")
+                        .WithMany("ProductGalery")
+                        .HasForeignKey("DopelZylinderId");
+
+                    b.HasOne("schliessanlagen_konfigurator.Models.Hebel.Hebel", "Hebel")
+                        .WithMany("ProductGalery")
+                        .HasForeignKey("HebelId");
+
+                    b.HasOne("schliessanlagen_konfigurator.Models.Halbzylinder.Profil_Halbzylinder", "Profil_Halbzylinder")
+                        .WithMany("ProductGalery")
+                        .HasForeignKey("Profil_HalbzylinderId");
+
+                    b.HasOne("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Profil_Knaufzylinder", "Profil_Knaufzylinder")
+                        .WithMany("ProductGalery")
+                        .HasForeignKey("Profil_KnaufzylinderId");
+
+                    b.HasOne("schliessanlagen_konfigurator.Models.System.SysteamPriceKey", "SysteamPriceKey")
+                        .WithMany("ProductGalery")
+                        .HasForeignKey("SysteamPriceKeyId");
+
+                    b.HasOne("schliessanlagen_konfigurator.Models.Vorhan.Vorhangschloss", "Vorhangschloss")
+                        .WithMany("ProductGalery")
+                        .HasForeignKey("VorhangschlossId");
+
+                    b.Navigation("Aussenzylinder_Rundzylinder");
+
+                    b.Navigation("DopelZylinder");
+
+                    b.Navigation("Hebel");
+
+                    b.Navigation("Profil_Halbzylinder");
+
+                    b.Navigation("Profil_Knaufzylinder");
+
+                    b.Navigation("SysteamPriceKey");
+
+                    b.Navigation("Vorhangschloss");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.ValueOptions.Knayf_Options_value", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.System.SystemOptionInfo", b =>
                 {
-                    b.HasOne("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.ValueOptions.Knayf_Options", "Knayf_Options")
-                        .WithMany("Knayf_Options_value")
-                        .HasForeignKey("Knayf_OptionsId");
-
-                    b.Navigation("Knayf_Options");
-                });
-
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.SystemOptionInfo", b =>
-                {
-                    b.HasOne("schliessanlagen_konfigurator.Models.SystemOptionen", "Options")
+                    b.HasOne("schliessanlagen_konfigurator.Models.System.SystemOptionen", "Options")
                         .WithMany("SystemOptionInfo")
                         .HasForeignKey("OptionsId");
 
                     b.Navigation("Options");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.SystemOptionValue", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.System.SystemOptionValue", b =>
                 {
-                    b.HasOne("schliessanlagen_konfigurator.Models.SystemOptionInfo", "SysteamPriceKey")
+                    b.HasOne("schliessanlagen_konfigurator.Models.System.SystemOptionInfo", "SysteamPriceKey")
                         .WithMany("SystemOptionValue")
                         .HasForeignKey("SysteamPriceKeyId");
 
                     b.Navigation("SysteamPriceKey");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.SystemOptionen", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.System.SystemOptionen", b =>
                 {
-                    b.HasOne("schliessanlagen_konfigurator.Models.SysteamPriceKey", "System")
+                    b.HasOne("schliessanlagen_konfigurator.Models.System.SysteamPriceKey", "System")
                         .WithMany("SystemOptionen")
                         .HasForeignKey("SystemId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1880,9 +1915,9 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Navigation("System");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.SystemScheker", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.System.SystemScheker", b =>
                 {
-                    b.HasOne("schliessanlagen_konfigurator.Models.SystemOptionInfo", "cheker")
+                    b.HasOne("schliessanlagen_konfigurator.Models.System.SystemOptionInfo", "cheker")
                         .WithMany("SystemScheker")
                         .HasForeignKey("chekerId");
 
@@ -1938,7 +1973,7 @@ namespace schliessanlagen_konfigurator.Migrations
 
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Vorhan.Size", b =>
                 {
-                    b.HasOne("schliessanlagen_konfigurator.Models.Vorhangschloss", "Vorhangschloss")
+                    b.HasOne("schliessanlagen_konfigurator.Models.Vorhan.Vorhangschloss", "Vorhangschloss")
                         .WithMany("Size")
                         .HasForeignKey("VorhangschlossId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1949,16 +1984,16 @@ namespace schliessanlagen_konfigurator.Migrations
 
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Vorhan.Vorhan_Options", b =>
                 {
-                    b.HasOne("schliessanlagen_konfigurator.Models.Vorhangschloss", "Vorhangschloss")
+                    b.HasOne("schliessanlagen_konfigurator.Models.Vorhan.Vorhangschloss", "Vorhangschloss")
                         .WithMany("Vorhan_Options")
                         .HasForeignKey("VorhangschlossId");
 
                     b.Navigation("Vorhangschloss");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Vorhangschloss", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Vorhan.Vorhangschloss", b =>
                 {
-                    b.HasOne("schliessanlagen_konfigurator.Models.Schliessanlagen", "Schliessanlagen")
+                    b.HasOne("schliessanlagen_konfigurator.Models.System.Schliessanlagen", "Schliessanlagen")
                         .WithMany("Vorhangschloss")
                         .HasForeignKey("schliessanlagenId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1977,11 +2012,16 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Navigation("Aussen_Rund_all");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Aussenzylinder_Rundzylinder", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Aussen_Rund.Aussenzylinder_Rundzylinder", b =>
                 {
                     b.Navigation("Aussen_Rund_options");
 
                     b.Navigation("ProductGalery");
+                });
+
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Halbzylinder.Halbzylinder_Options", b =>
+                {
+                    b.Navigation("Halbzylinder_Options_value");
                 });
 
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Halbzylinder.Profil_Halbzylinder", b =>
@@ -1998,29 +2038,24 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Navigation("Halbzylinder_Options");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Halbzylinder.ValueOptions.Halbzylinder_Options", b =>
-                {
-                    b.Navigation("Halbzylinder_Options_value");
-                });
-
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Hebel", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Hebel.Hebel", b =>
                 {
                     b.Navigation("Hebelzylinder_Options");
 
                     b.Navigation("ProductGalery");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Hebelzylinder.Hebelzylinder_Options", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Hebel.Hebelzylinder_Options", b =>
                 {
                     b.Navigation("Options");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Hebelzylinder.Options", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Hebel.Options", b =>
                 {
                     b.Navigation("Options_value");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Orders", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.OrdersOpen.Orders", b =>
                 {
                     b.Navigation("isOpen_Order");
                 });
@@ -2040,6 +2075,11 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Navigation("Doppel_Innen_klein");
                 });
 
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.NGF", b =>
+                {
+                    b.Navigation("NGF_Value");
+                });
+
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.Profil_Doppelzylinder", b =>
                 {
                     b.Navigation("Aussen_Innen");
@@ -2054,9 +2094,14 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Navigation("NGF");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.ValueOptions.NGF", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Aussen_Innen_Knauf", b =>
                 {
-                    b.Navigation("NGF_Value");
+                    b.Navigation("Aussen_Innen_Knauf_klein");
+                });
+
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Knayf_Options", b =>
+                {
+                    b.Navigation("Knayf_Options_value");
                 });
 
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Profil_Knaufzylinder", b =>
@@ -2073,12 +2118,7 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Navigation("options");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.ValueOptions.Knayf_Options", b =>
-                {
-                    b.Navigation("Knayf_Options_value");
-                });
-
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Schliessanlagen", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.System.Schliessanlagen", b =>
                 {
                     b.Navigation("Aussenzylinder_Rundzylinder");
 
@@ -2093,21 +2133,21 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Navigation("Vorhangschloss");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.SysteamPriceKey", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.System.SysteamPriceKey", b =>
                 {
                     b.Navigation("ProductGalery");
 
                     b.Navigation("SystemOptionen");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.SystemOptionInfo", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.System.SystemOptionInfo", b =>
                 {
                     b.Navigation("SystemOptionValue");
 
                     b.Navigation("SystemScheker");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.SystemOptionen", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.System.SystemOptionen", b =>
                 {
                     b.Navigation("SystemOptionInfo");
                 });
@@ -2134,7 +2174,7 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Navigation("Options");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Vorhangschloss", b =>
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Vorhan.Vorhangschloss", b =>
                 {
                     b.Navigation("ProductGalery");
 

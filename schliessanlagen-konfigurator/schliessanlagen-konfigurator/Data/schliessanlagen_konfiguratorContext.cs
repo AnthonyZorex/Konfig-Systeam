@@ -108,9 +108,7 @@ namespace schliessanlagen_konfigurator.Data
         public DbSet<Knayf_Options> Knayf_Options { get; set; }
         public DbSet<Knayf_Options_value> Knayf_Options_value { get; set; }
         public DbSet<Profil_Knaufzylinder_Options> Profil_Knaufzylinder_Options { get; set; }
-
-
-        
+        public DbSet<Aussen_Innen_Knauf_klein> Aussen_Innen_Knauf_klein { get; set; }
 
     }
 

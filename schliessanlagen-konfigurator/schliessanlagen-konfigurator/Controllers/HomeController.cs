@@ -1342,7 +1342,15 @@ namespace schliessanlagen_konfigurator.Controllers
                 ViewBag.Size = Size;
 
                 ViewBag.System = db.SysteamPriceKey.Select(x => x.NameSysteam).ToList();
+               
+                var KleidKnayfSize = db.Aussen_Innen_Knauf_klein.Where(x => x.Aussen_Innen_KnaufId == Size[0].Id).ToList();
 
+                if (KleidKnayfSize.Count > 0)
+                {
+                    ViewBag.KleinAussen = Size[0];
+                }
+
+                ViewBag.KnayfKleinSize = KleidKnayfSize;
             }
             else
             {
@@ -2809,6 +2817,16 @@ namespace schliessanlagen_konfigurator.Controllers
 
             for (int i = 0; i < a.Count(); i++)
             {
+                if (i == 0)
+                {
+                    var klein = db.Aussen_Innen_Knauf_klein.Where(x => x.Aussen_Innen_KnaufId == Size[i].Id).ToList();
+
+                    foreach (var list in klein)
+                    {
+                        db.Aussen_Innen_Knauf_klein.Remove(list);
+                        db.SaveChanges();
+                    }
+                }
                 db.Aussen_Innen_Knauf.Remove(Size[i]);
                 db.SaveChanges();
             }
@@ -3830,7 +3848,16 @@ namespace schliessanlagen_konfigurator.Controllers
 
             ViewBag.Galry = Galery;
 
-            var SizeHalbzylinder = db.Aussen_Innen_Knauf.Where(x => x.Profil_KnaufzylinderId == profil_Halbzylinder.Id).ToList();
+            var SizeKnyfzylinder = db.Aussen_Innen_Knauf.Where(x => x.Profil_KnaufzylinderId == profil_Halbzylinder.Id).ToList();
+
+            var KnayfKleinSize = db.Aussen_Innen_Knauf_klein.Where(x => x.Aussen_Innen_KnaufId == SizeKnyfzylinder[0].Id).ToList();
+
+            if (KnayfKleinSize.Count > 0)
+            {
+                ViewBag.KleinAussen = SizeKnyfzylinder[0];
+            }
+
+            ViewBag.KnayfKleinSize = KnayfKleinSize;
 
             var options = db.Profil_Knaufzylinder_Options.Where(x => x.Profil_KnaufzylinderId == Knayf.Id).ToList();
 
@@ -3871,7 +3898,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 ViewBag.CountOptions = countV.ToList();
                 ViewBag.OptionValue = ValueOption;
 
-                ViewBag.Size = SizeHalbzylinder;
+                ViewBag.Size = SizeKnyfzylinder;
 
                 ViewBag.optionV = true;
             }
@@ -4518,7 +4545,8 @@ namespace schliessanlagen_konfigurator.Controllers
 
         [HttpPost]
         public async Task<IActionResult> SaveProfil_Knaufzylinder(Profil_Knaufzylinder profil_Knayf,List<int> SizeAus, List<int> SizeInen, List<string> Options,List<string> ImageNameOption,
-        List<string> Descriptions, List<string> valueNGF, List<float> costNGF, List<int> inputCounter, List<float> costSizeAussen, List<float> costSizeIntern, List<IFormFile> UploadGalleryImages, List<string> GalleryImages)
+        List<string> Descriptions, List<string> valueNGF, List<float> costNGF, List<int> inputCounter, List<float> costSizeAussen, List<float> costSizeIntern, List<IFormFile> UploadGalleryImages, List<string> GalleryImages,
+        List<float> internDoppelKlein, List<float> priesDoppelKlein, float ausKlein, float ausKleinPreis)
         {
             var Items = db.Profil_Knaufzylinder.Find(profil_Knayf.Id);
             Items.schliessanlagenId = profil_Knayf.schliessanlagenId;
@@ -4661,23 +4689,63 @@ namespace schliessanlagen_konfigurator.Controllers
             }
 
             var KnayfItemSize_Cost = db.Aussen_Innen_Knauf.Where(x => x.Profil_KnaufzylinderId == profil_Knayf.Id).ToList();
+            var KnayfKleinIten = db.Aussen_Innen_Knauf_klein.Where(x => x.Aussen_Innen_KnaufId == KnayfItemSize_Cost[0].Id).ToList();
+
+            foreach (var list in KnayfKleinIten)
+            {
+                db.Aussen_Innen_Knauf_klein.Remove(list);
+            }
+            db.SaveChanges();
+
             foreach (var list in KnayfItemSize_Cost)
             {
                 db.Aussen_Innen_Knauf.Remove(list);
             }
             db.SaveChanges();
 
-            for (int i = 0; i < SizeAus.Count(); i++)
+            if (ausKlein != 0)
             {
-                var SizeV = new Aussen_Innen_Knauf
+                var ausse_innenklein = new Aussen_Innen_Knauf
                 {
                     Profil_KnaufzylinderId = Items.Id,
-                    aussen = SizeAus[i],
-                    Intern = SizeInen[i],
-                    costSizeAussen = costSizeAussen[i],
-                    costSizeIntern = costSizeIntern[i]
+                    aussen = ausKlein,
+                    costSizeAussen = ausKleinPreis,
+                    costSizeIntern = 0,
+                    Intern = 0
                 };
-                db.Aussen_Innen_Knauf.Add(SizeV);
+                db.Aussen_Innen_Knauf.Add(ausse_innenklein);
+                db.SaveChanges();
+
+                for (int f = 0; f < internDoppelKlein.Count(); f++)
+                {
+                    var KnayfInternKlein = new Aussen_Innen_Knauf_klein
+                    {
+                        Aussen_Innen_KnaufId = ausse_innenklein.Id,
+                        Intern = internDoppelKlein[f],
+                        costSizeIntern = priesDoppelKlein[f]
+                    };
+                    db.Aussen_Innen_Knauf_klein.Add(KnayfInternKlein);
+                    db.SaveChanges();
+                }
+            }
+
+            for (int i = 0; i < SizeAus.Count(); i++)
+            {
+                var klein = db.Aussen_Innen_Knauf.FirstOrDefault(x => x.Profil_KnaufzylinderId == Items.Id && x.aussen == SizeAus[i]);
+
+                if (klein == null)
+                {
+                    var SizeV = new Aussen_Innen_Knauf
+                    {
+                        Profil_KnaufzylinderId = Items.Id,
+                        aussen = SizeAus[i],
+                        Intern = SizeInen[i],
+                        costSizeAussen = costSizeAussen[i],
+                        costSizeIntern = costSizeIntern[i],
+                    };
+                    db.Aussen_Innen_Knauf.Add(SizeV);
+                }
+
             }
             db.SaveChanges();
             return RedirectToAction("Profil_KnaufzylinderRout");

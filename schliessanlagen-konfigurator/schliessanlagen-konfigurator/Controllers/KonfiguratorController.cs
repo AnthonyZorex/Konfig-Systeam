@@ -782,25 +782,30 @@ namespace schliessanlagen_konfigurator.Controllers
             ViewBag.DoppelIntern = ListInternDopple.Distinct();
 
 
-            var b = db.Aussen_Innen_Knauf.Select(x => x.aussen).Distinct().OrderBy(x => x).ToList();
-            var ba = db.Aussen_Innen_Knauf.Select(x => x.Intern).Distinct().OrderBy(x => x).ToList();
+            var KnayfAussen = db.Aussen_Innen_Knauf.Select(x => x.aussen).Distinct().OrderBy(x => x).ToList();
+            var KnayfIntern = db.Aussen_Innen_Knauf.Select(x => x.Intern).Distinct().OrderBy(x => x).ToList();
             var KnayfOptions = db.Knayf_Options.Select(x => x.Name).ToList();
 
             var listKnayfAussen = new List<float>();
             var listKnayfIntern = new List<float>();
             var KnayfListOptions = new List<string>();
 
-            for (int i = 0; i < b.Count(); i++)
+            for (int i = 0; i < KnayfAussen.Count(); i++)
             {
-                if (b[i] != 0)
+                if (KnayfAussen[i] != 0)
                 {
-                    listKnayfAussen.Add(b[i]);
+                    listKnayfAussen.Add(KnayfAussen[i]);
                 }              
             }
                 
 
-            for (int i = 0; i < ba.Count(); i++)
-                listKnayfIntern.Add(ba[i]);
+            for (int i = 0; i < KnayfIntern.Count(); i++)
+            {
+                if (KnayfIntern[i] != 0)
+                {
+                    listKnayfIntern.Add(KnayfIntern[i]);
+                }
+            }
 
             var c = db.Aussen_Innen_Halbzylinder.Select(x => x.aussen).Distinct().OrderBy(x => x).ToList();
 
@@ -4534,24 +4539,71 @@ namespace schliessanlagen_konfigurator.Controllers
                                          Id = t2.Aussen_InnenId
                                      };
 
-                    var ListOrder = queryOrder.Distinct().ToList();
+                    var ListOrder = queryOrder.Distinct().ToList();  
 
                     if (ListOrder.Count() > 0)
                     {
                         var f = db.Aussen_Innen.FirstOrDefault(x => x.Id == ListOrder[0].Id);
-
-                        foreach (var list in f.Doppel_Innen_klein)
+                        
+                        if(f.aussen == aussen)
                         {
-                            if (list.Intern <= order.innen)
+                            foreach (var list in f.Doppel_Innen_klein)
                             {
-                                nÍtem.Price = nÍtem.Price + list.costSizeIntern;
-                            }
-                            else
-                            {
-                                nÍtem.Price = nÍtem.Price + list.costSizeIntern;
-                                break;
+                                if (list.Intern <= order.innen)
+                                {
+                                    nÍtem.Price = nÍtem.Price + list.costSizeIntern;
+                                }
+                                else
+                                {
+                                    nÍtem.Price = nÍtem.Price + list.costSizeIntern;
+                                    break;
+                                }
                             }
                         }
+                        else
+                        {
+                            foreach (var ine in innenSize)
+                            {
+                                if (ine < order.innen)
+                                {
+                                    if (countZylinder.Count() > CountAussenDoppel)
+                                    {
+                                        for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
+                                        {
+                                            var costIntern = DoppelSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
+                                            nÍtem.Price = nÍtem.Price + costIntern;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        var costIntern = DoppelSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
+                                        nÍtem.Price = nÍtem.Price + costIntern;
+                                    }
+                                }
+                                else
+                                {
+                                    if (countZylinder.Count() > CountAussenDoppel)
+                                    {
+                                        for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
+                                        {
+                                            var costIntern = DoppelSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
+                                            nÍtem.Price = nÍtem.Price + costIntern;
+                                            innen = ine;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        var costIntern = DoppelSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
+                                        nÍtem.Price = nÍtem.Price + costIntern;
+                                        innen = ine;
+                                    }
+
+                                    break;
+                                }
+
+                            }
+                        }
+                        
 
                     }
                     else
@@ -4759,17 +4811,25 @@ namespace schliessanlagen_konfigurator.Controllers
 
                var ListDoppelKlein = queryOrder.Distinct().ToList();
 
-                if (ListDoppelKlein.Count() > 0)
+                if (ListDoppelKlein.Count() > 0 )
                 {
                     var f = db.Aussen_Innen.FirstOrDefault(x => x.Id == ListDoppelKlein[0].Id);
-
-                    foreach (var s in f.Doppel_Innen_klein)
+                   
+                    if (f.aussen == Aussenitem)
                     {
-                        inter.Add(s.Intern);
-                    }
-                    var Innenitem = f.Doppel_Innen_klein.Where(x => x.Intern > list.innen || x.Intern == list.innen).Min(x => x.Intern);
+                        foreach (var s in f.Doppel_Innen_klein)
+                        {
+                            inter.Add(s.Intern);
+                        }
+                        var Innenitem = f.Doppel_Innen_klein.Where(x => x.Intern > list.innen || x.Intern == list.innen).Min(x => x.Intern);
 
-                    InenActual.Add(Innenitem);
+                        InenActual.Add(Innenitem);
+                    }
+                    else
+                    {
+                        var Innenitem = DoppelSize.Where(x => x.Intern > list.innen || x.Intern == list.innen).Min(x => x.Intern);
+                        InenActual.Add(Innenitem);
+                    }
                 }
                 else
                 {
@@ -5056,7 +5116,8 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var doppelKleinSize = AussenInen.First().Doppel_Innen_klein;
 
-                if (doppelKleinSize.Count() > 0)
+
+                if (doppelKleinSize.Count() > 0 && AussenInen.First().aussen == DaussenActual.First())
                 {
                     ViewBag.DopelzylinderIntern = doppelKleinSize.Select(x => x.Intern).ToList();
                     ViewBag.CostDoppelIntern = JsonConvert.SerializeObject(AussenInen.Select(x => x.costSizeIntern).Skip(1).ToList());

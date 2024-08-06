@@ -1,6 +1,9 @@
 ﻿@model schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Profil_Knaufzylinder;
 @{
     ViewData["Title"] = "Profil Knaufzylinder";
+    var kleinAussen = ViewBag.KleinAussen;
+    var resultAussen = (kleinAussen != null) ? kleinAussen.aussen : 0;
+    var resultPreis = (kleinAussen != null) ? kleinAussen.costSizeAussen : 0;
 }
 @if (User.IsInRole("admin"))
 {
@@ -117,6 +120,47 @@
                                    
                                 </div>
                             </div>
+
+                            <div id="Aussen_innen_klein">
+                                <h5>Für zylinder aussen klein</h5>
+                                <div id="kleinGrose">
+                                    <div>
+                                        <div>
+                                            <h5>Aussen</h5>
+                                            <input type="number" value="@resultAussen" name="ausKlein" />
+                                        </div>
+                                        <div>
+                                            <h5>Preis</h5>
+                                            <input type="number" step="0,00" value="@resultPreis" name="ausKleinPreis" />
+                                        </div>
+                                    </div>
+                                    <div class="arrow-right">
+                                    </div>
+                                    <div>
+                                        <table class="table">
+                                            <thead>
+                                                <tr class="table-dark">
+                                                    <th scope="col">Wert</th>
+                                                    <th scope="col">Preis</th>
+                                                    <th scope="col"><button type="button" onclick="PlusKleinIntert()" class="btn btn-success">+</button><button type="button" class="btn btn-danger" onclick="MinusKleinIntern()">-</button></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="kleiIntern">
+
+                                                @foreach (var list in ViewBag.KnayfKleinSize)
+                                                {
+                                                    <tr class="table-info">
+                                                        <th scope="row"><input name="internDoppelKlein" value="@list.Intern" type="number" step="0,01" /></th>
+                                                        <td><input name="priesDoppelKlein" type="number" value="@list.costSizeIntern" step="0,01" /></td>
+                                                    </tr>
+                                                }
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
                             <div id="productOptions">
                             </div>
 
@@ -168,6 +212,42 @@
                                     <input type="number" class="form-control" required placeholder="innen" id="inter" step="0.01" name="innen" />
                                     <input type="number" class="form-control" placeholder="Price" name="costSizeIntern" id="interCost" step="0.01" />
                                 </div>
+                            </div>
+
+                            <div id="Aussen_innen_klein">
+                                <h5>Für zylinder aussen klein</h5>
+                                <div id="kleinGrose">
+                                    <div id="kleinSize">
+                                        <div>
+                                            <h5>Aussen</h5>
+                                            <input type="number" value="0" name="ausKlein" />
+                                        </div>
+                                        <div>
+                                            <h5>Preis</h5>
+                                            <input type="number" step="0,00" value="0" name="ausKleinPreis" />
+                                        </div>
+                                    </div>
+                                    <div class="arrow-right">
+                                    </div>
+                                    <div>
+                                        <table class="table">
+                                            <thead>
+                                                <tr class="table-dark">
+                                                    <th scope="col">Wert</th>
+                                                    <th scope="col">Preis</th>
+                                                    <th scope="col"><button type="button" onclick="PlusKleinIntert()" class="btn btn-success">+</button><button type="button" class="btn btn-danger" onclick="MinusKleinIntern()">-</button></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="kleiIntern">
+                                                <tr class="table-info">
+                                                    <th scope="row"><input name="internDoppelKlein" type="number" step="0,01" /></th>
+                                                    <td><input name="priesDoppelKlein" type="number" step="0,01" /></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
                             </div>
                             <div id="productOptions">
                             </div>
@@ -234,6 +314,34 @@
     <script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script>
 
     <script type="text/javascript">
+
+        let table = document.getElementById("kleiIntern");
+
+        function PlusKleinIntert() 
+        {
+            let row = `   <tr class="table-info">
+                                    <th scope="row"><input
+                                   name="internDoppelKlein" type="number" step="0,01" /></th>
+                                       <td><input name="priesDoppelKlein" step="0,01" type="number" /></td>
+                            </tr> `;
+
+            table.insertAdjacentHTML('beforeend', row);
+        }
+
+        function MinusKleinIntern() 
+        {
+            let countelem = table.querySelectorAll("tr");
+
+            let kleinSize = document.getElementById("Aussen_innen_klein");
+
+            if (countelem.length == 0) {
+                kleinSize.remove();
+            }
+            else {
+                countelem[countelem.length - 1].remove();
+            }
+        }
+
 
         tinymce.init({
             selector: '#exampleFormControlTextarea1',
