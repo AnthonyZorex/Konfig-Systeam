@@ -1,11 +1,14 @@
 ﻿@model schliessanlagen_konfigurator.Models.ProfilDopelZylinder.Profil_Doppelzylinder;
 
 @{
+    var kleinAussen = ViewBag.KleinAussen;
     ViewData["Title"] = $"Edit/{Model.Id}";
     int count = -1;
     int f = -1;
     int r = -1;
     int galeryCheker = 0;
+    var resultAussen = (kleinAussen != null) ? kleinAussen.aussen : 0;
+    var resultPreis = (kleinAussen != null) ? kleinAussen.costSizeAussen : 0;
 }
 @if (User.IsInRole("admin"))
 {
@@ -107,18 +110,18 @@
                    
                 </div>
 
-                <h5>Für zylinder aussen klein</h5>
+               
                     <div id="Aussen_innen_klein">
-
+                    <h5>Für zylinder aussen klein</h5>
                         <div id="kleinGrose">
                             <div>
                                 <div>
                                     <h5>Aussen</h5>
-                                    <input type="number" value="0" name="ausKlein" />
+                                <input type="number" value="@resultAussen" name="ausKlein" />
                                 </div>
                                 <div>
                                     <h5>Preis</h5>
-                                    <input type="number" step="0,00" value="0" name="ausKleinPreis" />
+                                <input type="number" step="0,00" value="@resultPreis" name="ausKleinPreis" />
                                 </div>
                             </div>
                             <div class="arrow-right">
@@ -240,9 +243,18 @@
                 table.insertAdjacentHTML('beforeend', row);
             }
 
-            function MinusKleinIntern() {
+            function MinusKleinIntern() 
+            {
                 let countelem = table.querySelectorAll("tr");
-                countelem[countelem.length - 1].remove();
+
+                let kleinSize = document.getElementById("Aussen_innen_klein");
+
+                if (countelem.length == 0) {
+                    kleinSize.remove();
+                }
+                else {
+                    countelem[countelem.length - 1].remove();
+                }
             }
 
             let Galery = document.getElementById("Galerry");
@@ -590,6 +602,7 @@
                     d.setAttribute('name', 'costNGF');
                     d.setAttribute('placeholder', 'costNGF');
                     d.setAttribute('class', 'form-control');
+
                     let x = document.createElement('input');
                     x.setAttribute('name', 'valueNGF');
                     x.setAttribute('placeholder', 'valueNGF');

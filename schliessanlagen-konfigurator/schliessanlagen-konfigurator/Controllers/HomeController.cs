@@ -1234,7 +1234,6 @@ namespace schliessanlagen_konfigurator.Controllers
         {
             if (id != 0)
             {
-
                 var allSystem = db.SysteamPriceKey.Select(x => x.NameSysteam).ToList();
 
                 ViewBag.System = allSystem;
@@ -1276,6 +1275,15 @@ namespace schliessanlagen_konfigurator.Controllers
                 var Size = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == Example.Id).ToList();
                 
                 ViewBag.Size = Size;
+
+                var kleidDoppelSize = db.Doppel_Innen_klein.Where(x => x.Aussen_InnenId == Size[0].Id).ToList();
+
+                if (kleidDoppelSize.Count > 0)
+                {
+                    ViewBag.KleinAussen = Size[0];
+                }
+
+                ViewBag.DoppelKleinSize = kleidDoppelSize;
 
                 var AllDoppel = await db.Profil_Doppelzylinder.OrderBy(x => x.Price).Select(x => x.NameSystem).ToListAsync();
 
@@ -1540,7 +1548,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
             }
             
-            if (ausKlein != null)
+            if (ausKlein != 0)
             {
                 var ausse_innenklein = new Aussen_Innen
                 {
@@ -3239,6 +3247,11 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var kleidDoppelSize = db.Doppel_Innen_klein.Where(x => x.Aussen_InnenId == SizeDoppel[0].Id).ToList();
 
+                if (kleidDoppelSize.Count>0)
+                {
+                    ViewBag.KleinAussen = SizeDoppel[0];
+                }
+
                 ViewBag.DoppelKleinSize = kleidDoppelSize;
 
                 if (options != null)
@@ -3540,7 +3553,7 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             db.SaveChanges();
 
-            if (ausKlein != null)
+            if (ausKlein != 0)
             {
                 var ausse_innenklein = new Aussen_Innen
                 {
@@ -3568,15 +3581,21 @@ namespace schliessanlagen_konfigurator.Controllers
 
             for (int i = 0; i < SizeAus.Count(); i++)
             {
-                var SizeV = new Aussen_Innen
+                var klein = db.Aussen_Innen.FirstOrDefault(x => x.Profil_DoppelzylinderId == Items.Id && x.aussen == SizeAus[i]);
+                
+                if (klein == null)
                 {
-                    Profil_DoppelzylinderId = Items.Id,
-                    aussen = SizeAus[i],
-                    Intern = SizeInen[i],
-                    costSizeAussen = costSizeAussen[i],
-                    costSizeIntern = costSizeIntern[i],
-                };
-                db.Aussen_Innen.Add(SizeV);
+                    var SizeV = new Aussen_Innen
+                    {
+                        Profil_DoppelzylinderId = Items.Id,
+                        aussen = SizeAus[i],
+                        Intern = SizeInen[i],
+                        costSizeAussen = costSizeAussen[i],
+                        costSizeIntern = costSizeIntern[i],
+                    };
+                    db.Aussen_Innen.Add(SizeV);
+                }
+              
             }
             db.SaveChanges();
 
