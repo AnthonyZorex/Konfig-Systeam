@@ -491,7 +491,6 @@
     }
 
     #itemKeyBlock {
-        margin-bottom: 23px;
         margin-left: 240px;
         display: flex;
         width: auto;
@@ -521,11 +520,12 @@
     }
 
     #inputCount {
+        height: 25px;
         text-align: center;
-        max-width: 30px;
+        max-width: 25px;
     }
 
-    #sclusselInfo2 {
+    #sclusselInfo2 {  
         height: 100px;
         width: 240px;
         padding: 5px;
@@ -587,12 +587,11 @@
 
     .TexCountTur {
         text-align: center;
-        align-items: center;
         display: flex;
         grid-template-columns: 30px;
-        background-color: #EDEDED;
-        padding: 5px;
-        width: auto;
+        background-color: #ededed;
+        align-items: center;
+        justify-content: center;
     }
     #inputTur {
         padding: 5px;
@@ -612,42 +611,49 @@
         padding-right: 8px ;
     }
 
-    #add_And_Minus {
-        background: red;
-        height: 45px;
-    }
+        #schlussel>img{
+            height:15px;
+            width:15px;
+        }
+
+        #add_And_Minus {
+            background: red;
+            height: 45px;
+        }
 
     #removeButtonTur {
         height: 20px;
         width: 20px;
-        font-size: 8px;
+        font-size: 12px;
         border-radius: 55px;
         transform: scale(0.7);
         font-weight: bold;
         border: none;
-        background: red;
-        color:white;
+        color: #fff;
+        background: transparent;
     }
 
     #addButtonTur {
         height: 20px;
         width: 20px;
         transform: scale(0.7);
-        font-size: 8px;
+        font-size: 12px;
         border-radius: 55px;
         font-weight: bold;
         border: none;
-        background: red;
-        color: white;
+        color: #fff;
+        background: transparent;
     }
 
     #turInfo {
-        display: flex;
-        border: 2px solid gray;
+        grid-template-columns: 235px auto;
+        display: grid;
+        border: 2px solid #808080;
     }
 
     #inputS {
-        margin-left: 40px;
+        height: 20px;
+        margin-left: 33px;
         width: 150px;
         margin-top: 165px;
         padding: 4px;
@@ -657,11 +663,12 @@
     #removeButton {
         height: 20px;
         width: 20px;
-        font-size: 6px;
+        font-size: 12px;
         border-radius: 55px;
         background: white;
         font-weight: bold;
-        color: red;
+        color: #fff;
+        background: transparent;
         border: none;
         margin-left: 10px;
     }
@@ -669,7 +676,7 @@
     #addButton {
         height: 20px;
         width: 20px;
-        font-size: 8px;
+        font-size: 12px;
         border-radius: 55px;
         font-weight: bold;
         background: red;
@@ -713,8 +720,9 @@
     }
 
     #schlussel2 {
-        gap: 10px;
-        transform: scale(0.7);
+        margin-top: 2px;
+        gap: 5px;
+        transform: scale(0.5);
         margin-left: -20px;
         display: flex;
     }
@@ -980,25 +988,24 @@
     }
 
     #chekerTur > button {
-        border-radius: 20%;
-        font-size: 8px;
-        height: 20px;
-        width: 20px;
+        font-size: 20px;
         border: none;
         background: transparent;
     }
 
-    #TypeSelectTurType 
-    {
+    #TypeSelectTurType {
+        margin-right: 0px !important;
+        margin-left: -5px;
+        transform: scale(0.8);
         height: 20px;
-        margin-right: 20px;
-        width: 100px;    
+        width: 100px;
     }
 
     #chekerTur {
-        margin-left: 10px;
+        margin-top: -5px;
+        align-items: baseline;
         display: flex;
-        gap:5px;
+        gap: 5px;
     }
 
    
@@ -1016,10 +1023,11 @@
         color: white;
         align-items: center;
         display: flex;
+        height: 25px;
     }
 
     #itemKeyBlock {
-        margin-bottom: 10px;
+        gap: 8px;
         margin-left: 500px;
         display: flex;
         width: auto;
@@ -1028,11 +1036,11 @@
 
     .checkboxContainer > input[type="checkbox"] {
         width: 15px;
-        height: 15px;
+        height: 30px;
     }
 
     .TexCount {
-        max-width: 42px;
+        max-width: 22px;
         text-align: center;
         display: grid;
         grid-template-columns: 30px;
@@ -1046,8 +1054,10 @@
     }
 
     #inputCount {
+        margin-left: -10px;
         text-align: center;
-        max-width: 30px;
+        max-width: 20px;
+        height: 20px;
     }
 
     #sclusselInfo2 {
@@ -1073,20 +1083,20 @@
         margin-bottom:10px;
     }
     #typeSylinder {
-        margin-right:5px;
-        margin-left: 5px;
+        margin-right: 5px;
+        margin-left: -10px;
         height: 15px;
         width: 15px;
     }
 
     .horizontal {
         display: flex;
-        gap: 10px;
         align-items: center;
     }
 
     #TypeSelectTurItem {
-        max-width: 40px;
+        transform: scale(0.8);
+        margin-left: -5px;
     }
 
     #InfoValue {
@@ -1106,18 +1116,27 @@
         display: flex;
         align-items: center;
     }
+    .checkboxContainer > input[type="checkbox"] {
+        width: 30px;
+        height: 15px;
+    }
 
     .TexCountTur {
         text-align: center;
-        align-items: center;
         display: flex;
         grid-template-columns: 30px;
-        background-color: #EDEDED;
-        padding: 5px;
-        width: 495px;
+        background-color: #ededed;
+        align-items: center;
+        justify-content: center;
+        max-width: 495px;
+    }
+    #infoButten {
+        transform: scale(0.8);
+        margin-top: 5px;
     }
 
     #inputTur {
+        transform: scale(0.8);
         padding: 5px;
         max-width: 120px;
         height: 20px;
@@ -1136,43 +1155,38 @@
     }
 
     #add_And_Minus {
-        background: red;
-        height: 45px;
+        align-items: self-end;
+        display: flex;
+        background: #f00;
+        height: 25px;
     }
 
     #removeButtonTur {
-        transform: scale(0.7);
-        height: 20px;
-        width: 20px;
-        border-radius: 55px;
+        background: transparent;
+        font-size: 20px;
         font-weight: bold;
-        background: red;
-        color: white;
-        font-size: 8px;
+        color: #fff;
         border: none;
         margin-left: 10px;
     }
 
     #addButtonTur {
-        transform: scale(0.7);
-        font-size: 8px;
-        height: 20px;
-        width: 20px;
-        border-radius: 55px;
+        background: transparent;
+        font-size: 20px;
         font-weight: bold;
-        background: red;
-        color:white;
+        color: #fff;
         border: none;
-        margin-left: 10px;
     }
 
     #turInfo {
-        display: flex;
-        border: 2px solid gray;
+        grid-template-columns: 495px auto;
+        display: grid;
+        border: 2px solid #808080;
     }
 
     #inputS {
-        margin-left: 40px;
+        height: 20px;
+        margin-left: 35px;
         width: 150px;
         margin-top: 165px;
         padding: 4px;
@@ -1180,25 +1194,19 @@
     }
 
     #removeButton {
-        height: 30px;
-        width: 30px;
-        border-radius: 55px;
-        background: white;
-        font-size: 8px;
+        background: transparent;
+        font-size: 20px;
         font-weight: bold;
-        color: red;
+        color: white;
         border: none;
         margin-left: 10px;
     }
 
     #addButton {
-        height: 30px;
-        width: 30px;
-        border-radius: 55px;
-        background: white;
-        font-size: 8px;
+        background: transparent;
+        font-size: 20px;
         font-weight: bold;
-        color: red;
+        color: white;
         border: none;
         margin-left: 10px;
     }
@@ -1210,7 +1218,12 @@
         font-size: 12px;
     }
 
-    
+    #infoButten {
+        margin-top: 6px;
+        height: 25px;
+        width: 25px;
+    }
+
     body {
         margin-bottom: 60px;
         font-family: "Inter", sans-serif;
@@ -1873,6 +1886,7 @@
     }
 
     #inputS {
+        height: 25px;
         margin-left: 40px;
         width: 150px;
         margin-top: 160px;
@@ -1887,8 +1901,9 @@
     }
 
     #inputCount {
+        height: 25px;
         text-align: center;
-        max-width: 30px;
+        max-width: 25px;
     }
 
     .TexCount {
@@ -1913,13 +1928,15 @@
 
     #typeSylinder {
         margin-left: -15px;
+        width: 20px !important;
+        height: 20px !important;
     }
 
     #sclusselInfo2 {
         justify-content: end;
         grid-template-columns: 40px 170px 100px 130px 120px;
         height: 100px;
-        width: 570px;
+        max-width: 570px;
         padding: 5px;
         background: #f00;
         color: #fff;
@@ -1940,11 +1957,9 @@
     }
 
     .TexCountTur {
-        justify-content: center;
         max-width: 570px;
-        text-align: center;
         display: flex;
-        background-color: #ededed;
+        justify-content: center;
     }
 
     .TexCountTurFinisher {
@@ -1971,7 +1986,7 @@
 
     #inputTur {
         margin-left: -50px;
-        transform: scale(0.7);
+        transform: scale(0.6);
         padding: 5px;
         max-width: 160px;
     }
@@ -1999,13 +2014,6 @@
             border: none;
             background:transparent;
         }
-
-    #infoButten {
-        height: 30px;
-        width: 30px;
-        padding: 5px;
-        margin-top: 5px;
-    }
 
     #positio {
         min-width: 35px;
@@ -2072,8 +2080,9 @@
     }
 
     #turInfo {
-        display: flex;
-        border: 2px solid gray;
+        grid-template-columns: 570px auto;
+        display: grid;
+        border: 2px solid #808080;
     }
 
     .checkboxContainer {
@@ -2095,7 +2104,7 @@
 
     .checkboxContainer > input[type="checkbox"] {
         width: 30px;
-        height: 28px;
+        height: 20px;
     }
 
 
@@ -3000,7 +3009,7 @@
     #itemKeyBlock {
         margin-left: 800px;
         display: flex;
-        width: 480px;
+        width: 500px;
         max-width: 500px;
         overflow-x: scroll;
     }
@@ -3197,8 +3206,9 @@
     }
 
     #turInfo {
-        display: flex;
-        border: 2px solid gray;
+        grid-template-columns: 800px auto;
+        display: grid;
+        border: 2px solid #808080;
     }
 
     .checkboxContainer {
