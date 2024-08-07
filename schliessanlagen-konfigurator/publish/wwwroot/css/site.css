@@ -5,6 +5,9 @@
     width: 1px;
     background-color: red;
 }
+body {
+    overflow-x: hidden;
+}
 .arrow-right {
     display: inline-block;
     width: 0;
@@ -13,6 +16,9 @@
     border-bottom: 10px solid transparent;
     border-left: 10px solid #000;
     margin-top: 30px;
+}
+.container {
+    background-color: #e4e4e4;
 }
 #kleinGrose {
     grid-template-columns: 200px 20px auto;
@@ -199,6 +205,22 @@
         display: block;
         gap: 150px;
     }
+        #product_desciptions > div > p > img {
+            margin-left: -85px;
+            transform: scale(0.7);
+        }
+
+        #product_desciptions > div > div > div > div > div > p > img {
+            margin-left: -85px;
+            transform: scale(0.7);
+        }
+
+        #product_desciptions > div > table {
+            margin-left: -180px;
+            transform: scale(.5);
+            border-collapse: collapse;
+        }
+
     .SizeProduct {
         display: flex;
         margin-bottom: 20px;
@@ -338,13 +360,14 @@
     }
     #counterTur 
     {       
-        margin-top: 10px;
+        margin-top: 5px;
         float: left;
         text-align: center;
     }
     #counterTur > img{
-        height:10px;
-        width:10px;
+        height:5px;
+        margin-left:5px;
+        width:5px;
     }
     .modalI {
         display: none;
@@ -480,7 +503,7 @@
     }
 
     #sclusselInfo {
-        height: 50px;
+        height: 25px;
         margin-left: 240px;
         padding: 5px;
         width: auto;
@@ -506,7 +529,7 @@
     }
 
     .TexCount {
-        max-width: 42px;
+        max-width: 35px;
         text-align: center;
         display: grid;
         grid-template-columns: 30px;
@@ -550,7 +573,7 @@
 
     .horizontal {
         display: flex;
-        gap: 20px;
+        gap: 10px;
         align-items: center;
     }
     #hilfeImg{
@@ -611,18 +634,21 @@
         margin-left: 2px !important;
         padding-right: 8px ;
     }
+    input[name="FurNameKey"]{
+        margin-left:-15px;
+    }
 
-        #schlussel > div > img {
-            height: 15px !important;
-            width: 15px !important;
-        }
+    #schlussel > div > img {
+        height: 15px !important;
+        width: 15px !important;
+    }
         #schlussel > div > p{
             font-size:6px !important;
         }
 
         #add_And_Minus {
             background: red;
-            height: 45px;
+            height: 25px;
         }
 
     #removeButtonTur {
@@ -650,7 +676,7 @@
     }
 
     #turInfo {
-        grid-template-columns: 235px auto;
+        grid-template-columns: 236px auto;
         display: grid;
         border: 2px solid #808080;
     }
@@ -793,6 +819,21 @@
         display: block;
         gap: 150px;
     }
+        #product_desciptions > div > p > img {
+            margin-left: -85px;
+            transform: scale(0.6);
+        }
+
+        #product_desciptions > div > div > div > div > div > p > img {
+            margin-left: -85px;
+            transform: scale(0.6);
+        }
+
+        #product_desciptions > div > table {
+            margin-left: -180px;
+            transform: scale(.5);
+            border-collapse: collapse;
+        }
     #ItemCounterOrders 
     {
         display: flex;
@@ -1217,7 +1258,17 @@
 }
 @media (min-width: 900px) and (max-width: 1440px) 
 {
-
+    #product_desciptions > div > p > img {
+        max-width: 500px;
+    }
+    #product_desciptions > div > div > div > div > div > p > img {
+        max-width: 500px;
+    }
+    #product_desciptions > div > table {
+        margin-left: -180px;
+        transform: scale(.6);
+        border-collapse: collapse;
+    }
     html {
         font-size: 12px;
     }
@@ -1782,7 +1833,7 @@
 
     #product_desciptions {
         margin-top: 20px;
-        max-width: 1100px;
+        max-width: 340px;
     }
 
     #closeMenu {
