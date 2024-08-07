@@ -51,25 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "70ef42ce-a67d-4f66-a24b-c36f9ad8b03f",
+                            Id = "d9e127d8-af19-42ea-8ffd-3a6facea7063",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "0a7ceb5b-6826-40ee-a458-268222ade998",
+                            Id = "353f12e2-4fcd-4ccf-a392-a6a26b2e8465",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "bbb9d7a7-c8c1-44eb-86bb-449257efd9d5",
+                            Id = "fcd64e2a-ac85-46aa-916c-908a3bf323e4",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "068a24a2-eacc-4e9d-beb6-ba94aeaf2279",
+                            Id = "17fb8d19-97c5-4a16-b9c7-f2fcdd6e4d79",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -1347,6 +1347,9 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     b.Property<int?>("KeyCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("Lieferzeit")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OrderStatus")
                         .HasColumnType("nvarchar(max)");

@@ -27,6 +27,7 @@ namespace schliessanlagen_konfigurator.Models.Users
         public float? KeyCost { get; set; }
         public string UserOrderKey { get; set; }
         public DateTime? createData { get; set; }
+        public string? Lieferzeit { get; set; }
         public string? UserId { get; set; }
         public User User { get; set; }
         public string? OrderStatus { get; set; }
