@@ -520,9 +520,10 @@
     }
 
     #inputCount {
-        height: 25px;
+        margin-left: -13px;
+        height: 20px;
         text-align: center;
-        max-width: 25px;
+        max-width: 20px;
     }
 
     #sclusselInfo2 {  
@@ -611,9 +612,12 @@
         padding-right: 8px ;
     }
 
-        #schlussel>img{
-            height:15px;
-            width:15px;
+        #schlussel > div > img {
+            height: 15px !important;
+            width: 15px !important;
+        }
+        #schlussel > div > p{
+            font-size:6px !important;
         }
 
         #add_And_Minus {
