@@ -2495,9 +2495,9 @@
                                         {
                                             if (Aussen.value > 29 || oldIntern.value > kleinKnayfPrice.length) 
                                             {
-                                                costItems.value = parseFloat(costItems.value) - (KnayfZiseNormal[i]);
+                                                costItems.value = parseFloat(costItems.value) - (priceKnayfInternCost[i]);
 
-                                                AllPrice.value = parseFloat(AllPrice.value) - (KnayfZiseNormal[i] * Number(countSchluss.value));
+                                                AllPrice.value = parseFloat(AllPrice.value) - (priceKnayfInternCost[i] * Number(countSchluss.value));
 
                                                 let Costen = AllPrice.value.replace(/,/g, '.');
 

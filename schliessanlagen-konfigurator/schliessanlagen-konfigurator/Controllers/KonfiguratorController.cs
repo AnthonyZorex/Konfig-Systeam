@@ -5229,13 +5229,33 @@ namespace schliessanlagen_konfigurator.Controllers
                 var KnayfInfo = db.Profil_Knaufzylinder.Where(x => x.NameSystem == Systeam).ToList();
                 ViewBag.KnayfZelinderJson = JsonConvert.SerializeObject(KnayfInfo.ToList());
 
-                var KnayfSize = db.Aussen_Innen_Knauf.Where(x => x.Profil_KnaufzylinderId == KnayfInfo[0].Id).ToList();
+                var KnayfSize = db.Aussen_Innen_Knauf.Include(x=>x.Aussen_Innen_Knauf_klein).Where(x => x.Profil_KnaufzylinderId == KnayfInfo[0].Id).ToList();
+
+                var KnayfKleinSize = KnayfSize.First().Aussen_Innen_Knauf_klein;
+
+                if (KnayfKleinSize.Count() > 0)
+                {
+                    ViewBag.KnayfZelinderIntern = KnayfKleinSize.Select(x => x.Intern).Distinct().ToList();
+                    ViewBag.KnayfInternCost = JsonConvert.SerializeObject(KnayfSize.Select(x => x.costSizeIntern).Skip(1).ToList());
+
+                    ViewBag.KnayfzylinderInternNormal = JsonConvert.SerializeObject(KnayfSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
+                    ViewBag.KnayfInternKlein = JsonConvert.SerializeObject(KnayfKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
+                    ViewBag.KnayfzylinderInternKleinPreis = JsonConvert.SerializeObject(KnayfKleinSize.Select(x => x.costSizeIntern).ToList());
+
+                }
+                else
+                {
+                    ViewBag.KnayfZelinderIntern = KnayfSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList();
+                    ViewBag.KnayfInternCost = JsonConvert.SerializeObject(KnayfSize.Select(x => x.costSizeIntern).ToList());
+
+                    ViewBag.KnayfzylinderInternNormal = JsonConvert.SerializeObject(KnayfSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
+                    ViewBag.KnayfInternKlein = JsonConvert.SerializeObject(KnayfKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
+                    ViewBag.KnayfzylinderInternKleinPreis = JsonConvert.SerializeObject(KnayfKleinSize.Select(x => x.costSizeIntern).Skip(1).ToList());
+                }
 
                 ViewBag.KnayfZelinderAussen = KnayfSize.Select(x => x.aussen).ToList();
-                ViewBag.KnayfZelinderIntern = KnayfSize.Select(x => x.Intern).ToList();
 
                 ViewBag.KnayfAussenCost = JsonConvert.SerializeObject(KnayfSize.Select(x => x.costSizeAussen).ToList());
-                ViewBag.KnayfInternCost = JsonConvert.SerializeObject(KnayfSize.Select(x => x.costSizeIntern).ToList());
 
                 var K_option = db.Profil_Knaufzylinder_Options.Where(x => x.Profil_KnaufzylinderId == KnayfInfo[0].Id).ToList();
 
@@ -5373,6 +5393,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 ViewBag.DoppelzylinderDescriptions = JsonConvert.SerializeObject(DoppelInfo.Select(x => x.description).ToList());
                 
                 var DSize = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == DoppelInfo[0].Id).ToList();
+
                 ViewBag.Dopelzylinderaussen = DSize.Select(x=>x.aussen).ToList();
                 ViewBag.DopelzylinderIntern = DSize.Select(x => x.Intern).ToList();
 
