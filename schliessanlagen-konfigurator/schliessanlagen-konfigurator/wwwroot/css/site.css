@@ -58,7 +58,12 @@
 #form-info > div {
     margin-top: 30px;
 }
-
+#card_controll {
+    gap: 5px;
+    display: flex;
+    border-top: 3px solid #f00;
+    padding: 10px;
+}
     .radio-container input[type="radio"] {
         display: none;
     }
@@ -171,15 +176,7 @@
 
     #blockSchrite {
         padding: 50px;
-        border-radius: 20px;
-        -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
-        -moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
-        box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
-        margin-top: 50px;
     }
-    /* Стиль для активного состояния чекбокса */
-
-
     .footer {
         background: #323232;
         color: white;
@@ -1394,8 +1391,6 @@
 
     #orderCostHeader {
         margin-left: auto;
-        display: flex;
-        gap: 50px;
     }
 
     #producktInfo {
@@ -2413,8 +2408,6 @@
 
     #orderCostHeader {
         margin-left: auto;
-        display: flex;
-        gap: 50px;
     }
 
     #producktInfo {
@@ -2443,10 +2436,6 @@
     #add_And_Minus {
         background: red;
         height: 45px;
-    }
-
-    .modal-content {
-        padding: 10px;
     }
 
     #routBAR {
@@ -2628,14 +2617,6 @@
         cursor: pointer;
         font-weight: bold;
         margin-top: -20px;
-    }
-    /* Modal content */
-    .modal-content {
-        background-color: #fefefe;
-        margin: 15% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
     }
 
     /* Close button */
@@ -3438,44 +3419,6 @@
         color: peachpuff;
         background: #323232;
     }
-
-    .modal {
-        display: none; /* По умолчанию модальное окно скрыто */
-        position: fixed; /* Фиксированное положение */
-        z-index: 1; /* Поверх всех остальных элементов */
-        left: 0;
-        top: 0;
-        width: 100%; /* Полная ширина */
-        height: 100%; /* Полная высота */
-        overflow: auto; /* Добавление прокрутки, если содержимое слишком большое */
-        background-color: rgba(0,0,0,0.4); /* Полупрозрачный фон */
-        padding-top: 60px; /* Отступ сверху */
-    }
-
-    /* Стили для содержимого модального окна */
-    .modal-content {
-        background-color: #fefefe;
-        margin: auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 55%;
-    }
-
-    /* Стили для кнопки закрытия модального окна */
-    .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-        text-align: end;
-    }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
 
     #FinihserCostInfo {
         display: flex;

@@ -14,14 +14,6 @@
     var countProduct = (List<int>)ViewData["CounterProduct"];
     var descriptions = (List<string>)ViewData["Descriptions"];
 }
-<style>
-    #card_controll
-    {
-        border-top: 3px solid red;
-        padding: 10px;
-    }
- 
-</style>
 
 <h3>@ViewData["Title"]</h3>
 <div class="row" style="overflow-y: auto;">
@@ -37,9 +29,6 @@
                         </div>
                         <div id="orderCostHeader">
                             <div>
-                                <h5>Menge</h5>
-                            </div>
-                            <div>
                                 <h5>Preis</h5>
                             </div>
                         </div>
@@ -48,7 +37,6 @@
                         <img src="@("/Image/Schliarticle.jpg")" data-bs-toggle="modal" data-bs-target="#myModal-@z" height="150" width="150" />
                         <h5>@orderList[z].ProductName</h5>
                         <div id="costedInfo">
-                            <input read readonly id="countOrderSysteam" value="@orderList[z].count" type="text" />
                             <h5 id="cost-@z">@orderList[z].OrderSum €</h5>
                         </div>
                     </div>
@@ -67,7 +55,7 @@
                                         <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                             <div class="row g-0">
                                                 <div class="col-md-4">
-                                                    <img src="@($"~/Image/{imageList[z]}")" class="img-fluid rounded-start" alt="...">
+                                                    <img src="@($"/Image/{imageList[z]}")" class="img-fluid rounded-start" alt="...">
                                                 </div>
                                                 <div class="col-md-8">
                                                     <div class="card-body">
