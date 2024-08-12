@@ -8,12 +8,33 @@
         Layout = "/Areas/Identity/Pages/_Layout.cshtml";
     }
 }
+<style>
+    #header_menu_personal{
+        border-bottom:3px solid #f00;
+        background: white;
+    }
+
+    .nav-pills .nav-link.active{
+        background-color: #f00;
+    }
+    #personal_menu_content{
+        background:white;
+    }
+
+    .nav-link {
+        color:black;
+    }
+    
+</style>
 
 <div>
-    <h2>Change your account settings</h2>
-    <hr />
-    <div class="row">
-        <div class="col-md-3" style="border-right:2px solid black">
+
+    <div id="header_menu_personal" class="row shadow-lg p-3 mb-2 bg-body-tertiary rounded">
+        <h2>Ändern Sie Ihre Kontoeinstellungen</h2>
+    </div>
+
+    <div class="row shadow-lg p-3 mb-5 bg-body-tertiary rounded" id="personal_menu_content">
+        <div class="col-md-3" style="border-right:3px solid #f00">
             <partial name="_ManageNav" />
         </div>
         <div class="col-md-9">

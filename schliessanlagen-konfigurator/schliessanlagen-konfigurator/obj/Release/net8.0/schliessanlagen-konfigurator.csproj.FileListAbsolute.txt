@@ -1798,7 +1798,6 @@ D:\Anthnony\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator
 D:\Anthnony\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\schliessanlagen-konfigurator.MvcApplicationPartsAssemblyInfo.cache
 D:\Anthnony\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\schliessanlagen-konfigurator.RazorAssemblyInfo.cache
 D:\Anthnony\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\schliessanlagen-konfigurator.RazorAssemblyInfo.cs
-D:\Anthnony\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\schliessanlagen-konfigurator.sourcelink.json
 D:\Anthnony\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\staticwebassets.build.json
 D:\Anthnony\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\staticwebassets.development.json
 D:\Anthnony\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Release\net8.0\staticwebassets\msbuild.schliessanlagen-konfigurator.Microsoft.AspNetCore.StaticWebAssets.props

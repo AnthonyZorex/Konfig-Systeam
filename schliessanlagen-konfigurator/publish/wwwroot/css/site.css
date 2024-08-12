@@ -1,42 +1,112 @@
-﻿.radio-container input[type="radio"] {
-    display: none;
+﻿html, body {
+    height: 100% !important;
+    margin-bottom: 60px;
+    font-family: "Fira Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-variation-settings: "slnt" 0;
 }
-#element::-webkit-scrollbar {
-    width: 1px;
-    background-color: red;
+.modal-backdrop {
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 1050;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
 }
-body {
-    overflow-x: hidden;
+.modal-header {
+    border-bottom: 3px solid #f00;
 }
-.arrow-right {
-    display: inline-block;
-    width: 0;
-    height: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: 10px solid #000;
+.modal-footer {
+    border-top: 3px solid #f00;
+}
+#Tabele {
+    margin-right: auto;
+    margin-left: auto;
+    width: 90%;
+}
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; 
+}
+.danger {
+    background-color: #f00;
+    color: white
+}
+.input-block > div > div {
     margin-top: 30px;
 }
-.container {
+.input-block {
+    margin-right: auto;
+    margin-left: auto;
+    width: 80%;
+    border-top: 3px solid #f00;
+}
+.content {
     background-color: #e4e4e4;
+    padding: 30px;
+    flex: 1;
 }
-#kleinGrose {
-    grid-template-columns: 200px 20px auto;
-    text-align: center;
-    justify-content: center;
-    align-self: self-end;
-    display: grid;
+#form-Size {
+    margin-right: auto;
+    margin-left: auto;
+    width: 80%;
+    border-top: 3px solid #f00;
 }
-.radio-container label {
-    display: inline-block;
-    cursor: pointer;
-    position: relative;
-    padding-left: 25px; /* расстояние между кнопкой и текстом */
-    margin-right: 15px; /* расстояние между кнопками */
-    font-size: 16px;
-    line-height: 20px;
+#form-info > div {
+    margin-top: 30px;
 }
 
+    .radio-container input[type="radio"] {
+        display: none;
+    }
+
+    #element::-webkit-scrollbar {
+        width: 1px;
+        background-color: red;
+    }
+
+    .arrow-right {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-left: 10px solid #000;
+        margin-top: 30px;
+    }
+
+    #Aussen_innen_klein > div {
+        margin-top: 30px;
+    }
+
+    #Aussen_innen_klein {
+        margin-right: auto;
+        margin-left: auto;
+        width: 80%;
+        border-top: 3px solid #f00;
+    }
+
+    #kleinGrose {
+        gap: 20px;
+        grid-template-columns: 200px 30px auto;
+        text-align: center;
+        justify-content: center;
+        align-self: self-end;
+        display: grid;
+    }
+
+    .radio-container label {
+        display: inline-block;
+        cursor: pointer;
+        position: relative;
+        padding-left: 25px; /* расстояние между кнопкой и текстом */
+        margin-right: 15px; /* расстояние между кнопками */
+        font-size: 16px;
+        line-height: 20px;
+    }
     /* Кастомная кнопка (круглый чекбокс) */
     .radio-container label:before {
         content: '';
@@ -49,42 +119,42 @@ body {
         border-radius: 50%; /* делаем круглым */
         background-color: #fff;
     }
+    /* Оформление для выбранной кастомной кнопки */
+    .radio-container input[type="radio"]:checked + label:before {
+        background-color: #007bff; /* цвет фона при выборе */
+        border-color: #007bff; /* цвет рамки при выборе */
+    }
 
-/* Оформление для выбранной кастомной кнопки */
-.radio-container input[type="radio"]:checked + label:before {
-    background-color: #007bff; /* цвет фона при выборе */
-    border-color: #007bff; /* цвет рамки при выборе */
-}
+    #rechnungSend {
+        display: none;
+    }
+    /* Оформление для текста рядом с кастомной кнопкой */
+    .radio-container label:after {
+        content: attr(data-label);
+        position: relative;
+        top: -1px; /* коррекция вертикального выравнивания */
+        left: 10px; /* отступ от кнопки до текста */
+    }
 
-#rechnungSend{
-    display:none;
-}
-/* Оформление для текста рядом с кастомной кнопкой */
-.radio-container label:after {
-    content: attr(data-label);
-    position: relative;
-    top: -1px; /* коррекция вертикального выравнивания */
-    left: 10px; /* отступ от кнопки до текста */
-}
+    .konfiguratorSelect input[type="checkbox"] {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        width: 30px;
+        height: 30px;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        background-color: white;
+        outline: none;
+        cursor: pointer;
+        position: relative;
+    }
 
-.konfiguratorSelect input[type="checkbox"] {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    width: 30px;
-    height: 30px;
-    border: 2px solid #fff;
-    border-radius: 50%;
-    background-color: white;
-    outline: none;
-    cursor: pointer;
-    position: relative;
-}
-.konfiguratorSelect input[type="checkbox"]:checked {
-    background-color: black;
-    border-color: #fff;
-    border: 1px solid black;
-}
+    .konfiguratorSelect input[type="checkbox"]:checked {
+        background-color: black;
+        border-color: #fff;
+        border: 1px solid black;
+    }
 
     .konfiguratorSelect input[type="checkbox"]:checked::after {
         content: '';
@@ -98,67 +168,81 @@ body {
         border-right: none;
         transform: translate(-50%, -50%) rotate(-45deg);
     }
+
     #blockSchrite {
         padding: 50px;
         border-radius: 20px;
         -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
         -moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
         box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
-        margin-top:50px;
+        margin-top: 50px;
     }
     /* Стиль для активного состояния чекбокса */
 
 
-.footer {
-    background: #323232;
-    padding-top: 50px;
-    color: white;
-    width: 100%;
-    text-align: center;
-    margin-top: 50px;
-    position:absolute;
-    align-content: center;
-}
-#schrit {
-    font-weight: 600;
-    font-size: 20px;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    text-align: center;
-    border: 2px solid #f00;
-}
-#orderCost {
-    color: red;
-    text-align: end;
-}
-#Allcost {
-    color: #f00;
-    font-size: 24px;
-    outline: none;
-    border: none;
-    width: 200px;
-}
+    .footer {
+        background: #323232;
+        color: white;
+        width: 100%;
+        text-align: center;
+        padding: 20px 0;
+    }
+
+    .footer .row img {
+        max-width: 100%;
+    }
+
+    .footer li {
+        list-style: none;
+        margin: 5px 0;
+    }
+
+    .footer a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .footer a:hover {
+        text-decoration: underline;
+    }
+
+    #schrit {
+        font-weight: 600;
+        font-size: 20px;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        text-align: center;
+        border: 2px solid #f00;
+    }
+
+    #orderCost {
+        color: red;
+        text-align: end;
+    }
+
+    #Allcost {
+        color: #f00;
+        font-size: 24px;
+        outline: none;
+        border: none;
+        width: 200px;
+    }
+
+    #optionsItems {
+        margin-top: 20px;
+    }
 
 
-#html, body {
-    height: 100%;
-}
-#optionsItems {
-    margin-top: 20px;
-}
+    #selectLang {
+        border: none;
+        outline: none;
+        margin-right: 50px;
+    }
 
 
-#selectLang{
-    border:none;
-    outline:none;
-    margin-right:50px;
-}
-
-
-@media(max-width:900px) and (orientation: portrait) 
-{
-    #position{
+    @media(max-width:900px) and (orientation: portrait) {
+        #position{
         width:25px;
     }
 
@@ -1271,6 +1355,7 @@ body {
     }
     html {
         font-size: 12px;
+        height:100%;
     }
 
     #infoButten {
@@ -1279,15 +1364,15 @@ body {
         width: 25px;
     }
 
-    body {
-        margin-bottom: 60px;
-        font-family: "Inter", sans-serif;
-        font-optical-sizing: auto;
-        font-style: normal;
-        font-variation-settings: "slnt" 0;
-    }
-
     #hederBlockOrder {
+        height: 30px;
+        padding: 10px;
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
+        color: white;
+        background: #f00;
+        border-bottom: 3px solid #f00;
+        justify-content: flex-start;
         display: flex;
     }
 
@@ -1308,28 +1393,31 @@ body {
     }
 
     #orderCostHeader {
-        margin-left: 400px;
-        gap: 50px;
+        margin-left: auto;
         display: flex;
+        gap: 50px;
     }
 
     #producktInfo {
+        padding: 10px;
+        padding-top: 10px;
         display: flex;
         gap: 50px;
     }
 
     #countOrderSysteam {
+        border: none;
         text-align: center;
         outline: none;
         margin-left: 50px;
-        margin-right: 50px;
+        margin-right: 30px;
         width: 55px;
-        height: 40px;
+        height: 20px;
     }
 
     #costedInfo {
         display: flex;
-        margin-left: 140px;
+        margin-left: auto;
     }
 
 
@@ -1338,9 +1426,6 @@ body {
         height: 50px;
     }
 
-    .modal-content {
-        padding: 10px;
-    }
 
     #routBAR {
         display: grid;
@@ -1519,22 +1604,6 @@ body {
         font-weight: bold;
         margin-top: -20px;
     }
-    /* Modal content */
-    .modal-content {
-        background-color: #fefefe;
-        margin: 15% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-    }
-
-    /* Close button */
-    .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-    }
 
     #filteblock {
         justify-content: center;
@@ -1544,13 +1613,6 @@ body {
         padding: 20px;
         margin: 20px;
         box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    }
-
-    .close:hover,
-    .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
     }
 
     #konfigMenu {
@@ -1828,7 +1890,6 @@ body {
         font-size: 24px;
         outline: none;
         border: none;
-        width: 200px;
     }
 
     #product_desciptions {
@@ -2199,11 +2260,6 @@ body {
         margin-left: auto;
     }
 
-    .container {
-        background-color: #e4e4e4;
-        max-width: 1100px;
-    }
-
     #FinisherPage {
         background-color: #e4e4e4;
     }
@@ -2281,46 +2337,6 @@ body {
         color: peachpuff;
         background: #323232;
     }
-
-    .modal {
-        display: none; /* По умолчанию модальное окно скрыто */
-        position: fixed; /* Фиксированное положение */
-        z-index: 1; /* Поверх всех остальных элементов */
-        left: 0;
-        top: 0;
-        width: 100%; /* Полная ширина */
-        height: 100%; /* Полная высота */
-        overflow: auto; /* Добавление прокрутки, если содержимое слишком большое */
-        background-color: rgba(0,0,0,0.4); /* Полупрозрачный фон */
-        padding-top: 60px; /* Отступ сверху */
-    }
-
-    /* Стили для содержимого модального окна */
-    .modal-content {
-        background-color: #fefefe;
-        margin: auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 55%;
-    }
-
-    /* Стили для кнопки закрытия модального окна */
-    .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-        text-align:end    
-
-    }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
     #FinihserCostInfo {
         display: flex;
         gap: 500px;
@@ -2350,13 +2366,11 @@ body {
     #AllProductUser {
         margin-top: 50px;
         background: white;
-        padding: 40px;
-        border-radius: 10px;
         width: auto;
     }
 
     #AllOrderUser {
-        width: 70vw;
+        width: 67vw;
     }
     #hilfeOptionsIcon {
         position: absolute;
@@ -2367,15 +2381,17 @@ body {
 }
 @media (min-width:1440px ) 
 {
-    body {
-        margin-bottom: 60px;
-        font-family: "Fira Sans", sans-serif;
-        font-optical-sizing: auto;
-        font-style: normal;
-        font-variation-settings: "slnt" 0;
-    }
 
     #hederBlockOrder {
+        height: 35px;
+        padding: 10px;
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
+        color: white;
+        background: #f00;
+        overflow: hidden;
+        border-bottom: 3px solid #f00;
+        justify-content: flex-start;
         display: flex;
     }
 
@@ -2396,28 +2412,31 @@ body {
     }
 
     #orderCostHeader {
-        margin-left: 400px;
-        gap: 50px;
+        margin-left: auto;
         display: flex;
+        gap: 50px;
     }
 
     #producktInfo {
+        padding: 10px;
+        padding-top: 10px;
         display: flex;
         gap: 50px;
     }
 
     #countOrderSysteam {
+        border: none;
         text-align: center;
         outline: none;
         margin-left: 50px;
-        margin-right: 50px;
+        margin-right: 30px;
         width: 55px;
-        height: 40px;
+        height: 20px;
     }
 
     #costedInfo {
         display: flex;
-        margin-left: 140px;
+        margin-left:auto;
     }
 
 
@@ -2921,7 +2940,6 @@ body {
         font-size: 24px;
         outline: none;
         border: none;
-        width: 200px;
     }
 
     #product_desciptions {
@@ -3025,7 +3043,7 @@ body {
         }
 
     #schlussel2 {
-        margin-left: 220px;
+        margin-left: auto;
     }
 
     #TexInputKey {
@@ -3064,8 +3082,7 @@ body {
     #itemKeyBlock {
         margin-left: 800px;
         display: flex;
-        width: 500px;
-        max-width: 500px;
+        width: auto;
         overflow-x: scroll;
     }
 
@@ -3325,10 +3342,6 @@ body {
         margin-left: auto;
     }
 
-    .container {
-        background-color: #e4e4e4;
-    }
-
     #FinisherPage {
         background-color: #e4e4e4;
     }
@@ -3492,13 +3505,8 @@ body {
 
     #AllProductUser {
         margin-top: 50px;
-        background: white;
-        padding: 40px;
-        border-radius: 10px;
-        width: 900px;
+        background: white; 
+        width:auto;
     }
 
-    #AllOrderUser {
-        width: 900px;
-    }
 }

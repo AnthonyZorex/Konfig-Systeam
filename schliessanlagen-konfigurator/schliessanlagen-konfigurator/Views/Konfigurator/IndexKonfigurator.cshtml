@@ -8,7 +8,7 @@
 
 <div>
     <div id="konfigMenu">
-        <button type="button" class="btn btn-danger">1. Schließplan erstellen</button>
+        <button type="button" class="btn danger">1. Schließplan erstellen</button>
         @if (User.IsInRole("client") || User.IsInRole("admin"))
         {
             <button type="button" class="btn btn-secondary"><a href="@Url.Action("System_Auswählen","Konfigurator",new{userName = @ViewBag.UserNameItem , isNewKonfig = true} )">2. System auswählen</a></button>
@@ -20,7 +20,7 @@
         <h2>Füllen Sie den Konfigurator mit Daten aus!</h2>
     </div>
   
-    <form asp-action="SaveOrder" enctype="multipart/form-data" id="content" asp-controller="Konfigurator">
+    <form asp-action="SaveOrder" enctype="multipart/form-data"  class="shadow-lg p-3 mb-5 bg-body-tertiary rounded" asp-controller="Konfigurator">
   
         @Html.HiddenFor(m => m.userKey)
         <input type="hidden" value="@ViewBag.UserNameItem" name="userName" />

@@ -6,59 +6,131 @@
     var resultAussen = (kleinAussen != null) ? kleinAussen.aussen : 0;
     var resultPreis = (kleinAussen != null) ? kleinAussen.costSizeAussen : 0;
 }
+<style>
+    a{
+        color:black;
+    }
+    a:hover{
+       color: black;  
+    }
+    li:hover{
+        background-color: #e4e4e4;
+    }
+    form{
+        background: #F9F9F9;
+        padding: 30px;
+        border-radius: 10px;
+    }
+    .list-group-item.active {
+        z-index: 2;
+        color: #fff;
+        background-color: #a1c5fa;
+        border-color: #0d6efd;
+    }
+
+    #Table > #rowTable{
+        border: 3px solid #e4e4e4;
+    }
+
+    #Table > .Thead {
+    border-bottom:3px solid red;
+    }
+
+    .table > thead {
+        border-bottom: 3px solid red;
+        vertical-align: bottom;
+    }
+
+    #zylidner_create_name{
+        border-bottom:3px solid red; 
+    }
+
+    #Image-load-product{
+        padding-bottom: 10px;
+        padding-top: 10px;
+        display:grid;
+        grid-template-columns:repeat(2,auto);
+    }
+
+    .Image-load_item:nth-child(1) 
+    {
+       max-width:250px;
+        margin-right: auto;
+    }
+
+ 
+    .Image-load_item:nth-child(2) {
+        max-width: 250px;
+        margin-left: auto;
+    }
+
+    </style>
 
 @if (User.IsInRole("admin"))
 {
+    <button class="btn danger mb-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLeft" aria-controls="offcanvasLeft">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-adjustments-horizontal"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14 6m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M4 6l8 0" /><path d="M16 6l4 0" /><path d="M8 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M4 12l2 0" /><path d="M10 12l10 0" /><path d="M17 18m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M4 18l11 0" /><path d="M19 18l1 0" /></svg>
+    </button>
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasLeft" aria-labelledby="offcanvasLeftLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasLeftLabel">Menu</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="@Url.Action("ImageConfig","Home")"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-photo-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 8h.01" /><path d="M12.5 21h-6.5a3 3 0 0 1 -3 -3v-12a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v6.5" /><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l4 4" /><path d="M14 14l1 -1c.67 -.644 1.45 -.824 2.182 -.54" /><path d="M16 19h6" /><path d="M19 16v6" /></svg> Bilder</a></li>
+                <li class="list-group-item"><a href="@Url.Action("SystemInfo","Home")"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-assembly"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M13.666 1.429l6.75 3.98q .1 .06 .18 .133l.009 .008l.106 .075a3.22 3.22 0 0 1 1.284 2.39l.005 .203v7.284c0 1.175 -.643 2.256 -1.623 2.793l-6.804 4.302c-.98 .538 -2.166 .538 -3.2 -.032l-6.695 -4.237a3.23 3.23 0 0 1 -1.678 -2.826v-7.285a3.21 3.21 0 0 1 1.65 -2.808l6.775 -3.995a3.34 3.34 0 0 1 3.24 .015m-.64 5.343a2.03 2.03 0 0 0 -2 -.014l-3.023 1.804a1.99 1.99 0 0 0 -1.002 1.736v3.278a2 2 0 0 0 1.03 1.75l2.946 1.89c.657 .367 1.39 .367 1.994 .033l3.054 -1.955c.582 -.322 .976 -.992 .976 -1.719v-3.277l-.005 -.164a2 2 0 0 0 -.725 -1.391l-.092 -.07l-.056 -.047a1 1 0 0 0 -.096 -.064z" /></svg> SystemInfo</a></li>
+                <li class="list-group-item"><a href="@Url.Action("SendMail","Home")"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-mail"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg> E-Mail senden</a></li>
+                <li class="list-group-item active"><a href="@Url.Action("Index","Home")"> <img src="@("/Image/doppelzylinder.png")" height="24" width="24" /> Profil-Doppelzylinder</a></li>
+                <li class="list-group-item"><a href="@Url.Action("Profil_HalbzylinderRout","Home")"> <img src="@("/Image/halbzylinder.png")" height="24" width="24" /> Profil-Halbzylinder</a></li>
+                <li class="list-group-item"><a href="@Url.Action("Profil_KnaufzylinderRout","Home")"> <img src="@("/Image/knaufzylinder.png")" height="24" width="24" /> Profil-Knaufzylinder</a></li>
+                <li class="list-group-item"><a href="@Url.Action("HebelzylinderRout","Home")"> <img src="@("/Image/briefkastenzylinder.png")" height="24" width="24" /> Hebelzylinder</a></li>
+                <li class="list-group-item"><a href="@Url.Action("VorhangschlossRout","Home")"> <img src="@("/Image/vorhangschloss.png")" height="24" width="24" /> Vorhangschloss</a></li>
+                <li class="list-group-item"><a href="@Url.Action("Aussenzylinder_RundzylinderRout","Home")"> <img src="@("/Image/aussenzylinder.png")" height="24" width="24" /> Aussenzylinder / Rundzylinder</a></li>
+            </ul>
+        </div>
+    </div>
     <div class="text-center ">
         <div id="myModal_NewSchliessanlagen" class="d-grid gap-3">
-            <div id="routBAR">
-                <div id="Bar">
-                    <button class="btn btn-danger"><a href="@Url.Action("ImageConfig","Home")">Bilder</a></button>
-                    <button class="btn btn-info"><a href="@Url.Action("SystemInfo","Home")">SystemInfo</a></button>
-                    <button class="btn btn-info"><a href="@Url.Action("SendMail","Home")">E-Mail senden</a></button>
-                    <button class="btn btn-secondary"><a href="@Url.Action("Profil_HalbzylinderRout","Home")">Profil-Halbzylinder</a></button>
-                    <button class="btn btn-success"><a href="@Url.Action("Profil_KnaufzylinderRout","Home")">Profil-Knaufzylinder</a></button>
-                    <button class="btn btn-danger"><a href="@Url.Action("HebelzylinderRout","Home")">Hebelzylinder</a></button>
-                    <button class="btn btn-warning"><a href="@Url.Action("VorhangschlossRout","Home")">Vorhangschloss</a></button>
-                    <button class="btn btn-info"><a href="@Url.Action("Aussenzylinder_RundzylinderRout","Home")">Aussenzylinder / Rundzylinder</a></button>
-                </div>
-            </div>
-
             <div>
-                <h2>Neues Profil Doppelzylinder</h2>
+                <form asp-action="Create_Profil_Doppelzylinder" enctype="multipart/form-data" class="shadow-lg p-3 mb-5 bg-body-tertiary rounded" asp-controller="Home">
+                   
+                    <div id="zylidner_create_name">
+                        <h2>Neues Profil Doppelzylinder</h2>
+                    </div>
+                    <input style="display:none" asp-for="schliessanlagenId" class="form-control" type="text" value="1" />
+                    
+                    <div id="Image-load-product">
 
-                <form asp-action="Create_Profil_Doppelzylinder" enctype="multipart/form-data" asp-controller="Home">
-
-                    <div id="productMenu">
-                        <input style="display:none" asp-for="schliessanlagenId" class="form-control" type="text" value="1" />
-                        <div>
+                        <div class="Image-load_item">
                             <label asp-for="ImageFile" class="control-label"></label>
                             <input asp-for="ImageFile" class="btn btn-success" accept="image/*" />
                             <span asp-validation-for="ImageFile" class="text-danger"></span>
                             @Html.ValidationMessageFor(m => m.ImageFile, "", new { @class = "error" })
                         </div>
-                        <br />
-                        <div>
-                            <label for="Images">Bilder auswählen:</label>
+
+                        <div class="Image-load_item">
+                            <h5 for="Images">Bilder auswählen:</h5>
                                 <input type="file" name="Images" multiple class="form-control" />
                         </div>
                     </div>
                     @if (ViewBag.Dopple != null)
                     {
-                        <div id="product_desciptions">
-
-                            <div style="margin-bottom: 50px;">
-                                <label>Name</label>
+                        <div class="shadow-sm p-3 mb-5 bg-body-tertiary rounded">
+                            <div id="form-info">
+                            
+                            <div>
+                                <h5>Name</h5>
                                 <input asp-for="Name" value="@ViewBag.Dopple.Name" required class="form-control" type="text" name="Name" />
                             </div>
 
-                            <div style="margin-bottom: 50px;">
-                                <label>Firmenname</label>
+                            <div>
+                                <h5>Firmenname</h5>
                                 <input asp-for="companyName" value="@ViewBag.Dopple.companyName" required class="form-control" type="text" />
                             </div>
 
-                            <div style="margin-bottom: 50px;">
-                                <label>Name System</label>
+                            <div>
+                                <h5>Name System</h5>
                                
                                 <select asp-for="NameSystem" onchange="systemSwitch(event.target.value)" required id="DoppelSys" class="form-select">
 
@@ -74,19 +146,23 @@
                                         }
                                     }
                                 </select>
+                            </div>
 
-                                <div style="margin-bottom: 50px;margin-top: 50px">
-                                    <label>Beschreibungen</label>
+                                <div>
+                                    <h5>Beschreibungen</h5>
                                     <textarea  class="form-control" id="exampleFormControlTextarea1">@ViewBag.Dopple.description</textarea>
                                 </div>
                              
-                                <div style="margin-bottom: 50px;">
-                                    <label>Price</label>
+                                <div>
+                                    <h5>Price</h5>
                                     <input asp-for="Price" value="@ViewBag.Dopple.Price" required class="form-control" />
                                 </div>
-                                <h1>Aussen & Innen <input id="addAussen_Innen" class="btn btn-success" type="button" value="+" /><input id="addAussen_Innen_remove" class="btn btn-danger" type="button" value="-" /></h1>
 
-                                <div id="Aussen_Innen_ProfilDopel">
+                                    <div id="form-Size" class="shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+                                    <div>
+                                        <h4>Aussen & Innen <input id="addAussen_Innen" class="btn btn-success" type="button" value="+" /><input id="addAussen_Innen_remove" class="btn danger" type="button" value="-" /></h4>
+                                    </div>
+                                  <div id="Aussen_Innen_ProfilDopel">
 
                                     <div id="AussenProfilDopel">
 
@@ -124,18 +200,20 @@
                                         } 
                                     </div>
                                 </div>
-
-                                <div id="Aussen_innen_klein">
-                                    <h5>Für zylinder aussen klein</h5>
+                               </div>
+                                <div id="Aussen_innen_klein" class="shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+                                    <div>
+                                        <h5>Für zylinder aussen klein</h5>
+                                    </div>
                                     <div id="kleinGrose">
                                         <div>
                                             <div>
                                                 <h5>Aussen</h5>
-                                                <input type="number" value="@resultAussen" name="ausKlein" />
+                                                <input class="form-control" type="number" value="@resultAussen" name="ausKlein" />
                                             </div>
                                             <div>
                                                 <h5>Preis</h5>
-                                                <input type="number" step="0,00" value="@resultPreis" name="ausKleinPreis" />
+                                                <input class="form-control" type="number" step="0,00" value="@resultPreis" name="ausKleinPreis" />
                                             </div>
                                         </div>
                                         <div class="arrow-right">
@@ -143,19 +221,19 @@
                                         <div>
                                             <table class="table">
                                                 <thead>
-                                                    <tr class="table-dark">
-                                                        <th scope="col">Wert</th>
-                                                        <th scope="col">Preis</th>
-                                                        <th scope="col"><button type="button" onclick="PlusKleinIntert()" class="btn btn-success">+</button><button type="button" class="btn btn-danger" onclick="MinusKleinIntern()">-</button></th>
+                                                    <tr >
+                                                        <th>Wert</th>
+                                                        <th>Preis</th>
+                                                        <th><button type="button" onclick="PlusKleinIntert()" class="btn btn-success">+</button><button type="button" class="btn danger" onclick="MinusKleinIntern()">-</button></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="kleiIntern">
 
                                                     @foreach (var list in ViewBag.DoppelKleinSize)
                                                     {
-                                                        <tr class="table-info">
-                                                            <th scope="row"><input name="internDoppelKlein" value="@list.Intern" type="number" step="0,01" /></th>
-                                                            <td><input name="priesDoppelKlein" type="number" value="@list.costSizeIntern" step="0,01" /></td>
+                                                        <tr >
+                                                            <th scope="row"><input name="internDoppelKlein" class="form-control" value="@list.Intern" type="number" step="0,01" /></th>
+                                                            <td><input name="priesDoppelKlein" class="form-control" type="number" value="@list.costSizeIntern" step="0,01" /></td>
                                                         </tr>
                                                     }
 
@@ -168,10 +246,9 @@
                                 <div id="productOptions">
 
                                 </div>
-                            </div>
+                           
                         </div>
-                        <hr />
-                        <hr />
+                        </div>
                         <button id="createBlockBtn" type="button" class="btn btn-success">Optionen hinzufügen</button>
                         <button id="addInputBtn" type="button" class="btn btn-success">+</button>
                         <button id="RemoveInputBtn" type="button" class="btn btn-danger">-</button>
@@ -179,64 +256,74 @@
                     }
                     else
                     {
-                        <div id="product_desciptions">
+                        <div>
 
-                            <div style="margin-bottom: 50px;">
-                                <label>Name</label>
-                                <input asp-for="Name" required class="form-control" type="text" name="Name" />
-                            </div>
+                            <div id="form-info" >
 
-                            <div style="margin-bottom: 50px;">
-                                <label>Firmenname</label>
-                                <input asp-for="companyName" required class="form-control" type="text" />
-                            </div>
+                                <div>
+                                    <h5>Name</h5>
+                                    <input asp-for="Name" required class="form-control" type="text" name="Name" />
+                                </div>
 
-                            <div style="margin-bottom: 50px;">
-                                <label>Name System</label>
-                                <input asp-for="NameSystem" onchange="systemSwitch(event.target.value)" id="DoppelSys" required class="form-control" type="text" />
+                                <div>
+                                    <h5>Firmenname</h5>
+                                    <input asp-for="companyName" required class="form-control" type="text" />
+                                </div>
 
-                                <div style="margin-bottom: 50px;margin-top: 50px">
-                                    <label>Beschreibungen</label>
+                                <div>
+                                    <h5>Name System</h5>
+                                    <input asp-for="NameSystem" onchange="systemSwitch(event.target.value)" id="DoppelSys" required class="form-control" type="text" />
+                                </div>
+
+
+                                <div>
+                                    <h5>Beschreibungen</h5>
                                     <textarea asp-for="description" class="form-control" id="exampleFormControlTextarea1"></textarea>
+                                    @if (ViewBag.Content != null)
+                                    {
+                                        <div>
+                                            <h3>Submitted Content:</h3>
+                                            <div>@Html.Raw(ViewBag.Content)</div>
+                                        </div>
+                                    }
                                 </div>
-                                @if (ViewBag.Content != null)
-                                {
+
                                     <div>
-                                        <h3>Submitted Content:</h3>
-                                        <div>@Html.Raw(ViewBag.Content)</div>
+                                    <h5>Price</h5>
+                                        <input asp-for="Price" required class="form-control" />
                                     </div>
-                                }
-                                <div style="margin-bottom: 50px;">
-                                    <label>Price</label>
-                                    <input asp-for="Price" required class="form-control" />
+
+                                <div id="form-Size" class="shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+                                    <div>
+                                        <h4>Aussen & Innen <input id="addAussen_Innen" class="btn btn-success" type="button" value="+" /><input id="addAussen_Innen_remove" class="btn danger" type="button" value="-" /></h4>
+                                    </div>
+                                    <div id="Aussen_Innen_ProfilDopel" >
+
+                                        <div id="AussenProfilDopel">
+                                            <input type="number" class="form-control" placeholder="Aussen" id="aus" step="0.01" name="aussen" />
+                                            <input class="form-control" name="costSizeAussen" type="number" placeholder="Price" id="ausCost" step="0.01" />
+                                        </div>
+
+                                        <div id="InnenProfilDopel">
+                                            <input type="number" class="form-control" placeholder="Innen" id="inter" step="0.01" name="innen" />
+                                            <input class="form-control" placeholder="Price" type="number" name="costSizeIntern" step="0.01" id="interCost" />
+                                        </div>
+
+                                    </div>
                                 </div>
-                                <h1>Aussen & Innen <input id="addAussen_Innen" class="btn btn-success" type="button" value="+" /><input id="addAussen_Innen_remove" class="btn btn-danger" type="button" value="-" /></h1>
-
-                                <div id="Aussen_Innen_ProfilDopel">
-
-                                    <div id="AussenProfilDopel">
-                                        <input type="number" class="form-control" placeholder="Aussen" id="aus" step="0.01" name="aussen" />
-                                        <input class="form-control" name="costSizeAussen" type="number" placeholder="Price" id="ausCost" step="0.01" />
-                                    </div>
-
-                                    <div id="InnenProfilDopel">
-                                        <input type="number" class="form-control" placeholder="Innen" id="inter" step="0.01" name="innen" />
-                                        <input class="form-control" placeholder="Price" type="number" name="costSizeIntern" step="0.01" id="interCost" />
-                                    </div>
                                
-                                </div>
 
-                                <div id="Aussen_innen_klein">
+                                <div id="Aussen_innen_klein" class="shadow-lg p-3 mb-5 bg-body-tertiary rounded">
                                     <h5>Für zylinder aussen klein</h5>
                                     <div id="kleinGrose" >
                                         <div id="kleinSize">
                                             <div>
                                                 <h5>Aussen</h5>
-                                                <input type="number" value="0"  name="ausKlein"/>
+                                                <input type="number" class="form-control" value="0" name="ausKlein" />
                                             </div>
                                            <div>
                                                 <h5>Preis</h5>
-                                                <input type="number" step="0,00" value="0" name="ausKleinPreis" />
+                                                <input type="number" class="form-control" step="0,00" value="0" name="ausKleinPreis" />
                                             </div>  
                                         </div>
                                         <div class="arrow-right">
@@ -245,16 +332,16 @@
                                         <div>
                                             <table class="table">
                                                 <thead>
-                                                    <tr class="table-dark">
-                                                        <th scope="col">Wert</th>
-                                                        <th scope="col">Preis</th>
-                                                        <th scope="col"><button type="button" onclick="PlusKleinIntert()" class="btn btn-success">+</button><button type="button" class="btn btn-danger" onclick="MinusKleinIntern()">-</button></th>
+                                                    <tr>
+                                                        <th >Wert</th>
+                                                        <th >Preis</th>
+                                                        <th ><button type="button" onclick="PlusKleinIntert()" class="btn btn-success">+</button><button type="button" class="btn danger" onclick="MinusKleinIntern()">-</button></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id ="kleiIntern">
-                                                    <tr class="table-info">
-                                                        <th scope="row"><input name="internDoppelKlein" type="number" step="0,01" /></th>
-                                                        <td><input name="priesDoppelKlein" type="number" step="0,01" /></td>
+                                                    <tr>
+                                                        <th scope="row"><input class="form-control" name="internDoppelKlein" type="number" step="0,01" /></th>
+                                                        <td><input class="form-control" name="priesDoppelKlein" type="number" step="0,01" /></td>
                                                     </tr> 
                                                 </tbody>
                                             </table>
@@ -267,10 +354,9 @@
                                 </div>
                             </div>
                         </div>
-                        <hr />
                         <button id="createBlockBtn" type="button" class="btn btn-success">Optionen hinzufügen</button>
                         <button id="addInputBtn" type="button" class="btn btn-success">+</button>
-                        <button id="RemoveInputBtn" type="button" class="btn btn-danger">-</button>
+                        <button id="RemoveInputBtn" type="button" class="btn danger">-</button>
                         <input type="submit" class="btn btn-success" id="input" value="Erstellen Profil Doppelzylinder" />
                     }
                 </form>
@@ -278,42 +364,69 @@
         </div>
         <div>
 
-            <h4 id="input">ALLE Profil Doppelzylinder</h4>
-            @using (Html.BeginForm("Index", "Home", FormMethod.Get))
-            {
-                <table class="table table-bordered table-sm">
-                    <tbody>
-                        <tr id="Table">
-                            <th>Hersteller</th>
-                            <th>System</th>
-                            <th>Name</th>
-                            <th>Bild</th>
-                            <th>Preis</th>
-                            <th>Bearbeiten</th>
-                            <th>Optionen</th>
-                            <th>Löschen</th>
-                            <th>Vorlage</th>
 
-                            @foreach (var item in ViewBag.item)
-                            {
-                                i++;
-                                <td id="rowTable" class="table-info">@item.companyName</td>
-                                <td id="rowTable" class="table-info">@item.NameSystem</td>
-                                <td id="rowTable" class="table-info">@item.Name</td>
-                                <td id="rowTable" class="table-info"> <img decoding="async" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="50px" height="50px" /></td>
-                                <td id="rowTable " class="table-info"><h6 id="cost">@item.Price.ToString("C")</h6></td>
-                                <td id="rowTable" class="table-info"><a href="@Url.Action("Edit_Doppelzylinder","Home", new { item.Id })"><img src="@("/image/edit-tools.png")" height="30" width="30" /></a></td>
-                                <td id="rowTable" class="table-info">
-                                    <a class="compItem" href="@Url.Action("ProductProfil_Doppelzylinder","Home", new { item.Id })">
-                                        <img src="@("/Image/options.png")" height="30" width="30" />
-                                    </a>
-                                </td>
-                                <td id="rowTable" class="table-info"><a href="@Url.Action("Delete_Doppelzylinder","Home", new { item.Id })"><img src="@("/image/entfernen.png")" height="30" width="30" /></a></td>
-                                <td id="rowTable" class="table-info"><a href="@Url.Action("Index","Home", new { id = item.Id })"><img src="@("/image/3d-modeling.png")" height="30" width="30" /></a></td>
-                            }
-                        </tr>
-                    </tbody>
-                </table>
+            @using (Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = "shadow-lg p-3 mb-5 bg-body-tertiary rounded" }))
+            {
+                <div  id="Tabele">
+                    <div>
+                        <h4 id="input">ALLE Profil Doppelzylinder</h4>
+                    </div>
+ 
+                    <div id="Table">
+                        <div  class="Thead">
+                            <h5>Hersteller</h5>
+                        </div>
+                        <div  class="Thead">
+                            <h5>System</h5>
+                        </div>
+                        <div class="Thead">
+                            <h5>Name</h5>
+                        </div>
+                        <div  class="Thead">
+                            <h5>Bild</h5>
+                        </div>
+                        <div  class="Thead">
+                            <h5>Preis</h5>
+                        </div>
+                        <div  class="Thead">
+                            <h5> Bearbeiten</h5>
+                        </div>
+                        <div  class="Thead">
+                            <h5>Optionen</h5>
+                        </div>
+
+                        <div  class="Thead">
+                            <h5>Löschen</h5>
+                        </div>
+                        <div  class="Thead">
+                            <h5>Vorlage</h5>
+                        </div>
+
+                                @foreach (var item in ViewBag.item)
+                                {
+                                    i++;
+                                    <div id="rowTable">@item.companyName</div>
+                                    <div id="rowTable">@item.NameSystem</div>
+                                    <div id="rowTable">@item.Name</div>
+                                    <div id="rowTable"> <img decoding="async" id="image-@i" onmouseover="ImgZiseUp(@i)" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="30px" height="30px" /></div>
+                                    <div id="rowTable"><h6 id="cost">@item.Price.ToString("C")</h6></div>
+                                    <div id="rowTable"><a href="@Url.Action("Edit_Doppelzylinder","Home", new { item.Id })">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+                                    </a></div>
+                                    <div id="rowTable">
+                                            <a class="compItem" href="@Url.Action("ProductProfil_Doppelzylinder","Home", new { item.Id })">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file-settings"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M12 10.5v1.5" /><path d="M12 16v1.5" /><path d="M15.031 12.25l-1.299 .75" /><path d="M10.268 15l-1.3 .75" /><path d="M15 15.803l-1.285 -.773" /><path d="M10.285 12.97l-1.285 -.773" /><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /></svg>
+                                            </a>
+                                        </div>
+                                    <div id="rowTable"><a href="@Url.Action("Delete_Doppelzylinder","Home", new { item.Id })">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file-x"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M10 12l4 4m0 -4l-4 4" /></svg>
+                                        </a></div>
+                                    <div id="rowTable"><a href="@Url.Action("Index","Home", new { id = item.Id })">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-table-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12.5 21h-7.5a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v7.5" /><path d="M3 10h18" /><path d="M10 3v18" /><path d="M16 19h6" /><path d="M19 16v6" /></svg>
+                                </a></div>
+                                }
+                            </div>
+                </div>
             }
         </div>
     </div>
@@ -323,14 +436,27 @@
 {
     <script type="text/javascript">
 
+
+        function ImgZiseUp(id) 
+        {
+            let img = document.getElementById("image-" + id);
+            img.style.transform = "scale(4)";
+
+            img.addEventListener('mouseleave', function () 
+            {
+                img.style.transform = 'scale(1)';
+            });
+        }
+
+
         let table = document.getElementById("kleiIntern");
 
         function PlusKleinIntert() 
         {
-            let row = `   <tr class="table-info">
+            let row = `   <tr>
                             <th scope="row"><input
-                           name="internDoppelKlein" type="number" step="0,01" /></th>
-                               <td><input name="priesDoppelKlein" step="0,01" type="number" /></td>
+                                   name="internDoppelKlein" class="form-control" type="number" step="0,01" /></th>
+                                       <td><input name="priesDoppelKlein" class="form-control" step="0,01" type="number" /></td>
                     </tr> `;
 
             table.insertAdjacentHTML('beforeend', row);
@@ -430,20 +556,30 @@
             {
                 counterOptions = 2;
                 const block = document.createElement('div');
-                block.classList.add('input-block');
+                block.classList.add('input-block',"shadow-lg","p-3","mb-5","bg-body-tertiary","rounded");
                 block.id = `block-${blockCounter}`;
                 block.innerHTML = `<div>
-                                                        <h1>Optionen</h1>
-                                                <label>Name</label>
-                                                <input class="form-control" type="text" name="Options" />
+                                                    <div>
+                                                        <h4>Optionen</h4>
+                                                        </div>
                                                 <div>
-                                                    <p></p>
-                                                    <input name="postedFile" type="file" class="btn btn-success" />
-                                                    <p></p>
+                                                                <h5>Name</h5>
+                                                <input class="form-control" type="text" name="Options" />
                                                 </div>
-                                                        <label>Beschreibungen</label>
+                                                
+                                                <div>
+              
+                                                    <input name="postedFile" type="file" class="btn btn-success" />
+                    
+                                                </div>
+                                                    <div>
+                                                           <h5>Beschreibungen</h5>
                                                   <textarea class="form-control" id="descriptionOptions"  name="NGFDescriptions"></textarea>
-                                                <h1>Wert & Price </h1>
+                                                   </div>
+
+                                                   <div>
+                                                  <h4>Wert & Price </h4>
+                                                   </div>
                                                 <div id="Aussen_Innen_ProfilDopel">
                                                     <div id="valueNGF">
                                                          <input type="text" placeholder="Wert" class="form-control" step="0.01" name="valueNGF" />

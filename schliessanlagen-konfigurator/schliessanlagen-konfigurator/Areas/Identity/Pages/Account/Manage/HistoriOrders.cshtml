@@ -8,76 +8,107 @@
     int ProudctItemCounter = 0;
     int UserOrderId = 0;
 
+    var imageList = (List<string>)ViewData["Image"];
     var orderList = (List<UserOrdersShop>)ViewData["OrderLis"];
     var orderItem = (List<ProductSysteam>)ViewData["OrderItem"];
-
     var countProduct = (List<int>)ViewData["CounterProduct"];
-
+    var descriptions = (List<string>)ViewData["Descriptions"];
 }
+<style>
+    #card_controll
+    {
+        border-top: 3px solid red;
+        padding: 10px;
+    }
+ 
+</style>
+
 <h3>@ViewData["Title"]</h3>
-<div class="row">
-    <div class="col-md-6">
-        <div id="AllOrderUser">
+<div class="row" style="overflow-y: auto;">
+    <div>
+        <div id="AllOrderUser" >
             @for (int z = 0; z < orderList.Count; z++)
             {
-                <div id="AllProductUser">
-
+                <div id="AllProductUser" class="shadow-lg  mb-5 bg-body-tertiary rounded">
                     <div id="hederBlockOrder">
-                        <h3>Artikel</h3>
+                       
+                        <div>
+                            <h5>Artikel</h5>
+                        </div>
                         <div id="orderCostHeader">
-                            <h3>Menge</h3>
-                            <h3>Preis</h3>
+                            <div>
+                                <h5>Menge</h5>
+                            </div>
+                            <div>
+                                <h5>Preis</h5>
+                            </div>
                         </div>
                     </div>
-                    <hr />
                     <div id="producktInfo">
-                        <img src="@("/Image/Schliarticle.jpg")" onclick="OpenModalInfo(@z)" height="150" width="150" />
-                        <h4>@orderList[z].ProductName</h4>
+                        <img src="@("/Image/Schliarticle.jpg")" data-bs-toggle="modal" data-bs-target="#myModal-@z" height="150" width="150" />
+                        <h5>@orderList[z].ProductName</h5>
                         <div id="costedInfo">
                             <input read readonly id="countOrderSysteam" value="@orderList[z].count" type="text" />
-                            <h4 id="cost-@z">@orderList[z].OrderSum €</h4>
+                            <h5 id="cost-@z">@orderList[z].OrderSum €</h5>
                         </div>
                     </div>
 
-                    <div id="myModal-@z" class="modal">
 
-                        <div class="modal-content">
+                    <div class="modal fade" id="myModal-@z" tabindex="-1">
+                        <div class="modal-dialog modal-xl">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h1 class="modal-title">@orderList[z].ProductName</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                    @for (int s = 0; s < countProduct[z]; s++)
+                                    {
+                                        <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                                            <div class="row g-0">
+                                                <div class="col-md-4">
+                                                    <img src="@($"~/Image/{imageList[z]}")" class="img-fluid rounded-start" alt="...">
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">Name: @orderItem[ProudctItemCounter].Name</h5>
+                                                        <div class="card-text">
+                                                            @Html.Raw(descriptions[z])
+                                                            <h6>aussen: @orderItem[ProudctItemCounter].Aussen</h6>
+                                                            <h6>innen: @orderItem[ProudctItemCounter].Intern</h6>
+                                                            <h6>Option - @orderItem[ProudctItemCounter].Option</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                            <span onclick="closedModal(@z)" class="close">&times;</span>
-
-                            <img src="@("/Image/Schliarticle.jpg")" height="150" width="150" />
-
-                            <h4>@orderList[z].ProductName</h4>
-
-                            @for (int s = 0; s < countProduct[z]; s++)
-                            {
-                                <hr />
-                                <h4>Name: @orderItem[ProudctItemCounter].Name</h4>
-                                <h4>aussen: @orderItem[ProudctItemCounter].Aussen</h4>
-                                <h4>innen: @orderItem[ProudctItemCounter].Intern</h4>
-                                <h4>Option - @orderItem[ProudctItemCounter].Option</h4>
-                                UserOrderId = @orderList[z].Id;
-                                ProudctItemCounter++;
-                            }
-                            <hr />
-                            <h5>Zahlungsstatus: @orderList[z].OrderStatus</h5>
-                            <br />
-                            <h5>Lieferstatus: @orderList[z].ShippingStatus</h5>
-
+                                      
+                                        UserOrderId = @orderList[z].Id;
+                                        ProudctItemCounter++;
+                                    }
+                       
+                                    <h5>Zahlungsstatus: @orderList[z].OrderStatus</h5>               
+                                    <h5>Lieferstatus: @orderList[z].ShippingStatus</h5>
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <br />
-                    <hr />
-                    <br />
-                    <button class="btn btn-danger">
-                        <a href="@Url.Action("System_Auswählen","Konfigurator",new{Id = @orderList[z].Id ,userName = @orderList[z].UserOrderKey , isNewKonfig = true, Biarbeiten = false, Reorder=true} )">Überarbeiten Sie den Plan</a>
-                    </button>
-                    <button id="removeOrder" class="btn btn-danger" onclick="(remove(@UserOrderId))">
-                        <a href="@Url.Action("DowloadRehnung","Konfigurator",new{Id = @UserOrderId} )">Rechnung herunterladen</a>
+
+                    <div id="card_controll">
+                        <button class="btn danger">
+                            <a href="@Url.Action("System_Auswählen","Konfigurator",new{Id = @orderList[z].Id ,userName = @orderList[z].UserOrderKey , isNewKonfig = true, Biarbeiten = false, Reorder=true} )">Überarbeiten Sie den Plan</a>
                         </button>
-                    <button id="removeOrder" class="btn btn-danger" onclick="(remove(@UserOrderId))">
-                        <a href="@Url.Action("Download","Konfigurator",new{Id = @UserOrderId} )">Den Plan herunterladen</a>
-                    </button>
+                        <button id="removeOrder" class="btn danger" onclick="(remove(@UserOrderId))">
+                            <a href="@Url.Action("DowloadRehnung","Konfigurator",new{Id = @UserOrderId} )">Rechnung <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-cloud-download"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M19 18a3.5 3.5 0 0 0 0 -7h-1a5 4.5 0 0 0 -11 -2a4.6 4.4 0 0 0 -2.1 8.4" /><path d="M12 13l0 9" /><path d="M9 19l3 3l3 -3" /></svg></a>
+                        </button>
+                        <button id="removeOrder" class="btn danger" onclick="(remove(@UserOrderId))">
+                            <a href="@Url.Action("Download","Konfigurator",new{Id = @UserOrderId} )">Den Plan <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-cloud-download"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M19 18a3.5 3.5 0 0 0 0 -7h-1a5 4.5 0 0 0 -11 -2a4.6 4.4 0 0 0 -2.1 8.4" /><path d="M12 13l0 9" /><path d="M9 19l3 3l3 -3" /></svg></a>
+                        </button>
+                    </div>
                 </div>
             }
             <br />
@@ -85,43 +116,16 @@
     </div>
 </div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
-<script>
-    let AllOrderID = document.querySelector("#OrderId");
 
-    var span = document.getElementsByClassName("close")[0];
-    let idItem = 0;
+    <script type="text/javascript">
 
-    function OpenModalInfo(id) 
-    {
-        idItem = id;
-        var modal = document.getElementById(`myModal-${id}`);
-        modal.style.display = "block";
-    }
+        document.addEventListener("DOMContentLoaded", function () {
+            let count = document.querySelectorAll("#countOrderSysteam");
+            count.forEach((item) => {
+                item.value = 1;
+            })
+        });
 
-    function closedModal(id) {
-        idItem = id;
-        var modal = document.getElementById(`myModal-${id}`);
-        modal.style.display = "none";
-    }
+    </script>
 
-    window.onclick = function (event) {
-        var modal = document.getElementById(`myModal-${idItem}`);
-
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-        let count = document.querySelectorAll("#countOrderSysteam");
-        count.forEach((item) => {
-            item.value = 1;
-        })
-    });
-
-    
-</script>
 
