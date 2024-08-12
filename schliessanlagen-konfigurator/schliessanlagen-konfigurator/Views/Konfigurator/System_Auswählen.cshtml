@@ -8,24 +8,29 @@
     int countItem = 0;
 }
 
-<div>
-    <h3>
-        System auswählen
-    </h3>
-
-    <h4 style="box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;padding: 10px;">
-        Bitte wählen Sie das passende Schließsystem aus.
-    </h4>
-</div>
-<br />
-
-<h5>Systemfilterung</h5>
-<div id="filteblock">
+<div class="shadow-lg  mb-5 bg-body-tertiary rounded" id="selectedSystem_filter">
     <div>
-        <button onclick="clean()" style="border:none;margin-top:15px"><img src="/Image/sort.png" width="40" hight="30" /></button>
+        <h5>
+            System auswählen
+        </h5>
+    </div>
+   <div>
+        <h5>
+            Bitte wählen Sie das passende Schließsystem aus.
+        </h5>
+    </div>
+    <div class="shadow-lg mb-2 bg-body-tertiary rounded" id="selected_system_block">
+   <div id="selected_inform_text">
+        <h5>Systemfilterung</h5>
+    </div>
+    <div id="filteblock">
+    <div>
+        <button onclick="clean()" class="btn danger">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-filter-x"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M13.758 19.414l-4.758 1.586v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v1.5" /><path d="M22 22l-5 -5" /><path d="M17 22l5 -5" /></svg>
+        </button>
     </div>
     <div>
-        <label>Hersteller</label>
+            <h5>Hersteller</h5>
         <select id="company-name" onchange="selectCompany(event.target.value)" class="form-control">
             <option selected></option>
             <option>CES</option>
@@ -36,45 +41,39 @@
     </div>
 
     <div>
-        <label>Lieferzeit</label>
-
+        <h5>Lieferzeit</h5>
         <select id="liferzeit" onchange="serchLiferZeit(event.target.value)" class="form-control">
         </select>
-
     </div>
 
     <div>
-        <label>SystemName</label>
+        <h5>SystemName</h5>
         <input id="serchSystemName" onchange="selectSysteam(event.target.value)" type="text" class="form-control" />
     </div>
 
-    <div>
-        <div id="Gesamtpreis" style="display:flex;gap: 20px;">
-            <label>Gesamtpreis von </label>
-            <label>Gesamtpreis bis</label>
+        <div id="Gesamtpreis">
+            <h5>Gesamtpreis von </h5>
+                <input id="minSelect" type="text" onchange="minPrise(event.target.value)" class="form-control" min="0" step="0,1" />
         </div>
 
-        <div style="display:flex;gap:20px">
-            <input style="width: 130px;" id="minSelect" type="text" onchange="minPrise(event.target.value)" class="form-control" min="0" step="0,1" />
-
-            <input style="width: 130px;" id="maxSelect" type="text" onchange="maxPrise(event.target.value)" class="form-control" min="0" step="0,1" />
+        <div>
+                <h5>Gesamtpreis bis</h5>
+            <input id="maxSelect" type="text" onchange="maxPrise(event.target.value)" class="form-control" min="0" step="0,1" />
         </div>
     </div>
-
+    </div>
 </div>
 
 <div id="ExelMenu">
     <form asp-action="System_Auswählen" method="post" enctype="multipart/form-data" asp-controller="Konfigurator">
-
         @Html.HiddenFor(m => m.userKey)
-
         @{
             if (ViewBag.Doppel != null)
             {
                 
                 foreach (var item in ViewBag.Doppel)
                 {
-                    <div class="ExelItem" id="@countItem">
+                    <div class="ExelItem shadow-lg mb-4 bg-body-tertiary rounded" id="@countItem">
                         <div id="productImage">
                             <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
  

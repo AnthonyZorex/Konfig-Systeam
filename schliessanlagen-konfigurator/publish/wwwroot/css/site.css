@@ -61,7 +61,6 @@
 #card_controll {
     gap: 5px;
     display: flex;
-    border-top: 3px solid #f00;
     padding: 10px;
 }
     .radio-container input[type="radio"] {
@@ -417,11 +416,8 @@
     .ExelItem {
         padding-bottom: 10px;
         padding-top: 10px;
-        margin-bottom: 50px;
-        margin-top: 50px;
         box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
         width:auto;
-        max-width:800px;
         text-align: center;
     }
     #konfigMenu {
@@ -991,11 +987,8 @@
     .ExelItem {
         padding-bottom: 10px;
         padding-top: 10px;
-        margin-bottom: 50px;
-        margin-top: 50px;
         box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
         width: auto;
-        max-width: 800px;
         text-align: center;
     }
 
@@ -1354,7 +1347,17 @@
         font-size: 12px;
         height:100%;
     }
-
+    #filteblock {
+        border-top: 3px solid red;
+        padding: 10px;
+        gap: 20px;
+        grid-template-columns: 100px repeat(5, auto);
+        display: grid;
+    }
+    #selectedSystem_filter {
+        background: white;
+        padding: 10px;
+    }
     #infoButten {
         margin-top: 6px;
         height: 25px;
@@ -1364,11 +1367,8 @@
     #hederBlockOrder {
         height: 30px;
         padding: 10px;
-        border-top-right-radius: 10px;
-        border-top-left-radius: 10px;
-        color: white;
-        background: #f00;
-        border-bottom: 3px solid #f00;
+        color: black;
+        background: #e4e4e4;
         justify-content: flex-start;
         display: flex;
     }
@@ -1598,16 +1598,6 @@
         cursor: pointer;
         font-weight: bold;
         margin-top: -20px;
-    }
-
-    #filteblock {
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        display: flex;
-        padding: 20px;
-        margin: 20px;
-        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     }
 
     #konfigMenu {
@@ -1858,8 +1848,6 @@
     .ExelItem {
         grid-template-columns: 350px auto;
         display: grid;
-        margin-top: 50px;
-        max-width: 1250px;
         background: white;
         margin-left: auto;
         margin-right: auto;
@@ -1870,9 +1858,17 @@
         background-color: #EDEDED;
         padding: 5px;
     }
+    #selected_inform_text {
+        padding: 5px;
+    }
+    #selected_system_block {
+        margin-top: 20px;
+       
+    }
 
     #productImage {
         padding: 20px;
+        border-right: 3px solid red;
     }
 
     #ProductNameUndCost {
@@ -2380,12 +2376,9 @@
     #hederBlockOrder {
         height: 35px;
         padding: 10px;
-        border-top-right-radius: 10px;
-        border-top-left-radius: 10px;
-        color: white;
-        background: #f00;
+        color: black;
+        background: #e4e4e4;
         overflow: hidden;
-        border-bottom: 3px solid #f00;
         justify-content: flex-start;
         display: flex;
     }
@@ -2505,7 +2498,17 @@
         overflow: auto;
         background-color: rgba(0,0,0,0.4);
     }
-
+    #filteblock {
+        border-top: 3px solid red;
+        padding: 10px;
+        gap: 20px;
+        grid-template-columns: 100px repeat(5, auto);
+        display: grid;
+    }
+    #selectedSystem_filter {
+        background: white;
+        padding: 10px;
+    }
     .arrow-down {
         width: 0;
         height: 0;
@@ -2617,31 +2620,6 @@
         cursor: pointer;
         font-weight: bold;
         margin-top: -20px;
-    }
-
-    /* Close button */
-    .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-    }
-
-    #filteblock {
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        display: flex;
-        padding: 20px;
-        margin: 20px;
-        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    }
-
-    .close:hover,
-    .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
     }
 
     #konfigMenu {
@@ -2891,8 +2869,6 @@
     .ExelItem {
         grid-template-columns: 350px auto;
         display: grid;
-        margin-top: 50px;
-        max-width: 1250px;
         background: white;
         margin-left: auto;
         margin-right: auto;
@@ -2909,6 +2885,15 @@
 
     #productImage {
         padding: 20px;
+        border-right: 3px solid red;
+    }
+    #selected_inform_text {
+        padding: 5px;
+    }
+
+    #selected_system_block {
+        margin-top: 20px;
+       
     }
 
     #ProductNameUndCost {
@@ -3307,7 +3292,7 @@
         display: grid;
         align-items: center;
         text-align: center;
-        grid-template-columns: 100px 200px 950px;
+        grid-template-columns: 100px 200px auto;
     }
 
     #ItemCounterOrders {
