@@ -176,7 +176,7 @@
 
     </div> *@
 
-    <div id="myModal" class="modalLessen">
+  @*   <div id="myModal" class="modalLessen">
         <div class="modal-contentLessen ">
             <span class="clostHilfeModel">&times;</span>
             <br />
@@ -227,7 +227,7 @@
                 <span class="closI">&times;</span>
             <h2>Beginnen Sie hier mit dem Ausfüllen des Konfigurators!</h2>
             </div>
-        </div>
+        </div> *@
 </div>
 
 <script>
@@ -433,7 +433,7 @@
     
     let circle2 = document.querySelectorAll("#circle2");
 
-    let closeHilfe = document.getElementsByClassName("clostHilfeModel")[0];
+    // let closeHilfe = document.getElementsByClassName("clostHilfeModel")[0];
 
     let boolArray = [];
 
@@ -509,8 +509,8 @@
 
     document.addEventListener('DOMContentLoaded', (event) => 
     {
-        var modal = document.getElementById("myModal");
-        modal.style.display = "none";
+        // var modal = document.getElementById("myModal");
+        // modal.style.display = "none";
 
         for (let i = 1;i<circle2.length ;i++) 
         {
@@ -702,22 +702,22 @@
         }
     }
 
-    closeHilfe.addEventListener("click", () => 
-    {
-        var modal = document.getElementById("myModal");
-        modal.style.display = "none";
-    })
+    // closeHilfe.addEventListener("click", () => 
+    // {
+    //     var modal = document.getElementById("myModal");
+    //     modal.style.display = "none";
+    // })
 
-    function openModal() 
-    {
-        var modal = document.getElementById("myModal");
-        modal.style.display = "block";
-    }
+    // function openModal() 
+    // {
+    //     var modal = document.getElementById("myModal");
+    //     modal.style.display = "block";
+    // }
 
-    function hilfe() 
-    {
-        openModal();
-    }
+    // function hilfe() 
+    // {
+    //     openModal();
+    // }
 
 
     function bolleanCheked()

@@ -17,319 +17,335 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = schliessanlagen_konfigurator
 build_property.RootNamespace = schliessanlagen_konfigurator
-build_property.ProjectDir = C:\Users\JAKUB\Downloads\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator\schliessanlagen-konfigurator\schliessanlagen-konfigurator\
+build_property.ProjectDir = D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\JAKUB\Downloads\Konfig-Systeam-main\Konfig-Systeam-main\schliessanlagen-konfigurator\schliessanlagen-konfigurator\schliessanlagen-konfigurator
+build_property.MSBuildProjectDirectory = D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/AccessDenied.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/AccessDenied.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxBY2Nlc3NEZW5pZWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ConfirmEmail.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ConfirmEmail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxDb25maXJtRW1haWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ConfirmEmailChange.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ConfirmEmailChange.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxDb25maXJtRW1haWxDaGFuZ2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ExternalLogin.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ExternalLogin.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxFeHRlcm5hbExvZ2luLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ForgotPassword.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ForgotPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxGb3Jnb3RQYXNzd29yZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ForgotPasswordConfirmation.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ForgotPasswordConfirmation.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxGb3Jnb3RQYXNzd29yZENvbmZpcm1hdGlvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Lockout.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Lockout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2Nrb3V0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Login.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/LoginWith2fa.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/LoginWith2fa.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dpbldpdGgyZmEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/LoginWithRecoveryCode.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/LoginWithRecoveryCode.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dpbldpdGhSZWNvdmVyeUNvZGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Logout.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Logout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/ChangePassword.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/ChangePassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcQ2hhbmdlUGFzc3dvcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/DeletePersonalData.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/DeletePersonalData.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcRGVsZXRlUGVyc29uYWxEYXRhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/Disable2fa.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/Disable2fa.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcRGlzYWJsZTJmYS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/DownloadPersonalData.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/DownloadPersonalData.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcRG93bmxvYWRQZXJzb25hbERhdGEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/Email.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/Email.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcRW1haWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/EnableAuthenticator.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/EnableAuthenticator.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcRW5hYmxlQXV0aGVudGljYXRvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/ExternalLogins.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/ExternalLogins.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcRXh0ZXJuYWxMb2dpbnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/GenerateRecoveryCodes.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/GenerateRecoveryCodes.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcR2VuZXJhdGVSZWNvdmVyeUNvZGVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/HistoriOrders.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/HistoriOrders.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcSGlzdG9yaU9yZGVycy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/Index.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/PagePersonalOrders.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/PagePersonalOrders.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcUGFnZVBlcnNvbmFsT3JkZXJzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/PersonalData.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/PersonalData.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcUGVyc29uYWxEYXRhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/ResetAuthenticator.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/ResetAuthenticator.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcUmVzZXRBdXRoZW50aWNhdG9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/SetPassword.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/SetPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcU2V0UGFzc3dvcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/ShowRecoveryCodes.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/ShowRecoveryCodes.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcU2hvd1JlY292ZXJ5Q29kZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/TwoFactorAuthentication.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/TwoFactorAuthentication.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcVHdvRmFjdG9yQXV0aGVudGljYXRpb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/_Layout.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcX0xheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/_ManageNav.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/_ManageNav.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcX01hbmFnZU5hdi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/_StatusMessage.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/_StatusMessage.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcX1N0YXR1c01lc3NhZ2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/_ViewImports.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Register.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/RegisterConfirmation.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/RegisterConfirmation.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxSZWdpc3RlckNvbmZpcm1hdGlvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ResendEmailConfirmation.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ResendEmailConfirmation.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxSZXNlbmRFbWFpbENvbmZpcm1hdGlvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ResetPassword.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ResetPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxSZXNldFBhc3N3b3JkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ResetPasswordConfirmation.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/ResetPasswordConfirmation.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxSZXNldFBhc3N3b3JkQ29uZmlybWF0aW9uLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/_StatusMessage.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/_StatusMessage.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxfU3RhdHVzTWVzc2FnZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/_ViewImports.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxfVmlld0ltcG9ydHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/_ValidationScriptsPartial.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZhbGlkYXRpb25TY3JpcHRzUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/_ViewImports.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/_ViewStart.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Pages/_ValidationScriptsPartial.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Pages/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZhbGlkYXRpb25TY3JpcHRzUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Aussenzylinder_Rundzylinder.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Aussenzylinder_Rundzylinder.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdFxFZGl0X0F1c3Nlbnp5bGluZGVyX1J1bmR6eWxpbmRlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Doppelzylinder.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Doppelzylinder.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdFxFZGl0X0RvcHBlbHp5bGluZGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Hebel.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Hebel.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdFxFZGl0X0hlYmVsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Profil_Halbzylinder.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Profil_Halbzylinder.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdFxFZGl0X1Byb2ZpbF9IYWxienlsaW5kZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Profil_Knaufzylinder.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Profil_Knaufzylinder.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdFxFZGl0X1Byb2ZpbF9LbmF1Znp5bGluZGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Vorhangschloss.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_System.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdFxFZGl0X1N5c3RlbS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/Edit_Vorhangschloss.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdFxFZGl0X1ZvcmhhbmdzY2hsb3NzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/ImageConfig.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Edit/ImageConfig.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRWRpdFxJbWFnZUNvbmZpZy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/AllOrders.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/AllOrders.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBbGxPcmRlcnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Aussenzylinder_RundzylinderRout.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Aussenzylinder_RundzylinderRout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBdXNzZW56eWxpbmRlcl9SdW5kenlsaW5kZXJSb3V0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Error.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFcnJvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/HebelzylinderRout.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/HebelzylinderRout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxIZWJlbHp5bGluZGVyUm91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Impressum.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Impressum.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbXByZXNzdW0uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Index.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Message.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Message.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxNZXNzYWdlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductAussenzylinder.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductAussenzylinder.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9kdWN0QXVzc2VuenlsaW5kZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductHebel.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductHebel.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9kdWN0SGViZWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductProfil_Doppelzylinder.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductProfil_Doppelzylinder.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9kdWN0UHJvZmlsX0RvcHBlbHp5bGluZGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductProfil_Halb.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductProfil_Halb.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9kdWN0UHJvZmlsX0hhbGIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductProfil_Knayf.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductProfil_Knayf.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9kdWN0UHJvZmlsX0tuYXlmLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductVorhan.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/ProductVorhan.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9kdWN0Vm9yaGFuLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Profil_HalbzylinderRout.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Profil_HalbzylinderRout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9maWxfSGFsYnp5bGluZGVyUm91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Profil_KnaufzylinderRout.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Profil_KnaufzylinderRout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9maWxfS25hdWZ6eWxpbmRlclJvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/SendMail.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Schipeed.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTY2hpcGVlZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/SendMail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTZW5kTWFpbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/VorhangschlossRout.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/SystemInfo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTeXN0ZW1JbmZvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/VorhangschlossRout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxWb3JoYW5nc2NobG9zc1JvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Konfigurator/ChangedKonfigPlan.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Konfigurator/ChangedKonfigPlan.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS29uZmlndXJhdG9yXENoYW5nZWRLb25maWdQbGFuLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Konfigurator/Finisher.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Konfigurator/Finisher.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS29uZmlndXJhdG9yXEZpbmlzaGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Konfigurator/IndexKonfigurator.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Konfigurator/IndexKonfigurator.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS29uZmlndXJhdG9yXEluZGV4S29uZmlndXJhdG9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Konfigurator/System_Auswählen.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Konfigurator/SendRehnung.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS29uZmlndXJhdG9yXFNlbmRSZWhudW5nLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Konfigurator/System_Auswählen.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS29uZmlndXJhdG9yXFN5c3RlbV9BdXN3w6RobGVuLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/Error.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/_Footer.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/_Footer.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Gb290ZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/_LoginPartial.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/_LoginPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/_ValidationScriptsPartial.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/_ViewImports.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/_ViewStart.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/JAKUB/Downloads/Konfig-Systeam-main/Konfig-Systeam-main/schliessanlagen-konfigurator/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/_Layout.cshtml]
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-rlp7f96r37

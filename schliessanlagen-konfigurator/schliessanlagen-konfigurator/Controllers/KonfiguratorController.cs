@@ -5000,10 +5000,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
             ViewBag.SelectHalb = HalbaussenActual.ToList();
 
-            ViewBag.Halb = Halbzylinder.ToList();
-
             if (Halbzylinder.Count() > 0)
             {
+                ViewBag.Halb = Halbzylinder.ToList();
                 ViewBag.HalbJson = JsonConvert.SerializeObject(Halbzylinder.ToList());
                 ViewBag.CostHalbSize = JsonConvert.SerializeObject(HablAussen.Select(x => x.costAussen).ToList());
                 ViewBag.AussenHalb = halbAussen_Inter.Select(x => x.aussen).ToList();
@@ -5126,6 +5125,8 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 ViewBag.KnayfZelinderJson = JsonConvert.SerializeObject(KnayfOrderlist.ToList());
 
+                ViewBag.KnayfDescriptions = KnayfOrderlist.Select(x => x.description).First();
+
                 ViewBag.KnayfZelinderAussen = Kanyf_AussenInen.Select(x => x.aussen).Distinct().ToList();
            
                 var KnayfKleinSize = Kanyf_AussenInen.First().Aussen_Innen_Knauf_klein;
@@ -5206,6 +5207,8 @@ namespace schliessanlagen_konfigurator.Controllers
                 var KnayfInfo = db.Profil_Knaufzylinder.Where(x => x.NameSystem == Systeam).ToList();
                 ViewBag.KnayfZelinderJson = JsonConvert.SerializeObject(KnayfInfo.ToList());
 
+                ViewBag.KnayfDescriptions = JsonConvert.SerializeObject(KnayfInfo.Select(x => x.description).First());
+
                 var KnayfSize = db.Aussen_Innen_Knauf.Include(x=>x.Aussen_Innen_Knauf_klein).Where(x => x.Profil_KnaufzylinderId == KnayfInfo[0].Id).ToList();
 
                 var KnayfKleinSize = KnayfSize.First().Aussen_Innen_Knauf_klein;
@@ -5280,17 +5283,11 @@ namespace schliessanlagen_konfigurator.Controllers
 
             }
 
-            ViewBag.DopelzylinderIdList = DopelOrderlist.Select(x => x.Id).ToList();
-
-            ViewBag.DopelzylinderIdJson = JsonConvert.SerializeObject(DopelOrderlist.Select(x => x.Id).ToList());
-
             ViewBag.Dopelzylinder = DopelOrderlist.ToList();
 
             if (DopelOrderlist.Count() > 0)
             {
                 ViewBag.DopelzylinderJson = JsonConvert.SerializeObject(DopelOrderlist.ToList());
-
-                ViewBag.DoppelzylinderDescriptions = JsonConvert.SerializeObject(DopelOrderlist.Select(x=>x.description).ToList());
 
                 ViewBag.Dopelzylinderaussen = AussenInen.Select(x => x.aussen).ToList();
 
@@ -5353,6 +5350,9 @@ namespace schliessanlagen_konfigurator.Controllers
                     L.Add(fs.NGF_Value.Count());
                 }
 
+                ViewBag.DAussen = DaussenActual.ToList();
+
+                ViewBag.DInter = InenActual.ToList();
 
                 ViewBag.countOptionsListI = L;
 
@@ -5365,13 +5365,12 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             else
             {
-                var DoppelInfo = db.Profil_Doppelzylinder.Where(x => x.NameSystem == Systeam).ToList();
-                ViewBag.DopelzylinderJson = JsonConvert.SerializeObject(DoppelInfo);
-                ViewBag.DoppelzylinderDescriptions = JsonConvert.SerializeObject(DoppelInfo.Select(x => x.description).ToList());
-                
-                var DSize = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == DoppelInfo[0].Id).ToList();
+               var DoppelInfo = db.Profil_Doppelzylinder.Where(x => x.NameSystem == Systeam).ToList();
+               ViewBag.DopelzylinderJson = JsonConvert.SerializeObject(DoppelInfo);
 
-                ViewBag.Dopelzylinderaussen = DSize.Select(x=>x.aussen).ToList();
+               var DSize = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == DoppelInfo[0].Id).ToList();
+
+                ViewBag.Dopelzylinderaussen = DSize.Select(x => x.aussen).ToList();
                 ViewBag.DopelzylinderIntern = DSize.Select(x => x.Intern).ToList();
 
                 var doppelKleinSize = DSize.First().Doppel_Innen_klein;
@@ -5434,7 +5433,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
 
                 ViewBag.countOptionsListI = L;
-                
+
                 ViewBag.DoppelOptionsNameJsonI = JsonConvert.SerializeObject(ngf.Select(x => x.Name).ToList());
                 ViewBag.DoppelOptionsValueI = JsonConvert.SerializeObject(ngfValue.Select(x => x.Value).ToList());
                 ViewBag.optionsPrise = JsonConvert.SerializeObject(ngfValue.Select(x => x.Cost).ToList());
@@ -5443,15 +5442,9 @@ namespace schliessanlagen_konfigurator.Controllers
                 ViewBag.optionsValueI = ngfValue.Select(x => x.Value).ToList();
             }
 
-
-            ViewBag.DAussen = DaussenActual.ToList();
-
-            ViewBag.DInter = InenActual.ToList();
-
-            ViewBag.HelbZ = HelbZ.ToList();
-
             if (HelbZ.Count() > 0)
             {
+                ViewBag.HelbZ = HelbZ.ToList();
                 ViewBag.HelbZJson = JsonConvert.SerializeObject(HelbZ.ToList());
             }
             else
@@ -5460,8 +5453,6 @@ namespace schliessanlagen_konfigurator.Controllers
                 ViewBag.HelbZJson = JsonConvert.SerializeObject(HelbInfo.ToList());
             }
 
-            ViewBag.HelbItem = HelbZ.Select(x => x.Id).ToList();
-            ViewBag.HelbItemJson = JsonConvert.SerializeObject(HelbZ.Select(x => x.Id).ToList());
 
             if (Vorhanschlos.Count() > 0)
             {
@@ -5473,6 +5464,10 @@ namespace schliessanlagen_konfigurator.Controllers
                 ViewBag.VorhanSize = Vsize.Select(x => x.sizeVorhangschloss).ToList();
                 ViewBag.VorhanschlosSizeJson = JsonConvert.SerializeObject(Vsize.Select(x => x.sizeVorhangschloss).ToList());
                 ViewBag.VorhanschlosSizeCostedJson = JsonConvert.SerializeObject(Vsize.Select(x => x.Cost).ToList());
+
+                ViewBag.VorhanschlosItem = Vorhanschlos.Select(x => x.Id).ToList();
+                ViewBag.VorhanschlosItemJson = JsonConvert.SerializeObject(Vorhanschlos.Select(x => x.Id).ToList());
+                ViewBag.VorhanOrderAussen = key.Where(x => x.ZylinderId == 5).Select(x => x.aussen).ToList();
             }
             else
             {
@@ -5489,16 +5484,10 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
             }
 
-            ViewBag.VorhanschlosItem = Vorhanschlos.Select(x => x.Id).ToList();
-            ViewBag.VorhanschlosItemJson = JsonConvert.SerializeObject(Vorhanschlos.Select(x => x.Id).ToList());
-
-            ViewBag.VorhanOrderAussen = key.Where(x => x.ZylinderId == 5).Select(x => x.aussen).ToList();
-
-            ViewBag.Aussenzylinder = Aussenzylinder.ToList();
-
 
             if (Aussenzylinder.Count() > 0)
             {
+                ViewBag.Aussenzylinder = Aussenzylinder.ToList();
                 ViewBag.AussenzylinderJson = JsonConvert.SerializeObject(Aussenzylinder.ToList());
             }
             else
@@ -5507,11 +5496,6 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 ViewBag.AussenzylinderJson = JsonConvert.SerializeObject(AussenzylinderInfo.ToList());
             }
-
-            
-
-            ViewBag.AussenzylinderItem = Aussenzylinder.Select(x => x.Id).ToList();
-            ViewBag.AussenzylinderItemJson = JsonConvert.SerializeObject(Aussenzylinder.Select(x => x.Id).ToList());
 
             ViewBag.KeyCount = IsOpenValue.Count;
             ViewBag.KeyValue = ValueKeyOpen.Select(x => x.isOpen).ToList();
