@@ -4023,6 +4023,8 @@ namespace schliessanlagen_konfigurator.Controllers
 
             ViewBag.HalbOptionsName = OptionsHalb.Select(x => x).ToList();
 
+
+
             ViewBag.HalbOptionsNameJson = JsonConvert.SerializeObject(OptionsHalb.Select(x => x.Name).ToList());
 
             ViewBag.HalbOptionsValue = OptionsValueHalb.Select(x => x.Value).ToList();

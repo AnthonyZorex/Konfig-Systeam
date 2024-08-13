@@ -1226,7 +1226,7 @@
                                                 {
                                                                        <div class="input-group">
                                                                              <div class="input-group-text" id="btnGroupAddon">
-                                                                                <img data-bs-toggle="modal" data-bs-target="#myModalOptions-@i" id="hilfeOptionsIcon" src="@("/Image/question.png")" height="20" width="20" />
+                                                                                                <img data-bs-toggle="modal" data-bs-target="#myModalOptions-@i" id="hilfeOptionsIcon" src="@("/Image/question.png")" height="20" width="20" />
                                                                              </div>
                                                                                <input class="form-control" id="OptionName" readonly type="text" value="@ViewBag.optionsNameI[i].Name" aria-label="Пример группы ввода" aria-describedby="btnGroupAddon" />
                                                                            </div>
@@ -1247,6 +1247,37 @@
                                                                                                                                                                                                                                                                                                                                     <input type="hidden" id="Option-${BlockN} + @i" />
                                                     <input type="hidden" id="d-${BlockN} + @i" />
 
+                                                     <div class="modal fade" id="myModalOptions-@i" tabindex="-1">
+                                                            <div class="modal-dialog modal-xl">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                                        <h1 class="modal-title">@ViewBag.optionsNameI[i].Name</h1>
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+
+                                                                            <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                                                                                <div class="row g-0">
+                                                                                    <div class="col-md-4">
+                                                                                         <img src="@("/Image/"+@ViewBag.optionsNameI[i].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                                                                    </div>
+                                                                                    <div class="col-md-8">
+                                                                                        <div class="card-body">
+
+                                                                                            <div class="card-text">
+                                                                                            @Html.Raw(@ViewBag.optionsNameI[i].Description)
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
 
                                                       
 
@@ -1276,9 +1307,8 @@
                                                     </div>
                                                     <div class="col-md-8">
                                                         <div class="card-body">
-
                                                             <div class="card-text">
-                                                             
+                                                                ${DoppelInfo[0].description}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1300,9 +1330,10 @@
 
             let img = HalbInfo[0].ImageName;
 
+
             block.innerHTML = `   <input type="hidden" name="Halb" value="${HalbInfo[0].Id}" />
                         <div id="productImage">
-                                    <img  decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="/Image/${img}" asp-append-version="true" width="300px" height="300px" />
+                             <img  decoding="async" data-bs-toggle="modal" data-bs-target="#ModalHalb-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="/Image/${img}" asp-append-version="true" width="300px" height="300px" />
                         </div>
                         <div id="productMenuInfo">
                             <div id="ProductNameUndCost">
@@ -1362,8 +1393,13 @@
                                     {
                                         @for (int i = 0; i < ViewBag.HalbOptionsNameI.Count; i++)
                                         {
-                                            <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.HalbOptionsNameI[i].Name" />
-                                              <img onclick="OpenHalbDescriptions(@i)"  id="hilfeOptionsIcon" src="@("/Image/question.png")" height="20" width="20" />
+                                                        <div class="input-group">
+                                                            <div class="input-group-text" id="btnGroupAddon">
+                                                              <img data-bs-toggle="modal" data-bs-target="#HalbOptionsDescriptions-@i"   id="hilfeOptionsIcon" src="@("/Image/question.png")" height="20" width="20" />
+                                                            </div>
+                                                              <input class="form-control" id="OptionName"  readonly type="text" value="@ViewBag.HalbOptionsNameI[i].Name" aria-label="Пример группы ввода" aria-describedby="btnGroupAddon"/>
+                                                          </div>
+
                                                <select class="form-select"  id="@d-Options-@i" style="margin-bottom: 10px;" onchange="OptionsSelect(${BlockN},'Halb',event.target.id,event.target.value,@valueCountHalb,'@ViewBag.HalbOptionsNameI[i]',@i,${BlockN})" >
 
                                                 @for (int j = 0; j < ViewBag.HalbOptionsValueICount[i]; j++)
@@ -1378,13 +1414,77 @@
                                              <input type="hidden"  id="Option-${BlockN} + @i" />
                                              <input type="hidden" id="d-${BlockN} + @i" />
 
+                                              <div class="modal fade" id="HalbOptionsDescriptions-@i" tabindex="-1">
+                                                <div class="modal-dialog modal-xl">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                                        <h1 class="modal-title">@ViewBag.HalbOptionsNameI[i].Name</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+
+                                                            <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                                                                <div class="row g-0">
+                                                                    <div class="col-md-4">
+                                                                                    <img src="@("/Image/"+@ViewBag.HalbOptionsNameI[i].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <div class="card-body">
+
+                                                                            <div class="card-text">
+                                                                                @Html.Raw(@ViewBag.HalbOptionsNameI[i].Description)
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         }
                                         <input type="hidden" name="HalbOption" id="OptionAll-${BlockN}" />
                                     }
                                 </div>
                                  </div>                              
                         </div>
-                           `;
+
+                            <div class="modal fade" id="ModalHalb-@d" tabindex="-1">
+                                <div class="modal-dialog modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                         <h1 class="modal-title">${[HalbInfo[0].Name]}</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                        </div>
+                                        <div class="modal-body">
+
+                                            <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                                                <div class="row g-0">
+                                                    <div class="col-md-4">
+                                                            <img src="/Image/${img}" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="card-body">
+
+                                                            <div class="card-text">
+                                                                       ${HalbInfo[0].description}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                        `;
         }
         if (value == "Knaufzylinder") 
         {
@@ -1420,6 +1520,148 @@
 
                             </select>
                         </div>
+                            <div id="textInform">
+                              <h5>Zylinderlänge</h5>
+                              <h5>Stück</h5>
+                        </div>
+                            <div id="Size-${BlockN}" class="SizeProduct">
+                                  <div>
+                                              <input style="border: none;" id="compName" type="hidden" value="${[KnayfInfo[0].companyName]}" />
+
+
+                                       <select class="form-select" name="KnayfAussen" id="Aussen" onchange="selectParamAussen(${BlockN},'Knaufzylinder',event.target.selectedIndex+1)">
+    @for (int i = 0; i < ViewBag.KnayfZelinderAussen.Count; i++)
+    {
+                                            <option id="OptionA">@ViewBag.KnayfZelinderAussen[i]</option>
+    }
+                                                  </select>
+
+
+                                       <input type="hidden" id="Aussen-${BlockN}" />
+                                  </div>
+                                  <div>
+
+                                                      <select class="form-select" name="KnayfIntern" id="Intern" onchange="selectParamIntern(${BlockN},'Knaufzylinder',event.target.selectedIndex+1)">
+
+    @for (int i = 0; i < ViewBag.KnayfZelinderIntern.Count; i++)
+    {
+                                                        <option id="OptionI">@ViewBag.KnayfZelinderIntern[i]</option>
+    }
+
+                                                  </select>
+
+                                           <input type="hidden" id="Innen-${BlockN}" />
+                                  </div>
+                                      <div class="btn-group count_control" role="group" aria-label="Basic outlined example">
+                                          <button type="button" onclick="CylinderMinus(${BlockN})" class="btn btn-success">-</button>
+                                                  <input readonly class="count_input_controll" id="countSchlusse-${BlockN}" type="number" min="1" value="1" name="TurCounter" />
+                                          <button type="button" onclick="CylinderPlus(${BlockN})" class="btn btn-success">+</button>
+                                  </div>
+                              </div>
+                                  <div id="optionsItems">
+                                      <h3>Weitere Optionen</h3>
+                                            <div>
+
+                @{
+                    int KnayfValueCount = 0;
+                }
+                @if (ViewBag.countOptionsQueryKnayfI > 0)
+                {
+                    @for (int i = 0; i < ViewBag.optionsNameKnayfI.Count; i++)
+                    {
+                                                                        <div class="input-group">
+                                                                           <div class="input-group-text" id="btnGroupAddon">
+                                                                               <img  id="hilfeOptionsIcon" data-bs-toggle="modal" data-bs-target="#KanyfOptionsModal-@i" src="@("/Image/question.png")" height="20" width="20" />
+                                                                           </div>
+                                                                               <input class="form-control" id="OptionName"  readonly aria-label="Пример группы ввода" aria-describedby="btnGroupAddon" type="text" value="@ViewBag.optionsNameKnayfI[i].Name" />
+                                                                         </div>
+
+
+                                                                 <select style="margin-bottom: 10px;"  class="form-select" id="${BlockN}-Options-@i" onchange="OptionsSelect(${BlockN},'Knayf',event.target.id,event.target.value,@KnayfValueCount,'@ViewBag.optionsNameKnayfI[i].Name',@i,${BlockN})">
+
+                                                                    @for (int j = 0; j < ViewBag.countOptionsListKnayfI[i]; j++)
+                                                                    {
+                                                                          <option id="@KnayfValueCount">@ViewBag.optionsValueKnayfI[KnayfValueCount]</option>
+
+                                                                        KnayfValueCount++;
+                                                                    }
+
+                                                               </select>
+                                                              <input type="hidden"  id="Option-${BlockN} + @i" />
+                                                              <input type="hidden" id="d-${BlockN} + @i" />
+
+                                                                   <div class="modal fade" id="KanyfOptionsModal-@i" tabindex="-1">
+                                                                       <div class="modal-dialog modal-xl">
+                                                                           <div class="modal-content">
+                                                                               <div class="modal-header">
+                                                                                               <h1 class="modal-title">@ViewBag.optionsNameKnayfI[i].Name</h1>
+                                                                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                                                               </div>
+                                                                               <div class="modal-body">
+
+                                                                                       <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                                                                                           <div class="row g-0">
+                                                                                               <div class="col-md-4">
+                                                                                                           <img src="@("/Image/"+@ViewBag.optionsNameKnayfI[i].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                                                                               </div>
+                                                                                               <div class="col-md-8">
+                                                                                                   <div class="card-body">
+
+                                                                                                       <div class="card-text">
+                                                                                                        @Html.Raw(@ViewBag.optionsNameKnayfI[i].Description)
+                                                                                                       </div>
+                                                                                                   </div>
+                                                                                               </div>
+                                                                                           </div>
+                                                                                       </div>
+                                                                               </div>
+                                                                               <div class="modal-footer">
+                                                                                   <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
+                                                                               </div>
+                                                                           </div>
+                                                                       </div>
+                                                                   </div>
+
+                                                        }
+
+                                                                                                         <input type="hidden" name="KnayfOption" id="OptionAll-${BlockN}" />
+                                                    }
+
+                                               </div>
+                                                              </div>
+                                                                  </div>
+
+                                 <div class="modal fade" id="ModalItemKnayf-@d" tabindex="-1">
+                             <div class="modal-dialog modal-xl">
+                                 <div class="modal-content">
+                                     <div class="modal-header">
+                                                 <h1 class="modal-title">${[KnayfInfo[0].Name]}</h1>
+                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                     </div>
+                                     <div class="modal-body">
+
+                                         <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                                             <div class="row g-0">
+                                                 <div class="col-md-4">
+                                                         <img src="/Image/${img} height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                                 </div>
+                                                 <div class="col-md-8">
+                                                     <div class="card-body">
+
+                                                         <div class="card-text">
+                                                                ${[KnayfInfo[0].description]}
+                                                         </div>
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </div>
+                                     <div class="modal-footer">
+                                         <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
                        `;
         }
         if (value == "Hebelzylinder") 
@@ -1430,7 +1672,7 @@
 
             block.innerHTML = `<input type="hidden" name="Helb" value="${[HelbInfo[0].Id]}" />
                         <div id="productImage">
-                                        <img  decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="/Image/${img}" asp-append-version="true" width="300px" height="300px" />
+                                <img  decoding="async" data-bs-toggle="modal" data-bs-target="#ModalHebel-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="/Image/${img}" asp-append-version="true" width="300px" height="300px" />
                         </div>
                         <div id="productMenuInfo">
                             <div id="ProductNameUndCost">
@@ -1460,9 +1702,9 @@
                                     <h5>Stück</h5>
                             </div>
                                     <div id="Size-${BlockN}" class="SizeProduct">
-                                <div style="gap: 10px;display: flex;margin-left: 50px;">
+                                <div>
                                             <button onclick="CylinderMinus(${BlockN})" type="button" class="btn btn-success">-</button>
-                                            <input readonly style="border: none;max-width: 80px;" name="TurCounter" type="number" min="1" value="1" id="countSchlusse-${BlockN}" />
+                                                <input readonly  name="TurCounter" class="count_input_controll" type="number" min="1" value="1" id="countSchlusse-${BlockN}" />
                                         <button onclick="CylinderPlus(${BlockN})" type="button" class="btn btn-success">+</button>
                                 </div>
                             </div>
@@ -1477,7 +1719,42 @@
                                
                                 </div>
                             </div>
-                        </div>`;
+                        </div>
+
+            <div class="modal fade" id="ModalHebel-@d" tabindex="-1">
+         <div class="modal-dialog modal-xl">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h1 class="modal-title">${[HelbInfo[0].Name]}</h1>
+                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                 </div>
+                 <div class="modal-body">
+
+                     <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                         <div class="row g-0">
+                             <div class="col-md-4">
+                                 <img src="/Image/${img}" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                             </div>
+                             <div class="col-md-8">
+                                 <div class="card-body">
+
+                                     <div class="card-text">
+                                         ${HelbInfo[0].description}
+          
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
+                 </div>
+             </div>
+         </div>
+     </div>
+                        
+                        `;
         }
         if (value == "Vorhangschloss") 
         {
@@ -1487,7 +1764,7 @@
 
             block.innerHTML = `  <input type="hidden" name="Vorhan" value="${VorhanschlosInfo[0].Id} " />
                         <div id="productImage">
-                                         <img  decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="/Image/${img}" asp-append-version="true" width="300px" height="300px" />
+                                <img  decoding="async" data-bs-toggle="modal" data-bs-target="#ModalVorhan-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="/Image/${img}" asp-append-version="true" width="300px" height="300px" />
                         </div>
                         <div id="productMenuInfo">
                             <div id="ProductNameUndCost">
@@ -1542,7 +1819,41 @@
                                     
                                 </div>
                             </div>      
-                        </div>`;
+                        </div>
+                            <div class="modal fade" id="ModalVorhan-@d" tabindex="-1">
+                         <div class="modal-dialog modal-xl">
+                             <div class="modal-content">
+                                 <div class="modal-header">
+                                             <h1 class="modal-title">${[AVorhanschlosInfo[0].Name]}</h1>
+                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                 </div>
+                                 <div class="modal-body">
+
+                                     <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                                         <div class="row g-0">
+                                             <div class="col-md-4">
+                                                     <img src="/Image/${img}" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                             </div>
+                                             <div class="col-md-8">
+                                                 <div class="card-body">
+
+                                                     <div class="card-text">
+                                                             ${VorhanschlosInfo[0].description}
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 <div class="modal-footer">
+                                     <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                        
+                        
+                        `;
         }
         if (value == "Aussenzylinder") 
         {
@@ -1552,7 +1863,7 @@
             block.innerHTML = `<input type="hidden" name="Aussen" value="${AussenzylinderInfo[0].Id}" />
            
             <div id="productImage">
-                <img  decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="/Image/${img}" asp-append-version="true" width="300px" height="300px" />
+                <img  decoding="async" data-bs-toggle="modal" data-bs-target="#ModalAussenzylinder-@d"  style="border: 2px solid rgba(237,237,237,0.5);" src="/Image/${img}" asp-append-version="true" width="300px" height="300px" />
                 </div>
             <div id="productMenuInfo">
                 <div id="ProductNameUndCost">
@@ -1580,13 +1891,13 @@
                     </select>
                 </div>
 
-                <div>
+                    <div id="textInform">
                     <h5>Stück</h5>
                 </div>
                         <div id="Size-${BlockN}" class="SizeProduct">
                             <button type="button" onclick="CylinderMinus(${BlockN})" class="btn btn-success">-</button>
                            
-                                <input style="border: none;max-width: 30px;" readonly name="TurCounter" type="number" min="1" value="1" id="countSchlusse-${BlockN}" />
+                                <input class="count_input_controll" readonly name="TurCounter" type="number" min="1" value="1" id="countSchlusse-${BlockN}" />
                            
                             <button type="button" onclick="CylinderPlus(${BlockN})" class="btn btn-success">+</button>
 
@@ -1623,7 +1934,40 @@
                     </div
                 </div>
             </div>
-                    `;
+
+       <div class="modal fade" id="ModalAussenzylinder-@d" tabindex="-1">
+         <div class="modal-dialog modal-xl">
+             <div class="modal-content">
+                 <div class="modal-header">
+                         <h1 class="modal-title">${[AussenzylinderInfo[0].Name]}</h1>
+                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                 </div>
+                 <div class="modal-body">
+
+                     <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                         <div class="row g-0">
+                             <div class="col-md-4">
+                                     <img src="/Image/${img}" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                             </div>
+                             <div class="col-md-8">
+                                 <div class="card-body">
+
+                                     <div class="card-text">
+                                         ${AussenzylinderInfo[0].description}
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
+                 </div>
+             </div>
+         </div>
+     </div>
+            
+            `;
         }
 
         procent();
