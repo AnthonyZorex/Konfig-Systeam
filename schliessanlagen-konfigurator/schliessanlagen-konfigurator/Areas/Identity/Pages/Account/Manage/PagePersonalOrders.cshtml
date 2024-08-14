@@ -458,17 +458,17 @@
 
                                                         @for (int s = 0; s < countProduct[z]; s++)
                                                         {
-
                                                             <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                                                 <div class="row g-0">
                                                                     <div class="col-md-4">
-                                                                        <img src="@($"/Image/{imageList[z]}")" class="img-fluid rounded-start" alt="...">
+                                                                <img src="@($"/Image/{imageList[ProudctItemCounter]}")" class="img-fluid rounded-start" alt="...">
                                                                     </div>
                                                                     <div class="col-md-8">
                                                                         <div class="card-body">
                                                                             <h5 class="card-title">Name: @orderItem[ProudctItemCounter].Name</h5>
                                                                             <div class="card-text">
-                                                                                @Html.Raw(descriptions[z])
+                                                                                  @Html.Raw(descriptions[ProudctItemCounter])
+                                                                        <br />
                                                                                 <h6>aussen: @orderItem[ProudctItemCounter].Aussen</h6>
                                                                                 <h6>innen: @orderItem[ProudctItemCounter].Intern</h6>
                                                                                 <h6>Option - @orderItem[ProudctItemCounter].Option</h6>

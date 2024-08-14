@@ -49,7 +49,7 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
             List<string> images = new List<string>();
             List<string> descriptions = new List<string>();
             foreach (var list in ListItemProduct)
-           {
+            {
                 var doppel = db.Profil_Doppelzylinder.FirstOrDefault(x => x.Name == list.Name);
                 var knayf = db.Profil_Knaufzylinder.FirstOrDefault(x => x.Name == list.Name);
                 var halb = db.Profil_Halbzylinder.FirstOrDefault(x => x.Name == list.Name);

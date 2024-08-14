@@ -73,47 +73,48 @@
                 
                 foreach (var item in ViewBag.Doppel)
                 {
-                    <div class="ExelItem shadow-lg mb-4 bg-body-tertiary rounded" id="@countItem">
-                        <div id="productImage">
-                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
- 
-                                <div>
-                                    @foreach (var list in ViewBag.Gallery)
+                            <div class="ExelItem shadow-lg mb-4 bg-body-tertiary rounded" id="@countItem">
+                                <div id="productImage">
+
+                                    <img decoding="async" id="ImgSelecter-@countItem" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+         
+                                        <div id="Galery">
+                                            @foreach (var list in ViewBag.Gallery)
                                     {
-                                        @if (item.SystemId == list.SysteamPriceKeyId)
+                                                @if (item.SystemId == list.SysteamPriceKeyId)
                                         {
-                                            <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
+                                            <img src="@("/Image/"+@list.ImageName)" onclick="imageSwitcher(event,@countItem)" height="100" width="100" />
                                         }        
                                     }
+                                        </div>
                                 </div>
-                        </div>
-                        <div id="productMenuInfo">
-                            <div id="ProductNameUndCost">
-                                <div>
-                                    <h3 id="sys">@item.NameSystem</h3>
-                                    <input type="hidden" value="@item.companyName" id="name" />
-                                </div>
-                                <div style="margin-left: auto;">
-                                    <h4 id="cost">ab @item.Cost.ToString("C")</h4>
-                                </div>
-                            </div>
-                            <div id="product_desciptions">
-                                <div>
-                                    @Html.Raw(@item.description)
-                                </div>
-                            </div>
-
-                            <div id="productChek">
-                                <div>
-                                    <div>
-                                       @Html.Raw(@item.Lieferzeit)
+                                <div id="productMenuInfo">
+                                    <div id="ProductNameUndCost">
+                                        <div>
+                                            <h3 id="sys">@item.NameSystem</h3>
+                                            <input type="hidden" value="@item.companyName" id="name" />
+                                        </div>
+                                        <div style="margin-left: auto;">
+                                            <h4 id="cost">ab @item.Cost.ToString("C")</h4>
+                                        </div>
                                     </div>
-                                    <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
-                                </div>
+                                    <div id="product_desciptions">
+                                        <div>
+                                            @Html.Raw(@item.description)
+                                        </div>
+                                    </div>
 
+                                    <div id="productChek">
+                                        <div>
+                                            <div>
+                                               @Html.Raw(@item.Lieferzeit)
+                                            </div>
+                                            <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
                     countItem++;
                    
                 }
@@ -123,42 +124,42 @@
             {
                 foreach (var item in ViewBag.Knaufzylinder)
                 {
-                    <div class="ExelItem shadow-lg mb-4 bg-body-tertiary rounded" id="@countItem">
-                        <div id="productImage">
-                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                            <div>
-                                @foreach (var list in ViewBag.Gallery)
+                            <div class="ExelItem shadow-lg mb-4 bg-body-tertiary rounded" id="@countItem">
+                                <div id="productImage">
+                                    <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                                    <div>
+                                        @foreach (var list in ViewBag.Gallery)
                                 {
-                                    @if (item.SystemId == list.SysteamPriceKeyId)
+                                            @if (item.SystemId == list.SysteamPriceKeyId)
                                     {
-                                        <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
+                                                <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
                                     }
                                 }
-                            </div>
-                         </div>
-                        <div id="productMenuInfo">
-                            <div id="ProductNameUndCost">
-                                <div>
-                                    <h3 id="sys">@item.NameSystem</h3>
-                                    <input type="hidden" value="@item.companyName" id="name" />
+                                    </div>
+                                 </div>
+                                <div id="productMenuInfo">
+                                    <div id="ProductNameUndCost">
+                                        <div>
+                                            <h3 id="sys">@item.NameSystem</h3>
+                                            <input type="hidden" value="@item.companyName" id="name" />
+                                        </div>
+                                        <div style="margin-left: auto;">
+                                            <h4 id="cost">ab @item.Cost.ToString("C")</h4>
+                                        </div>
+                                    </div>
+                                    <div id="product_desciptions">
+                                        <div>
+                                            @Html.Raw(@item.description)
+                                        </div>
+                                    </div>
+                                    <div id="productChek">
+                                        <div>
+                                            @Html.Raw(@item.Lieferzeit)
+                                        </div>
+                                        <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem,DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
+                                    </div>
                                 </div>
-                                <div style="margin-left: auto;">
-                                    <h4 id="cost">ab @item.Cost.ToString("C")</h4>
-                                </div>
                             </div>
-                            <div id="product_desciptions">
-                                <div>
-                                    @Html.Raw(@item.description)
-                                </div>
-                            </div>
-                            <div id="productChek">
-                                <div>
-                                    @Html.Raw(@item.Lieferzeit)
-                                </div>
-                                <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem,DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
-                            </div>
-                        </div>
-                    </div>
                     countItem++;
                 }
             }
@@ -166,43 +167,43 @@
             {
                 foreach (var item in ViewBag.Halb)
                 {
-                    <div class="ExelItem shadow-lg mb-4 bg-body-tertiary rounded" id="@countItem">
-                        <div id="productImage">
-                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                            <div>
-                                @foreach (var list in ViewBag.Gallery)
+                            <div class="ExelItem shadow-lg mb-4 bg-body-tertiary rounded" id="@countItem">
+                                <div id="productImage">
+                                    <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                                    <div>
+                                        @foreach (var list in ViewBag.Gallery)
                                 {
-                                    @if (item.SystemId == list.SysteamPriceKeyId)
+                                            @if (item.SystemId == list.SysteamPriceKeyId)
                                     {
-                                        <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
+                                                <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
                                     }
                                 }
-                            </div>
-                            
-                            </div>
-                        <div id="productMenuInfo">
-                            <div id="ProductNameUndCost">
-                                <div>
-                                    <h3 id="sys">@item.NameSystem</h3>
-                                    <input type="hidden" value="@item.companyName" id="name" />
+                                    </div>
+                                    
+                                    </div>
+                                <div id="productMenuInfo">
+                                    <div id="ProductNameUndCost">
+                                        <div>
+                                            <h3 id="sys">@item.NameSystem</h3>
+                                            <input type="hidden" value="@item.companyName" id="name" />
+                                        </div>
+                                        <div style="margin-left: auto;">
+                                            <h4 id="cost">ab @item.Cost.ToString("C")</h4>
+                                        </div>
+                                    </div>
+                                    <div id="product_desciptions">
+                                        <div>
+                                            @Html.Raw(@item.description)
+                                        </div>
+                                    </div>
+                                    <div id="productChek">
+                                        <div>
+                                            @Html.Raw(@item.Lieferzeit)
+                                        </div>
+                                        <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
+                                    </div>
                                 </div>
-                                <div style="margin-left: auto;">
-                                    <h4 id="cost">ab @item.Cost.ToString("C")</h4>
-                                </div>
                             </div>
-                            <div id="product_desciptions">
-                                <div>
-                                    @Html.Raw(@item.description)
-                                </div>
-                            </div>
-                            <div id="productChek">
-                                <div>
-                                    @Html.Raw(@item.Lieferzeit)
-                                </div>
-                                <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
-                            </div>
-                        </div>
-                    </div>
                     countItem++;
                 }
             }
@@ -210,42 +211,42 @@
             {
                 foreach (var item in ViewBag.Hebel)
                 {
-                    <div class="ExelItem shadow-lg mb-4 bg-body-tertiary rounded" id="@countItem">
-                        <div id="productImage">
-                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                            <div>
-                                @foreach (var list in ViewBag.Gallery)
+                            <div class="ExelItem shadow-lg mb-4 bg-body-tertiary rounded" id="@countItem">
+                                <div id="productImage">
+                                    <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                                    <div>
+                                        @foreach (var list in ViewBag.Gallery)
                                 {
-                                    @if (item.SystemId == list.SysteamPriceKeyId)
+                                            @if (item.SystemId == list.SysteamPriceKeyId)
                                     {
-                                        <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
+                                                <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
                                     }
                                 }
-                            </div>
-                          </div>
-                        <div id="productMenuInfo">
-                            <div id="ProductNameUndCost">
-                                <div>
-                                    <h3 id="sys">@item.NameSystem</h3>
-                                    <input type="hidden" value="@item.companyName" id="name" />
+                                    </div>
+                                  </div>
+                                <div id="productMenuInfo">
+                                    <div id="ProductNameUndCost">
+                                        <div>
+                                            <h3 id="sys">@item.NameSystem</h3>
+                                            <input type="hidden" value="@item.companyName" id="name" />
+                                        </div>
+                                        <div style="margin-left: auto;">
+                                            <h4 id="cost">ab @item.Cost.ToString("C")</h4>
+                                        </div>
+                                    </div>
+                                    <div id="product_desciptions">
+                                        <div>
+                                            @Html.Raw(@item.description)
+                                        </div>
+                                    </div>
+                                    <div id="productChek">
+                                        <div>
+                                            @Html.Raw(@item.Lieferzeit)
+                                        </div>
+                                        <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
+                                    </div>
                                 </div>
-                                <div style="margin-left: auto;">
-                                    <h4 id="cost">ab @item.Cost.ToString("C")</h4>
-                                </div>
                             </div>
-                            <div id="product_desciptions">
-                                <div>
-                                    @Html.Raw(@item.description)
-                                </div>
-                            </div>
-                            <div id="productChek">
-                                <div>
-                                    @Html.Raw(@item.Lieferzeit)
-                                </div>
-                                <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
-                            </div>
-                        </div>
-                    </div>
                     countItem++;
                 }
             }
@@ -253,43 +254,43 @@
             {
                 foreach (var item in ViewBag.VorhanSchloss)
                 {
-                    <div class="ExelItem shadow-lg mb-4 bg-body-tertiary rounded" id="@countItem">
-                        <div id="productImage">
-                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                            <div class="ExelItem shadow-lg mb-4 bg-body-tertiary rounded" id="@countItem">
+                                <div id="productImage">
+                                    <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
 
-                            <div>
-                                @foreach (var list in ViewBag.Gallery)
+                                    <div>
+                                        @foreach (var list in ViewBag.Gallery)
                                 {
-                                    @if (item.SystemId == list.SysteamPriceKeyId)
+                                            @if (item.SystemId == list.SysteamPriceKeyId)
                                     {
-                                        <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
+                                                <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
                                     }
                                 }
-                            </div>
-                        </div>
-                        <div id="productMenuInfo">
-                            <div id="ProductNameUndCost">
-                                <div>
-                                    <h3 id="sys">@item.NameSystem</h3>
-                                    <input type="hidden" value="@item.companyName" id="name" />
+                                    </div>
                                 </div>
-                                <div style="margin-left: auto;">
-                                    <h4 id="cost">ab @item.Cost.ToString("C")</h4>
+                                <div id="productMenuInfo">
+                                    <div id="ProductNameUndCost">
+                                        <div>
+                                            <h3 id="sys">@item.NameSystem</h3>
+                                            <input type="hidden" value="@item.companyName" id="name" />
+                                        </div>
+                                        <div style="margin-left: auto;">
+                                            <h4 id="cost">ab @item.Cost.ToString("C")</h4>
+                                        </div>
+                                    </div>
+                                    <div id="product_desciptions">
+                                        <div>
+                                            @Html.Raw(@item.description)
+                                        </div>
+                                    </div>
+                                    <div id="productChek">
+                                        <div>
+                                            @Html.Raw(@item.Lieferzeit)
+                                        </div>
+                                        <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem,DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
+                                    </div>
                                 </div>
                             </div>
-                            <div id="product_desciptions">
-                                <div>
-                                    @Html.Raw(@item.description)
-                                </div>
-                            </div>
-                            <div id="productChek">
-                                <div>
-                                    @Html.Raw(@item.Lieferzeit)
-                                </div>
-                                <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem,DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
-                            </div>
-                        </div>
-                    </div>
                     countItem++;
                 }
             }
@@ -297,43 +298,43 @@
             {
                 foreach (var item in ViewBag.Aussen)
                 {
-                    <div class="ExelItem shadow-lg mb-4 bg-body-tertiary rounded" id="@countItem">
-                        <div id="productImage">
-                            <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                            <div class="ExelItem shadow-lg mb-4 bg-body-tertiary rounded" id="@countItem">
+                                <div id="productImage">
+                                    <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
 
-                            <div>
-                                @foreach (var list in ViewBag.Gallery)
+                                    <div>
+                                        @foreach (var list in ViewBag.Gallery)
                                 {
-                                    @if (item.SystemId == list.SysteamPriceKeyId)
+                                            @if (item.SystemId == list.SysteamPriceKeyId)
                                     {
-                                        <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
+                                                <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
                                     }
                                 }
-                            </div>
-                         </div>
-                        <div id="productMenuInfo">
-                            <div id="ProductNameUndCost">
-                                <div>
-                                    <h3 id="sys">@item.NameSystem</h3>
-                                    <input type="hidden" value="@item.companyName" id="name" />
+                                    </div>
+                                 </div>
+                                <div id="productMenuInfo">
+                                    <div id="ProductNameUndCost">
+                                        <div>
+                                            <h3 id="sys">@item.NameSystem</h3>
+                                            <input type="hidden" value="@item.companyName" id="name" />
+                                        </div>
+                                        <div style="margin-left: auto;">
+                                            <h4 id="cost">ab @item.Cost.ToString("C")</h4>
+                                        </div>
+                                    </div>
+                                    <div id="product_desciptions">
+                                        <div>
+                                            @Html.Raw(@item.description)
+                                        </div>
+                                    </div>
+                                    <div id="productChek">
+                                        <div>
+                                            @Html.Raw(@item.Lieferzeit)
+                                        </div>
+                                        <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem,DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
+                                    </div>
                                 </div>
-                                <div style="margin-left: auto;">
-                                    <h4 id="cost">ab @item.Cost.ToString("C")</h4>
-                                </div>
                             </div>
-                            <div id="product_desciptions">
-                                <div>
-                                    @Html.Raw(@item.description)
-                                </div>
-                            </div>
-                            <div id="productChek">
-                                <div>
-                                    @Html.Raw(@item.Lieferzeit)
-                                </div>
-                                <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem,DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
-                            </div>
-                        </div>
-                    </div>
                     countItem++;
                 }
             }
@@ -342,6 +343,13 @@
 </div>
 <script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script>
 <script>
+
+
+    function imageSwitcher(e,id) 
+    {
+        let img = document.getElementById("ImgSelecter-"+id);
+        img.src = e.target.src;        
+    }
 
     let allDoc = document.querySelectorAll(".ExelItem");
 

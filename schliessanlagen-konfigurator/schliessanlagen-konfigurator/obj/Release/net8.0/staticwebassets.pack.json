@@ -221,6 +221,26 @@
       "PackagePath": "staticwebassets\\Image\\CES WO Schließzylinder245930069.png"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\DU-215.WEBP",
+      "PackagePath": "staticwebassets\\Image\\DU-215.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\DU-5558.WEBP",
+      "PackagePath": "staticwebassets\\Image\\DU-5558.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\DU-810.WEBP",
+      "PackagePath": "staticwebassets\\Image\\DU-810.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\DU-815.WEBP",
+      "PackagePath": "staticwebassets\\Image\\DU-815.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\DU-851.WEBP",
+      "PackagePath": "staticwebassets\\Image\\DU-851.WEBP"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\EVVA 4KS Außenzylinder AZI241947892.png",
       "PackagePath": "staticwebassets\\Image\\EVVA 4KS Außenzylinder AZI241947892.png"
     },
@@ -285,6 +305,26 @@
       "PackagePath": "staticwebassets\\Image\\EVVA ICS Vorhängeschloss241351836.png"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\RHM-215.WEBP",
+      "PackagePath": "staticwebassets\\Image\\RHM-215.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\RHM-5558.WEBP",
+      "PackagePath": "staticwebassets\\Image\\RHM-5558.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\RHM-810.WEBP",
+      "PackagePath": "staticwebassets\\Image\\RHM-810.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\RHM-815.WEBP",
+      "PackagePath": "staticwebassets\\Image\\RHM-815.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\RHM-851.WEBP",
+      "PackagePath": "staticwebassets\\Image\\RHM-851.WEBP"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\RHM5-30 Rund-Außenzylinder244453521.png",
       "PackagePath": "staticwebassets\\Image\\RHM5-30 Rund-Außenzylinder244453521.png"
     },
@@ -311,6 +351,34 @@
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\Schliarticle.jpg",
       "PackagePath": "staticwebassets\\Image\\Schliarticle.jpg"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\Screenshot 2023-04-04 171535.WEBP",
+      "PackagePath": "staticwebassets\\Image\\Screenshot 2023-04-04 171535.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\UDM-215.WEBP",
+      "PackagePath": "staticwebassets\\Image\\UDM-215.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\UDM-5558.WEBP",
+      "PackagePath": "staticwebassets\\Image\\UDM-5558.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\UDM-810.WEBP",
+      "PackagePath": "staticwebassets\\Image\\UDM-810.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\UDM-815.WEBP",
+      "PackagePath": "staticwebassets\\Image\\UDM-815.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\UDM-851.WEBP",
+      "PackagePath": "staticwebassets\\Image\\UDM-851.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\UDM-System.WEBP",
+      "PackagePath": "staticwebassets\\Image\\UDM-System.WEBP"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\UDM5-30 Rund-Außenzylinder240952453.png",
@@ -365,6 +433,58 @@
       "PackagePath": "staticwebassets\\Image\\Vitess.4000241729692.png"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\WD-215.WEBP",
+      "PackagePath": "staticwebassets\\Image\\WD-215.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\WD-5558.WEBP",
+      "PackagePath": "staticwebassets\\Image\\WD-5558.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\WD-810.WEBP",
+      "PackagePath": "staticwebassets\\Image\\WD-810.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\WD-815.WEBP",
+      "PackagePath": "staticwebassets\\Image\\WD-815.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\WD-851.WEBP",
+      "PackagePath": "staticwebassets\\Image\\WD-851.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\WD-System.WEBP",
+      "PackagePath": "staticwebassets\\Image\\WD-System.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\WO-215.WEBP",
+      "PackagePath": "staticwebassets\\Image\\WO-215.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\WO-5558.WEBP",
+      "PackagePath": "staticwebassets\\Image\\WO-5558.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\WO-810.WEBP",
+      "PackagePath": "staticwebassets\\Image\\WO-810.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\WO-815.WEBP",
+      "PackagePath": "staticwebassets\\Image\\WO-815.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\WO-851.WEBP",
+      "PackagePath": "staticwebassets\\Image\\WO-851.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\WO-System.WEBP",
+      "PackagePath": "staticwebassets\\Image\\WO-System.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\Zolit1000_Z1410.WEBP",
+      "PackagePath": "staticwebassets\\Image\\Zolit1000_Z1410.WEBP"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\apple-pay.png",
       "PackagePath": "staticwebassets\\Image\\apple-pay.png"
     },
@@ -397,6 +517,10 @@
       "PackagePath": "staticwebassets\\Image\\ces.png"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\ces_bz1_bohrschutz.WEBP",
+      "PackagePath": "staticwebassets\\Image\\ces_bz1_bohrschutz.WEBP"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\doppelzylinder.png",
       "PackagePath": "staticwebassets\\Image\\doppelzylinder.png"
     },
@@ -407,6 +531,10 @@
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\entfernen.png",
       "PackagePath": "staticwebassets\\Image\\entfernen.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\fl-freilauffunktion.WEBP",
+      "PackagePath": "staticwebassets\\Image\\fl-freilauffunktion.WEBP"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\free-icon-home-with-locked-padlock-15748.png",
@@ -443,6 +571,10 @@
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\logo_evva.png",
       "PackagePath": "staticwebassets\\Image\\logo_evva.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\ngf_not-und-gefahrenfunktion.WEBP",
+      "PackagePath": "staticwebassets\\Image\\ngf_not-und-gefahrenfunktion.WEBP"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\ohne-ngf.png",
@@ -493,6 +625,10 @@
       "PackagePath": "staticwebassets\\Orders\\CES_schliessplan_DE_schliessanlagen.xlsx"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\SchlüsselDiscount12151482024 OrderFile.xlsx",
+      "PackagePath": "staticwebassets\\Orders\\SchlüsselDiscount12151482024 OrderFile.xlsx"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\SchlüsselDiscount14151282024 OrderFile.xlsx",
       "PackagePath": "staticwebassets\\Orders\\SchlüsselDiscount14151282024 OrderFile.xlsx"
     },
@@ -507,10 +643,6 @@
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\SchlüsselDiscount5012282024 OrderFile.xlsx",
       "PackagePath": "staticwebassets\\Orders\\SchlüsselDiscount5012282024 OrderFile.xlsx"
-    },
-    {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\SchlüsselDiscount5161282024 OrderFile.xlsx",
-      "PackagePath": "staticwebassets\\Orders\\SchlüsselDiscount5161282024 OrderFile.xlsx"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Rehnung\\SK2235.pdf",

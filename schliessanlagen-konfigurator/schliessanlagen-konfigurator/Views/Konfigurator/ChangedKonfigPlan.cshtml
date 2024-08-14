@@ -1,7 +1,6 @@
 ﻿@model Orders;
 @using Microsoft.AspNetCore.Http;
 @using schliessanlagen_konfigurator.Models.OrdersOpen
-    using schliessanlagen_konfigurator.Models.OrdersOpen;
 
 @{
     ViewData["Title"] = "ChangedKonfigPlan";
@@ -39,15 +38,15 @@
                         int countTur = 0;
                         foreach (var list in ViewBag.key)
                         {
-                                                                <div class="TexCount" id="TexCount-@keyId">
-                                                                    <input type="text" style="position: relative;" name="FurNameKey" value="@list.ForNameKey" />
-                                                                    <div id="TexInputKey">
-                                                                        <input id="inputS" onchange="chekedNameArienKey(event.target.value,1)" name="NameKey" value='@list.NameKey' type="text" />
-                                                                    </div>
-                                                                    <div>
-                                                                        <input id="inputCount" name="CountKey" value="@list.CountKey" type="text" />
-                                                                    </div>
-                                                                </div>
+                                                                        <div class="TexCount" id="TexCount-@keyId">
+                                                                            <input type="text" id="keyPoint" name="FurNameKey" value="@list.ForNameKey" />
+                                                                            <div id="TexInputKey">
+                                                                                <input id="inputS" onchange="chekedNameArienKey(event.target.value,1)" name="NameKey" value='@list.NameKey' type="text" />
+                                                                            </div>
+                                                                            <div>
+                                                                                <input id="inputCount" name="CountKey" value="@list.CountKey" type="text" />
+                                                                            </div>
+                                                                        </div>
                             keyId++;
                         }
                     }
@@ -88,7 +87,7 @@
                                     <div class="TexCountTur">
                                         <div id="ItemTur">
                                             <div id="position">
-                                                <h6 id="counterTur"><img src="@("/Image/options.png")" onmouseover="controlPannel(1)" height="20" width="20" style="margin-right: 10px;" />1</h6>
+                                                <h6 id="counterTur"><img src="@("/Image/options.png")" onmouseover="controlPannel(1)" height="20" width="20" style="margin-right: 10px;" />@countTur</h6>
                                             </div>
                                             <div>
                                                 <input id="inputTur" value="@info.DorName" name="Turname" onchange="chekedNameArientiren(event.target.value,@countTur)" placeholder="Name der Tür" />
@@ -232,7 +231,7 @@
                                                 string idWithoutSpaces = $"{chekboxtur}checkbox{chekbox}";
                                                 string idIchekbox = $"I{chekboxtur}checkbox{chekbox}";
                                                 string idChekboxContainer = $"{chekboxtur}.checkboxContainer{chekbox}";
-                                                <div class="checkboxContainer" id="@idChekboxContainer">
+                                                <div class="checkboxContainer1" id="@idChekboxContainer">
 
                                                     @if (@ViewBag.KeyValueFT[countFalse].isOpen == true)
                                                     {
@@ -424,7 +423,11 @@
         let BlockTur = document.querySelector(`#BlockTur-${turNumber}`);
         let countTur = BlockTur.querySelector("#infoButten");
         let count = countTur.value;
-        count--;
+
+        if (turNumber > 0) {
+            count--;
+        }
+
         countTur.value = count;
     }
     function selectParam(value, turNumber) 
@@ -591,7 +594,7 @@
                                         </div>
 
                                         <div>
-                                                  <input id="inputTur" required  onchange="chekedNameArientiren(event.target.value,${blockTur})" name="Turname" placeholder="Name der Tür" />
+                                                      <input id="inputTur" required  value="Tür ${blockTur}" onchange="chekedNameArientiren(event.target.value,${blockTur})" name="Turname" placeholder="Name der Tür" />
                                         </div>
 
                                             <div>
@@ -629,15 +632,15 @@
 
 
                                                <div id="chekerTur">
-                                                <button type="button" onclick="Plus(${blockTur})">+</button>
-                                            <input id="infoButten"  value="1" type="text" name="CountTur" />
-                                                <button type="button" onclick="Minus(${blockTur})">-</button>
-                                        </div>
+                                                   <button type="button" onclick="Minus(${blockTur})">-</button>
+                                                     <input id="infoButten"  value="1" type="text" name="CountTur" />
+                                                   <button type="button" onclick="Plus(${blockTur})">+</button>
+                                            </div>
                                 </div>
 
                     `;
 
-        document.getElementById('BlockTur-1').appendChild(newBlock);
+        document.getElementById('BlockTur-0').appendChild(newBlock);
 
         for (let i = 1; i <= blockCount; i++) 
         {
@@ -676,9 +679,9 @@
         newBlock.id = 'TexCount-' + blockCount;
         newBlock.innerHTML = `
                                    <div  class="TexCount">
-                                         <input type="text" required  name="FurNameKey" style="position: relative;" value="${blockCount}" />
+                                             <input type="text" required  name="FurNameKey" id="keyPoint" value="${blockCount}" />
                                 <div id="TexInputKey">
-                                        <input id="inputS" required name="NameKey" onchange="chekedNameArienKey(event.target.value,${blockCount})" placeholder="Name des Schlüssels" type="text" />
+                                            <input id="inputS" required name="NameKey" value="Schlüssel ${blockCount}" onchange="chekedNameArienKey(event.target.value,${blockCount})" placeholder="Name des Schlüssels" type="text" />
                                 </div>
                                 <div>
                                              <input id="inputCount" required name="CountKey" value="1" type="text" />
@@ -719,7 +722,7 @@
         document.getElementById('itemKeyBlock').innerHTML = "";
         blockCount = 0;
 
-        let hor = document.querySelectorAll(".horizontal1");
+        let hor = document.querySelectorAll("#InfoValue1");
 
         hor.forEach((item) => {
             item.innerHTML = "";
@@ -732,9 +735,9 @@
             newBlock.id = 'TexCount-' + blockCount;
             newBlock.innerHTML = `
                                        <div  class="TexCount">
-                                             <input type="text" required  name="FurNameKey" style="position: relative;background:none;border:none;text-align: center;" value="${blockCount}" />
+                                                 <input type="text" required  name="FurNameKey" id="keyPoint"  value="${blockCount}" />
                                     <div id="TexInputKey">
-                                                    <input id="inputS" required name="NameKey" onchange="chekedNameArienKey(event.target.value,${blockCount})" value="Schlüssel ${blockCount}" placeholder="Name des Schlüssels" type="text" />
+                                        <input id="inputS" required name="NameKey" value="Schlüssel ${blockCount}" onchange="chekedNameArienKey(event.target.value,${blockCount})" value="Schlüssel ${blockCount}" placeholder="Name des Schlüssels" type="text" />
                                     </div>
                                     <div>
                                        <input id="inputCount" required name="CountKey" value="1" type="text" />
@@ -745,41 +748,53 @@
 
             document.getElementById('itemKeyBlock').appendChild(newBlock);
 
-            let horizont = document.getElementById(`${blockTur}horizontal`);
-            
+            let horizont = document.createElement('div');
+            horizont.id = `${blockCount}horizontal`;
             horizont.classList.add('horizontal1');
 
-            for (let i = 1; i <= blockTur; i++) {
+            for (let i = 1; i <= blockTur; i++) 
+            {
 
                 let newBlockTur = document.createElement('div');
 
-                newBlockTur.innerHTML = ` <input type="checkbox" class="konfiguratorSelect" onmouseover="drawLines(${i},${blockCount})"  onmouseout="hideLines(${i},${blockCount})" id=${i}checkbox${blockCount}>
+                newBlockTur.innerHTML = ` <input type="checkbox" id=${i}checkbox${blockCount}>
                                             <input type="hidden"  value="false" id="I${i}checkbox${blockCount}">`;
 
                 newBlockTur.id = `${i}.checkboxContainer${blockCount}`;
 
                 newBlockTur.classList.add('checkboxContainer1');
 
-                document.getElementById(`${i}horizontal`).appendChild(newBlockTur);
+                horizont.appendChild(newBlockTur);
 
                 document.getElementById('InfoValue1').appendChild(horizont);
 
                 createCustomCheckbox(`${i}checkbox${blockCount}`);
             }
-
-           
-
         }
 
     }
 
-    function selectTur(value) {
+    function selectTur(value) 
+    {
         localStorage.clear();
+        
         blockTur = 0;
-        document.getElementById('InfoValue1').innerHTML = '';
-        document.getElementById('BlockTur-0').innerHTML = '';
 
-        for (let i = 1; i <= value; i++) {
+        let hor = document.querySelectorAll("#InfoValue1");
+
+        hor.forEach((item) => {
+            item.innerHTML = "";
+        });
+
+        let tur = document.querySelectorAll("#BlockTur-0");
+
+        tur.forEach((item) => {
+            item.innerHTML = "";
+        });
+
+
+        for (let i = 1; i <= value; i++) 
+        {
             blockTur++;
 
             let newBlock = document.createElement('div');
@@ -793,7 +808,7 @@
                                                 </div>
 
                                                 <div>
-                                                                      <input id="inputTur" required  onchange="chekedNameArientiren(event.target.value,${blockTur})" value="Tür ${blockTur}" name="Turname" placeholder="Name der Tür" />
+                                                     <input id="inputTur" required  onchange="chekedNameArientiren(event.target.value,${blockTur})" value="Tür ${blockTur}" name="Turname" placeholder="Name der Tür" />
                                                 </div>
 
                                                     <div>
@@ -840,32 +855,35 @@
 
             
 
+        }
+
+        for (let f = 1; f <= blockCount; f++) 
+        {
+
             let horizont = document.createElement('div');
-            horizont.draggable = "true";
-            horizont.id = `${blockTur}horizontal`;
+            horizont.id = `${f}horizontal`;
             horizont.classList.add('horizontal1');
 
-            for (let i = 1; i <= blockCount; i++) {
+            
+            for (let d = 1; d <= value; d++) 
+            {
 
                 let newBlockTur = document.createElement('div');
 
-                newBlockTur.innerHTML = ` <input type="checkbox" id=${blockTur}checkbox${i}>
-                <input type="hidden" value="false" id="I${blockTur}checkbox${i}">`;
+                newBlockTur.innerHTML = ` <input type="checkbox" id=${d}checkbox${blockCount}>
+                                                    <input type="hidden"  value="false" id="I${d}checkbox${blockCount}">`;
 
-                newBlockTur.id = `${blockTur}.checkboxContainer${i}`;
+                newBlockTur.id = `${d}.checkboxContainer${blockCount}`;
 
                 newBlockTur.classList.add('checkboxContainer1');
 
-                document.getElementById(`${i}horizontal`).appendChild(newBlockTur);
+                horizont.appendChild(newBlockTur);
 
-                document.getElementById('InfoValue1').appendChild(document.getElementById(`${i}horizontal`));
+                document.getElementById('InfoValue1').appendChild(horizont);
 
-                createCustomCheckbox(`${blockTur}checkbox${i}`);
+                createCustomCheckbox(`${d}checkbox${blockCount}`);
             }
-
-
         }
-
     }
 
     document.getElementById('removeButton').addEventListener('click', removeBlock);

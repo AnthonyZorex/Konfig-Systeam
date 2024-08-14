@@ -57,6 +57,8 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpGet]
         public ActionResult ChangedKonfigPlan(string userKey)
         {
+            SchopAlarm();
+
             var Orders = db.Orders.Where(x => x.userKey == userKey).ToList();
             
             var isOpen = new List<isOpen_Order>();
@@ -110,7 +112,7 @@ namespace schliessanlagen_konfigurator.Controllers
             ViewBag.Zylinder_Typ = db.Schliessanlagen.ToList();
 
             var a = db.Aussen_Innen.Select(x => x.aussen).Distinct().OrderBy(x => x).ToList();
-            var d = db.Aussen_Innen.Select(x => x.Intern).Distinct().OrderBy(x => x).ToList();
+            var d = db.Aussen_Innen.Where(x=>x.Intern>0).Select(x => x.Intern).Distinct().OrderBy(x => x).ToList();
 
             var listAllInnen = new List<float>();
 
@@ -122,8 +124,15 @@ namespace schliessanlagen_konfigurator.Controllers
             ViewBag.DoppelAussen = ListAussenDopple.Distinct();
 
             var ListInternDopple = new List<float>();
+            
             for (int i = 0; i < d.Count(); i++)
-                ListInternDopple.Add(d[i]);
+            {
+                if (d[i] > 0)
+                {
+                    ListInternDopple.Add(d[i]);
+                } 
+            }
+               
 
             ViewBag.DoppelIntern = ListInternDopple.Distinct();
 
@@ -140,7 +149,13 @@ namespace schliessanlagen_konfigurator.Controllers
                 listKnayfAussen.Add(b[i]);
 
             for (int i = 0; i < ba.Count(); i++)
-                listKnayfIntern.Add(ba[i]);
+            {
+                if (ba[i] > 0)
+                {
+                    listKnayfIntern.Add(ba[i]);
+                }
+            }
+                
 
             var c = db.Aussen_Innen_Halbzylinder.Select(x => x.aussen).Distinct().OrderBy(x => x).ToList();
 
@@ -535,6 +550,8 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpGet]
         public async Task<IActionResult> SendRehnung (string info,string userName, string OrderSum,bool aufRechnung)
         {
+            SchopAlarm();
+
             ViewBag.Info = info;
 
             string cleanedString = OrderSum.Replace("€", "").Trim();
@@ -625,9 +642,25 @@ namespace schliessanlagen_konfigurator.Controllers
 
             return View();
         }
-      
+        public void SchopAlarm()
+        {
+            ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
+
+            string loginInform = ident.Claims.Select(x => x.Value).First();
+            var users = db.Users.Find(loginInform);
+
+            if (users != null)
+            {
+                var OrderList = db.UserOrdersShop.Where(x => x.UserId == users.Id && x.OrderStatus == "Nicht bezahlt").Distinct().ToList();
+
+                ViewBag.CountOrder = OrderList.Count();
+            }
+        }
+
         public ActionResult IndexKonfigurator()
         {
+            SchopAlarm();
+
             //ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
 
             //if (ident.IsAuthenticated == true)
@@ -923,6 +956,8 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpGet]
         public async Task<ActionResult> System_Auswählen(int Id, string Key, string userName, bool isNewKonfig,bool Biarbeiten,bool Reorder)
         {
+            SchopAlarm();
+
             var Liferzeit = db.SysteamPriceKey.Select(x => x.Lieferzeit).Distinct().ToList();
 
             ViewBag.SortLiferzeit = JsonConvert.SerializeObject(Liferzeit.Distinct().ToList());
@@ -1229,7 +1264,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t3.Id,
                                      aussen = t2.aussen,
                                      innen = t2.innen,                                  
-                                     Lieferzeit = (t2.aussen >= 55 && t2.innen >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
+                                     Lieferzeit = (t2.aussen >= 55 || t2.innen >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
                                      lieferzeitCheker = (t2.aussen >= 55 && t2.innen >= 55) ? true : false,
                                      cheked3 = 0,
                                      cheked2 = 0,
@@ -1247,7 +1282,13 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var ListOrder = queryOrder.GroupBy(x => x.SystemId).Select(g => g.First()).ToList();
+                var ListOrder = queryOrder
+                .GroupBy(x => x.SystemId)
+                .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+                .Distinct()
+                .OrderBy(x => x.Cost)
+                .ToList();
+
                 ViewBag.Doppel = ListOrder.Distinct().OrderBy(x => x.Cost).ToList();
 
                 ViewBag.Gallery = Gallery;
@@ -1287,7 +1328,13 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Knaufzylinder = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Knaufzylinder = queryOrder
+                  .GroupBy(x => x.SystemId)
+                  .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+                  .Distinct()
+                  .OrderBy(x => x.Cost)
+                  .ToList();
+
                 ViewBag.Knaufzylinder = Knaufzylinder.Distinct().OrderBy(x => x.Cost).ToList();
            }
             if (cheked3.Count() > 0 && cheked2.Count == 0 && cheked.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
@@ -1324,7 +1371,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                 ImageName = t1.ImageName
 
                             };
-                var rl = query.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var rl = query.GroupBy(x => x.SystemId)
+                  .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+                  .Distinct()
+                  .OrderBy(x => x.Cost)
+                  .ToList();
 
                 ViewBag.Halb = rl.Distinct().OrderBy(x => x.Cost).ToList();
 
@@ -1363,7 +1414,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                 ImageName = t1.ImageName
 
                             };
-                var rl = query.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var rl = query.GroupBy(x => x.SystemId)
+                  .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+                  .Distinct()
+                  .OrderBy(x => x.Cost)
+                  .ToList();
 
                 ViewBag.Hebel = rl.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -1401,7 +1456,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                 ImageName = t1.ImageName
                             };
 
-                var rl = query.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var rl = query.GroupBy(x => x.SystemId)
+                  .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+                  .Distinct()
+                  .OrderBy(x => x.Cost)
+                  .ToList();
 
                 ViewBag.VorhanSchloss = rl.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -1439,7 +1498,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                 ImageName = t1.ImageName
                             };
 
-                var rl = query.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var rl = query.GroupBy(x => x.SystemId)
+                  .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+                  .Distinct()
+                  .OrderBy(x => x.Cost)
+                  .ToList();
 
                 ViewBag.Aussen = rl.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -1460,7 +1523,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t3.Id,
                                      aussen = allUserListOrder.Max(x=>x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = 0,
                                      cheked4 = 0,
@@ -1478,7 +1541,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+                  .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+                  .Distinct()
+                  .OrderBy(x => x.Cost)
+                  .ToList();
 
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -1499,7 +1566,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t3.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
                                      userKey = keyUser.userKey,
                                      cheked = t1.Id,
                                      cheked3 = t2.Id,
@@ -1515,7 +1582,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                       (t3.Price * isOpen.Count()), precision),
                                      ImageName = t1.ImageName,
                                  };
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
 
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -1536,7 +1607,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t3.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = 0,
                                      cheked4 = t2.Id,
@@ -1553,7 +1624,12 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
+
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked.Count() > 0 && cheked5.Count() > 0 && cheked2.Count == 0 && cheked4.Count == 0 && cheked3.Count == 0 && cheked6.Count == 0)
@@ -1573,7 +1649,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t3.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = 0,
                                      cheked4 = 0,
@@ -1590,7 +1666,12 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
+
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
 
@@ -1611,7 +1692,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t3.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = 0,
                                      cheked4 = 0,
@@ -1628,7 +1709,12 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
+
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList(); 
             }
 
@@ -1649,7 +1735,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t3.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = t2.Id,
                                      cheked4 = 0,
@@ -1666,7 +1752,12 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
+
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked2.Count() > 0 && cheked4.Count() > 0 && cheked.Count == 0 && cheked3.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
@@ -1686,7 +1777,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t3.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = 0,
                                      cheked4 = t2.Id,
@@ -1703,7 +1794,12 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
+
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked2.Count() > 0 && cheked5.Count() > 0 && cheked.Count == 0 && cheked3.Count == 0 && cheked4.Count == 0 && cheked6.Count == 0)
@@ -1723,7 +1819,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t3.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = 0,
                                      cheked4 = 0,
@@ -1740,7 +1836,12 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
+
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked2.Count() > 0 && cheked6.Count() > 0 && cheked.Count == 0 && cheked3.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0)
@@ -1760,7 +1861,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t3.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = 0,
                                      cheked4 = 0,
@@ -1777,7 +1878,12 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
+
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked3.Count() > 0 && cheked4.Count() > 0 && cheked.Count == 0 && cheked2.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
@@ -1794,7 +1900,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t3.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = t1.Id,
                                      cheked4 = t2.Id,
@@ -1811,7 +1917,12 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
+
                 ViewBag.Halb = Join.Distinct().OrderBy(x => x.Cost).ToList();
                
             }
@@ -1831,7 +1942,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t3.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = t1.Id,
                                      cheked4 = 0,
@@ -1849,7 +1960,12 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+                  .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+                  .Distinct()
+                  .OrderBy(x => x.Cost)
+                  .ToList();
+
                 ViewBag.Halb = Join.Distinct().OrderBy(x => x.Cost).ToList(); 
 
             }
@@ -1870,7 +1986,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t3.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = t1.Id,
                                      cheked4 = 0,
@@ -1887,7 +2003,12 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
+
                 ViewBag.Halb = Join.Distinct().OrderBy(x => x.Cost).ToList(); 
          
             }
@@ -1908,7 +2029,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t3.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = 0,
                                      cheked4 = t1.Id,
@@ -1925,7 +2046,12 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
+
                 ViewBag.Hebel = Join.Distinct().OrderBy(x => x.Cost).ToList(); 
                 
             }
@@ -1946,7 +2072,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t3.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = 0,
                                      cheked4 = t1.Id,
@@ -1964,7 +2090,12 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
+
                 ViewBag.Hebel = Join.Distinct().OrderBy(x => x.Cost).ToList(); 
                 
             }
@@ -1985,7 +2116,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t3.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t3.LieferzeitGrosse : t3.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = 0,
                                      cheked4 = 0,
@@ -2002,7 +2133,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
 
                 ViewBag.VorhanSchloss = Join.Distinct().OrderBy(x => x.Cost).ToList(); 
              
@@ -2025,7 +2160,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = t3.Id,
                                      cheked4 = 0,
@@ -2042,7 +2177,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
 
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2064,7 +2203,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = 0,
                                      cheked4 = t3.Id,
@@ -2081,7 +2220,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
 
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2103,7 +2246,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = 0,
                                      cheked4 = 0,
@@ -2120,7 +2263,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
 
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2142,7 +2289,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = 0,
                                      cheked4 = 0,
@@ -2159,7 +2306,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+                  .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+                  .Distinct()
+                  .OrderBy(x => x.Cost)
+                  .ToList();
 
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2181,7 +2332,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = t2.Id,
                                      cheked4 = t3.Id,
@@ -2198,7 +2349,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
 
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2220,7 +2375,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = t2.Id,
                                      cheked4 = 0,
@@ -2237,7 +2392,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
 
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2259,7 +2418,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = t2.Id,
                                      cheked4 = 0,
@@ -2276,7 +2435,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+                  .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+                  .Distinct()
+                  .OrderBy(x => x.Cost)
+                  .ToList();
 
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2299,7 +2462,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = 0,
                                      cheked4 = t2.Id,
@@ -2316,7 +2479,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
 
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2338,7 +2505,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = 0,
                                      cheked4 = t2.Id,
@@ -2355,7 +2522,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
 
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2377,7 +2548,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = 0,
                                      cheked4 = 0,
@@ -2394,7 +2565,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
 
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2417,7 +2592,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = t2.Id,
                                      cheked4 = t3.Id,
@@ -2434,7 +2609,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2456,7 +2635,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = t2.Id,
                                      cheked4 = 0,
@@ -2473,7 +2652,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2495,7 +2678,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = t2.Id,
                                      cheked4 = 0,
@@ -2512,7 +2695,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2534,7 +2721,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = 0,
                                      cheked4 = t2.Id,
@@ -2551,7 +2738,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2573,7 +2764,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = 0,
                                      cheked4 = t2.Id,
@@ -2590,7 +2781,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2613,7 +2808,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = 0,
                                      cheked4 = 0,
@@ -2630,7 +2825,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.Distinct().ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2652,7 +2851,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) > 55 && allUserListOrder.Max(x => x.innen) > 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) > 55 || allUserListOrder.Max(x => x.innen) > 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = t1.Id,
                                      cheked4 = t2.Id,
@@ -2669,7 +2868,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+                  .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+                  .Distinct()
+                  .OrderBy(x => x.Cost)
+                  .ToList();
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2691,7 +2894,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = t1.Id,
                                      cheked4 = t2.Id,
@@ -2708,7 +2911,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+                  .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+                  .Distinct()
+                  .OrderBy(x => x.Cost)
+                  .ToList();
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2731,7 +2938,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = t1.Id,
                                      cheked4 = 0,
@@ -2748,7 +2955,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+                  .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+                  .Distinct()
+                  .OrderBy(x => x.Cost)
+                  .ToList();
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2770,7 +2981,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t4.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t4.LieferzeitGrosse : t4.Lieferzeit,
                                      cheked = 0,
                                      cheked3 = 0,
                                      cheked4 = t1.Id,
@@ -2787,7 +2998,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+                  .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+                  .Distinct()
+                  .OrderBy(x => x.Cost)
+                  .ToList();
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2811,7 +3026,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t5.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) > 55 && allUserListOrder.Max(x => x.innen) > 55) ? t5.LieferzeitGrosse : t5.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) > 55 || allUserListOrder.Max(x => x.innen) > 55) ? t5.LieferzeitGrosse : t5.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = t3.Id,
                                      cheked4 = t4.Id,
@@ -2829,7 +3044,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.Distinct().ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+                  .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+                  .Distinct()
+                  .OrderBy(x => x.Cost)
+                  .ToList();
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2852,7 +3071,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t5.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t5.LieferzeitGrosse : t5.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t5.LieferzeitGrosse : t5.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = t3.Id,
                                      cheked4 = 0,
@@ -2871,7 +3090,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2894,7 +3117,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t5.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t5.LieferzeitGrosse : t5.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t5.LieferzeitGrosse : t5.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = t3.Id,
                                      cheked4 = 0,
@@ -2913,7 +3136,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+                  .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+                  .Distinct()
+                  .OrderBy(x => x.Cost)
+                  .ToList();
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2937,7 +3164,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t5.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t5.LieferzeitGrosse : t5.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t5.LieferzeitGrosse : t5.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = 0,
                                      cheked4 = t3.Id,
@@ -2956,7 +3183,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2979,7 +3210,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t5.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t5.LieferzeitGrosse : t5.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t5.LieferzeitGrosse : t5.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = 0,
                                      cheked4 = t3.Id,
@@ -2998,7 +3229,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -3021,7 +3256,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t5.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t5.LieferzeitGrosse : t5.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t5.LieferzeitGrosse : t5.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = 0,
                                      cheked4 = 0,
@@ -3040,7 +3275,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+                  .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+                  .Distinct()
+                  .OrderBy(x => x.Cost)
+                  .ToList();
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -3064,7 +3303,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t5.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t5.LieferzeitGrosse : t5.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t5.LieferzeitGrosse : t5.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = t2.Id,
                                      cheked4 = t3.Id,
@@ -3083,7 +3322,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -3107,7 +3350,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t5.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t5.LieferzeitGrosse : t5.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t5.LieferzeitGrosse : t5.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = t2.Id,
                                      cheked4 = t3.Id,
@@ -3126,7 +3369,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+                  .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+                  .Distinct()
+                  .OrderBy(x => x.Cost)
+                  .ToList();
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -3150,7 +3397,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t5.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t5.LieferzeitGrosse : t5.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t5.LieferzeitGrosse : t5.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked3 = t2.Id,
                                      cheked4 = 0,
@@ -3169,7 +3416,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -3192,7 +3443,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t5.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t5.LieferzeitGrosse : t5.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t5.LieferzeitGrosse : t5.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked4 = t2.Id,
                                      cheked3 = 0,
@@ -3211,7 +3462,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+                  .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+                  .Distinct()
+                  .OrderBy(x => x.Cost)
+                  .ToList();
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -3234,7 +3489,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t5.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t5.LieferzeitGrosse : t5.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t5.LieferzeitGrosse : t5.Lieferzeit,
                                      cheked = 0,
                                      cheked4 = t3.Id,
                                      cheked3 = t2.Id,
@@ -3253,7 +3508,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+                  .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+                  .Distinct()
+                  .OrderBy(x => x.Cost)
+                  .ToList();
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -3276,7 +3535,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t5.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t5.LieferzeitGrosse : t5.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t5.LieferzeitGrosse : t5.Lieferzeit,
                                      cheked = 0,
                                      cheked4 = t3.Id,
                                      cheked3 = t2.Id,
@@ -3295,7 +3554,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+                  .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+                  .Distinct()
+                  .OrderBy(x => x.Cost)
+                  .ToList();
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -3318,7 +3581,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t5.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t5.LieferzeitGrosse : t5.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t5.LieferzeitGrosse : t5.Lieferzeit,
                                      cheked = 0,
                                      cheked4 = 0,
                                      cheked3 = t2.Id,
@@ -3337,7 +3600,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+                  .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+                  .Distinct()
+                  .OrderBy(x => x.Cost)
+                  .ToList();
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -3360,7 +3627,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t5.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t5.LieferzeitGrosse : t5.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t5.LieferzeitGrosse : t5.Lieferzeit,
                                      cheked = 0,
                                      cheked4 = t2.Id,
                                      cheked3 = 0,
@@ -3379,7 +3646,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+                  .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+                  .Distinct()
+                  .OrderBy(x => x.Cost)
+                  .ToList();
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -3402,7 +3673,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t5.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t5.LieferzeitGrosse : t5.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t5.LieferzeitGrosse : t5.Lieferzeit,
                                      cheked = 0,
                                      cheked4 = t2.Id,
                                      cheked3 = t1.Id,
@@ -3421,7 +3692,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+                  .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+                  .Distinct()
+                  .OrderBy(x => x.Cost)
+                  .ToList();
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -3445,7 +3720,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t6.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t6.LieferzeitGrosse : t6.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t6.LieferzeitGrosse : t6.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked4 = t4.Id,
                                      cheked3 = t3.Id,
@@ -3465,7 +3740,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+                  .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+                  .Distinct()
+                  .OrderBy(x => x.Cost)
+                  .ToList();
 
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
 
@@ -3490,7 +3769,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t6.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t6.LieferzeitGrosse : t6.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t6.LieferzeitGrosse : t6.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked4 = t4.Id,
                                      cheked3 = t3.Id,
@@ -3510,7 +3789,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+                  .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+                  .Distinct()
+                  .OrderBy(x => x.Cost)
+                  .ToList();
 
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
 
@@ -3535,7 +3818,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t6.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t6.LieferzeitGrosse : t6.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t6.LieferzeitGrosse : t6.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked4 = 0,
                                      cheked3 = t3.Id,
@@ -3555,7 +3838,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+                  .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+                  .Distinct()
+                  .OrderBy(x => x.Cost)
+                  .ToList();
 
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
 
@@ -3580,7 +3867,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t6.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t6.LieferzeitGrosse : t6.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t6.LieferzeitGrosse : t6.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked4 = t4.Id,
                                      cheked3 = 0,
@@ -3600,7 +3887,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
 
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
 
@@ -3625,7 +3916,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t6.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t6.LieferzeitGrosse : t6.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t6.LieferzeitGrosse : t6.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked4 = t4.Id,
                                      cheked3 = t2.Id,
@@ -3645,7 +3936,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+              .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+              .Distinct()
+              .OrderBy(x => x.Cost)
+              .ToList();
 
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
 
@@ -3670,7 +3965,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t6.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ? t6.LieferzeitGrosse : t6.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ? t6.LieferzeitGrosse : t6.Lieferzeit,
                                      cheked = 0,
                                      cheked4 = t4.Id,
                                      cheked3 = t2.Id,
@@ -3690,7 +3985,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+                  .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+                  .Distinct()
+                  .OrderBy(x => x.Cost)
+                  .ToList();
 
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
 
@@ -3716,7 +4015,7 @@ namespace schliessanlagen_konfigurator.Controllers
                                      SystemId = t7.Id,
                                      aussen = allUserListOrder.Max(x => x.aussen),
                                      innen = allUserListOrder.Max(x => x.innen),
-                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 && allUserListOrder.Max(x => x.innen) >= 55) ?t7.LieferzeitGrosse  : t7.Lieferzeit,
+                                     Lieferzeit = (allUserListOrder.Max(x => x.aussen) >= 55 || allUserListOrder.Max(x => x.innen) >= 55) ?t7.LieferzeitGrosse  : t7.Lieferzeit,
                                      cheked = t1.Id,
                                      cheked4 = t4.Id,
                                      cheked3 = t3.Id,
@@ -3737,7 +4036,12 @@ namespace schliessanlagen_konfigurator.Controllers
                                      ImageName = t1.ImageName,
                                  };
 
-                var Join = queryOrder.GroupBy(x => x.SystemId).Select(g => g.OrderByDescending(x => x.aussen).ThenByDescending(x => x.innen).First()).ToList();
+                var Join = queryOrder.GroupBy(x => x.SystemId)
+                  .Select(g => g.OrderByDescending(x => x.aussen > x.innen ? x.aussen : x.innen).First())
+                  .Distinct()
+                  .OrderBy(x => x.Cost)
+                  .ToList();
+
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
              
             }
@@ -3771,6 +4075,8 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpGet]
         public IActionResult OrdersKey(string Lieferzeit, string Systeam, int DopelId, List<string> dopelOption, string param2, int KnayfID, int Halb, int Hebel, int Aussen, int Vorhan)
         {
+            SchopAlarm();
+
             var key = db.Orders.Where(x => x.userKey == param2).Distinct().ToList();
 
             var DopelOrderlist = new List<Profil_Doppelzylinder>();
@@ -3815,12 +4121,12 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var listVorHanOptions = new List<int>();
 
-            var sys = db.SysteamPriceKey.Where(x => x.NameSysteam == Systeam).Select(x=>x.LieferzeitGrosse).ToList();
+            var sys = db.SysteamPriceKey.Where(x => x.NameSysteam == Systeam).ToList();
 
             ViewBag.Lieferzeit = Lieferzeit;
 
-            ViewBag.LieferzeitJson = JsonConvert.SerializeObject(Lieferzeit);
-            ViewBag.LieferzeitGroz = JsonConvert.SerializeObject(sys);
+            ViewBag.LieferzeitJson = JsonConvert.SerializeObject(sys.Select(x => x.Lieferzeit));
+            ViewBag.LieferzeitGroz = JsonConvert.SerializeObject(sys.Select(x => x.LieferzeitGrosse));
 
             foreach (var list in SelectVorhanschlos)
             {

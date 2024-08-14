@@ -9,10 +9,18 @@
 {
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="true">
-                @UserManager.GetUserName(User)
+                @UserManager.GetUserName(User) 
+                @{
+                    if (ViewBag.CountOrder != null)
+                    {
+                        <span style="font-size: 12px;color: white;background: red;border-radius: 50%;padding: 4px;">@ViewBag.CountOrder</span>
+                    }
+                }
         </a>
         <ul class="dropdown-menu">
-                <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">Profile</a></li>
+                <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">
+                        Profile 
+                    </a></li>
                 
             <li><hr class="dropdown-divider"/></li>
                 <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Context.Request.Path">Logout</a></li>

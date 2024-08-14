@@ -16,7 +16,7 @@
 
     </div>
     <div style="display:flex;gap: 20px;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;align-items: center;">
-        <button onclick="hilfe()" id="hilfeImg" style="border:none"><img src="/Image/help.png" width="60" hight="60" /></button>
+        <button id="hilfeImg" style="border:none"><img src="/Image/help.png" data-bs-toggle="modal" data-bs-target="#hilfe" width="60" hight="60" /></button>
         <h2>Füllen Sie den Konfigurator mit Daten aus!</h2>
     </div>
   
@@ -42,7 +42,7 @@
             <div id="itemKeyBlock">
                     <div id="TexCount-1">
                         <div class="TexCount">
-                            <input type="text" required readonly style="position: relative;background:none;border:none;text-align: center; " name="FurNameKey" value="1" />
+                            <input type="text" required readonly id="keyPoint" name="FurNameKey" value="1" />
                             <div id="TexInputKey">
                                 <input id="inputS" required name="NameKey" value="Schlüssel 1" onchange="chekedNameArienKey(event.target.value,1)" placeholder="Name des Schlüssels" type="text" />
                             </div>
@@ -84,7 +84,10 @@
                                 <div class="TexCountTur">
                                     <div id="ItemTur">
                                         <div id="position">
-                                            <h6 id="counterTur"><img src="@("/Image/options.png")" onmouseover="controlPannel(1)" height="20" width="20" style="margin-right: 10px;" />1</h6>
+                                            <h6 id="counterTur">
+                                                <svg style="margin-right: 10px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-dots-circle-horizontal"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M8 12l0 .01" /><path d="M12 12l0 .01" /><path d="M16 12l0 .01" /></svg>
+                                                1
+                                                </h6>
                                         </div>
                                         <div>
                                             <input id="inputTur" required name="Turname" value="Tür 1" onchange="chekedNameArientiren(event.target.value,1)" placeholder="Name der Tür" />
@@ -154,9 +157,9 @@
         <input type="submit"  onclick="(bolleanCheked())" class="btn btn-success" id="input" value="Weiter" />
     </form>
 
-   @*  <div id="zylinderMenu" onmouseleave="closeControlPannel()">
+ <div id="zylinderMenu" >
        
-        <div style="display:flex;gap:10px">
+        @* <div style="display:flex;gap:10px">
 
             <img src="@("/Image/arrows.png")" width="20" height="20" />
             <h5 id="infoControlPanelTur" class="Up">nach oben verschieben</h5>
@@ -174,60 +177,64 @@
             <h5 id="infoControlPanelTur" class="deleted">löschen</h5>
         </div>
 
-    </div> *@
+    </div>  *@
 
-  @*   <div id="myModal" class="modalLessen">
-        <div class="modal-contentLessen ">
-            <span class="clostHilfeModel">&times;</span>
-            <br />
-            <h2 id="hilfeText">Hier den Namen der Türen eingeben!</h2>
-            <hr/>
-            <div id="modelProgress">
-                <button id="hilfeNext" onclick="back()"> < </button>
-                <div id="circle">
-                    <div id="circle2" class="c1">
+        <div class="modal fade" id="hilfe" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Beginnen Sie hier mit dem Ausfüllen des Konfigurators!</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h5 id="hilfeText">Hier den Namen der Türen eingeben!</h5>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <div id="modelProgress">
+                            <button id="hilfeNext" onclick="back()"> < </button>
+                            <div id="circle">
+                                <div id="circle2" class="c1">
+                                </div>
+                            </div>
+
+                            <div id="circle">
+                                <div id="circle2" class="c2">
+                                </div>
+                            </div>
+
+                            <div id="circle">
+                                <div id="circle2" class="c3">
+                                </div>
+                            </div>
+
+                            <div id="circle">
+                                <div id="circle2" class="c4">
+                                </div>
+                            </div>
+
+                            <div id="circle">
+                                <div id="circle2" class="c5">
+                                </div>
+                            </div>
+                            <div id="circle">
+                                <div id="circle2" class="c6">
+                                </div>
+                            </div>
+
+                            <div id="circle">
+                                <div id="circle2" class="c7">
+                                </div>
+                            </div>
+                            <button id="hilfeBack" onclick="next()"> > </button>
+                        </div>
+                        <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
+                       
                     </div>
                 </div>
-
-                <div id="circle">
-                    <div id="circle2" class="c2">
-                    </div>
                 </div>
-
-                <div id="circle">
-                    <div id="circle2" class="c3">
-                    </div>
-                </div>
-
-                <div id="circle">
-                    <div id="circle2" class="c4">
-                    </div>
-                </div>
-
-                <div id="circle">
-                    <div id="circle2" class="c5">
-                    </div>
-                </div>
-                <div id="circle">
-                    <div id="circle2" class="c6">
-                    </div>
-                </div>
-
-                <div id="circle">
-                    <div id="circle2" class="c7">
-                    </div>
-                </div>  
-                <button id="hilfeBack" onclick="next()"> > </button>
             </div>
         </div>
-        <div class="arrow-down"></div>
-    </div>
-        <div id="myModalI" class="modalI">
-            <div class="modal-contentI ">
-                <span class="closI">&times;</span>
-            <h2>Beginnen Sie hier mit dem Ausfüllen des Konfigurators!</h2>
-            </div>
-        </div> *@
 </div>
 
 <script>
@@ -433,7 +440,6 @@
     
     let circle2 = document.querySelectorAll("#circle2");
 
-    // let closeHilfe = document.getElementsByClassName("clostHilfeModel")[0];
 
     let boolArray = [];
 
@@ -506,11 +512,10 @@
         
     }
    
-
     document.addEventListener('DOMContentLoaded', (event) => 
-    {
-        // var modal = document.getElementById("myModal");
-        // modal.style.display = "none";
+    {  
+        selectTur(5);
+        selectKey(5);
 
         for (let i = 1;i<circle2.length ;i++) 
         {
@@ -525,6 +530,7 @@
             option.value = i;
 
             countTurSelect.append(option);
+            countTurSelect.value = 5;
         }
 
         for (let i = 1; i < 200; i++) 
@@ -535,6 +541,7 @@
             option.value = i;
 
             countKeySelect.append(option);
+            countKeySelect.value = 5;
         }
 
     });
@@ -544,7 +551,7 @@
 
     function next() 
     {
-        let modalcontent = document.getElementsByClassName("modal-contentLessen")[0];
+        let modalcontent = document.getElementsByClassName("modal-content")[0];
         let modalArrow = document.getElementsByClassName("arrow-down")[0];
 
         if (circlestep < 6) 
@@ -625,7 +632,7 @@
     }
     function back() 
     {
-        let modalcontent = document.getElementsByClassName("modal-contentLessen")[0];
+        let modalcontent = document.getElementsByClassName("modal-content")[0];
         let modalArrow = document.getElementsByClassName("arrow-down")[0];
         if (circlestep > 0) 
         {
@@ -701,24 +708,6 @@
             }
         }
     }
-
-    // closeHilfe.addEventListener("click", () => 
-    // {
-    //     var modal = document.getElementById("myModal");
-    //     modal.style.display = "none";
-    // })
-
-    // function openModal() 
-    // {
-    //     var modal = document.getElementById("myModal");
-    //     modal.style.display = "block";
-    // }
-
-    // function hilfe() 
-    // {
-    //     openModal();
-    // }
-
 
     function bolleanCheked()
     {
@@ -1050,7 +1039,9 @@
             newBlock.innerHTML = `  <div class="TexCountTur">
                                     <div id="ItemTur">
                                         <div id="position">
-                                                           <h6 id="counterTur"><img src="@("/Image/options.png")" onmouseover="controlPannel(${blockTur})" height="20" width="20" style="margin-right: 10px;" /> ${blockTur}</h6>
+                                                           <h6 id="counterTur">
+                                                               <svg style="margin-right: 10px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-dots-circle-horizontal"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M8 12l0 .01" /><path d="M12 12l0 .01" /><path d="M16 12l0 .01" /></svg>
+                                                           ${blockTur}</h6>
                                         </div>
 
                                         <div>
@@ -1189,7 +1180,7 @@
         newBlock.id = 'TexCount-' + blockCount;
         newBlock.innerHTML = `
                                <div  class="TexCount">
-                                     <input type="text" readonly required  name="FurNameKey" style="position: relative;background:none;border:none;text-align: center;" value="${blockCount}" />
+                                             <input type="text" readonly required  name="FurNameKey" id="keyPoint" value="${blockCount}" />
                             <div id="TexInputKey">
                                                 <input id="inputS" required name="NameKey" onchange="chekedNameArienKey(event.target.value,${blockCount})" value="Schlüssel ${blockCount}" placeholder="Name des Schlüssels" type="text" />
                             </div>
@@ -1245,7 +1236,7 @@
             newBlock.id = 'TexCount-' + blockCount;
             newBlock.innerHTML = `
                                    <div  class="TexCount">
-                                         <input type="text" required  name="FurNameKey" style="position: relative;background:none;border:none;text-align: center;" value="${blockCount}" />
+                                                 <input type="text" required readonly  name="FurNameKey" id="keyPoint" value="${blockCount}" />
                                 <div id="TexInputKey">
                                                 <input id="inputS" required name="NameKey" onchange="chekedNameArienKey(event.target.value,${blockCount})" value="Schlüssel ${blockCount}" placeholder="Name des Schlüssels" type="text" />
                                 </div>
@@ -1312,7 +1303,9 @@
             newBlock.innerHTML = `  <div class="TexCountTur">
                                         <div id="ItemTur">
                                             <div id="position">
-                                                  <h6 id="counterTur"><img src="@("/Image/options.png")" height="20" width="20" onmouseover="controlPannel(${blockTur})" style="margin-right: 10px;" />${blockTur}</h6>
+                                                  <h6 id="counterTur">
+                                                      <svg style="margin-right: 10px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-dots-circle-horizontal"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M8 12l0 .01" /><path d="M12 12l0 .01" /><path d="M16 12l0 .01" /></svg>
+                                                  ${blockTur}</h6>
                                             </div>
 
                                             <div>

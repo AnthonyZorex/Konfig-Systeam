@@ -272,7 +272,7 @@
                                         <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                             <div class="row g-0">
                                                 <div class="col-md-4">
-                                                    <img src="@("~/image/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                                    <img src="@("/image/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="...">
                                                 </div>
                                                 <div class="col-md-8">
                                                     <div class="card-body">
@@ -456,7 +456,7 @@
                                     <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                         <div class="row g-0">
                                             <div class="col-md-4">
-                                                <img src="@("~/image/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                                <img src="@("/image/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="...">
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="card-body">
@@ -578,6 +578,37 @@
                                             <input type="hidden"  id="Option-@d + @i" />
                                             <input type="hidden" id="d-@d + @i" />
 
+                                            <div class="modal fade" id="HalbOptionsDescriptions-@i" tabindex="-1">
+                                                <div class="modal-dialog modal-xl">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title">@ViewBag.HalbOptionsName[i].Name</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+
+                                                            <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                                                                <div class="row g-0">
+                                                                    <div class="col-md-4">
+                                                                        <img src="@("/Image/"+@ViewBag.HalbOptionsName[i].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <div class="card-body">
+
+                                                                            <div class="card-text">
+                                                                                @Html.Raw(@ViewBag.HalbOptionsName[i].Description)
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                            
                                     }
                                         <input type="hidden" name="HalbOption" id="OptionAll-@d" /> 
@@ -601,7 +632,7 @@
                                     <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                         <div class="row g-0">
                                             <div class="col-md-4">
-                                                <img src="@("~/image/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                                <img src="@("/image/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="...">
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="card-body">
@@ -722,7 +753,7 @@
                                     <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                         <div class="row g-0">
                                             <div class="col-md-4">
-                                                <img src="@("~/image/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                                <img src="@("/image/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="...">
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="card-body">
@@ -755,7 +786,7 @@
                     <div id="ExelItem-@d" class="ExelItem shadow-lg  mb-5 bg-body-tertiary rounded">
                         <input type="hidden" name="Vorhan" value="@item.Id" />
                     <div id="productImage">
-                            <img decoding="async" data-bs-toggle="modal" data-bs-target="#ModalVorhanschlos-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                            <img decoding="async" data-bs-toggle="modal" data-bs-target="#ModalVorhanschlos-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                             <div>
                                 @foreach (var list in ViewBag.VorhanGalery)
                                 {
@@ -859,7 +890,7 @@
                                     <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                         <div class="row g-0">
                                             <div class="col-md-4">
-                                                <img src="@("~/image/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                                <img src="@("/image/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="...">
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="card-body">
@@ -982,7 +1013,7 @@
                                     <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                         <div class="row g-0">
                                             <div class="col-md-4">
-                                                <img src="@("~/image/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                                <img src="@("/image/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="...">
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="card-body">
@@ -1643,7 +1674,7 @@
                                          <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                              <div class="row g-0">
                                                  <div class="col-md-4">
-                                                         <img src="/Image/${img} height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                                         <img src="/Image/${img}" height="300" width="300" class="img-fluid rounded-start" alt="...">
                                                  </div>
                                                  <div class="col-md-8">
                                                      <div class="card-body">
@@ -1824,7 +1855,7 @@
                          <div class="modal-dialog modal-xl">
                              <div class="modal-content">
                                  <div class="modal-header">
-                                             <h1 class="modal-title">${[AVorhanschlosInfo[0].Name]}</h1>
+                                             <h1 class="modal-title">${[VorhanschlosInfo[0].Name]}</h1>
                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                                  </div>
                                  <div class="modal-body">
@@ -2404,7 +2435,7 @@
             }
             else 
             {
-                WaitTime.textContent = liferun.replace(/<[^>]*>/g, '').trim();
+                WaitTime.textContent = liferun.map(text => text.replace(/<[^>]*>/g, '').trim());
             }
             if (Innen != null && !AussenCheked)
             {
@@ -2417,7 +2448,7 @@
                     WaitTime.textContent = liferungGroz.map(text => text.replace(/<[^>]*>/g, '').trim());
                 }
                 else{
-                    WaitTime.textContent = liferun.replace(/<[^>]*>/g, '').trim();
+                    WaitTime.textContent = liferun.map(text => text.replace(/<[^>]*>/g, '').trim());
                 }
             }
         }

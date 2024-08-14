@@ -7,7 +7,6 @@ using schliessanlagen_konfigurator.Data;
 using schliessanlagen_konfigurator.Models.Users;
 using schliessanlagen_konfigurator.Send_Data;
 using System.Threading;
-using Microsoft.AspNetCore.ResponseCompression;
 using System.IO;
 using System.IO.Compression;
 using System.Web.Optimization;
