@@ -646,14 +646,17 @@ namespace schliessanlagen_konfigurator.Controllers
         {
             ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
 
-            string loginInform = ident.Claims.Select(x => x.Value).First();
-            var users = db.Users.Find(loginInform);
-
-            if (users != null)
+            if (ident.IsAuthenticated != false)
             {
-                var OrderList = db.UserOrdersShop.Where(x => x.UserId == users.Id && x.OrderStatus == "Nicht bezahlt").Distinct().ToList();
+                string loginInform = ident.Claims.Select(x => x.Value).First();
+                var users = db.Users.Find(loginInform);
 
-                ViewBag.CountOrder = OrderList.Count();
+                if (users != null)
+                {
+                    var OrderList = db.UserOrdersShop.Where(x => x.UserId == users.Id && x.OrderStatus == "Nicht bezahlt").Distinct().ToList();
+
+                    ViewBag.CountOrder = OrderList.Count();
+                }
             }
         }
 

@@ -281,28 +281,24 @@ namespace schliessanlagen_konfigurator.Controllers
         {
             if (file != null && file.Length > 0)
             {
-                // Путь для сохранения файла на сервере (например, папка "uploads" в корне вашего веб-приложения)
                 string uploadFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "image");
 
-                // Создаем папку, если она не существует
+            
                 if (!Directory.Exists(uploadFolderPath))
                 {
                     Directory.CreateDirectory(uploadFolderPath);
                 }
 
-                // Сохраняем файл на сервере
                 string filePath = Path.Combine(uploadFolderPath, file.FileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     file.CopyTo(fileStream);
                 }
 
-                // Возвращаем сообщение об успешной загрузке
                 ViewBag.Message = "File uploaded successfully.";
             }
             else
             {
-                // Возвращаем сообщение об ошибке, если файл не выбран
                 ViewBag.Message = "Please select a file.";
             }
 
