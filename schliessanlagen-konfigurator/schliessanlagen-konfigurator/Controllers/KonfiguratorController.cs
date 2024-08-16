@@ -793,6 +793,8 @@ namespace schliessanlagen_konfigurator.Controllers
 
             ViewBag.Zylinder_Typ = db.Schliessanlagen.ToList();
 
+            ViewBag.Zylinder_TypJson = JsonConvert.SerializeObject(db.Schliessanlagen.Select(x=>x.nameType).ToList());
+
             var a = db.Aussen_Innen.Select(x => x.aussen).Distinct().OrderBy(x => x).ToList();
             var d = db.Aussen_Innen.Select(x => x.Intern).Distinct().OrderBy(x => x).ToList();
 
@@ -805,6 +807,8 @@ namespace schliessanlagen_konfigurator.Controllers
 
             ViewBag.DoppelAussen = ListAussenDopple.Distinct();
 
+            ViewBag.DoppelAussenJson = JsonConvert.SerializeObject(ListAussenDopple.Distinct());
+
             var ListInternDopple = new List<float>();
             for (int i = 0; i < d.Count(); i++)
             {
@@ -816,7 +820,7 @@ namespace schliessanlagen_konfigurator.Controllers
                
 
             ViewBag.DoppelIntern = ListInternDopple.Distinct();
-
+            ViewBag.DoppelInternJson = JsonConvert.SerializeObject(ListInternDopple.Distinct());
 
             var KnayfAussen = db.Aussen_Innen_Knauf.Select(x => x.aussen).Distinct().OrderBy(x => x).ToList();
             var KnayfIntern = db.Aussen_Innen_Knauf.Select(x => x.Intern).Distinct().OrderBy(x => x).ToList();

@@ -489,14 +489,6 @@
       "PackagePath": "staticwebassets\\Image\\apple-pay.png"
     },
     {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\arrow.png",
-      "PackagePath": "staticwebassets\\Image\\arrow.png"
-    },
-    {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\arrows.png",
-      "PackagePath": "staticwebassets\\Image\\arrows.png"
-    },
-    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\aussenzylinder.png",
       "PackagePath": "staticwebassets\\Image\\aussenzylinder.png"
     },
@@ -607,6 +599,18 @@
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\zylinderlaenge.png",
       "PackagePath": "staticwebassets\\Image\\zylinderlaenge.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Js\\Index-konfigurator\\controll_dor.js",
+      "PackagePath": "staticwebassets\\Js\\Index-konfigurator\\controll_dor.js"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Js\\Index-konfigurator\\controll_key.js",
+      "PackagePath": "staticwebassets\\Js\\Index-konfigurator\\controll_key.js"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Js\\Index-konfigurator\\dynemic_control_panel.js",
+      "PackagePath": "staticwebassets\\Js\\Index-konfigurator\\dynemic_control_panel.js"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\Anthony Bonetta213282024 OrderFile.xlsx",

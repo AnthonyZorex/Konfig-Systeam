@@ -13,6 +13,7 @@ using System.Web.Optimization;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Options;
+using schliessanlagen_konfigurator;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,7 +28,8 @@ builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfi
 
 builder.Services.AddControllersWithViews();
 
-BundleTable.EnableOptimizations = false;
+
+BundleTable.EnableOptimizations = true;
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -99,8 +101,7 @@ app.UseDefaultFiles();
 //    app.UseHsts();
 //}
 
-//app.UseResponseCompression();
-
+app.UseResponseCompression();
 
 var supportedCultures = new[] { new CultureInfo("de-DE") };
 

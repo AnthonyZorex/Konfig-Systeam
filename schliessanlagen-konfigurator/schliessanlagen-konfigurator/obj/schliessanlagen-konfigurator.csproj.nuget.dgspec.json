@@ -45,10 +45,6 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "BuildBundlerMinifier": {
-              "target": "Package",
-              "version": "[3.2.449, )"
-            },
             "EPPlus": {
               "target": "Package",
               "version": "[4.5.3.3, )"
