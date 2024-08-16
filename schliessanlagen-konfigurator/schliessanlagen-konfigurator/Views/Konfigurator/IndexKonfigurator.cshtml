@@ -80,67 +80,11 @@
             <div> 
                 <div id="turInfo">
                         <div id="BlockTur-0">
-                            <div id="BlockTur-1" class="block">
-                                <div class="TexCountTur">
-                                    <div id="ItemTur">
-                                        <div id="position">
-                                            <h6 id="counterTur">
-                                                <svg style="margin-right: 10px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-dots-circle-horizontal"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M8 12l0 .01" /><path d="M12 12l0 .01" /><path d="M16 12l0 .01" /></svg>
-                                                1
-                                                </h6>
-                                        </div>
-                                        <div>
-                                            <input id="inputTur" required name="Turname" value="Tür 1" onchange="chekedNameArientiren(event.target.value,1)" placeholder="Name der Tür" />
-                                        </div>
-                                    </div>
-                                    <div>
-
-                                        <img id="typeSylinder" src="/Image/doppelzylinder.png" style="margin-top:10px" height="30" width="30" />
-
-                                    </div>
-
-                                    <div id="SelectTurItem">
-                                        <select id="TypeSelectTurType" onchange="selectParam(event.target.value,1)" name="ZylinderId">
-                                            @foreach (var list in ViewBag.Zylinder_Typ)
-                                            {
-                                                <option>@list.nameType</option>
-                                            }
-                                        </select>
-                                    </div>
-
-                                    <div id="SelectTurItem">
-                                        <select id="TypeSelectTurItem" class="aussen" name="aussen">
-                                            @foreach (var list in ViewBag.DoppelAussen)
-                                            {
-                                                <option id="OptionA">@list</option>
-                                            }
-                                        </select>
-
-                                    </div>
-                                    <div id="SelectTurItem">
-                                        <select id="TypeSelectTurItem" class="Innen" name="innen">
-                                            @foreach (var list in ViewBag.DoppelIntern)
-                                            {
-                                                <option id="OptionI">@list</option>
-                                            }
-                                        </select>
-                                    </div>
-                                    <div id="chekerTur">
-                                        <button type="button" onclick="Minus(1)">-</button>
-                                        <input id="infoButten" value="1" type="text" name="CountTur" />
-                                        <button type="button" onclick="Plus(1)">+</button>
-                                    </div>
-                                </div>
-                            </div>
+                           
                     </div>
                 <div id="InfoValue">
-                            <div class="horizontal" draggable="true" id="1horizontal">
-                                <div id="1.checkboxContainer1" class="checkboxContainer">
-                                    <input class="konfiguratorSelect" onmouseover="drawLines(1,1)"  onmouseout="hideLines(1,1)"  type="checkbox" id="1checkbox1">
-                                    <input type="hidden"  value="false" id="I1checkbox1">
-                                </div>
-                    </div>
-                </div>
+                        
+                </div> 
                 </div>
             </div>
                 <div id="add_And_Minus">
@@ -156,28 +100,6 @@
         <input type="text" name="IsOppen" style="display:none" id="vBool" />
         <input type="submit"  onclick="(bolleanCheked())" class="btn btn-success" id="input" value="Weiter" />
     </form>
-
- <div id="zylinderMenu" >
-       
-        @* <div style="display:flex;gap:10px">
-
-            <img src="@("/Image/arrows.png")" width="20" height="20" />
-            <h5 id="infoControlPanelTur" class="Up">nach oben verschieben</h5>
-        </div>
-        <div style="display:flex;gap:10px">
-            <img src="@("/Image/arrow.png")" width="20" height="20" />
-            <h5 id="infoControlPanelTur" class="Down">nach unten verschieben</h5>
-        </div>
-        <div style="display:flex;gap:10px">
-            <img src="@("/Image/files.png")" width="20" height="20" />
-            <h5 id="infoControlPanelTur" class="koppi">kopieren</h5>
-        </div>
-        <div style="display:flex;gap:10px">
-            <img src="@("/Image/delete.png")" width="20" height="20" />
-            <h5 id="infoControlPanelTur" class="deleted">löschen</h5>
-        </div>
-
-    </div>  *@
 
         <div class="modal fade" id="hilfe" tabindex="-1">
             <div class="modal-dialog">
@@ -234,7 +156,7 @@
                 </div>
                 </div>
             </div>
-        </div>
+       
 </div>
 
 <script>
@@ -378,50 +300,204 @@
         });
     }
 
-    // function TurUp(Id) 
-    // {
-    //     let dor = document.getElementById("BlockTur-" + Id);
-    //     let schritt = Number(Id) + 1;
+    function TurUp(Id) 
+    {
+        let alltur = document.querySelectorAll(".block");
+        let allKey = document.querySelectorAll(".horizontal");
 
-    //     let uP = document.getElementById("BlockTur-" + schritt);
-    //     var parent = dor.parentNode;
+        let dor = document.getElementById("BlockTur-" + Id);
+        let Key_down = document.getElementById(Id + "horizontal");
 
-    //     parent.insertBefore(uP, dor);
-    // }
-    // function TurDown(Id) 
-    // {
-    //     let dor = document.getElementById("BlockTur-" + Id);
-    //     let schritt = Number(Id) - 1;
+        let parent = dor.parentNode;
+        let parent2 = Key_down.parentNode;
 
-    //     let uP = document.getElementById("BlockTur-" + schritt);
-    //     var parent = dor.parentNode;
+        let allturArray = Array.from(alltur);
+        let allKeyArray = Array.from(allKey);
 
-    //     parent.insertBefore(dor, uP);
-    // }
+        let index = allturArray.findIndex(element => element === dor);
+        let indexKey = allKeyArray.findIndex(element => element === Key_down);
 
-    // function controlPannel(Id) 
-    // {
-    //     let dor = document.getElementById("BlockTur-" + Id);
-    //     let controlPannel = document.getElementById("zylinderMenu");
+        if (index !=0) 
+        {
+            let nextElement = allturArray[index - 1];
+            parent.insertBefore(dor, nextElement);
 
-    //     document.getElementsByClassName('Up')[0].addEventListener('click', function () {
-    //         TurUp(Id);
-    //     });
-    //     document.getElementsByClassName('Down')[0].addEventListener('click', function () {
-    //         TurDown(Id);
-    //     });
+            let nextElementKey = allKeyArray[index - 1];
+            parent2.insertBefore(Key_down, nextElementKey);
+        }
+        else {
+            console.log("Элемент не найден или он уже последний.");
+        }
+    }
 
-    //     console.log(dor);
+    function TurKoppy(Id,count_Coppy) 
+    {
+        let alltur = document.querySelectorAll(".block");
+        let dor = document.getElementById("BlockTur-" + Id);
+       
+        let allturArray = Array.from(alltur);
+        let index = allturArray.findIndex(element => element === dor);
+        const targetElement = alltur[index];
+        
+        let tür_konfig = document.getElementById("zylinderMenu-" + Id);
+        tür_konfig.style.display = "none";
 
-    //     controlPannel.style.display = "block";
-    // }
+        let arrayTur = [];
 
-    // function closeControlPannel() 
-    // {
-    //     let controlPannel = document.getElementById("zylinderMenu");
+        for (let d = 1; d <= count_Coppy; d++) 
+        {
+            let clone = dor.cloneNode(true);
 
-    //     controlPannel.style.display = "none";
-    // }
+            let originalSelects = dor.querySelectorAll('select');
+            let clonedSelects = clone.querySelectorAll('select');
+
+            for (let i = 0; i < originalSelects.length; i++) {
+                clonedSelects[i].value = originalSelects[i].value;
+            }
+
+            clone.childNodes[1].childNodes[1].childNodes[1].childNodes[1].childNodes[2].textContent = `${Id}.` + d;
+            clone.childNodes[1].childNodes[1].childNodes[3].childNodes[1].value = `Tür ${Id}.` + d;
+            
+            let elementControlOpen = clone.childNodes[1].childNodes[1].childNodes[1].childNodes[1].childNodes[1];
+            elementControlOpen.setAttribute("onclick", `controlPannel(1${Id}${allturArray.length + d})`);
+
+            clone.childNodes[3].id = `zylinderMenu-1${Id}` + (allturArray.length + d);
+
+            let element = clone.childNodes[1].childNodes[3].childNodes[1];
+            element.setAttribute("onchange", `selectParam(event.target.value,1${Id}${allturArray.length + d})`);
+
+            let elementCountMinus = clone.childNodes[1].childNodes[9].childNodes[1];
+            elementCountMinus.setAttribute("onclick", `Minus(1${Id}${allturArray.length + d})`);
+            
+            let elementCountPlus = clone.childNodes[1].childNodes[9].childNodes[5];
+            elementCountPlus.setAttribute("onclick", `Plus(1${Id}${allturArray.length + d})`);
+
+            let elemetnControl = clone.childNodes[3];
+            elemetnControl.setAttribute("onmouseleave", `closeControlPannel(1${Id}${allturArray.length + d})`);
+
+            let elemetnControlUp = clone.childNodes[3].childNodes[1];
+            elemetnControlUp.setAttribute("onclick", `TurUp(1${Id}${allturArray.length + d})`);
+
+            let elemetnControlDown = clone.childNodes[3].childNodes[3];
+            elemetnControlDown.setAttribute("onclick", `TurDown(1${Id}${allturArray.length + d})`);
+
+            let elemetnControlDelete = clone.childNodes[3].childNodes[7];
+            elemetnControlDelete.setAttribute("onclick", `TurDelete(1${Id}${allturArray.length + d})`);
+
+
+            clone.id = `BlockTur-1${Id}` + (allturArray.length + d);
+
+            arrayTur.push(`1${Id}` + (allturArray.length + d));
+
+            allturArray.splice(index + d, 0, clone);
+        }
+
+        document.getElementById("BlockTur-0").innerHTML = "";
+
+        for (let i = 0; i < allturArray.length; i++) 
+        { 
+            document.getElementById("BlockTur-0").append(allturArray[i]);
+        }
+
+        let allKey = document.querySelectorAll(".horizontal");
+        let Key_down = document.getElementById(Id + "horizontal");
+        let allKeyArray = Array.from(allKey);
+        let indexKey = allKeyArray.findIndex(element => element === Key_down);
+        
+        let chekbox_open_array = [];
+        
+        const targetElementKey = allKey[indexKey];
+
+        for (let f = 1; f <= count_Coppy; f++) 
+        {
+            let clone2 = Key_down.cloneNode(true);
+
+
+            clone2.id = `1${Id}` + (allKeyArray.length + f) + "horizontal";
+
+            allKeyArray.splice(indexKey + f, 0, clone2);   
+            
+            for (let s = 0; s < clone2.childNodes.length; s++) 
+            {
+                clone2.childNodes[s].id = `${arrayTur[f - 1]}` + ".checkboxContainer" + (s + 1);
+                clone2.childNodes[s].childNodes[1].id = `${arrayTur[f - 1]}` + "checkbox" + (s + 1);
+
+                let chekbox = clone2.childNodes[s].childNodes[1];
+                chekbox.setAttribute("onmouseover", `drawLines(${arrayTur[f - 1]},${s + 1})`);
+                chekbox.setAttribute("onmouseout", `hideLines(${arrayTur[f - 1]},${s + 1})`);
+
+
+                chekbox_open_array.push(`${arrayTur[f - 1]}` + "checkbox" + (s + 1));
+                clone2.childNodes[s].childNodes[3].id = `I${arrayTur[f - 1]}` + "checkbox" + (s + 1);
+            }
+        }
+       
+        document.getElementById("InfoValue").innerHTML = "";
+       
+        for (let i = 0; i < allKeyArray.length; i++) 
+        {
+            document.getElementById("InfoValue").append(allKeyArray[i]);
+        }
+
+        chekbox_open_array.forEach((item) => {
+            createCustomCheckbox(item);
+        });
+
+    }
+
+    function TurDelete(Id)
+    {
+        let dor = document.getElementById("BlockTur-" + Id);
+        dor.remove();
+        
+        let Key_down = document.getElementById(Id + "horizontal");
+        Key_down.remove();
+    }
+    
+    function TurDown(Id) 
+    {
+        let alltur = document.querySelectorAll(".block");
+        let allKey = document.querySelectorAll(".horizontal");
+
+        let dor = document.getElementById("BlockTur-" + Id);
+        let Key_down = document.getElementById(Id + "horizontal");
+
+        let parent = dor.parentNode;
+        let parent2 = Key_down.parentNode;
+
+        let allturArray = Array.from(alltur);
+        let allKeyArray = Array.from(allKey);
+
+        let index = allturArray.findIndex(element => element === dor);
+        let indexKey = allKeyArray.findIndex(element => element === Key_down);
+
+        if (index !== -1 && index < allturArray.length - 1) 
+        {
+            let nextElement = allturArray[index + 1];
+            parent.insertBefore(nextElement, dor);
+
+            let nextElementKey = allKeyArray[index + 1];
+            parent2.insertBefore(nextElementKey, Key_down);
+        }
+        else {
+            console.log("Элемент не найден или он уже последний.");
+        }
+    }
+
+    function controlPannel(Id) 
+    {
+        let dor = document.getElementById("BlockTur-" + Id);
+        let controlPannel = document.getElementById("zylinderMenu-" + Id);
+
+        controlPannel.style.display = "block";
+    }
+
+    function closeControlPannel(id) 
+    {
+        let controlPannel = document.getElementById("zylinderMenu-"+id);
+
+        controlPannel.style.display = "none";
+    }
 
 
 
@@ -477,13 +553,26 @@
             const horizont = document.getElementById(`${id}horizontal`);
             horizont.style.background = "#8CC4E7";
 
-            for (let i = 1; i<id; i++) 
-            {
-                let str = `${i}.checkboxContainer${row}`;
+            const allHorizont = document.querySelectorAll(".horizontal");
+            let serchelement = false; 
 
-                const chekboxSelect = document.getElementById(str);
-                chekboxSelect.style.background = "red";
-               
+            for (let i = 0; i < allHorizont.length; i++) 
+            {
+                 let chekboxrow = allHorizont[i].childNodes;
+
+                    if (chekboxrow[row-1].id == chekboxSelect.id) 
+                    {
+                        serchelement = true;
+                    }
+                    else 
+                    {
+                        if (serchelement!= true) 
+                        {
+                            chekboxrow[row-1].style.background = "red";
+                        }
+                       
+                    }
+
             }
             
             
@@ -502,11 +591,15 @@
 
         const horizont = document.getElementById(`${id}horizontal`);
         horizont.style.background = "#ededed";
-        
-        for (let i = 1; i < id; i++) 
+
+
+        const allHorizont = document.querySelectorAll(".horizontal");
+        let serchelement = false;
+
+        for (let i = 0; i < allHorizont.length; i++) 
         {
-            const chekboxSelect = document.getElementById(i + ".checkboxContainer" + row);
-            chekboxSelect.style.background = "none";
+            let chekboxrow = allHorizont[i].childNodes;
+            chekboxrow[row-1].style.background = "none";
         }
         
         
@@ -792,15 +885,19 @@
             let dorCounter = document.querySelectorAll("#inputTur");
             let keyCounter = document.querySelectorAll("#inputS");
             let boolV = document.getElementById('vBool');
+            const allHorizont = document.querySelectorAll(".horizontal");
             let boolArray = [];
 
             for (let i = 0; i < keyCounter.length; i++) {
                 let w = 0;
 
-                for (let j = 0; j < dorCounter.length; j++) {
+                for (let j = 0; j < dorCounter.length; j++) 
+                {
                     w++;
-                    let chekbox = document.getElementById(`I${w}checkbox${i + 1}`);
-                    if (chekbox) boolArray.push(chekbox.value);
+
+                    let chekboxrow = allHorizont[j].childNodes[0].childNodes[3];
+
+                    if (chekboxrow) boolArray.push(chekboxrow.value);
                 }
             }
             boolV.value = boolArray.join(',');
@@ -861,7 +958,7 @@
         let countTur = BlockTur.querySelector("#infoButten");
         let count = countTur.value;
 
-        if (countTur.value != 0) 
+        if (countTur.value > 1) 
         {
             count--;
         }
@@ -997,8 +1094,7 @@
     }
 
     function foo() {
-        localStorage.clear();
-        createCustomCheckbox(`${blockTur}checkbox${blockCount}`);
+        localStorage.clear();       
     }
 
     window.onload = foo()
@@ -1040,7 +1136,7 @@
                                     <div id="ItemTur">
                                         <div id="position">
                                                            <h6 id="counterTur">
-                                                               <svg style="margin-right: 10px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-dots-circle-horizontal"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M8 12l0 .01" /><path d="M12 12l0 .01" /><path d="M16 12l0 .01" /></svg>
+                                                 <svg onclick="controlPannel(${blockTur})  style="margin-right: 10px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-dots-circle-horizontal"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M8 12l0 .01" /><path d="M12 12l0 .01" /><path d="M16 12l0 .01" /></svg>
                                                            ${blockTur}</h6>
                                         </div>
 
@@ -1086,7 +1182,47 @@
                                                <button type="button" onclick="Plus(${blockTur})">+</button>
                                         </div>
                                 </div>
-                              
+
+                                    </div>
+
+                                                     <div id="zylinderMenu-${blockTur}" onmouseleave="closeControlPannel(${blockTur})" class="tür_konfig">
+                                                       <div style="display:flex;gap:10px" onclick="TurUp(${blockTur})">
+                                                  <img src="@("/Image/arrows.png")" width="20" height="20" />
+                                                  <h5 id="infoControlPanelTur" class="Up">nach oben verschieben</h5>
+                                                </div>
+                                                    <div style="display:flex;gap:10px" onclick="TurDown(${blockTur})">
+                                                  <img src="@("/Image/arrow.png")" width="20" height="20" />
+                                                  <h5 id="infoControlPanelTur" class="Down">nach unten verschieben</h5>
+                                                </div>
+                                                         <div style="display:flex;gap:10px">
+
+                                                              <div class="input-group mb-3">
+                                                              <span class="input-group-text" id="basic-addon1">
+                                                                    <h5>
+                                                                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-table-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12.5 21h-7.5a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v7.5"></path><path d="M3 10h18"></path><path d="M10 3v18"></path><path d="M16 19h6"></path><path d="M19 16v6"></path></svg>
+                                                                    kopieren</h5>
+                                                              </span>
+                                                                     <select type="text" class="form-select" onchange="TurKoppy(${blockTur},event.target.value)">
+                                                                            <option value="1">1</option>
+                                                                                <option value="2">2</option>
+                                                                                      <option value="3">3</option>
+                                                                                    <option value="4">4</option>
+                                                                                          <option value="5">5</option>
+                                                                                    <option value="6">6</option>
+                                                                                        <option value="7">7</option>
+                                                                                        <option value="8">8</option>
+                                                                                              <option value="9">9</option>
+                                                                                        <option value="10">10</option>
+                                                                   <select/>
+                                                            </div>
+                                                         
+                                                    </div>
+                                                        <div style="display:flex;gap:10px" onclick="TurDelete(${blockTur})">
+                                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M14 3v4a1 1 0 0 0 1 1h4"></path><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path><path d="M10 12l4 4m0 -4l-4 4"></path></svg>
+                                                      <h5 id="infoControlPanelTur" class="deleted"> löschen</h5>
+                                                    </div>
+                                                </div>
+                                   
                     `;
 
                 document.getElementById('BlockTur-0').appendChild(newBlock);
@@ -1218,184 +1354,246 @@
     {
         localStorage.clear();
 
-        document.getElementById('itemKeyBlock').innerHTML = "";
-        // blockTur = 0;
-        blockCount = 0;
-
-        let hor = document.querySelectorAll(".horizontal");
-        
-        hor.forEach((item) => {
-            item.innerHTML = "";
-        });
-
-        for (let i = 1; i <= value ;i++) 
+        if (value > blockCount) 
         {
-            blockCount++;
-
-            let newBlock = document.createElement('div');
-            newBlock.id = 'TexCount-' + blockCount;
-            newBlock.innerHTML = `
-                                   <div  class="TexCount">
-                                                 <input type="text" required readonly  name="FurNameKey" id="keyPoint" value="${blockCount}" />
-                                <div id="TexInputKey">
-                                                <input id="inputS" required name="NameKey" onchange="chekedNameArienKey(event.target.value,${blockCount})" value="Schlüssel ${blockCount}" placeholder="Name des Schlüssels" type="text" />
-                                </div>
-                                <div>
-                                   <input id="inputCount" required name="CountKey" value="1" type="text" />
-                                </div>
-                            </div>
-
-            `;
-
-            document.getElementById('itemKeyBlock').appendChild(newBlock);
-
-            let horizont = document.getElementById(`${blockTur}horizontal`);
-
-            horizont.draggable = "true";
-
-            for (let i = 1; i <= blockTur; i++) 
+            for (let i = blockCount; i < value; i++) 
             {
+                blockCount++;
 
-                let newBlockTur = document.createElement('div');
+                let newBlock = document.createElement('div');
+                newBlock.id = 'TexCount-' + blockCount;
+                newBlock.innerHTML = `
+                               <div  class="TexCount">
+                                             <input type="text" required readonly  name="FurNameKey" id="keyPoint" value="${blockCount}" />
+                            <div id="TexInputKey">
+                                            <input id="inputS" required name="NameKey" onchange="chekedNameArienKey(event.target.value,${blockCount})" value="Schlüssel ${blockCount}" placeholder="Name des Schlüssels" type="text" />
+                            </div>
+                            <div>
+                               <input id="inputCount" required name="CountKey" value="1" type="text" />
+                            </div>
+                        </div>
 
-                newBlockTur.innerHTML = ` <input type="checkbox" class="konfiguratorSelect" onmouseover="drawLines(${i},${blockCount})"  onmouseout="hideLines(${i},${blockCount})" id=${i}checkbox${blockCount}>
-                                        <input type="hidden"  value="false" id="I${i}checkbox${blockCount}">`;
+        `;
 
-                newBlockTur.id = `${i}.checkboxContainer${blockCount}`;
+                document.getElementById('itemKeyBlock').appendChild(newBlock);
 
-                newBlockTur.classList.add('checkboxContainer');
+                let horizont = document.getElementById(`${blockTur}horizontal`);
 
-                document.getElementById(`${i}horizontal`).appendChild(newBlockTur);
+                horizont.draggable = "true";
 
-                document.getElementById('InfoValue').appendChild(horizont);
+                for (let i = 1; i <= blockTur; i++) 
+                {
 
-                createCustomCheckbox(`${i}checkbox${blockCount}`);
+                    let newBlockTur = document.createElement('div');
+
+                    newBlockTur.innerHTML = ` <input type="checkbox" class="konfiguratorSelect" onmouseover="drawLines(${i},${blockCount})"  onmouseout="hideLines(${i},${blockCount})" id=${i}checkbox${blockCount}>
+                                    <input type="hidden"  value="false" id="I${i}checkbox${blockCount}">`;
+
+                    newBlockTur.id = `${i}.checkboxContainer${blockCount}`;
+
+                    newBlockTur.classList.add('checkboxContainer');
+
+                    document.getElementById(`${i}horizontal`).appendChild(newBlockTur);
+
+                    document.getElementById('InfoValue').appendChild(horizont);
+
+                    createCustomCheckbox(`${i}checkbox${blockCount}`);
+                }
+
+                blocksKey = containerKey.querySelectorAll('.horizontal');
+
+                blocksKey.forEach(block => {
+                    block.addEventListener('dragstart', handleDragStartKey);
+                    block.addEventListener('dragover', handleDragOverKey);
+                    block.addEventListener('drop', handleDropKey);
+                    block.addEventListener('dragend', handleDragEndKey);
+                });
+
             }
-
-            blocksKey = containerKey.querySelectorAll('.horizontal');
-
-            blocksKey.forEach(block => {
-                block.addEventListener('dragstart', handleDragStartKey);
-                block.addEventListener('dragover', handleDragOverKey);
-                block.addEventListener('drop', handleDropKey);
-                block.addEventListener('dragend', handleDragEndKey);
-            });
-
         }
+        else {
 
+            for (let i = blockCount; i > value; i--) 
+            {
+                blockCount--;
+
+                let key = document.querySelectorAll(".TexCount");
+                key[key.length - 1].remove();
+
+                let checkboxContainers = document.querySelectorAll(".horizontal");
+
+                checkboxContainers.forEach(container => {
+                  
+                    let checkboxes = container.querySelectorAll('.checkboxContainer');
+                    checkboxes[checkboxes.length - 1].remove();
+                });
+            }
+            
+        }
     }
 
     function selectTur(value) 
     {
         localStorage.clear();
-        blockTur = 0;
-        document.getElementById('InfoValue').innerHTML = '';
-        document.getElementById('BlockTur-0').innerHTML = '';
 
-        for (let i = 1; i <= value; i++) 
+        if (value > blockTur) 
         {
-            blockTur++;
+            for (let i = blockTur; i < value; i++) 
+            {
+                blockTur++;
 
-            let newBlock = document.createElement('div');
-            newBlock.className = "block";
-            newBlock.draggable = "true";
-            newBlock.id = 'BlockTur-' + blockTur;
-            newBlock.innerHTML = `  <div class="TexCountTur">
-                                        <div id="ItemTur">
-                                            <div id="position">
-                                                  <h6 id="counterTur">
-                                                      <svg style="margin-right: 10px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-dots-circle-horizontal"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M8 12l0 .01" /><path d="M12 12l0 .01" /><path d="M16 12l0 .01" /></svg>
-                                                  ${blockTur}</h6>
-                                            </div>
-
-                                            <div>
-                                                                  <input id="inputTur" required  onchange="chekedNameArientiren(event.target.value,${blockTur})" value="Tür ${blockTur}" name="Turname" placeholder="Name der Tür" />
-                                            </div>
+                let newBlock = document.createElement('div');
+                newBlock.className = "block";
+                newBlock.draggable = "true";
+                newBlock.id = 'BlockTur-' + blockTur;
+                newBlock.innerHTML = `  <div class="TexCountTur">
+                                            <div id="ItemTur">
+                                                <div id="position">
+                                                      <h6 id="counterTur">
+                                                            <svg onclick="controlPannel(${blockTur})" style="margin-right: 10px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-dots-circle-horizontal"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M8 12l0 .01" /><path d="M12 12l0 .01" /><path d="M16 12l0 .01" /></svg>
+                                                      ${blockTur}</h6>
+                                                </div>
 
                                                 <div>
-                                                     <img  id="typeSylinder" src="/Image/doppelzylinder.png" height="30" width="30"  />
+                                                                      <input id="inputTur" required  onchange="chekedNameArientiren(event.target.value,${blockTur})" value="Tür ${blockTur}" name="Turname" placeholder="Name der Tür" />
+                                                </div>
+
+                                                    <div>
+                                                         <img  id="typeSylinder" src="/Image/doppelzylinder.png" height="30" width="30"  />
+                                                    </div>
+                                            </div>
+
+                                            <div id="SelectTurItem">
+                                                    <select id="TypeSelectTurType"  onchange="selectParam(event.target.value,${blockTur})" name="ZylinderId">
+                                                        @foreach (var list in ViewBag.Zylinder_Typ)
+                                                        {
+                                                           <option>@list.nameType</option>
+                                                        }
+                                                </select>
+                                            </div>
+
+                                            <div id="SelectTurItem">
+                                                    <select id="TypeSelectTurItem"  class="aussen" name="aussen">
+                                                    @foreach (var list in ViewBag.DoppelAussen)
+                                                    {
+                                                        <option id="OptionA">@list</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                            <div id="SelectTurItem">
+                                                        <select id="TypeSelectTurItem" class="Innen" name="innen">
+                                                        @foreach (var list in ViewBag.DoppelIntern)
+                                                        {
+                                                            <option id="OptionI">@list</option>
+                                                        }
+                                                </select>
+                                            </div>
+                                                       <div id="chekerTur">
+                                                        <button type="button" onclick="Minus(${blockTur})">-</button>
+                                                    <input id="infoButten"  value="1" type="text" name="CountTur" />
+                                                       <button type="button" onclick="Plus(${blockTur})">+</button>
                                                 </div>
                                         </div>
 
-                                        <div id="SelectTurItem">
-                                                <select id="TypeSelectTurType"  onchange="selectParam(event.target.value,${blockTur})" name="ZylinderId">
-                                                @foreach (var list in ViewBag.Zylinder_Typ)
-                                                {
-                                                    <option>@list.nameType</option>
-                                                }
-                                            </select>
-                                        </div>
+                                                   <div id="zylinderMenu-${blockTur}" onmouseleave="closeControlPannel(${blockTur})" class="tür_konfig">
 
-                                        <div id="SelectTurItem">
-                                                <select id="TypeSelectTurItem"  class="aussen" name="aussen">
-                                                @foreach (var list in ViewBag.DoppelAussen)
-                                                {
-                                                     <option id="OptionA">@list</option>
-                                                }
-                                            </select>
-                                        </div>
-                                        <div id="SelectTurItem">
-                                                    <select id="TypeSelectTurItem" class="Innen" name="innen">
-                                                    @foreach (var list in ViewBag.DoppelIntern)
-                                                    {
-                                                       <option id="OptionI">@list</option>
-                                                    }
-                                            </select>
-                                        </div>
-                                                   <div id="chekerTur">
-                                                    <button type="button" onclick="Minus(${blockTur})">-</button>
-                                                <input id="infoButten"  value="1" type="text" name="CountTur" />
-                                                   <button type="button" onclick="Plus(${blockTur})">+</button>
-                                            </div>
-                                    </div>
+                                                <div style="display:flex;gap:10px"  onclick="TurUp(${blockTur})">
+                                                  <img src="@("/Image/arrows.png")" width="20" height="20" />
+                                                  <h5 id="infoControlPanelTur" class="Up">nach oben verschieben</h5>
+                                                </div>
+                                                    <div style="display:flex;gap:10px" onclick="TurDown(${blockTur})">
+                                                  <img src="@("/Image/arrow.png")" width="20" height="20" />
+                                                  <h5 id="infoControlPanelTur" class="Down">nach unten verschieben</h5>
+                                                </div>
+                                                    <div style="display:flex;gap:10px">
+                                                         <div class="input-group mb-3">
+                                                                  <span class="input-group-text" id="basic-addon1">
+                                                                           <h5>
+                                                                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-table-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12.5 21h-7.5a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v7.5"></path><path d="M3 10h18"></path><path d="M10 3v18"></path><path d="M16 19h6"></path><path d="M19 16v6"></path></svg>
+                                                                        kopieren</h5>
+                                                                  </span>
+                                                                          <select type="text" class="form-select" onchange="TurKoppy(${blockTur},event.target.value)">
+                                                                            <option value="1">1</option>
+                                                                                    <option value="2">2</option>
+                                                                                          <option value="3">3</option>
+                                                                                        <option value="4">4</option>
+                                                                                              <option value="5">5</option>
+                                                                                        <option value="6">6</option>
+                                                                                            <option value="7">7</option>
+                                                                                            <option value="8">8</option>
+                                                                                                  <option value="9">9</option>
+                                                                                            <option value="10">10</option>
+                                                                        <select/>
+                                                                </div>
+                                                </div>
+                                                    <div style="display:flex;gap:10px" onclick="TurDelete(${blockTur})">
+                                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M14 3v4a1 1 0 0 0 1 1h4"></path><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path><path d="M10 12l4 4m0 -4l-4 4"></path></svg>
+                                                  <h5 id="infoControlPanelTur" class="deleted">löschen</h5>
+                                                </div>
+                                                </div>
 
-                        `;
+                            `;
 
 
-            document.getElementById('BlockTur-0').appendChild(newBlock);
+                document.getElementById('BlockTur-0').appendChild(newBlock);
 
-            let blocks = container.querySelectorAll('.block');
-            blocks.forEach(block => {
-                block.addEventListener('dragstart', handleDragStart);
-                block.addEventListener('dragover', handleDragOver);
-                block.addEventListener('drop', handleDrop);
-                block.addEventListener('dragend', handleDragEnd);
-            });
+                let blocks = container.querySelectorAll('.block');
+                blocks.forEach(block => {
+                    block.addEventListener('dragstart', handleDragStart);
+                    block.addEventListener('dragover', handleDragOver);
+                    block.addEventListener('drop', handleDrop);
+                    block.addEventListener('dragend', handleDragEnd);
+                });
 
-            console.log(blocks);
+                let horizont = document.createElement('div');
+                horizont.draggable = "true";
+                horizont.id = `${blockTur}horizontal`;
+                horizont.classList.add('horizontal');
 
-            let horizont = document.createElement('div');
-            horizont.draggable = "true";
-            horizont.id = `${blockTur}horizontal`;
-            horizont.classList.add('horizontal');
+                for (let i = 1; i <= blockCount; i++) {
 
-            for (let i = 1; i <= blockCount; i++) 
-            {
+                    let newBlockTur = document.createElement('div');
 
-                let newBlockTur = document.createElement('div');
+                    newBlockTur.innerHTML = ` <input type="checkbox" onmouseover="drawLines(${blockTur},${i})"  onmouseout="hideLines(${blockTur},${i})" id=${blockTur}checkbox${i}>
+                    <input type="hidden" value="false" id="I${blockTur}checkbox${i}">`;
 
-                newBlockTur.innerHTML = ` <input type="checkbox" onmouseover="drawLines(${blockTur},${i})"  onmouseout="hideLines(${blockTur},${i})" id=${blockTur}checkbox${i}>
-                <input type="hidden" value="false" id="I${blockTur}checkbox${i}">`;
+                    newBlockTur.id = `${blockTur}.checkboxContainer${i}`;
 
-                newBlockTur.id = `${blockTur}.checkboxContainer${i}`;
+                    newBlockTur.classList.add('checkboxContainer');
 
-                newBlockTur.classList.add('checkboxContainer');
+                    horizont.appendChild(newBlockTur);
 
-                horizont.appendChild(newBlockTur);
+                    document.getElementById('InfoValue').appendChild(horizont)
 
-                document.getElementById('InfoValue').appendChild(horizont)
+                    createCustomCheckbox(`${blockTur}checkbox${i}`);
+                }
+                let blocksKey = containerKey.querySelectorAll('.horizontal');
 
-                createCustomCheckbox(`${blockTur}checkbox${i}`);
+                blocksKey.forEach(block => {
+                    block.addEventListener('dragstart', handleDragStartKey);
+                    block.addEventListener('dragover', handleDragOverKey);
+                    block.addEventListener('drop', handleDropKey);
+                    block.addEventListener('dragend', handleDragEndKey);
+                });
             }
-            let blocksKey = containerKey.querySelectorAll('.horizontal');
 
-            blocksKey.forEach(block => {
-                block.addEventListener('dragstart', handleDragStartKey);
-                block.addEventListener('dragover', handleDragOverKey);
-                block.addEventListener('drop', handleDropKey);
-                block.addEventListener('dragend', handleDragEndKey);
-            });
         }
+        else 
+        {
+            for (let i = blockTur; i > value; i--) 
+            {
+                blockTur--;
+
+                let blocks = container.querySelectorAll('.block');
+
+                blocks[blocks.length - 1].remove();
+
+                let checkboxContainer = document.querySelectorAll(".horizontal");
+                checkboxContainer[checkboxContainer.length - 1].remove();
+                
+            }
+        }
+        
 
     }
 

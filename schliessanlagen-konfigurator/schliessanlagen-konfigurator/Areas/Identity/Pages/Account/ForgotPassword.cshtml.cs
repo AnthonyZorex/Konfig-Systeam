@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using schliessanlagen_konfigurator.Data;
 using schliessanlagen_konfigurator.Models.Users;
 
 namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account
@@ -21,11 +22,12 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account
     {
         private readonly UserManager<User> _userManager;
         private readonly IEmailSender _emailSender;
-
-        public ForgotPasswordModel(UserManager<User> userManager, IEmailSender emailSender)
+        schliessanlagen_konfiguratorContext db;
+        public ForgotPasswordModel(schliessanlagen_konfiguratorContext context, UserManager<User> userManager, IEmailSender emailSender)
         {
             _userManager = userManager;
             _emailSender = emailSender;
+            db = context;
         }
 
         /// <summary>
@@ -54,15 +56,12 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByEmailAsync(Input.Email);
-                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+                var user = db.User.FirstOrDefault(x=>x.UserName == Input.Email);
+                if (user == null)
                 {
-                    // Don't reveal that the user does not exist or is not confirmed
                     return RedirectToPage("./ForgotPasswordConfirmation");
                 }
-
-                // For more information on how to enable account confirmation and password reset please
-                // visit https://go.microsoft.com/fwlink/?LinkID=532713
+    
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                 var callbackUrl = Url.Page(

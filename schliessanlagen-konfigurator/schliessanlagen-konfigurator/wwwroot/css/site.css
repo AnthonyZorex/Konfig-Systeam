@@ -4,16 +4,33 @@
     --text-color-primary: #fff;
     --default-color: black;
     --primary-border: 3px solid #f00;
+    --primary-font: "Fira Sans", sans-serif;
 }
 
 html, body {
     height: 100% !important;
     margin-bottom: 60px;
-    font-family: "Fira Sans", sans-serif;
+    font-family: var(--primary-font);
     font-optical-sizing: auto;
     font-style: normal;
     font-variation-settings: "slnt" 0;
 }
+#registerPage {
+    background: var(--text-color-primary);
+}
+
+.tür_konfig {
+    display: none;
+    margin-left: 50px;
+    margin-top: -15px;
+    padding: 10px;
+    position: absolute;
+    border:var(--primary-border);
+    background: white;
+    z-index: 999;
+}
+
+
 #Galery {
     margin-top: 20px;
     display: grid;
@@ -45,8 +62,16 @@ html, body {
 }
 .danger {
     background-color: var(--primary-color);
-    color: white
+    color: white;
+    outline:none;
 }
+.btn-outline-danger {
+    background-color: transparent;
+    color: var(--primary-color);
+    outline: none;
+    border: 1px solid var(--primary-color);
+}
+
 .input-block > div > div {
     margin-top: 30px;
 }
@@ -258,8 +283,9 @@ html, body {
 
     @media(max-width:900px) and (orientation: portrait) 
     {
-        #position{
-        width:25px;
+        #position
+        {
+            width:25px;
         }
 
     #countTurSelect {
@@ -1272,7 +1298,6 @@ html, body {
     }
     html {
         font-size: 12px;
-        height:100%;
     }
     #filteblock {
         border-top: 3px solid red;
@@ -1899,7 +1924,7 @@ html, body {
     #sclusselInfo2 {
         justify-content: end;
         grid-template-columns: 40px 170px 100px 130px 120px;
-        height: 100px;
+        height: 80px;
         max-width: 570px;
         padding: 5px;
         background: #f00;
@@ -2826,9 +2851,6 @@ html, body {
         overflow-x: scroll;
     }
 
-    #blockSclussel {
-    }
-
     #typeSylinder {
         margin-left: 30px;
         margin-right: 30px;
@@ -2836,7 +2858,7 @@ html, body {
 
     #sclusselInfo2 {
         justify-content: end;
-        height: 100px;
+        height: 80px;
         width: 800px;
         padding: 5px;
         background: #f00;
@@ -2957,7 +2979,7 @@ html, body {
         cursor:pointer;
     }
         #infoControlPanelTur:hover {
-            background: #F363AC;
+            background: var(--primary-color);
             color: white;
         }
 

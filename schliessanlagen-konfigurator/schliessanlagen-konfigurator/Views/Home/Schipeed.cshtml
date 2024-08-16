@@ -3,87 +3,121 @@
 }
 
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
+    .arc-padding{
+        padding:30px;
     }
 
-    .container {
-        max-width: 600px;
-        margin: auto;
+    #result{
+    
+        padding:30px;
     }
 
-    .form-group {
-        margin-bottom: 15px;
-    }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-        }
-
-    .btn {
-        padding: 10px 15px;
-        border: none;
-        color: white;
-        background-color: #007bff;
-        cursor: pointer;
-    }
-
-        .btn:hover {
-            background-color: #0056b3;
-        }
-
-    .result {
-        margin-top: 20px;
-    }
+   
+    
 </style>
-    <div class="container">
+<div class="shadow-lg  mb-5 bg-body-tertiary rounded arc-padding" id="registerPage">
+    <div>
         <h1>Track Package</h1>
         <form id="trackingForm">
             <div class="form-group">
                 <label for="trackingNumber">Tracking Number:</label>
-                <input type="text" id="trackingNumber" name="trackingNumber" required />
+                <input type="text" id="trackingNumber" class="form-control" name="trackingNumber" required />
             </div>
-            <button type="submit" class="btn">Track</button>
+            <br/>
+            <button type="submit" class="btn danger">Track</button>
+            <button type="button" onclick="back()" class="btn danger">Züruk</button>
         </form>
-        <div class="result" id="result"></div>
+    </div>
+        
+        <div class="result" id="result">
+
+        </div>
+    <div id="dhl-tracking-widget"></div>
     </div>
 
     <script>
+   
         document.getElementById('trackingForm').addEventListener('submit', function (event) {
             event.preventDefault();
             const trackingNumber = document.getElementById('trackingNumber').value;
             trackPackage(trackingNumber);
         });
 
+        function back() {
+        window.history.back();
+    }
+
         async function trackPackage(trackingNumber) 
         {
-            const apiKey = 'GJMIipNwzFURXdT4l1Fu4uGPF9uhbM87'; // Замените на ваш действительный API ключ
 
-            const options = {
-                method: 'GET',
-                headers: {
-                    'DHL-API-Key': 'demo-key',
-                    'Content-Type': 'application/json' // Убедитесь, что это требуемый заголовок
-                }
-            };
+                document.getElementById("result").innerHTML="";
 
-                fetch(`https://api-test.dhl.com/track/shipments?trackingNumber=${trackingNumber}`, options)
-                .then(response => {
+                const apiKey = 'lN7bvh8aOePGGzdqOQULGtyWEezJ18uJ';
+                const language = 'de'; 
+                const offset = 1;
+                const limit = 10; 
+
+                const url = `https://api-eu.dhl.com/track/shipments?trackingNumber=${trackingNumber}&language=${language}&offset=${offset}&limit=${limit}`;
+
+                try {
+                    const response = await fetch(url, {
+                        method: 'GET',
+                        headers: {
+                            'accept': 'application/json',
+                            'DHL-API-Key': apiKey
+                        }
+                    });
+
                     if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
+                        throw new Error(`Ошибка при запросе: ${response.statusText}`);
                     }
-                    return response.json();
-                })
-                .then(data => console.log(data))
-                .catch(err => console.error('Error:', err));
+
+                    const data = await response.json();
+
+                    let Size = document.createElement("div");
+
+                    Size.innerHTML = `
+
+                            <h5>Size</h5>
+                            
+                            <div>
+                                <h6>Height: ${data.shipments[0].details.dimensions.height.value} ${data.shipments[0].details.dimensions.height.unitText}</h6>
+                                    <h6>Width: ${data.shipments[0].details.dimensions.width.value} ${data.shipments[0].details.dimensions.width.unitText}</h6>
+                                 <h6>Length: ${data.shipments[0].details.dimensions.length.value} ${data.shipments[0].details.dimensions.length.unitText}</h6>
+                            </div>
+                    
+                    `;
+
+                    document.getElementById("result").appendChild(Size);
+
+                    let info = data.shipments[0].events;
+
+                    let counter = 1;
+
+                    info.forEach((item) => {
+
+                        let date = item.timestamp;
+
+                        let TransferInfo = document.createElement("div");
+                        TransferInfo.innerHTML = `
+                                              <div class="shadow-lg  mb-5 bg-body-tertiary rounded arc-padding" >
+                                                      <h5><strong>${counter} Schrit</strong></h5>
+
+                                                        <h6>description: ${item.description}</h6>
+                                                                 <h6>statusCode: ${item.statusCode}</h6>
+                                                                     <h6>Date: ${date.replace("T"," ")}</h6>
+                                            </div>
+                                `;
+
+                        document.getElementById("result").append(TransferInfo);
+                        counter++;
+                    });
+
+                    console.log(data);
+                    
+                } catch (error) {
+                    console.error('Ошибка:', error);
+                }
         }
 
     </script>
