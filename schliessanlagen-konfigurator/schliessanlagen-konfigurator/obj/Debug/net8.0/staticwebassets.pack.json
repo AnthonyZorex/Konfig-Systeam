@@ -489,14 +489,6 @@
       "PackagePath": "staticwebassets\\Image\\apple-pay.png"
     },
     {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\arrow.png",
-      "PackagePath": "staticwebassets\\Image\\arrow.png"
-    },
-    {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\arrows.png",
-      "PackagePath": "staticwebassets\\Image\\arrows.png"
-    },
-    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\aussenzylinder.png",
       "PackagePath": "staticwebassets\\Image\\aussenzylinder.png"
     },

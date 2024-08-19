@@ -158,7 +158,7 @@
             </div>
        
 </div>
-@section Scripts{
+@section Scripts {
     <script>
 
         let zylinderTypList = @Html.Raw(ViewBag.Zylinder_TypJson);
@@ -342,8 +342,9 @@
             }
         }
 
-        function bolleanCheked() {
-           
+        function bolleanCheked() 
+        {
+
             let dorCounter = document.querySelectorAll("#inputTur");
             let keyCounter = document.querySelectorAll("#inputS");
             let boolV = document.getElementById('vBool');
@@ -356,7 +357,7 @@
                 for (let j = 0; j < dorCounter.length; j++) {
                     w++;
 
-                    let chekboxrow = allHorizont[j].childNodes[0].childNodes[3];
+                    let chekboxrow = allHorizont[j].childNodes[i].childNodes[3];
 
                     if (chekboxrow) boolArray.push(chekboxrow.value);
                 }
@@ -396,7 +397,7 @@
                 cheker++;
             }
         }
-       
+
 
         function createCustomCheckbox(id) {
             var checkbox = document.getElementById(id);
@@ -438,6 +439,7 @@
     <script src="~/Js/index-konfigurator/controll_key.js"></script>
 
     <script>
+
         let boolArray = [];
         document.addEventListener('DOMContentLoaded', (event) => {
             selectTur(5);
@@ -447,7 +449,7 @@
                 circle2[i].style.background = "white";
             }
 
-            for (let i = 1; i < 200; i++) {
+            for (let i = 1; i < 100; i++) {
                 let option = document.createElement("option");
 
                 option.innerText = i;
@@ -457,7 +459,7 @@
                 countTurSelect.value = 5;
             }
 
-            for (let i = 1; i < 200; i++) {
+            for (let i = 1; i < 100; i++) {
                 let option = document.createElement("option");
 
                 option.innerText = i;

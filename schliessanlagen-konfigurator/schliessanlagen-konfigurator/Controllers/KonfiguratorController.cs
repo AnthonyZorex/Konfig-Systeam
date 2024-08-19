@@ -5846,25 +5846,25 @@ namespace schliessanlagen_konfigurator.Controllers
 
         [HttpPost]
         public ActionResult RemoveOrder(int data)
-        { ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
+        { 
+            ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
             string loginInform = ident.Claims.Select(x => x.Value).First();
             var users = db.Users.FirstOrDefault(x => x.Id == loginInform);
 
-            var RemoveOrder = db.UserOrdersShop.Where(x => x.Id == data).ToList();
+            var RemoveOrder = db.UserOrdersShop.Include(x=>x.ProductSysteam).Where(x => x.Id == data).ToList();
 
             var currentTime = RemoveOrder.First().createData.Value;
 
-            var OrderProduct = db.ProductSysteam.Where(x => x.UserOrdersShopId == data).ToList();
+            var OrderProduct = RemoveOrder?.SelectMany(x=>x.ProductSysteam).ToList();
 
             foreach (var listProduct in OrderProduct)
             {
-                db.ProductSysteam.Remove(listProduct);
+                db.ProductSysteam.Remove(listProduct);  
+            }
+            foreach (var listOrder in RemoveOrder)
+            {
+                db.UserOrdersShop.Remove(listOrder);
 
-                foreach (var listOrder in RemoveOrder)
-                {
-                    db.UserOrdersShop.Remove(listOrder);
-
-                }
             }
             string destinationFilePath = @$"wwwroot/Orders/{users.FirstName + users.LastName + currentTime.Minute + currentTime.Hour + currentTime.Day + currentTime.Month + currentTime.Year} OrderFile.xlsx";
 

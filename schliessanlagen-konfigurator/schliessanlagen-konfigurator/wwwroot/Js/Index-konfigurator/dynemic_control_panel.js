@@ -19,16 +19,16 @@ function handleDragStart(e) {
 
 function handleDragOver(e) {
     if (e.preventDefault) {
-        e.preventDefault(); // Necessary. Allows us to drop.
+        e.preventDefault();
     }
 
-    e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
+    e.dataTransfer.dropEffect = 'move';  
     return false;
 }
 
 function handleDrop(e) {
     if (e.stopPropagation) {
-        e.stopPropagation(); // Stops some browsers from redirecting.
+        e.stopPropagation(); 
     }
 
     if (dragSrcEl !== this) {
@@ -38,7 +38,6 @@ function handleDrop(e) {
         const dragSrcInputValues = Array.from(dragSrcEl.querySelectorAll('input')).map(select => select.value);
         const dropInputValues = Array.from(this.querySelectorAll('input')).map(select => select.value);
 
-        // Замена содержимого блоков
         dragSrcEl.innerHTML = this.innerHTML;
 
         let b = dragSrcEl.id;
@@ -49,7 +48,6 @@ function handleDrop(e) {
 
         this.innerHTML = e.dataTransfer.getData('text/html');
 
-        // Восстановление значений select элементов
         Array.from(dragSrcEl.querySelectorAll('select')).forEach((select, index) => select.value = dropSelectValues[index]);
         Array.from(this.querySelectorAll('select')).forEach((select, index) => select.value = dragSrcSelectValues[index]);
 
@@ -330,9 +328,13 @@ let countTurSelect = document.getElementById("countTurSelect");
 
 function drawLines(id, row)
 {
+    let all_block = document.querySelectorAll(".block");
 
     const elemX = document.getElementById('BlockTur-' + id);
     const elemY = document.getElementById(id + 'checkbox' + row);
+
+    console.log(id);
+    console.log(elemY);
 
     const rectX = elemX.getBoundingClientRect();
     const rectY = elemY.getBoundingClientRect();
