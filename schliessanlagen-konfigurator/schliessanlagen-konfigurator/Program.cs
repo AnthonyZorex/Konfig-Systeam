@@ -28,9 +28,6 @@ builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfi
 
 builder.Services.AddControllersWithViews();
 
-
-BundleTable.EnableOptimizations = true;
-
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -101,7 +98,7 @@ app.UseDefaultFiles();
 //    app.UseHsts();
 //}
 
-app.UseResponseCompression();
+//app.UseResponseCompression();
 
 var supportedCultures = new[] { new CultureInfo("de-DE") };
 

@@ -259,7 +259,7 @@
                     }
                     else
                     {
-                        <div id="product_desciptions">
+                        <div >
 
                             <div style="margin-bottom: 50px;">
                                 <label>Name</label>
@@ -441,10 +441,9 @@
 
         function PlusKleinIntert() 
         {
-            let row = `   <tr class="table-info">
-                                    <th scope="row"><input
-                                   name="internDoppelKlein" type="number" step="0,01" /></th>
-                                       <td><input name="priesDoppelKlein" step="0,01" type="number" /></td>
+            let row = `   <tr>
+                                            <th><input class="form-control" name="internDoppelKlein" type="number" step="0,01" /></th>
+                                               <td><input class="form-control" name="priesDoppelKlein" step="0,01" type="number" /></td>
                             </tr> `;
 
             table.insertAdjacentHTML('beforeend', row);
