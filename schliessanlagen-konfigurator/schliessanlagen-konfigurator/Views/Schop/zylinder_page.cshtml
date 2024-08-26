@@ -1,0 +1,279 @@
+﻿@using schliessanlagen_konfigurator.Schop_models
+@model OrderZylinder;
+
+@{
+    ViewData["Title"] = "zylinder";
+}
+<style>
+    #modalDiscriptions {
+        gap: 50px;
+        display: grid;
+        grid-template-columns: auto auto;
+    }
+
+    .count_input_controll {
+        border: none;
+        max-width: 40px;
+        outline: none;
+        text-align: center;
+    }
+
+    .closeOptions {
+        margin-left: auto;
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .closeOptions:hover,
+        .closeOptions:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    #Procent {
+        text-align: end;
+        color: red;
+    }
+
+    .count_control {
+        margin-left: 50px;
+    }
+
+    .count_control_Aussen {
+        margin-left: 125px;
+    }
+</style>
+
+<div style="display:flex; gap:10px">
+    <button class="btn danger mb-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLeft" aria-controls="offcanvasLeft">
+        Kategorien
+    </button>
+</div>
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasLeft" aria-labelledby="offcanvasLeftLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasLeftLabel">Menu</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
+    </div>
+    <div class="offcanvas-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item active"><a href=""> <img src="@("/Image/doppelzylinder.png")" height="24" width="24" /> Zylinder</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+    <form method="post" action="Order_item">
+    @foreach (var item in ViewBag.Item)
+    {
+        <div id="ExelItem-1" class="ExelItem shadow-lg  mb-5 bg-body-tertiary rounded">
+            <input value="@item.Id" type="hidden" name="DopelItem" />
+            <div id="productImage">
+                <img decoding="async" data-bs-toggle="modal" data-bs-target="#ModalItemDoppel" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />     
+            </div>
+            <div id="productMenuInfo">
+                <div id="ProductNameUndCost">
+                    <div>
+                        <input style="border: none;width:250px" readonly type="text"  name="Name" value="@item.Name" />
+                            <input style="border: none;width:250px" type="hidden" name="NameSystem" value="@item.NameSystem" />
+
+                        <input id="costItems-1" name="ProductCosted" type="hidden" value="@item.Price" />
+                    </div>
+                </div>
+
+                <div id="textInform">
+                    @if (ViewBag.Aussen == null && ViewBag.Intern == null)
+                    {
+                        
+                    }
+                    else
+                    {
+                        <h5>Zylinderlänge</h5>
+                    }
+                  
+                    <h5>Stück</h5>
+                </div>
+
+                <div id="Size-1" class="SizeProduct">
+
+                    @if (ViewBag.Aussen == null && ViewBag.Intern == null)
+                    {
+
+                    }
+                    else
+                    {
+                        <div class="btn-group" role="group" aria-label="Basic outlined example">
+                            <div>
+                                    <input style="border: none;" id="compName" name="companyName" type="hidden" value="@item.companyName" />
+                                    <select class="form-select" name="Aussen" id="Aussen" onchange="selectParamAussen('1','Doppelzylinder',event.target.selectedIndex)">
+                                    @foreach (var list in ViewBag.Aussen)
+                                    {
+                                        <option id="OptionA">@list</option>
+                                    }
+
+                                </select>
+                                <input type="hidden" id="Aussen-1" />
+                            </div>
+                            <div>
+                                @if (ViewBag.Intern == null)
+                                {
+                                    
+                                }
+                                else
+                                {
+                                    <select class="form-select" name="Intern" id="Intern" onchange="selectParamIntern('1','Doppelzylinder',event.target.selectedIndex)">
+                                        @foreach (var list in ViewBag.Intern)
+                                        {
+                                            <option id="OptionI">@list</option>
+                                        }
+                                    </select>
+                                    <input type="hidden" id="Innen-1" />
+                                }
+                            </div>
+                        </div>
+                    }
+                   
+
+                    <div class="btn-group count_control" role="group" aria-label="Basic outlined example">
+                        <button type="button" onclick="CylinderMinus('1')" class="btn btn-success">-</button>
+                            <input readonly class="count_input_controll" name="Count" id="countSchlusse-1" type="number" min="1" value="1" />
+                        <button type="button" onclick="CylinderPlus('1')" class="btn btn-success">+</button>
+                    </div>
+
+                </div>
+
+                <div id="optionsItems">
+                    <div>
+                        @{
+                            int valueCount = 0;
+                        }
+                        @if (ViewBag.countOptionsQuery > 0)
+                        {
+                            <h3>Weitere Optionen</h3>
+                            @for (int i = 0; i < ViewBag.optionsName.Count; i++)
+                            {
+
+                                <div class="input-group">
+                                    <div class="input-group-text" id="btnGroupAddon">  <img data-bs-toggle="modal" data-bs-target="#myModal-@i" id="hilfeOptionsIcon" src="@("/Image/question.png")" height="20" width="20" /></div>
+                                    <input type="text" class="form-control" id="OptionName" value="@ViewBag.optionsName[i].Name" readonly aria-label="Пример группы ввода" aria-describedby="btnGroupAddon">
+                                </div>
+
+                                <select style="margin-bottom: 10px;" class="form-select" id="1-Options-@i" onchange="OptionsSelect('1','Doppel',event.target.id,event.target.value,@valueCount,'@ViewBag.optionsName[i].Name',@i,'1')">
+
+                                    @for (int j = 0; j < ViewBag.countOptionsList[i]; j++)
+                                    {
+                                        <option id="@valueCount">@ViewBag.optionsValue[valueCount]</option>
+
+                                        valueCount++;
+                                    }
+                                </select>
+
+                                <div class="modal fade" id="myModal-@i" tabindex="-1">
+                                    <div class="modal-dialog modal-xl">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title">@ViewBag.optionsName[i].Name</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                            </div>
+                                            <div class="modal-body">
+
+                                                <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                                                    <div class="row g-0">
+                                                        <div class="col-md-4">
+                                                            <img src="@("/Image/"+@ViewBag.optionsName[i].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="card-body">
+
+                                                                <div class="card-text">
+                                                                    @Html.Raw(@item.description)
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <input type="hidden" id="Option-1 + @i" />
+                                <input type="hidden" id="d-1 + @i" />
+                            }
+                                <input type="hidden" name="Options" id="OptionAll-1" />
+                        }
+                    </div>
+                </div>
+                <div>
+                    @Html.Raw(@item.description)
+                </div>
+            </div>
+            
+
+            <div id="orderCost">
+                <input readonly type="hidden" value="@item.Price.ToString("C")" id="cost" />
+                <input name="Sum" id="costed" type="hidden" style="border:none;font-size:24px" value="@item.Price" />
+            </div>
+
+            <div id="orderCost">
+                <input name="Cost" readonly type="text" value="@item.Price.ToString("C")" id="Allcost" />
+            </div>
+        </div>
+            <div style="text-align: end;">
+                <input type="button" class="btn btn-dark" onclick="window.history.back()" value="Zurück" />
+                <input type="submit" class="btn danger" value="Weiter" />
+        </div>
+    }
+    </form>
+</div>  
+
+@section scripts
+{
+    <script>
+
+        let AllPrice = document.getElementById("cost");
+        let hasFreilauffunktion = false;
+
+        let hasNotUndGefahrenfunktion = false;
+
+        let DoppelOptions = @Html.Raw(ViewBag.DoppelOptionsNameJson) || null;
+        let DoppelOptionsValue = @Html.Raw(ViewBag.DoppelOptionsValue) || null;
+        let DoppelCostValue = @Html.Raw(ViewBag.optionsPrise) || null;
+
+        let priceDoppelInternCost = @Html.Raw(ViewBag.CostDoppelIntern);
+        let priceDoppelAussenCost = @Html.Raw(ViewBag.CostDoppelAussen);
+
+
+        let kleinPrice = @Html.Raw(ViewBag.DopelzylinderInternKleinPreis)|| null;
+        let normalDopelSize = @Html.Raw(ViewBag.DopelzylinderInternNormal)|| null;
+        let kleinSize = @Html.Raw(ViewBag.DopelzylinderInternKlein)|| null;
+
+
+
+
+
+        function procent() {
+            let proc = document.getElementById("Procent");
+            let Allcost = document.getElementById("Allcost");
+            Allcost.value = (parseFloat(AllPrice.value)).toLocaleString('de-DE', {
+                style: 'currency',
+                currency: 'EUR'
+            });
+        }
+        function liferung() {
+
+        }
+    </script>
+
+    <script src="~/Js/Finisher/tur_count.js"></script>
+    <script src="~/Js/Finisher/Zylider_options.js"></script>
+    <script src="~/Js/Finisher/aussen_size.js"></script>
+    <script src="~/Js/Finisher/intern_size.js"></script>
+    <script src="~/Js/Finisher/vorhan.js"></script>
+}

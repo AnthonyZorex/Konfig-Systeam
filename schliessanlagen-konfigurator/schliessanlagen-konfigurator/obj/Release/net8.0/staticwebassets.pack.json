@@ -677,6 +677,34 @@
       "PackagePath": "staticwebassets\\Image\\zylinderlaenge.png"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Js\\Finisher\\Zylider_options.js",
+      "PackagePath": "staticwebassets\\Js\\Finisher\\Zylider_options.js"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Js\\Finisher\\aussen_size.js",
+      "PackagePath": "staticwebassets\\Js\\Finisher\\aussen_size.js"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Js\\Finisher\\intern_size.js",
+      "PackagePath": "staticwebassets\\Js\\Finisher\\intern_size.js"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Js\\Finisher\\key_count.js",
+      "PackagePath": "staticwebassets\\Js\\Finisher\\key_count.js"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Js\\Finisher\\liferung.js",
+      "PackagePath": "staticwebassets\\Js\\Finisher\\liferung.js"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Js\\Finisher\\tur_count.js",
+      "PackagePath": "staticwebassets\\Js\\Finisher\\tur_count.js"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Js\\Finisher\\vorhan.js",
+      "PackagePath": "staticwebassets\\Js\\Finisher\\vorhan.js"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Js\\Index-konfigurator\\controll_dor.js",
       "PackagePath": "staticwebassets\\Js\\Index-konfigurator\\controll_dor.js"
     },
@@ -699,6 +727,10 @@
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Js\\Page_Personal_Order\\Rehnung_adress.js",
       "PackagePath": "staticwebassets\\Js\\Page_Personal_Order\\Rehnung_adress.js"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Js\\Schop\\search_Item.js",
+      "PackagePath": "staticwebassets\\Js\\Schop\\search_Item.js"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\Anthony Bonetta213282024 OrderFile.xlsx",

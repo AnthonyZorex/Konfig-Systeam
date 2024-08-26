@@ -1,10 +1,30 @@
 ﻿@font-face {
-    font-family: 'Fira Sans'; /* Название шрифта, которое вы будете использовать */
-    src: url('/Fira_Sans/FiraSans-Light.ttf') format('truetype'); /* Путь к файлу шрифта */
-    font-weight: normal; /* Вес шрифта */
-    font-style: normal; /* Стиль шрифта */
+    font-family: 'Fira Sans';
+    src: url('/Fira_Sans/FiraSans-Regular') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+    font-size:26px;
+}
+#herschteller_sort {
+    text-align: center;
+    background: var(--text-color-primary);
+    border-top: var(--primary-border);
+}
+#herschteller_item {
+    cursor: pointer;
+}
+#hilfeOptionsIcon {
+    cursor: pointer;
 }
 
+#herschteller_item:hover {
+    cursor: pointer;
+    border-bottom: var(--primary-border);
+}
+
+.ExelItem {
+    background: var(--text-color-primary); 
+}
 :root {
     --bg-color: #e4e4e4;
     --primary-color: #f00;
@@ -12,6 +32,23 @@
     --default-color: black;
     --primary-border: 3px solid #f00;
     --primary-font: "Fira Sans", sans-serif;
+}
+
+body::-webkit-scrollbar {
+    width: 6px;
+}
+
+body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+body::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 html, body {
@@ -336,6 +373,7 @@ html, body {
         margin-top: 10px;
         display: block;
         gap: 150px;
+        font-size:12px;
     }
         #product_desciptions > div > p > img {
             margin-left: -85px;
@@ -403,6 +441,7 @@ html, body {
     }
     #cost {
         color: red;
+        font-size:12px;
     }
  
     #ItemCounterOrders {
@@ -882,6 +921,7 @@ html, body {
     }
     #cost 
     {
+        font-size: 12px;
         color: red;
     }
     #textInform {
@@ -895,6 +935,7 @@ html, body {
         margin-top: 20px;
         display: block;
         gap: 150px;
+        font-size: 12px;
     }
         #product_desciptions > div > p > img {
             margin-left: -85px;
@@ -966,8 +1007,9 @@ html, body {
         #Gesamtpreis {
             gap: 65px !important;
         }
-    #cost{
-        color:red;
+    #cost {
+        font-size: 12px;
+        color: red;
     }
     #lifer {
         color: red;
@@ -1290,6 +1332,7 @@ html, body {
 {
     #product_desciptions > div > p > img {
         max-width: 500px;
+        font-size: 20px;
     }
     #product_desciptions > div > div > div > div > div > p > img {
         max-width: 500px;
@@ -1777,6 +1820,8 @@ html, body {
     }
 
     #product_desciptions {
+        font-size: 16px;
+        min-height: 200px;
         margin-top: 20px;
         max-width: 340px;
     }
@@ -2428,7 +2473,7 @@ html, body {
         height: 5px;
         background: #fff;
     }
-
+    
     .clostHilfeModel {
         color: #aaa;
         float: right;
@@ -2437,7 +2482,11 @@ html, body {
         font-weight: bold;
         margin-top: -20px;
     }
-
+    #Herschteller{
+        display:grid;
+        grid-template-columns:300px auto;
+        gap:20px;
+    }
     #konfigMenu {
         margin-bottom: 10px;
         margin-top: 10px;
@@ -2724,7 +2773,9 @@ html, body {
     }
 
     #product_desciptions {
+        font-size: 20px;
         margin-top: 20px;
+        min-height: 200px;
     }
 
     #closeMenu {

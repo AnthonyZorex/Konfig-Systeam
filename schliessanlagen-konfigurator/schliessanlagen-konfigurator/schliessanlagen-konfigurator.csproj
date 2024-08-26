@@ -44,8 +44,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="OpenAI" Version="1.11.0" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.4.4" />
+    <PackageReference Include="Tinify" Version="1.6.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -53,6 +57,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Interface\" />
+    <Folder Include="wwwroot\Image\" />
+    <Folder Include="wwwroot\compression\" />
     <Folder Include="wwwroot\Rehnung\" />
   </ItemGroup>
 

@@ -677,6 +677,34 @@
       "PackagePath": "staticwebassets\\Image\\zylinderlaenge.png"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Js\\Finisher\\Zylider_options.js",
+      "PackagePath": "staticwebassets\\Js\\Finisher\\Zylider_options.js"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Js\\Finisher\\aussen_size.js",
+      "PackagePath": "staticwebassets\\Js\\Finisher\\aussen_size.js"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Js\\Finisher\\intern_size.js",
+      "PackagePath": "staticwebassets\\Js\\Finisher\\intern_size.js"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Js\\Finisher\\key_count.js",
+      "PackagePath": "staticwebassets\\Js\\Finisher\\key_count.js"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Js\\Finisher\\liferung.js",
+      "PackagePath": "staticwebassets\\Js\\Finisher\\liferung.js"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Js\\Finisher\\tur_count.js",
+      "PackagePath": "staticwebassets\\Js\\Finisher\\tur_count.js"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Js\\Finisher\\vorhan.js",
+      "PackagePath": "staticwebassets\\Js\\Finisher\\vorhan.js"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Js\\Index-konfigurator\\controll_dor.js",
       "PackagePath": "staticwebassets\\Js\\Index-konfigurator\\controll_dor.js"
     },
@@ -699,6 +727,10 @@
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Js\\Page_Personal_Order\\Rehnung_adress.js",
       "PackagePath": "staticwebassets\\Js\\Page_Personal_Order\\Rehnung_adress.js"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Js\\Schop\\search_Item.js",
+      "PackagePath": "staticwebassets\\Js\\Schop\\search_Item.js"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\Anthony Bonetta213282024 OrderFile.xlsx",
@@ -767,6 +799,166 @@
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Rehnung\\SK2242.pdf",
       "PackagePath": "staticwebassets\\Rehnung\\SK2242.pdf"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\DU-215.WEBP",
+      "PackagePath": "staticwebassets\\compression\\DU-215.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\DU-5558.WEBP",
+      "PackagePath": "staticwebassets\\compression\\DU-5558.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\DU-810.WEBP",
+      "PackagePath": "staticwebassets\\compression\\DU-810.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\DU-815.WEBP",
+      "PackagePath": "staticwebassets\\compression\\DU-815.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\DU-851.WEBP",
+      "PackagePath": "staticwebassets\\compression\\DU-851.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\RHM-215.WEBP",
+      "PackagePath": "staticwebassets\\compression\\RHM-215.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\RHM-5558.WEBP",
+      "PackagePath": "staticwebassets\\compression\\RHM-5558.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\RHM-810.WEBP",
+      "PackagePath": "staticwebassets\\compression\\RHM-810.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\RHM-815.WEBP",
+      "PackagePath": "staticwebassets\\compression\\RHM-815.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\RHM-851.WEBP",
+      "PackagePath": "staticwebassets\\compression\\RHM-851.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\Screenshot 2023-04-04 171535.WEBP",
+      "PackagePath": "staticwebassets\\compression\\Screenshot 2023-04-04 171535.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\UDM-215.WEBP",
+      "PackagePath": "staticwebassets\\compression\\UDM-215.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\UDM-5558.WEBP",
+      "PackagePath": "staticwebassets\\compression\\UDM-5558.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\UDM-810.WEBP",
+      "PackagePath": "staticwebassets\\compression\\UDM-810.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\UDM-815.WEBP",
+      "PackagePath": "staticwebassets\\compression\\UDM-815.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\UDM-851.WEBP",
+      "PackagePath": "staticwebassets\\compression\\UDM-851.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\UDM-System.WEBP",
+      "PackagePath": "staticwebassets\\compression\\UDM-System.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\WD-215.WEBP",
+      "PackagePath": "staticwebassets\\compression\\WD-215.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\WD-5558.WEBP",
+      "PackagePath": "staticwebassets\\compression\\WD-5558.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\WD-810.WEBP",
+      "PackagePath": "staticwebassets\\compression\\WD-810.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\WD-815.WEBP",
+      "PackagePath": "staticwebassets\\compression\\WD-815.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\WD-851.WEBP",
+      "PackagePath": "staticwebassets\\compression\\WD-851.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\WD-System.WEBP",
+      "PackagePath": "staticwebassets\\compression\\WD-System.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\WO-215.WEBP",
+      "PackagePath": "staticwebassets\\compression\\WO-215.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\WO-5558.WEBP",
+      "PackagePath": "staticwebassets\\compression\\WO-5558.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\WO-810.WEBP",
+      "PackagePath": "staticwebassets\\compression\\WO-810.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\WO-815.WEBP",
+      "PackagePath": "staticwebassets\\compression\\WO-815.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\WO-851.WEBP",
+      "PackagePath": "staticwebassets\\compression\\WO-851.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\WO-System.WEBP",
+      "PackagePath": "staticwebassets\\compression\\WO-System.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\Zolit1000_Z1410.WEBP",
+      "PackagePath": "staticwebassets\\compression\\Zolit1000_Z1410.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\aussenzylinder.png",
+      "PackagePath": "staticwebassets\\compression\\aussenzylinder.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\briefkastenzylinder.png",
+      "PackagePath": "staticwebassets\\compression\\briefkastenzylinder.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\ces_bz1_bohrschutz.WEBP",
+      "PackagePath": "staticwebassets\\compression\\ces_bz1_bohrschutz.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\doppelzylinder.png",
+      "PackagePath": "staticwebassets\\compression\\doppelzylinder.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\fl-freilauffunktion.WEBP",
+      "PackagePath": "staticwebassets\\compression\\fl-freilauffunktion.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\halbzylinder.png",
+      "PackagePath": "staticwebassets\\compression\\halbzylinder.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\knaufzylinder.png",
+      "PackagePath": "staticwebassets\\compression\\knaufzylinder.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\ngf_not-und-gefahrenfunktion.WEBP",
+      "PackagePath": "staticwebassets\\compression\\ngf_not-und-gefahrenfunktion.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\vorhangschloss.png",
+      "PackagePath": "staticwebassets\\compression\\vorhangschloss.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\zylinderlaenge.png",
+      "PackagePath": "staticwebassets\\compression\\zylinderlaenge.png"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\css\\site.css",

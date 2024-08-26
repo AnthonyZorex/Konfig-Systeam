@@ -14,34 +14,23 @@ using System.Diagnostics;
 using System.Security.Claims;
 using MailKit.Net.Smtp;
 using MimeKit;
-using System;
 using System.Text;
-using System.Text.RegularExpressions;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.AspNetCore.Mvc.TagHelpers;
-using schliessanlagen_konfigurator.Migrations;
-using System.Diagnostics.Metrics;
-using System.Collections.Generic;
-using System.Collections;
-using Microsoft.DotNet.Scaffolding.Shared;
-using System.ComponentModel;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
-using System.Reflection;
-using System.Net;
 using schliessanlagen_konfigurator.Models.Hebel;
 using schliessanlagen_konfigurator.Models.System;
+using Org.BouncyCastle.Asn1.Cms;
+using schliessanlagen_konfigurator.Service;
 namespace schliessanlagen_konfigurator.Controllers
 {
     public class HomeController : Controller
     {
         schliessanlagen_konfiguratorContext db;
         private IWebHostEnvironment Environment;
-
+        private readonly ImageOptimizationService _imageOptimizationService;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         public HomeController(UserManager<User> userManager, SignInManager<User> signInManager, schliessanlagen_konfiguratorContext context, IWebHostEnvironment _environment)
         {
+            _imageOptimizationService = new ImageOptimizationService();
             db = context;
             Environment = _environment;
             _userManager = userManager;
@@ -51,9 +40,7 @@ namespace schliessanlagen_konfigurator.Controllers
         public async Task<IActionResult> ImageConfig()
         {
             string sourceFilePath = @"wwwroot/Image/";
-
             IEnumerable<string> imageFiles = Directory.GetFiles(sourceFilePath, "*").Select(Path.GetFileName);
-
             return View("../Edit/ImageConfig", imageFiles);
 
         }
@@ -277,23 +264,28 @@ namespace schliessanlagen_konfigurator.Controllers
 
 
         [HttpPost]
-        public ActionResult Upload(IFormFile file)
+        public async Task<IActionResult> Upload(IFormFile file)
         {
             if (file != null && file.Length > 0)
             {
                 string uploadFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "image");
 
-            
+                string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
+
+
                 if (!Directory.Exists(uploadFolderPath))
                 {
                     Directory.CreateDirectory(uploadFolderPath);
                 }
 
                 string filePath = Path.Combine(uploadFolderPath, file.FileName);
+                string filePathCompression = Path.Combine(uploadFolderPathCompression, file.FileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     file.CopyTo(fileStream);
                 }
+
+                await _imageOptimizationService.CompressImageAsync(filePath, filePathCompression);
 
                 ViewBag.Message = "File uploaded successfully.";
             }

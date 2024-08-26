@@ -79,6 +79,7 @@ D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\NuGet.Packaging.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\NuGet.ProjectModel.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\NuGet.Protocol.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\NuGet.Versioning.dll
+D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\OpenAI_API.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\SQLitePCLRaw.batteries_v2.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\SQLitePCLRaw.core.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\SQLitePCLRaw.provider.e_sqlite3.dll
@@ -91,6 +92,7 @@ D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\System.Composition.TypedP
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\System.Configuration.ConfigurationManager.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\System.Drawing.Common.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\System.IdentityModel.Tokens.Jwt.dll
+D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\System.Linq.Dynamic.Core.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\System.Memory.Data.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\System.Reflection.MetadataLoadContext.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\System.Runtime.Caching.dll

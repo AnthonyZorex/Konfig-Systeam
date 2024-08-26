@@ -1,4 +1,5 @@
 ﻿using schliessanlagen_konfigurator.Models.System;
+using schliessanlagen_konfigurator.Schop_models;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
@@ -6,7 +7,7 @@ using System.Text.Json.Serialization;
 
 namespace schliessanlagen_konfigurator.Models.Vorhan
 {
-    public class Vorhangschloss
+    public class Vorhangschloss: Zylinder_Type
     {
         public int Id { get; set; }
         public int schliessanlagenId { get; set; }

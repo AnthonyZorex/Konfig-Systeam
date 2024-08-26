@@ -1,10 +1,29 @@
 ﻿@font-face {
-    font-family: 'Fira Sans'; /* Название шрифта, которое вы будете использовать */
-    src: url('/Fira_Sans/FiraSans-Light.ttf') format('truetype'); /* Путь к файлу шрифта */
-    font-weight: normal; /* Вес шрифта */
-    font-style: normal; /* Стиль шрифта */
+    font-family: 'Fira Sans';
+    src: url('/Fira_Sans/FiraSans-Light.ttf') format('truetype'); 
+    font-weight: normal; 
+    font-style: normal; 
+}
+#herschteller_sort {
+    text-align: center;
+    background: var(--text-color-primary);
+    border-top: var(--primary-border);
+}
+#herschteller_item {
+    cursor: pointer;
+}
+#hilfeOptionsIcon {
+    cursor: pointer;
 }
 
+#herschteller_item:hover {
+    cursor: pointer;
+    border-bottom: var(--primary-border);
+}
+
+.ExelItem {
+    background: var(--text-color-primary); 
+}
 :root {
     --bg-color: #e4e4e4;
     --primary-color: #f00;
@@ -12,6 +31,23 @@
     --default-color: black;
     --primary-border: 3px solid #f00;
     --primary-font: "Fira Sans", sans-serif;
+}
+
+body::-webkit-scrollbar {
+    width: 6px;
+}
+
+body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+body::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 html, body {
@@ -1289,7 +1325,7 @@ html, body {
 @media (min-width: 900px) and (max-width: 1440px) 
 {
     #product_desciptions > div > p > img {
-        max-width: 500px;
+        max-width: 500px;  
     }
     #product_desciptions > div > div > div > div > div > p > img {
         max-width: 500px;
@@ -1777,6 +1813,7 @@ html, body {
     }
 
     #product_desciptions {
+        min-height: 200px;
         margin-top: 20px;
         max-width: 340px;
     }
@@ -2428,7 +2465,7 @@ html, body {
         height: 5px;
         background: #fff;
     }
-
+    
     .clostHilfeModel {
         color: #aaa;
         float: right;
@@ -2437,7 +2474,11 @@ html, body {
         font-weight: bold;
         margin-top: -20px;
     }
-
+    #Herschteller{
+        display:grid;
+        grid-template-columns:300px auto;
+        gap:20px;
+    }
     #konfigMenu {
         margin-bottom: 10px;
         margin-top: 10px;
@@ -2725,6 +2766,7 @@ html, body {
 
     #product_desciptions {
         margin-top: 20px;
+        min-height: 200px;
     }
 
     #closeMenu {

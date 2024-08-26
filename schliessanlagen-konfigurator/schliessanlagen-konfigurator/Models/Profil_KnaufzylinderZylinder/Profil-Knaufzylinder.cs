@@ -1,11 +1,12 @@
 ﻿using schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder;
 using schliessanlagen_konfigurator.Models.System;
+using schliessanlagen_konfigurator.Schop_models;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder
 {
-    public class Profil_Knaufzylinder
+    public class Profil_Knaufzylinder: Zylinder_Type
     {
         public int Id { get; set; }
         public int schliessanlagenId { get; set; }
@@ -54,7 +55,6 @@ namespace schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder
         [DisplayName("Upload your photo")]
         public IFormFile? ImageFile { get; set; }
         public string? Description { get; set; }
-
         public ICollection<Knayf_Options_value> Knayf_Options_value { get; set; }
         public Knayf_Options()
         {

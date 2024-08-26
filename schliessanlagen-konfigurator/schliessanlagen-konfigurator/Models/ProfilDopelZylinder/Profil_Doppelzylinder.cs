@@ -1,10 +1,11 @@
 ﻿using schliessanlagen_konfigurator.Models.System;
+using schliessanlagen_konfigurator.Schop_models;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace schliessanlagen_konfigurator.Models.ProfilDopelZylinder
 {
-    public class Profil_Doppelzylinder
+    public class Profil_Doppelzylinder:Zylinder_Type
     {
         public int Id { get; set; }
         public int schliessanlagenId { get; set; }

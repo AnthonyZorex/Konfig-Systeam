@@ -1,11 +1,12 @@
 ﻿using schliessanlagen_konfigurator.Models.System;
+using schliessanlagen_konfigurator.Schop_models;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
 namespace schliessanlagen_konfigurator.Models.Halbzylinder
 {
-    public class Profil_Halbzylinder
+    public class Profil_Halbzylinder:Zylinder_Type
     {
         public int Id { get; set; }
         public int schliessanlagenId { get; set; }
