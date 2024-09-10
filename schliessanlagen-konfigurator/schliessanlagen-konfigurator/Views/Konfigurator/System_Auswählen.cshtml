@@ -79,13 +79,13 @@
                                     <img decoding="async" id="ImgSelecter-@countItem" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
          
                                         <div id="Galery">
-                                            @foreach (var list in ViewBag.Gallery)
-                                    {
-                                                @if (item.SystemId == list.SysteamPriceKeyId)
+                                        @foreach (var list in ViewBag.Gallery)
                                         {
-                                            <img src="@("/Image/"+@list.ImageName)" onclick="imageSwitcher(event,@countItem)" height="100" width="100" />
-                                        }        
-                                    }
+                                                @if (item.SystemId == list.SysteamPriceKeyId)
+                                                {
+                                                    <img src="@("/Image/"+@list.ImageName)" onclick="imageSwitcher(event,@countItem)" height="100" width="100" />
+                                                }        
+                                        }
                                         </div>
                                 </div>
                                 <div id="productMenuInfo">

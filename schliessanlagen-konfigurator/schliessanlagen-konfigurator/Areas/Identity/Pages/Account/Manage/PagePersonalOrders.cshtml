@@ -27,9 +27,9 @@
 
                     <div id="AllProductUser" class="shadow-lg  mb-5 bg-body-tertiary rounded">
                         <div id="hederBlockOrder">
-                            <h5>Article</h5>
+                            <h4>Article</h4>
                             <div id="orderCostHeader">
-                                <h5>Price</h5>
+                                <h4>Price</h4>
                             </div>
                         </div>
 
@@ -371,7 +371,7 @@
                                                     </div>
                                                     <div style="display:flex;gap:30px">
                                                     <input type="checkbox" name="Rehnung" checked onchange="changeAdress(event.target.checked,@z)" />
-                                                        <h6>Gleiche Adresse für Bestellung und Versand</h6>
+                                                        <h4>Gleiche Adresse für Bestellung und Versand</h4>
                                                     </div>
                                                     <br />
                                                     <div id="rechnungSend">
@@ -399,10 +399,10 @@
                                                     <div style="display: flex;gap: 30px;align-items: center;">
                                                         <input type="radio" readonly style="border: none;" onchange="changeSend(@z)" id="Plase-@z" name="DhlSend" value="0,00 €">
                                                         <label for="css" style="margin-left: -25px;">0,00 €</label><br>
-                                                        <h6>
+                                                        <h4>
                                                             Brunnenstrasse 8
                                                             10119 Berlin
-                                                        </h6>
+                                                        </h4>
                                                     </div>
                                                 </div>
 
@@ -416,22 +416,22 @@
                                                         <label>
                                                             <input type="radio" onchange="BezaleMethod(@z)" checked name="Pay" value="PayPall">
                                                             <img src="@("/Image/paypal.png")" height="30" width="30" />
-                                                            <h5>PayPall</h5>
+                                                            <h4>PayPall</h4>
                                                         </label><br>
-                                                        <label>
+                                                    @*     <label>
                                                             <input type="radio" onchange="BezaleMethod(@z)" name="Pay" value="Google Pay">
                                                             <img src="@("/Image/google-pay.png")" height="40" width="40" />
-                                                            <h5>Google Pay</h5>
+                                                            <h4>Google Pay</h4>
                                                         </label><br>
                                                         <label>
                                                             <input type="radio" onchange="BezaleMethod(@z)" name="Pay" value="Apple Pay">
                                                             <img src="@("/Image/apple-pay.png")" height="40" width="40" />
-                                                            <h5>Apple Pay</h5>
-                                                        </label>
+                                                            <h4>Apple Pay</h4>
+                                                        </label> *@
                                                         <label>
                                                             <input type="radio" onchange="BezaleMethod(@z)" name="Pay" value="auf Rechnung">
                                                             <img src="@("/Image/cash-on-delivery.png")" height="40" width="40" />
-                                                            <h5>auf Rechnung</h5>
+                                                            <h4>auf Rechnung</h4>
                                                         </label>
                                                     </div>
                                                 </div>
@@ -445,11 +445,11 @@
                                                         </div>
                                                         <div class="col-md-8">
                                                             <div class="card-body">
-                                                                <h5>@orderList[z].ProductName</h5>
+                                                                <h3>@orderList[z].ProductName</h3>
                                                                 <div class="card-text">
-                                                                    <h6>Schlüssel</h6>
-                                                                    <h6>Anzahl: @orderList[z].KeyCount</h6>
-                                                                    <h6>Preis: @orderList[z].KeyCost,00 €</h6>
+                                                                    <h4>Schlüssel</h4>
+                                                                    <h4>Anzahl: @orderList[z].KeyCount</h4>
+                                                                    <h4>Preis: @orderList[z].KeyCost,00 €</h4>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -465,15 +465,15 @@
                                                                     </div>
                                                                     <div class="col-md-8">
                                                                         <div class="card-body">
-                                                                            <h5 class="card-title">Name: @orderItem[ProudctItemCounter].Name</h5>
+                                                                            <h3 class="card-title">Name: @orderItem[ProudctItemCounter].Name</h3>
                                                                             <div class="card-text">
                                                                                   @Html.Raw(descriptions[ProudctItemCounter])
                                                                         <br />
-                                                                                <h6>aussen: @orderItem[ProudctItemCounter].Aussen</h6>
-                                                                                <h6>innen: @orderItem[ProudctItemCounter].Intern</h6>
-                                                                                <h6>Option - @orderItem[ProudctItemCounter].Option</h6>
-                                                                            <h6>Anzahl: @orderItem[ProudctItemCounter].Count</h6>
-                                                                            <h6>Preis: @orderItem[ProudctItemCounter].Price,00 €</h6>
+                                                                                <h4>aussen: @orderItem[ProudctItemCounter].Aussen</h4>
+                                                                                <h4>innen: @orderItem[ProudctItemCounter].Intern</h4>
+                                                                                <h4>Option - @orderItem[ProudctItemCounter].Option</h4>
+                                                                            <h4>Anzahl: @orderItem[ProudctItemCounter].Count</h4>
+                                                                            <h4>Preis: @orderItem[ProudctItemCounter].Price,00 €</h4>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -496,12 +496,12 @@
                                                 </div>
 
                                                 <div style="display:flex;gap:50px;">
-                                                    <h5>Versand:</h5>
+                                                    <h4>Versand:</h4>
                                                     <input name="Versand" type="text" redonly style="border: none;outline:none" value="0" id="CostGram-@z" />
                                                 </div>
 
                                                 <div style="display:flex;gap:50px;">
-                                                    <h5>Bestellsumme:</h5>
+                                                    <h4>Bestellsumme:</h4>
                                                     <input name="OrderSum" redonly style="border:none;outline:none" value="@orderList[z].OrderSum.ToString("C")" id="costedI-@z" />
                                                 </div>
 

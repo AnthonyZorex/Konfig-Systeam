@@ -4,6 +4,7 @@ function select_zylinder(herschteller_name)
     let bis = document.getElementById("bis");
     let von = document.getElementById("von");
     let search_value = document.getElementById("suchen_Item").value;
+    let typ = document.getElementById("typ_zylinder").value;
 
     if (search_value != null)
     {
@@ -15,7 +16,7 @@ function select_zylinder(herschteller_name)
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ page: 1, herschteller: herschteller_name, priceBis: null, priceVon: null, Sort_string: search_value  })
+                    body: JSON.stringify({ page: 1, herschteller: herschteller_name, priceBis: null, priceVon: null, Sort_string: search_value, Typ:typ  })
                 })
                 .then(response => {
                     if (response.redirected) {
@@ -35,7 +36,7 @@ function select_zylinder(herschteller_name)
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ page: 1, herschteller: herschteller_name, priceBis: bis.value, priceVon: von.value, Sort_string: search_value })
+                    body: JSON.stringify({ page: 1, herschteller: herschteller_name, priceBis: bis.value, priceVon: von.value, Sort_string: search_value, Typ: typ })
                 })
                 .then(response => {
                     if (response.redirected) {
@@ -57,7 +58,7 @@ function select_zylinder(herschteller_name)
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ page: 1, herschteller: herschteller_name, priceBis: null, priceVon: null, Sort_string:null })
+                    body: JSON.stringify({ page: 1, herschteller: herschteller_name, priceBis: null, priceVon: null, Sort_string: null, Typ: typ })
                 })
                 .then(response => {
                     if (response.redirected) {
@@ -77,7 +78,7 @@ function select_zylinder(herschteller_name)
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ page: 1, herschteller: herschteller_name, priceBis: bis.value, priceVon: von.value, Sort_string: null })
+                    body: JSON.stringify({ page: 1, herschteller: herschteller_name, priceBis: bis.value, priceVon: von.value, Sort_string: null, Typ: typ })
                 })
                 .then(response => {
                     if (response.redirected) {
@@ -101,7 +102,7 @@ function cleanSort()
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ page: 1, herschteller: null, priceBis: null, priceVon: null, Sort_string: null })
+        body: JSON.stringify({ page: 1, herschteller: null, priceBis: null, priceVon: null, Sort_string: null, Typ: typ })
     })
         .then(response => {
             if (response.redirected) {

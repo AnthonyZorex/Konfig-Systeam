@@ -51,8 +51,6 @@ function removeBlock()
     let block_count_item = document.querySelectorAll(".block");
     let horizont = document.querySelectorAll(`.horizontal`);
 
-    console.log(horizont[0].childNodes);
-
     let blockToRemove = document.getElementById('TexCount-' + blockCount);
     let countKeySelect = document.getElementById("countKeySelect");
     let x = Number(countKeySelect.value);
@@ -112,8 +110,6 @@ function selectKey(value) {
 
             let horizont = document.getElementById(`${blockTur}horizontal`);
 
-            horizont.draggable = "true";
-
             for (let i = 1; i <= blockTur; i++)
             {
 
@@ -132,15 +128,6 @@ function selectKey(value) {
 
                 createCustomCheckbox(`${i}checkbox${blockCount}`);
             }
-
-            blocksKey = containerKey.querySelectorAll('.horizontal');
-
-            blocksKey.forEach(block => {
-                block.addEventListener('dragstart', handleDragStartKey);
-                block.addEventListener('dragover', handleDragOverKey);
-                block.addEventListener('drop', handleDropKey);
-                block.addEventListener('dragend', handleDragEndKey);
-            });
 
         }
     }

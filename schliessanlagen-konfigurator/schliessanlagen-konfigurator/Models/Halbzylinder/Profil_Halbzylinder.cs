@@ -16,6 +16,7 @@ namespace schliessanlagen_konfigurator.Models.Halbzylinder
         public string? NameSystem { get; set; }
         public string? Artikelnummer { get; set; }
         public float Price { get; set; }
+        public string? Type { get; set; }
         public float? Gramm { get; set; }
         public string ImageName { get; set; }
         [NotMapped]

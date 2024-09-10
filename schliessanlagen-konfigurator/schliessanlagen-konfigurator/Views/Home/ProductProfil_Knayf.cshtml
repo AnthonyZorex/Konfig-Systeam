@@ -21,37 +21,6 @@
                     </div>
                 </div>
 
-                @if (Model.isGround == true)
-                {
-                    <div id="cardOptions">
-                        <h6>
-                            Zylinderlänge A (Außenlänge)
-                            Bitte wählen Sie zunächst die Außenlänge des Zylinders
-                        </h6>
-
-                        <select id="aussen" class="form-select" onchange="selectParamAussen(event.target.value)">
-                            @foreach (var listItem in ViewBag.aussen)
-                            {
-                                <option id="OptionA">@listItem</option>
-                            }
-                        </select>
-
-                        <h6>
-                            Zylinderlänge B (Innenlänge)
-                            Bitte wählen Sie jetzt die Innenlänge des Zylinders
-                        </h6>
-
-                        <select id="Innen" class="form-select" onchange="selectParamIntern(event.target.value)">
-                            @foreach (var listItem in ViewBag.innen)
-                            {
-                                <option id="OptionI">@listItem</option>
-                            }
-                        </select>
-                    </div>
-
-                }
-                else
-                {
                     <div id="cardOptions">
                         <h6>
                             Zylinderlänge A (Außenlänge)
@@ -77,7 +46,7 @@
                             }
                         </select>
                     </div>
-                }
+              
 
                 <div id="cardOptions">
                     @{

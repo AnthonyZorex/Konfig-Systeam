@@ -59,10 +59,10 @@
     <input type="hidden" name="user" value="@Model.userKey" />
     <div id="FinisherPage">
   
-    <h5>Schlüssel konfigurieren</h5>
-        <h6 id="keyInform">
+    <h3>Schlüssel konfigurieren</h3>
+        <h4 id="keyInform">
             Sie können sehen, welcher Schlüssel welches Schloss öffnet, und die erforderliche Anzahl an Schlüsseln auswählen.
-        </h6>
+        </h4>
     <div>
         @foreach (var item in ViewBag.Order)
         {
@@ -83,7 +83,7 @@
                 </div>
 
                 <div id="numerKey">
-                    <h5>Schlüssel Nr.@z </h5>
+                    <h4>Schlüssel Nr.@z </h4>
                 </div>
                 <div id="OpenValue">
                             @for (int i = 0; i < ViewBag.DorName.Count; i++)
@@ -107,10 +107,10 @@
         <div id="FinisherAnderes">
             <a class="btn btn-danger" href="@Url.Action("ChangedKonfigPlan","Konfigurator",new{ userKey = @Model.userKey})">SCHLIESSPLAN BEARBEITEN</a>
         </div>
-        <h5>Türen konfigurieren</h5>
-        <h6 id="infoTuren">
+        <h3>Türen konfigurieren</h3>
+        <h4 id="infoTuren">
                 Unten sind die Schlösser mit Angaben zu deren Größen, Optionen und Mengen aufgeführt.
-        </h6>
+        </h4>
     </div>
     <div>
         @if (ViewBag.Dopelzylinder != null)
@@ -154,8 +154,8 @@
                                 </select>
                             </div>
                             <div id="textInform">
-                                <h5>Zylinderlänge</h5>
-                                <h5>Stück</h5>
+                                <h4>Zylinderlänge</h4>
+                                <h4>Stück</h4>
                             </div>
 
                             <div id="Size-@d" class="SizeProduct">
@@ -338,8 +338,8 @@
                             </select>
                         </div>
                             <div id="textInform">
-                                <h5>Zylinderlänge</h5>
-                                <h5>Stück</h5>
+                                <h4>Zylinderlänge</h4>
+                                <h4>Stück</h4>
                         </div>
 
                             <div id="Size-@d" class="SizeProduct">
@@ -524,8 +524,8 @@
                             </select>
                         </div>
                             <div id="textInform">
-                                <h5>Zylinderlänge</h5>
-                                <h5>Stück</h5>
+                                <h4>Zylinderlänge</h4>
+                                <h4>Stück</h4>
                         </div>
                             <div id="Size-@d" class="SizeProduct">
                             <div>
@@ -698,7 +698,7 @@
                             </select>
                         </div>
                             <div id="textInform">
-                                <h5>Stück</h5>
+                                <h4>Stück</h4>
                         </div>
                             <div id="Size-@d" class="SizeProduct">
 
@@ -819,8 +819,8 @@
                             </select>
                         </div>
                         <div id="textInform">
-                                <h5>Zylinderlänge</h5>
-                                <h5>Stück</h5>
+                                <h4>Zylinderlänge</h4>
+                                <h4>Stück</h4>
                         </div>
                             <div id="Size-@d" class="SizeProduct">
                             <div>
@@ -959,7 +959,7 @@
                                 </select>
                             </div>
                             <div id="textInform">
-                                <h5>Stück</h5>
+                                <h4>Stück</h4>
                             </div>
                             <div id="Size-@d" class="SizeProduct">
                                 <div class="btn-group" role="group" aria-label="Basic outlined example">

@@ -15,7 +15,7 @@ namespace schliessanlagen_konfigurator.Models.ProfilDopelZylinder
         public string? NameSystem { get; set; }
         public float Price { get; set; }
         public float? Gramm { get; set; }
-        public bool? isGround { get; set; }
+        public string? Type { get; set; }
         public string ImageName { get; set; }
         [NotMapped]
         [DisplayName("Upload your photo")]

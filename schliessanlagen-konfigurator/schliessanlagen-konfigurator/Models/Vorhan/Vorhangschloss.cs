@@ -17,6 +17,7 @@ namespace schliessanlagen_konfigurator.Models.Vorhan
         public string? NameSystem { get; set; }
         public float Price { get; set; }
         public float? Gramm { get; set; }
+        public string? Type { get; set; }
         public string ImageName { get; set; }
         [NotMapped]
         [DisplayName("Upload your photo")]

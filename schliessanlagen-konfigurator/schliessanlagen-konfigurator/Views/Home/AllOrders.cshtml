@@ -116,6 +116,7 @@
  
         @foreach (var list in ViewBag.Order)
         {
+            v++;
             <div class="modal fade" id="ModalOrder-@v" tabindex="-1">
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
@@ -165,7 +166,7 @@
                     </div>
                 </div>
             </div>
-            v++;
+           
         }
 
     </div>

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj": {}
+    "C:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj": {}
   },
   "projects": {
-    "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj": {
+    "C:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj",
+        "projectUniqueName": "C:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj",
         "projectName": "schliessanlagen-konfigurator",
-        "projectPath": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj",
-        "packagesPath": "C:\\Users\\JAKUB\\.nuget\\packages\\",
-        "outputPath": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\obj\\",
+        "projectPath": "C:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj",
+        "packagesPath": "C:\\Users\\owsd_\\.nuget\\packages\\",
+        "outputPath": "C:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\JAKUB\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\owsd_\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -59,7 +59,7 @@
             },
             "MailKit": {
               "target": "Package",
-              "version": "[4.5.0, )"
+              "version": "[4.7.1.1, )"
             },
             "Microsoft.AspNet.Web.Optimization": {
               "target": "Package",
@@ -67,39 +67,39 @@
             },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
-              "version": "[8.0.4, )"
+              "version": "[8.0.8, )"
             },
             "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[8.0.4, )"
+              "version": "[8.0.8, )"
             },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[8.0.4, )"
+              "version": "[8.0.8, )"
             },
             "Microsoft.AspNetCore.Identity.UI": {
               "target": "Package",
-              "version": "[8.0.4, )"
+              "version": "[8.0.8, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.4, )"
+              "version": "[8.0.8, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[8.0.4, )"
+              "version": "[8.0.8, )"
             },
             "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",
-              "version": "[8.0.4, )"
+              "version": "[8.0.8, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.4, )"
+              "version": "[8.0.8, )"
             },
             "Microsoft.Extensions.Http": {
               "target": "Package",
@@ -107,19 +107,19 @@
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
-              "version": "[8.0.2, )"
+              "version": "[8.0.4, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.3, )"
             },
-            "OpenAI": {
+            "SixLabors.ImageSharp.Web": {
               "target": "Package",
-              "version": "[1.11.0, )"
+              "version": "[3.1.3, )"
             },
             "System.Linq.Dynamic.Core": {
               "target": "Package",
-              "version": "[1.4.4, )"
+              "version": "[1.4.5, )"
             },
             "Tinify": {
               "target": "Package",
@@ -145,7 +145,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.301/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

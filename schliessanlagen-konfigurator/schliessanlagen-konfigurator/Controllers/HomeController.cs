@@ -19,6 +19,8 @@ using schliessanlagen_konfigurator.Models.Hebel;
 using schliessanlagen_konfigurator.Models.System;
 using Org.BouncyCastle.Asn1.Cms;
 using schliessanlagen_konfigurator.Service;
+using SixLabors.ImageSharp.Formats.Webp;
+using OfficeOpenXml.ConditionalFormatting;
 namespace schliessanlagen_konfigurator.Controllers
 {
     public class HomeController : Controller
@@ -28,7 +30,7 @@ namespace schliessanlagen_konfigurator.Controllers
         private readonly ImageOptimizationService _imageOptimizationService;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        public HomeController(UserManager<User> userManager, SignInManager<User> signInManager, schliessanlagen_konfiguratorContext context, IWebHostEnvironment _environment)
+        public HomeController( UserManager<User> userManager, SignInManager<User> signInManager, schliessanlagen_konfiguratorContext context, IWebHostEnvironment _environment)
         {
             _imageOptimizationService = new ImageOptimizationService();
             db = context;
@@ -36,10 +38,12 @@ namespace schliessanlagen_konfigurator.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
         }
+       
         [HttpGet]
         public async Task<IActionResult> ImageConfig()
         {
-            string sourceFilePath = @"wwwroot/Image/";
+
+            string sourceFilePath = @"wwwroot/compression/";
             IEnumerable<string> imageFiles = Directory.GetFiles(sourceFilePath, "*").Select(Path.GetFileName);
             return View("../Edit/ImageConfig", imageFiles);
 
@@ -52,6 +56,7 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpGet]
         public async Task<IActionResult> Impressum()
         {
+
             return View();
         }
 
@@ -268,24 +273,44 @@ namespace schliessanlagen_konfigurator.Controllers
         {
             if (file != null && file.Length > 0)
             {
-                string uploadFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "image");
+                string wwwRootPath = Environment.WebRootPath;
 
-                string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
+                // Путь к папке для сохранения изображений
+                string uploadFolderPath = Path.Combine(wwwRootPath, "image");
+                string uploadFolderPathCompression = Path.Combine(wwwRootPath, "compression");
 
-
+                // Проверяем наличие папки "image", создаем, если ее нет
                 if (!Directory.Exists(uploadFolderPath))
                 {
                     Directory.CreateDirectory(uploadFolderPath);
                 }
 
+                // Формируем полный путь для сохранения загруженного файла
                 string filePath = Path.Combine(uploadFolderPath, file.FileName);
-                string filePathCompression = Path.Combine(uploadFolderPathCompression, file.FileName);
+
+                // Сохраняем загруженный файл
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                    file.CopyTo(fileStream);
+                    await file.CopyToAsync(fileStream);
                 }
 
-                await _imageOptimizationService.CompressImageAsync(filePath, filePathCompression);
+                // Формируем имя и путь для файла в формате WebP
+                string webpFileName = Path.GetFileNameWithoutExtension(file.FileName) + ".webp";
+                string webpFilePath = Path.Combine(uploadFolderPathCompression, webpFileName);
+
+                // Проверяем наличие папки "compression", создаем, если ее нет
+                if (!Directory.Exists(uploadFolderPathCompression))
+                {
+                    Directory.CreateDirectory(uploadFolderPathCompression);
+                }
+
+                using (var imageSharpImage = await Image.LoadAsync(filePath)) // Загружаем по пути к оригинальному файлу
+                {
+                    await imageSharpImage.SaveAsync(webpFilePath, new WebpEncoder()); // Сохраняем как WebP
+                }
+
+                // Сжимаем изображение (если нужно)
+                await _imageOptimizationService.CompressImageAsync(filePath, webpFilePath);
 
                 ViewBag.Message = "File uploaded successfully.";
             }
@@ -377,6 +402,7 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpGet]
         public async Task<IActionResult> Schipeed()
         {
+           
             return View();
         }
         [HttpPost]
@@ -1029,9 +1055,15 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         string extension = Path.GetExtension(image.FileName);
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
-
                         itemGalary.ImageName = fileName = fileName + extension;
+
+                        string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                        
+                        string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
+
+                        string filePathCompression = Path.Combine(uploadFolderPathCompression, fileName);
+
+                        await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
 
                         using (var fileStream = new FileStream(path, FileMode.Create))
                         {
@@ -1220,8 +1252,10 @@ namespace schliessanlagen_konfigurator.Controllers
 
         public async Task<IActionResult> Index(int id)
         {
+          
             if (id != 0)
             {
+
                 var allSystem = db.SysteamPriceKey.Select(x => x.NameSysteam).ToList();
 
                 ViewBag.System = allSystem;
@@ -1293,6 +1327,7 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             else
             {
+
                 var AllDoppel = await db.Profil_Doppelzylinder.OrderBy(x => x.Price).Select(x => x.NameSystem).ToListAsync();
 
                 ViewBag.item = await db.Profil_Doppelzylinder.OrderBy(x => x.Price).ToListAsync();
@@ -1350,6 +1385,7 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpGet]
         public IActionResult HebelzylinderRout(int id)
         {
+
             if (id != 0)
             {
                 var Hebelzylinder = db.Hebelzylinder.Where(x => x.Id == id).First();
@@ -1370,6 +1406,7 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpGet]
         public IActionResult VorhangschlossRout(int id)
         {
+
             if (id !=0)
             {
                 var Vorhangschloss = db.Vorhangschloss.Where(x => x.Id == id).First();
@@ -1394,7 +1431,8 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpGet]
         public IActionResult Aussenzylinder_RundzylinderRout(int id)
         {
-            if(id!=0)
+
+            if (id!=0)
             {
                 var Aussenzylinder = db.Aussenzylinder_Rundzylinder.Where(x => x.Id == id).First();
 
@@ -1414,6 +1452,7 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpGet]
         public IActionResult Profil_HalbzylinderRout(int id)
         {
+
             if (id != 0)
             {
                 var Example = db.Profil_Halbzylinder.Where(x => x.Id == id).First();
@@ -1502,7 +1541,13 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 Profil_Doppelzylinder.ImageName = fileName = fileName + extension;
 
-                string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
+                string path = Path.Combine(wwwRootPath + "/Image/", fileName );
+
+                string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
+
+                string filePathCompression = Path.Combine(uploadFolderPathCompression, fileName);
+
+                await _imageOptimizationService.CompressImageAsync(fileName + extension, filePathCompression);
 
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
@@ -1529,9 +1574,15 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         string extension = Path.GetExtension(image.FileName);
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
-
                         itemGalary.ImageName = fileName = fileName + extension;
+
+                        string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+
+                        string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
+
+                        string filePathCompression = Path.Combine(uploadFolderPathCompression, fileName);
+
+                        await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
 
                         using (var fileStream = new FileStream(path, FileMode.Create))
                         {
@@ -1662,7 +1713,13 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         ngf.ImageName = fileName = fileName + extension;
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
+                        string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+
+                        string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
+
+                        string filePathCompression = Path.Combine(uploadFolderPathCompression, fileName);
+
+                        await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
 
                         using (var fileStream = new FileStream(path, FileMode.Create))
                         {
@@ -1751,7 +1808,13 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 Profil_Doppelzylinder.ImageName = fileName = fileName + extension;
 
-                string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
+                string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+
+                string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
+
+                string filePathCompression = Path.Combine(uploadFolderPathCompression, fileName);
+
+                await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
 
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
@@ -1777,10 +1840,16 @@ namespace schliessanlagen_konfigurator.Controllers
                         string fileName = Path.GetFileNameWithoutExtension(image.FileName);
 
                         string extension = Path.GetExtension(image.FileName);
-
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
-
+                        
                         itemGalary.ImageName = fileName = fileName + extension;
+
+                        string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+
+                        string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
+
+                        string filePathCompression = Path.Combine(uploadFolderPathCompression, fileName);
+
+                        await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
 
                         using (var fileStream = new FileStream(path, FileMode.Create))
                         {
@@ -1882,7 +1951,13 @@ namespace schliessanlagen_konfigurator.Controllers
 
                             ngf.ImageName = fileName = fileName + extension;
 
-                            string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
+                            string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+
+                            string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
+
+                            string filePathCompression = Path.Combine(uploadFolderPathCompression, fileName);
+
+                            await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
 
                             using (var fileStream = new FileStream(path, FileMode.Create))
                             {
@@ -1969,7 +2044,13 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 Profil_Doppelzylinder.ImageName = fileName = fileName + extension;
 
-                string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
+                string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+
+                string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
+
+                string filePathCompression = Path.Combine(uploadFolderPathCompression, fileName);
+
+                await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
 
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
@@ -1997,9 +2078,15 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         string extension = Path.GetExtension(image.FileName);
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
+                        string path = Path.Combine(wwwRootPath + "/Image/", fileName);
 
                         itemGalary.ImageName = fileName = fileName + extension;
+
+                        string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
+
+                        string filePathCompression = Path.Combine(uploadFolderPathCompression, fileName);
+
+                        await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
 
                         using (var fileStream = new FileStream(path, FileMode.Create))
                         {
@@ -2099,9 +2186,15 @@ namespace schliessanlagen_konfigurator.Controllers
 
                             string extension = Path.GetExtension(ngf.ImageFile.FileName);
 
-                            ngf.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                            ngf.ImageName = fileName = fileName + extension;
 
-                            string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
+                            string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+
+                            string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
+
+                            string filePathCompression = Path.Combine(uploadFolderPathCompression, fileName);
+
+                            await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
 
                             using (var fileStream = new FileStream(path, FileMode.Create))
                             {
@@ -2189,7 +2282,13 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 Profil_Doppelzylinder.ImageName = fileName = fileName + extension;
 
-                string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
+                string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+
+                string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
+
+                string filePathCompression = Path.Combine(uploadFolderPathCompression, fileName);
+
+                await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
 
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
@@ -2216,9 +2315,15 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         string extension = Path.GetExtension(image.FileName);
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
-
                         itemGalary.ImageName = fileName = fileName + extension;
+
+                        string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+
+                        string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
+
+                        string filePathCompression = Path.Combine(uploadFolderPathCompression, fileName);
+
+                        await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
 
                         using (var fileStream = new FileStream(path, FileMode.Create))
                         {
@@ -2304,7 +2409,13 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         ngf.ImageName = fileName = fileName + extension;
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
+                        string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+
+                        string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
+
+                        string filePathCompression = Path.Combine(uploadFolderPathCompression, fileName);
+
+                        await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
 
                         using (var fileStream = new FileStream(path, FileMode.Create))
                         {
@@ -2389,7 +2500,13 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 Profil_Doppelzylinder.ImageName = fileName = fileName + extension;
 
-                string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
+                string path = Path.Combine(wwwRootPath + "/Image/", fileName );
+
+                string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
+
+                string filePathCompression = Path.Combine(uploadFolderPathCompression, fileName);
+
+                await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
 
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
@@ -2416,9 +2533,15 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         string extension = Path.GetExtension(image.FileName);
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
-
                         itemGalary.ImageName = fileName = fileName + extension;
+
+                        string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+
+                        string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
+
+                        string filePathCompression = Path.Combine(uploadFolderPathCompression, fileName);
+
+                        await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
 
                         using (var fileStream = new FileStream(path, FileMode.Create))
                         {
@@ -2516,7 +2639,13 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         ngf.ImageName = fileName = fileName + extension;
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
+                        string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+
+                        string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
+
+                        string filePathCompression = Path.Combine(uploadFolderPathCompression, fileName);
+
+                        await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
 
                         using (var fileStream = new FileStream(path, FileMode.Create))
                         {
@@ -2602,7 +2731,13 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 Profil_Doppelzylinder.ImageName = fileName = fileName + extension;
 
-                string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
+                string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+
+                string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
+
+                string filePathCompression = Path.Combine(uploadFolderPathCompression, fileName);
+
+                await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
 
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
@@ -2629,9 +2764,15 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         string extension = Path.GetExtension(image.FileName);
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
-
                         itemGalary.ImageName = fileName = fileName + extension;
+
+                        string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+
+                        string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
+
+                        string filePathCompression = Path.Combine(uploadFolderPathCompression, fileName);
+
+                        await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
 
                         using (var fileStream = new FileStream(path, FileMode.Create))
                         {
@@ -2720,7 +2861,13 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         ngf.ImageName = fileName = fileName + extension;
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
+                        string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+
+                        string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
+
+                        string filePathCompression = Path.Combine(uploadFolderPathCompression, fileName);
+
+                        await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
 
                         using (var fileStream = new FileStream(path, FileMode.Create))
                         {
@@ -2757,6 +2904,7 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete_KnayfZylinder(int id)
         {
+
             var Knaufzylinder = db.Profil_Knaufzylinder.Find(id);
 
             var Gallery = db.ProductGalery.Where(x => x.Profil_KnaufzylinderId == id).ToList();
@@ -2799,7 +2947,6 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
 
             }
-
 
             var Size = db.Aussen_Innen_Knauf.Where(x => x.Profil_KnaufzylinderId == Knaufzylinder.Id).ToList();
 
@@ -3233,6 +3380,7 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit_Doppelzylinder(Profil_Doppelzylinder profil_Doppelzylinder, string data,int DoppelId)
         {
+
             if (data == null)
             {
                 var Doppel = db.Profil_Doppelzylinder.Find(profil_Doppelzylinder.Id);
@@ -3402,6 +3550,7 @@ namespace schliessanlagen_konfigurator.Controllers
         {
             var Items = db.Profil_Doppelzylinder.Find(profil_Doppelzylinder.Id);
             Items.schliessanlagenId = profil_Doppelzylinder.schliessanlagenId;
+            Items.Type = profil_Doppelzylinder.Type;
             Items.Name = profil_Doppelzylinder.Name;
             Items.companyName = profil_Doppelzylinder.companyName;
             Items.NameSystem = profil_Doppelzylinder.NameSystem;
@@ -3610,6 +3759,7 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit_Hebel(Hebel profil_Halbzylinder)
         {
+
             var Halbzylinder = db.Hebelzylinder.Find(profil_Halbzylinder.Id);
 
             var options = db.Hebelzylinder_Options.Where(x => x.HebelzylinderId == Halbzylinder.Id).ToList();
@@ -3664,6 +3814,7 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit_Aussenzylinder_Rundzylinder(Aussenzylinder_Rundzylinder aussenzylinder)
         {
+
             var Auszylinder = db.Aussenzylinder_Rundzylinder.Find(aussenzylinder.Id);
 
             var Galery = db.ProductGalery.Where(x => x.Aussenzylinder_RundzylinderId == aussenzylinder.Id).ToList();
@@ -3713,6 +3864,7 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit_Vorhangschloss(Vorhangschloss Vorhan)
         {
+
             var VorhanItem = db.Vorhangschloss.Find(Vorhan.Id);
 
             var Galery = db.ProductGalery.Where(x => x.VorhangschlossId == Vorhan.Id).ToList();
@@ -3770,6 +3922,7 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit_Profil_Halbzylinder(Profil_Halbzylinder profil_Halbzylinder)
         {
+
             var Halbzylinder = db.Profil_Halbzylinder.Find(profil_Halbzylinder.Id);
 
             var Galery = db.ProductGalery.Where(x => x.Profil_HalbzylinderId == profil_Halbzylinder.Id).ToList();
@@ -3830,6 +3983,7 @@ namespace schliessanlagen_konfigurator.Controllers
         }
         public async Task<IActionResult> Edit_Profil_Knaufzylinder(Profil_Knaufzylinder profil_Halbzylinder)
         {
+
             var Knayf = db.Profil_Knaufzylinder.Find(profil_Halbzylinder.Id);
 
             var Galery = db.ProductGalery.Where(x => x.Profil_KnaufzylinderId== Knayf.Id).ToList();
@@ -3906,6 +4060,7 @@ namespace schliessanlagen_konfigurator.Controllers
             var Items = db.Profil_Halbzylinder.Find(profil_Halbzylinder.Id);
             Items.schliessanlagenId = profil_Halbzylinder.schliessanlagenId;
             Items.Name = profil_Halbzylinder.Name;
+            Items.Type = profil_Halbzylinder.Type;
             Items.companyName = profil_Halbzylinder.companyName;
             Items.NameSystem = profil_Halbzylinder.NameSystem;
             Items.description = profil_Halbzylinder.description;
@@ -3938,10 +4093,6 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 foreach (var image in UploadGalleryImages)
                 {
-                    var itemGalary = new ProductGalery
-                    {
-                        Profil_HalbzylinderId = profil_Halbzylinder.Id,
-                    };
                     if (image.Length > 0)
                     {
                         string wwwRootPath = Environment.WebRootPath;
@@ -3950,17 +4101,38 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         string extension = Path.GetExtension(image.FileName);
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
+                        string originalImagePath = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
 
-                        itemGalary.ImageName = fileName = fileName + extension;
-
-                        using (var fileStream = new FileStream(path, FileMode.Create))
+                        using (var fileStream = new FileStream(originalImagePath, FileMode.Create))
                         {
                             await image.CopyToAsync(fileStream);
                         }
 
+                        string webpFileName = fileName + ".webp";
+                        string webpFilePath = Path.Combine(wwwRootPath + "/compression/", webpFileName);
+
+
+                        if (!Directory.Exists(Path.Combine(wwwRootPath, "compression")))
+                        {
+                            Directory.CreateDirectory(Path.Combine(wwwRootPath, "compression"));
+                        }
+
+                        using (var imageSharpImage = await Image.LoadAsync(webpFilePath))
+                        {
+                            await imageSharpImage.SaveAsync(webpFilePath, new WebpEncoder());
+                        }
+
+                        await _imageOptimizationService.CompressImageAsync(originalImagePath, webpFilePath);
+
+                        var itemGalary = new ProductGalery
+                        {
+                            Profil_HalbzylinderId = profil_Halbzylinder.Id,
+                            ImageName = webpFileName
+                        };
+
                         db.ProductGalery.Add(itemGalary);
                         db.SaveChanges();
+
                     }
                 }
             }
@@ -4096,35 +4268,57 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 foreach (var image in UploadGalleryImages)
                 {
-                    var itemGalary = new ProductGalery
-                    {
-                        HebelId = Items.Id,
-                    };
                     if (image.Length > 0)
                     {
                         string wwwRootPath = Environment.WebRootPath;
 
+                        // Получаем имя файла без расширения
                         string fileName = Path.GetFileNameWithoutExtension(image.FileName);
 
+                        // Получаем расширение файла
                         string extension = Path.GetExtension(image.FileName);
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
+                        // Путь для сохранения оригинального файла
+                        string originalImagePath = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
 
-                        itemGalary.ImageName = fileName = fileName + extension;
-
-                        using (var fileStream = new FileStream(path, FileMode.Create))
+                        // Сохраняем оригинальное изображение на диск
+                        using (var fileStream = new FileStream(originalImagePath, FileMode.Create))
                         {
                             await image.CopyToAsync(fileStream);
                         }
 
+                        string webpFileName = fileName + ".webp";
+                        string webpFilePath = Path.Combine(wwwRootPath + "/compression/", webpFileName);
+
+
+                        if (!Directory.Exists(Path.Combine(wwwRootPath, "compression")))
+                        {
+                            Directory.CreateDirectory(Path.Combine(wwwRootPath, "compression"));
+                        }
+
+                        using (var imageSharpImage = await Image.LoadAsync(webpFilePath))
+                        {
+                            await imageSharpImage.SaveAsync(webpFilePath, new WebpEncoder());
+                        }
+
+                        await _imageOptimizationService.CompressImageAsync(originalImagePath, webpFilePath);
+
+
+                        var itemGalary = new ProductGalery
+                        {
+                            HebelId = Items.Id,
+                            ImageName = webpFileName
+                        };
                         db.ProductGalery.Add(itemGalary);
                         db.SaveChanges();
+
                     }
                 }
             }
 
             Items.schliessanlagenId = profil_Halbzylinder.schliessanlagenId;
             Items.Name = profil_Halbzylinder.Name;
+            Items.Type = profil_Halbzylinder.Type;
             Items.companyName = profil_Halbzylinder.companyName;
             Items.NameSystem = profil_Halbzylinder.NameSystem;
             Items.description = profil_Halbzylinder.description;
@@ -4227,7 +4421,6 @@ namespace schliessanlagen_konfigurator.Controllers
         {
             var Items = db.Aussenzylinder_Rundzylinder.Find(profil_Halbzylinder.Id);
 
-
             var Gallery = db.ProductGalery.Where(x => x.Aussenzylinder_RundzylinderId == profil_Halbzylinder.Id).ToList();
 
             var listN = Gallery.Select(x => x.ImageName).Except(GalleryImages).ToList();
@@ -4244,29 +4437,50 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 foreach (var image in UploadGalleryImages)
                 {
-                    var itemGalary = new ProductGalery
-                    {
-                        Aussenzylinder_RundzylinderId = profil_Halbzylinder.Id,
-                    };
                     if (image.Length > 0)
                     {
                         string wwwRootPath = Environment.WebRootPath;
 
+                        // Получаем имя файла без расширения
                         string fileName = Path.GetFileNameWithoutExtension(image.FileName);
 
+                        // Получаем расширение файла
                         string extension = Path.GetExtension(image.FileName);
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
+                        // Путь для сохранения оригинального файла
+                        string originalImagePath = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
 
-                        itemGalary.ImageName = fileName = fileName + extension;
-
-                        using (var fileStream = new FileStream(path, FileMode.Create))
+                        // Сохраняем оригинальное изображение на диск
+                        using (var fileStream = new FileStream(originalImagePath, FileMode.Create))
                         {
                             await image.CopyToAsync(fileStream);
                         }
 
+                        string webpFileName = fileName + ".webp";
+                        string webpFilePath = Path.Combine(wwwRootPath + "/compression/", webpFileName);
+
+
+                        if (!Directory.Exists(Path.Combine(wwwRootPath, "compression")))
+                        {
+                            Directory.CreateDirectory(Path.Combine(wwwRootPath, "compression"));
+                        }
+
+                        using (var imageSharpImage = await Image.LoadAsync(webpFilePath))
+                        {
+                            await imageSharpImage.SaveAsync(webpFilePath, new WebpEncoder());
+                        }
+
+                        await _imageOptimizationService.CompressImageAsync(originalImagePath, webpFilePath);
+
+
+                        var itemGalary = new ProductGalery
+                        {
+                            Aussenzylinder_RundzylinderId = profil_Halbzylinder.Id,
+                            ImageName = webpFileName
+                        };
                         db.ProductGalery.Add(itemGalary);
                         db.SaveChanges();
+
                     }
                 }
             }
@@ -4274,6 +4488,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             Items.schliessanlagenId = profil_Halbzylinder.schliessanlagenId;
             Items.Name = profil_Halbzylinder.Name;
+            Items.Type = profil_Halbzylinder.Type;
             Items.companyName = profil_Halbzylinder.companyName;
             Items.NameSystem = profil_Halbzylinder.NameSystem;
             Items.description = profil_Halbzylinder.description;
@@ -4388,27 +4603,48 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 foreach (var image in UploadGalleryImages)
                 {
-                    var itemGalary = new ProductGalery
-                    {
-                        VorhangschlossId = Items.Id,
-                    };
+                   
                     if (image.Length > 0)
                     {
                         string wwwRootPath = Environment.WebRootPath;
 
+                        // Получаем имя файла без расширения
                         string fileName = Path.GetFileNameWithoutExtension(image.FileName);
 
+                        // Получаем расширение файла
                         string extension = Path.GetExtension(image.FileName);
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
+                        // Путь для сохранения оригинального файла
+                        string originalImagePath = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
 
-                        itemGalary.ImageName = fileName = fileName + extension;
-
-                        using (var fileStream = new FileStream(path, FileMode.Create))
+                        // Сохраняем оригинальное изображение на диск
+                        using (var fileStream = new FileStream(originalImagePath, FileMode.Create))
                         {
                             await image.CopyToAsync(fileStream);
                         }
 
+                        string webpFileName = fileName + ".webp";
+                        string webpFilePath = Path.Combine(wwwRootPath + "/compression/", webpFileName);
+
+
+                        if (!Directory.Exists(Path.Combine(wwwRootPath, "compression")))
+                        {
+                            Directory.CreateDirectory(Path.Combine(wwwRootPath, "compression"));
+                        }
+
+                        using (var imageSharpImage = await Image.LoadAsync(webpFilePath))
+                        {
+                            await imageSharpImage.SaveAsync(webpFilePath, new WebpEncoder());
+                        }
+
+                        await _imageOptimizationService.CompressImageAsync(originalImagePath, webpFilePath);
+
+
+                        var itemGalary = new ProductGalery
+                        {
+                            VorhangschlossId = Items.Id,
+                            ImageName = webpFileName
+                        };
                         db.ProductGalery.Add(itemGalary);
                         db.SaveChanges();
                     }
@@ -4417,6 +4653,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             Items.schliessanlagenId = profil_Halbzylinder.schliessanlagenId;
             Items.Name = profil_Halbzylinder.Name;
+            Items.Type = profil_Halbzylinder.Type;
             Items.companyName = profil_Halbzylinder.companyName;
             Items.NameSystem = profil_Halbzylinder.NameSystem;
             Items.description = profil_Halbzylinder.description;
@@ -4518,7 +4755,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             for (int i =0;i< Size.Count(); i++)
             {
-                var SizeV = new Size
+                var SizeV = new Models.Vorhan.Size
                 {
                     VorhangschlossId = Items.Id,
                     sizeVorhangschloss = Size[i],
@@ -4539,6 +4776,7 @@ namespace schliessanlagen_konfigurator.Controllers
             var Items = db.Profil_Knaufzylinder.Find(profil_Knayf.Id);
             Items.schliessanlagenId = profil_Knayf.schliessanlagenId;
             Items.Name = profil_Knayf.Name;
+            Items.Type = profil_Knayf.Type;
             Items.companyName = profil_Knayf.companyName;
             Items.NameSystem = profil_Knayf.NameSystem;
             Items.description = profil_Knayf.description;
@@ -4561,29 +4799,50 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 foreach (var image in UploadGalleryImages)
                 {
-                    var itemGalary = new ProductGalery
-                    {
-                        Profil_KnaufzylinderId = profil_Knayf.Id,
-                    };
                     if (image.Length > 0)
                     {
                         string wwwRootPath = Environment.WebRootPath;
 
+                        // Получаем имя файла без расширения
                         string fileName = Path.GetFileNameWithoutExtension(image.FileName);
 
+                        // Получаем расширение файла
                         string extension = Path.GetExtension(image.FileName);
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
+                        // Путь для сохранения оригинального файла
+                        string originalImagePath = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
 
-                        itemGalary.ImageName = fileName = fileName + extension;
-
-                        using (var fileStream = new FileStream(path, FileMode.Create))
+                        // Сохраняем оригинальное изображение на диск
+                        using (var fileStream = new FileStream(originalImagePath, FileMode.Create))
                         {
                             await image.CopyToAsync(fileStream);
                         }
 
+                        string webpFileName = fileName + ".webp";
+                        string webpFilePath = Path.Combine(wwwRootPath + "/compression/", webpFileName);
+
+              
+                        if (!Directory.Exists(Path.Combine(wwwRootPath, "compression")))
+                        {
+                            Directory.CreateDirectory(Path.Combine(wwwRootPath, "compression"));
+                        }
+
+                        using (var imageSharpImage = await Image.LoadAsync(webpFilePath))
+                        {
+                            await imageSharpImage.SaveAsync(webpFilePath, new WebpEncoder());
+                        }
+
+                        await _imageOptimizationService.CompressImageAsync(originalImagePath, webpFilePath);
+
+
+                        var itemGalary = new ProductGalery
+                        {
+                            Profil_KnaufzylinderId = profil_Knayf.Id,
+                            ImageName = webpFileName
+                        };
                         db.ProductGalery.Add(itemGalary);
                         db.SaveChanges();
+
                     }
                 }
             }
@@ -5130,6 +5389,7 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpGet]
         public ActionResult AllOrders()
         {
+
             var User = db.Users.Select(x => x).ToList();
             var UserProduct = db.ProductSysteam.Select(x => x).ToList();
             var UserOrders = db.UserOrdersShop.Select(x => x).Distinct().ToList();

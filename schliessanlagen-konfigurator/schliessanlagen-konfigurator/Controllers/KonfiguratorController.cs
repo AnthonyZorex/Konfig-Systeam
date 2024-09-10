@@ -38,6 +38,9 @@ using System.Text.Json.Nodes;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
 using System.Globalization;
 using schliessanlagen_konfigurator.Models.Hebel;
+using MimeKit.Cryptography;
+using System.Drawing;
+using schliessanlagen_konfigurator.Service;
 namespace schliessanlagen_konfigurator.Controllers
 {
     [EnableCors("*")]
@@ -551,7 +554,6 @@ namespace schliessanlagen_konfigurator.Controllers
         public async Task<IActionResult> SendRehnung (string info,string userName, string OrderSum,bool aufRechnung)
         {
             SchopAlarm();
-
             ViewBag.Info = info;
 
             string cleanedString = OrderSum.Replace("€", "").Trim();
@@ -659,7 +661,6 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
             }
         }
-
         public ActionResult IndexKonfigurator()
         {
             SchopAlarm();

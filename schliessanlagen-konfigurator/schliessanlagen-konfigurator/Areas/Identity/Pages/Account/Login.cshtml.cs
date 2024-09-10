@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using schliessanlagen_konfigurator.Models.Users;
+using schliessanlagen_konfigurator.Service;
 
 namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account
 {
@@ -28,6 +29,8 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
         }
+
+       
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used

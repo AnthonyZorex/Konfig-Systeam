@@ -12,14 +12,14 @@
             submitRechnung.style.display = "none";
             Inputrechnung.value = false;
         }
-        if (selectedRadio[0].value === "Google Pay") {
-            submitRechnung.style.display = "none";
-            Inputrechnung.value = false;
-        }
-        if (selectedRadio[0].value === "Apple Pay") {
-            submitRechnung.style.display = "none";
-            Inputrechnung.value = false;
-        }
+        //if (selectedRadio[0].value === "Google Pay") {
+        //    submitRechnung.style.display = "none";
+        //    Inputrechnung.value = false;
+        //}
+        //if (selectedRadio[0].value === "Apple Pay") {
+        //    submitRechnung.style.display = "none";
+        //    Inputrechnung.value = false;
+        //}
         if (selectedRadio[0].value === "auf Rechnung") {
             submitRechnung.style.display = "block";
             Inputrechnung.value = true;
@@ -27,7 +27,8 @@
     }
 }
 
-function ProcentMwst(value, BlockItem) {
+function ProcentMwst(value, BlockItem)
+{
     let cost = document.querySelectorAll("#costedI-" + BlockItem);
     let modalItem = document.getElementById("myModal-" + BlockItem);
     let proc = document.getElementById("aldProcent-" + BlockItem);

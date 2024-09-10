@@ -60,7 +60,7 @@
     </div>
     <div class="offcanvas-body">
         <ul class="list-group list-group-flush">
-            <li class="list-group-item active"><a href=""> <img src="@("/Image/doppelzylinder.png")" height="24" width="24" /> Zylinder</a></li>
+            <li class="list-group-item active"><a href=""> <img src="@("/compression/doppelzylinder.WEBP")" height="24" width="24" /> Zylinder</a></li>
         </ul>
     </div>
 </div>
@@ -91,10 +91,10 @@
                     }
                     else
                     {
-                        <h5>Zylinderlänge</h5>
+                        <h4>Zylinderlänge</h4>
                     }
                   
-                    <h5>Stück</h5>
+                    <h4>Stück</h4>
                 </div>
 
                 <div id="Size-1" class="SizeProduct">
@@ -145,13 +145,13 @@
 
                 </div>
 
-                <div id="optionsItems">
-                    <div>
-                        @{
-                            int valueCount = 0;
-                        }
                         @if (ViewBag.countOptionsQuery > 0)
                         {
+                            int valueCount = 0;
+                            <div id="optionsItems">
+                                <div>
+
+                              
                             <h3>Weitere Optionen</h3>
                             @for (int i = 0; i < ViewBag.optionsName.Count; i++)
                             {
@@ -207,9 +207,10 @@
                                 <input type="hidden" id="d-1 + @i" />
                             }
                                 <input type="hidden" name="Options" id="OptionAll-1" />
+                            </div>
+                        </div>
                         }
-                    </div>
-                </div>
+                
                 <div>
                     @Html.Raw(@item.description)
                 </div>

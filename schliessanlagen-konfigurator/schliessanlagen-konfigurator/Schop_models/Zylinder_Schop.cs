@@ -9,6 +9,7 @@ namespace schliessanlagen_konfigurator.Schop_models
     public class Zylinder_Type
     {
         public float Price { get; set; }
+        public string? Type { get; set; }
     }
     public class All_Zylinder_Schop
     {

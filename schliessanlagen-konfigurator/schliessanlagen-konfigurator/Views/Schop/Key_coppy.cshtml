@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Tittle"] = "Key-coppy";
+}
+<div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+    <div>
+        <video id="video" width="640" height="480" autoplay playsinline></video>
+
+        <canva id="canvas" width="640" height="480" style="display:none;"></canva>
+    </div>
+
+    <div>
+        <button class="btn btn-danger p-5" style="font-size: 26px;" id="upload">
+            Upload
+        </button>
+
+        <form id="uploadForm" action="/Schop/UploadPhoto" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="imageData" id="imageData">
+        </form>
+    </div>
+
+</div>
+
+
+<script>
+    var video = document.getElementById('video');
+    var canvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
+    var snapButton = document.getElementById('snap');
+    var uploadButton = document.getElementById('upload');
+    var imageDataInput = document.getElementById('imageData');
+
+    navigator.mediaDevices.enumerateDevices().then(function (devices) {
+        const videoDevices = devices.filter(device => device.kind === 'videoinput');
+
+        if (videoDevices.length > 0) {
+           
+            navigator.mediaDevices.getUserMedia({
+                video: { deviceId: videoDevices[0].deviceId } 
+            })
+                .then(function (stream) {
+                    video.srcObject = stream;
+                    video.play();
+                })
+                .catch(function (error) {
+                    console.error("Ошибка доступа к камере: ", error);
+                });
+        } else {
+            console.error("Нет доступных видеоустройств.");
+        }
+    });
+
+    uploadButton.addEventListener('click', function () {
+        context.drawImage(video, 0, 0, 640, 480);
+        var imageData = canvas.toDataURL('image/png');
+        imageDataInput.value = imageData;
+        document.getElementById('uploadForm').submit();
+    });
+</script>

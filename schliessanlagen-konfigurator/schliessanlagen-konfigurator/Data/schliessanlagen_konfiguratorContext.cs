@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using schliessanlagen_konfigurator.Models;
 using schliessanlagen_konfigurator.Models.Aussen_Rund;
 using schliessanlagen_konfigurator.Models.Halbzylinder;
 using schliessanlagen_konfigurator.Models.Hebel;
@@ -85,7 +86,7 @@ namespace schliessanlagen_konfigurator.Data
 
 
         public DbSet<Vorhangschloss> Vorhangschloss { get; set; }
-        public DbSet<Size> Size { get; set; }
+        public DbSet<Models.Vorhan.Size> Size { get; set; }
         public DbSet<Vorhan_Options> Vorhan_Options { get; set; }
         public DbSet<OptionsVorhan> OptionsVorhan { get; set; }
         public DbSet<OptionsVorhan_value> OptionsVorhan_value { get; set; }

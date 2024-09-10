@@ -9,5 +9,6 @@
         public float? PriceBis { get; set; }
         public string? Herschteller { get; set; }
         public int page { get; set; }
+        public string Typ { get; set; }
     }
 }

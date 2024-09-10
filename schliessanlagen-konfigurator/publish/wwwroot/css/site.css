@@ -1,8 +1,9 @@
 ﻿@font-face {
     font-family: 'Fira Sans';
-    src: url('/Fira_Sans/FiraSans-Light.ttf') format('truetype'); 
-    font-weight: normal; 
-    font-style: normal; 
+    src: url('/Fira_Sans/FiraSans-Regular.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+    font-size: 26px;
 }
 #herschteller_sort {
     text-align: center;
@@ -103,17 +104,7 @@ html, body {
     flex-direction: column;
     min-height: 100vh; 
 }
-.danger {
-    background-color: var(--primary-color);
-    color: white;
-    outline:none;
-}
-.btn-outline-danger {
-    background-color: transparent;
-    color: var(--primary-color);
-    outline: none;
-    border: 1px solid var(--primary-color);
-}
+
 
 .input-block > div > div {
     margin-top: 30px;
@@ -267,7 +258,10 @@ html, body {
 
     .footer .row img {
         max-width: 100%;
+        background: white;
+        padding:5px;
     }
+
 
     .footer li {
         list-style: none;
@@ -326,25 +320,35 @@ html, body {
 
     @media(max-width:900px) and (orientation: portrait) 
     {
-        #position
-        {
-            width:25px;
+
+        #optionsItems {
+            margin-bottom: 20px;
+            margin-top: 20px;
+            padding: 15px;
+        }
+        #card_controll {
+            gap: 5px;
+            display: grid;
+            padding: 10px;
+        }
+        #blockSchrite{
+
         }
 
-    #countTurSelect {
-        transform: scale(0.7);
-        outline: none;
-    }
+        #card_controll > div {
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+        }
+            #card_controll > div>button {
+                width: 100%;
+            }
 
-    html {
-        font-size:4px !important;
-    }
-
-    .horizontal1 {
-        border-top: 1px solid black;
-        display: block;
-        gap: 20px;
-    }
+            .horizontal1 {
+                border-top: 1px solid black;
+                display: block;
+                gap: 20px;
+            }
     #InfoValue1 {
         gap: 10px;
         display: flex;
@@ -357,45 +361,47 @@ html, body {
         gap: 105px !important;
     }
     #schlussel2 {
-        margin-left:-10px;
+        margin-left:auto;
         transform: scale(0.7);
         display: flex;
     }
-    #typeSylinder {
-        height: 15px;
-        margin-left: -45px;
-        width: 15px;
-        transform: scale(0.5);
-    }
+        #hederBlockOrder{
+            display:none;
+        }
+        #personal_menu_content {
+            gap: 40px;
+            display: grid;
+            background: white;
+        }
+            #personal_menu_content > div {
+                border-right: none !important;
+            }
+            #typeSylinder {
+                height: 15px;
+                margin-left: -45px;
+                width: 15px;
+                transform: scale(0.5);
+            }
   
     #product_desciptions {
         margin-top: 10px;
         display: block;
         gap: 150px;
+        font-size:16px;
     }
-        #product_desciptions > div > p > img {
-            margin-left: -85px;
-            transform: scale(0.7);
-        }
 
-        #product_desciptions > div > div > div > div > div > p > img {
-            margin-left: -85px;
-            transform: scale(0.7);
+        .SizeProduct {
+            padding: 15px;
+            grid-template-columns: auto auto;
+            display: grid;
         }
-
-        #product_desciptions > div > table {
-            margin-left: -180px;
-            transform: scale(.5);
-            border-collapse: collapse;
+        .btn-group {
+            position: relative;
+            vertical-align: middle;
         }
-
-    .SizeProduct {
-        display: flex;
-        margin-bottom: 20px;
-    }
-    #numerKey{
-        font-size:8px;
-    }
+        #numerKey {
+            font-size: 8px;
+        }
     OpenValue > input{
         width: 10px !important;
     }
@@ -416,14 +422,24 @@ html, body {
     .navbar-toggler {
         font-size: 2rem !important;
     }
-    #keyInform {
-        margin-top: 10px;
-        text-align: start;
-        font-size: 12px;
-        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    }
+
+        #producktInfo {
+            padding: 15px;
+        }
+
+        #costedInfo {
+            color: var(--primary-color);
+        }
+
+        #keyInform {
+            margin-top: 10px;
+            text-align: start;
+            font-size: 12px;
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        }
 
         #infoTuren {
+            margin-bottom: 10px;
             margin-top: 10px;
             text-align: start;
             font-size: 12px;
@@ -434,11 +450,12 @@ html, body {
     #OpenValue {
         display: grid;
         gap: 10px;
-        grid-template-columns: 100px 100px 100px;
+        grid-template-columns: auto auto;
         margin-right: 50px;
     }
     #cost {
         color: red;
+        font-size:12px;
     }
  
     #ItemCounterOrders {
@@ -446,30 +463,32 @@ html, body {
         gap: 20px;
     }
     #counterKey {
-        display: flex;
-        gap: 20px;
+        display: flex;            
     }
-    #finisherItem {
-        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-        border-radius: 10px;
-        margin-top: 20px;
-        padding: 10px;
-        background-color: white;
-        display: grid;
-        align-items: center;
-        text-align: center;
-        grid-template-columns: repeat(3, 100px);
-    }
+        #counterKey>input{
+            text-align:center;
+        }
+        #finisherItem {
+            gap: 20px;
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+            border-radius: 10px;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: white;
+            display: grid;
+            align-items: center;
+            grid-template-columns: repeat(2, auto);
+        }
     #orderCost {
         justify-content: center;
         display: flex;
         text-align: center;
         align-items:center;
     }
-        #orderCost>input{
-            font-size:16px;
-            outline:none;
-
+        #orderCost > input {
+            text-align: center;
+            width: auto;
+            outline: none;
         }
         #orderCost>h2{
             font-size:24px;
@@ -479,21 +498,24 @@ html, body {
             background-color: #198754;
             border-color: #198754;
         }
-    a:hover {
-        text-decoration-color: none;
-        color: white;
-    }
-    a{
-        text-decoration-color: none;
-        color: white;
-    }
-   
-    #lifer{
-        color:red;
-        margin-top:20px;
-        margin-bottom:20px;
-        font-size:12px;
-    }
+        a:hover {
+            text-decoration-color: transparent;
+            text-decoration-color: none;
+            color: white;
+        }
+        a {
+            text-decoration-color: none;
+            text-decoration-color: transparent;
+            color: white;
+        }
+
+        #lifer {
+            text-align: center;
+            color: red;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            font-size: 12px;
+        }
     #ProductNameUndCost {
         margin-top: 20px;
         margin-left: auto;
@@ -508,22 +530,14 @@ html, body {
         width:auto;
         text-align: center;
     }
-    #konfigMenu {
-        margin-top: 10px;
-        margin-bottom: 10px;
-    }
+        #konfigMenu {
+            display: grid;
+            gap: 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
    
-    #counterTur 
-    {       
-        margin-top: 5px;
-        float: left;
-        text-align: center;
-    }
-    #counterTur > svg{
-        height:5px;
-        margin-left:5px;
-        width:5px;
-    }
+   
 
     
     .clostHilfeModel {
@@ -543,6 +557,12 @@ html, body {
         font-size: 24px;
         color: white;
     }
+        #cost {
+            color: red;
+            font-size: 24px;
+            outline: none;
+            border: none;
+        }
 
     #circle {
         margin-top: 10px;
@@ -611,9 +631,7 @@ html, body {
         gap: 50px;
     }
 
-    #schlussel h5 {
-        margin-left: 10px !important;
-    }
+
 
     #sclusselInfo {
         height: 25px;
@@ -625,13 +643,17 @@ html, body {
         align-items: center;
         display: flex;
     }
+        .content{
+            padding:5px;
+        }
 
-    #itemKeyBlock {
-        margin-left: 240px;
-        display: flex;
-        width: auto;
-        overflow-x: scroll;
-    }
+        #itemKeyBlock {
+            padding-bottom: 60px;
+            margin-left: 240px;
+            display: flex;
+            width: auto;
+            overflow-x: scroll;
+        }
     #buttonActionFinishBlock {
         text-align: center;
         display: block;
@@ -663,7 +685,7 @@ html, body {
     }
 
     #sclusselInfo2 {  
-        height: 80px;
+        height: 40px;
         width: 240px;
         padding: 5px;
         background: red;
@@ -672,12 +694,14 @@ html, body {
         display: flex;
         margin-top: -100px;
     }
-    #textInform {
-        display: flex;
-        gap: 130px;
-        margin-top:10px;
-        margin-left:0px;
-    }
+        #textInform {
+            padding-left: 15px;
+            text-align: start;
+            grid-template-columns: auto auto;
+            display: grid;
+            margin-top: 10px;
+            margin-left: 0;
+        }
     #infoButten {
         width: 20px;
         padding: 5px;
@@ -743,7 +767,6 @@ html, body {
 
     #schlussel {
         margin-top: 5px;
-        font-size: 8px;
         margin-left: 2px !important;
         padding-right: 8px ;
     }
@@ -755,9 +778,26 @@ html, body {
         height: 15px !important;
         width: 15px !important;
     }
-        #schlussel > div > p{
-            font-size:6px !important;
+
+        #sclusselInfo2 > .h5, h5 {
+            font-size: 5px !important;
         }
+        #sclusselInfo2 > .h6, h6 {
+            font-size: 5px !important;
+        }
+        #sclusselInfo2 > #schlussel > div > p {
+            font-size: 5px !important;
+        }
+        #counterTur {
+            margin-right: 1px;
+            margin-top: 5px;
+        }
+
+            #counterTur > svg {
+                margin-right: 1px;
+                height: 5px;
+                width: 5px;
+            }
 
         #add_And_Minus {
             background: red;
@@ -834,11 +874,45 @@ html, body {
         font-size: 16px;
         color: white;
     }
-    
+        .danger {
+            background-color: var(--primary-color);
+            color: white;
+            outline: none;
+            font-size: 12px;
+            padding: 10px;
+        }
+
+        .btn-outline-danger {
+            background-color: transparent;
+            color: var(--primary-color);
+            outline: none;
+            border: 1px solid var(--primary-color);
+        }
+        #sys {
+            font-size: 24px;
+        }
+        .pagination {
+            font-size: 16px;
+        }
 }
 
 @media(max-width:900px) and (orientation: landscape) 
 {
+    a {
+        text-decoration-color: none;
+        color: #fff;
+    }
+    .pagination {
+        font-size: 16px;
+    }
+
+    #cost {
+        color: red;
+        font-size: 24px;
+        outline: none;
+        border: none;
+    }
+
     #countTurSelect {
         transform: scale(0.7);
         outline: none;
@@ -918,6 +992,7 @@ html, body {
     }
     #cost 
     {
+        font-size: 12px;
         color: red;
     }
     #textInform {
@@ -931,6 +1006,7 @@ html, body {
         margin-top: 20px;
         display: block;
         gap: 150px;
+        font-size: 12px;
     }
         #product_desciptions > div > p > img {
             margin-left: -85px;
@@ -1002,8 +1078,9 @@ html, body {
         #Gesamtpreis {
             gap: 65px !important;
         }
-    #cost{
-        color:red;
+    #cost {
+        font-size: 12px;
+        color: red;
     }
     #lifer {
         color: red;
@@ -1138,6 +1215,7 @@ html, body {
     }
 
     #itemKeyBlock {
+        padding-bottom : 10px;
         gap: 8px;
         margin-left: 500px;
         display: flex;
@@ -1188,10 +1266,12 @@ html, body {
         padding: 5px;
 
     }
-
-    #konfigMenu{
-        margin-top:10px;
-        margin-bottom:10px;
+    #sys{
+        font-size:24px;
+    }
+    #konfigMenu {
+        margin-top: 10px;
+        margin-bottom: 10px;
     }
     #typeSylinder {
         margin-right: 5px;
@@ -1321,11 +1401,26 @@ html, body {
         border: none;
         margin-left: 10px;
     }
+    .danger {
+        background-color: var(--primary-color);
+        color: white;
+        outline: none;
+        font-size: 12px;
+        padding: 10px;
+    }
+
+    .btn-outline-danger {
+        background-color: transparent;
+        color: var(--primary-color);
+        outline: none;
+        border: 1px solid var(--primary-color);
+    }
 }
 @media (min-width: 900px) and (max-width: 1440px) 
 {
     #product_desciptions > div > p > img {
-        max-width: 500px;  
+        max-width: 500px;
+        font-size: 20px;
     }
     #product_desciptions > div > div > div > div > div > p > img {
         max-width: 500px;
@@ -1813,6 +1908,7 @@ html, body {
     }
 
     #product_desciptions {
+        font-size: 16px;
         min-height: 200px;
         margin-top: 20px;
         max-width: 340px;
@@ -2293,7 +2389,18 @@ html, body {
     #AllOrderUser {
         width: 67vw;
     }
- 
+    .danger {
+        background-color: var(--primary-color);
+        color: white;
+        outline: none;
+    }
+
+    .btn-outline-danger {
+        background-color: transparent;
+        color: var(--primary-color);
+        outline: none;
+        border: 1px solid var(--primary-color);
+    }
 }
 @media (min-width:1440px ) 
 {
@@ -2713,7 +2820,18 @@ html, body {
         display: block;
         width: 400px;
     }
+    .danger {
+        background-color: var(--primary-color);
+        color: white;
+        outline: none;
+    }
 
+    .btn-outline-danger {
+        background-color: transparent;
+        color: var(--primary-color);
+        outline: none;
+        border: 1px solid var(--primary-color);
+    }
     .input-counter {
         display: none;
     }
@@ -2765,6 +2883,7 @@ html, body {
     }
 
     #product_desciptions {
+        font-size: 20px;
         margin-top: 20px;
         min-height: 200px;
     }

@@ -1,4 +1,4 @@
-﻿function Plus(turNumber) {
+﻿    function Plus(turNumber) {
     let BlockTur = document.querySelector(`#BlockTur-${turNumber}`);
     let countTur = BlockTur.querySelector("#infoButten");
     let count = countTur.value;
@@ -53,7 +53,7 @@ function selectParam(value, turNumber) {
             Intern.appendChild(option);
         }
 
-        TypeSylinder.src = "/Image/doppelzylinder.png";
+        TypeSylinder.src = "/compression/doppelzylinder.webp";
     }
     if (value == "Halbzylinder") {
         for (let i = 0; i < HalbSize.length; i++) {
@@ -64,7 +64,7 @@ function selectParam(value, turNumber) {
             Aussen.appendChild(option);
         }
 
-        TypeSylinder.src = "/Image/halbzylinder.png";
+        TypeSylinder.src = "/compression/halbzylinder.webp";
     }
     if (value == "Knaufzylinder") {
         for (let i = 0; i < KnayfAussenSize.length; i++) {
@@ -82,19 +82,19 @@ function selectParam(value, turNumber) {
             Intern.appendChild(option);
         }
 
-        TypeSylinder.src = "/Image/knaufzylinder.png";
+        TypeSylinder.src = "/compression/knaufzylinder.webp";
 
     }
     if (value == "Hebelzylinder") {
 
-        TypeSylinder.src = "/Image/briefkastenzylinder.png";
-    }
+        TypeSylinder.src = "/compression/briefkastenzylinder.webp";
+    } 
     if (value == "Vorhangschloss") {
-        TypeSylinder.src = "/Image/vorhangschloss.png";
+        TypeSylinder.src = "/compression/vorhangschloss.webp";
     }
     if (value == "Aussenzylinder") {
 
-        TypeSylinder.src = "/Image/aussenzylinder.png";
+        TypeSylinder.src = "/compression/aussenzylinder.webp";
     }
 
 }
@@ -128,7 +128,6 @@ function addBlockTur()
     let newBlock = document.createElement('div');
     newBlock.id = 'BlockTur-' + blockTur;
     newBlock.className = "block";
-    newBlock.draggable = "true";
     newBlock.innerHTML = `  <div class="TexCountTur">
                                             <div id="ItemTur">
                                                 <div id="position">
@@ -143,7 +142,7 @@ function addBlockTur()
 
                                                     <div>
 
-                                                         <img  id="typeSylinder" src="/Image/doppelzylinder.png" height="30" width="30"  />
+                                                         <img  id="typeSylinder" src="/compression/doppelzylinder.webp" height="30" width="30"  />
 
                                                     </div>
                                             </div>
@@ -206,27 +205,9 @@ function addBlockTur()
 
     document.getElementById('BlockTur-0').appendChild(newBlock);
 
-    blocks = container.querySelectorAll('.block');
-    blocks.forEach(block => {
-        block.addEventListener('dragstart', handleDragStart);
-        block.addEventListener('dragover', handleDragOver);
-        block.addEventListener('drop', handleDrop);
-        block.addEventListener('dragend', handleDragEnd);
-    });
-
-
     let horizont = document.createElement('div');
     horizont.id = `${blockTur}horizontal`;
     horizont.classList.add('horizontal');
-    horizont.draggable = "true";
-
-    blocksKey = containerKey.querySelectorAll('.horizontal');
-    blocksKey.forEach(block => {
-        block.addEventListener('dragstart', handleDragStartKey);
-        block.addEventListener('dragover', handleDragOverKey);
-        block.addEventListener('drop', handleDropKey);
-        block.addEventListener('dragend', handleDragEndKey);
-    });
 
     for (let i = 1; i <= blockCount; i++) {
 
@@ -256,7 +237,6 @@ function selectTur(value)
 
             let newBlock = document.createElement('div');
             newBlock.className = "block";
-            newBlock.draggable = "true";
             newBlock.id = 'BlockTur-' + blockTur;
             newBlock.innerHTML = `  <div class="TexCountTur">
                                                     <div id="ItemTur">
@@ -271,7 +251,7 @@ function selectTur(value)
                                                         </div>
 
                                                             <div>
-                                                                 <img  id="typeSylinder" src="/Image/doppelzylinder.png" height="30" width="30"  />
+                                                                 <img  id="typeSylinder" src="/compression/doppelzylinder.webp" height="30" width="30"  />
                                                             </div>
                                                     </div>
 
@@ -331,16 +311,7 @@ function selectTur(value)
 
             document.getElementById('BlockTur-0').appendChild(newBlock);
 
-            let blocks = container.querySelectorAll('.block');
-            blocks.forEach(block => {
-                block.addEventListener('dragstart', handleDragStart);
-                block.addEventListener('dragover', handleDragOver);
-                block.addEventListener('drop', handleDrop);
-                block.addEventListener('dragend', handleDragEnd);
-            });
-
             let horizont = document.createElement('div');
-            horizont.draggable = "true";
             horizont.id = `${blockTur}horizontal`;
             horizont.classList.add('horizontal');
 
@@ -361,14 +332,7 @@ function selectTur(value)
 
                 createCustomCheckbox(`${blockTur}checkbox${i}`);
             }
-            let blocksKey = containerKey.querySelectorAll('.horizontal');
-
-            blocksKey.forEach(block => {
-                block.addEventListener('dragstart', handleDragStartKey);
-                block.addEventListener('dragover', handleDragOverKey);
-                block.addEventListener('drop', handleDropKey);
-                block.addEventListener('dragend', handleDragEndKey);
-            });
+           
         }
 
     }

@@ -51,25 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d9e127d8-af19-42ea-8ffd-3a6facea7063",
+                            Id = "2c2812f3-955e-4fae-bdda-574dfeb05962",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "353f12e2-4fcd-4ccf-a392-a6a26b2e8465",
+                            Id = "7995fae5-99b4-49b3-b448-c8480b700e32",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "fcd64e2a-ac85-46aa-916c-908a3bf323e4",
+                            Id = "27438d93-776f-4acc-8d43-5c4e0711687d",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "17fb8d19-97c5-4a16-b9c7-f2fcdd6e4d79",
+                            Id = "85d50fcd-c52b-4e69-b8a9-e84ffd4ef355",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -279,6 +279,9 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("companyName")
                         .HasColumnType("nvarchar(max)");
 
@@ -399,6 +402,9 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("companyName")
                         .HasColumnType("nvarchar(max)");
 
@@ -457,6 +463,9 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     b.Property<float>("Price")
                         .HasColumnType("real");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("companyName")
                         .HasColumnType("nvarchar(max)");
@@ -778,14 +787,14 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("companyName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("description")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("isGround")
-                        .HasColumnType("bit");
 
                     b.Property<int>("schliessanlagenId")
                         .HasColumnType("int");
@@ -944,14 +953,14 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("companyName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("description")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("isGround")
-                        .HasColumnType("bit");
 
                     b.Property<int>("schliessanlagenId")
                         .HasColumnType("int");
@@ -1504,6 +1513,9 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     b.Property<float>("Price")
                         .HasColumnType("real");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("companyName")
                         .HasColumnType("nvarchar(max)");

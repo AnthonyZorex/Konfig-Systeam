@@ -46,37 +46,11 @@
         <div class="content">
             @RenderBody()
         </div>
-
-        <div class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4 mt-2 p-2">
-                        <img src="@Url.Content("~/Image/basi.png")" alt="Basi" height="60" width="120" />
-                    </div>
-                    <div class="col-md-4 mt-2 p-2">
-                        <img src="@Url.Content("~/Image/ces.png")" alt="CES" height="40" width="40" style="margin-left:10px" />
-                        <br />
-                        <div style="margin-top:20px">
-                            <li><a onclick="sendInfo(event.target.textContent)">UDM5</a></li>
-                            <li><a onclick="sendInfo(event.target.textContent)">RHM5</a></li>
-                            <li><a onclick="sendInfo(event.target.textContent)">DU5</a></li>
-                            <li><a onclick="sendInfo(event.target.textContent)">WO5</a></li>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mt-2 p-2">
-                        <img src="@Url.Content("~/Image/logo_abus.png")" alt="ABUS" height="80" width="60" />
-                    </div>
-                    <div class="col-md-4 mt-2 p-2">
-                        <img src="@Url.Content("~/Image/logo_evva.png")" alt="EVVA" height="80" width="60" />
-                    </div>
-                </div>
-                <hr style="height: 3px;">
-                <h2><a href="@Url.Action("Impressum", "Home")">Impressum</a></h2>
-            </div>
-        </div>
+        @await Component.InvokeAsync("Footer")
     </div>
+      
 
-    <script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script>
+   <script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script> 
      <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" async></script>
     <script src="~/lib/jquery/dist/jquery.min.js" async></script>
     @await RenderSectionAsync("Scripts", required: false)

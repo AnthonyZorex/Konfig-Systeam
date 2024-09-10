@@ -1,134 +1,4 @@
-﻿const containerKey = document.getElementById('InfoValue');
-let blocksKey;
-let dragSrcElkey = null;
-
-const container = document.getElementById('BlockTur-0');
-let blocks;
-let dragSrcEl = null;
-
-function handleDragStart(e) {
-    console.log(e);
-    dragSrcEl = this;
-    e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('text/html', this.innerHTML);
-    this.classList.add('dragging');
-
-
-    // handleDragStartKey(e)
-}
-
-function handleDragOver(e) {
-    if (e.preventDefault) {
-        e.preventDefault();
-    }
-
-    e.dataTransfer.dropEffect = 'move';  
-    return false;
-}
-
-function handleDrop(e) {
-    if (e.stopPropagation) {
-        e.stopPropagation(); 
-    }
-
-    if (dragSrcEl !== this) {
-        const dragSrcSelectValues = Array.from(dragSrcEl.querySelectorAll('select')).map(select => select.value);
-        const dropSelectValues = Array.from(this.querySelectorAll('select')).map(select => select.value);
-
-        const dragSrcInputValues = Array.from(dragSrcEl.querySelectorAll('input')).map(select => select.value);
-        const dropInputValues = Array.from(this.querySelectorAll('input')).map(select => select.value);
-
-        dragSrcEl.innerHTML = this.innerHTML;
-
-        let b = dragSrcEl.id;
-
-        dragSrcEl.id = this.id;
-
-        this.id = b;
-
-        this.innerHTML = e.dataTransfer.getData('text/html');
-
-        Array.from(dragSrcEl.querySelectorAll('select')).forEach((select, index) => select.value = dropSelectValues[index]);
-        Array.from(this.querySelectorAll('select')).forEach((select, index) => select.value = dragSrcSelectValues[index]);
-
-        Array.from(dragSrcEl.querySelectorAll('input')).forEach((input, index) => input.value = dropInputValues[index]);
-        Array.from(this.querySelectorAll('input')).forEach((input, index) => input.value = dragSrcInputValues[index]);
-
-
-    }
-
-    return false;
-}
-
-function handleDragEnd(e) {
-    this.classList.remove('dragging');
-    let blocks = container.querySelectorAll('.block');
-    blocks.forEach(block => {
-        block.classList.remove('over');
-    });
-}
-
-
-
-function handleDragStartKey(e) {
-    dragSrcElkey = this;
-    e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('text/html', this.innerHTML);
-    this.classList.add('dragging');
-
-}
-
-function handleDragOverKey(e) {
-    if (e.preventDefault) {
-        e.preventDefault(); // Necessary. Allows us to drop.
-    }
-
-    e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
-    return false;
-}
-
-function handleDropKey(e) {
-    if (e.stopPropagation) {
-        e.stopPropagation(); // Stops some browsers from redirecting.
-    }
-
-    if (dragSrcElkey !== this) {
-        const dragSrcInputValues = Array.from(dragSrcElkey.querySelectorAll('input')).map(select => select.value);
-        const dropInputValues = Array.from(this.querySelectorAll('input')).map(select => select.value);
-
-        const dragSrcCheckboxValues = Array.from(dragSrcElkey.querySelectorAll('.konfiguratorSelect')).map(checkbox => checkbox.checked);
-        const dropCheckboxValues = Array.from(this.querySelectorAll('.konfiguratorSelect')).map(checkbox => checkbox.checked);
-
-        // Замена содержимого блоков
-        dragSrcElkey.innerHTML = this.innerHTML;
-
-        let b = dragSrcElkey.id;
-
-        dragSrcElkey.id = this.id;
-
-        this.id = b;
-
-        this.innerHTML = e.dataTransfer.getData('text/html');
-
-        Array.from(dragSrcElkey.querySelectorAll('input')).forEach((input, index) => input.value = dropInputValues[index]);
-        Array.from(this.querySelectorAll('input')).forEach((input, index) => input.value = dragSrcInputValues[index]);
-
-        Array.from(dragSrcElkey.querySelectorAll('.konfiguratorSelect')).forEach((checkbox, index) => checkbox.checked = dropCheckboxValues[index]);
-        Array.from(this.querySelectorAll('.konfiguratorSelect')).forEach((checkbox, index) => checkbox.checked = dragSrcCheckboxValues[index]);
-
-    }
-
-    return false;
-}
-
-function handleDragEndKey(e) {
-    this.classList.remove('dragging');
-    let blocksKey = containerKey.querySelectorAll('.block');
-    blocksKey.forEach(block => {
-        block.classList.remove('over');
-    });
-}
-
+﻿
 function TurUp(Id) {
     let alltur = document.querySelectorAll(".block");
     let allKey = document.querySelectorAll(".horizontal");
@@ -297,9 +167,7 @@ function TurDown(Id) {
         let nextElementKey = allKeyArray[index + 1];
         parent2.insertBefore(nextElementKey, Key_down);
     }
-    else {
-        console.log("Элемент не найден или он уже последний.");
-    }
+   
 }
 
 function controlPannel(Id) {
@@ -328,13 +196,8 @@ let countTurSelect = document.getElementById("countTurSelect");
 
 function drawLines(id, row)
 {
-    let all_block = document.querySelectorAll(".block");
-
     const elemX = document.getElementById('BlockTur-' + id);
     const elemY = document.getElementById(id + 'checkbox' + row);
-
-    console.log(id);
-    console.log(elemY);
 
     const rectX = elemX.getBoundingClientRect();
     const rectY = elemY.getBoundingClientRect();

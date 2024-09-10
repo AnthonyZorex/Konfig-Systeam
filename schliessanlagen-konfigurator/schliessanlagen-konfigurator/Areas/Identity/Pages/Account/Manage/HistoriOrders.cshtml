@@ -25,19 +25,19 @@
                     <div id="hederBlockOrder">
                        
                         <div>
-                            <h5>Artikel</h5>
+                            <h4>Artikel</h4>
                         </div>
                         <div id="orderCostHeader">
                             <div>
-                                <h5>Preis</h5>
+                                <h4>Preis</h4>
                             </div>
                         </div>
                     </div>
                     <div id="producktInfo">
                         <img src="@("/Image/Schliarticle.jpg")" data-bs-toggle="modal" data-bs-target="#myModal-@z" height="150" width="150" />
-                        <h5>@orderList[z].ProductName</h5>
+                        <h4>@orderList[z].ProductName</h4>
                         <div id="costedInfo">
-                            <h5 id="cost-@z">@orderList[z].OrderSum €</h5>
+                            <h4 id="cost-@z">@orderList[z].OrderSum €</h4>
                         </div>
                     </div>
 
@@ -59,15 +59,15 @@
                                                 </div>
                                                 <div class="col-md-8">
                                                     <div class="card-body">
-                                                        <h5 class="card-title">Name: @orderItem[ProudctItemCounter].Name</h5>
+                                                        <h4 class="card-title">Name: @orderItem[ProudctItemCounter].Name</h4>
                                                         <div class="card-text">
                                                             @Html.Raw(descriptions[ProudctItemCounter])
 
                                                             <br/>
-                                                            <h6>aussen: @orderItem[ProudctItemCounter].Aussen</h6>
-                                                            <h6>innen: @orderItem[ProudctItemCounter].Intern</h6>
-                                                            <h6>Option - @orderItem[ProudctItemCounter].Option</h6>
-                                                            <h5 style="color:red">Preis: @orderItem[ProudctItemCounter].Price,00 €</h5>
+                                                            <h4>aussen: @orderItem[ProudctItemCounter].Aussen</h4>
+                                                            <h4>innen: @orderItem[ProudctItemCounter].Intern</h4>
+                                                            <h4>Option - @orderItem[ProudctItemCounter].Option</h4>
+                                                            <h4 style="color:red">Preis: @orderItem[ProudctItemCounter].Price,00 €</h4>
                                                         </div>
                                                     </div>
                                                 </div>

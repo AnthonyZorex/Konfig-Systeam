@@ -3,40 +3,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using schliessanlagen_konfigurator.Data;
-using schliessanlagen_konfigurator.Models;
-using schliessanlagen_konfigurator.Models.Aussen_Rund;
-using schliessanlagen_konfigurator.Models.Halbzylinder;
 using schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder;
-using schliessanlagen_konfigurator.Models.ProfilDopelZylinder;
 using schliessanlagen_konfigurator.Models.Users;
-using schliessanlagen_konfigurator.Models.Vorhan;
-using System.Diagnostics;
 using System.Security.Claims;
-using System.Drawing;
-using MailKit.Net.Smtp;
-using MimeKit;
-using System.Text;
-using schliessanlagen_konfigurator.Models.Hebel;
-using schliessanlagen_konfigurator.Models.System;
 using schliessanlagen_konfigurator.Schop_models;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using System.Linq.Dynamic.Core;
-using System.Drawing.Printing;
-using Microsoft.EntityFrameworkCore.Query.Internal;
-using schliessanlagen_konfigurator.Migrations;
-using OpenAI_API.Chat;
-using OpenAI_API;
-using System.Drawing;
-using System.Security.Policy;
-using schliessanlagen_konfigurator.Models.OrdersOpen;
-using Microsoft.AspNetCore.OutputCaching;
+using schliessanlagen_konfigurator.Service;
 namespace schliessanlagen_konfigurator.Controllers
 {
     public class SchopController : Controller
     {
         schliessanlagen_konfiguratorContext db;
         private IWebHostEnvironment Environment;
-
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         public SchopController(UserManager<User> userManager, SignInManager<User> signInManager, schliessanlagen_konfiguratorContext context, IWebHostEnvironment _environment)
@@ -46,7 +24,8 @@ namespace schliessanlagen_konfigurator.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
         }
-        async void ZylinderHerschteller(int? page, float? priceVon, float? priceBis, string? Herschteller, string? Sort_string, ZylinderViewModel model)
+
+        async void ZylinderHerschteller(string Typ , int? page, float? priceVon, float? priceBis, string? Herschteller, string? Sort_string, ZylinderViewModel model)
         {
             int pageSize = 10;
             int pageNumber = (page ?? 1);
@@ -59,12 +38,12 @@ namespace schliessanlagen_konfigurator.Controllers
                 {
                     if (priceBis != null && priceVon != null && Herschteller == null)
                     {
-                        var doppelZylinder = db.Profil_Doppelzylinder.Where(x => x.Name.Contains(Sort_string) && x.Price > priceVon && priceBis > x.Price).ToList();
-                        var knayfZylinder = db.Profil_Knaufzylinder.Where(x => x.Name.Contains(Sort_string) && x.Price > priceVon && priceBis > x.Price).ToList();
-                        var halbZylinder = db.Profil_Halbzylinder.Where(x => x.Name.Contains(Sort_string) && x.Price > priceVon && priceBis > x.Price).ToList();
-                        var hebelZylinder = db.Hebelzylinder.Where(x => x.Name.Contains(Sort_string) && x.Price > priceVon && priceBis > x.Price).ToList();
-                        var vorhanZylinder = db.Vorhangschloss.Where(x => x.Name.Contains(Sort_string) && x.Price > priceVon && priceBis > x.Price).ToList();
-                        var aussenZylinder = db.Aussenzylinder_Rundzylinder.Where(x => x.Name.Contains(Sort_string) && x.Price > priceVon && priceBis > x.Price).ToList();
+                        var doppelZylinder = db.Profil_Doppelzylinder.Where(x => x.Name.Contains(Sort_string) && x.Type == Typ  && x.Price > priceVon && priceBis > x.Price).ToList();
+                        var knayfZylinder = db.Profil_Knaufzylinder.Where(x => x.Name.Contains(Sort_string) && x.Type == Typ && x.Price > priceVon && priceBis > x.Price).ToList();
+                        var halbZylinder = db.Profil_Halbzylinder.Where(x => x.Name.Contains(Sort_string) && x.Type == Typ && x.Price > priceVon && priceBis > x.Price).ToList();
+                        var hebelZylinder = db.Hebelzylinder.Where(x => x.Name.Contains(Sort_string) && x.Type == Typ && x.Price > priceVon && priceBis > x.Price).ToList();
+                        var vorhanZylinder = db.Vorhangschloss.Where(x => x.Name.Contains(Sort_string) && x.Type == Typ && x.Price > priceVon && priceBis > x.Price).ToList();
+                        var aussenZylinder = db.Aussenzylinder_Rundzylinder.Where(x => x.Name.Contains(Sort_string) && x.Type == Typ && x.Price > priceVon && priceBis > x.Price).ToList();
 
                         var count_zylinder = doppelZylinder.Distinct().Count() + hebelZylinder.Distinct().Count() + knayfZylinder.Distinct().Count() +
                         halbZylinder.Distinct().Count() + vorhanZylinder.Distinct().Count() + aussenZylinder.Distinct().Count();
@@ -79,6 +58,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         .ToList<dynamic>();
 
                         int totalItems = count_zylinder;
+                        model.Typ = Typ;
                         model.PriceBis = priceBis;
                         model.PriceVon = priceVon;
                         model.Herschteller = Herschteller;
@@ -88,12 +68,12 @@ namespace schliessanlagen_konfigurator.Controllers
                     }
                     else if (priceBis == null && priceVon == null && Herschteller != null)
                     {
-                        var doppelZylinder = db.Profil_Doppelzylinder.Where(x => x.Name.Contains(Sort_string) && x.companyName == Herschteller).ToList();
-                        var knayfZylinder = db.Profil_Knaufzylinder.Where(x => x.Name.Contains(Sort_string) && x.companyName == Herschteller).ToList();
-                        var halbZylinder = db.Profil_Halbzylinder.Where(x => x.Name.Contains(Sort_string) && x.companyName == Herschteller).ToList();
-                        var hebelZylinder = db.Hebelzylinder.Where(x => x.Name.Contains(Sort_string) && x.companyName == Herschteller).ToList();
-                        var vorhanZylinder = db.Vorhangschloss.Where(x => x.Name.Contains(Sort_string) && x.companyName == Herschteller).ToList();
-                        var aussenZylinder = db.Aussenzylinder_Rundzylinder.Where(x => x.Name.Contains(Sort_string) && x.companyName == Herschteller).ToList();
+                        var doppelZylinder = db.Profil_Doppelzylinder.Where(x => x.Name.Contains(Sort_string) && x.Type == Typ && x.companyName == Herschteller).ToList();
+                        var knayfZylinder = db.Profil_Knaufzylinder.Where(x => x.Name.Contains(Sort_string) && x.Type == Typ && x.companyName == Herschteller).ToList();
+                        var halbZylinder = db.Profil_Halbzylinder.Where(x => x.Name.Contains(Sort_string) && x.Type == Typ && x.companyName == Herschteller).ToList();
+                        var hebelZylinder = db.Hebelzylinder.Where(x => x.Name.Contains(Sort_string) && x.Type == Typ && x.companyName == Herschteller).ToList();
+                        var vorhanZylinder = db.Vorhangschloss.Where(x => x.Name.Contains(Sort_string) && x.Type == Typ && x.companyName == Herschteller).ToList();
+                        var aussenZylinder = db.Aussenzylinder_Rundzylinder.Where(x => x.Name.Contains(Sort_string) && x.Type == Typ && x.companyName == Herschteller).ToList();
 
                         var count_zylinder = doppelZylinder.Distinct().Count() + hebelZylinder.Distinct().Count() + knayfZylinder.Distinct().Count() +
                         halbZylinder.Distinct().Count() + vorhanZylinder.Distinct().Count() + aussenZylinder.Distinct().Count();
@@ -110,17 +90,18 @@ namespace schliessanlagen_konfigurator.Controllers
                         model.Sort_string = Sort_string;
                         int totalItems = count_zylinder;
                         model.Herschteller = Herschteller;
+                        model.Typ = Typ;
                         model.page = pageNumber;
                         model.TotalPages = (int)Math.Ceiling((double)totalItems / pageSize);
                     }
                     else
                     {
-                        var doppelZylinder = db.Profil_Doppelzylinder.Where(x => x.Name.Contains(Sort_string) && x.companyName == Herschteller && (x.Price > priceVon && priceBis > x.Price)).ToList();
-                        var knayfZylinder = db.Profil_Knaufzylinder.Where(x => x.Name.Contains(Sort_string) && x.companyName == Herschteller && (x.Price > priceVon && priceBis > x.Price)).ToList();
-                        var halbZylinder = db.Profil_Halbzylinder.Where(x => x.Name.Contains(Sort_string) && x.companyName == Herschteller && (x.Price > priceVon && priceBis > x.Price)).ToList();
-                        var hebelZylinder = db.Hebelzylinder.Where(x => x.Name.Contains(Sort_string) && x.companyName == Herschteller && (x.Price > priceVon && priceBis > x.Price)).ToList();
-                        var vorhanZylinder = db.Vorhangschloss.Where(x => x.Name.Contains(Sort_string) && x.companyName == Herschteller && (x.Price > priceVon && priceBis > x.Price)).ToList();
-                        var aussenZylinder = db.Aussenzylinder_Rundzylinder.Where(x => x.Name.Contains(Sort_string) && x.companyName == Herschteller && (x.Price > priceVon && priceBis > x.Price)).ToList();
+                        var doppelZylinder = db.Profil_Doppelzylinder.Where(x => x.Name.Contains(Sort_string) && x.Type == Typ && x.companyName == Herschteller && (x.Price > priceVon && priceBis > x.Price)).ToList();
+                        var knayfZylinder = db.Profil_Knaufzylinder.Where(x => x.Name.Contains(Sort_string) && x.Type == Typ && x.companyName == Herschteller && (x.Price > priceVon && priceBis > x.Price)).ToList();
+                        var halbZylinder = db.Profil_Halbzylinder.Where(x => x.Name.Contains(Sort_string) && x.Type == Typ && x.companyName == Herschteller && (x.Price > priceVon && priceBis > x.Price)).ToList();
+                        var hebelZylinder = db.Hebelzylinder.Where(x => x.Name.Contains(Sort_string) && x.Type == Typ && x.companyName == Herschteller && (x.Price > priceVon && priceBis > x.Price)).ToList();
+                        var vorhanZylinder = db.Vorhangschloss.Where(x => x.Name.Contains(Sort_string) && x.Type == Typ && x.companyName == Herschteller && (x.Price > priceVon && priceBis > x.Price)).ToList();
+                        var aussenZylinder = db.Aussenzylinder_Rundzylinder.Where(x => x.Name.Contains(Sort_string) && x.Type == Typ && x.companyName == Herschteller && (x.Price > priceVon && priceBis > x.Price)).ToList();
 
                         var count_zylinder = doppelZylinder.Distinct().Count() + hebelZylinder.Distinct().Count() + knayfZylinder.Distinct().Count() +
                         halbZylinder.Distinct().Count() + vorhanZylinder.Distinct().Count() + aussenZylinder.Distinct().Count();
@@ -137,6 +118,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         model.Sort_string = Sort_string;
                         int totalItems = count_zylinder;
                         model.PriceBis = priceBis;
+                        model.Typ = Typ;
                         model.PriceVon = priceVon;
                         model.Herschteller = Herschteller;
                         model.page = pageNumber;
@@ -147,12 +129,12 @@ namespace schliessanlagen_konfigurator.Controllers
                 else
                 {
                     model.Herschteller = null;
-                    var doppelZylinder = db.Profil_Doppelzylinder.Where(x => x.Name.Contains(Sort_string)).ToList();
-                    var knayfZylinder = db.Profil_Knaufzylinder.Where(x => x.Name.Contains(Sort_string)).ToList();
-                    var halbZylinder = db.Profil_Halbzylinder.Where(x => x.Name.Contains(Sort_string)).ToList();
-                    var hebelZylinder = db.Hebelzylinder.Where(x => x.Name.Contains(Sort_string)).Distinct().ToList();
-                    var vorhanZylinder = db.Vorhangschloss.Where(x => x.Name.Contains(Sort_string)).Distinct().ToList();
-                    var aussenZylinder = db.Aussenzylinder_Rundzylinder.Where(x => x.Name.Contains(Sort_string)).Distinct().ToList();
+                    var doppelZylinder = db.Profil_Doppelzylinder.Where(x => x.Name.Contains(Sort_string) && x.Type == Typ).ToList();
+                    var knayfZylinder = db.Profil_Knaufzylinder.Where(x => x.Name.Contains(Sort_string) && x.Type == Typ).ToList();
+                    var halbZylinder = db.Profil_Halbzylinder.Where(x => x.Name.Contains(Sort_string) && x.Type == Typ).ToList();
+                    var hebelZylinder = db.Hebelzylinder.Where(x => x.Name.Contains(Sort_string) && x.Type == Typ).Distinct().ToList();
+                    var vorhanZylinder = db.Vorhangschloss.Where(x => x.Name.Contains(Sort_string) && x.Type == Typ).Distinct().ToList();
+                    var aussenZylinder = db.Aussenzylinder_Rundzylinder.Where(x => x.Name.Contains(Sort_string) && x.Type == Typ).Distinct().ToList();
 
                     var count_zylinder = doppelZylinder.Distinct().Count() + hebelZylinder.Distinct().Count() + knayfZylinder.Distinct().Count() +
                     halbZylinder.Distinct().Count() + vorhanZylinder.Distinct().Count() + aussenZylinder.Distinct().Count();
@@ -168,6 +150,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     .Take(pageSize)
                     .ToList<dynamic>();
 
+                    model.Typ = Typ;
                     int totalItems = count_zylinder;
                     model.Sort_string = Sort_string;
                     model.page = pageNumber;
@@ -181,12 +164,12 @@ namespace schliessanlagen_konfigurator.Controllers
                 {
                     if (priceBis != null && priceVon != null && Herschteller == null)
                     {
-                        var doppelZylinder = db.Profil_Doppelzylinder.Where(x => x.Price > priceVon && priceBis > x.Price).ToList();
-                        var knayfZylinder = db.Profil_Knaufzylinder.Where(x => x.Price > priceVon && priceBis > x.Price).ToList();
-                        var halbZylinder = db.Profil_Halbzylinder.Where(x => x.Price > priceVon && priceBis > x.Price).ToList();
-                        var hebelZylinder = db.Hebelzylinder.Where(x => x.Price > priceVon && priceBis > x.Price).ToList();
-                        var vorhanZylinder = db.Vorhangschloss.Where(x => x.Price > priceVon && priceBis > x.Price).ToList();
-                        var aussenZylinder = db.Aussenzylinder_Rundzylinder.Where(x => x.Price > priceVon && priceBis > x.Price).ToList();
+                        var doppelZylinder = db.Profil_Doppelzylinder.Where(x => x.Price > priceVon && priceBis > x.Price && x.Type == Typ).ToList();
+                        var knayfZylinder = db.Profil_Knaufzylinder.Where(x => x.Price > priceVon && priceBis > x.Price && x.Type == Typ).ToList();
+                        var halbZylinder = db.Profil_Halbzylinder.Where(x => x.Price > priceVon && priceBis > x.Price && x.Type == Typ).ToList();
+                        var hebelZylinder = db.Hebelzylinder.Where(x => x.Price > priceVon && priceBis > x.Price && x.Type == Typ).ToList();
+                        var vorhanZylinder = db.Vorhangschloss.Where(x => x.Price > priceVon && priceBis > x.Price && x.Type == Typ).ToList();
+                        var aussenZylinder = db.Aussenzylinder_Rundzylinder.Where(x => x.Price > priceVon && priceBis > x.Price && x.Type == Typ).ToList();
 
                         var count_zylinder = doppelZylinder.Distinct().Count() + hebelZylinder.Distinct().Count() + knayfZylinder.Distinct().Count() +
                         halbZylinder.Distinct().Count() + vorhanZylinder.Distinct().Count() + aussenZylinder.Distinct().Count();
@@ -201,6 +184,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         .ToList<dynamic>();
 
                         int totalItems = count_zylinder;
+                        model.Typ = Typ;
                         model.PriceBis = priceBis;
                         model.PriceVon = priceVon;
                         model.Herschteller = Herschteller;
@@ -209,12 +193,12 @@ namespace schliessanlagen_konfigurator.Controllers
                     }
                     else if (priceBis == null && priceVon == null && Herschteller != null)
                     {
-                        var doppelZylinder = db.Profil_Doppelzylinder.Where(x => x.companyName == Herschteller).ToList();
-                        var knayfZylinder = db.Profil_Knaufzylinder.Where(x => x.companyName == Herschteller).ToList();
-                        var halbZylinder = db.Profil_Halbzylinder.Where(x => x.companyName == Herschteller).ToList();
-                        var hebelZylinder = db.Hebelzylinder.Where(x => x.companyName == Herschteller).ToList();
-                        var vorhanZylinder = db.Vorhangschloss.Where(x => x.companyName == Herschteller).ToList();
-                        var aussenZylinder = db.Aussenzylinder_Rundzylinder.Where(x => x.companyName == Herschteller).ToList();
+                        var doppelZylinder = db.Profil_Doppelzylinder.Where(x => x.companyName == Herschteller && x.Type == Typ).ToList();
+                        var knayfZylinder = db.Profil_Knaufzylinder.Where(x => x.companyName == Herschteller && x.Type == Typ).ToList();
+                        var halbZylinder = db.Profil_Halbzylinder.Where(x => x.companyName == Herschteller && x.Type == Typ).ToList();
+                        var hebelZylinder = db.Hebelzylinder.Where(x => x.companyName == Herschteller && x.Type == Typ).ToList();
+                        var vorhanZylinder = db.Vorhangschloss.Where(x => x.companyName == Herschteller && x.Type == Typ).ToList();
+                        var aussenZylinder = db.Aussenzylinder_Rundzylinder.Where(x => x.companyName == Herschteller && x.Type == Typ).ToList();
 
                         var count_zylinder = doppelZylinder.Distinct().Count() + hebelZylinder.Distinct().Count() + knayfZylinder.Distinct().Count() +
                         halbZylinder.Distinct().Count() + vorhanZylinder.Distinct().Count() + aussenZylinder.Distinct().Count();
@@ -231,16 +215,17 @@ namespace schliessanlagen_konfigurator.Controllers
                         int totalItems = count_zylinder;
                         model.Herschteller = Herschteller;
                         model.page = pageNumber;
+                        model.Typ = Typ;
                         model.TotalPages = (int)Math.Ceiling((double)totalItems / pageSize);
                     }
                     else
                     {
-                        var doppelZylinder = db.Profil_Doppelzylinder.Where(x => x.companyName == Herschteller && (x.Price > priceVon && priceBis > x.Price)).ToList();
-                        var knayfZylinder = db.Profil_Knaufzylinder.Where(x => x.companyName == Herschteller && (x.Price > priceVon && priceBis > x.Price)).ToList();
-                        var halbZylinder = db.Profil_Halbzylinder.Where(x => x.companyName == Herschteller && (x.Price > priceVon && priceBis > x.Price)).ToList();
-                        var hebelZylinder = db.Hebelzylinder.Where(x => x.companyName == Herschteller && (x.Price > priceVon && priceBis > x.Price)).ToList();
-                        var vorhanZylinder = db.Vorhangschloss.Where(x => x.companyName == Herschteller && (x.Price > priceVon && priceBis > x.Price)).ToList();
-                        var aussenZylinder = db.Aussenzylinder_Rundzylinder.Where(x => x.companyName == Herschteller && (x.Price > priceVon && priceBis > x.Price)).ToList();
+                        var doppelZylinder = db.Profil_Doppelzylinder.Where(x => x.companyName == Herschteller && x.Type == Typ && (x.Price > priceVon && priceBis > x.Price)).ToList();
+                        var knayfZylinder = db.Profil_Knaufzylinder.Where(x => x.companyName == Herschteller && x.Type == Typ && (x.Price > priceVon && priceBis > x.Price)).ToList();
+                        var halbZylinder = db.Profil_Halbzylinder.Where(x => x.companyName == Herschteller && x.Type == Typ && (x.Price > priceVon && priceBis > x.Price)).ToList();
+                        var hebelZylinder = db.Hebelzylinder.Where(x => x.companyName == Herschteller && x.Type == Typ && (x.Price > priceVon && priceBis > x.Price)).ToList();
+                        var vorhanZylinder = db.Vorhangschloss.Where(x => x.companyName == Herschteller && x.Type == Typ && (x.Price > priceVon && priceBis > x.Price)).ToList();
+                        var aussenZylinder = db.Aussenzylinder_Rundzylinder.Where(x => x.companyName == Herschteller && x.Type == Typ && (x.Price > priceVon && priceBis > x.Price)).ToList();
 
                         var count_zylinder = doppelZylinder.Distinct().Count() + hebelZylinder.Distinct().Count() + knayfZylinder.Distinct().Count() +
                         halbZylinder.Distinct().Count() + vorhanZylinder.Distinct().Count() + aussenZylinder.Distinct().Count();
@@ -257,6 +242,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         int totalItems = count_zylinder;
                         model.PriceBis = priceBis;
                         model.PriceVon = priceVon;
+                        model.Typ = Typ;
                         model.Herschteller = Herschteller;
                         model.page = pageNumber;
                         model.TotalPages = (int)Math.Ceiling((double)totalItems / pageSize);
@@ -266,12 +252,12 @@ namespace schliessanlagen_konfigurator.Controllers
                 else
                 {
                     model.Herschteller = null;
-                    var doppelZylinder = db.Profil_Doppelzylinder.ToList();
-                    var knayfZylinder = db.Profil_Knaufzylinder.ToList();
-                    var halbZylinder = db.Profil_Halbzylinder.ToList();
-                    var hebelZylinder = db.Hebelzylinder.Distinct().ToList();
-                    var vorhanZylinder = db.Vorhangschloss.Distinct().ToList();
-                    var aussenZylinder = db.Aussenzylinder_Rundzylinder.Distinct().ToList();
+                    var doppelZylinder = db.Profil_Doppelzylinder.Where(x=> x.Type == Typ).ToList();
+                    var knayfZylinder = db.Profil_Knaufzylinder.Where(x => x.Type == Typ).ToList();
+                    var halbZylinder = db.Profil_Halbzylinder.Where(x => x.Type == Typ).ToList();
+                    var hebelZylinder = db.Hebelzylinder.Where(x => x.Type == Typ).Distinct().ToList();
+                    var vorhanZylinder = db.Vorhangschloss.Where(x => x.Type == Typ).Distinct().ToList();
+                    var aussenZylinder = db.Aussenzylinder_Rundzylinder.Where(x => x.Type == Typ).Distinct().ToList();
 
                     var count_zylinder = doppelZylinder.Distinct().Count() + hebelZylinder.Distinct().Count() + knayfZylinder.Distinct().Count() +
                     halbZylinder.Distinct().Count() + vorhanZylinder.Distinct().Count() + aussenZylinder.Distinct().Count();
@@ -288,7 +274,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     .ToList<dynamic>();
 
                     int totalItems = count_zylinder;
-
+                    model.Typ = Typ;
                     model.page = pageNumber;
                     model.TotalPages = (int)Math.Ceiling((double)totalItems / pageSize);
 
@@ -300,19 +286,55 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(int? page,ZylinderViewModel model)
         {
-            ZylinderHerschteller(model.page, model.PriceVon, model.PriceBis, model.Herschteller, model.Sort_string, model);
+            ZylinderHerschteller(model.Typ == null? "Mechanik": model.Typ, model.page, model.PriceVon, model.PriceBis, model.Herschteller, model.Sort_string, model);
             return View("../Schop/Index", model);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Key_coppy()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult UploadPhoto(string imageData)
+        {
+            if (!string.IsNullOrEmpty(imageData))
+            {
+                var base64Data = imageData.Replace("data:image/png;base64,", "");
+                var imageBytes = Convert.FromBase64String(base64Data);
+                var fileName = Guid.NewGuid() + ".png";
+                string uploadFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Camera");
+
+                if (!Directory.Exists(uploadFolderPath))
+                {
+                    Directory.CreateDirectory(uploadFolderPath);
+                }
+
+                string filePath = Path.Combine(uploadFolderPath, fileName);
+                System.IO.File.WriteAllBytes(filePath, imageBytes);
+
+                ViewBag.Message = "Image uploaded successfully!";
+            }
+            else
+            {
+                ViewBag.Message = "Failed to upload image.";
+            }
+
+            return RedirectToAction("Key_coppy");
+        }
+
+        
 
         [HttpPost]
         public async Task<IActionResult> Index([FromBody] ZylinderViewModel filter)
         {
             int page = filter.page;
+            string type = filter.Typ;
             string herschteller = filter.Herschteller;
             string sort = filter.Sort_string;
             float? priceVon = filter.PriceVon;
             float? priceBis = filter.PriceBis;
-            return RedirectToAction("Index", "Schop", new { page = page, Herschteller = herschteller, priceVon = priceVon, priceBis = priceBis , Sort_string = sort });
+            return RedirectToAction("Index", "Schop", new { page = page, Herschteller = herschteller, priceVon = priceVon, priceBis = priceBis , Sort_string = sort, Typ = type });
         }
 
         public async Task<IActionResult> zylinder_page(string product_Name)
