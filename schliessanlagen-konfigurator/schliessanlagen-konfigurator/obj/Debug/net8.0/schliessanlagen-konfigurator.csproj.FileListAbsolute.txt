@@ -1299,7 +1299,6 @@ D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Debug\net8.0\NuGet.ProjectModel.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Debug\net8.0\NuGet.Protocol.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Debug\net8.0\NuGet.Versioning.dll
-D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Debug\net8.0\OpenAI_API.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Debug\net8.0\SQLitePCLRaw.batteries_v2.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Debug\net8.0\SQLitePCLRaw.core.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Debug\net8.0\SQLitePCLRaw.provider.e_sqlite3.dll
@@ -2426,3 +2425,9 @@ C:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\
 C:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Debug\net8.0\schliessanlagen-konfigurator.pdb
 C:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Debug\net8.0\schliessanlagen-konfigurator.genruntimeconfig.cache
 C:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\obj\Debug\net8.0\ref\schliessanlagen-konfigurator.dll
+D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Debug\net8.0\Microsoft.IO.RecyclableMemoryStream.dll
+D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Debug\net8.0\SixLabors.ImageSharp.dll
+D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Debug\net8.0\SixLabors.ImageSharp.Web.dll
+D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Debug\net8.0\System.Formats.Asn1.dll
+D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Debug\net8.0\System.Text.Json.dll
+D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Debug\net8.0\Tinify.dll
