@@ -59,10 +59,13 @@ builder.Services.AddResponseCompression(options =>
 {
     options.EnableForHttps = true;
     options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[]
-    {
-        "image/svg+xml+png",
-        "application/atom+xml"
-    });
+          {
+            "image/svg+xml",
+            "image/png",
+            "image/webp",
+            "application/atom+xml",
+            "application/rss+xml" 
+        });
     options.Providers.Add<BrotliCompressionProvider>();
     options.Providers.Add<GzipCompressionProvider>();
 });
@@ -95,12 +98,6 @@ app.UseStaticFiles(new StaticFileOptions
 });
 
 app.UseDefaultFiles();
-
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseExceptionHandler("/Home/Error");
-//    app.UseHsts();
-//}
 
 app.UseResponseCompression();
 
