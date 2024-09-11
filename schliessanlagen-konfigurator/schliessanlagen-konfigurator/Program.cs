@@ -137,10 +137,10 @@ app.UseEndpoints(endpoints =>
         pattern: "sitemap.xml",
         defaults: new { controller = "Sitemap", action = "Index" });
 
-    endpoints.MapControllerRoute(
-        name: "NotFound",
-        pattern: "{*url}",
-        defaults: new { controller = "Home", action = "Error" });
+    //endpoints.MapControllerRoute(
+    //    name: "NotFound",
+    //    pattern: "{*url}",
+    //    defaults: new { controller = "Home", action = "Error" });
 
 
     endpoints.MapControllerRoute(
