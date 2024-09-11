@@ -53,9 +53,9 @@ function selectParam(value, turNumber)
             option.innerText = DoppelInternSize[i];
             Intern.appendChild(option);
         }
-
+        console.log(TypeSylinder);
         TypeSylinder.src = "/compression/doppelzylinder.webp";
-        TypeSylinder.alt = "doppelzylinder";
+        TypeSylinder.setAttribute('alt', 'doppelzylinder');
     }
     if (value == "Halbzylinder") {
         for (let i = 0; i < HalbSize.length; i++) {
@@ -67,7 +67,7 @@ function selectParam(value, turNumber)
         }
 
         TypeSylinder.src = "/compression/halbzylinder.webp";
-        TypeSylinder.alt = "halbzylinder";
+        TypeSylinder.setAttribute('alt', 'halbzylinder');
     }
     if (value == "Knaufzylinder") {
         for (let i = 0; i < KnayfAussenSize.length; i++) {
@@ -86,21 +86,23 @@ function selectParam(value, turNumber)
         }
 
         TypeSylinder.src = "/compression/knaufzylinder.webp";
-        TypeSylinder.alt = "knaufzylinder";
-    }
-    if (value == "Hebelzylinder") {
+        TypeSylinder.setAttribute('alt', 'knaufzylinder');
 
+    }
+    if (value == "Hebelzylinder")
+    {
         TypeSylinder.src = "/compression/briefkastenzylinder.webp";
-        TypeSylinder.alt = "briefkastenzylinder";
+        TypeSylinder.setAttribute('alt', 'briefkastenzylinder');
     } 
-    if (value == "Vorhangschloss") {
+    if (value == "Vorhangschloss")
+    {
         TypeSylinder.src = "/compression/vorhangschloss.webp";
-        TypeSylinder.alt = "vorhangschloss";
+        TypeSylinder.setAttribute('alt', 'vorhangschloss');
     }
     if (value == "Aussenzylinder") {
 
         TypeSylinder.src = "/compression/aussenzylinder.webp";
-        TypeSylinder.alt = "aussenzylinder";
+        TypeSylinder.setAttribute('alt', 'aussenzylinder');
     }
 
 }
@@ -262,11 +264,11 @@ function selectTur(value)
                                                         </div>
 
                                                         <div>
-                                                                              <input id="inputTur" required  onchange="chekedNameArientiren(event.target.value,${blockTur})" value="Tür ${blockTur}" name="Turname" placeholder="Name der Tür" />
+                                                             <input id="inputTur" required  onchange="chekedNameArientiren(event.target.value,${blockTur})" value="Tür ${blockTur}" name="Turname" placeholder="Name der Tür" />
                                                         </div>
 
                                                             <div>
-                                                                 <img  id="typeSylinder" src="/compression/doppelzylinder.webp" height="30" width="30"  />
+                                                                 <img alt="doppelzylinder"  id="typeSylinder" src="/compression/doppelzylinder.webp" height="30" width="30"  />
                                                             </div>
                                                     </div>
 

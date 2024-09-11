@@ -16,6 +16,7 @@ using Microsoft.Extensions.Options;
 using schliessanlagen_konfigurator;
 using schliessanlagen_konfigurator.Service;
 using System.Security.Policy;
+using schliessanlagen_konfigurator.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -141,6 +142,11 @@ app.UseEndpoints(endpoints =>
         pattern: "{*url}",
         defaults: new { controller = "Home", action = "Error" });
 
+
+    endpoints.MapControllerRoute(
+       name: "robots",
+       pattern: "robots.txt",
+       defaults: new { controller = "Sitemap", action = "Robots" });
 
     endpoints.MapRazorPages();
 
