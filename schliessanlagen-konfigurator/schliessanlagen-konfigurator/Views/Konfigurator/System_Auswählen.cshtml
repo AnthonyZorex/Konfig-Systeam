@@ -26,7 +26,9 @@
     <div id="filteblock">
     <div>
         <button onclick="clean()" class="btn danger">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-filter-x"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M13.758 19.414l-4.758 1.586v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v1.5" /><path d="M22 22l-5 -5" /><path d="M17 22l5 -5" /></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-filter-x"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M13.758 19.414l-4.758 1.586v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v1.5" /><path d="M22 22l-5 -5" /><path d="M17 22l5 -5" />
+              <title>clean</title>
+          </svg>
         </button>
     </div>
     <div>
@@ -76,14 +78,14 @@
                             <div class="ExelItem shadow-lg mb-4 bg-body-tertiary rounded" id="@countItem">
                                 <div id="productImage">
 
-                                    <img decoding="async" id="ImgSelecter-@countItem" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                                    <img decoding="async" alt="@item.NameSystem" id="ImgSelecter-@countItem" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
          
                                         <div id="Galery">
                                         @foreach (var list in ViewBag.Gallery)
                                         {
                                                 @if (item.SystemId == list.SysteamPriceKeyId)
                                                 {
-                                                    <img src="@("/Image/"+@list.ImageName)" onclick="imageSwitcher(event,@countItem)" height="100" width="100" />
+                                                <img src="@("/compression/"+@list.ImageName)" onclick="imageSwitcher(event,@countItem)" height="100" width="100" />
                                                 }        
                                         }
                                         </div>
@@ -126,15 +128,17 @@
                 {
                             <div class="ExelItem shadow-lg mb-4 bg-body-tertiary rounded" id="@countItem">
                                 <div id="productImage">
-                                    <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+
+                                    <img decoding="async" alt="@item.NameSystem" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                                   
                                     <div>
                                         @foreach (var list in ViewBag.Gallery)
-                                {
+                                        {
                                             @if (item.SystemId == list.SysteamPriceKeyId)
-                                    {
-                                                <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
-                                    }
-                                }
+                                            {
+                                                <img src="@("/compression/"+@list.ImageName)" height="100" width="100" />
+                                            }
+                                        }
                                     </div>
                                  </div>
                                 <div id="productMenuInfo">
@@ -169,15 +173,17 @@
                 {
                             <div class="ExelItem shadow-lg mb-4 bg-body-tertiary rounded" id="@countItem">
                                 <div id="productImage">
-                                    <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+
+                                    <img decoding="async" alt="@item.NameSystem" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                                    
                                     <div>
                                         @foreach (var list in ViewBag.Gallery)
-                                {
+                                        {
                                             @if (item.SystemId == list.SysteamPriceKeyId)
-                                    {
-                                                <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
-                                    }
-                                }
+                                            {
+                                                <img src="@("/compression/"+@list.ImageName)" height="100" width="100" />
+                                            }
+                                        }
                                     </div>
                                     
                                     </div>
@@ -213,15 +219,15 @@
                 {
                             <div class="ExelItem shadow-lg mb-4 bg-body-tertiary rounded" id="@countItem">
                                 <div id="productImage">
-                                    <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                                    <img decoding="async" alt="@item.NameSystem" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                                     <div>
                                         @foreach (var list in ViewBag.Gallery)
-                                {
+                                        {
                                             @if (item.SystemId == list.SysteamPriceKeyId)
-                                    {
-                                                <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
-                                    }
-                                }
+                                            {
+                                                <img src="@("/compression/"+@list.ImageName)" height="100" width="100" />
+                                            }
+                                        }
                                     </div>
                                   </div>
                                 <div id="productMenuInfo">
@@ -256,16 +262,16 @@
                 {
                             <div class="ExelItem shadow-lg mb-4 bg-body-tertiary rounded" id="@countItem">
                                 <div id="productImage">
-                                    <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                                    <img decoding="async" alt="@item.NameSystem" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
 
                                     <div>
                                         @foreach (var list in ViewBag.Gallery)
-                                {
+                                        {
                                             @if (item.SystemId == list.SysteamPriceKeyId)
-                                    {
-                                                <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
-                                    }
-                                }
+                                            {
+                                                <img src="@("/compression/"+@list.ImageName)" height="100" width="100" />
+                                            }
+                                        }
                                     </div>
                                 </div>
                                 <div id="productMenuInfo">
@@ -300,16 +306,16 @@
                 {
                             <div class="ExelItem shadow-lg mb-4 bg-body-tertiary rounded" id="@countItem">
                                 <div id="productImage">
-                                    <img decoding="async" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                                    <img decoding="async" alt="@item.NameSystem" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
 
                                     <div>
                                         @foreach (var list in ViewBag.Gallery)
-                                {
+                                        {
                                             @if (item.SystemId == list.SysteamPriceKeyId)
-                                    {
-                                                <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
-                                    }
-                                }
+                                            {
+                                                 <img src="@("/compression/"+@list.ImageName)" alt="@list.ImageName" height="100" width="100" />
+                                            }
+                                        }
                                     </div>
                                  </div>
                                 <div id="productMenuInfo">

@@ -34,7 +34,7 @@
                         </div>
                     </div>
                     <div id="producktInfo">
-                        <img src="@("/Image/Schliarticle.jpg")" data-bs-toggle="modal" data-bs-target="#myModal-@z" height="150" width="150" />
+                        <img src="@("/compression/Schliarticle.webp")" alt="Schliarticle" data-bs-toggle="modal" data-bs-target="#myModal-@z" height="150" width="150" />
                         <h4>@orderList[z].ProductName</h4>
                         <div id="costedInfo">
                             <h4 id="cost-@z">@orderList[z].OrderSum €</h4>
@@ -55,7 +55,7 @@
                                         <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                             <div class="row g-0">
                                                 <div class="col-md-4">
-                                                    <img src="@($"/Image/{imageList[ProudctItemCounter]}")" class="img-fluid rounded-start" alt="...">
+                                                    <img src="@($"/compression/{imageList[ProudctItemCounter]}")" class="img-fluid rounded-start" alt="@orderItem[ProudctItemCounter].Name">
                                                 </div>
                                                 <div class="col-md-8">
                                                     <div class="card-body">

@@ -72,7 +72,7 @@
         <div id="ExelItem-1" class="ExelItem shadow-lg  mb-5 bg-body-tertiary rounded">
             <input value="@item.Id" type="hidden" name="DopelItem" />
             <div id="productImage">
-                <img decoding="async" data-bs-toggle="modal" data-bs-target="#ModalItemDoppel" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />     
+                    <img decoding="async" alt="@item.Name" data-bs-toggle="modal" data-bs-target="#ModalItemDoppel" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
             </div>
             <div id="productMenuInfo">
                 <div id="ProductNameUndCost">
@@ -157,7 +157,7 @@
                             {
 
                                 <div class="input-group">
-                                    <div class="input-group-text" id="btnGroupAddon">  <img data-bs-toggle="modal" data-bs-target="#myModal-@i" id="hilfeOptionsIcon" src="@("/Image/question.png")" height="20" width="20" /></div>
+                                        <div class="input-group-text" id="btnGroupAddon">  <img data-bs-toggle="modal" data-bs-target="#myModal-@i" id="hilfeOptionsIcon" alt="question" src="@("/compression/question.webp")" height="20" width="20" /></div>
                                     <input type="text" class="form-control" id="OptionName" value="@ViewBag.optionsName[i].Name" readonly aria-label="Пример группы ввода" aria-describedby="btnGroupAddon">
                                 </div>
 
@@ -183,7 +183,7 @@
                                                 <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                                     <div class="row g-0">
                                                         <div class="col-md-4">
-                                                            <img src="@("/Image/"+@ViewBag.optionsName[i].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                                                <img src="@("/compression/"+@ViewBag.optionsName[i].ImageName)" alt="@ViewBag.optionsName[i].Name" height="300" width="300" class="img-fluid rounded-start">
                                                         </div>
                                                         <div class="col-md-8">
                                                             <div class="card-body">
@@ -254,10 +254,6 @@
         let kleinPrice = @Html.Raw(ViewBag.DopelzylinderInternKleinPreis)|| null;
         let normalDopelSize = @Html.Raw(ViewBag.DopelzylinderInternNormal)|| null;
         let kleinSize = @Html.Raw(ViewBag.DopelzylinderInternKlein)|| null;
-
-
-
-
 
         function procent() {
             let proc = document.getElementById("Procent");

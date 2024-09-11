@@ -14,7 +14,9 @@
             <button type="button" class="btn btn-secondary"><a href="@Url.Action("System_Auswählen","Konfigurator",new{userName = @ViewBag.UserNameItem , isNewKonfig = true} )">2. System auswählen</a></button>
         }
         <button type="button" class="btn danger">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                <title>Schop</title>
+            </svg>
             <a asp-area="" asp-controller="Schop" asp-action="Index">Shop</a>
         </button>
     </div>
@@ -72,7 +74,7 @@
                         <h5>Zylinderlänge mm</h5>
                         <div style="align-items: end;justify-content: start;font-size: 11px;display: flex;gap: 5px;">
                             <p>außen  </p>
-                            <img src="/Image/zylinderlaenge.webp" height="40" width="40">
+                            <img alt="zylinderlaenge" src="/compression/zylinderlaenge.webp" height="40" width="40">
                             <p>innen  </p>
                         </div>
                     </div>

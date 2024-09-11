@@ -17,7 +17,8 @@ function Minus(turNumber) {
     countTur.value = count;
 }
 
-function selectParam(value, turNumber) {
+function selectParam(value, turNumber)
+{
     let BlockTur = document.querySelector(`#BlockTur-${turNumber}`);
 
     let Aussen = BlockTur.querySelector(".aussen");
@@ -54,6 +55,7 @@ function selectParam(value, turNumber) {
         }
 
         TypeSylinder.src = "/compression/doppelzylinder.webp";
+        TypeSylinder.alt = "doppelzylinder";
     }
     if (value == "Halbzylinder") {
         for (let i = 0; i < HalbSize.length; i++) {
@@ -65,6 +67,7 @@ function selectParam(value, turNumber) {
         }
 
         TypeSylinder.src = "/compression/halbzylinder.webp";
+        TypeSylinder.alt = "halbzylinder";
     }
     if (value == "Knaufzylinder") {
         for (let i = 0; i < KnayfAussenSize.length; i++) {
@@ -83,18 +86,21 @@ function selectParam(value, turNumber) {
         }
 
         TypeSylinder.src = "/compression/knaufzylinder.webp";
-
+        TypeSylinder.alt = "knaufzylinder";
     }
     if (value == "Hebelzylinder") {
 
         TypeSylinder.src = "/compression/briefkastenzylinder.webp";
+        TypeSylinder.alt = "briefkastenzylinder";
     } 
     if (value == "Vorhangschloss") {
         TypeSylinder.src = "/compression/vorhangschloss.webp";
+        TypeSylinder.alt = "vorhangschloss";
     }
     if (value == "Aussenzylinder") {
 
         TypeSylinder.src = "/compression/aussenzylinder.webp";
+        TypeSylinder.alt = "aussenzylinder";
     }
 
 }
@@ -132,7 +138,9 @@ function addBlockTur()
                                             <div id="ItemTur">
                                                 <div id="position">
                                                                    <h6 id="counterTur">
-                                                         <svg onclick="controlPannel(${blockTur})  style="margin-right: 10px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-dots-circle-horizontal"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M8 12l0 .01" /><path d="M12 12l0 .01" /><path d="M16 12l0 .01" /></svg>
+                                                         <svg onclick="controlPannel(${blockTur}) style="margin-right: 10px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-dots-circle-horizontal"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M8 12l0 .01" /><path d="M12 12l0 .01" /><path d="M16 12l0 .01" />
+                                                         <title>controlPannel</title>
+                                                         </svg>
                                                                    ${blockTur}</h6>
                                                 </div>
 
@@ -142,7 +150,7 @@ function addBlockTur()
 
                                                     <div>
 
-                                                         <img  id="typeSylinder" src="/compression/doppelzylinder.webp" height="30" width="30"  />
+                                                         <img alt="typeSylinder"  id="typeSylinder" src="/compression/doppelzylinder.webp" height="30" width="30"  />
 
                                                     </div>
                                             </div>
@@ -173,16 +181,19 @@ function addBlockTur()
                                             </div>
 
                                                              <div id="zylinderMenu-${blockTur}" onmouseleave="closeControlPannel(${blockTur})" class="tür_konfig">
-                                                               <div style="display:flex;gap:10px" onclick="TurUp(${blockTur})">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-up"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+                                                           <div style="display:flex;gap:10px" onclick="TurUp(${blockTur})">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-up"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline>
+                                                        <title>ArrowUp</title>
+                                                        </svg>
                                                           <h5 id="infoControlPanelTur" class="Up">nach oben verschieben</h5>
                                                         </div>
                                                             <div style="display:flex;gap:10px" onclick="TurDown(${blockTur})">
-                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline>
+                                                         <title>ArrowDown</title>
+                                                         </svg>
                                                           <h5 id="infoControlPanelTur" class="Down">nach unten verschieben</h5>
                                                         </div>
                                                                  <div style="display:flex;gap:10px">
-
                                                                       <div class="input-group mb-3">
                                                                       <span class="input-group-text" id="basic-addon1">
                                                                             <h5>
@@ -196,7 +207,9 @@ function addBlockTur()
 
                                                             </div>
                                                                 <div style="display:flex;gap:10px" onclick="TurDelete(${blockTur})">
-                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M14 3v4a1 1 0 0 0 1 1h4"></path><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path><path d="M10 12l4 4m0 -4l-4 4"></path></svg>
+                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M14 3v4a1 1 0 0 0 1 1h4"></path><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path><path d="M10 12l4 4m0 -4l-4 4"></path>
+                                                                 <title>TurDelete</title>
+                                                                 </svg>
                                                               <h5 id="infoControlPanelTur" class="deleted"> löschen</h5>
                                                             </div>
                                                         </div>
@@ -242,7 +255,9 @@ function selectTur(value)
                                                     <div id="ItemTur">
                                                         <div id="position">
                                                               <h6 id="counterTur">
-                                                                    <svg onclick="controlPannel(${blockTur})" style="margin-right: 10px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-dots-circle-horizontal"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M8 12l0 .01" /><path d="M12 12l0 .01" /><path d="M16 12l0 .01" /></svg>
+                                                                    <svg onclick="controlPannel(${blockTur})" style="margin-right: 10px;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-dots-circle-horizontal"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M8 12l0 .01" /><path d="M12 12l0 .01" /><path d="M16 12l0 .01" />
+                                                                     <title>controlPannel</title>
+                                                                    </svg>
                                                               ${blockTur}</h6>
                                                         </div>
 
@@ -281,11 +296,15 @@ function selectTur(value)
                                                            <div id="zylinderMenu-${blockTur}" onmouseleave="closeControlPannel(${blockTur})" class="tür_konfig">
 
                                                         <div style="display:flex;gap:10px"  onclick="TurUp(${blockTur})">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-up"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-up"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline>
+                                                            <title>ArrowUp</title>
+                                                            </svg>
                                                           <h5 id="infoControlPanelTur" class="Up">nach oben verschieben</h5>
                                                         </div>
                                                             <div style="display:flex;gap:10px" onclick="TurDown(${blockTur})">
-                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline>
+                                                         <title>ArrowDown</title>
+                                                         </svg>
                                                           <h5 id="infoControlPanelTur" class="Down">nach unten verschieben</h5>
                                                         </div>
                                                             <div style="display:flex;gap:10px">
@@ -301,7 +320,9 @@ function selectTur(value)
                                                                         </div>
                                                         </div>
                                                             <div style="display:flex;gap:10px" onclick="TurDelete(${blockTur})">
-                                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M14 3v4a1 1 0 0 0 1 1h4"></path><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path><path d="M10 12l4 4m0 -4l-4 4"></path></svg>
+                                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M14 3v4a1 1 0 0 0 1 1h4"></path><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path><path d="M10 12l4 4m0 -4l-4 4"></path>
+                                                               <title>Delete</title>
+                                                             </svg>
                                                           <h5 id="infoControlPanelTur" class="deleted">löschen</h5>
                                                         </div>
                                                         </div>

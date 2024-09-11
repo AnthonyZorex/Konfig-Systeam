@@ -126,7 +126,7 @@
                             <div>
                                 @foreach(var list in ViewBag.DoppelGalery)
                                 {
-                                    <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
+                                    <img src="@("/compression/"+@list.ImageName)" alt="@item.Name" height="100" width="100" />
                                 }
                             </div>
                         </div>
@@ -206,7 +206,7 @@
                                         {
 
                                               <div class="input-group">
-                                                <div class="input-group-text" id="btnGroupAddon">  <img data-bs-toggle="modal" data-bs-target="#myModal-@i" id="hilfeOptionsIcon" src="@("/Image/question.png")" height="20" width="20" /></div>
+                                                <div class="input-group-text" id="btnGroupAddon">  <img data-bs-toggle="modal" data-bs-target="#myModal-@i" id="hilfeOptionsIcon" alt="@ViewBag.optionsName[i].Name" src="@("/compression/question.webp")" height="20" width="20" /></div>
                                                 <input type="text" class="form-control" id="OptionName" value="@ViewBag.optionsName[i].Name" readonly aria-label="Пример группы ввода" aria-describedby="btnGroupAddon">
                                               </div>
 
@@ -232,7 +232,7 @@
                                                                 <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                                                     <div class="row g-0">
                                                                         <div class="col-md-4">
-                                                                        <img src="@("/Image/"+@ViewBag.optionsName[i].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                                                        <img src="@("/compression/"+@ViewBag.optionsName[i].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@ViewBag.optionsName[i].Name">
                                                                         </div>
                                                                         <div class="col-md-8">
                                                                             <div class="card-body">
@@ -272,7 +272,7 @@
                                         <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                             <div class="row g-0">
                                                 <div class="col-md-4">
-                                                    <img src="@("/image/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                                    <img src="@("/compression/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@item.Name">
                                                 </div>
                                                 <div class="col-md-8">
                                                     <div class="card-body">
@@ -306,11 +306,11 @@
                    <div id="ExelItem-@d" class="ExelItem shadow-lg  mb-5 bg-body-tertiary rounded">
                         <input type="hidden" name="Knayf" value="@item.Id" />
                     <div id="productImage">
-                            <img decoding="async" data-bs-toggle="modal" data-bs-target="#ModalKnyf-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                            <img decoding="async" data-bs-toggle="modal" alt="@item.Name" data-bs-target="#ModalKnyf-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                             <div>
                                 @foreach (var list in ViewBag.KnaufGalery)
                                 {
-                                    <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
+                                    <img src="@("/compression/"+@list.ImageName)" height="100" width="100" />
                                 }
                             </div>
                         </div>
@@ -385,7 +385,7 @@
 
                                             <div class="input-group">
                                                 <div class="input-group-text" id="btnGroupAddon">
-                                                    <img data-bs-toggle="modal" data-bs-target="#ModalKnyfOptions-@i" id="hilfeOptionsIcon" src="@("/Image/question.png")" height="20" width="20" />
+                                                    <img data-bs-toggle="modal" data-bs-target="#ModalKnyfOptions-@i" id="hilfeOptionsIcon" alt="@ViewBag.optionsNameKnayf[i].Name" src="@("/compression/question.webp")" height="20" width="20" />
                                                     </div>
                                                 <input type="text" class="form-control" id="OptionName" value="@ViewBag.optionsNameKnayf[i].Name" readonly aria-label="Пример группы ввода" aria-describedby="btnGroupAddon">
                                             </div>
@@ -413,7 +413,7 @@
                                                             <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                                                 <div class="row g-0">
                                                                     <div class="col-md-4">
-                                                                        <img src="@("/Image/"+@ViewBag.optionsNameKnayf[i].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                                                        <img src="@("/compression/"+@ViewBag.optionsNameKnayf[i].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@ViewBag.optionsNameKnayf[i].Name">
                                                                     </div>
                                                                     <div class="col-md-8">
                                                                         <div class="card-body">
@@ -456,7 +456,7 @@
                                     <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                         <div class="row g-0">
                                             <div class="col-md-4">
-                                                <img src="@("/image/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                                <img src="@("/compression/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@item.Name">
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="card-body">
@@ -491,12 +491,12 @@
 
                     <input type="hidden" name="Halb" value="@item.Id" />
                     <div id="productImage">
-                            <img decoding="async" data-bs-toggle="modal" data-bs-target="#ModalHalb-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                            <img decoding="async" data-bs-toggle="modal" alt="@item.Name" data-bs-target="#ModalHalb-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                             
                             <div>
                                 @foreach (var list in ViewBag.HalbGalery)
                                 {
-                                    <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
+                                    <img src="@("/compression/"+@list.ImageName)" alt="@list.ImageName" height="100" width="100" />
                                 }
                             </div>
                         </div>
@@ -559,7 +559,7 @@
                                     {
                                             <div class="input-group">
                                                 <div class="input-group-text" id="btnGroupAddon">
-                                                    <img data-bs-toggle="modal" data-bs-target="#HalbOptionsDescriptions-@i" id="hilfeOptionsIcon" src="@("/Image/question.png")" height="20" width="20" />
+                                                    <img data-bs-toggle="modal" data-bs-target="#HalbOptionsDescriptions-@i" alt="question" id="hilfeOptionsIcon" src="@("/compression/question.webp")" height="20" width="20" />
                                                 </div>
                                                 <input type="text" class="form-control" id="OptionName" value="@ViewBag.HalbOptionsName[i].Name" readonly aria-label="Пример группы ввода" aria-describedby="btnGroupAddon">
                                             </div>
@@ -590,7 +590,7 @@
                                                             <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                                                 <div class="row g-0">
                                                                     <div class="col-md-4">
-                                                                        <img src="@("/Image/"+@ViewBag.HalbOptionsName[i].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                                                        <img src="@("/compression/"+@ViewBag.HalbOptionsName[i].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@ViewBag.HalbOptionsName[i].Name">
                                                                     </div>
                                                                     <div class="col-md-8">
                                                                         <div class="card-body">
@@ -632,7 +632,7 @@
                                     <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                         <div class="row g-0">
                                             <div class="col-md-4">
-                                                <img src="@("/image/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                                <img src="@("/compression/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@item.Name">
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="card-body">
@@ -664,11 +664,11 @@
                         <input type="hidden" name="Helb" value="@item.Id" />
 
                         <div id="productImage">
-                            <img decoding="async" data-bs-toggle="modal" data-bs-target="#ModalHelbZ-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                            <img decoding="async" data-bs-toggle="modal" alt="@item.Name" data-bs-target="#ModalHelbZ-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                             <div>
                                 @foreach (var list in ViewBag.HebelzylinderGalery)
                                 {
-                                    <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
+                                    <img src="@("/compression/"+@list.ImageName)" alt="@list.ImageName" height="100" width="100" />
                                 }
                             </div>
                         </div>
@@ -753,7 +753,7 @@
                                     <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                         <div class="row g-0">
                                             <div class="col-md-4">
-                                                <img src="@("/image/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                                <img src="@("/compression/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@item.Name">
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="card-body">
@@ -786,11 +786,11 @@
                     <div id="ExelItem-@d" class="ExelItem shadow-lg  mb-5 bg-body-tertiary rounded">
                         <input type="hidden" name="Vorhan" value="@item.Id" />
                     <div id="productImage">
-                            <img decoding="async" data-bs-toggle="modal" data-bs-target="#ModalVorhanschlos-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                            <img decoding="async" data-bs-toggle="modal" alt="@item.Name" data-bs-target="#ModalVorhanschlos-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("/compression/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                             <div>
                                 @foreach (var list in ViewBag.VorhanGalery)
                                 {
-                                    <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
+                                    <img src="@("/compression/"+@list.ImageName)" alt="@list.ImageName" height="100" width="100" />
                                 }
                             </div>
                         </div>
@@ -890,7 +890,7 @@
                                     <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                         <div class="row g-0">
                                             <div class="col-md-4">
-                                                <img src="@("/image/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                                <img src="@("/compression/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@item.Name">
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="card-body">
@@ -923,11 +923,11 @@
                     <div id="ExelItem-@d" class="ExelItem shadow-lg  mb-5 bg-body-tertiary rounded">
                         <input type="hidden" name="Aussen" value="@item.Id" />
                         <div id="productImage">
-                            <img decoding="async" data-bs-toggle="modal" data-bs-target="#ModalAussenzylinder-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                            <img decoding="async" data-bs-toggle="modal" alt="@item.Name" data-bs-target="#ModalAussenzylinder-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                             <div>
                                 @foreach (var list in ViewBag.VorhanGalery)
                                 {
-                                    <img src="@("/Image/"+@list.ImageName)" height="100" width="100" />
+                                    <img src="@("/compression/"+@list.ImageName)" alt="@list.ImageName" height="100" width="100" />
                                 }
                             </div>
                         </div>
@@ -1013,7 +1013,7 @@
                                     <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                         <div class="row g-0">
                                             <div class="col-md-4">
-                                                <img src="@("/image/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                                <img src="@("/compression/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@item.Name">
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="card-body">
@@ -1186,7 +1186,7 @@
 
                 block.innerHTML = ` <input value="${DoppelInfo[0].Id}" type="hidden" name="DopelItem" />
                 <div id="productImage">
-                   <img  decoding="async" data-bs-toggle="modal" data-bs-target="#ModalItemDoppel-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="/Image/${img}" asp-append-version="true" width="300px" height="300px" />
+                      <img  decoding="async" alt="${[DoppelInfo[0].Name]}" data-bs-toggle="modal" data-bs-target="#ModalItemDoppel-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="/compression/${img}" asp-append-version="true" width="300px" height="300px" />
                 </div>
                 <div id="productMenuInfo">
                     <div id="ProductNameUndCost">
@@ -1259,7 +1259,7 @@
                                                 {
                                                                        <div class="input-group">
                                                                              <div class="input-group-text" id="btnGroupAddon">
-                                                                                                <img data-bs-toggle="modal" data-bs-target="#myModalOptions-@i" id="hilfeOptionsIcon" src="@("/Image/question.png")" height="20" width="20" />
+                                                                                 <img data-bs-toggle="modal" data-bs-target="#myModalOptions-@i" alt="question" id="hilfeOptionsIcon" src="@("/compression/question.webp")" height="20" width="20" />
                                                                              </div>
                                                                                <input class="form-control" id="OptionName" readonly type="text" value="@ViewBag.optionsNameI[i].Name" aria-label="Пример группы ввода" aria-describedby="btnGroupAddon" />
                                                                            </div>
@@ -1284,7 +1284,7 @@
                                                             <div class="modal-dialog modal-xl">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                                        <h1 class="modal-title">@ViewBag.optionsNameI[i].Name</h1>
+                                                                         <h1 class="modal-title">@ViewBag.optionsNameI[i].Name</h1>
                                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                                                                     </div>
                                                                     <div class="modal-body">
@@ -1292,7 +1292,7 @@
                                                                             <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                                                                 <div class="row g-0">
                                                                                     <div class="col-md-4">
-                                                                                         <img src="@("/Image/"+@ViewBag.optionsNameI[i].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                                                                         <img src="@("/compression/"+@ViewBag.optionsNameI[i].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@ViewBag.optionsNameI[i].Name">
                                                                                     </div>
                                                                                     <div class="col-md-8">
                                                                                         <div class="card-body">
@@ -1336,7 +1336,7 @@
                                             <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                                 <div class="row g-0">
                                                     <div class="col-md-4">
-                                                            <img src="/Image/${img}" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                                      <img src="/compression/${img}"  height="300" width="300" class="img-fluid rounded-start" alt="${[DoppelInfo[0].Name]}">
                                                     </div>
                                                     <div class="col-md-8">
                                                         <div class="card-body">
@@ -1366,7 +1366,7 @@
 
             block.innerHTML = `   <input type="hidden" name="Halb" value="${HalbInfo[0].Id}" />
                         <div id="productImage">
-                             <img  decoding="async" data-bs-toggle="modal" data-bs-target="#ModalHalb-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="/Image/${img}" asp-append-version="true" width="300px" height="300px" />
+                             <img  decoding="async" alt="${HalbInfo[0].Name}" data-bs-toggle="modal" data-bs-target="#ModalHalb-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="/compression/${img}" asp-append-version="true" width="300px" height="300px" />
                         </div>
                         <div id="productMenuInfo">
                             <div id="ProductNameUndCost">
@@ -1428,7 +1428,7 @@
                                         {
                                                         <div class="input-group">
                                                             <div class="input-group-text" id="btnGroupAddon">
-                                                              <img data-bs-toggle="modal" data-bs-target="#HalbOptionsDescriptions-@i"   id="hilfeOptionsIcon" src="@("/Image/question.png")" height="20" width="20" />
+                                                                   <img data-bs-toggle="modal" alt="question" data-bs-target="#HalbOptionsDescriptions-@i"   id="hilfeOptionsIcon" src="@("/compression/question.webp")" height="20" width="20" />
                                                             </div>
                                                               <input class="form-control" id="OptionName"  readonly type="text" value="@ViewBag.HalbOptionsNameI[i].Name" aria-label="Пример группы ввода" aria-describedby="btnGroupAddon"/>
                                                           </div>
@@ -1459,7 +1459,7 @@
                                                             <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                                                 <div class="row g-0">
                                                                     <div class="col-md-4">
-                                                                                    <img src="@("/Image/"+@ViewBag.HalbOptionsNameI[i].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                                                       <img src="@("/compression/"+@ViewBag.HalbOptionsNameI[i].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@ViewBag.HalbOptionsNameI[i].Name">
                                                                     </div>
                                                                     <div class="col-md-8">
                                                                         <div class="card-body">
@@ -1497,7 +1497,7 @@
                                             <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                                 <div class="row g-0">
                                                     <div class="col-md-4">
-                                                            <img src="/Image/${img}" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                                         <img src="/compression/${img}" height="300" width="300" class="img-fluid rounded-start" alt="${[HalbInfo[0].Name]}">
                                                     </div>
                                                     <div class="col-md-8">
                                                         <div class="card-body">
@@ -1527,7 +1527,7 @@
 
             block.innerHTML = ` <input value="${KnayfInfo[0].Id}" type="hidden" name="DopelItem" />
                     <div id="productImage">
-                            <img decoding="async" data-bs-toggle="modal" data-bs-target="#ModalItemKnayf-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="/Image/${img}" asp-append-version="true" width="300px" height="300px" />
+                         <img decoding="async" data-bs-toggle="modal" alt="${img}" data-bs-target="#ModalItemKnayf-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="/compression/${img}" asp-append-version="true" width="300px" height="300px" />
                     </div>
                     <div id="productMenuInfo">
                         <div id="ProductNameUndCost">
@@ -1563,10 +1563,12 @@
 
 
                                        <select class="form-select" name="KnayfAussen" id="Aussen" onchange="selectParamAussen(${BlockN},'Knaufzylinder',event.target.selectedIndex+1)">
-    @for (int i = 0; i < ViewBag.KnayfZelinderAussen.Count; i++)
-    {
-                                            <option id="OptionA">@ViewBag.KnayfZelinderAussen[i]</option>
-    }
+                                                    
+                                                    @for (int i = 0; i < ViewBag.KnayfZelinderAussen.Count; i++)
+                                                    {
+                                                         <option id="OptionA">@ViewBag.KnayfZelinderAussen[i]</option>
+                                                    }
+
                                                   </select>
 
 
@@ -1604,7 +1606,7 @@
                     {
                                                                         <div class="input-group">
                                                                            <div class="input-group-text" id="btnGroupAddon">
-                                                                               <img  id="hilfeOptionsIcon" data-bs-toggle="modal" data-bs-target="#KanyfOptionsModal-@i" src="@("/Image/question.png")" height="20" width="20" />
+                                                                                 <img  id="hilfeOptionsIcon" data-bs-toggle="modal" alt="question" data-bs-target="#KanyfOptionsModal-@i" src="@("/compression/question.webp")" height="20" width="20" />
                                                                            </div>
                                                                                <input class="form-control" id="OptionName"  readonly aria-label="Пример группы ввода" aria-describedby="btnGroupAddon" type="text" value="@ViewBag.optionsNameKnayfI[i].Name" />
                                                                          </div>
@@ -1635,7 +1637,7 @@
                                                                                        <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                                                                            <div class="row g-0">
                                                                                                <div class="col-md-4">
-                                                                                                           <img src="@("/Image/"+@ViewBag.optionsNameKnayfI[i].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                                                                                  <img src="@("/compression/"+@ViewBag.optionsNameKnayfI[i].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@ViewBag.optionsNameKnayfI[i].Name">
                                                                                                </div>
                                                                                                <div class="col-md-8">
                                                                                                    <div class="card-body">
@@ -1676,7 +1678,7 @@
                                          <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                              <div class="row g-0">
                                                  <div class="col-md-4">
-                                                         <img src="/Image/${img}" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                                     <img src="/compression/${img}" height="300" width="300" class="img-fluid rounded-start" alt="${[KnayfInfo[0].Name]}">
                                                  </div>
                                                  <div class="col-md-8">
                                                      <div class="card-body">
@@ -1705,7 +1707,7 @@
 
             block.innerHTML = `<input type="hidden" name="Helb" value="${[HelbInfo[0].Id]}" />
                         <div id="productImage">
-                                <img  decoding="async" data-bs-toggle="modal" data-bs-target="#ModalHebel-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="/Image/${img}" asp-append-version="true" width="300px" height="300px" />
+                            <img  decoding="async" data-bs-toggle="modal" alt="${[HelbInfo[0].Name]}" data-bs-target="#ModalHebel-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="/compression/${img}" asp-append-version="true" width="300px" height="300px" />
                         </div>
                         <div id="productMenuInfo">
                             <div id="ProductNameUndCost">
@@ -1766,7 +1768,7 @@
                      <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                          <div class="row g-0">
                              <div class="col-md-4">
-                                 <img src="/Image/${img}" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                   <img src="/compression/${img}" height="300" width="300" class="img-fluid rounded-start" alt="${[HelbInfo[0].Name]}">
                              </div>
                              <div class="col-md-8">
                                  <div class="card-body">
@@ -1797,7 +1799,7 @@
 
             block.innerHTML = `  <input type="hidden" name="Vorhan" value="${VorhanschlosInfo[0].Id} " />
                         <div id="productImage">
-                                <img  decoding="async" data-bs-toggle="modal" data-bs-target="#ModalVorhan-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="/Image/${img}" asp-append-version="true" width="300px" height="300px" />
+                            <img  decoding="async" data-bs-toggle="modal" alt="${VorhanschlosInfo[0].Name}" data-bs-target="#ModalVorhan-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="/compression/${img}" asp-append-version="true" width="300px" height="300px" />
                         </div>
                         <div id="productMenuInfo">
                             <div id="ProductNameUndCost">
@@ -1865,7 +1867,7 @@
                                      <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                          <div class="row g-0">
                                              <div class="col-md-4">
-                                                     <img src="/Image/${img}" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                               <img src="/compression/${img}" height="300" width="300" class="img-fluid rounded-start" alt="${[VorhanschlosInfo[0].Name]}">
                                              </div>
                                              <div class="col-md-8">
                                                  <div class="card-body">
@@ -1896,7 +1898,7 @@
             block.innerHTML = `<input type="hidden" name="Aussen" value="${AussenzylinderInfo[0].Id}" />
            
             <div id="productImage">
-                <img  decoding="async" data-bs-toggle="modal" data-bs-target="#ModalAussenzylinder-@d"  style="border: 2px solid rgba(237,237,237,0.5);" src="/Image/${img}" asp-append-version="true" width="300px" height="300px" />
+                   <img  decoding="async" alt="${img}" data-bs-toggle="modal" data-bs-target="#ModalAussenzylinder-@d"  style="border: 2px solid rgba(237,237,237,0.5);" src="/compression/${img}" asp-append-version="true" width="300px" height="300px" />
                 </div>
             <div id="productMenuInfo">
                 <div id="ProductNameUndCost">
@@ -1980,7 +1982,7 @@
                      <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                          <div class="row g-0">
                              <div class="col-md-4">
-                                     <img src="/Image/${img}" height="300" width="300" class="img-fluid rounded-start" alt="...">
+                                <img src="/compression/${img}" height="300" width="300" class="img-fluid rounded-start" alt="${[AussenzylinderInfo[0].Name]}">
                              </div>
                              <div class="col-md-8">
                                  <div class="card-body">

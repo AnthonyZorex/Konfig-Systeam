@@ -34,7 +34,7 @@
                         </div>
 
                         <div id="producktInfo">
-                            <img src="@("/Image/Schliarticle.jpg")" height="150" width="150" />
+                            <img src="@("/compression/Schliarticle.webp")" alt="Schliarticle" height="150" width="150" />
                             <h4>@orderList[z].ProductName</h4>
                             <div id="costedInfo">
                                 <div style="display:flex"><h4 id="costedI-@z">@orderList[z].OrderSum.ToString("C")</h4></div>
@@ -415,22 +415,12 @@
                                                     <div style="display: flex;gap: 50px;" id="bezalenMethod-@z">
                                                         <label>
                                                             <input type="radio" onchange="BezaleMethod(@z)" checked name="Pay" value="PayPall">
-                                                            <img src="@("/Image/paypal.png")" height="30" width="30" />
+                                                        <img src="@("/compression/paypal.png")" height="30" width="30" />
                                                             <h4>PayPall</h4>
-                                                        </label><br>
-                                                    @*     <label>
-                                                            <input type="radio" onchange="BezaleMethod(@z)" name="Pay" value="Google Pay">
-                                                            <img src="@("/Image/google-pay.png")" height="40" width="40" />
-                                                            <h4>Google Pay</h4>
-                                                        </label><br>
-                                                        <label>
-                                                            <input type="radio" onchange="BezaleMethod(@z)" name="Pay" value="Apple Pay">
-                                                            <img src="@("/Image/apple-pay.png")" height="40" width="40" />
-                                                            <h4>Apple Pay</h4>
-                                                        </label> *@
+                                                        </label><br>                                                   
                                                         <label>
                                                             <input type="radio" onchange="BezaleMethod(@z)" name="Pay" value="auf Rechnung">
-                                                            <img src="@("/Image/cash-on-delivery.png")" height="40" width="40" />
+                                                        <img src="@("/compression/cash-on-delivery.png")" height="40" width="40" />
                                                             <h4>auf Rechnung</h4>
                                                         </label>
                                                     </div>
@@ -441,7 +431,7 @@
                                                 <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                                     <div class="row g-0">
                                                         <div class="col-md-4">
-                                                            <img src="@("/Image/Schliarticle.jpg")" class="img-fluid rounded-start" alt="...">
+                                                            <img src="@("/compression/Schliarticle.webp")" class="img-fluid rounded-start" alt="Schliarticle">
                                                         </div>
                                                         <div class="col-md-8">
                                                             <div class="card-body">
@@ -461,7 +451,7 @@
                                                             <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                                                 <div class="row g-0">
                                                                     <div class="col-md-4">
-                                                                <img src="@($"/Image/{imageList[ProudctItemCounter]}")" class="img-fluid rounded-start" alt="...">
+                                                                <img src="@($"/compression/{imageList[ProudctItemCounter]}")" class="img-fluid rounded-start" alt="@orderItem[ProudctItemCounter].Name">
                                                                     </div>
                                                                     <div class="col-md-8">
                                                                         <div class="card-body">

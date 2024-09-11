@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Options;
 using schliessanlagen_konfigurator;
 using schliessanlagen_konfigurator.Service;
+using System.Security.Policy;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +29,6 @@ builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfi
     .AddEntityFrameworkStores<schliessanlagen_konfiguratorContext>();
 
 builder.Services.AddScoped<FooterService>();
-
 
 builder.Services.AddControllersWithViews();
 
@@ -122,9 +122,26 @@ app.UseCors();
 
 app.UseEndpoints(endpoints =>
 {
+
     endpoints.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Konfigurator}/{action=IndexKonfigurator}");
+            name: "default",
+            pattern: "{controller=Konfigurator}/{action=IndexKonfigurator}");
+
+    endpoints.MapControllerRoute(
+           name: "Schop",
+           pattern: "{controller=Schop}/{action=Index}");
+
+    endpoints.MapControllerRoute(
+        name: "Sitemap",
+        pattern: "sitemap.xml",
+        defaults: new { controller = "Sitemap", action = "Index" });
+
+    endpoints.MapControllerRoute(
+        name: "NotFound",
+        pattern: "{*url}",
+        defaults: new { controller = "Home", action = "Error" });
+
+
     endpoints.MapRazorPages();
 
 });
