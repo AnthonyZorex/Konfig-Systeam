@@ -96,9 +96,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 xdoc.Root.Add(
                     new XElement(xmlns + "url",
                         new XElement(xmlns + "loc", url.Url),
-                        new XElement(xmlns + "lastmod", url.LastModified.ToString("yyyy-MM-dd")),
-                        new XElement(xmlns + "changefreq", url.ChangeFrequency),
-                        new XElement(xmlns + "priority", url.Priority.ToString("F1"))
+                        new XElement(xmlns + "lastmod", url.LastModified.ToString("yyyy-MM-dd"))
                     ));
             }
 
