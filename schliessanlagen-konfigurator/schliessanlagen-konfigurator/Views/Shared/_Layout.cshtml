@@ -6,8 +6,17 @@
     <title>@ViewData["Title"]</title>  
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" defer />
     <link rel="stylesheet" as="style" href="~/css/site.min.css" asp-append-version="true" />
-     <link rel="icon" type="image/x-icon" loading="lazy" alt="logo" href="@("/Image/SD_Logo.svg")" />
+    <link rel="icon" type="image/x-icon" loading="lazy" alt="logo" href="@("/Image/SD_Logo.svg")" />
     <link rel="canonical" href="https://schliessanlagen.discount/" />
+    <meta name="google-site-verification" content="IsNOTjO6GlJpiCjeAVXfTj7CGOcsjaJkC13Tp5q0GQQ" />
+     <script async src="https://www.googletagmanager.com/gtag/js?id=G-1D9HDZ80QC"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-1D9HDZ80QC');
+    </script> 
 </head>
 <body>
 
@@ -50,10 +59,10 @@
         @await Component.InvokeAsync("Footer")
     </div>
 
+    <script src="~/lib/jquery/dist/jquery.min.js" ></script>
+    <script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js" ></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" ></script>
 
-    <script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js" defer></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>
-    <script src="~/lib/jquery/dist/jquery.min.js" defer></script>
     @await RenderSectionAsync("Scripts", required: false)
 
 </body>

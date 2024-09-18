@@ -93,7 +93,6 @@ D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\System.Composition.Runtim
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\System.Composition.TypedParts.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\System.Configuration.ConfigurationManager.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\System.Drawing.Common.dll
-D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\System.Formats.Asn1.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\System.IdentityModel.Tokens.Jwt.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\System.Linq.Dynamic.Core.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\System.Memory.Data.dll
@@ -101,7 +100,6 @@ D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\System.Reflection.Metadat
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\System.Runtime.Caching.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\System.Security.Cryptography.ProtectedData.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\System.Security.Permissions.dll
-D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\System.Text.Json.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\System.Windows.Extensions.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\System.Xml.XPath.XmlDocument.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\publish\Tinify.dll
