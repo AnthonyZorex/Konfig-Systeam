@@ -347,7 +347,7 @@ namespace schliessanlagen_konfigurator.Controllers
             var hebel = db.Hebelzylinder.Include(x=>x.Hebelzylinder_Options).ThenInclude(x=>x.Options).ThenInclude(x=>x.Options_value).Where(x => x.Name == productName).ToList();
             var vorhan = db.Vorhangschloss.Include(x=>x.Vorhan_Options).ThenInclude(x=>x.Options).ThenInclude(x=>x.Options_value).Where(x => x.Name == productName).ToList();
             var aussen = db.Aussenzylinder_Rundzylinder.Include(x=>x.Aussen_Rund_options).ThenInclude(x=>x.Aussen_Rund_all).ThenInclude(x=>x.Aussen_Rouns_all_value).Where(x => x.Name == productName).ToList();
-
+            
             if (doppel.Count()>0)
             {
                 ViewBag.Item = doppel;
@@ -383,7 +383,6 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var doppelKleinSize = size.First().Doppel_Innen_klein;
 
-
                 ViewBag.CostDoppelIntern = JsonConvert.SerializeObject(size.Select(x => x.costSizeIntern).ToList());
                 ViewBag.CostDoppelAussen = JsonConvert.SerializeObject(size.Select(x => x.costSizeAussen).ToList());
 
@@ -394,6 +393,9 @@ namespace schliessanlagen_konfigurator.Controllers
                 ViewBag.DopelzylinderInternKlein = JsonConvert.SerializeObject(doppelKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
                 ViewBag.DopelzylinderInternKleinPreis = JsonConvert.SerializeObject(doppelKleinSize.Select(x => x.costSizeIntern).ToList());
 
+                var typeItem = db.Profil_Doppelzylinder.Where(x=>x.schliessanlagenId == doppel.First().schliessanlagenId).ToList();
+
+                ViewBag.AllDoppel = typeItem;
             }
             if (halb.Count() > 0)
             {
@@ -446,6 +448,8 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 ViewBag.countOptionsQuery = options.Count();
 
+                var typeItem = db.Profil_Halbzylinder.Where(x => x.schliessanlagenId == halb.First().schliessanlagenId).ToList();
+                ViewBag.AllDoppel = typeItem;
 
             }
             if (knayf.Count() > 0)
@@ -514,6 +518,8 @@ namespace schliessanlagen_konfigurator.Controllers
                 ViewBag.DopelzylinderInternKlein = JsonConvert.SerializeObject(doppelKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
                 ViewBag.DopelzylinderInternKleinPreis = JsonConvert.SerializeObject(doppelKleinSize.Select(x => x.costSizeIntern).ToList());
 
+                var typeItem = db.Profil_Knaufzylinder.Where(x => x.schliessanlagenId == knayf.First().schliessanlagenId).ToList();
+                ViewBag.AllDoppel = knayf.Select(x => x).ToList();
             }
             if (hebel.Count() > 0)
             {
@@ -563,6 +569,8 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 ViewBag.countOptionsQuery = options.Count();
 
+                var typeItem = db.Hebelzylinder.Where(x => x.schliessanlagenId == hebel.First().schliessanlagenId).ToList();
+                ViewBag.AllDoppel = typeItem;
             }
             if (vorhan.Count() > 0)
             {
@@ -612,6 +620,9 @@ namespace schliessanlagen_konfigurator.Controllers
                 ViewBag.DopelzylinderInternKleinPreis = JsonConvert.SerializeObject(emptyArray);
 
                 ViewBag.countOptionsQuery = options.Count();
+
+                var typeItem = db.Vorhangschloss.Where(x => x.schliessanlagenId == vorhan.First().schliessanlagenId).ToList();
+                ViewBag.AllDoppel = vorhan.Select(x => x).ToList();
             }
             if (aussen.Count() > 0)
             {
@@ -659,6 +670,9 @@ namespace schliessanlagen_konfigurator.Controllers
                 ViewBag.DopelzylinderInternKleinPreis = JsonConvert.SerializeObject(emptyArray);
 
                 ViewBag.countOptionsQuery = options.Count();
+
+                var typeItem = db.Aussenzylinder_Rundzylinder.Where(x => x.schliessanlagenId == aussen.First().schliessanlagenId).ToList();
+                ViewBag.AllDoppel = typeItem.Select(x => x).ToList();
             }
 
             return View("../Schop/zylinder_page");

@@ -1072,12 +1072,12 @@ namespace schliessanlagen_konfigurator.Controllers
             var cheked5 = new List<Vorhangschloss>();
             var cheked6 = new List<Aussenzylinder_Rundzylinder>();
 
-            var dopelType = profilD.Select(x => x.schliessanlagenId).First();
-            var KnayfType = profilK.Select(x => x.schliessanlagenId).First();
-            var HebelType = hebel.Select(x => x.schliessanlagenId).First();
-            var HalbType = profilH.Select(x => x.schliessanlagenId).First();
-            var VorhanType = Vorhangschloss.Select(x => x.schliessanlagenId).First();
-            var AussenType = Aussenzylinder.Select(x => x.schliessanlagenId).First();
+            var dopelType = profilD.Where(x=> x.Type == "Mechanik").Select(x => x.schliessanlagenId).First();
+            var KnayfType = profilK.Where(x => x.Type == "Mechanik").Select(x => x.schliessanlagenId).First();
+            var HebelType = hebel.Where(x => x.Type == "Mechanik").Select(x => x.schliessanlagenId).First();
+            var HalbType = profilH.Where(x => x.Type == "Mechanik").Select(x => x.schliessanlagenId).First();
+            var VorhanType = Vorhangschloss.Where(x => x.Type == "Mechanik").Select(x => x.schliessanlagenId).First();
+            var AussenType = Aussenzylinder.Where(x => x.Type == "Mechanik").Select(x => x.schliessanlagenId).First();
 
             int VorhCount = 0;
             var allOderDopelSyze = allUserListOrder.Where(x => x.ZylinderId == dopelType).ToList();
@@ -1147,10 +1147,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 for (int i = 0; i < item.Count(); i++)
                 {
-                    var f = item[i];
 
-                    
-                            var chekedItem = db.Profil_Knaufzylinder.Where(x => x.Id == item[i]).ToList();
+                    var f = item[i];
+                    var chekedItem = db.Profil_Knaufzylinder.Where(x => x.Id == item[i]).ToList();
 
                             for (int g = 0; g < chekedItem.Count(); g++)
                             {
