@@ -41,6 +41,8 @@ using schliessanlagen_konfigurator.Models.Hebel;
 using MimeKit.Cryptography;
 using System.Drawing;
 using schliessanlagen_konfigurator.Service;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
+using System.Runtime.CompilerServices;
 namespace schliessanlagen_konfigurator.Controllers
 {
     [EnableCors("*")]
@@ -664,6 +666,7 @@ namespace schliessanlagen_konfigurator.Controllers
         public ActionResult IndexKonfigurator()
         {
             SchopAlarm();
+            ViewData["Description"] = "Gestalten Sie Ihre individuelle Schließanlage mit unserem benutzerfreundlichen Konfigurator! Wählen Sie aus verschiedenen Modellen und Sicherheitsstufen, um optimalen Schutz für Ihr Zuhause oder Unternehmen zu gewährleisten. Jetzt starten und die perfekte Lösung finden!";
 
             //ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
 

@@ -9,6 +9,9 @@ using System.Security.Claims;
 using schliessanlagen_konfigurator.Schop_models;
 using System.Linq.Dynamic.Core;
 using schliessanlagen_konfigurator.Service;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
+using System.Text.RegularExpressions;
+using TinifyAPI;
 namespace schliessanlagen_konfigurator.Controllers
 {
     public class SchopController : Controller
@@ -286,6 +289,7 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(int? page,ZylinderViewModel model)
         {
+            ViewData["Description"] = "Entdecken Sie hochwertige Schließzylinder für maximale Sicherheit! Unsere Auswahl an robusten und zuverlässigen Zylindern schützt Ihr Zuhause und Ihr Unternehmen. Jetzt stöbern und den perfekten Zylinder finden!";
             ZylinderHerschteller(model.Typ == null? "Mechanik": model.Typ, model.page, model.PriceVon, model.PriceBis, model.Herschteller, model.Sort_string, model);
             return View("../Schop/Index", model);
         }
@@ -351,6 +355,13 @@ namespace schliessanlagen_konfigurator.Controllers
             if (doppel.Count()>0)
             {
                 ViewBag.Item = doppel;
+
+                string result = Regex.Replace(doppel.First().description, "<.*?>", string.Empty);
+
+                string metaSchreiben = result.Replace("&nbsp;", string.Empty);
+
+                ViewData["Description"] = metaSchreiben;
+
                 var size = db.Aussen_Innen.Include(x=>x.Doppel_Innen_klein).Where(x => x.Profil_DoppelzylinderId == doppel.First().Id).ToList();
 
                 ViewBag.Aussen = size.Select(x => x.aussen).ToList();
@@ -400,6 +411,10 @@ namespace schliessanlagen_konfigurator.Controllers
             if (halb.Count() > 0)
             {
                 ViewBag.Item = halb;
+
+                string result = Regex.Replace(halb.First().description, "<.*?>", string.Empty);
+                string metaSchreiben = result.Replace("&nbsp;", string.Empty);
+                ViewData["Description"] = metaSchreiben;
 
                 var size = db.Aussen_Innen_Halbzylinder.Where(x=>x.Profil_HalbzylinderId==halb.First().Id).ToList();
 
@@ -455,6 +470,11 @@ namespace schliessanlagen_konfigurator.Controllers
             if (knayf.Count() > 0)
             {
                 ViewBag.Item = knayf;
+
+                string result = Regex.Replace(knayf.First().description, "<.*?>", string.Empty);
+
+                string metaSchreiben = result.Replace("&nbsp;", string.Empty);
+                ViewData["Description"] = metaSchreiben;
 
                 var size = db.Aussen_Innen_Knauf.Where(x => x.Profil_KnaufzylinderId == knayf.First().Id).ToList();
 
@@ -525,6 +545,10 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 ViewBag.Item = hebel;
 
+                string result = Regex.Replace(hebel.First().description, "<.*?>", string.Empty);
+                string metaSchreiben = result.Replace("&nbsp;", string.Empty);
+                ViewData["Description"] = metaSchreiben;
+
                 ViewBag.Aussen = null;
                 ViewBag.Intern = null;
 
@@ -577,6 +601,11 @@ namespace schliessanlagen_konfigurator.Controllers
                 ViewBag.Item = vorhan;
                 var size = db.Size.Where(x => x.VorhangschlossId == vorhan.First().Id).ToList();
 
+                string result = Regex.Replace(vorhan.First().description, "<.*?>", string.Empty);
+
+                string metaSchreiben = result.Replace("&nbsp;", string.Empty);
+                ViewData["Description"] = metaSchreiben;
+
                 ViewBag.Aussen = size.Select(x => x.sizeVorhangschloss).ToList();
                 ViewBag.Intern = null;
 
@@ -627,6 +656,11 @@ namespace schliessanlagen_konfigurator.Controllers
             if (aussen.Count() > 0)
             {
                 ViewBag.Item = aussen;
+
+                string result = Regex.Replace(aussen.First().description, "<.*?>", string.Empty);
+
+                string metaSchreiben = result.Replace("&nbsp;", string.Empty);
+                ViewData["Description"] = metaSchreiben;
 
                 ViewBag.Aussen = null;
                 ViewBag.Intern = null;

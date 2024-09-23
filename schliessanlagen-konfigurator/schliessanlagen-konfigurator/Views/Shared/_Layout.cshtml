@@ -3,11 +3,21 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"]</title>  
+    <title>@ViewData["Title"]</title>
+    <meta name="description" content="@ViewData["Description"]" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" defer />
     <link rel="stylesheet" as="style" href="~/css/site.min.css" asp-append-version="true" />
     <link rel="icon" type="image/x-icon" loading="lazy" alt="logo" href="@("/Image/SD_Logo.svg")" />
-    <link rel="canonical" href="https://schliessanlagen.discount/" />
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var currentUrl = window.location.href;
+            var canonicalLink = document.querySelector('link[rel="canonical"]');
+            if (canonicalLink) {
+                canonicalLink.setAttribute('href', currentUrl);
+            }
+        });
+    </script>
+    <link rel="canonical" href="" />
     <meta name="google-site-verification" content="IsNOTjO6GlJpiCjeAVXfTj7CGOcsjaJkC13Tp5q0GQQ" />
      <script async src="https://www.googletagmanager.com/gtag/js?id=G-1D9HDZ80QC"></script>
     <script>
