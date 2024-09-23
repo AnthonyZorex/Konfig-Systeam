@@ -277,6 +277,10 @@
       "PackagePath": "staticwebassets\\Image\\RHM-851.WEBP"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\SD_Logo-rund.jpg",
+      "PackagePath": "staticwebassets\\Image\\SD_Logo-rund.jpg"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\SD_Logo.svg",
       "PackagePath": "staticwebassets\\Image\\SD_Logo.svg"
     },
@@ -755,6 +759,10 @@
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\RHM-851.WEBP",
       "PackagePath": "staticwebassets\\compression\\RHM-851.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\SD_Logo-rund.webp",
+      "PackagePath": "staticwebassets\\compression\\SD_Logo-rund.webp"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\Schliarticle.webp",

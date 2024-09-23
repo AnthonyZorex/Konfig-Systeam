@@ -73,7 +73,46 @@ namespace schliessanlagen_konfigurator.Service
 
             return CesGalerry;
         }
+        public List<SysteamPriceKey> SystemBasi()
+        {
+            var System = SystemInfo();
 
+            var DoppelZylinder = db.Profil_Doppelzylinder.Where(x => x.companyName == "BASI").ToList();
+
+            var Basi = new List<SysteamPriceKey>();
+
+            foreach (var item in DoppelZylinder)
+            {
+                var sortItem = System.Where(x => x.NameSysteam == item.NameSystem).ToList();
+
+                foreach (var x in sortItem)
+                {
+
+                    Basi.Add(x);
+                }
+            }
+
+            return Basi;
+        }
+
+        public List<ProductGalery> System_Basi_Galery()
+        {
+            var Basi = SystemBasi();
+
+            var BasiGalerry = new List<ProductGalery>();
+
+            foreach (var item in Basi)
+            {
+                var gallery = db.ProductGalery.Where(x => x.SysteamPriceKeyId == item.Id).ToList();
+
+                foreach (var x in gallery)
+                {
+                    BasiGalerry.Add(x);
+                }
+            }
+
+            return BasiGalerry;
+        }
         public List<SysteamPriceKey> SystemABUS()
         {
             var System = SystemInfo();
