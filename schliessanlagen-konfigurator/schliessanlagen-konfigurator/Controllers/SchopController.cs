@@ -393,9 +393,9 @@ namespace schliessanlagen_konfigurator.Controllers
                 ViewBag.DopelzylinderInternKlein = JsonConvert.SerializeObject(doppelKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
                 ViewBag.DopelzylinderInternKleinPreis = JsonConvert.SerializeObject(doppelKleinSize.Select(x => x.costSizeIntern).ToList());
 
-                var typeItem = db.Profil_Doppelzylinder.Where(x=>x.schliessanlagenId == doppel.First().schliessanlagenId).ToList();
+                var typeItem = db.Profil_Doppelzylinder.Where(x=>x.schliessanlagenId == doppel.First().schliessanlagenId && x.Type == doppel.First().Type).ToList();
 
-                ViewBag.AllDoppel = typeItem;
+                ViewBag.AllDoppel = typeItem.OrderBy(x => x.Price).ToList();
             }
             if (halb.Count() > 0)
             {
@@ -448,8 +448,8 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 ViewBag.countOptionsQuery = options.Count();
 
-                var typeItem = db.Profil_Halbzylinder.Where(x => x.schliessanlagenId == halb.First().schliessanlagenId).ToList();
-                ViewBag.AllDoppel = typeItem;
+                var typeItem = db.Profil_Halbzylinder.Where(x => x.schliessanlagenId == halb.First().schliessanlagenId && x.Type == halb.First().Type).ToList();
+                ViewBag.AllDoppel = typeItem.OrderBy(x => x.Price).ToList();
 
             }
             if (knayf.Count() > 0)
@@ -518,8 +518,8 @@ namespace schliessanlagen_konfigurator.Controllers
                 ViewBag.DopelzylinderInternKlein = JsonConvert.SerializeObject(doppelKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
                 ViewBag.DopelzylinderInternKleinPreis = JsonConvert.SerializeObject(doppelKleinSize.Select(x => x.costSizeIntern).ToList());
 
-                var typeItem = db.Profil_Knaufzylinder.Where(x => x.schliessanlagenId == knayf.First().schliessanlagenId).ToList();
-                ViewBag.AllDoppel = knayf.Select(x => x).ToList();
+                var typeItem = db.Profil_Knaufzylinder.Where(x => x.schliessanlagenId == knayf.First().schliessanlagenId && x.Type == knayf.First().Type).ToList();
+                ViewBag.AllDoppel = knayf.OrderBy(x=>x.Price).Select(x => x).ToList();
             }
             if (hebel.Count() > 0)
             {
@@ -569,8 +569,8 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 ViewBag.countOptionsQuery = options.Count();
 
-                var typeItem = db.Hebelzylinder.Where(x => x.schliessanlagenId == hebel.First().schliessanlagenId).ToList();
-                ViewBag.AllDoppel = typeItem;
+                var typeItem = db.Hebelzylinder.Where(x => x.schliessanlagenId == hebel.First().schliessanlagenId && x.Type == hebel.First().Type).ToList();
+                ViewBag.AllDoppel = typeItem.OrderBy(x => x.Price).ToList();
             }
             if (vorhan.Count() > 0)
             {
@@ -621,8 +621,8 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 ViewBag.countOptionsQuery = options.Count();
 
-                var typeItem = db.Vorhangschloss.Where(x => x.schliessanlagenId == vorhan.First().schliessanlagenId).ToList();
-                ViewBag.AllDoppel = vorhan.Select(x => x).ToList();
+                var typeItem = db.Vorhangschloss.Where(x => x.schliessanlagenId == vorhan.First().schliessanlagenId && x.Type == vorhan.First().Type).ToList();
+                ViewBag.AllDoppel = vorhan.OrderBy(x => x.Price).Select(x => x).ToList();
             }
             if (aussen.Count() > 0)
             {
@@ -671,8 +671,8 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 ViewBag.countOptionsQuery = options.Count();
 
-                var typeItem = db.Aussenzylinder_Rundzylinder.Where(x => x.schliessanlagenId == aussen.First().schliessanlagenId).ToList();
-                ViewBag.AllDoppel = typeItem.Select(x => x).ToList();
+                var typeItem = db.Aussenzylinder_Rundzylinder.Where(x => x.schliessanlagenId == aussen.First().schliessanlagenId && x.Type == aussen.First().Type).ToList();
+                ViewBag.AllDoppel = typeItem.OrderBy(x => x.Price).Select(x => x).ToList();
             }
 
             return View("../Schop/zylinder_page");

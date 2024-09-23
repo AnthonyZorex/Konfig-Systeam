@@ -60,7 +60,7 @@
     </div>
     <div class="offcanvas-body">
         <ul class="list-group list-group-flush">
-            <li class="list-group-item active"><a href=""> <img src="@("/compression/doppelzylinder.WEBP")" height="24" width="24" /> Zylinder</a></li>
+            <li class="list-group-item active"><a href="@Url.Action("Index","Schop")"> <img src="@("/compression/doppelzylinder.WEBP")" height="24" width="24" /> Zylinder</a></li>
         </ul>
     </div>
 </div>
@@ -235,23 +235,27 @@
 
     <div id="slide_product" class="shadow-lg  mb-5 bg-body-tertiary rounded">
         <div>
-            <div style="border-radius: 50%;background: white;padding: 10px;" onclick="arrowLeft()">
+            <div id="arrowSchop" class="shadow-lg  mb-5 bg-body-tertiary rounded" onclick="arrowLeft()">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" width="12" height="12"><path d="M3.587 6.025c0 .2.1.4.2.5l3.3 3.3c.3.3.8.3 1.1 0 .3-.3.3-.8 0-1.1l-2.7-2.7 2.7-2.7c.3-.3.3-.8 0-1.1-.3-.3-.8-.3-1.1 0l-3.2 3.2c-.2.2-.3.4-.3.6Z"></path></svg>
             </div>
         </div>
         @foreach (var list in ViewBag.AllDoppel)
         {
-               <div id="item_block_slide">
+               <div id="item_block_slide">             
                    <div>
-                    <h4>@list.Name</h4>
+                    <img src="@("~/compression/"+@list.ImageName)" alt="@list.Name" asp-append-version="true" width="300px" height="300px" />
                    </div>
-                   <div>
-                    <img src="@("~/compression/"+@list.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                   </div>
+                   <br/>
+                <div>
+                    <a style="color:black" href="@Url.Action("zylinder_page",new{product_Name = @list.Name})"><strong>@list.Name</strong></a>
+                </div>
+                <div>
+                    <h4 style="color:var(--primary-color)">@list.Price.ToString("C")</h4>
+                </div>
                </div>
         }
         <div>
-            <div style="border-radius: 50%;background: white;padding: 10px;" onclick="arrowRight()">
+            <div id="arrowSchop" class="shadow-lg  mb-5 bg-body-tertiary rounded" onclick="arrowRight()">
                 <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" width="12" height="12"><path d="M4.7 10c-.2 0-.4-.1-.5-.2-.3-.3-.3-.8 0-1.1L6.9 6 4.2 3.3c-.3-.3-.3-.8 0-1.1.3-.3.8-.3 1.1 0l3.3 3.2c.3.3.3.8 0 1.1L5.3 9.7c-.2.2-.4.3-.6.3Z"></path></svg>
             </div>
         </div>
@@ -286,46 +290,193 @@
 
         function cheked_count_item() 
         {
-            for (let i = 0; i < divChildren.length; ) 
+            for (let i = 0; i < divChildren.length;) 
             {
-                if (i < 4) 
+
+                if (window.innerWidth > 1760) 
                 {
-                    numItem++;
-                    divChildren[i].style.display = "block";
-                    
+                    if (i < 5) {
+                        numItem++;
+                        divChildren[i].style.display = "block";
+                    }
+                    else {
+                        divChildren[i].style.display = "none";
+                    }
                 }
-                else {
-                    divChildren[i].style.display = "none";
+
+                else if (window.innerWidth > 1460 & window.innerWidth <= 1760) 
+                {
+                    if (i < 4) {
+                        numItem++;
+                        divChildren[i].style.display = "block";
+                    }
+                    else {
+                        divChildren[i].style.display = "none";
+                    }
                 }
+                else if (window.innerWidth > 1150 && window.innerWidth <= 1460) 
+                {
+                    if (i < 3) {
+                        numItem++;
+                        divChildren[i].style.display = "block";
+                    }
+                    else {
+                        divChildren[i].style.display = "none";
+                    }
+                }
+                else if (window.innerWidth > 800 && window.innerWidth <= 1000) 
+                {
+                    if (i < 2) {
+                        numItem++;
+                        divChildren[i].style.display = "block";
+                    }
+                    else {
+                        divChildren[i].style.display = "none";
+                    }
+                }
+                else if (window.innerWidth < 800) 
+                {
+                    if (i < 1) {
+                        numItem++;
+                        divChildren[i].style.display = "block";
+                    }
+                    else {
+                        divChildren[i].style.display = "none";
+                    }
+                }
+               
                 i++;
             }
-
+               
         }
-        
+
         cheked_count_item();
+
+        window.onresize = cheked_count_item;
 
         function arrowLeft()
         {
-            if (numItem > 3) 
-            {
-                let firstItem = numItem;
-                divChildren[firstItem].style.display = "none";
-                numItem--;
+            if (window.innerWidth > 1760) {
+                if (numItem > 4) {
+                    let firstItem = numItem;
+                    divChildren[firstItem].style.display = "none";
+                    numItem--;
 
-                let x = numItem - 3;
-                divChildren[x].style.display = "block";
-            }  
+                    let x = numItem - 4;
+                    divChildren[x].style.display = "block";
+                }
+            }
+
+            else if (window.innerWidth > 1460 & window.innerWidth <= 1760) 
+            {
+                if (numItem > 3) {
+                    let firstItem = numItem;
+                    divChildren[firstItem].style.display = "none";
+                    numItem--;
+
+                    let x = numItem - 3;
+                    divChildren[x].style.display = "block";
+                }
+            }
+            else if (window.innerWidth > 1150 && window.innerWidth <= 1460) 
+            {
+                if (numItem > 2) {
+                    let firstItem = numItem;
+                    divChildren[firstItem].style.display = "none";
+                    numItem--;
+
+                    let x = numItem - 2;
+                    divChildren[x].style.display = "block";
+                }
+            }
+            else if (window.innerWidth > 800 && window.innerWidth <= 1000) 
+            {
+                if (numItem > 1) {
+                    let firstItem = numItem;
+                    divChildren[firstItem].style.display = "none";
+                    numItem--;
+
+                    let x = numItem - 1;
+                    divChildren[x].style.display = "block";
+                }
+            }
+            else if (window.innerWidth < 800) 
+            {
+                if (numItem > 0) 
+                {
+                    let firstItem = numItem;
+                    divChildren[firstItem].style.display = "none";
+                    numItem--;
+
+                    let x = numItem;
+                    divChildren[x].style.display = "block";
+                }
+                   
+                
+            }
+
         }
         function arrowRight() 
         {
-            if (numItem >= 3 && numItem < (divChildren.length - 1)) 
-            {              
-                let firstItem = numItem - 3;
-                divChildren[firstItem].style.display = "none";
+            if (window.innerWidth > 1760) 
+            {
+                if (numItem >= 4 && numItem < (divChildren.length - 1)) 
+                {
+                    let firstItem = numItem - 4;
+                    divChildren[firstItem].style.display = "none";
 
-                numItem++;
-                divChildren[numItem].style.display = "block";
+                    numItem++;
+                    divChildren[numItem].style.display = "block";
+                }
             }
+
+            else if (window.innerWidth > 1460 & window.innerWidth <= 1760) 
+            {
+                if (numItem >= 3 && numItem < (divChildren.length - 1)) 
+                {
+                    let firstItem = numItem - 3;
+                    divChildren[firstItem].style.display = "none";
+
+                    numItem++;
+                    divChildren[numItem].style.display = "block";
+                }
+            }
+
+            else if (window.innerWidth > 1150 && window.innerWidth <= 1460) 
+            {
+                if (numItem >= 2 && numItem < (divChildren.length - 1)) 
+                {
+                    let firstItem = numItem - 2;
+                    divChildren[firstItem].style.display = "none";
+
+                    numItem++;
+                    divChildren[numItem].style.display = "block";
+                }
+            }
+            else if (window.innerWidth > 800 && window.innerWidth <= 1000) 
+            {
+                if (numItem >= 1 && numItem < (divChildren.length - 1)) 
+                {
+                    let firstItem = numItem - 1;
+                    divChildren[firstItem].style.display = "none";
+
+                    numItem++;
+                    divChildren[numItem].style.display = "block";
+                }
+            }
+            else if (window.innerWidth < 800) 
+            {
+                if (numItem < (divChildren.length - 1)) 
+                { 
+                    let firstItem = numItem;
+                    divChildren[firstItem].style.display = "none";
+
+                    numItem++;
+                    divChildren[numItem].style.display = "block";
+                }
+                    
+            }
+
         }
 
 

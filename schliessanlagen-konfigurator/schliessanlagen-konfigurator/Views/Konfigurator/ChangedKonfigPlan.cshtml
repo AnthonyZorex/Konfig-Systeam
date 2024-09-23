@@ -68,7 +68,7 @@
                         <h5>Zylinderlänge mm</h5>
                         <div style="align-items: end;justify-content: start;font-size: 11px;display: flex;gap: 5px;">
                             <p>außen  </p>
-                            <img src="/Image/zylinderlaenge.png" height="40" width="40">
+                            <img alt="zylinderlaenge" src="/compression/zylinderlaenge.webp" height="40" width="40">
                             <p>innen  </p>
                         </div>
                     </div>
@@ -86,9 +86,9 @@
                                    
                                     <div class="TexCountTur">
                                         <div id="ItemTur">
-                                            <div id="position">
-                                                <h6 id="counterTur"><img src="@("/Image/options.png")" onmouseover="controlPannel(1)" height="20" width="20" style="margin-right: 10px;" />@countTur</h6>
-                                            </div>
+                                             <div id="position">
+                                                <h6 id="counterTur">@countTur</h6>
+                                            </div> 
                                             <div>
                                                 <input id="inputTur" value="@info.DorName" name="Turname" onchange="chekedNameArientiren(event.target.value,@countTur)" placeholder="Name der Tür" />
                                             </div>
@@ -96,27 +96,27 @@
                                         <div>
                                             @if (info.ZylinderId == 1)
                                             {
-                                                <img id="typeSylinder" src="/Image/doppelzylinder.png" height="25" width="40" />
+                                                <img id="typeSylinder" src="/compression/doppelzylinder.webp" height="30" width="30" />
                                             }
                                             @if (info.ZylinderId == 2)
                                             {
-                                                <img id="typeSylinder" src="/Image/halbzylinder.png" height="25" width="40" />
+                                                <img id="typeSylinder" src="/compression/halbzylinder.webp" height="30" width="30" />
                                             }
                                             @if (info.ZylinderId == 3)
                                             {
-                                                <img id="typeSylinder" src="/Image/knaufzylinder.png" height="25" width="40" />
+                                                <img id="typeSylinder" src="/compression/knaufzylinder.webp" height="30" width="30" />
                                             }
                                             @if (info.ZylinderId == 4)
                                             {
-                                                <img id="typeSylinder" src="/Image/briefkastenzylinder.png" height="25" width="40" />
+                                                <img id="typeSylinder" src="/compression/briefkastenzylinder.webp" height="30" width="30" />
                                             }
                                             @if (info.ZylinderId == 5)
                                             {
-                                                <img id="typeSylinder" src="/Image/vorhangschloss.png" height="25" width="40" />
+                                                <img id="typeSylinder" src="/compression/vorhangschloss.webp" height="30" width="30" />
                                             }
                                             @if (info.ZylinderId == 6)
                                             {
-                                                <img id="typeSylinder" src="/Image/aussenzylinder.png" height="25" width="40" />
+                                                <img id="typeSylinder" src="/compression/aussenzylinder.webp" height="30" width="30" />
                                             }
                                         </div>
 
@@ -471,7 +471,7 @@
                 Intern.appendChild(option);
             }
 
-            TypeSylinder.src = "/Image/doppelzylinder.png";
+            TypeSylinder.src = "/compression/doppelzylinder.webp";
         }
         if (value == "Halbzylinder") {
             for (let i = 0; i < HalbSize.length; i++) {
@@ -482,7 +482,7 @@
                 Aussen.appendChild(option);
             }
 
-            TypeSylinder.src = "/Image/halbzylinder.png";
+            TypeSylinder.src = "/compression/halbzylinder.webp";
         }
         if (value == "Knaufzylinder") {
             for (let i = 0; i < KnayfAussenSize.length; i++) {
@@ -500,19 +500,19 @@
                 Intern.appendChild(option);
             }
 
-            TypeSylinder.src = "/Image/knaufzylinder.png";
+            TypeSylinder.src = "/compression/knaufzylinder.webp";
 
         }
         if (value == "Hebelzylinder") {
 
-            TypeSylinder.src = "/Image/briefkastenzylinder.png";
+            TypeSylinder.src = "/compression/briefkastenzylinder.webp";
         }
         if (value == "Vorhangschloss") {
-            TypeSylinder.src = "/Image/vorhangschloss.png";
+            TypeSylinder.src = "/compression/vorhangschloss.webp";
         }
         if (value == "Aussenzylinder") {
 
-            TypeSylinder.src = "/Image/aussenzylinder.png";
+            TypeSylinder.src = "/compression/aussenzylinder.webp";
         }
 
     }
@@ -590,7 +590,7 @@
         newBlock.innerHTML = `  <div class="TexCountTur">
                                     <div id="ItemTur">
                                         <div id="position">
-                                               <h6 id="counterTur"><img src="@("/Image/options.png")" onmouseover="controlPannel(1)" height="20" width="20" style="margin-right: 10px;" />${blockTur}</h6>
+                                               <h6 id="counterTur">${blockTur}</h6>
                                         </div>
 
                                         <div>
@@ -599,7 +599,7 @@
 
                                             <div>
 
-                                                 <img  id="typeSylinder" src="/Image/doppelzylinder.png" height="25" width="40"  />
+                                                     <img  id="typeSylinder" src="/compression/doppelzylinder.webp" height="30" width="30"  />
 
                                             </div>
                                     </div>
@@ -799,12 +799,11 @@
 
             let newBlock = document.createElement('div');
             newBlock.className = "block";
-            newBlock.draggable = "true";
             newBlock.id = 'BlockTur-' + blockTur;
             newBlock.innerHTML = `  <div class="TexCountTur">
                                             <div id="ItemTur">
                                                 <div id="position">
-                                                      <h6 id="counterTur"><img src="@("/Image/options.png")" height="20" width="20" onmouseover="controlPannel(${blockTur})" style="margin-right: 10px;" />${blockTur}</h6>
+                                                      <h6 id="counterTur">${blockTur}</h6>
                                                 </div>
 
                                                 <div>
@@ -812,7 +811,7 @@
                                                 </div>
 
                                                     <div>
-                                                         <img  id="typeSylinder" src="/Image/doppelzylinder.png" height="30" width="30"  />
+                                                             <img  id="typeSylinder" src="/compression/doppelzylinder.webp" height="30" width="30"  />
                                                     </div>
                                             </div>
 
