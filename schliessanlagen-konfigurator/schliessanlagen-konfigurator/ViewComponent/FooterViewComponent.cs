@@ -14,17 +14,17 @@ namespace schliessanlagen_konfigurator.ViewComponent
         }
 
 
-        public async Task<IViewComponentResult> InvokeAsync()
+        public IViewComponentResult Invoke()
         {
             var model = new FooterViewModel
             {
-                SystemCes = await _footerService.SystemCes(),
+                SystemCes =  _footerService.SystemCes(),
           
-                ABUS = await _footerService.SystemABUS(),
+                ABUS =  _footerService.SystemABUS(),
                 
-                EVVA = await _footerService.SystemEVVA(),
+                EVVA =  _footerService.SystemEVVA(),
               
-                Basi = await _footerService.SystemBasi(),
+                Basi =  _footerService.SystemBasi(),
                 
             };
 
@@ -34,7 +34,6 @@ namespace schliessanlagen_konfigurator.ViewComponent
     
     public class FooterViewModel
     {
-
         public List<SysteamPriceKey> SystemCes { get; set; }
         //public List<ProductGalery> SystemCesGalerry { get; set; }
         public List<SysteamPriceKey> ABUS { get; set; }

@@ -7,29 +7,29 @@
             <div class="col-md-4 mt-2 p-2">
                 <img src="@Url.Content("~/compression/basi.webp")" alt="Basi" height="50" width="50" />
                  <div style="margin-top:20px">
-                     @foreach (var t in Model.Basi)
+              @*       @foreach (var t in Model.Basi)
                     {
                         <li><a data-bs-toggle="modal" onclick="system_name('@t.NameSysteam')" data-bs-target="#FooterItemRender">@t.NameSysteam</a></li>
-                    } 
+                    }   *@
                 </div> 
             </div>
             <div class="col-md-4 mt-2 p-2">
                 <img src="@Url.Content("~/Image/logo_ces.svg")" alt="CES" height="50" width="50" />
                 <br />
                  <div style="margin-top:20px">
-                    @foreach (var t in  Model.SystemCes)
+                 @*    @foreach (var t in  Model.SystemCes)
                     {
                         <li><a data-bs-toggle="modal" onclick="system_name('@t.NameSysteam')" data-bs-target="#FooterItemRender">@t.NameSysteam</a></li>
-                    }  
+                    }    *@
                 </div> 
             </div>
             <div class="col-md-4 mt-2 p-2">
                  <img src="@Url.Content("~/compression/ABUS.svg.webp")" alt="ABUS" height="50" width="100" />
                  <div style="margin-top:20px">
-                    @foreach (var t in Model.ABUS)
+                  @*   @foreach (var t in Model.ABUS)
                     {
                         <li><a data-bs-toggle="modal" onclick="system_name('@t.NameSysteam')" data-bs-target="#FooterItemRender">@t.NameSysteam</a></li>
-                    }  
+                    }   *@
                 </div>  
             </div>
 
@@ -37,11 +37,11 @@
                 <img src="@Url.Content("~/compression/EVVA.webp")" alt="EVVA" height="50" width="100" />
                  <div style="margin-top:20px">
 
-                    @foreach (var t in Model.EVVA)
+                   @*  @foreach (var t in Model.EVVA)
                     {
                         <li><a data-bs-toggle="modal" onclick="system_name('@t.NameSysteam')" data-bs-target="#FooterItemRender">@t.NameSysteam</a></li>
 
-                    }
+                    } *@
                 </div> 
             </div>
 
@@ -87,10 +87,10 @@
  <script async>
 
     let modalInfo = document.querySelector("#FooterItemRender");
-    let abusData = @Html.Raw(Json.Serialize(Model.ABUS));
-    let cesSystem = @Html.Raw(Json.Serialize(Model.SystemCes));
-    let Basi = @Html.Raw(Json.Serialize(Model.Basi));
-    let EVVA = @Html.Raw(Json.Serialize(Model.EVVA));
+    // let abusData = @Html.Raw(Json.Serialize(Model.ABUS));
+    // let cesSystem = @Html.Raw(Json.Serialize(Model.SystemCes));
+    // let Basi = @Html.Raw(Json.Serialize(Model.Basi));
+    // let EVVA = @Html.Raw(Json.Serialize(Model.EVVA));
 
 
     let title = document.getElementById("footer_item_title");
