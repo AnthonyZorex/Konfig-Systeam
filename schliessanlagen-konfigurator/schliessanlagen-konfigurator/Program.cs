@@ -34,7 +34,7 @@ builder.Services.AddScoped<FooterService>();
 builder.Services.AddControllersWithViews().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
-    options.JsonSerializerOptions.MaxDepth = 64; // Можно также увеличить глубину
+    options.JsonSerializerOptions.MaxDepth = 64;
 });
 
 builder.Services.AddDistributedMemoryCache();
