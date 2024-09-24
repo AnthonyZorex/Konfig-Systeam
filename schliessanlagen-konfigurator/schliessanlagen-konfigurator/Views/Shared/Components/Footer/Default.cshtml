@@ -7,10 +7,10 @@
             <div class="col-md-4 mt-2 p-2">
                 <img src="@Url.Content("~/compression/basi.webp")" alt="Basi" height="50" width="50" />
                  <div style="margin-top:20px">
-                    @foreach (var t in Model.Basi)
+                     @foreach (var t in Model.Basi)
                     {
                         <li><a data-bs-toggle="modal" onclick="system_name('@t.NameSysteam')" data-bs-target="#FooterItemRender">@t.NameSysteam</a></li>
-                    }
+                    } 
                 </div> 
             </div>
             <div class="col-md-4 mt-2 p-2">
@@ -24,13 +24,13 @@
                 </div> 
             </div>
             <div class="col-md-4 mt-2 p-2">
-                <img src="@Url.Content("~/compression/ABUS.svg.webp")" alt="ABUS" height="50" width="100" />
+                 <img src="@Url.Content("~/compression/ABUS.svg.webp")" alt="ABUS" height="50" width="100" />
                  <div style="margin-top:20px">
                     @foreach (var t in Model.ABUS)
                     {
                         <li><a data-bs-toggle="modal" onclick="system_name('@t.NameSysteam')" data-bs-target="#FooterItemRender">@t.NameSysteam</a></li>
                     }  
-                </div> 
+                </div>  
             </div>
 
             <div class="col-md-4 mt-2 p-2">
@@ -41,7 +41,6 @@
                     {
                         <li><a data-bs-toggle="modal" onclick="system_name('@t.NameSysteam')" data-bs-target="#FooterItemRender">@t.NameSysteam</a></li>
 
-                     
                     }
                 </div> 
             </div>
@@ -85,7 +84,7 @@
         <h2><a href="@Url.Action("Impressum", "Home")">Impressum</a></h2>
     </div>
 </div>
- <script>
+ <script async>
 
     let modalInfo = document.querySelector("#FooterItemRender");
     let abusData = @Html.Raw(Json.Serialize(Model.ABUS));

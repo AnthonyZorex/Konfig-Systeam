@@ -14,17 +14,17 @@ namespace schliessanlagen_konfigurator.ViewComponent
         }
 
 
-        public IViewComponentResult Invoke()
+        public async Task<IViewComponentResult> InvokeAsync()
         {
             var model = new FooterViewModel
             {
-                SystemCes = _footerService.SystemCes(),
+                SystemCes = await _footerService.SystemCes(),
           
-                ABUS = _footerService.SystemABUS(),
+                ABUS = await _footerService.SystemABUS(),
                 
-                EVVA = _footerService.SystemEVVA(),
+                EVVA = await _footerService.SystemEVVA(),
               
-                Basi = _footerService.SystemBasi(),
+                Basi = await _footerService.SystemBasi(),
                 
             };
 

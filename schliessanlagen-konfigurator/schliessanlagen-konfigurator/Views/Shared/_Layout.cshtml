@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" defer />
     <link rel="stylesheet" as="style" href="~/css/site.min.css" asp-append-version="true" />
     <link rel="icon" type="image/x-icon" loading="lazy" alt="logo" href="@("/compression/SD_Logo-rund.webp")" />
+    <script src="~/lib/jquery/dist/jquery.min.js" async></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" async></script>
+    <script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js" async></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var currentUrl = window.location.href;
@@ -68,10 +71,6 @@
         </div>
       @await Component.InvokeAsync("Footer")
     </div>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 
