@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using schliessanlagen_konfigurator.Data;
 using schliessanlagen_konfigurator.Models.System;
 using schliessanlagen_konfigurator.Models.Users;
@@ -21,29 +22,29 @@ namespace schliessanlagen_konfigurator.Service
             _signInManager = signInManager;
         }
 
-        public List<ProductGalery> SystemGalery()
+        public async Task<List<ProductGalery>> SystemGalery()
         {
-            var Gallery = db.ProductGalery.ToList();
+            var Gallery = await db.ProductGalery.ToListAsync();
 
-            return Gallery;
+            return  Gallery;
         }
-        public List<SysteamPriceKey> SystemInfo()
+        public async Task<List<SysteamPriceKey>> SystemInfo()
         {
-            var System = db.SysteamPriceKey.ToList();
+            var System = await db.SysteamPriceKey.ToListAsync();
 
             return System;
         }
-        public List<SysteamPriceKey> SystemCes()
+        public async Task<List<SysteamPriceKey>> SystemCes()
         {
-            var System = SystemInfo();
+            var System = await SystemInfo();
 
-            var DoppelZylinder = db.Profil_Doppelzylinder.Where(x => x.companyName == "CES").ToList();
+            var DoppelZylinder = await db.Profil_Doppelzylinder.Where(x => x.companyName == "CES").ToListAsync();
 
             var Ces = new List<SysteamPriceKey>();
 
             foreach (var item in DoppelZylinder)
             {
-                var sortItem = System.Where(x => x.NameSysteam == item.NameSystem).ToList();
+                var sortItem =  System.Where(x => x.NameSysteam == item.NameSystem).ToList();
 
                 foreach (var x in sortItem)
                 {
@@ -55,15 +56,15 @@ namespace schliessanlagen_konfigurator.Service
             return Ces;
         }
 
-        public List<ProductGalery> System_CES_Galery()
+        public async Task<List<ProductGalery>> System_CES_Galery()
         {
-            var Ces = SystemCes();
+            var Ces = await SystemCes();
 
             var CesGalerry = new List<ProductGalery>();
 
             foreach (var item in Ces)
             {
-                var gallery = db.ProductGalery.Where(x => x.SysteamPriceKeyId == item.Id).ToList();
+                var gallery = await db.ProductGalery.Where(x => x.SysteamPriceKeyId == item.Id).ToListAsync();
 
                 foreach (var x in gallery)
                 {
@@ -73,11 +74,11 @@ namespace schliessanlagen_konfigurator.Service
 
             return CesGalerry;
         }
-        public List<SysteamPriceKey> SystemBasi()
+        public async Task<List<SysteamPriceKey>> SystemBasi()
         {
-            var System = SystemInfo();
+            var System = await SystemInfo();
 
-            var DoppelZylinder = db.Profil_Doppelzylinder.Where(x => x.companyName == "BASI").ToList();
+            var DoppelZylinder = await db.Profil_Doppelzylinder.Where(x => x.companyName == "BASI").ToListAsync();
 
             var Basi = new List<SysteamPriceKey>();
 
@@ -87,7 +88,6 @@ namespace schliessanlagen_konfigurator.Service
 
                 foreach (var x in sortItem)
                 {
-
                     Basi.Add(x);
                 }
             }
@@ -95,15 +95,15 @@ namespace schliessanlagen_konfigurator.Service
             return Basi;
         }
 
-        public List<ProductGalery> System_Basi_Galery()
+        public async Task<List<ProductGalery>> System_Basi_Galery()
         {
-            var Basi = SystemBasi();
+            var Basi = await SystemBasi();
 
             var BasiGalerry = new List<ProductGalery>();
 
             foreach (var item in Basi)
             {
-                var gallery = db.ProductGalery.Where(x => x.SysteamPriceKeyId == item.Id).ToList();
+                var gallery = await db.ProductGalery.Where(x => x.SysteamPriceKeyId == item.Id).ToListAsync();
 
                 foreach (var x in gallery)
                 {
@@ -113,11 +113,11 @@ namespace schliessanlagen_konfigurator.Service
 
             return BasiGalerry;
         }
-        public List<SysteamPriceKey> SystemABUS()
+        public async Task<List<SysteamPriceKey>> SystemABUS()
         {
-            var System = SystemInfo();
+            var System = await SystemInfo();
 
-            var DoppelZylinder = db.Profil_Doppelzylinder.Where(x => x.companyName == "ABUS").ToList();
+            var DoppelZylinder = await db.Profil_Doppelzylinder.Where(x => x.companyName == "ABUS").ToListAsync();
 
             var ABUS = new List<SysteamPriceKey>();
 
@@ -133,15 +133,15 @@ namespace schliessanlagen_konfigurator.Service
 
             return ABUS;
         }
-        public List<ProductGalery> System_ABUS_Galery()
+        public async  Task<List<ProductGalery>> System_ABUS_Galery()
         {
-            var ABUS = SystemABUS();
+            var ABUS = await SystemABUS();
 
             var ABUS_Galerry = new List<ProductGalery>();
 
             foreach (var item in ABUS)
             {
-                var gallery = db.ProductGalery.Where(x => x.SysteamPriceKeyId == item.Id).ToList();
+                var gallery = await db.ProductGalery.Where(x => x.SysteamPriceKeyId == item.Id).ToListAsync();
 
                 foreach (var x in gallery)
                 {
@@ -151,11 +151,11 @@ namespace schliessanlagen_konfigurator.Service
 
             return ABUS_Galerry;
         }
-        public List<SysteamPriceKey> SystemEVVA()
+        public async Task<List<SysteamPriceKey>> SystemEVVA()
         {
-            var System = SystemInfo();
+            var System = await SystemInfo();
 
-            var DoppelZylinder = db.Profil_Doppelzylinder.Where(x => x.companyName == "EVVA").ToList();
+            var DoppelZylinder = await db.Profil_Doppelzylinder.Where(x => x.companyName == "EVVA").ToListAsync();
 
             var EVVA = new List<SysteamPriceKey>();
 
@@ -171,15 +171,15 @@ namespace schliessanlagen_konfigurator.Service
 
             return EVVA;
         }
-        public List<ProductGalery> System_EVVA_Galery()
+        public async Task<List<ProductGalery>> System_EVVA_Galery()
         {
-            var EVVA = SystemEVVA();
+            var EVVA = await SystemEVVA();
 
             var EVVA_Galerry = new List<ProductGalery>();
 
             foreach (var item in EVVA)
             {
-                var gallery = db.ProductGalery.Where(x => x.SysteamPriceKeyId == item.Id).ToList();
+                var gallery = await db.ProductGalery.Where(x => x.SysteamPriceKeyId == item.Id).ToListAsync();
 
                 foreach (var x in gallery)
                 {

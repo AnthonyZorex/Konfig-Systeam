@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using schliessanlagen_konfigurator.Models.System;
 using schliessanlagen_konfigurator.Service;
-
+using System.Diagnostics;
 namespace schliessanlagen_konfigurator.ViewComponent
 {
     public class FooterViewComponent : Microsoft.AspNetCore.Mvc.ViewComponent
