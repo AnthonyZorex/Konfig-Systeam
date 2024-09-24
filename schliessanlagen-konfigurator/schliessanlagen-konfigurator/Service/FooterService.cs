@@ -1,193 +1,183 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using schliessanlagen_konfigurator.Data;
 using schliessanlagen_konfigurator.Models.System;
 using schliessanlagen_konfigurator.Models.Users;
-
+using Microsoft.Extensions.Caching.Memory;
 namespace schliessanlagen_konfigurator.Service
 {
     public class FooterService
     {
-        schliessanlagen_konfiguratorContext db;
-        private IWebHostEnvironment Environment;
+        private readonly schliessanlagen_konfiguratorContext db;
+        private readonly IWebHostEnvironment Environment;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly IMemoryCache _cache;
 
-        public FooterService(UserManager<User> userManager, SignInManager<User> signInManager, schliessanlagen_konfiguratorContext context, IWebHostEnvironment _environment)
+        public FooterService(UserManager<User> userManager, SignInManager<User> signInManager, schliessanlagen_konfiguratorContext context, IWebHostEnvironment environment, IMemoryCache cache)
         {
             db = context;
-            Environment = _environment;
+            Environment = environment;
             _userManager = userManager;
             _signInManager = signInManager;
+            _cache = cache;
         }
 
-        public async Task<List<ProductGalery>> SystemGalery()
+        private List<T> GetCachedData<T>(string cacheKey, Func<List<T>> getDataFunc)
         {
-            var Gallery = await db.ProductGalery.ToListAsync();
-
-            return  Gallery;
-        }
-        public async Task<List<SysteamPriceKey>> SystemInfo()
-        {
-            var System = await db.SysteamPriceKey.ToListAsync();
-
-            return System;
-        }
-        public async Task<List<SysteamPriceKey>> SystemCes()
-        {
-            var System = await SystemInfo();
-
-            var DoppelZylinder = await db.Profil_Doppelzylinder.Where(x => x.companyName == "CES").ToListAsync();
-
-            var Ces = new List<SysteamPriceKey>();
-
-            foreach (var item in DoppelZylinder)
+            if (!_cache.TryGetValue(cacheKey, out List<T> cachedData))
             {
-                var sortItem =  System.Where(x => x.NameSysteam == item.NameSystem).ToList();
+                // Данные не найдены в кэше, получаем из базы данных
+                cachedData = getDataFunc();
 
-                foreach (var x in sortItem)
-                {
-
-                    Ces.Add(x);
-                }
+                // Устанавливаем кэш с истечением через 24 часа
+                _cache.Set(cacheKey, cachedData, TimeSpan.FromHours(24));
             }
-
-            return Ces;
+            return cachedData;
         }
 
-        public async Task<List<ProductGalery>> System_CES_Galery()
+        public List<ProductGalery> SystemGalery()
         {
-            var Ces = await SystemCes();
-
-            var CesGalerry = new List<ProductGalery>();
-
-            foreach (var item in Ces)
-            {
-                var gallery = await db.ProductGalery.Where(x => x.SysteamPriceKeyId == item.Id).ToListAsync();
-
-                foreach (var x in gallery)
-                {
-                    CesGalerry.Add(x);
-                }
-            }
-
-            return CesGalerry;
-        }
-        public async Task<List<SysteamPriceKey>> SystemBasi()
-        {
-            var System = await SystemInfo();
-
-            var DoppelZylinder = await db.Profil_Doppelzylinder.Where(x => x.companyName == "BASI").ToListAsync();
-
-            var Basi = new List<SysteamPriceKey>();
-
-            foreach (var item in DoppelZylinder)
-            {
-                var sortItem = System.Where(x => x.NameSysteam == item.NameSystem).ToList();
-
-                foreach (var x in sortItem)
-                {
-                    Basi.Add(x);
-                }
-            }
-
-            return Basi;
+            return db.ProductGalery.AsNoTracking().ToList();
         }
 
-        public async Task<List<ProductGalery>> System_Basi_Galery()
+        public List<SysteamPriceKey> SystemInfo()
         {
-            var Basi = await SystemBasi();
-
-            var BasiGalerry = new List<ProductGalery>();
-
-            foreach (var item in Basi)
-            {
-                var gallery = await db.ProductGalery.Where(x => x.SysteamPriceKeyId == item.Id).ToListAsync();
-
-                foreach (var x in gallery)
-                {
-                    BasiGalerry.Add(x);
-                }
-            }
-
-            return BasiGalerry;
+            return db.SysteamPriceKey.AsNoTracking().ToList();
         }
-        public async Task<List<SysteamPriceKey>> SystemABUS()
+
+        public List<SysteamPriceKey> SystemCes()
         {
-            var System = await SystemInfo();
-
-            var DoppelZylinder = await db.Profil_Doppelzylinder.Where(x => x.companyName == "ABUS").ToListAsync();
-
-            var ABUS = new List<SysteamPriceKey>();
-
-            foreach (var item in DoppelZylinder)
+            return GetCachedData("SystemCes", () =>
             {
-                var sortItem = System.Where(x => x.NameSysteam == item.NameSystem).ToList();
+                var System = SystemInfo();
+                var DoppelZylinder = db.Profil_Doppelzylinder.AsNoTracking().Where(x => x.companyName == "CES").ToList();
+                var Ces = new List<SysteamPriceKey>();
 
-                foreach (var x in sortItem)
+                foreach (var item in DoppelZylinder)
                 {
-                    ABUS.Add(x);
+                    var sortItem = System.Where(x => x.NameSysteam == item.NameSystem).ToList();
+                    Ces.AddRange(sortItem);
                 }
-            }
-
-            return ABUS;
+                return Ces;
+            });
         }
-        public async  Task<List<ProductGalery>> System_ABUS_Galery()
+
+        public List<ProductGalery> System_CES_Galery()
         {
-            var ABUS = await SystemABUS();
-
-            var ABUS_Galerry = new List<ProductGalery>();
-
-            foreach (var item in ABUS)
+            return GetCachedData("SystemCesGallery", () =>
             {
-                var gallery = await db.ProductGalery.Where(x => x.SysteamPriceKeyId == item.Id).ToListAsync();
+                var Ces = SystemCes();
+                var CesGalerry = new List<ProductGalery>();
 
-                foreach (var x in gallery)
+                foreach (var item in Ces)
                 {
-                    ABUS_Galerry.Add(x);
+                    var gallery = db.ProductGalery.AsNoTracking().Where(x => x.SysteamPriceKeyId == item.Id).ToList();
+                    CesGalerry.AddRange(gallery);
                 }
-            }
-
-            return ABUS_Galerry;
+                return CesGalerry;
+            });
         }
-        public async Task<List<SysteamPriceKey>> SystemEVVA()
+
+        public List<SysteamPriceKey> SystemBasi()
         {
-            var System = await SystemInfo();
-
-            var DoppelZylinder = await db.Profil_Doppelzylinder.Where(x => x.companyName == "EVVA").ToListAsync();
-
-            var EVVA = new List<SysteamPriceKey>();
-
-            foreach (var item in DoppelZylinder)
+            return GetCachedData("SystemBasi", () =>
             {
-                var sortItem = System.Where(x => x.NameSysteam == item.NameSystem).ToList();
+                var System = SystemInfo();
+                var DoppelZylinder = db.Profil_Doppelzylinder.AsNoTracking().Where(x => x.companyName == "BASI").ToList();
+                var Basi = new List<SysteamPriceKey>();
 
-                foreach (var x in sortItem)
+                foreach (var item in DoppelZylinder)
                 {
-                    EVVA.Add(x);
+                    var sortItem = System.Where(x => x.NameSysteam == item.NameSystem).ToList();
+                    Basi.AddRange(sortItem);
                 }
-            }
-
-            return EVVA;
+                return Basi;
+            });
         }
-        public async Task<List<ProductGalery>> System_EVVA_Galery()
+
+        public List<ProductGalery> System_Basi_Galery()
         {
-            var EVVA = await SystemEVVA();
-
-            var EVVA_Galerry = new List<ProductGalery>();
-
-            foreach (var item in EVVA)
+            return GetCachedData("SystemBasiGallery", () =>
             {
-                var gallery = await db.ProductGalery.Where(x => x.SysteamPriceKeyId == item.Id).ToListAsync();
+                var Basi = SystemBasi();
+                var BasiGalerry = new List<ProductGalery>();
 
-                foreach (var x in gallery)
+                foreach (var item in Basi)
                 {
-                    EVVA_Galerry.Add(x);
+                    var gallery = db.ProductGalery.AsNoTracking().Where(x => x.SysteamPriceKeyId == item.Id).ToList();
+                    BasiGalerry.AddRange(gallery);
                 }
-            }
+                return BasiGalerry;
+            });
+        }
 
-            return EVVA_Galerry;
+        public List<SysteamPriceKey> SystemABUS()
+        {
+            return GetCachedData("SystemABUS", () =>
+            {
+                var System = SystemInfo();
+                var DoppelZylinder = db.Profil_Doppelzylinder.AsNoTracking().Where(x => x.companyName == "ABUS").ToList();
+                var ABUS = new List<SysteamPriceKey>();
+
+                foreach (var item in DoppelZylinder)
+                {
+                    var sortItem = System.Where(x => x.NameSysteam == item.NameSystem).ToList();
+                    ABUS.AddRange(sortItem);
+                }
+                return ABUS;
+            });
+        }
+
+        public List<ProductGalery> System_ABUS_Galery()
+        {
+            return GetCachedData("SystemABUSGallery", () =>
+            {
+                var ABUS = SystemABUS();
+                var ABUS_Galerry = new List<ProductGalery>();
+
+                foreach (var item in ABUS)
+                {
+                    var gallery = db.ProductGalery.AsNoTracking().Where(x => x.SysteamPriceKeyId == item.Id).ToList();
+                    ABUS_Galerry.AddRange(gallery);
+                }
+                return ABUS_Galerry;
+            });
+        }
+
+        public List<SysteamPriceKey> SystemEVVA()
+        {
+            return GetCachedData("SystemEVVA", () =>
+            {
+                var System = SystemInfo();
+                var DoppelZylinder = db.Profil_Doppelzylinder.AsNoTracking().Where(x => x.companyName == "EVVA").ToList();
+                var EVVA = new List<SysteamPriceKey>();
+
+                foreach (var item in DoppelZylinder)
+                {
+                    var sortItem = System.Where(x => x.NameSysteam == item.NameSystem).ToList();
+                    EVVA.AddRange(sortItem);
+                }
+                return EVVA;
+            });
+        }
+
+        public List<ProductGalery> System_EVVA_Galery()
+        {
+            return GetCachedData("SystemEVVAGallery", () =>
+            {
+                var EVVA = SystemEVVA();
+                var EVVA_Galerry = new List<ProductGalery>();
+
+                foreach (var item in EVVA)
+                {
+                    var gallery = db.ProductGalery.AsNoTracking().Where(x => x.SysteamPriceKeyId == item.Id).ToList();
+                    EVVA_Galerry.AddRange(gallery);
+                }
+                return EVVA_Galerry;
+            });
         }
     }
 }

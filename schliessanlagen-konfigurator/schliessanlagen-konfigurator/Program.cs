@@ -29,14 +29,13 @@ builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfi
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<schliessanlagen_konfiguratorContext>();
 
-builder.Services.AddScoped<FooterService>();
-
 builder.Services.AddControllersWithViews().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
     options.JsonSerializerOptions.MaxDepth = 64;
 });
-
+builder.Services.AddMemoryCache();
+builder.Services.AddScoped<FooterService>();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -92,7 +91,6 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     SendData.Initialize(services);
 }
-
 
 app.UseStaticFiles(new StaticFileOptions
 {
