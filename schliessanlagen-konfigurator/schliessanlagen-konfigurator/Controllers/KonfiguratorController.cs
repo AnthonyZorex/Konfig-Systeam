@@ -668,6 +668,40 @@ namespace schliessanlagen_konfigurator.Controllers
             SchopAlarm();
             ViewData["Description"] = "Gestalten Sie Ihre individuelle Schließanlage mit unserem benutzerfreundlichen Konfigurator! Wählen Sie aus verschiedenen Modellen und Sicherheitsstufen, um optimalen Schutz für Ihr Zuhause oder Unternehmen zu gewährleisten. Jetzt starten und die perfekte Lösung finden!";
 
+            var listDoppel = db.Profil_Doppelzylinder.AsNoTracking().ToList();
+
+            var CES = listDoppel
+           
+            .Where(x => x.companyName == "CES")
+            .Select(x => x.NameSystem)
+            .Distinct()
+            .ToList();
+
+            var ABUS = listDoppel
+            .Where(x => x.companyName == "ABUS")
+            .Select(x => x.NameSystem)
+            .Distinct()
+            .ToList();
+
+            var EVVA = listDoppel
+            .Where(x => x.companyName == "EVVA")
+            .Select(x => x.NameSystem)
+            .Distinct()
+            .ToList();
+
+            var BASI = listDoppel
+            .Where(x => x.companyName == "BASI")
+            .Select(x => x.NameSystem)
+            .Distinct()
+            .ToList();
+
+            var system = db.SysteamPriceKey.AsNoTracking().ToList();
+
+            ViewBag.Ces = system.Where(x => CES.Contains(x.NameSysteam)).ToList();
+            ViewBag.Evva = system.Where(x => EVVA.Contains(x.NameSysteam)).ToList();
+            ViewBag.Abus = system.Where(x => ABUS.Contains(x.NameSysteam)).ToList();
+            ViewBag.Basi = system.Where(x => BASI.Contains(x.NameSysteam)).ToList();
+
             //ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
 
             //if (ident.IsAuthenticated == true)

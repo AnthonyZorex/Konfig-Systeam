@@ -1,5 +1,5 @@
-﻿@using schliessanlagen_konfigurator.ViewComponent
-@model FooterViewModel
+﻿@* @using schliessanlagen_konfigurator.ViewComponent
+@model FooterViewModel *@
 
 <div class="footer">
     <div class="container">
@@ -84,61 +84,4 @@
         <h2><a href="@Url.Action("Impressum", "Home")">Impressum</a></h2>
     </div>
 </div>
- <script async>
 
-    let modalInfo = document.querySelector("#FooterItemRender");
-    // let abusData = @Html.Raw(Json.Serialize(Model.ABUS));
-    // let cesSystem = @Html.Raw(Json.Serialize(Model.SystemCes));
-    // let Basi = @Html.Raw(Json.Serialize(Model.Basi));
-    // let EVVA = @Html.Raw(Json.Serialize(Model.EVVA));
-
-
-    let title = document.getElementById("footer_item_title");
-    let discriptions = document.getElementById("FooterItemRenderDescriptions");
-   
-    function system_name(name) 
-    {
-        render(name);
-    }
-
-    function render(name) 
-    {
-        abusData["$values"].forEach((item) =>
-        {
-            if (item.nameSysteam == name) 
-            {
-                title.textContent = item.nameSysteam;
-                discriptions.innerHTML = item.desctiptionsSysteam;
-            }
-
-        });
-
-        cesSystem["$values"].forEach((item) => 
-        {
-            if (item.nameSysteam == name) 
-            {
-                title.textContent = item.nameSysteam;
-                discriptions.innerHTML = item.desctiptionsSysteam;
-            }
-            
-        });
-
-        Basi["$values"].forEach((item) => 
-        {
-            if (item.nameSysteam == name) {
-                title.textContent = item.nameSysteam;
-                discriptions.innerHTML = item.desctiptionsSysteam;
-            }
-        });
-
-        EVVA["$values"].forEach((item) => 
-        {
-            if (item.nameSysteam == name) 
-            {
-                title.textContent = item.nameSysteam;
-                discriptions.innerHTML = item.desctiptionsSysteam;
-            }
-        });
-    }
-    
-</script> 

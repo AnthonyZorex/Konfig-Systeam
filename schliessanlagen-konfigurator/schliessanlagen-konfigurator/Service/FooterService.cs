@@ -19,37 +19,27 @@ namespace schliessanlagen_konfigurator.Service
             _cache = cache;
         }
 
-        private List<T> GetCachedDataAsync<T>(string cacheKey, Func<List<T>> getDataFunc)
-        {
-            if (!_cache.TryGetValue(cacheKey, out List<T> cachedData))
-            {
-                cachedData =  getDataFunc();
-                _cache.Set(cacheKey, cachedData, TimeSpan.FromHours(24));
-            }
-            return cachedData;
-        }
+        //private List<T> GetCachedDataAsync<T>(string cacheKey, Func<List<T>> getDataFunc)
+        //{
+        //    if (!_cache.TryGetValue(cacheKey, out List<T> cachedData))
+        //    {
+        //        cachedData =  getDataFunc();
+        //        _cache.Set(cacheKey, cachedData, TimeSpan.FromHours(24));
+        //    }
+        //    return cachedData;
+        //}
 
-        public List<SysteamPriceKey> SystemAsync(string companyName, string cacheKey)
-        {
-            return GetCachedDataAsync(cacheKey, () =>
-            {
-                var doppelZylinder = db.Profil_Doppelzylinder
-                    .AsNoTracking()
-                    .Where(x => x.companyName == companyName)
-                    .Select(x => x.NameSystem)
-                    .Distinct()
-                    .ToList();
+        //public List<SysteamPriceKey> SystemAsync(string companyName, string cacheKey)
+        //{
+        //    return GetCachedDataAsync(cacheKey, () =>
+        //    {
 
-                return  db.SysteamPriceKey
-                    .AsNoTracking()
-                    .Where(x => doppelZylinder.Contains(x.NameSysteam))
-                    .ToList();
-            });
-        }
+        //    });
+        //}
 
-        public List<SysteamPriceKey> SystemCes() => SystemAsync("CES", "SystemCes");
-        public List<SysteamPriceKey> SystemBasi() => SystemAsync("BASI", "SystemBasi");
-        public List<SysteamPriceKey> SystemABUS() => SystemAsync("ABUS", "SystemABUS");
-        public List<SysteamPriceKey> SystemEVVA() => SystemAsync("EVVA", "SystemEVVA");
+        //public List<SysteamPriceKey> SystemCes() => SystemAsync("CES", "SystemCes");
+        //public List<SysteamPriceKey> SystemBasi() => SystemAsync("BASI", "SystemBasi");
+        //public List<SysteamPriceKey> SystemABUS() => SystemAsync("ABUS", "SystemABUS");
+        //public List<SysteamPriceKey> SystemEVVA() => SystemAsync("EVVA", "SystemEVVA");
     }
 }

@@ -66,10 +66,97 @@
         <div class="content">
             @RenderBody()
         </div>
-      @await Component.InvokeAsync("Footer")
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 mt-2 p-2">
+                        <img src="@Url.Content("~/compression/basi.webp")" alt="Basi" height="50" width="50" />
+                        <div style="margin-top:20px">
+                            @foreach (var t in ViewBag.Basi)
+                            {
+                            <li><a data-bs-toggle="modal" onclick="system_name('@t.NameSysteam')" data-bs-target="#FooterItemRender">@t.NameSysteam</a></li>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-4 mt-2 p-2">
+                        <img src="@Url.Content("~/Image/logo_ces.svg")" alt="CES" height="50" width="50" />
+                        <br />
+                        <div style="margin-top:20px">
+                            @foreach (var t in ViewBag.Ces)
+                            {
+                            <li><a data-bs-toggle="modal" onclick="system_name('@t.NameSysteam')" data-bs-target="#FooterItemRender">@t.NameSysteam</a></li>
+                            }    
+                        </div>
+                    </div>
+                    <div class="col-md-4 mt-2 p-2">
+                        <img src="@Url.Content("~/compression/ABUS.svg.webp")" alt="ABUS" height="50" width="100" />
+                        <div style="margin-top:20px">
+                            @foreach (var t in ViewBag.Abus)
+                            {
+                            <li><a data-bs-toggle="modal" onclick="system_name('@t.NameSysteam')" data-bs-target="#FooterItemRender">@t.NameSysteam</a></li>
+                            }   
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mt-2 p-2">
+                        <img src="@Url.Content("~/compression/EVVA.webp")" alt="EVVA" height="50" width="100" />
+                        <div style="margin-top:20px">
+
+                            @foreach (var t in ViewBag.Evva)
+                            {
+                            <li><a data-bs-toggle="modal" onclick="system_name('@t.NameSysteam')" data-bs-target="#FooterItemRender">@t.NameSysteam</a></li>
+                            } 
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal fade" id="FooterItemRender" load tabindex="-1">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title" style="color:black" id="footer_item_title"></h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                                <div class="row g-0">
+                                    <div class="col-md-2">
+                                        @*  @foreach(var d in t.ProductGalery)
+                                        {
+                                        <img class="img-fluid rounded-start" height="150" width="85" src="@("/compression/" + d.ImageName)" alt="@t.NameSysteam">
+                                        }  *@
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+
+                                            <div class="card-text" id="FooterItemRenderDescriptions" style="color:black">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr style="height: 3px;">
+            <h2><a href="@Url.Action("Impressum", "Home")">Impressum</a></h2>
+        </div>
     </div>
 
     @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        let abusData = @Html.Raw(Json.Serialize(ViewBag.Abus));
+        let cesSystem = @Html.Raw(Json.Serialize(ViewBag.Ces));
+        let Basi = @Html.Raw(Json.Serialize(ViewBag.Basi));
+        let EVVA = @Html.Raw(Json.Serialize(ViewBag.Evva));
+    </script>
+    <script src="~/Js/footer.js" async></script>
     <script src="~/lib/jquery/dist/jquery.min.js" async></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" async></script>
     <script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js" async></script>

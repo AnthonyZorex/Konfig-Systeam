@@ -16,33 +16,33 @@ namespace schliessanlagen_konfigurator.ViewComponent
 
         public IViewComponentResult Invoke()
         {
-            var model = new FooterViewModel
-            {
-                SystemCes =  _footerService.SystemCes(),
+            //var model = new FooterViewModel
+            //{
+            //    SystemCes =  _footerService.SystemCes(),
           
-                ABUS =  _footerService.SystemABUS(),
+            //    ABUS =  _footerService.SystemABUS(),
                 
-                EVVA =  _footerService.SystemEVVA(),
+            //    EVVA =  _footerService.SystemEVVA(),
               
-                Basi =  _footerService.SystemBasi(),
+            //    Basi =  _footerService.SystemBasi(),
                 
-            };
+            //};
 
-            return View(model);
+            return View();
         }
     }
     
-    public class FooterViewModel
-    {
-        public List<SysteamPriceKey> SystemCes { get; set; }
-        //public List<ProductGalery> SystemCesGalerry { get; set; }
-        public List<SysteamPriceKey> ABUS { get; set; }
-        //public List<ProductGalery> SystemAbusGalerry { get; set; }
-        public List<SysteamPriceKey> EVVA { get; set; }
-        //public List<ProductGalery> SystemEvvaGalerry { get; set; }
-        public List<SysteamPriceKey> Basi { get; set; }
-        //public List<ProductGalery> SystemBasiGalerry { get; set; }
+    //public class FooterViewModel
+    //{
+    //    public List<SysteamPriceKey> SystemCes { get; set; }
+    //    //public List<ProductGalery> SystemCesGalerry { get; set; }
+    //    public List<SysteamPriceKey> ABUS { get; set; }
+    //    //public List<ProductGalery> SystemAbusGalerry { get; set; }
+    //    public List<SysteamPriceKey> EVVA { get; set; }
+    //    //public List<ProductGalery> SystemEvvaGalerry { get; set; }
+    //    public List<SysteamPriceKey> Basi { get; set; }
+    //    //public List<ProductGalery> SystemBasiGalerry { get; set; }
 
        
-    }
+    //}
 }

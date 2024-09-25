@@ -553,6 +553,10 @@
       "PackagePath": "staticwebassets\\Js\\Schop\\search_Item.js"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Js\\footer.js",
+      "PackagePath": "staticwebassets\\Js\\footer.js"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\CES_schliessplan_DE_schliessanlagen.xlsx",
       "PackagePath": "staticwebassets\\Orders\\CES_schliessplan_DE_schliessanlagen.xlsx"
     },
