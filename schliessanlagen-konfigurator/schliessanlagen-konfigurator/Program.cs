@@ -29,15 +29,6 @@ builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfi
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<schliessanlagen_konfiguratorContext>();
 
-//builder.Services.AddControllersWithViews().AddJsonOptions(options =>
-//{
-//    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
-//    options.JsonSerializerOptions.MaxDepth = 64;
-//});
-
-//builder.Services.AddMemoryCache();
-builder.Services.AddScoped<FooterService>();
-//builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddSession(options =>

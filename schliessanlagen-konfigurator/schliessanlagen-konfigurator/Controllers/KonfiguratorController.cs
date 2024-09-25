@@ -43,6 +43,9 @@ using System.Drawing;
 using schliessanlagen_konfigurator.Service;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
 using System.Runtime.CompilerServices;
+using Antlr.Runtime;
+using schliessanlagen_konfigurator.Migrations;
+using OptionsVorhan = schliessanlagen_konfigurator.Models.Vorhan.OptionsVorhan;
 namespace schliessanlagen_konfigurator.Controllers
 {
     [EnableCors("*")]
@@ -663,44 +666,74 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
             }
         }
+        [HttpPost]
+        public JsonResult GetData([FromBody] RequestModel request)
+        {
+            var System = db.SysteamPriceKey.Where(x => x.Id == Convert.ToInt32(request.Id)).First();
+
+            var data = new
+            {
+                nameSysteam = System.NameSysteam,
+                desctiptionsSysteam = System.DesctiptionsSysteam
+            };
+
+            return Json(data);
+        }
+        public class RequestModel
+        {
+            public int Id { get; set; }
+        }
         public ActionResult IndexKonfigurator()
         {
-            SchopAlarm();
+            SchopAlarm();   
             ViewData["Description"] = "Gestalten Sie Ihre individuelle Schließanlage mit unserem benutzerfreundlichen Konfigurator! Wählen Sie aus verschiedenen Modellen und Sicherheitsstufen, um optimalen Schutz für Ihr Zuhause oder Unternehmen zu gewährleisten. Jetzt starten und die perfekte Lösung finden!";
+            var listDoppelCes = db.Profil_Doppelzylinder.Where(x => x.companyName == "CES").ToList();
+            var system = db.SysteamPriceKey.ToList();
 
-            var listDoppel = db.Profil_Doppelzylinder.AsNoTracking().ToList();
+            var query = from p in system
+                        join s in listDoppelCes on p.NameSysteam equals s.NameSystem
+                        select new
+                        {
+                            Id = p.Id,
+                            NameSysteam = p.NameSysteam,
+                            desctiptionsSysteam = p.DesctiptionsSysteam
+                        };
 
-            var CES = listDoppel
-           
-            .Where(x => x.companyName == "CES")
-            .Select(x => x.NameSystem)
-            .Distinct()
-            .ToList();
+            ViewBag.Ces = query.Distinct().ToList();
 
-            var ABUS = listDoppel
-            .Where(x => x.companyName == "ABUS")
-            .Select(x => x.NameSystem)
-            .Distinct()
-            .ToList();
+            var listDoppelEVVA = db.Profil_Doppelzylinder.Where(x => x.companyName == "EVVA").ToList();
+            var listDoppelAbus = db.Profil_Doppelzylinder.Where(x => x.companyName == "ABUS").ToList();
+            var listDoppelBasi = db.Profil_Doppelzylinder.Where(x => x.companyName == "BASI").ToList();
 
-            var EVVA = listDoppel
-            .Where(x => x.companyName == "EVVA")
-            .Select(x => x.NameSystem)
-            .Distinct()
-            .ToList();
+            var EVVA = from p in system
+                        join s in listDoppelEVVA on p.NameSysteam equals s.NameSystem
+                        select new
+                        {
+                            Id = p.Id,
+                            NameSysteam = p.NameSysteam,
+                            desctiptionsSysteam = p.DesctiptionsSysteam
+                        };
 
-            var BASI = listDoppel
-            .Where(x => x.companyName == "BASI")
-            .Select(x => x.NameSystem)
-            .Distinct()
-            .ToList();
+            var ABUS = from p in system
+                       join s in listDoppelAbus on p.NameSysteam equals s.NameSystem
+                       select new
+                       {
+                           Id = p.Id,
+                           NameSysteam = p.NameSysteam,
+                           desctiptionsSysteam = p.DesctiptionsSysteam
+                       };
+            var BASI = from p in system
+                       join s in listDoppelBasi on p.NameSysteam equals s.NameSystem
+                       select new
+                       {
+                           Id = p.Id,
+                           NameSysteam = p.NameSysteam,
+                           desctiptionsSysteam = p.DesctiptionsSysteam
+                       };
 
-            var system = db.SysteamPriceKey.AsNoTracking().ToList();
-
-            ViewBag.Ces = system.Where(x => CES.Contains(x.NameSysteam)).ToList();
-            ViewBag.Evva = system.Where(x => EVVA.Contains(x.NameSysteam)).ToList();
-            ViewBag.Abus = system.Where(x => ABUS.Contains(x.NameSysteam)).ToList();
-            ViewBag.Basi = system.Where(x => BASI.Contains(x.NameSysteam)).ToList();
+            ViewBag.Evva = EVVA.Distinct().ToList();
+            ViewBag.Abus = ABUS.Distinct().ToList();
+            ViewBag.Basi = BASI.Distinct().ToList();
 
             //ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
 
