@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "ContainingType": "schliessanlagen_konfigurator.Controllers.SystemController",
+    "Method": "GetData",
+    "RelativePath": "api/System/GetData",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "schliessanlagen_konfigurator.Controllers.RequestModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

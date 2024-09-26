@@ -7,8 +7,7 @@ function system_name(name,id) {
 
 function render(name, id)
 {
-
-    fetch('/Konfigurator/GetData', {  
+    fetch('/api/System/GetData', {  
         method: 'POST',                  
         headers: {
             'Content-Type': 'application/json'  

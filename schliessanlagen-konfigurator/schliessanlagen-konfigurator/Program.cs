@@ -17,6 +17,7 @@ using schliessanlagen_konfigurator;
 using schliessanlagen_konfigurator.Service;
 using System.Security.Policy;
 using schliessanlagen_konfigurator.Controllers;
+using schliessanlagen_konfigurator.ViewComponent;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,7 +38,7 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 
 });
-builder.Services.AddRazorPages(); 
+builder.Services.AddRazorPages();
 
 BundleTable.EnableOptimizations = true;
 
@@ -75,6 +76,8 @@ builder.Services.Configure<GzipCompressionProviderOptions>(options =>
 {
     options.Level = System.IO.Compression.CompressionLevel.Fastest;
 });
+
+builder.Services.AddScoped<FooterServis>();
 
 var app = builder.Build();
 
