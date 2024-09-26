@@ -16,14 +16,12 @@
                 canonicalLink.setAttribute('href', currentUrl);
             }
         });
-   
-            (function(c,l,a,r,i,t,y) {
-                w[c] = w[c] || function () { (w[c].q = w[c].q || []).push(arguments) };
-            w[c].l=1*new Date();
-            i=l.createElement(a);
-            r=l.getElementsByTagName(a)[0];
-            i.async=1;i.src=y;r.parentNode.insertBefore(i,r);
-        })(window, "clarity", "script", "https://www.clarity.ms/tag/o97kp4ebde");
+
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "o97kp4ebde");
 
     </script>
     <link rel="canonical" href="" />
