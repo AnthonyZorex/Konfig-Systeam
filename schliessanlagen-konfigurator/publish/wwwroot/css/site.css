@@ -14,7 +14,10 @@
     gap: 20px;
     text-align: center;
 }
-#arrowSchop{
+#footerItem{
+    cursor:pointer;
+}
+#arrowSchop {
     margin-top: 150px;
     border-radius: 50%;
     background: white;

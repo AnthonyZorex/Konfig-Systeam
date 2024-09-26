@@ -465,6 +465,10 @@
       "PackagePath": "staticwebassets\\Image\\ngf_not-und-gefahrenfunktion.WEBP"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\paypal.png",
+      "PackagePath": "staticwebassets\\Image\\paypal.png"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\profilzylinder_vitess4000.webp",
       "PackagePath": "staticwebassets\\Image\\profilzylinder_vitess4000.webp"
     },
@@ -943,6 +947,10 @@
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\ngf_not-und-gefahrenfunktion.WEBP",
       "PackagePath": "staticwebassets\\compression\\ngf_not-und-gefahrenfunktion.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\paypal.webp",
+      "PackagePath": "staticwebassets\\compression\\paypal.webp"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\profilzylinder_vitess4000.webp",

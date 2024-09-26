@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "BlogItem";
+}
+<style>
+    a {
+        color: black;
+    }
+
+        a:hover {
+            color: black;
+        }
+
+
+    .blogItem{
+        background:white;
+        border-left: var(--primary-border);
+    }
+</style>
+
+<div id="Blog">
+
+    <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+
+        @foreach (var item in ViewBag.Item)
+        {
+            <div class="blogItem shadow-lg mb-4 bg-body-tertiary rounded">
+
+                <div id="productMenuInfo">
+                    <div>
+                        <div>
+                            <h1 id="sys"><strong>@item.Name</strong></h1>
+                        </div>
+                    </div>
+                    <div id="product_desciptions">
+                        <div>
+                            @Html.Raw(@item.Description)
+                        </div>
+                    </div>
+                    <div id="productChek">
+                        <div>
+                            <h6>@item.Data</h6>
+                        </div>
+                        <div>
+                            <a class="btn danger" id="chekProduct" asp-controller="Blog" asp-action="Index">Zurück</a>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        }
+    </div>
+    @*  <nav aria-label="Page navigation example">
+    @if (@Model.TotalPages > 1)
+    {
+    <ul class="pagination">
+    @for (int i = 1; i <= @Model.TotalPages; i++)
+    {
+    <li class="page-item @(i == @Model.page ? "active" : "")">
+    <a class="page-link" href="@Url.Action("Index", new { page = i,Herschteller = @Model.Herschteller,priceVon = @Model.PriceVon,priceBis = @Model.PriceBis,Sort_string = @Model.Sort_string })">@i</a>
+    </li>
+    }
+    </ul>
+    }
+    </nav> *@
+</div>
+
+@section Scripts {
+
+}

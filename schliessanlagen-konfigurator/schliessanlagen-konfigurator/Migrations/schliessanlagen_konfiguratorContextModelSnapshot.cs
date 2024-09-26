@@ -17,7 +17,7 @@ namespace schliessanlagen_konfigurator.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.4")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -51,25 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2c2812f3-955e-4fae-bdda-574dfeb05962",
+                            Id = "3a63943e-9a1b-4836-b3f6-416d08e32728",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "7995fae5-99b4-49b3-b448-c8480b700e32",
+                            Id = "f2dd584b-9560-480e-8720-c57b754cc4cf",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "27438d93-776f-4acc-8d43-5c4e0711687d",
+                            Id = "fe0ddd8d-f76a-424f-b522-362aae3f6258",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "85d50fcd-c52b-4e69-b8a9-e84ffd4ef355",
+                            Id = "476d3225-581f-489c-8417-385917a8ccaa",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -296,6 +296,28 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasIndex("schliessanlagenId");
 
                     b.ToTable("Aussenzylinder_Rundzylinder");
+                });
+
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Blog", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Blogs");
                 });
 
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Halbzylinder.Aussen_Innen_Halbzylinder", b =>

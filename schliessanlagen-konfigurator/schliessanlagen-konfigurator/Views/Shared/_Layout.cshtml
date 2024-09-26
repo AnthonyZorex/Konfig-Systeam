@@ -7,6 +7,7 @@
     <meta name="description" content="@ViewData["Description"]" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" defer />
     <link rel="stylesheet" as="style" href="~/css/site.min.css" asp-append-version="true" />
+    <script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script>
     <link rel="icon" type="image/x-icon" loading="lazy" alt="logo" href="@("/compression/SD_Logo-rund.webp")" />  
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -61,7 +62,10 @@
 
                         <li class="nav-item">
                             <a class="nav-link text-dark" href=" @Url.Action("IndexKonfigurator", "Konfigurator")">Konfigurator</a>
-                        </li>                      
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href=" @Url.Action("Index", "Blog")">Blog</a>
+                        </li>
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -80,7 +84,6 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js" ></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" ></script>
-    <script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script>
     <script src="~/Js/footer.js" ></script>
 </body>
 </html>

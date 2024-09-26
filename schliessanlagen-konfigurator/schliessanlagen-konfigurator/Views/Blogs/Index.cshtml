@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "Blog";
+}
+<style>
+    a {
+        color: black;
+    }
+
+        a:hover {
+            color: black;
+        }
+
+
+    .blogItem{
+        background:white;
+        border-left: var(--primary-border);
+    }
+</style>
+
+<div id="Blog">
+   
+    <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+
+        @foreach (var item in ViewBag.AllBlog)
+        {
+            string fullText = @item.Description; // Полный текст из модели
+            string truncatedText = fullText.Length > 1000 ? fullText.Substring(0, 1000) + "..." : fullText;
+
+            <div class="blogItem shadow-lg mb-4 bg-body-tertiary rounded">
+             
+                <div id="productMenuInfo">
+                    <div>
+                        <div>
+                            <h1 id="sys"><strong>@item.Name</strong></h1>
+                        </div>
+                    </div>
+                    <div id="product_desciptions">
+                        <div>
+                            @Html.Raw(truncatedText)
+                        </div>
+                    </div>
+                    <div id="productChek">
+                        <div>
+                            <a class="btn danger" id="chekProduct" name="DopelId" href="@Url.Action("Item",new{Id = @item.Id})">WÄHLEN</a>
+                        </div>
+
+                    </div>
+                </div>
+              
+            </div>
+
+        }
+    </div>
+   @*  <nav aria-label="Page navigation example">
+        @if (@Model.TotalPages > 1)
+        {
+            <ul class="pagination">
+                @for (int i = 1; i <= @Model.TotalPages; i++)
+                {
+                    <li class="page-item @(i == @Model.page ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("Index", new { page = i,Herschteller = @Model.Herschteller,priceVon = @Model.PriceVon,priceBis = @Model.PriceBis,Sort_string = @Model.Sort_string })">@i</a>
+                    </li>
+                }
+            </ul>
+        }
+    </nav> *@
+</div>
+
+@section Scripts {
+  
+}

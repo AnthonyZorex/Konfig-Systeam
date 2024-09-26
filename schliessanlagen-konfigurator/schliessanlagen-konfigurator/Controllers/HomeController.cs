@@ -49,6 +49,29 @@ namespace schliessanlagen_konfigurator.Controllers
 
         }
         [HttpGet]
+        public async Task<IActionResult> Blogs()
+        {
+            ViewBag.item = await db.Blogs.ToListAsync();
+
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create_Blog(string Name, string Descriptions)
+        {
+
+            var model = new Blog
+            {
+                Name = Name,
+                Description = Descriptions,
+                Data = DateTime.Now.Date
+            };
+                db.Blogs.Add(model);
+                db.SaveChanges();
+            
+
+            return RedirectToAction("Blogs");
+        }
+        [HttpGet]
         public async Task<IActionResult> SendMail()
         {
             return View();
