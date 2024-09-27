@@ -45,13 +45,19 @@ namespace schliessanlagen_konfigurator.Controllers
             var hebel = _db.Hebelzylinder.ToList();
             var vorhangschloss = _db.Vorhangschloss.ToList();
             var assunzylinder = _db.Aussenzylinder_Rundzylinder.ToList();
-
+            var blogs = _db.Blogs.ToList();
             var nodes = new List<SitemapUrl>
         {
             new SitemapUrl { Url = Url.Action("Index", "Schop", null, Request.Scheme), LastModified = DateTime.UtcNow, ChangeFrequency = "daily", Priority = 1.0 },
-            new SitemapUrl { Url = Url.Action("IndexKonfigurator", "Konfigurator", null, Request.Scheme), LastModified = DateTime.UtcNow.AddDays(-1), ChangeFrequency = "monthly", Priority = 0.8 }
+            new SitemapUrl { Url = Url.Action("IndexKonfigurator", "Konfigurator", null, Request.Scheme), LastModified = DateTime.UtcNow.AddDays(-1), ChangeFrequency = "monthly", Priority = 0.8 },
+            new SitemapUrl { Url = Url.Action("Index", "Blog", null, Request.Scheme), LastModified = DateTime.UtcNow, ChangeFrequency = "daily", Priority = 0.8 },
         };
 
+
+            foreach (var item in blogs)
+            {
+                nodes.Add(new SitemapUrl { Url = Url.Action("Item", "Blog", new { Id = item.Id }, Request.Scheme), LastModified = DateTime.UtcNow.AddDays(-1), ChangeFrequency = "monthly", Priority = 0.6 });
+            }
             foreach (var product in doppel)
             {
                 nodes.Add(new SitemapUrl { Url = Url.Action("zylinder_page", "Schop", new { product_Name = product.Name }, Request.Scheme), LastModified = DateTime.UtcNow.AddDays(-1), ChangeFrequency = "monthly", Priority = 0.6 });
