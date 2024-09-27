@@ -7,9 +7,8 @@
     <meta name="description" content="@ViewData["Description"]" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" defer />
     <link rel="stylesheet" as="style" href="~/css/site.min.css" asp-append-version="true" />
-    <script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script>
-    <link rel="icon" type="image/x-icon" loading="lazy" alt="logo" href="@("/compression/SD_Logo-rund.webp")" />  
-    <script>
+    <link rel="icon" type="image/x-icon" loading="lazy" alt="logo" href="@("/compression/SD_Logo-rund.webp")" />
+    <script async>
         document.addEventListener('DOMContentLoaded', function () {
             var currentUrl = window.location.href;
             var canonicalLink = document.querySelector('link[rel="canonical"]');
@@ -18,17 +17,17 @@
             }
         });
 
-        (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", "o97kp4ebde");
+        // (function(c,l,a,r,i,t,y){
+        //     c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        //     t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        //     y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        // })(window, document, "clarity", "script", "o97kp4ebde");
 
     </script>
     <link rel="canonical" href="" />
     <meta name="google-site-verification" content="IsNOTjO6GlJpiCjeAVXfTj7CGOcsjaJkC13Tp5q0GQQ" />
      <script async src="https://www.googletagmanager.com/gtag/js?id=G-1D9HDZ80QC"></script>
-    <script>
+    <script async>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
@@ -81,7 +80,6 @@
     </div>
 
     @await RenderSectionAsync("Scripts", required: false)
-
     <script src="~/lib/jquery/dist/jquery.min.js" ></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" ></script>
     <script src="~/Js/footer.js" ></script>

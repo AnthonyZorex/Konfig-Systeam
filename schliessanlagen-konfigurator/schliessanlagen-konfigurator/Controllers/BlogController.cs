@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using schliessanlagen_konfigurator.Data;
+using schliessanlagen_konfigurator.Migrations;
 using schliessanlagen_konfigurator.Models.Users;
 using schliessanlagen_konfigurator.Service;
 
@@ -39,6 +40,35 @@ namespace schliessanlagen_konfigurator.Controllers
             ViewBag.Item = Item;
 
             return View("../Blogs/InfoBlog");
+        }
+        [HttpGet]
+        public async Task<IActionResult> Edit_Blog(Guid Id)
+        {
+            var Item = db.Blogs.Where(x => x.Id == Id).ToList();
+            ViewBag.Item = Item.ToList();
+            return View("../Blogs/Edit_Blog");
+        }
+        [HttpPost]
+        public async Task<IActionResult> Save_Blog(Guid Id,string Name, string descriptions)
+        {
+            var Item = db.Blogs.Where(x => x.Id == Id).First();
+            Item.Name = Name;
+            Item.Description = descriptions;
+
+            db.Blogs.Update(Item);
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete_Blog(Guid Id)
+        {
+            var Item = db.Blogs.Where(x => x.Id == Id).First();
+         
+            db.Blogs.Remove(Item);
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
     }
 }

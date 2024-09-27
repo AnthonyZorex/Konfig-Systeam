@@ -4,42 +4,55 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4 mt-2 p-2">
-                <img src="@Url.Content("~/compression/basi.webp")" alt="Basi" height="50" width="50" />
-                <div style="margin-top:20px">
+                <div>
+                    <img src="@Url.Content("~/compression/basi.webp")" alt="Basi" height="50" width="50" />
+                </div>
+
+                <ul style="margin-top:20px;margin-left: -30px;">
                     @foreach (var t in Model.Basi)
                     {
                         <li><a data-bs-toggle="modal" id="footerItem" onclick="system_name('@t.NameSysteam','@t.Id')" data-bs-target="#FooterItemRender">@t.NameSysteam</a></li>
                     }
-                </div>
+                </ul>
             </div>
             <div class="col-md-4 mt-2 p-2">
-                <img src="@Url.Content("~/Image/logo_ces.svg")" alt="CES" height="50" width="50" />
-                <br />
-                <div style="margin-top:20px">
+                <div>
+                    <img src="@Url.Content("~/Image/logo_ces.svg")" alt="CES" height="50" width="50" />
+                </div>
+               
+             
+                <ul style="margin-top:20px;margin-left: -30px;">
                     @foreach (var t in Model.Ces)
                     {
                         <li><a data-bs-toggle="modal" id="footerItem" onclick="system_name('@t.NameSysteam','@t.Id')" data-bs-target="#FooterItemRender">@t.NameSysteam</a></li>
                     }
-                </div>
+                </ul>
             </div>
             <div class="col-md-4 mt-2 p-2">
-                <img src="@Url.Content("~/compression/ABUS.svg.webp")" alt="ABUS" height="50" width="100" />
-                <div style="margin-top:20px">
+                <div>
+                    <img src="@Url.Content("~/compression/ABUS.svg.webp")" alt="ABUS" height="50" width="100" />
+                </div>
+               
+                <ul style="margin-top:20px;margin-left: -30px;">
                     @foreach (var t in Model.ABUS)
                     {
                         <li><a data-bs-toggle="modal" id="footerItem" onclick="system_name('@t.NameSysteam','@t.Id')" data-bs-target="#FooterItemRender">@t.NameSysteam</a></li>
                     }
-                </div>
+                </ul>
             </div>
 
             <div class="col-md-4 mt-2 p-2">
-                <img src="@Url.Content("~/compression/EVVA.webp")" alt="EVVA" height="50" width="100" />
-                <div style="margin-top:20px">
+                
+                <div>
+                    <img src="@Url.Content("~/compression/EVVA.webp")" alt="EVVA" height="50" width="100" />
+                </div>
+
+                <ul style="margin-top:20px;margin-left: -30px;">
                     @foreach (var t in Model.EVVA)
                     {
                         <li><a data-bs-toggle="modal" id="footerItem" onclick="system_name('@t.NameSysteam','@t.Id')" data-bs-target="#FooterItemRender">@t.NameSysteam</a></li>
                     }
-                </div>
+                </ul>
             </div>
         </div>
     </div>

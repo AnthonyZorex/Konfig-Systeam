@@ -1,0 +1,72 @@
+﻿@model schliessanlagen_konfigurator.Models.Blog;
+
+@{
+    ViewData["Title"] = "Edit Blog";
+}
+<style>
+    a {
+        color: black;
+    }
+
+        a:hover {
+            color: black;
+        }
+
+
+    .blogItem{
+        background:white;
+        border-left: var(--primary-border);
+    }
+</style>
+
+<div id="Blog">
+
+    <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+
+
+            <div class="blogItem shadow-lg mb-4 bg-body-tertiary rounded">
+            <form method="post" asp-action="Save_Blog" asp-controller="Blog">
+                @foreach (var item in ViewBag.Item)
+                {
+                    <input type="hidden" name="Id" value="@item.Id" />
+
+                    <label>Name</label>
+                    <div>
+                        <input type="text" class="form-control" name="Name" value="@item.Name" id="sys" />
+                    </div>
+                    <label>Description</label>
+                    <div>
+                        <textarea name="descriptions" id="discriptions">@item.Description</textarea>
+                    </div>
+
+                    <div>
+                        <input class="btn danger" id="chekProduct" type="submit" value="Save" />
+                    </div>
+                }
+            </form>
+            
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+   <script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js" ></script>
+    <script>
+        tinymce.init({
+            selector: '#discriptions',
+            plugins: [
+                'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
+                'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen', 'insertdatetime',
+                'media', 'table', 'emoticons', 'help'
+            ],
+            toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
+                'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
+                'forecolor backcolor emoticons | help',
+            menu: {
+                favs: { title: 'Discriptions', items: 'code visualaid | searchreplace | emoticons' }
+            },
+            menubar: 'favs file edit view insert format tools table help',
+            content_css: 'css/content.css'
+        });
+    </script>
+}
