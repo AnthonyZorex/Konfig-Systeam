@@ -11,10 +11,14 @@
 @if (User.IsInRole("admin"))
 {
     <h1>Edit Hebelzylinder</h1>
+    <div id="alertBox" class="alert alert-success d-none alert-dismissible fade" role="alert">
+        <span id="alertMessage">Die Daten wurden erfolgreich gespeichert!</span>
+        <button type="button" class="btn-close" aria-label="Close" onclick="closeAlert()"></button>
+    </div>
     <hr />
     <div class="row">
         <div class="col-md-12">
-            <form asp-action="SaveHebelzylinder" enctype="multipart/form-data">
+            <form asp-action="SaveHebelzylinder" id="systemInfoForm" enctype="multipart/form-data">
 
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 @Html.HiddenFor(x => x.Id)
@@ -165,22 +169,74 @@
                 <button id="addInputBtn" type="button" class="btn btn-success">+</button>
                 <button id="RemoveInputBtn" type="button" class="btn btn-danger">-</button>
                 <hr />
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="button" onclick="goBack()" value="Close" class="btn danger" />
+                <input type="submit" id="submitForm" value="Save" class="btn btn-primary" />
             </form>
         </div>
     </div>
 
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
-
     @section Scripts 
     {
-    <script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script>
+
          @{
             await Html.RenderPartialAsync("_ValidationScriptsPartial");
         }
         <script>
+
+            function goBack() {
+                if (document.referrer !== "") {
+                    window.location.href = document.referrer;  // Возвращаемся на предыдущую страницу
+                } else {
+                    window.history.back();  // Если реферера нет, используем history.back()
+                }
+            }
+
+            function showAlert(message) {
+                const alertBox = document.getElementById('alertBox');
+                const alertMessage = document.getElementById('alertMessage');
+
+                alertMessage.innerText = message;  // Установка сообщения
+                alertBox.classList.remove('d-none');  // Удалить класс d-none
+                alertBox.classList.add('show'); // Добавить класс show для отображения
+            }
+
+
+            function closeAlert() {
+                const alertBox = document.getElementById('alertBox');
+                alertBox.classList.remove('show');  // Удалить класс show
+                alertBox.classList.add('d-none');  // Добавить класс d-none для скрытия
+            }
+
+            document.getElementById('submitForm').addEventListener('click', function (event) {
+                event.preventDefault();
+
+                var form = document.getElementById('systemInfoForm');
+
+                var formData = new FormData(form);
+
+                axios.post('/Home/SaveHebelzylinder', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                    .then(function (response) {
+
+                        const alertBox = document.getElementById('alertBox');
+                        alertBox.classList.remove('alert-danger');
+                        alertBox.classList.add('alert-success');
+                        showAlert(response.data.message);
+
+                    })
+                    .catch(function (error) {
+
+                        const alertBox = document.getElementById('alertBox');
+                        alertBox.classList.remove('alert-success');
+                        alertBox.classList.add('alert-danger');
+                        showAlert(error);
+                    });
+            });
 
             let Galery = document.getElementById("Galerry");
 
