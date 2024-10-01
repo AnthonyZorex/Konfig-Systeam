@@ -461,6 +461,9 @@
 
 @section scripts
 {
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script>
+
     <script type="text/javascript">
 
 
@@ -521,7 +524,8 @@
             menubar: 'favs file edit view insert format tools table help',
             content_css: 'css/content.css'
         });
-        
+
+
         let plusAussen_Innen = document.getElementById('addAussen_Innen');
         let docInnen = document.getElementById('InnenProfilDopel');
         let docAussen = document.getElementById('AussenProfilDopel');
@@ -545,9 +549,30 @@
 
             let blockCounter = 1;
 
+            function creatDescription(value) {
+                tinymce.init({
+                    selector: `#exampleFormControlTextareaS${value}`,
+                    plugins: [
+                        'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
+                        'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen', 'insertdatetime',
+                        'media', 'table', 'emoticons', 'help'
+                    ],
+                    toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
+                        'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
+                        'forecolor backcolor emoticons | help',
+                    menu: {
+                        favs: { title: 'Discriptions', items: 'code visualaid | searchreplace | emoticons' }
+                    },
+                    menubar: 'favs file edit view insert format tools table help',
+                    content_css: 'css/content.css'
+                });
+            }
+
+
             createBlockBtn.addEventListener('click', function () {
                 const block = createBlock();
                 container.appendChild(block);
+                creatDescription(blockCounter - 1);
             });
 
             addInputBtn.addEventListener('click', function () 
@@ -601,7 +626,10 @@
                                                 </div>
                                                     <div>
                                                            <h5>Beschreibungen</h5>
-                                                  <textarea class="form-control" id="descriptionOptions"  name="NGFDescriptions"></textarea>
+
+                                                              <textarea name="NGFDescriptions" id="exampleFormControlTextareaS${blockCounter}" class="form-control">
+
+                                                              </textarea>
                                                    </div>
 
                                                    <div>

@@ -34,7 +34,7 @@
                         <div id="galeryItem-@galeryCheker">
                             <input name="GalleryImages" type="text" value="@list.ImageName" id="opt" class="form-control" />
                             <br />
-                            <img src="@("/Image/"+@list.ImageName)" height="300" width="300" />
+                            <img src="@("/compression/"+@list.ImageName)" height="300" width="300" />
                             <br />
                             <button class="btn btn-success" onclick="AddImage(@galeryCheker)" type="button">Bilder hinzufügen</button>
                             <button class="btn btn-danger" onclick="deleteImage(@galeryCheker)" type="button">Löschen</button>
@@ -58,18 +58,18 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Systembeschreibung</label>
-                    <textarea asp-for="DesctiptionsSysteam"  class="form-control" id="exampleFormControlTextarea1"></textarea>
+                    <textarea asp-for="DesctiptionsSysteam" class="form-control" id="DesctiptionsSysteam1"></textarea>
                     <span asp-validation-for="DesctiptionsSysteam" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Lieferzeit" class="control-label"></label>
-                    <textarea asp-for="Lieferzeit"  class="form-control" id="exampleFormControlTextarea1"></textarea>
+                    <textarea asp-for="Lieferzeit" class="form-control" id="Lieferzeit1"></textarea>
                     <span asp-validation-for="Lieferzeit" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
                     <label asp-for="LieferzeitGrosse" class="control-label"></label>
-                    <textarea asp-for="LieferzeitGrosse"  class="form-control" id="exampleFormControlTextarea1"></textarea>
+                    <textarea asp-for="LieferzeitGrosse" class="form-control" id="LieferzeitGrosse1"></textarea>
                     <span asp-validation-for="LieferzeitGrosse" class="text-danger"></span>
                 </div>
 
@@ -78,7 +78,6 @@
                     {
                         @foreach (var options in ViewBag.Options)
                         {
-                          
                             r++;
                             <div class="input-block" id="block-@r">
                                 <h2>Optionen</h2>
@@ -90,7 +89,7 @@
                                     <label class="control-label">Optionsbild</label>
                                     <input name="ImageNameOption" type="text" value="@options.ImageName" id="opt" class="form-control" />
                                     <br />
-                                    <img src="@("/Image/"+@options.ImageName)" height="300" width="300" />
+                                    <img src="@("/compression/"+@options.ImageName)" height="300" width="300" />
                                     <br />
                                 </div>
                                 <div class="form-group">
@@ -256,7 +255,7 @@
         document.getElementById('saveButton').addEventListener('click', function (event) {
             
             event.preventDefault();
-            
+
             tinymce.triggerSave();
             var form = document.getElementById('systemInfoForm');
 
@@ -310,7 +309,40 @@
             }
 
         tinymce.init({
-            selector: '#exampleFormControlTextarea1',
+            selector: '#DesctiptionsSysteam1',
+            plugins: [
+                'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
+                'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen', 'insertdatetime',
+                'media', 'table', 'emoticons', 'help'
+            ],
+            toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
+                'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
+                'forecolor backcolor emoticons | help',
+            menu: {
+                favs: { title: 'Discriptions', items: 'code visualaid | searchreplace | emoticons' }
+            },
+            menubar: 'favs file edit view insert format tools table help',
+            content_css: 'css/content.css'
+        });
+
+        tinymce.init({
+            selector: '#Lieferzeit1',
+            plugins: [
+                'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
+                'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen', 'insertdatetime',
+                'media', 'table', 'emoticons', 'help'
+            ],
+            toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
+                'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
+                'forecolor backcolor emoticons | help',
+            menu: {
+                favs: { title: 'Discriptions', items: 'code visualaid | searchreplace | emoticons' }
+            },
+            menubar: 'favs file edit view insert format tools table help',
+            content_css: 'css/content.css'
+        });
+        tinymce.init({
+            selector: '#LieferzeitGrosse1',
             plugins: [
                 'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
                 'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen', 'insertdatetime',
@@ -452,8 +484,6 @@
             }
         }
 
-
-
         document.addEventListener("DOMContentLoaded", function () {
             const container = document.getElementById('productOptions');
             const createBlockBtn = document.getElementById('createBlockBtn');
@@ -463,24 +493,25 @@
             let blockCounter = document.querySelectorAll('.input-block').length > 0 ? document.querySelectorAll('.input-block').length : 1;
 
 
-            function creatDescription(value) {
-                tinymce.init({
-                    selector: `#exampleFormControlTextareaS${value}`,
-                    plugins: [
-                        'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
-                        'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen', 'insertdatetime',
-                        'media', 'table', 'emoticons', 'help'
-                    ],
-                    toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
-                        'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
-                        'forecolor backcolor emoticons | help',
-                    menu: {
-                        favs: { title: 'Discriptions', items: 'code visualaid | searchreplace | emoticons' }
-                    },
-                    menubar: 'favs file edit view insert format tools table help',
-                    content_css: 'css/content.css'
-                });
-            }
+                function creatDescription(value) 
+                {
+                    tinymce.init({
+                        selector: `#exampleFormControlTextareaS${value}`,
+                        plugins: [
+                            'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
+                            'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen', 'insertdatetime',
+                            'media', 'table', 'emoticons', 'help'
+                        ],
+                        toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
+                            'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
+                            'forecolor backcolor emoticons | help',
+                        menu: {
+                            favs: { title: 'Discriptions', items: 'code visualaid | searchreplace | emoticons' }
+                        },
+                        menubar: 'favs file edit view insert format tools table help',
+                        content_css: 'css/content.css'
+                    });
+                }
 
             createBlockBtn.addEventListener('click', function () {
                 const block = createBlock();
@@ -569,22 +600,22 @@
 
                                                                                                         <ul>
                                                                                                                                    <ol> <input type="checkbox" onchange="doppelChange(event.target.checked,${blockCounter})"   /> Doppelzylinder </ol>
-                                                                                                                             <input type="hidden" id="chekDV${blockCounter}" value="false" name="doppel" />
+                                                                                                                             <input type="hidden" id="chekDV-${blockCounter}" value="false" name="doppel" />
 
                                                                                                                                  <ol><input type="checkbox" onchange="HalbChange(${blockCounter},event.target.checked)" /> Halbzylinder</ol>
-                                                                                                                                     <input type="hidden" id="chekHV${blockCounter}" value="false" name="Halb" />
+                                                                                                                                     <input type="hidden" id="chekHV-${blockCounter}" value="false" name="Halb" />
 
                                                                                                                                  <ol><input type="checkbox" onchange="KnayfChange(${blockCounter},event.target.checked)" /> Knaufzylinder</ol>
-                                                                                                                                     <input type="hidden" id="chekKV${blockCounter}" value="false" name="Knayf" />
+                                                                                                                                     <input type="hidden" id="chekKV-${blockCounter}" value="false" name="Knayf" />
 
                                                                                                                                 <ol><input type="checkbox" onchange="HebelChange(${blockCounter},event.target.checked)" /> Hebelzylinder</ol>
-                                                                                                                                     <input type="hidden" id="chekHeV${blockCounter}" value="false" name="Hebel" />
+                                                                                                                                     <input type="hidden" id="chekHeV-${blockCounter}" value="false" name="Hebel" />
 
                                                                                                                                 <ol><input type="checkbox" onchange="VorhangChange(${blockCounter}, event.target.checked)" /> Vorhangschloss</ol>
-                                                                                                                                     <input type="hidden" id="chekVV${blockCounter}" value="false" name="Vorhang" />
+                                                                                                                                     <input type="hidden" id="chekVV-${blockCounter}" value="false" name="Vorhang" />
 
                                                                                                                               <ol><input type="checkbox" onchange="AussenChange(${blockCounter},event.target.checked)" /> Aussenzylinder</ol>
-                                                                                                                                     <input type="hidden" id="chekAV${blockCounter}" value="false" name="Aussen" />
+                                                                                                                                     <input type="hidden" id="chekAV-${blockCounter}" value="false" name="Aussen" />
                                                                                                         </ul>
 
                                                                                                     </div>

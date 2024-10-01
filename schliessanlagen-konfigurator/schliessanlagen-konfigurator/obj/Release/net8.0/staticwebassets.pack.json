@@ -81,6 +81,18 @@
       "PackagePath": "staticwebassets\\Fira_Sans\\OFL.txt"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\1.jpeg",
+      "PackagePath": "staticwebassets\\Image\\1.jpeg"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\1.png",
+      "PackagePath": "staticwebassets\\Image\\1.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\2.jpeg",
+      "PackagePath": "staticwebassets\\Image\\2.jpeg"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\4ks-Hebelzylinder-MB23g.webp",
       "PackagePath": "staticwebassets\\Image\\4ks-Hebelzylinder-MB23g.webp"
     },
@@ -315,6 +327,10 @@
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\UDM-System.WEBP",
       "PackagePath": "staticwebassets\\Image\\UDM-System.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\Unbenannt.png",
+      "PackagePath": "staticwebassets\\Image\\Unbenannt.png"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\WD-215.WEBP",
@@ -573,6 +589,18 @@
       "PackagePath": "staticwebassets\\Rehnung\\SK2262.pdf"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\1.jpeg",
+      "PackagePath": "staticwebassets\\compression\\1.jpeg"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\1.png",
+      "PackagePath": "staticwebassets\\compression\\1.png"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\2.jpeg",
+      "PackagePath": "staticwebassets\\compression\\2.jpeg"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\4ks-Hebelzylinder-MB23g.webp",
       "PackagePath": "staticwebassets\\compression\\4ks-Hebelzylinder-MB23g.webp"
     },
@@ -803,6 +831,10 @@
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\UDM-System.WEBP",
       "PackagePath": "staticwebassets\\compression\\UDM-System.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\Unbenannt.png",
+      "PackagePath": "staticwebassets\\compression\\Unbenannt.png"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\WD-215.WEBP",
