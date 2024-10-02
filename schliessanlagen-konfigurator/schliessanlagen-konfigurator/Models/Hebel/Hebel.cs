@@ -16,6 +16,7 @@ namespace schliessanlagen_konfigurator.Models.Hebel
         public float? Gramm { get; set; }
         public string? Type { get; set; }
         public string ImageName { get; set; }
+        public byte[]? ImageData { get; set; }
         [NotMapped]
         [DisplayName("Upload your photo")]
         public IFormFile ImageFile { get; set; }
@@ -51,6 +52,7 @@ namespace schliessanlagen_konfigurator.Models.Hebel
         [NotMapped]
         [DisplayName("Upload your photo")]
         public IFormFile? ImageFile { get; set; }
+        public byte[]? ImageData { get; set; }
         public string? Description { get; set; }
 
         public ICollection<Options_value> Options_value { get; set; }

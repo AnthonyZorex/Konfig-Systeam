@@ -20,6 +20,7 @@ namespace schliessanlagen_konfigurator.Models.Aussen_Rund
         [NotMapped]
         [DisplayName("Upload your photo")]
         public IFormFile ImageFile { get; set; }
+        public byte[]? ImageData { get; set; }
         public Schliessanlagen Schliessanlagen { get; set; }
         public ICollection<Aussen_Rund_options> Aussen_Rund_options { get; set; }
         public ICollection<ProductGalery> ProductGalery { get; set; }
@@ -48,6 +49,7 @@ namespace schliessanlagen_konfigurator.Models.Aussen_Rund
         public Aussen_Rund_options Aussen_Rund_options { get; set; }
         public string? Name { get; set; }
         public string? ImageName { get; set; }
+        public byte[]? ImageData { get; set; }
         [NotMapped]
         [DisplayName("Upload your photo")]
         public IFormFile? ImageFile { get; set; }

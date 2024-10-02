@@ -19,6 +19,7 @@ namespace schliessanlagen_konfigurator.Models.Vorhan
         public float? Gramm { get; set; }
         public string? Type { get; set; }
         public string ImageName { get; set; }
+        public byte[]? ImageData { get; set; }
         [NotMapped]
         [DisplayName("Upload your photo")]
         public IFormFile ImageFile { get; set; }
@@ -65,6 +66,7 @@ namespace schliessanlagen_konfigurator.Models.Vorhan
         public Vorhan_Options Option { get; set; }
         public string Name { get; set; }
         public string? ImageName { get; set; }
+        public byte[]? ImageData { get; set; }
         [NotMapped]
         [DisplayName("Upload your photo")]
         public IFormFile? ImageFile { get; set; }

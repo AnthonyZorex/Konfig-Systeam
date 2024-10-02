@@ -1,5 +1,6 @@
 ﻿
-function selectParamIntern(idBlock, type, selectId) {
+function selectParamIntern(idBlock, type, selectId)
+{
     let ProductBlock = document.getElementById("ExelItem-" + idBlock);
     let BlockTur = document.getElementById("Size-" + idBlock);
     let countSchluss = BlockTur.querySelector("#countSchlusse-" + idBlock);
@@ -90,10 +91,11 @@ function selectParamIntern(idBlock, type, selectId) {
     }
 
 
-    if (type === "Doppelzylinder") {
+    if (type === "Doppelzylinder")
+    {
         for (let s = 0; s <= SelectItemId; s++) {
             if (kleinSize.length > 0) {
-                if (Aussen.value > 29) {
+                if (Aussen.value > 34) {
                     costItems.value = parseFloat(costItems.value) + (priceDoppelInternCost[s]);
 
                     AllPrice.value = parseFloat(AllPrice.value) + (priceDoppelInternCost[s] * Number(countSchluss.value));

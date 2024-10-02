@@ -118,7 +118,7 @@
 
                             <div>
                                 <label>Name</label>
-                                <input asp-for="Name" value="ViewBag.Hebel.Name" required class="form-control" type="text" name="Name" />
+                                <input asp-for="Name" value="@ViewBag.Hebel.Name" required class="form-control" type="text" name="Name" />
                             </div>
 
                                 <div>
@@ -146,7 +146,7 @@
 
                             <div>
                                 <label>Firmenname</label>
-                                <input asp-for="companyName" value="ViewBag.Hebel.companyName" required class="form-control" type="text" />
+                                   <input asp-for="companyName" value="@ViewBag.Hebel.companyName" required class="form-control" type="text" />
                             </div>
 
                             <div>
@@ -169,7 +169,7 @@
 
                             <div>
                                 <label>Beschreibungen</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1">@ViewBag.Hebel.description</textarea>
+                                    <textarea class="form-control" name="description" id="exampleFormControlTextarea1">@ViewBag.Hebel.description</textarea>
                             </div>
                            
                             <div>

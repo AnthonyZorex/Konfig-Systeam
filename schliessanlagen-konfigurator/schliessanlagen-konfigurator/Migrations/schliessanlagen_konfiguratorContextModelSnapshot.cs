@@ -51,25 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3a63943e-9a1b-4836-b3f6-416d08e32728",
+                            Id = "c1737e15-6115-4bc1-a8de-d95f7735c9d5",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "f2dd584b-9560-480e-8720-c57b754cc4cf",
+                            Id = "24fa0387-e42f-4e23-b25d-0ab70086fce5",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "fe0ddd8d-f76a-424f-b522-362aae3f6258",
+                            Id = "7e113e45-f4b7-4985-8be1-fa63db723bc8",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "476d3225-581f-489c-8417-385917a8ccaa",
+                            Id = "7c8bb6c4-cb24-4b89-8076-a1c92c651b4c",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -223,6 +223,9 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<byte[]>("ImageData")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<string>("ImageName")
                         .HasColumnType("nvarchar(max)");
 
@@ -264,6 +267,9 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     b.Property<float?>("Gramm")
                         .HasColumnType("real");
+
+                    b.Property<byte[]>("ImageData")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("ImageName")
                         .IsRequired()
@@ -355,6 +361,9 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<byte[]>("ImageData")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<string>("ImageName")
                         .HasColumnType("nvarchar(max)");
 
@@ -409,6 +418,9 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     b.Property<float?>("Gramm")
                         .HasColumnType("real");
+
+                    b.Property<byte[]>("ImageData")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("ImageName")
                         .IsRequired()
@@ -472,6 +484,9 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Property<float?>("Gramm")
                         .HasColumnType("real");
 
+                    b.Property<byte[]>("ImageData")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<string>("ImageName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -533,6 +548,9 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("ImageData")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("ImageName")
                         .HasColumnType("nvarchar(max)");
@@ -743,6 +761,9 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<byte[]>("ImageData")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<string>("ImageName")
                         .HasColumnType("nvarchar(max)");
 
@@ -794,6 +815,9 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     b.Property<float?>("Gramm")
                         .HasColumnType("real");
+
+                    b.Property<byte[]>("ImageData")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("ImageName")
                         .IsRequired()
@@ -911,6 +935,9 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<byte[]>("ImageData")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<string>("ImageName")
                         .HasColumnType("nvarchar(max)");
 
@@ -961,6 +988,9 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     b.Property<float?>("Gramm")
                         .HasColumnType("real");
+
+                    b.Property<byte[]>("ImageData")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("ImageName")
                         .HasColumnType("nvarchar(max)");
@@ -1028,6 +1058,9 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     b.Property<int?>("HebelId")
                         .HasColumnType("int");
+
+                    b.Property<byte[]>("ImageData")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("ImageName")
                         .IsRequired()
@@ -1120,6 +1153,9 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("ImageData")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("ImageName")
                         .HasColumnType("nvarchar(max)");
@@ -1427,6 +1463,9 @@ namespace schliessanlagen_konfigurator.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<byte[]>("ImageData")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<string>("ImageName")
                         .HasColumnType("nvarchar(max)");
 
@@ -1521,6 +1560,9 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     b.Property<float?>("Gramm")
                         .HasColumnType("real");
+
+                    b.Property<byte[]>("ImageData")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("ImageName")
                         .IsRequired()

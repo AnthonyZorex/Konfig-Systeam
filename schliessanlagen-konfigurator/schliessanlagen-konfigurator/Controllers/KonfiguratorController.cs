@@ -676,8 +676,10 @@ namespace schliessanlagen_konfigurator.Controllers
 
             ViewBag.Zylinder_TypJson = JsonConvert.SerializeObject(db.Schliessanlagen.Select(x=>x.nameType).ToList());
 
-            var a = db.Aussen_Innen.Select(x => x.aussen).Distinct().OrderBy(x => x).ToList();
-            var d = db.Aussen_Innen.Select(x => x.Intern).Distinct().OrderBy(x => x).ToList();
+            var a = db.Aussen_Innen.Include(x=>x.Doppel_Innen_klein).Select(x => x.aussen).Distinct().OrderBy(x => x).ToList();
+            var d = db.Aussen_Innen.Include(x => x.Doppel_Innen_klein).Select(x => x).Distinct().OrderBy(x => x).ToList();
+
+            var kleinIntern = d.SelectMany(x => x.Doppel_Innen_klein).Select(x=>x.Intern).ToList();
 
             var listAllInnen = new List<float>();
 
@@ -693,18 +695,27 @@ namespace schliessanlagen_konfigurator.Controllers
             var ListInternDopple = new List<float>();
             for (int i = 0; i < d.Count(); i++)
             {
-                if (d[i] != 0)
+                if (d[i].Intern != 0)
                 {
-                    ListInternDopple.Add(d[i]);
+                    ListInternDopple.Add(d[i].Intern);
                 }
             }
-               
+            for (int i = 0; i < kleinIntern.Count(); i++)
+            {
+                if (kleinIntern[i] != 0)
+                {
+                    ListInternDopple.Add(kleinIntern[i]);
+                }
+            }
 
-            ViewBag.DoppelIntern = ListInternDopple.Distinct();
-            ViewBag.DoppelInternJson = JsonConvert.SerializeObject(ListInternDopple.Distinct());
+            ViewBag.DoppelIntern = ListInternDopple.OrderBy(x => x).Distinct().ToList();
+            ViewBag.DoppelInternJson = JsonConvert.SerializeObject(ListInternDopple.OrderBy(x => x).Distinct().ToList());
 
-            var KnayfAussen = db.Aussen_Innen_Knauf.Select(x => x.aussen).Distinct().OrderBy(x => x).ToList();
-            var KnayfIntern = db.Aussen_Innen_Knauf.Select(x => x.Intern).Distinct().OrderBy(x => x).ToList();
+            var KnayfAussen = db.Aussen_Innen_Knauf.Include(x=>x.Aussen_Innen_Knauf_klein).Select(x => x.aussen).Distinct().OrderBy(x => x).ToList();
+            var KnayfIntern = db.Aussen_Innen_Knauf.Include(x => x.Aussen_Innen_Knauf_klein).Select(x => x).Distinct().OrderBy(x => x).ToList();
+
+            var kleinInternKnayf = KnayfIntern.SelectMany(x => x.Aussen_Innen_Knauf_klein).Select(x => x.Intern).ToList();
+
             var KnayfOptions = db.Knayf_Options.Select(x => x.Name).ToList();
 
             var listKnayfAussen = new List<float>();
@@ -722,9 +733,18 @@ namespace schliessanlagen_konfigurator.Controllers
 
             for (int i = 0; i < KnayfIntern.Count(); i++)
             {
-                if (KnayfIntern[i] != 0)
+                if (KnayfIntern[i].Intern != 0)
                 {
-                    listKnayfIntern.Add(KnayfIntern[i]);
+                    listKnayfIntern.Add(KnayfIntern[i].Intern);
+                }
+            }
+
+
+            for (int i = 0; i < kleinInternKnayf.Count(); i++)
+            {
+                if (kleinInternKnayf[i] != 0)
+                {
+                    listKnayfIntern.Add(kleinInternKnayf[i]);
                 }
             }
 
@@ -750,13 +770,13 @@ namespace schliessanlagen_konfigurator.Controllers
             ViewBag.isOpen = db.KeyValue.Select(x => x.isOpen);
 
             ViewBag.KnayfAussen = listKnayfAussen.Distinct();
-            ViewBag.KnayfInter = listKnayfIntern.Distinct();
+            ViewBag.KnayfInter = listKnayfIntern.OrderBy(x => x).Distinct().ToList();
 
             ViewBag.SizeDoppelAussen = JsonConvert.SerializeObject(ListAussenDopple.Distinct());
-            ViewBag.SizeDoppelIntern = JsonConvert.SerializeObject(ListInternDopple.Distinct());
+            ViewBag.SizeDoppelIntern = JsonConvert.SerializeObject(ListInternDopple.OrderBy(x => x).Distinct().ToList());
 
             ViewBag.SizeKnayfAussen = JsonConvert.SerializeObject(listKnayfAussen.Distinct());
-            ViewBag.SizeKnayfIntern = JsonConvert.SerializeObject(listKnayfIntern.Distinct());
+            ViewBag.SizeKnayfIntern = JsonConvert.SerializeObject(listKnayfIntern.OrderBy(x => x).Distinct().ToList());
 
             ViewBag.SizeHalb = JsonConvert.SerializeObject(HalbzylinderAussen.Distinct());
 
@@ -3974,7 +3994,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             ViewBag.DoppelGalery = DoppelGalery;
 
-            var AussenInen =  db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == Convert.ToInt32(DopelId)).Select(x => new { x.aussen, x.Intern, x.costSizeIntern,x.costSizeAussen,x.Doppel_Innen_klein }).ToList();
+            var AussenInen =  db.Aussen_Innen.Include(x=>x.Doppel_Innen_klein).Where(x => x.Profil_DoppelzylinderId == Convert.ToInt32(DopelId)).Select(x => new { x.aussen, x.Intern, x.costSizeIntern,x.costSizeAussen,x.Doppel_Innen_klein }).ToList();
 
             var Halbzylinder = new List<Profil_Halbzylinder>();
 
@@ -5483,12 +5503,11 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 ViewBag.DopelzylinderJson = JsonConvert.SerializeObject(DopelOrderlist.ToList());
 
-                ViewBag.Dopelzylinderaussen = AussenInen.Select(x => x.aussen).ToList();
+                ViewBag.Dopelzylinderaussen = AussenInen.Select(x => x.aussen).Distinct().ToList();
 
                 ViewBag.CostDoppelAussen = JsonConvert.SerializeObject(AussenInen.Select(x => x.costSizeAussen).ToList());
 
-                var doppelKleinSize = AussenInen.First().Doppel_Innen_klein;
-
+                var doppelKleinSize = AussenInen.SelectMany(x=>x.Doppel_Innen_klein).ToList();
 
                 if (doppelKleinSize.Count() > 0 && AussenInen.First().aussen == DaussenActual.First())
                 {
@@ -5499,6 +5518,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     ViewBag.DopelzylinderInternKlein = JsonConvert.SerializeObject(doppelKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
                     ViewBag.DopelzylinderInternKleinPreis = JsonConvert.SerializeObject(doppelKleinSize.Select(x => x.costSizeIntern).ToList());
 
+                    ViewBag.CountDoppelInter = JsonConvert.SerializeObject(AussenInen.Where(x => x.Doppel_Innen_klein.Count() > 0).Select(x => x.Doppel_Innen_klein.Count()).ToList());
                 }
                 else
                 {

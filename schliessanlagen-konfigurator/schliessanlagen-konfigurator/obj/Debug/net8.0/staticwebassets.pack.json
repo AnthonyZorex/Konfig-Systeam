@@ -589,18 +589,6 @@
       "PackagePath": "staticwebassets\\Rehnung\\SK2262.pdf"
     },
     {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\1.jpeg",
-      "PackagePath": "staticwebassets\\compression\\1.jpeg"
-    },
-    {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\1.png",
-      "PackagePath": "staticwebassets\\compression\\1.png"
-    },
-    {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\2.jpeg",
-      "PackagePath": "staticwebassets\\compression\\2.jpeg"
-    },
-    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\4ks-Hebelzylinder-MB23g.webp",
       "PackagePath": "staticwebassets\\compression\\4ks-Hebelzylinder-MB23g.webp"
     },
@@ -833,10 +821,6 @@
       "PackagePath": "staticwebassets\\compression\\UDM-System.WEBP"
     },
     {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\Unbenannt.png",
-      "PackagePath": "staticwebassets\\compression\\Unbenannt.png"
-    },
-    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\WD-215.WEBP",
       "PackagePath": "staticwebassets\\compression\\WD-215.WEBP"
     },
@@ -889,6 +873,14 @@
       "PackagePath": "staticwebassets\\compression\\Zolit1000_Z1410.WEBP"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\Zolit1000_Z1480.jpg",
+      "PackagePath": "staticwebassets\\compression\\Zolit1000_Z1480.jpg"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\Zolit2000_Z2480.jpg",
+      "PackagePath": "staticwebassets\\compression\\Zolit2000_Z2480.jpg"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\abus-vitess-hangschloss.webp",
       "PackagePath": "staticwebassets\\compression\\abus-vitess-hangschloss.webp"
     },
@@ -915,10 +907,6 @@
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\doppelzylinder.webp",
       "PackagePath": "staticwebassets\\compression\\doppelzylinder.webp"
-    },
-    {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\elektronikzylinder-doppelknauf-ces-640x360.webp",
-      "PackagePath": "staticwebassets\\compression\\elektronikzylinder-doppelknauf-ces-640x360.webp"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\evva-4ks-HPM-600x600.webp",

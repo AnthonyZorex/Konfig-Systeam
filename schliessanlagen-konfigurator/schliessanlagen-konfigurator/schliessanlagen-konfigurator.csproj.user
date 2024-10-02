@@ -18,7 +18,7 @@
     <WebStackScaffolding_DbContextTypeFullName>schliessanlagen_konfigurator.Data.schliessanlagen_konfiguratorContext</WebStackScaffolding_DbContextTypeFullName>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
     <WebStackScaffolding_IsViewGenerationSelected>True</WebStackScaffolding_IsViewGenerationSelected>
-    <NameOfLastUsedPublishProfile>IISProfile</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\Properties\PublishProfiles\IISProfile.pubxml</NameOfLastUsedPublishProfile>
     <IsLinterEnabled>True</IsLinterEnabled>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

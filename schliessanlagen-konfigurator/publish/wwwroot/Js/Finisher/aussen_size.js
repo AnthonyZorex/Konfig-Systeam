@@ -1,4 +1,5 @@
 ﻿function selectParamAussen(idBlock, type, selectId) {
+
     let SelectItemId = selectId - 1;
     let is_GrossSize = false;
     let BlockTur = document.getElementById("Size-" + idBlock);
@@ -65,10 +66,14 @@
     }
 
 
-    if (type === "Doppelzylinder") {
-        if (kleinSize.length > 0) {
-            if (Aussen.value > 29 && is_GrossSize == false) {
-                for (let i = 0; i < normalDopelSize.length; i++) {
+    if (type === "Doppelzylinder")
+    {
+        if (kleinSize.length > 0)
+        {
+            if (SelectItemId >= kleinCountItem.length && is_GrossSize == false)
+            {
+                for (let i = 0; i < normalDopelSize.length; i++)
+                {
                     if (i >= InnenItem.length) {
                         let options = document.createElement("option");
                         options.id = "OptionI";
@@ -83,10 +88,12 @@
                     }
 
                 }
-                for (let i = 0; i <= oldIntern.value; i++) {
-                    if (kleinSize.length > 0) {
-                        if (Aussen.value > 29) {
-
+                for (let i = 0; i <= oldIntern.value; i++)
+                {
+                    if (kleinSize.length > 0)
+                    {
+                        if (Aussen.value > 34)
+                        {
                             costItems.value = parseFloat(costItems.value) - (priceDoppelInternCost[i]);
 
                             AllPrice.value = parseFloat(AllPrice.value) - (priceDoppelInternCost[i] * Number(countSchluss.value));
@@ -123,19 +130,23 @@
             else {
 
                 for (let i = 0; i < InnenItem.length; i++) {
-                    if (i >= kleinSize.length) {
+                    if (i >= kleinCountItem[SelectItemId]) {
                         InnenItem[i].style.display = "none";
                     }
                     else {
                         InnenItem[i].value = kleinSize[i];
                         InnenItem[i].textContent = kleinSize[i];
+                        InnenItem[i].style.display = "block";
                     }
 
                 }
 
-                for (let i = 0; i <= oldIntern.value; i++) {
-                    if (kleinSize.length > 0 && oldIntern.value > 0) {
-                        if (Aussen.value > 29 || oldIntern.value > kleinPrice.length) {
+                for (let i = 0; i <= oldIntern.value; i++)
+                {
+                    if (kleinSize.length > 0 && oldIntern.value > 0)
+                    {
+                        if (SelectItemId > kleinCountItem.length || oldIntern.value > kleinPrice.length)
+                        {
                             costItems.value = parseFloat(costItems.value) - (priceDoppelInternCost[i]);
 
                             AllPrice.value = parseFloat(AllPrice.value) - (priceDoppelInternCost[i] * Number(countSchluss.value));
@@ -144,7 +155,8 @@
 
                             AllPrice.value = Costen;
                         }
-                        else {
+                        else
+                        {
                             costItems.value = parseFloat(costItems.value) - (kleinPrice[i]);
 
                             AllPrice.value = parseFloat(AllPrice.value) - (kleinPrice[i] * Number(countSchluss.value));
@@ -154,7 +166,8 @@
                             AllPrice.value = Costen;
                         }
                     }
-                    else {
+                    else
+                    {
                         costItems.value = parseFloat(costItems.value) - (priceDoppelInternCost[i]);
 
                         AllPrice.value = parseFloat(AllPrice.value) - (priceDoppelInternCost[i] * Number(countSchluss.value));
@@ -197,8 +210,10 @@
 
         }
     }
-    if (type === "Knaufzylinder") {
-        if (kleinKnayf.length > 0) {
+    if (type === "Knaufzylinder")
+    {
+        if (kleinKnayf.length > 0)
+        {
             if (Aussen.value > 29 && is_GrossSize == false) {
                 for (let i = 0; i < KnayfZiseNormal.length; i++) {
                     if (i >= InnenItem.length) {
