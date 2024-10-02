@@ -23,7 +23,7 @@
     }
     .list-group-item.active {
         z-index: 2;
-        color: #fff;
+        color: #fff; 
         background-color: #a1c5fa;
         border-color: #0d6efd;
     }
@@ -94,23 +94,40 @@
                         <h2>Neues Profil Doppelzylinder</h2>
                     </div>
                     <input style="display:none" asp-for="schliessanlagenId" class="form-control" type="text" value="1" />
+
                     
-                    <div id="Image-load-product">
-
-                        <div class="Image-load_item">
-                            <label asp-for="ImageFile" class="control-label"></label>
-                            <input asp-for="ImageFile" class="btn btn-success" accept="image/*" />
-                            <span asp-validation-for="ImageFile" class="text-danger"></span>
-                            @Html.ValidationMessageFor(m => m.ImageFile, "", new { @class = "error" })
-                        </div>
-
-                        <div class="Image-load_item">
-                            <h5 for="Images">Bilder auswählen:</h5>
-                                <input type="file" name="Images" multiple class="form-control" />
-                        </div>
-                    </div>
                     @if (ViewBag.Dopple != null)
                     {
+                        <br />
+                        <div class="form-group">
+                            <label>Aktuelles Bild:</label>
+                            <br />
+                            <img src="@("/compression/"+ @ViewBag.Dopple.ImageName)"  alt="Uploaded Image" style="max-width: 200px;" />
+
+                            <input type="hidden" name="OldImage" value=" @ViewBag.Dopple.ImageName" />
+                        </div>
+
+                        <div id="Image-load-product">
+
+                            <div class="Image-load_item">
+                                <label asp-for="ImageFile" class="control-label"></label>
+                                <input asp-for="ImageFile" class="btn btn-success" accept="image/*" />
+                                <span asp-validation-for="ImageFile" class="text-danger"></span>
+                                @Html.ValidationMessageFor(m => m.ImageFile, "", new { @class = "error" })
+
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" name="flexSwitchCheckChecked" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                                    <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
+                                </div>
+
+                            </div>
+
+                            <div class="Image-load_item">
+                                <h5 for="Images">Bilder auswählen:</h5>
+                                <input type="file" name="Images" multiple class="form-control" />
+                            </div>
+                        </div>
+
                         <div class="shadow-sm p-3 mb-5 bg-body-tertiary rounded">
                             <div id="form-info">
                             
@@ -274,6 +291,26 @@
                     }
                     else
                     {
+                        <div id="Image-load-product">
+
+                            <div class="Image-load_item">
+                                <label asp-for="ImageFile" class="control-label"></label>
+                                <input asp-for="ImageFile" class="btn btn-success" accept="image/*" />
+                                <span asp-validation-for="ImageFile" class="text-danger"></span>
+                                @Html.ValidationMessageFor(m => m.ImageFile, "", new { @class = "error" })
+
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch" name="flexSwitchCheckChecked" id="flexSwitchCheckChecked" checked>
+                                    <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
+                                </div>
+                            </div>
+
+                            <div class="Image-load_item">
+                                <h5 for="Images">Bilder auswählen:</h5>
+                                <input type="file" name="Images" multiple class="form-control" />
+                            </div>
+                        </div>
+
                         <div>
 
                             <div id="form-info" >
@@ -419,10 +456,6 @@
                             <h5> Bearbeiten</h5>
                         </div>
                         <div  class="Thead">
-                            <h5>Optionen</h5>
-                        </div>
-
-                        <div  class="Thead">
                             <h5>Löschen</h5>
                         </div>
                         <div  class="Thead">
@@ -439,12 +472,7 @@
                                     <div id="rowTable"><h6 id="cost">@item.Price.ToString("C")</h6></div>
                                     <div id="rowTable"><a href="@Url.Action("Edit_Doppelzylinder","Home", new { item.Id })">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
-                                    </a></div>
-                                    <div id="rowTable">
-                                            <a class="compItem" href="@Url.Action("ProductProfil_Doppelzylinder","Home", new { item.Id })">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file-settings"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M12 10.5v1.5" /><path d="M12 16v1.5" /><path d="M15.031 12.25l-1.299 .75" /><path d="M10.268 15l-1.3 .75" /><path d="M15 15.803l-1.285 -.773" /><path d="M10.285 12.97l-1.285 -.773" /><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /></svg>
-                                            </a>
-                                        </div>
+                                    </a></div>    
                                     <div id="rowTable"><a href="@Url.Action("Delete_Doppelzylinder","Home", new { item.Id })">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file-x"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M10 12l4 4m0 -4l-4 4" /></svg>
                                         </a></div>
@@ -465,6 +493,18 @@
     <script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script>
 
     <script type="text/javascript">
+
+         document.querySelectorAll('input[name="flexSwitchCheckChecked"]').forEach((input) => {
+            
+            input.addEventListener('change', function() 
+            {
+                if (input.checked === 'true') {
+
+                } else {
+                   
+                }
+            });
+        });
 
 
         function ImgZiseUp(id) 

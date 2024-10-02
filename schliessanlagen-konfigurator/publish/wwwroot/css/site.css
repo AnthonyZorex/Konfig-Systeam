@@ -999,7 +999,7 @@ html, body {
 
     #Table {
         display: grid;
-        grid-template-columns: repeat(9, auto);
+        grid-template-columns: repeat(8, auto);
     }
 
     #routBAR {
@@ -1663,7 +1663,7 @@ html, body {
     #Table {
         transform: scale(0.99);
         display: grid;
-        grid-template-columns: repeat(9,auto);
+        grid-template-columns: repeat(8,auto);
     }
    
     #Table2 {
@@ -2621,7 +2621,7 @@ html, body {
 
     #Table {
         display: grid;
-        grid-template-columns: repeat(9,auto);
+        grid-template-columns: repeat(8,auto);
     }
     #Table2 {
         display: grid;

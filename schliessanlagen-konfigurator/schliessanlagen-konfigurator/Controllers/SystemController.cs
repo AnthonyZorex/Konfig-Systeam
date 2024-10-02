@@ -34,6 +34,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             return Ok(data);
         }
+       
     }
 
     public class RequestModel
