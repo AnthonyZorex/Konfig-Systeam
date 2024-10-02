@@ -60,7 +60,10 @@
         margin-right: auto;
     }
 
-
+    input[type="checkbox"] {
+        width: 30px;
+        height: 30px;
+    }
     .Image-load_item:nth-child(2) {
         max-width: 250px;
         margin-left: auto;
@@ -104,33 +107,71 @@
 
                     @if (ViewBag.Knayf != null)
                     {
-                        <br />
-                        <div class="form-group">
-                            <label>Aktuelles Bild:</label>
-                            <br />
-                            <img src="@("/compression/"+ @ViewBag.Knayf.ImageName)" alt="Uploaded Image" style="max-width: 200px;" />
-
-                            <input type="hidden" name="OldImage" value=" @ViewBag.Knayf.ImageName" />
-                        </div>
-
-                        <div id="Image-load-product">
-
-                            <div class="Image-load_item">
-                                <label asp-for="ImageFile" class="control-label"></label>
-                                <input asp-for="ImageFile" class="btn btn-success" accept="image/*" />
-                                <span asp-validation-for="ImageFile" class="text-danger"></span>
-                                @Html.ValidationMessageFor(m => m.ImageFile, "", new { @class = "error" })
-                            </div>
-
-                            <div class="Image-load_item">
-                                <h5 for="Images">Bilder auswählen:</h5>
-                                <input type="file" name="Images" multiple class="form-control" />
-                            </div>
-                        </div>
-
+                       
                         <div class="shadow-sm p-3 mb-5 bg-body-tertiary rounded">
-                            <div id="form-info">
 
+                            <div>
+
+                                <div class="form-check form-switch mb-5">
+                                    <input class="form-check-input" type="checkbox" role="switch" onchange="changeLoad_image(event.target.checked)" name="flexSwitchCheckChecked" id="flexSwitchCheckChecked" checked>
+                                </div>
+
+                                <div id="Image-load_item">
+                                    <label asp-for="ImageFile" class="control-label"></label>
+                                    <input asp-for="ImageFile" class="btn btn-success" accept="image/*" />
+                                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+                                    @Html.ValidationMessageFor(m => m.ImageFile, "", new { @class = "error" })
+                                </div>
+
+                                <div id="loadServerItem" style="display:none">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" name="Server_render" readonly id="loadItem" aria-describedby="button-addon2">
+                                        <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#AllServerImage" type="button" id="button-addon2">Load</button>
+                                    </div>
+                                </div>
+
+                                <div class="modal fade" id="AllServerImage" tabindex="-1">
+                                    <div class="modal-dialog modal-xl">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h6 class="modal-title"></h6>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div style="display:grid;grid-template-columns:repeat(2,auto)">
+                                                    @foreach (var imageName in ViewBag.ServerImages)
+                                                    {
+                                                        <div style="border:1px solid red" id="ChoiseItem">
+                                                            <input type="checkbox" class="form-check" height="30" width="30" />
+                                                            <img src="@("/compression/" + imageName)" style="padding:5px" height="300" width="300" alt="@imageName" />
+                                                        </div>
+                                                    }
+                                                </div>
+
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary" onclick="ChoiseImage()" data-bs-dismiss="modal">Load</button>
+                                                <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="Image-load_item">
+                                    <h5 for="Images">Bilder auswählen:</h5>
+                                    <input type="file" name="Images" multiple class="form-control" />
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Aktuelles Bild:</label>
+                                    <br />
+                                    <img src="@("/compression/"+ @ViewBag.Knayf.ImageName)" alt="Uploaded Image" style="max-width: 200px;" />
+
+                                    <input type="hidden" name="OldImage" value=" @ViewBag.Knayf.ImageName" />
+                                </div>
+    
                             <div>
                                     <h5>Name</h5>
                                 <input asp-for="Name" value="@ViewBag.Knayf.Name" required class="form-control" type="text" name="Name" />
@@ -291,23 +332,59 @@
                     }
                     else
                     {
+                          <div class="shadow-sm p-3 mb-5 bg-body-tertiary rounded">
+                        <div>
+                                <div class="form-check form-switch mb-5">
+                                <input class="form-check-input" type="checkbox" role="switch" onchange="changeLoad_image(event.target.checked)" name="flexSwitchCheckChecked" id="flexSwitchCheckChecked" checked>
+                            </div>
 
-                        <div id="Image-load-product">
-
-                            <div class="Image-load_item">
+                            <div id="Image-load_item">
                                 <label asp-for="ImageFile" class="control-label"></label>
                                 <input asp-for="ImageFile" class="btn btn-success" accept="image/*" />
                                 <span asp-validation-for="ImageFile" class="text-danger"></span>
                                 @Html.ValidationMessageFor(m => m.ImageFile, "", new { @class = "error" })
                             </div>
 
+                            <div id="loadServerItem" style="display:none">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" name="Server_render" readonly id="loadItem" aria-describedby="button-addon2">
+                                    <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#AllServerImage" type="button" id="button-addon2">Load</button>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="AllServerImage" tabindex="-1">
+                                <div class="modal-dialog modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h6 class="modal-title"></h6>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div style="display:grid;grid-template-columns:repeat(2,auto)">
+                                                @foreach (var imageName in ViewBag.ServerImages)
+                                                {
+                                                    <div style="border:1px solid red" id="ChoiseItem">
+                                                        <input type="checkbox" class="form-check" height="30" width="30" />
+                                                        <img src="@("/compression/" + imageName)" style="padding:5px" height="300" width="300" alt="@imageName" />
+                                                    </div>
+                                                }
+                                            </div>
+
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" onclick="ChoiseImage()" data-bs-dismiss="modal">Load</button>
+                                            <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="Image-load_item">
                                 <h5 for="Images">Bilder auswählen:</h5>
                                 <input type="file" name="Images" multiple class="form-control" />
                             </div>
-                        </div>
 
-                        <div >
                             <div style="margin-bottom: 50px;">
                                 <label>Name</label>
                                 <input asp-for="Name" required class="form-control" type="text" name="Name" />
@@ -402,6 +479,7 @@
                             </div>
 
                         </div>
+                        </div>
                         <button id="createBlockBtn" type="button" class="btn btn-success">Optionen hinzufügen</button>
                         <button id="addInputBtn" type="button" class="btn btn-success">+</button>
                         <button id="RemoveInputBtn" type="button" class="btn btn-danger">-</button>
@@ -483,6 +561,36 @@
     <script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script>
 
     <script type="text/javascript">
+
+        function ChoiseImage() {
+
+            let All_Items_Img = document.querySelectorAll("#ChoiseItem");
+            let serverImg = document.getElementById("loadItem");
+
+            All_Items_Img.forEach((item) => {
+
+                if (item.childNodes[1].checked == true) {
+                    console.log(item.childNodes[3].alt);
+                    serverImg.value = item.childNodes[3].alt;
+                }
+            });
+        }
+
+        function changeLoad_image(item) {
+            let loadblock = document.getElementById("loadServerItem");
+            let imageBlock = document.getElementById("Image-load_item");
+
+            if (item === true) {
+                imageBlock.style.display = "block";
+                loadblock.style.display = "none";
+            }
+            else {
+                imageBlock.style.display = "none";
+                loadblock.style.display = "block";
+            }
+
+        }
+
 
         let table = document.getElementById("kleiIntern");
 

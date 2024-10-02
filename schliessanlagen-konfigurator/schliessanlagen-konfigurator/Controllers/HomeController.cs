@@ -2410,6 +2410,10 @@ namespace schliessanlagen_konfigurator.Controllers
         {
             if (id != 0)
             {
+                string sourceFilePath = @"wwwroot/compression/";
+                IEnumerable<string> imageFiles = Directory.GetFiles(sourceFilePath, "*").Select(Path.GetFileName);
+                ViewBag.ServerImages = imageFiles;
+
                 var Knauf = db.Profil_Knaufzylinder.Where(x => x.Id == id).First();
                 
                 ViewBag.item = db.Profil_Knaufzylinder.OrderBy(x => x.Price).ToList();
@@ -2433,6 +2437,10 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             else
             {
+                string sourceFilePath = @"wwwroot/compression/";
+                IEnumerable<string> imageFiles = Directory.GetFiles(sourceFilePath, "*").Select(Path.GetFileName);
+                ViewBag.ServerImages = imageFiles;
+
                 ViewBag.item = db.Profil_Knaufzylinder.OrderBy(x => x.Price).ToList();
             }
            
@@ -2441,9 +2449,13 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpGet]
         public IActionResult HebelzylinderRout(int id)
         {
-
             if (id != 0)
             {
+                string sourceFilePath = @"wwwroot/compression/";
+                IEnumerable<string> imageFiles = Directory.GetFiles(sourceFilePath, "*").Select(Path.GetFileName);
+
+                ViewBag.ServerImages = imageFiles;
+
                 var Hebelzylinder = db.Hebelzylinder.Where(x => x.Id == id).First();
                 
                 ViewBag.Hebel = Hebelzylinder;
@@ -2454,6 +2466,11 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             else
             {
+                string sourceFilePath = @"wwwroot/compression/";
+                IEnumerable<string> imageFiles = Directory.GetFiles(sourceFilePath, "*").Select(Path.GetFileName);
+
+                ViewBag.ServerImages = imageFiles;
+
                 ViewBag.item = db.Hebelzylinder.OrderBy(x => x.Price).ToList();
             }
            
@@ -2462,9 +2479,13 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpGet]
         public IActionResult VorhangschlossRout(int id)
         {
-
             if (id !=0)
             {
+                string sourceFilePath = @"wwwroot/compression/";
+                IEnumerable<string> imageFiles = Directory.GetFiles(sourceFilePath, "*").Select(Path.GetFileName);
+
+                ViewBag.ServerImages = imageFiles;
+
                 var Vorhangschloss = db.Vorhangschloss.Where(x => x.Id == id).First();
 
                 ViewBag.Vorhang = Vorhangschloss;
@@ -2479,6 +2500,11 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             else
             {
+                string sourceFilePath = @"wwwroot/compression/";
+                IEnumerable<string> imageFiles = Directory.GetFiles(sourceFilePath, "*").Select(Path.GetFileName);
+
+                ViewBag.ServerImages = imageFiles;
+
                 ViewBag.item = db.Vorhangschloss.OrderBy(x => x.Price).ToList();
             }
            
@@ -2487,9 +2513,13 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpGet]
         public IActionResult Aussenzylinder_RundzylinderRout(int id)
         {
-
             if (id!=0)
             {
+                string sourceFilePath = @"wwwroot/compression/";
+                IEnumerable<string> imageFiles = Directory.GetFiles(sourceFilePath, "*").Select(Path.GetFileName);
+
+                ViewBag.ServerImages = imageFiles;
+
                 var Aussenzylinder = db.Aussenzylinder_Rundzylinder.Where(x => x.Id == id).First();
 
                 ViewBag.AussenZyl = Aussenzylinder;
@@ -2500,6 +2530,11 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             else
             {
+                string sourceFilePath = @"wwwroot/compression/";
+                IEnumerable<string> imageFiles = Directory.GetFiles(sourceFilePath, "*").Select(Path.GetFileName);
+
+                ViewBag.ServerImages = imageFiles;
+
                 ViewBag.item = db.Aussenzylinder_Rundzylinder.OrderBy(x => x.Price).ToList();
             }
            
@@ -2511,6 +2546,11 @@ namespace schliessanlagen_konfigurator.Controllers
 
             if (id != 0)
             {
+                string sourceFilePath = @"wwwroot/compression/";
+                IEnumerable<string> imageFiles = Directory.GetFiles(sourceFilePath, "*").Select(Path.GetFileName);
+
+                ViewBag.ServerImages = imageFiles;
+
                 var Example = db.Profil_Halbzylinder.Where(x => x.Id == id).First();
                 
                 ViewBag.Habel = Example;
@@ -2525,6 +2565,11 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             else
             {
+                string sourceFilePath = @"wwwroot/compression/";
+                IEnumerable<string> imageFiles = Directory.GetFiles(sourceFilePath, "*").Select(Path.GetFileName);
+
+                ViewBag.ServerImages = imageFiles;
+
                 ViewBag.item = db.Profil_Halbzylinder.OrderBy(x => x.Price).ToList();
             }
 
@@ -2541,12 +2586,11 @@ namespace schliessanlagen_konfigurator.Controllers
         #region CreateNewItemZylinder
 
         [HttpPost]
-        public async Task<IActionResult> Create_Profil_Doppelzylinder(Profil_Doppelzylinder Profil_Doppelzylinder,string description,
+        public async Task<IActionResult> Create_Profil_Doppelzylinder(Profil_Doppelzylinder Profil_Doppelzylinder,string description,string Server_render,
         List<string> Options, List<string> NGFDescriptions, IFormFile postedFile, List<float> aussen, List<IFormFile> Images,string OldImage,
         List<float> innen,List<float> costSizeAussen, List<float> costSizeIntern, List<string> valueNGF, List<float> costNGF, List<int> input_counter,
         List<float> internDoppelKlein, List<float> priesDoppelKlein, float ausKlein,float ausKleinPreis)
         {
-
             Profil_Doppelzylinder.description = description;
 
             var ftr = aussen.Count();
@@ -2619,7 +2663,14 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             else
             {
-                Profil_Doppelzylinder.ImageName = OldImage.Trim();
+                if (Server_render == null)
+                {
+                    Profil_Doppelzylinder.ImageName = OldImage.Trim();
+                }
+                else
+                {
+                    Profil_Doppelzylinder.ImageName = Server_render.Trim();
+                }
             }
 
             db.Profil_Doppelzylinder.Add(Profil_Doppelzylinder);
@@ -2836,7 +2887,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Create_Profil_Knaufzylinder(Profil_Knaufzylinder Profil_Doppelzylinder,string description,string OldImage,
-        List<string> Options, List<string> NGFDescriptions, IFormFile postedFile, List<float> aussen, List<IFormFile> Images,
+        List<string> Options, List<string> NGFDescriptions, IFormFile postedFile, List<float> aussen, List<IFormFile> Images, string Server_render,
         List<float> innen, List<string> valueNGF, List<float> costNGF, List<int> input_counter, List<float> costSizeAussen, List<float> costSizeIntern)
         {
 
@@ -2910,7 +2961,14 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             else
             {
-                Profil_Doppelzylinder.ImageName = OldImage.Trim();
+                if (Server_render == null)
+                {
+                    Profil_Doppelzylinder.ImageName = OldImage.Trim();
+                }
+                else
+                {
+                    Profil_Doppelzylinder.ImageName = Server_render.Trim();
+                }
             }
 
             db.Profil_Knaufzylinder.Add(Profil_Doppelzylinder);
@@ -3096,7 +3154,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Create_Profil_Halbzylinder(Profil_Halbzylinder Profil_Doppelzylinder, string OldImage,string descriptions,
-        List<string> Options, List<string> NGFDescriptions, IFormFile postedFile, List<float> aussen, List<IFormFile> Images,
+        List<string> Options, List<string> NGFDescriptions, IFormFile postedFile, List<float> aussen, List<IFormFile> Images,string Server_render,
         List<float> innen, List<string> valueNGF, List<float> costNGF, List<int> input_counter,List<float> costSizeAussen)
         {
             Profil_Doppelzylinder.description = descriptions;
@@ -3168,7 +3226,14 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             else
             {
-                Profil_Doppelzylinder.ImageName = OldImage.Trim();
+                if (Server_render == null)
+                {
+                    Profil_Doppelzylinder.ImageName = OldImage.Trim();
+                }
+                else
+                {
+                    Profil_Doppelzylinder.ImageName = Server_render.Trim();
+                }
             }
 
             db.Profil_Halbzylinder.Add(Profil_Doppelzylinder);
@@ -3355,7 +3420,7 @@ namespace schliessanlagen_konfigurator.Controllers
         }
 
         public async Task<IActionResult> Create_Aussenzylinder_Rundzylinder(Aussenzylinder_Rundzylinder Profil_Doppelzylinder, List<IFormFile> Images,string description,string OldImage,
-        List<string> Options, List<string> NGFDescriptions, IFormFile postedFile, List<string> valueNGF, List<float> costNGF, List<int> input_counter)
+        List<string> Options, List<string> NGFDescriptions, IFormFile postedFile, List<string> valueNGF, List<float> costNGF, List<int> input_counter, string Server_render)
         {
             Profil_Doppelzylinder.description = description;
 
@@ -3430,7 +3495,14 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             else
             {
-                Profil_Doppelzylinder.ImageName = OldImage.Trim();
+                if (Server_render == null)
+                {
+                    Profil_Doppelzylinder.ImageName = OldImage.Trim();
+                }
+                else
+                {
+                    Profil_Doppelzylinder.ImageName = Server_render.Trim();
+                }
             }
 
             db.Aussenzylinder_Rundzylinder.Add(Profil_Doppelzylinder);
@@ -3597,7 +3669,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Create_Vorhangschloss(Vorhangschloss Profil_Doppelzylinder,List<float> costSize, List<IFormFile> Images,string description,string OldImage,
-        List<string> Options, List<string> NGFDescriptions, IFormFile postedFile, List<string> valueNGF, List<float> costNGF, List<float> aussen, List<int> input_counter)
+        List<string> Options, List<string> NGFDescriptions, IFormFile postedFile, List<string> valueNGF, List<float> costNGF, List<float> aussen, List<int> input_counter, string Server_render)
         {
             var System = db.SysteamPriceKey.FirstOrDefault(x => x.NameSysteam == Profil_Doppelzylinder.NameSystem);
 
@@ -3671,7 +3743,14 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             else
             {
-                Profil_Doppelzylinder.ImageName = OldImage.Trim();
+                if (Server_render == null)
+                {
+                    Profil_Doppelzylinder.ImageName = OldImage.Trim();
+                }
+                else
+                {
+                    Profil_Doppelzylinder.ImageName = Server_render.Trim();
+                }
             }
 
             db.Vorhangschloss.Add(Profil_Doppelzylinder);
@@ -3851,7 +3930,7 @@ namespace schliessanlagen_konfigurator.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create_Hebelzylinder(Hebel Profil_Doppelzylinder, List<IFormFile> Images,string description,string OldImage,
+        public async Task<IActionResult> Create_Hebelzylinder(Hebel Profil_Doppelzylinder, List<IFormFile> Images,string description,string OldImage, string Server_render,
         List<string> Options, List<string> NGFDescriptions, IFormFile postedFile, List<string> valueNGF, List<float> costNGF, List<int> input_counter)
         {
 
@@ -3928,7 +4007,14 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             else
             {
-                Profil_Doppelzylinder.ImageName = OldImage.Trim();
+                if (Server_render == null)
+                {
+                    Profil_Doppelzylinder.ImageName = OldImage.Trim();
+                }
+                else
+                {
+                    Profil_Doppelzylinder.ImageName = Server_render.Trim();
+                }
             }
 
             db.Hebelzylinder.Add(Profil_Doppelzylinder);
