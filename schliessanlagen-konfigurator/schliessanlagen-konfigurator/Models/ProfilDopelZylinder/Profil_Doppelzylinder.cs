@@ -17,7 +17,6 @@ namespace schliessanlagen_konfigurator.Models.ProfilDopelZylinder
         public float? Gramm { get; set; }
         public string? Type { get; set; }
         public string ImageName { get; set; }
-        public byte[]? ImageData { get; set; }
 
         [NotMapped]
         [DisplayName("Upload your photo")]
@@ -51,7 +50,6 @@ namespace schliessanlagen_konfigurator.Models.ProfilDopelZylinder
         public Profil_Doppelzylinder_Options Options { get; set; }
         public string? Name { get; set; }
         public string? ImageName { get; set; }
-        public byte[]? ImageData { get; set; }
         [NotMapped]
         [DisplayName("Upload your photo")]
         public IFormFile? ImageFile { get; set; }

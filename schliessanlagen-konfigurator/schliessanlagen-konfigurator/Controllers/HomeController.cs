@@ -2654,12 +2654,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     await Profil_Doppelzylinder.ImageFile.CopyToAsync(fileStream);
                 }
 
-                await _imageOptimizationService.CompressImageAsync(fileName + extension, filePathCompression);
-
-                using (var binaryReader = new BinaryReader(Profil_Doppelzylinder.ImageFile.OpenReadStream()))
-                {
-                    Profil_Doppelzylinder.ImageData = binaryReader.ReadBytes((int)Profil_Doppelzylinder.ImageFile.Length);
-                } 
+                await _imageOptimizationService.CompressImageAsync(fileName + extension, filePathCompression); 
             }
             else
             {
@@ -2707,11 +2702,6 @@ namespace schliessanlagen_konfigurator.Controllers
                         string filePathCompression = Path.Combine(uploadFolderPathCompression, fileName);
 
                         await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
-                        
-                        using (var binaryReader = new BinaryReader(image.OpenReadStream()))
-                        {
-                            itemGalary.ImageData = binaryReader.ReadBytes((int)image.Length);
-                        }
 
                         db.ProductGalery.Add(itemGalary);
                         db.SaveChanges();
@@ -2781,8 +2771,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         Name = SystemOptionItem[o].Name,
                         Description = SystemOptionItem[o].Description,
                         ImageFile = SystemOptionItem[o].ImageFile,
-                        ImageName = SystemOptionItem[o].ImageName,
-                        ImageData = SystemOptionItem[o].ImageData,
+                        ImageName = SystemOptionItem[o].ImageName
                     };
 
                     db.NGF.Add(ngf);
@@ -2849,11 +2838,6 @@ namespace schliessanlagen_konfigurator.Controllers
                         }
 
                         await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
-
-                        using (var binaryReader = new BinaryReader(ngf.ImageFile.OpenReadStream()))
-                        {
-                            ngf.ImageData = binaryReader.ReadBytes((int)ngf.ImageFile.Length);
-                        }
 
                     }
 
@@ -2953,11 +2937,6 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
 
                 await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
-
-                using (var binaryReader = new BinaryReader(Profil_Doppelzylinder.ImageFile.OpenReadStream()))
-                {
-                    Profil_Doppelzylinder.ImageData = binaryReader.ReadBytes((int)Profil_Doppelzylinder.ImageFile.Length);
-                }
             }
             else
             {
@@ -3004,13 +2983,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         }
 
                         await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
-
-                        using (var binaryReader = new BinaryReader(image.OpenReadStream()))
-                        {
-                            itemGalary.ImageData = binaryReader.ReadBytes((int)image.Length);
-                        }
-
-
+                     
                         db.ProductGalery.Add(itemGalary);
                         db.SaveChanges();
                     }
@@ -3050,8 +3023,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         Name = SystemOptionItem[o].Name,
                         Description = SystemOptionItem[o].Description,
                         ImageFile = SystemOptionItem[o].ImageFile,
-                        ImageName = SystemOptionItem[o].ImageName,
-                        ImageData = SystemOptionItem[o].ImageData,
+                        ImageName = SystemOptionItem[o].ImageName
                     };
 
                     db.Knayf_Options.Add(ngf);
@@ -3118,11 +3090,6 @@ namespace schliessanlagen_konfigurator.Controllers
                             }
 
                             await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
-
-                            using (var binaryReader = new BinaryReader(ngf.ImageFile.OpenReadStream()))
-                            {
-                                ngf.ImageData = binaryReader.ReadBytes((int)ngf.ImageFile.Length);
-                            }
 
                         }
 
@@ -3219,10 +3186,6 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
 
-                using (var binaryReader = new BinaryReader(Profil_Doppelzylinder.ImageFile.OpenReadStream()))
-                {
-                    Profil_Doppelzylinder.ImageData = binaryReader.ReadBytes((int)Profil_Doppelzylinder.ImageFile.Length);
-                }
             }
             else
             {
@@ -3271,11 +3234,6 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
 
-                        using (var binaryReader = new BinaryReader(image.OpenReadStream()))
-                        {
-                            itemGalary.ImageData = binaryReader.ReadBytes((int)image.Length);
-                        }
-
                         db.ProductGalery.Add(itemGalary);
                         db.SaveChanges();
                     }
@@ -3313,8 +3271,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         Name = SystemOptionItem[o].Name,
                         Description = SystemOptionItem[o].Description,
                         ImageFile = SystemOptionItem[o].ImageFile,
-                        ImageName = SystemOptionItem[o].ImageName,
-                        ImageData = SystemOptionItem[o].ImageData,
+                        ImageName = SystemOptionItem[o].ImageName
                     };
 
                     db.Halbzylinder_Options.Add(ngf);
@@ -3384,11 +3341,6 @@ namespace schliessanlagen_konfigurator.Controllers
                             }
 
                             await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
-
-                            using (var binaryReader = new BinaryReader(ngf.ImageFile.OpenReadStream()))
-                            {
-                                ngf.ImageData = binaryReader.ReadBytes((int)ngf.ImageFile.Length);
-                            }
 
                         }
 
@@ -3487,11 +3439,6 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
 
-                using (var binaryReader = new BinaryReader(Profil_Doppelzylinder.ImageFile.OpenReadStream()))
-                {
-                    Profil_Doppelzylinder.ImageData = binaryReader.ReadBytes((int)Profil_Doppelzylinder.ImageFile.Length);
-                }
-
             }
             else
             {
@@ -3539,11 +3486,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
 
-                        using (var binaryReader = new BinaryReader(image.OpenReadStream()))
-                        {
-                            itemGalary.ImageData = binaryReader.ReadBytes((int)image.Length);
-                        }
-
+                        
                         db.ProductGalery.Add(itemGalary);
                         db.SaveChanges();
                     }
@@ -3569,8 +3512,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         Name = SystemOptionItem[o].Name,
                         Description = SystemOptionItem[o].Description,
                         ImageFile = SystemOptionItem[o].ImageFile,
-                        ImageName = SystemOptionItem[o].ImageName,
-                        ImageData = SystemOptionItem[o].ImageData,
+                        ImageName = SystemOptionItem[o].ImageName
                     };
 
                     db.Aussen_Rund_all.Add(ngf);
@@ -3637,10 +3579,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
 
-                        using (var binaryReader = new BinaryReader(ngf.ImageFile.OpenReadStream()))
-                        {
-                            ngf.ImageData = binaryReader.ReadBytes((int)ngf.ImageFile.Length);
-                        }
+                       
                     }
 
                     db.Aussen_Rund_all.Add(ngf);
@@ -3788,11 +3727,6 @@ namespace schliessanlagen_konfigurator.Controllers
                         await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
 
                        
-                        using (var binaryReader = new BinaryReader(image.OpenReadStream()))
-                        {
-                            itemGalary.ImageData = binaryReader.ReadBytes((int)image.Length);
-                        }
-
                         db.ProductGalery.Add(itemGalary);
                         db.SaveChanges();
                     }
@@ -3830,8 +3764,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         Name = SystemOptionItem[o].Name,
                         Description = SystemOptionItem[o].Description,
                         ImageFile = SystemOptionItem[o].ImageFile,
-                        ImageName = SystemOptionItem[o].ImageName,
-                        ImageData = SystemOptionItem[o].ImageData,
+                        ImageName = SystemOptionItem[o].ImageName
                     };
 
                     db.OptionsVorhan.Add(ngf);
@@ -4051,12 +3984,6 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
 
-                        using (var binaryReader = new BinaryReader(image.OpenReadStream()))
-                        {
-                            itemGalary.ImageData = binaryReader.ReadBytes((int)image.Length);
-                        }
-
-
                         db.ProductGalery.Add(itemGalary);
                         db.SaveChanges();
                     }
@@ -4085,8 +4012,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         Name = SystemOptionItem[o].Name,
                         Description = SystemOptionItem[o].Description,
                         ImageFile = SystemOptionItem[o].ImageFile,
-                        ImageName = SystemOptionItem[o].ImageName,
-                        ImageData = SystemOptionItem[o].ImageData,
+                        ImageName = SystemOptionItem[o].ImageName
                     };
 
                     db.Options.Add(ngf);

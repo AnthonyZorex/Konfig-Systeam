@@ -22,7 +22,6 @@ namespace schliessanlagen_konfigurator.Models.Halbzylinder
         [NotMapped]
         [DisplayName("Upload your photo")]
         public IFormFile ImageFile { get; set; }
-        public byte[]? ImageData { get; set; }
         public Schliessanlagen Schliessanlagen { get; set; }
         public ICollection<Profil_Halbzylinder_Options> Profil_Halbzylinder_Options { get; set; }
         public ICollection<Aussen_Innen_Halbzylinder> Aussen_Innen_Halbzylinder { get; set; }
@@ -53,7 +52,6 @@ namespace schliessanlagen_konfigurator.Models.Halbzylinder
         public Profil_Halbzylinder_Options Options { get; set; }
         public string? Name { get; set; }
         public string? ImageName { get; set; }
-        public byte[]? ImageData { get; set; }
         [NotMapped]
         [DisplayName("Upload your photo")]
         public IFormFile? ImageFile { get; set; }

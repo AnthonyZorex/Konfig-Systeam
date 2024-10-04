@@ -42,7 +42,6 @@ namespace schliessanlagen_konfigurator.Models.System
         [NotMapped]
         [DisplayName("Upload your photo")]
         public IFormFile? ImageFile { get; set; }
-        public byte[]? ImageData { get; set; }
         public string? Description { get; set; }
         public ICollection<SystemScheker> SystemScheker { get; set; }
         public ICollection<SystemOptionValue> SystemOptionValue { get; set; }
