@@ -12,6 +12,7 @@ using schliessanlagen_konfigurator.Service;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using System.Text.RegularExpressions;
 using TinifyAPI;
+using schliessanlagen_konfigurator.Models.ProfilDopelZylinder;
 namespace schliessanlagen_konfigurator.Controllers
 {
     public class SchopController : Controller
@@ -364,8 +365,8 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var size = db.Aussen_Innen.Include(x=>x.Doppel_Innen_klein).Where(x => x.Profil_DoppelzylinderId == doppel.First().Id).ToList();
 
-                ViewBag.Aussen = size.Select(x => x.aussen).ToList();
-                ViewBag.Intern = size.Select(x => x.Intern).ToList();
+                ViewBag.Aussen = size.Select(x => x.aussen).Distinct().ToList();
+                ViewBag.Intern = size.Where(x=>x.Intern>0).Select(x => x.Intern).ToList();
 
                 var options = doppel.SelectMany(x=>x.Profil_Doppelzylinder_Options).ToList();
                 var optionsItem = doppel.SelectMany(x => x.Profil_Doppelzylinder_Options).SelectMany(x => x.NGF).ToList();
@@ -392,7 +393,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 ViewBag.DoppelOptionsValue = JsonConvert.SerializeObject(optionsValue.Select(x => x.Value).ToList());
                 ViewBag.optionsPrise = JsonConvert.SerializeObject(optionsValue.Select(x => x.Cost).ToList());
 
-                var doppelKleinSize = size.First().Doppel_Innen_klein;
+                var doppelKleinSize = size.SelectMany(x=>x.Doppel_Innen_klein).ToList();
 
                 ViewBag.CostDoppelIntern = JsonConvert.SerializeObject(size.Select(x => x.costSizeIntern).ToList());
                 ViewBag.CostDoppelAussen = JsonConvert.SerializeObject(size.Select(x => x.costSizeAussen).ToList());
@@ -405,6 +406,8 @@ namespace schliessanlagen_konfigurator.Controllers
                 ViewBag.DopelzylinderInternKleinPreis = JsonConvert.SerializeObject(doppelKleinSize.Select(x => x.costSizeIntern).ToList());
 
                 var typeItem = db.Profil_Doppelzylinder.Where(x=>x.schliessanlagenId == doppel.First().schliessanlagenId && x.Type == doppel.First().Type).ToList();
+
+                ViewBag.CountDoppelInter = JsonConvert.SerializeObject(size.Where(x => x.Doppel_Innen_klein.Count() > 0).Select(x => x.Doppel_Innen_klein.Count()).ToList());
 
                 ViewBag.AllDoppel = typeItem.OrderBy(x => x.Price).ToList();
             }

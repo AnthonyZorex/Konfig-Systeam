@@ -92,17 +92,8 @@
                 {
                     if (kleinSize.length > 0)
                     {
-                        if (Aussen.value > 34)
+                        if (kleinSize.includes(Number(Aussen.value)))
                         {
-                            costItems.value = parseFloat(costItems.value) - (priceDoppelInternCost[i]);
-
-                            AllPrice.value = parseFloat(AllPrice.value) - (priceDoppelInternCost[i] * Number(countSchluss.value));
-
-                            let Costen = AllPrice.value.replace(/,/g, '.');
-
-                            AllPrice.value = Costen;
-                        }
-                        else {
                             costItems.value = parseFloat(costItems.value) - (kleinPrice[i]);
 
                             AllPrice.value = parseFloat(AllPrice.value) - (kleinPrice[i] * Number(countSchluss.value));
@@ -110,6 +101,16 @@
                             let Costen = AllPrice.value.replace(/,/g, '.');
 
                             AllPrice.value = Costen;
+                        }
+                        else {
+                            costItems.value = parseFloat(costItems.value) - (priceDoppelInternCost[i]);
+
+                            AllPrice.value = parseFloat(AllPrice.value) - (priceDoppelInternCost[i] * Number(countSchluss.value));
+
+                            let Costen = AllPrice.value.replace(/,/g, '.');
+
+                            AllPrice.value = Costen;
+                           
 
                         }
                     }
@@ -129,18 +130,20 @@
             }
             else {
 
-                for (let i = 0; i < InnenItem.length; i++) {
-                    if (i >= kleinCountItem[SelectItemId]) {
-                        InnenItem[i].style.display = "none";
-                    }
-                    else {
-                        InnenItem[i].value = kleinSize[i];
-                        InnenItem[i].textContent = kleinSize[i];
-                        InnenItem[i].style.display = "block";
-                    }
+                    for (let i = 0; i < InnenItem.length; i++)
+                    {
+                        if (i >= kleinCountItem[SelectItemId])
+                        {
+                            InnenItem[i].style.display = "none";
+                        }
+                        else {
+                            InnenItem[i].value = kleinSize[i];
+                            InnenItem[i].textContent = kleinSize[i];
+                            InnenItem[i].style.display = "block";
+                        }
 
-                }
-
+                    }
+               
                 for (let i = 0; i <= oldIntern.value; i++)
                 {
                     if (kleinSize.length > 0 && oldIntern.value > 0)

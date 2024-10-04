@@ -81,6 +81,10 @@
       "PackagePath": "staticwebassets\\Fira_Sans\\OFL.txt"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\1.jpeg",
+      "PackagePath": "staticwebassets\\Image\\1.jpeg"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\1.png",
       "PackagePath": "staticwebassets\\Image\\1.png"
     },
@@ -231,10 +235,6 @@
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\Dualzylinder-CESentry-640x360.png",
       "PackagePath": "staticwebassets\\Image\\Dualzylinder-CESentry-640x360.png"
-    },
-    {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\EB815_CESentry-1083x1080-1024x1021.png",
-      "PackagePath": "staticwebassets\\Image\\EB815_CESentry-1083x1080-1024x1021.png"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\EVVA.webp",
@@ -551,6 +551,10 @@
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Rehnung\\SK2262.pdf",
       "PackagePath": "staticwebassets\\Rehnung\\SK2262.pdf"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\1.jpeg",
+      "PackagePath": "staticwebassets\\compression\\1.jpeg"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\4ks-Hebelzylinder-MB23g.webp",

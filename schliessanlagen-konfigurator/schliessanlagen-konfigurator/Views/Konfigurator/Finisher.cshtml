@@ -179,7 +179,22 @@
 
                                         @for (int i = 0; i < ViewBag.DopelzylinderIntern.Count; i++)
                                         {
-                                            <option id="OptionI">@ViewBag.DopelzylinderIntern[i]</option>
+                                            if(ViewBag.CountDoppelInter!="null")
+                                            {
+                                                    if (i < ViewBag.CountKlein)
+                                                    {
+                                                        <option id="OptionI">@ViewBag.DopelzylinderIntern[i]</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option style="display:none" id="OptionI">@ViewBag.DopelzylinderIntern[i]</option>
+                                                    }
+
+                                            }
+                                            else{
+                                                    <option id="OptionI">@ViewBag.DopelzylinderIntern[i]</option>
+                                            }
+                                            
                                         }
                                     </select>
                                     <input type="hidden" id="Innen-@d"  />

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "nrOEGrKzqIt+WTu3itg6C5AyZePY/QS2kt9yjkWYsqU=",
+  "Hash": "xwqX0DlWX9C35Ny8ut7Aae0hX5rDe4FtMiftRsTtRug=",
   "Source": "schliessanlagen-konfigurator",
   "BasePath": "_content/schliessanlagen-konfigurator",
   "Mode": "Default",
@@ -1193,6 +1193,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\obj\\Release\\net8.0\\scopedcss\\projectbundle\\schliessanlagen-konfigurator.bundle.scp.css"
+    },
+    {
+      "Identity": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\1.jpeg",
+      "SourceId": "schliessanlagen-konfigurator",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\",
+      "BasePath": "_content/schliessanlagen-konfigurator",
+      "RelativePath": "compression/1.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\compression\\1.jpeg"
     },
     {
       "Identity": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\4ks_azi-o-600x600.webp",
@@ -4442,25 +4461,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Image\\Dualzylinder-CESentry-640x360.png"
-    },
-    {
-      "Identity": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\EB815_CESentry-1083x1080-1024x1021.png",
-      "SourceId": "schliessanlagen-konfigurator",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\",
-      "BasePath": "_content/schliessanlagen-konfigurator",
-      "RelativePath": "Image/EB815_CESentry-1083x1080-1024x1021.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Image\\EB815_CESentry-1083x1080-1024x1021.png"
     },
     {
       "Identity": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Image\\elektronikzylinder-doppelknauf-ces-640x360.webp",
