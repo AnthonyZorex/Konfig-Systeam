@@ -35,7 +35,9 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpGet]
         public async Task<IActionResult> Item(Guid Id)
         {
-            var Item = db.Blogs.Where(x=>x.Id == Id).ToList();
+           var Item = db.Blogs.Where(x=>x.Id == Id).ToList();
+
+            ViewData["Description"] = $"{Item.First().Name}";
 
             ViewBag.Item = Item;
 
