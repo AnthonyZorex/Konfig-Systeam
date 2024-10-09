@@ -38,7 +38,7 @@
                         <div id="galeryItem-@galeryCheker">
                             <input name="GalleryImages" type="text" value="@list.ImageName" id="opt" class="form-control" />
                             <br />
-                            <img src="@("/Image/"+@list.ImageName)" height="300" width="300" />
+                            <img src="@("/compression/"+@list.ImageName)" height="300" width="300" />
                             <br />
                             <button class="btn btn-success" onclick="AddImage(@galeryCheker)" type="button">Bilder hinzufügen</button>
                             <button class="btn btn-danger" onclick="deleteImage(@galeryCheker)" type="button">Löschen</button>
@@ -126,7 +126,7 @@
                                     <label class="control-label">Options Image</label>
                                     <input name="ImageNameOption" type="text" value="@options.ImageName" id="opt" class="form-control" />
                                     <br />
-                                    <img src="@("/Image/"+@options.ImageName)" height="300" width="300" />
+                                    <img src="@("/compression/"+@options.ImageName)" height="300" width="300" />
                                     <br />
                                 </div>
                                 <div class="form-group">

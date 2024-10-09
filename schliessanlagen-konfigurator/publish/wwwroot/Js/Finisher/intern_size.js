@@ -5,7 +5,7 @@ function selectParamIntern(idBlock, type, selectId)
     let BlockTur = document.getElementById("Size-" + idBlock);
     let countSchluss = BlockTur.querySelector("#countSchlusse-" + idBlock);
 
-    let SelectItemId = selectId - 1;
+    let SelectItemId = selectId-1;
 
     let costItems = document.getElementById("costItems-" + idBlock);
 

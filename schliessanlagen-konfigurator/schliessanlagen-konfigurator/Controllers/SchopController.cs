@@ -395,19 +395,41 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var doppelKleinSize = size.SelectMany(x=>x.Doppel_Innen_klein).ToList();
 
-                ViewBag.CostDoppelIntern = JsonConvert.SerializeObject(size.Select(x => x.costSizeIntern).ToList());
-                ViewBag.CostDoppelAussen = JsonConvert.SerializeObject(size.Select(x => x.costSizeAussen).ToList());
+                if (doppelKleinSize.Count() > 0)
+                {
+                    var arrayCountItemIntern = size.Where(x => x.Doppel_Innen_klein.Count() > 0).Select(x => x.Doppel_Innen_klein.Count()).ToList();
+                    var x = arrayCountItemIntern.Sum();
 
-                ViewBag.DopelzylinderIntern = doppelKleinSize.Select(x => x.Intern).ToList();
-                ViewBag.CostDoppelIntern = JsonConvert.SerializeObject(size.Select(x => x.costSizeIntern).Skip(1).ToList());
+                    var arrayCountItemAussen = size.Where(x => x.Doppel_Innen_klein.Count() > 0).Select(x => x.aussen).Count();
 
-                ViewBag.DopelzylinderInternNormal = JsonConvert.SerializeObject(size.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
-                ViewBag.DopelzylinderInternKlein = JsonConvert.SerializeObject(doppelKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
-                ViewBag.DopelzylinderInternKleinPreis = JsonConvert.SerializeObject(doppelKleinSize.Select(x => x.costSizeIntern).ToList());
+                    var y = arrayCountItemAussen;
 
+                    ViewBag.DopelzylinderIntern = doppelKleinSize.Select(x => x.Intern).ToList();
+                    ViewBag.CostDoppelIntern = JsonConvert.SerializeObject(size.Select(x => x.costSizeIntern).Skip(y).ToList());
+
+                    ViewBag.CostDoppelAussen = JsonConvert.SerializeObject(size.Select(x => x.costSizeAussen).ToList());
+
+                    ViewBag.DopelzylinderInternNormal = JsonConvert.SerializeObject(size.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
+                    ViewBag.DopelzylinderInternKlein = JsonConvert.SerializeObject(doppelKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
+                    ViewBag.DopelzylinderInternKleinPreis = JsonConvert.SerializeObject(doppelKleinSize.Select(x => x.costSizeIntern).ToList());
+
+                    ViewBag.CountKlein = arrayCountItemIntern[0];
+
+                    ViewBag.CountDoppelInter = JsonConvert.SerializeObject(size.Where(x => x.Doppel_Innen_klein.Count() > 0).Select(x => x.Doppel_Innen_klein.Count()).ToList());
+                }
+                else
+                {
+                    ViewBag.DopelzylinderIntern = size.Where(x => x.Intern > 0).Select(x => x.Intern).ToList();
+                    ViewBag.CostDoppelIntern = JsonConvert.SerializeObject(size.Select(x => x.costSizeIntern).ToList());
+
+                    ViewBag.CostDoppelAussen = JsonConvert.SerializeObject(size.Select(x => x.costSizeAussen).ToList());
+
+                    ViewBag.DopelzylinderInternNormal = JsonConvert.SerializeObject(size.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
+                    ViewBag.DopelzylinderInternKlein = JsonConvert.SerializeObject(doppelKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
+                    ViewBag.DopelzylinderInternKleinPreis = JsonConvert.SerializeObject(doppelKleinSize.Select(x => x.costSizeIntern).ToList());
+                    ViewBag.CountDoppelInter = JsonConvert.SerializeObject(null);
+                }
                 var typeItem = db.Profil_Doppelzylinder.Where(x=>x.schliessanlagenId == doppel.First().schliessanlagenId && x.Type == doppel.First().Type).ToList();
-
-                ViewBag.CountDoppelInter = JsonConvert.SerializeObject(size.Where(x => x.Doppel_Innen_klein.Count() > 0).Select(x => x.Doppel_Innen_klein.Count()).ToList());
 
                 ViewBag.AllDoppel = typeItem.OrderBy(x => x.Price).ToList();
             }
@@ -423,7 +445,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 ViewBag.Aussen = size.Select(x => x.aussen).ToList();
                 ViewBag.Intern = null;
-
+                ViewBag.CountDoppelInter = JsonConvert.SerializeObject(null);
                 var options = halb.SelectMany(x => x.Profil_Halbzylinder_Options).ToList();
                 var optionsItem = halb.SelectMany(x => x.Profil_Halbzylinder_Options).SelectMany(x => x.Halbzylinder_Options).ToList();
                 var optionsValue = halb.SelectMany(x => x.Profil_Halbzylinder_Options).SelectMany(x => x.Halbzylinder_Options).SelectMany(x => x.Halbzylinder_Options_value).ToList();
@@ -473,7 +495,7 @@ namespace schliessanlagen_konfigurator.Controllers
             if (knayf.Count() > 0)
             {
                 ViewBag.Item = knayf;
-
+                ViewBag.CountDoppelInter = JsonConvert.SerializeObject(null);
                 string result = Regex.Replace(knayf.First().description, "<.*?>", string.Empty);
 
                 string metaSchreiben = result.Replace("&nbsp;", string.Empty);
@@ -547,7 +569,7 @@ namespace schliessanlagen_konfigurator.Controllers
             if (hebel.Count() > 0)
             {
                 ViewBag.Item = hebel;
-
+                ViewBag.CountDoppelInter = JsonConvert.SerializeObject(null);
                 string result = Regex.Replace(hebel.First().description, "<.*?>", string.Empty);
                 string metaSchreiben = result.Replace("&nbsp;", string.Empty);
                 ViewData["Description"] = metaSchreiben;
@@ -605,7 +627,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 var size = db.Size.Where(x => x.VorhangschlossId == vorhan.First().Id).ToList();
 
                 string result = Regex.Replace(vorhan.First().description, "<.*?>", string.Empty);
-
+                ViewBag.CountDoppelInter = JsonConvert.SerializeObject(null);
                 string metaSchreiben = result.Replace("&nbsp;", string.Empty);
                 ViewData["Description"] = metaSchreiben;
 
@@ -659,7 +681,7 @@ namespace schliessanlagen_konfigurator.Controllers
             if (aussen.Count() > 0)
             {
                 ViewBag.Item = aussen;
-
+                ViewBag.CountDoppelInter = JsonConvert.SerializeObject(null);
                 string result = Regex.Replace(aussen.First().description, "<.*?>", string.Empty);
 
                 string metaSchreiben = result.Replace("&nbsp;", string.Empty);

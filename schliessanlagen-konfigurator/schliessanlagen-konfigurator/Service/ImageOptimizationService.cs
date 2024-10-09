@@ -18,7 +18,6 @@ namespace schliessanlagen_konfigurator.Service
         {
             try
             {
-
                 var source = Tinify.FromFile(inputPath);
                 await source.ToFile(outputPath);
             }

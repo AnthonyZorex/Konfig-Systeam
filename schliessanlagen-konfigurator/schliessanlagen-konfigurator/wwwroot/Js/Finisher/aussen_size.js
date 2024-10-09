@@ -1,6 +1,6 @@
 ﻿function selectParamAussen(idBlock, type, selectId) {
 
-    let SelectItemId = selectId - 1;
+    let SelectItemId = selectId-1;
     let is_GrossSize = false;
     let BlockTur = document.getElementById("Size-" + idBlock);
     let countSchluss = BlockTur.querySelector("#countSchlusse-" + idBlock);

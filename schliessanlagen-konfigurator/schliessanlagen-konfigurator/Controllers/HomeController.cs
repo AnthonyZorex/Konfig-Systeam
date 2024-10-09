@@ -212,7 +212,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         string extension = Path.GetExtension(image.FileName);
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
+                        string path = Path.Combine(wwwRootPath + "/compression/", fileName + extension);
 
                         itemGalary.ImageName = fileName = fileName + extension;
 
@@ -223,7 +223,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
 
                         // Путь к папке для сохранения изображений
-                        string uploadFolderPath = Path.Combine(wwwRootPath, "image");
+                        string uploadFolderPath = Path.Combine(wwwRootPath, "compression");
                         string uploadFolderPathCompression = Path.Combine(wwwRootPath, "compression");
 
                         // Проверяем наличие папки "image", создаем, если ее нет
@@ -1205,7 +1205,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             foreach (var list in Gallery)
             {
-                string sourceFilePathGallery = @"wwwroot/image/";
+                string sourceFilePathGallery = @"wwwroot/compression/";
 
                 string imagePathToDeleteGallery = Path.Combine(sourceFilePathGallery, list.ImageName);
 
@@ -1278,7 +1278,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 string wwwRootPath = Environment.WebRootPath;
 
                 // Путь к папке для сохранения изображений
-                string uploadFolderPath = Path.Combine(wwwRootPath, "image");
+                string uploadFolderPath = Path.Combine(wwwRootPath, "compression");
                 string uploadFolderPathCompression = Path.Combine(wwwRootPath, "compression");
 
                 // Проверяем наличие папки "image", создаем, если ее нет
@@ -2075,7 +2075,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         itemGalary.ImageName = fileName = fileName + extension;
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                        string path = Path.Combine(wwwRootPath + "/compression/", fileName);
                         
                         string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
 
@@ -2196,7 +2196,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                                     createOptionsAussen.ImageName = fileName = fileName + extension;
 
-                                    string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                                    string path = Path.Combine(wwwRootPath + "/compression/", fileName);
 
                                     string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
 
@@ -2641,7 +2641,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 Profil_Doppelzylinder.ImageName = fileName = fileName + extension;
 
-                string path = Path.Combine(wwwRootPath + "/Image/", fileName );
+                string path = Path.Combine(wwwRootPath + "/compression/", fileName );
 
                 string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
 
@@ -2688,7 +2688,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         itemGalary.ImageName = fileName = fileName + extension;
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                        string path = Path.Combine(wwwRootPath + "/compression/", fileName);
 
                         using (var fileStream = new FileStream(path, FileMode.Create))
                         {
@@ -2847,7 +2847,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         ngf.ImageName = fileName = fileName + extension;
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                        string path = Path.Combine(wwwRootPath + "/compression/", fileName);
 
                         string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
 
@@ -2947,7 +2947,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 Profil_Doppelzylinder.ImageName = fileName = fileName + extension;
 
-                string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                string path = Path.Combine(wwwRootPath + "/compression/", fileName);
 
                 string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
 
@@ -2993,7 +2993,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         
                         itemGalary.ImageName = fileName = fileName + extension;
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                        string path = Path.Combine(wwwRootPath + "/compression/", fileName);
 
                         string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
 
@@ -3132,7 +3132,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                             ngf.ImageName = fileName = fileName + extension;
 
-                            string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                            string path = Path.Combine(wwwRootPath + "/compression/", fileName);
 
                             string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
 
@@ -3227,7 +3227,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 Profil_Doppelzylinder.ImageName = fileName = fileName + extension;
 
-                string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                string path = Path.Combine(wwwRootPath + "/compression/", fileName);
 
                 string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
 
@@ -3273,7 +3273,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         string extension = Path.GetExtension(image.FileName);
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                        string path = Path.Combine(wwwRootPath + "/compression/", fileName);
 
                         itemGalary.ImageName = fileName = fileName + extension;
 
@@ -3383,7 +3383,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                             ngf.ImageName = fileName = fileName + extension;
 
-                            string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                            string path = Path.Combine(wwwRootPath + "/compression/", fileName);
 
                             string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
 
@@ -3480,7 +3480,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 Profil_Doppelzylinder.ImageName = fileName = fileName + extension;
 
-                string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                string path = Path.Combine(wwwRootPath + "/compression/", fileName);
 
                 string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
 
@@ -3527,7 +3527,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         itemGalary.ImageName = fileName = fileName + extension;
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                        string path = Path.Combine(wwwRootPath + "/compression/", fileName);
 
                         string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
 
@@ -3620,7 +3620,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         ngf.ImageName = fileName = fileName + extension;
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                        string path = Path.Combine(wwwRootPath + "/compression/", fileName);
 
                         string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
 
@@ -3715,7 +3715,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 Profil_Doppelzylinder.ImageName = fileName = fileName + extension;
 
-                string path = Path.Combine(wwwRootPath + "/Image/", fileName );
+                string path = Path.Combine(wwwRootPath + "/compression/", fileName );
 
                 string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
 
@@ -3767,7 +3767,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         itemGalary.ImageName = fileName = fileName + extension;
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                        string path = Path.Combine(wwwRootPath + "/compression/", fileName);
 
                         string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
 
@@ -3872,7 +3872,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         ngf.ImageName = fileName = fileName + extension;
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                        string path = Path.Combine(wwwRootPath + "/compression/", fileName);
 
                         string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
 
@@ -3973,7 +3973,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 Profil_Doppelzylinder.ImageName = fileName = fileName + extension;
 
-                string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                string path = Path.Combine(wwwRootPath + "/compression/", fileName);
 
                 string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
 
@@ -4025,7 +4025,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         itemGalary.ImageName = fileName = fileName + extension;
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                        string path = Path.Combine(wwwRootPath + "/compression/", fileName);
 
                         string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
 
@@ -4120,7 +4120,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         ngf.ImageName = fileName = fileName + extension;
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName);
+                        string path = Path.Combine(wwwRootPath + "/compression/", fileName);
 
                         string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
 
@@ -4176,7 +4176,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             foreach (var list in Gallery)
             {
-                string sourceFilePathGallery = @"wwwroot/image/";
+                string sourceFilePathGallery = @"wwwroot/compression/";
 
                 string imagePathToDeleteGallery = Path.Combine(sourceFilePathGallery, list.ImageName);
 
@@ -4191,7 +4191,7 @@ namespace schliessanlagen_konfigurator.Controllers
             }
 
             var a = db.Profil_Knaufzylinder_Options.Where(x => x.Profil_KnaufzylinderId == id).ToList();
-            string sourceFilePath = @"wwwroot/Image/";
+            string sourceFilePath = @"wwwroot/compression/";
 
             string imagePathToDelete = Path.Combine(sourceFilePath, Knaufzylinder.ImageName);
 
@@ -4263,7 +4263,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             foreach (var list in Gallery)
             {
-                string sourceFilePathGallery = @"wwwroot/image/";
+                string sourceFilePathGallery = @"wwwroot/compression/";
 
                 string imagePathToDeleteGallery = Path.Combine(sourceFilePathGallery, list.ImageName);
 
@@ -4279,7 +4279,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var a = db.Hebelzylinder_Options.Where(x => x.HebelzylinderId == doppelzylinder.Id).ToList();
 
-            string sourceFilePath = @"wwwroot/Image/";
+            string sourceFilePath = @"wwwroot/compression/";
 
             string imagePathToDelete = Path.Combine(sourceFilePath, doppelzylinder.ImageName);
 
@@ -4332,7 +4332,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             foreach (var list in Gallery)
             {
-                string sourceFilePathGallery = @"wwwroot/image/";
+                string sourceFilePathGallery = @"wwwroot/compression/";
 
                 string imagePathToDeleteGallery = Path.Combine(sourceFilePathGallery, list.ImageName);
 
@@ -4348,7 +4348,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var a = db.Vorhan_Options.Where(x => x.VorhangschlossId == doppelzylinder.Id).ToList();
 
-            string sourceFilePath = @"wwwroot/Image/";
+            string sourceFilePath = @"wwwroot/compression/";
 
             string imagePathToDelete = Path.Combine(sourceFilePath, doppelzylinder.ImageName);
 
@@ -4409,7 +4409,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             foreach (var list in Gallery)
             {
-                string sourceFilePathGallery = @"wwwroot/image/";
+                string sourceFilePathGallery = @"wwwroot/compression/";
 
                 string imagePathToDeleteGallery = Path.Combine(sourceFilePathGallery, list.ImageName);
 
@@ -4425,7 +4425,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var a = db.Profil_Halbzylinder_Options.Where(x => x.Profil_HalbzylinderId == doppelzylinder.Id).ToList();
 
-            string sourceFilePath = @"wwwroot/Image/";
+            string sourceFilePath = @"wwwroot/compression/";
 
             string imagePathToDelete = Path.Combine(sourceFilePath, doppelzylinder.ImageName);
 
@@ -4486,7 +4486,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             foreach (var list in Gallery)
             {
-                string sourceFilePathGallery = @"wwwroot/image/";
+                string sourceFilePathGallery = @"wwwroot/compression/";
 
                 string imagePathToDeleteGallery = Path.Combine(sourceFilePathGallery, list.ImageName);
 
@@ -4502,7 +4502,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var a = db.Aussen_Rund_options.Where(x => x.Aussenzylinder_RundzylinderId == doppelzylinder.Id).ToList();
 
-            string sourceFilePath = @"wwwroot/Image/";
+            string sourceFilePath = @"wwwroot/compression/";
 
             string imagePathToDelete = Path.Combine(sourceFilePath, doppelzylinder.ImageName);
 
@@ -4557,7 +4557,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             foreach (var list in Gallery)
             {
-                string sourceFilePathGallery = @"wwwroot/image/";
+                string sourceFilePathGallery = @"wwwroot/compression/";
 
                 string imagePathToDeleteGallery = Path.Combine(sourceFilePathGallery, list.ImageName);
 
@@ -4573,7 +4573,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var a = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == doppelzylinder.Id).ToList();
 
-            string sourceFilePath = @"wwwroot/Image/";
+            string sourceFilePath = @"wwwroot/compression/";
 
             string imagePathToDelete = Path.Combine(sourceFilePath, doppelzylinder.ImageName);
 
@@ -4849,7 +4849,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         string extension = Path.GetExtension(image.FileName);
 
-                        string path = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
+                        string path = Path.Combine(wwwRootPath + "/compression/", fileName + extension);
 
                         itemGalary.ImageName = fileName = fileName + extension;
 
@@ -5368,7 +5368,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                         string extension = Path.GetExtension(image.FileName);
 
-                        string originalImagePath = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
+                        string originalImagePath = Path.Combine(wwwRootPath + "/compression/", fileName + extension);
 
                         using (var fileStream = new FileStream(originalImagePath, FileMode.Create))
                         {
@@ -5546,7 +5546,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         string extension = Path.GetExtension(image.FileName);
 
                         // Путь для сохранения оригинального файла
-                        string originalImagePath = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
+                        string originalImagePath = Path.Combine(wwwRootPath + "/compression/", fileName + extension);
 
                         // Сохраняем оригинальное изображение на диск
                         using (var fileStream = new FileStream(originalImagePath, FileMode.Create))
@@ -5715,7 +5715,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         string extension = Path.GetExtension(image.FileName);
 
                         // Путь для сохранения оригинального файла
-                        string originalImagePath = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
+                        string originalImagePath = Path.Combine(wwwRootPath + "/compression/", fileName + extension);
 
                         // Сохраняем оригинальное изображение на диск
                         using (var fileStream = new FileStream(originalImagePath, FileMode.Create))
@@ -5882,7 +5882,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         string extension = Path.GetExtension(image.FileName);
 
                         // Путь для сохранения оригинального файла
-                        string originalImagePath = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
+                        string originalImagePath = Path.Combine(wwwRootPath + "/compression/", fileName + extension);
 
                         // Сохраняем оригинальное изображение на диск
                         using (var fileStream = new FileStream(originalImagePath, FileMode.Create))
@@ -6077,7 +6077,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         string extension = Path.GetExtension(image.FileName);
 
                         // Путь для сохранения оригинального файла
-                        string originalImagePath = Path.Combine(wwwRootPath + "/Image/", fileName + extension);
+                        string originalImagePath = Path.Combine(wwwRootPath + "/compression/", fileName + extension);
 
                         // Сохраняем оригинальное изображение на диск
                         using (var fileStream = new FileStream(originalImagePath, FileMode.Create))

@@ -8,13 +8,13 @@
 <div class="shadow-lg  mb-5 bg-body-tertiary rounded" id="registerPage">
     <div class="col-md-4 mx-auto  p-3">
         <section>
-            <h2 class="text-center mb-3">Please Log in.</h2>
+            <h2 class="text-center mb-3">Bitte loggen Sie sich ein.</h2>
 
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
 
             <form id="account" method="post">
                 <div class="mb-3">     
-                    <label class="form-label">Email</label>
+                    <label class="form-label">Benutzername oder E-Mail-Adresse *</label>
                     <input asp-for="Input.Email" class="form-control"  />          
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
@@ -31,15 +31,15 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col d-grid">
-                        <button type="submit" class="btn btn-outline-success">Log in</button>
+                        <button type="submit" class="btn btn-outline-success">Einloggen</button>
                     </div>
                     <div class="col d-grid">
-                        <a class="btn btn-outline-danger" href="/" role="button">Cancel</a>
+                        <a class="btn btn-outline-danger" href="/" role="button">Abbrechen</a>
                     </div>
                 </div>
                 <div>
                     <input type="hidden" name="returnUrl" id="returnUrl" />
-                 <a class="btn btn-link" id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                    <a class="btn btn-link" id="forgot-password" asp-page="./ForgotPassword">Haben Sie Ihr Passwort vergessen?</a>
                 </div>
             </form>
         </section>

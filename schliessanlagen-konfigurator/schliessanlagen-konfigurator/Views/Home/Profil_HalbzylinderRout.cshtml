@@ -419,7 +419,7 @@
                             <div id="rowTable">@item.companyName</div>
                             <div id="rowTable">@item.NameSystem</div>
                             <div id="rowTable">@item.Name</div>
-                            <div id="rowTable"> <img decoding="async" id="image-@i" onmouseover="ImgZiseUp(@i)" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="30px" height="30px" /></div>
+                            <div id="rowTable"> <img decoding="async" id="image-@i" onmouseover="ImgZiseUp(@i)" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="30px" height="30px" /></div>
                             <div id="rowTable"><h6 id="cost">@item.Price.ToString("C")</h6></div>
                             <div id="rowTable">
                                 <a href="@Url.Action("Edit_Profil_Halbzylinder","Home", new { item.Id })">
