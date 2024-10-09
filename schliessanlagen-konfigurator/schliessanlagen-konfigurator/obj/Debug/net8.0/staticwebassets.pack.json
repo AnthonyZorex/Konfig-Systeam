@@ -477,6 +477,10 @@
       "PackagePath": "staticwebassets\\Image\\zylinderlaenge.webp"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Js\\Edit_Item\\Edit_Product.js",
+      "PackagePath": "staticwebassets\\Js\\Edit_Item\\Edit_Product.js"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Js\\Finisher\\Zylider_options.js",
       "PackagePath": "staticwebassets\\Js\\Finisher\\Zylider_options.js"
     },
@@ -549,10 +553,6 @@
       "PackagePath": "staticwebassets\\Rehnung\\SK2262.pdf"
     },
     {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\1.jpeg",
-      "PackagePath": "staticwebassets\\compression\\1.jpeg"
-    },
-    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\4ks-Hebelzylinder-MB23g.webp",
       "PackagePath": "staticwebassets\\compression\\4ks-Hebelzylinder-MB23g.webp"
     },
@@ -569,16 +569,8 @@
       "PackagePath": "staticwebassets\\compression\\4ks-plus-knaufzylinder.webp"
     },
     {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\4ks_azi-o-600x600.webp",
-      "PackagePath": "staticwebassets\\compression\\4ks_azi-o-600x600.webp"
-    },
-    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\ABUS.svg.webp",
       "PackagePath": "staticwebassets\\compression\\ABUS.svg.webp"
-    },
-    {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\Abus-Bravus2000-Aussenzylinder.webp",
-      "PackagePath": "staticwebassets\\compression\\Abus-Bravus2000-Aussenzylinder.webp"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\Abus-Bravus2000-Hangschloss.webp",
@@ -763,22 +755,6 @@
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\UDM-215.WEBP",
       "PackagePath": "staticwebassets\\compression\\UDM-215.WEBP"
-    },
-    {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\UDM-5558.WEBP",
-      "PackagePath": "staticwebassets\\compression\\UDM-5558.WEBP"
-    },
-    {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\UDM-810.WEBP",
-      "PackagePath": "staticwebassets\\compression\\UDM-810.WEBP"
-    },
-    {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\UDM-815.WEBP",
-      "PackagePath": "staticwebassets\\compression\\UDM-815.WEBP"
-    },
-    {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\UDM-851.WEBP",
-      "PackagePath": "staticwebassets\\compression\\UDM-851.WEBP"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\UDM-System.WEBP",

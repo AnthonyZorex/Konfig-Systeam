@@ -80,7 +80,13 @@
                         {
                             r++;
                             <div class="input-block" id="block-@r">
-                                <h2>Optionen</h2>
+                                <div>
+                                    <h2>Optionen</h2>
+                                </div>
+                                <div>
+                                    <input type="button" class="btn btn-success" onclick="addOptionsValue(@r)" value="+" />
+                                    <input type="button" class="btn danger" onclick="minusOptionsValue(@r)" value="-" />
+                                </div>
                                 <div class="form-group">
                                     <label class="control-label">Optionen Name</label>
                                     <input name="Options" value="@options.Name" id="opt" class="form-control" />
@@ -114,7 +120,7 @@
                                         @for (int i = 0; i < ViewBag.CountOptions[r]; i++)
                                         {
                                             f++;
-                                            <input type="text" placeholder="Preis" name="cost" value="@ViewBag.OptionValue[f].Cost" class="form-control" />
+                                            <input type="number" step="0.01" placeholder="Preis" name="cost" value="@ViewBag.OptionValue[f].Cost" class="form-control" />
                                         }
                                     </div>
                                     <input type="hidden" id="counter" name="inputCounter" />
@@ -227,6 +233,53 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script>
     <script>
+
+        function addOptionsValue(id) {
+            let optionsBlock = document.getElementById("block-" + id);
+
+            let value = document.createElement("input");
+            value.setAttribute('name', 'valueNGF');
+            value.setAttribute('placeholder', 'Wert');
+            value.setAttribute('class', 'form-control');
+            value.setAttribute('type', 'text');
+
+            let Price = document.createElement("input");
+            Price.setAttribute('name', 'costNGF');
+            Price.setAttribute('placeholder', 'Price');
+            Price.setAttribute('class', 'form-control');
+            Price.setAttribute('type', 'text');
+
+            let valueBlock = optionsBlock.querySelector("#valueNGF");
+            let priceBlock = optionsBlock.querySelector("#costNGF");
+
+            valueBlock.appendChild(value);
+            priceBlock.appendChild(Price);
+
+            var counter = optionsBlock.querySelector('#counter');
+            let x = valueBlock.querySelectorAll("input").length;
+            counter.value = x;
+        }
+        function minusOptionsValue(id) {
+            let optionsBlock = document.getElementById("block-" + id);
+            let inputProductValue = optionsBlock.querySelectorAll("#valueNGF  input");
+            let inputProductPrice = optionsBlock.querySelectorAll("#costNGF  input");
+
+            let valueBlock = optionsBlock.querySelector("#valueNGF");
+            let priceBlock = optionsBlock.querySelector("#costNGF");
+
+            let value = valueBlock.childNodes;
+            let price = priceBlock.childNodes;
+
+            let lastValueChild = valueBlock.lastChild;
+            lastValueChild.remove();
+
+            let lastPriceChild = priceBlock.lastChild;
+            lastPriceChild.remove();
+
+            var counter = optionsBlock.querySelector('#counter');
+            let x = valueBlock.querySelectorAll("input").length;
+            counter.value = x;
+        }
 
         function goBack() {
             if (document.referrer !== "") {

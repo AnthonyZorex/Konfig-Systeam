@@ -53,6 +53,11 @@
         max-width: 250px;
         margin-left: auto;
     }
+
+    input[type="checkbox"] {
+        width: 30px;
+        height: 30px;
+    }
 </style>
 <button class="btn danger mb-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLeft" aria-controls="offcanvasLeft">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-adjustments-horizontal"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14 6m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M4 6l8 0" /><path d="M16 6l4 0" /><path d="M8 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M4 12l2 0" /><path d="M10 12l10 0" /><path d="M17 18m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M4 18l11 0" /><path d="M19 18l1 0" /></svg>
@@ -87,10 +92,56 @@
 
         @if (ViewBag.SystemChois != null)
         {
-             <div>
-            <label for="Images">Bilder auswählen:</label>
-            <input type="file" name="Images" value=""   multiple class="form-control" />
-            </div>
+                <div class="form-check form-switch mb-5">
+                    <input class="form-check-input" type="checkbox" role="switch" onchange="changeLoad_image(event.target.checked)" name="flexSwitchCheckChecked" id="flexSwitchCheckChecked" checked>
+                </div>
+
+                <div id="loadServerItem" style="display:none">
+                    <div class="input-group mb-5">
+                        <input type="text" class="form-control" name="Server_render" readonly id="loadItem" aria-describedby="button-addon2">
+                        <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#AllServerImage" type="button" id="button-addon2">Load</button>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="AllServerImage" tabindex="-1">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h6 class="modal-title"></h6>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div style="display:grid;grid-template-columns:repeat(2,auto)">
+                                    @foreach (var imageName in ViewBag.ServerImages)
+                                    {
+                                        <div style="border:1px solid red" id="ChoiseItem">
+                                            <input type="checkbox" class="form-check" height="30" width="30" />
+                                            <img src="@("/compression/" + imageName)" style="padding:5px" height="300" width="300" alt="@imageName" />
+                                        </div>
+                                    }
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" onclick="ChoiseImage()" data-bs-dismiss="modal">Load</button>
+                                <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label for="Images">Bilder auswählen:</label>
+                    <input type="file" name="Images" value=""   multiple class="form-control" />
+                    </div>
+
+                <div class="form-group">
+                    <label>Aktuelles Bild:</label>
+                    <br />
+                    <img src="@("/compression/"+ @ViewBag.Galery )" alt="Uploaded Image" style="max-width: 200px;" />
+
+                    <input type="hidden" name="OldImage" value="@ViewBag.Galery" />
+                </div>
 
             <div style="margin-bottom: 50px;margin-top: 50px">
              <label>Systemname</label>
@@ -106,7 +157,48 @@
         }
         else
         {
-                     <div>
+
+            <div class="form-check form-switch mb-5">
+                <input class="form-check-input" type="checkbox" role="switch" onchange="changeLoad_image(event.target.checked)" name="flexSwitchCheckChecked" id="flexSwitchCheckChecked" checked>
+            </div>
+
+                <div id="loadServerItem" style="display:none">
+                    <div class="input-group mb-5">
+                        <input type="text" class="form-control" name="Server_render" readonly id="loadItem" aria-describedby="button-addon2">
+                        <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#AllServerImage" type="button" id="button-addon2">Load</button>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="AllServerImage" tabindex="-1">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h6 class="modal-title"></h6>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div style="display:grid;grid-template-columns:repeat(2,auto)">
+                                    @foreach (var imageName in ViewBag.ServerImages)
+                                    {
+                                        <div style="border:1px solid red" id="ChoiseItem">
+                                            <input type="checkbox" class="form-check" height="30" width="30" />
+                                            <img src="@("/compression/" + imageName)" style="padding:5px" height="300" width="300" alt="@imageName" />
+                                        </div>
+                                    }
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer" >
+                                <button type="button" class="btn btn-primary" onclick="ChoiseImage()" data-bs-dismiss="modal">Load</button>
+                                <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="Image-load_item" class="mb-5">
                     <label for="Images">Bilder auswählen:</label>
                     <input type="file" name="Images" multiple class="form-control" />
                 </div>
@@ -126,70 +218,99 @@
     </form>
 
   @using (Html.BeginForm("EditSystem", "Home", FormMethod.Get))
-{
-    <table class="table table-bordered table-sm" id="Table3" >
-        <thead>
-            <tr>
-                <th>NameSysteam</th>
-                <th>Price</th>
-                <th>Lieferzeit</th>
-                <th>LieferzeitGrosse</th>
-                <th>Bearbeiten</th>
-                <th>Löschen</th>
-                <th>Vorlage</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in ViewBag.item)
-            {
+    {
+        <table class="table table-bordered table-sm" id="Table3" >
+            <thead>
                 <tr>
-                    <td><h6>@item.NameSysteam</h6></td>
-                    <td><h6>@item.Price.ToString("C")</h6></td>
-                    <td><h6>@item.Lieferzeit</h6></td>
-                    <td><h6>@item.LieferzeitGrosse</h6></td>
-                    <td>
-                        <a href="@Url.Action("Edit_System", "Home", new { id = item.Id })">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-edit">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
-                                <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
-                                <path d="M16 5l3 3" />
-                            </svg>
-                        </a>
-                    </td>
-                    <td>
-                        <a href="@Url.Action("Delete_System", "Home", new { id = item.Id })">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file-x">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                                <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
-                                <path d="M10 12l4 4m0 -4l-4 4" />
-                            </svg>
-                        </a>
-                    </td>
-                    <td>
-                        <a href="@Url.Action("SystemInfo", "Home", new { id = item.Id })">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-table-plus">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M12.5 21h-7.5a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v7.5" />
-                                <path d="M3 10h18" />
-                                <path d="M10 3v18" />
-                                <path d="M16 19h6" />
-                                <path d="M19 16v6" />
-                            </svg>
-                        </a>
-                    </td>
+                    <th>NameSysteam</th>
+                    <th>Price</th>
+                    <th>Lieferzeit</th>
+                    <th>LieferzeitGrosse</th>
+                    <th>Bearbeiten</th>
+                    <th>Löschen</th>
+                    <th>Vorlage</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-}
-</div>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.item)
+                {
+                    <tr>
+                        <td><h6>@item.NameSysteam</h6></td>
+                        <td><h6>@item.Price.ToString("C")</h6></td>
+                        <td><h6>@item.Lieferzeit</h6></td>
+                        <td><h6>@item.LieferzeitGrosse</h6></td>
+                        <td>
+                            <a href="@Url.Action("Edit_System", "Home", new { id = item.Id })">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-edit">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                                    <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                                    <path d="M16 5l3 3" />
+                                </svg>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Delete_System", "Home", new { id = item.Id })">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file-x">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                                    <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                                    <path d="M10 12l4 4m0 -4l-4 4" />
+                                </svg>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="@Url.Action("SystemInfo", "Home", new { id = item.Id })">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-table-plus">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M12.5 21h-7.5a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v7.5" />
+                                    <path d="M3 10h18" />
+                                    <path d="M10 3v18" />
+                                    <path d="M16 19h6" />
+                                    <path d="M19 16v6" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
 @section scripts
 {
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     
     <script type="text/javascript">
+
+
+        function changeLoad_image(item) {
+            let loadblock = document.getElementById("loadServerItem");
+            let imageBlock = document.getElementById("Image-load_item");
+
+            if (item === true) {
+                imageBlock.style.display = "block";
+                loadblock.style.display = "none";
+            }
+            else {
+                imageBlock.style.display = "none";
+                loadblock.style.display = "block";
+            }
+
+        }
+        function ChoiseImage() {
+
+            let All_Items_Img = document.querySelectorAll("#ChoiseItem");
+            let serverImg = document.getElementById("loadItem");
+
+            All_Items_Img.forEach((item) => {
+
+                if (item.childNodes[1].checked == true) {
+                    console.log(item.childNodes[3].alt);
+                    serverImg.value = item.childNodes[3].alt;
+                }
+            });
+        }
 
 
             function updateTable(data) {
