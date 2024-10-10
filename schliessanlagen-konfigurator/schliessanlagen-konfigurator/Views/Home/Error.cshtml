@@ -1,8 +1,16 @@
-﻿@{
-    ViewData["Title"] = $"Error";
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
 }
 
-<div>
+<h1>Произошла ошибка</h1>
 
-    <h2>В данный момент ведётся техническая работа!</h2>
-</div>
+@if (Model.ShowRequestId)
+
+{
+    <p>Идентификатор запроса: <strong>@Model.RequestId</strong></p>
+}
+
+<p>Ошибка: @Model.ErrorMessage</p>
+
+<p><a href="/">Вернуться на главную страницу</a></p>

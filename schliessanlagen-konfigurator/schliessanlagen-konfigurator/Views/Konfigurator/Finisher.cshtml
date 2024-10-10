@@ -1146,17 +1146,15 @@
     let normalDopelSize = @Html.Raw(ViewBag.DopelzylinderInternNormal)|| null;
     let kleinSize = @Html.Raw(ViewBag.DopelzylinderInternKlein)|| null;
     let kleinCountItem = @Html.Raw(ViewBag.CountDoppelInter)|| null;
-
-
     let priceDoppelInternCost = @Html.Raw(ViewBag.CostDoppelIntern);
     let priceDoppelAussenCost = @Html.Raw(ViewBag.CostDoppelAussen);
-    
-    let priceKnayfAussenCost = @Html.Raw(ViewBag.KnayfAussenCost);
-    
-    let priceKnayfInternCost = @Html.Raw(ViewBag.KnayfInternCost);
-    let kleinKnayf = @Html.Raw(ViewBag.KnayfInternKlein);
-    let kleinKnayfPrice = @Html.Raw(ViewBag.KnayfzylinderInternKleinPreis);
-    let KnayfZiseNormal = @Html.Raw(ViewBag.KnayfzylinderInternNormal);
+
+        let kleinKnayfCountItem = @Html.Raw(ViewBag.CountKnayfInter)|| null;
+        let priceKnayfAussenCost = @Html.Raw(ViewBag.KnayfAussenCost)|| null;
+      let priceKnayfInternCost = @Html.Raw(ViewBag.KnayfInternCost);
+        let kleinKnayf = @Html.Raw(ViewBag.KnayfInternKlein)|| null;
+       let kleinKnayfPrice = @Html.Raw(ViewBag.KnayfzylinderInternKleinPreis)|| null;
+        let KnayfZiseNormal = @Html.Raw(ViewBag.KnayfzylinderInternNormal)|| null;
 
     let halbAussenCost = @Html.Raw(ViewBag.CostHalbSize);
 
@@ -1192,7 +1190,6 @@
 
     function procent()
     {
-        let proc = document.getElementById("Procent");
         let Allcost = document.getElementById("Allcost");
         Allcost.value = (parseFloat(AllPrice.value)).toLocaleString('de-DE', {
             style: 'currency',
@@ -1289,67 +1286,67 @@
 
                                             if (ViewBag.countOptionsQueryI > 0)
                                             {
-                                                @for (int i = 0; i < @ViewBag.optionsNameI.Count; i++)
+                                                    @for (int i = 0; i < @ViewBag.optionsNameI.Count; i++)
                                                 {
-                                                                       <div class="input-group">
-                                                                             <div class="input-group-text" id="btnGroupAddon">
-                                                                                 <img data-bs-toggle="modal" data-bs-target="#myModalOptions-@i" alt="question" id="hilfeOptionsIcon" src="@("/compression/question.webp")" height="20" width="20" />
-                                                                             </div>
-                                                                               <input class="form-control" id="OptionName" readonly type="text" value="@ViewBag.optionsNameI[i].Name" aria-label="Пример группы ввода" aria-describedby="btnGroupAddon" />
-                                                                           </div>
+                                                                           <div class="input-group">
+                                                                                 <div class="input-group-text" id="btnGroupAddon">
+                                                                                     <img data-bs-toggle="modal" data-bs-target="#myModalOptions-@i" alt="question" id="hilfeOptionsIcon" src="@("/compression/question.webp")" height="20" width="20" />
+                                                                                 </div>
+                                                                                   <input class="form-control" id="OptionName" readonly type="text" value="@ViewBag.optionsNameI[i].Name" aria-label="Пример группы ввода" aria-describedby="btnGroupAddon" />
+                                                                               </div>
                                                                                                                                                                                                                                                     
                                                                                                                                                                             
 
-                                                        <select style="margin-bottom: 10px;" class="form-select" id="${BlockN}-Options-@i" onchange="OptionsSelect(${BlockN},'Doppel',event.target.id,event.target.value,@value,'@ViewBag.optionsNameI[i].Name',@i,${BlockN})">
+                                                            <select style="margin-bottom: 10px;" class="form-select" id="${BlockN}-Options-@i" onchange="OptionsSelect(${BlockN},'Doppel',event.target.id,event.target.value,@value,'@ViewBag.optionsNameI[i].Name',@i,${BlockN})">
 
-                                                          @for (int j = 0; j < @ViewBag.countOptionsListI[i]; j++)
+                                                              @for (int j = 0; j < @ViewBag.countOptionsListI[i]; j++)
                                                         {
-                                                            <option id="@value">@ViewBag.optionsValueI[value]</option>
+                                                                <option id="@value">@ViewBag.optionsValueI[value]</option>
 
                                                             value++;
                                                         }
 
-                                                          </select>
+                                                              </select>
                                                      
-                                                                                                                                                                                                                                                                                                                                    <input type="hidden" id="Option-${BlockN} + @i" />
-                                                    <input type="hidden" id="d-${BlockN} + @i" />
+                                                                                                                                                                                                                                                                                                                                        <input type="hidden" id="Option-${BlockN} + @i" />
+                                                        <input type="hidden" id="d-${BlockN} + @i" />
 
-                                                     <div class="modal fade" id="myModalOptions-@i" tabindex="-1">
-                                                            <div class="modal-dialog modal-xl">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                         <h1 class="modal-title">@ViewBag.optionsNameI[i].Name</h1>
-                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                                                                    </div>
-                                                                    <div class="modal-body">
+                                                         <div class="modal fade" id="myModalOptions-@i" tabindex="-1">
+                                                                <div class="modal-dialog modal-xl">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                             <h1 class="modal-title">@ViewBag.optionsNameI[i].Name</h1>
+                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
 
-                                                                            <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
-                                                                                <div class="row g-0">
-                                                                                    <div class="col-md-4">
-                                                                                         <img src="@("/compression/"+@ViewBag.optionsNameI[i].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@ViewBag.optionsNameI[i].Name">
-                                                                                    </div>
-                                                                                    <div class="col-md-8">
-                                                                                        <div class="card-body">
+                                                                                <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                                                                                    <div class="row g-0">
+                                                                                        <div class="col-md-4">
+                                                                                             <img src="@("/compression/"+@ViewBag.optionsNameI[i].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@ViewBag.optionsNameI[i].Name">
+                                                                                        </div>
+                                                                                        <div class="col-md-8">
+                                                                                            <div class="card-body">
 
-                                                                                            <div class="card-text">
-                                                                                            @Html.Raw(@ViewBag.optionsNameI[i].Description)
+                                                                                                <div class="card-text">
+                                                                                                @Html.Raw(@ViewBag.optionsNameI[i].Description)
+                                                                                                </div>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
 
                                                       
 
                                                 }
-                                                <input type="hidden" name="DoppelOption" id="OptionAll-${BlockN}" />
+                                                    <input type="hidden" name="DoppelOption" id="OptionAll-${BlockN}" />
                                             }
                                         }
                                         

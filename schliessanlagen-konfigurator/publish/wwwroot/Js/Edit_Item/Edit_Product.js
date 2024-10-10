@@ -7,12 +7,14 @@
     value.setAttribute('placeholder', 'Wert');
     value.setAttribute('class', 'form-control');
     value.setAttribute('type', 'text');
+    value.required = true;
 
     let Price = document.createElement("input");
     Price.setAttribute('name', 'costNGF');
     Price.setAttribute('placeholder', 'Price');
     Price.setAttribute('class', 'form-control');
     Price.setAttribute('type', 'text');
+    Price.required = true;
 
     let valueBlock = optionsBlock.querySelector("#valueNGF");
     let priceBlock = optionsBlock.querySelector("#costNGF");
@@ -58,11 +60,11 @@ function newKlein() {
                                         <div>
                                             <div>
                                                 <h5>Aussen</h5>
-                                            <input type="number" class="form-control" value="" name="ausKlein" />
+                                            <input type="number" class="form-control" required value="" name="ausKlein" />
                                             </div>
                                             <div>
                                                 <h5>Preis</h5>
-                                            <input type="number" class="form-control" step="0,00" value="" name="ausKleinPreis" />
+                                            <input type="number" class="form-control" required step="0,00" value="" name="ausKleinPreis" />
                                             </div>
                                         </div>
                                         <div class="arrow-right">
@@ -80,8 +82,8 @@ function newKlein() {
 
 
                                                             <tr>
-                                                            <th><input name="internDoppelKlein" class="form-control" value="" type="number" step="0,01" /></th>
-                                                            <td><input name="priesDoppelKlein" class="form-control" type="number" value="" step="0,01" /></td>
+                                                            <th><input name="internDoppelKlein" required class="form-control" value="" type="number" step="0,01" /></th>
+                                                            <td><input name="priesDoppelKlein" required class="form-control" type="number" value="" step="0,01" /></td>
                                                             </tr>         
                                                 </tbody>
                                             </table>
@@ -89,7 +91,7 @@ function newKlein() {
                                         </div>
                                     </div>`;
 
-    Aussen_innen_klein.innerHTML += block;
+    Aussen_innen_klein.insertAdjacentHTML('beforeend', block) ;
 
     let blockItem = document.querySelector(`.kleinZise-${countKleinBlock}`);
 
@@ -131,153 +133,164 @@ document.getElementById('submitForm').addEventListener('click', function (event)
     event.preventDefault();
     tinymce.triggerSave();
 
+    let isValid = true;
+    $('input[required], select[required], textarea[required]').each(function () {
+        if ($(this).val() === '') {
+            isValid = false;
+            $(this).addClass('error'); // добавляем класс для визуального отображения ошибки
+        } else {
+            $(this).removeClass('error');
+        }
+    });
+
     var form = document.getElementById('systemInfoForm');
 
     var formData = new FormData(form);
 
-    if (TypeZylinder == 1)
-    {
-        axios.post('/Home/SaveDoppelZylinder', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
-            .then(function (response) {
+    if (isValid) {
 
-                const alertBox = document.getElementById('alertBox');
-                alertBox.classList.remove('alert-danger');
-                alertBox.classList.add('alert-success');
-                showAlert(response.data.message);
-
+        if (TypeZylinder == 1) {
+            axios.post('/Home/SaveDoppelZylinder', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
             })
-            .catch(function (error) {
+                .then(function (response) {
 
-                const alertBox = document.getElementById('alertBox');
-                alertBox.classList.remove('alert-success');
-                alertBox.classList.add('alert-danger');
-                showAlert(error);
-            });
-    }
-    else if (TypeZylinder == 2)
-    {
-        axios.post('/Home/SaveHalbzylinder', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
-            .then(function (response) {
+                    const alertBox = document.getElementById('alertBox');
+                    alertBox.classList.remove('alert-danger');
+                    alertBox.classList.add('alert-success');
+                    showAlert(response.data.message);
 
-                const alertBox = document.getElementById('alertBox');
-                alertBox.classList.remove('alert-danger');
-                alertBox.classList.add('alert-success');
-                showAlert(response.data.message);
+                })
+                .catch(function (error) {
 
+                    const alertBox = document.getElementById('alertBox');
+                    alertBox.classList.remove('alert-success');
+                    alertBox.classList.add('alert-danger');
+                    showAlert(error);
+                });
+        }
+        else if (TypeZylinder == 2) {
+            axios.post('/Home/SaveHalbzylinder', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
             })
-            .catch(function (error) {
+                .then(function (response) {
 
-                const alertBox = document.getElementById('alertBox');
-                alertBox.classList.remove('alert-success');
-                alertBox.classList.add('alert-danger');
-                showAlert(error);
-            });
-    }
-    else if (TypeZylinder == 3)
-    {
-        axios.post('/Home/SaveProfil_Knaufzylinder', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
-            .then(function (response) {
+                    const alertBox = document.getElementById('alertBox');
+                    alertBox.classList.remove('alert-danger');
+                    alertBox.classList.add('alert-success');
+                    showAlert(response.data.message);
 
-                const alertBox = document.getElementById('alertBox');
-                alertBox.classList.remove('alert-danger');
-                alertBox.classList.add('alert-success');
-                showAlert(response.data.message);
+                })
+                .catch(function (error) {
 
+                    const alertBox = document.getElementById('alertBox');
+                    alertBox.classList.remove('alert-success');
+                    alertBox.classList.add('alert-danger');
+                    showAlert(error);
+                });
+        }
+        else if (TypeZylinder == 3) {
+            axios.post('/Home/SaveProfil_Knaufzylinder', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
             })
-            .catch(function (error) {
+                .then(function (response) {
 
-                const alertBox = document.getElementById('alertBox');
-                alertBox.classList.remove('alert-success');
-                alertBox.classList.add('alert-danger');
-                showAlert(error);
-            });
-    }
-    else if (TypeZylinder == 4)
-    {
+                    const alertBox = document.getElementById('alertBox');
+                    alertBox.classList.remove('alert-danger');
+                    alertBox.classList.add('alert-success');
+                    showAlert(response.data.message);
 
-        axios.post('/Home/SaveHebelzylinder', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
-            .then(function (response) {
+                })
+                .catch(function (error) {
 
-                const alertBox = document.getElementById('alertBox');
-                alertBox.classList.remove('alert-danger');
-                alertBox.classList.add('alert-success');
-                showAlert(response.data.message);
+                    const alertBox = document.getElementById('alertBox');
+                    alertBox.classList.remove('alert-success');
+                    alertBox.classList.add('alert-danger');
+                    showAlert(error);
+                });
+        }
+        else if (TypeZylinder == 4) {
 
+            axios.post('/Home/SaveHebelzylinder', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
             })
-            .catch(function (error) {
+                .then(function (response) {
 
-                const alertBox = document.getElementById('alertBox');
-                alertBox.classList.remove('alert-success');
-                alertBox.classList.add('alert-danger');
-                showAlert(error);
-            });
-    }
-    else if (TypeZylinder == 5)
-    {
-        axios.post('/Home/SaveVorhangschloss', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
-            .then(function (response) {
+                    const alertBox = document.getElementById('alertBox');
+                    alertBox.classList.remove('alert-danger');
+                    alertBox.classList.add('alert-success');
+                    showAlert(response.data.message);
 
-                const alertBox = document.getElementById('alertBox');
-                alertBox.classList.remove('alert-danger');
-                alertBox.classList.add('alert-success');
-                showAlert(response.data.message);
+                })
+                .catch(function (error) {
 
+                    const alertBox = document.getElementById('alertBox');
+                    alertBox.classList.remove('alert-success');
+                    alertBox.classList.add('alert-danger');
+                    showAlert(error);
+                });
+        }
+        else if (TypeZylinder == 5) {
+            axios.post('/Home/SaveVorhangschloss', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
             })
-            .catch(function (error) {
+                .then(function (response) {
 
-                const alertBox = document.getElementById('alertBox');
-                alertBox.classList.remove('alert-success');
-                alertBox.classList.add('alert-danger');
-                showAlert(error);
-            });
-    }
+                    const alertBox = document.getElementById('alertBox');
+                    alertBox.classList.remove('alert-danger');
+                    alertBox.classList.add('alert-success');
+                    showAlert(response.data.message);
 
-    else if (TypeZylinder == 6)
-    {
-        axios.post('/Home/SaveAussenzylinder_Rundzylinder', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
-            .then(function (response) {
+                })
+                .catch(function (error) {
 
-                const alertBox = document.getElementById('alertBox');
-                alertBox.classList.remove('alert-danger');
-                alertBox.classList.add('alert-success');
-                showAlert(response.data.message);
+                    const alertBox = document.getElementById('alertBox');
+                    alertBox.classList.remove('alert-success');
+                    alertBox.classList.add('alert-danger');
+                    showAlert(error);
+                });
+        }
 
+        else if (TypeZylinder == 6) {
+            axios.post('/Home/SaveAussenzylinder_Rundzylinder', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
             })
-            .catch(function (error) {
+                .then(function (response) {
 
-                const alertBox = document.getElementById('alertBox');
-                alertBox.classList.remove('alert-success');
-                alertBox.classList.add('alert-danger');
-                showAlert(error);
-            });
+                    const alertBox = document.getElementById('alertBox');
+                    alertBox.classList.remove('alert-danger');
+                    alertBox.classList.add('alert-success');
+                    showAlert(response.data.message);
+
+                })
+                .catch(function (error) {
+
+                    const alertBox = document.getElementById('alertBox');
+                    alertBox.classList.remove('alert-success');
+                    alertBox.classList.add('alert-danger');
+                    showAlert(error);
+                });
+        }
     }
+    else {
 
-
-  
+        const alertBox = document.getElementById('alertBox');
+        alertBox.classList.remove('alert-success');
+        alertBox.classList.add('alert-danger');
+        showAlert("Заполнены не все поля!");
+    }
 });
 
 
@@ -287,8 +300,8 @@ function PlusKleinIntert(blockNumber) {
     let tableSearch = block.childNodes[5].childNodes[1].childNodes[3];
 
     let row = `   <tr>
-                                        <th><input name="internDoppelKlein" class="form-control" type="number" step="0,01" /></th>
-                                           <td><input class="form-control" name="priesDoppelKlein" step="0,01" type="number" /></td>
+                                        <th><input name="internDoppelKlein" required class="form-control" type="number" step="0,01" /></th>
+                                           <td><input class="form-control" required name="priesDoppelKlein" step="0,01" type="number" /></td>
                                 </tr> `;
 
     tableSearch.insertAdjacentHTML('beforeend', row);
@@ -518,12 +531,14 @@ if (plusAussen_Innen != null)
 {
     plusAussen_Innen.addEventListener('click', () => {
 
-        if (docAussen != null) {
+        if (docAussen != null)
+        {
             let d = document.createElement('input');
             d.setAttribute('name', 'SizeAus');
             d.setAttribute('placeholder', 'Aussen');
             d.setAttribute('class', 'form-control');
             d.id = 'aus';
+            d.required = true;
 
             let costAussen = document.createElement('input');
             costAussen.setAttribute('name', 'costSizeAussen');
@@ -532,16 +547,19 @@ if (plusAussen_Innen != null)
             costAussen.setAttribute('step', '0.01');
             costAussen.setAttribute('type', 'number');
             costAussen.id = 'ausCost';
+            costAussen.required = true;
             docAussen.append(d, costAussen);
         }
 
 
-        if (docInnen != null) {
+        if (docInnen != null)
+        {
             let x = document.createElement('input');
             x.setAttribute('name', 'SizeInen');
             x.setAttribute('placeholder', 'Innen');
             x.id = 'inter';
             x.setAttribute('class', 'form-control');
+            x.required = true;
 
             let costInter = document.createElement('input');
             costInter.setAttribute('name', 'costSizeIntern');
@@ -550,6 +568,8 @@ if (plusAussen_Innen != null)
             costInter.setAttribute('class', 'form-control');
             costInter.setAttribute('step', '0.01');
             costInter.setAttribute('type', 'number');
+            costInter.required = true;
+
             docInnen.append(x, costInter);
         }
 
@@ -628,22 +648,22 @@ document.addEventListener("DOMContentLoaded", function () {
         block.innerHTML = `<div>
                                                                                                 <h1>Options</h1>
                                                                                                 <label>Name</label>
-                                                                                                <input class="form-control" type="text" name="Options" />
+                                                                                                <input class="form-control" required type="text" name="Options" />
                                                                                                 <div>
                                                                                                     <p></p>
-                                                                                                    <input name="postedFile" type="file" class="btn btn-success" />
+                                                                                                    <input name="postedFile" required type="file" class="btn btn-success" />
                                                                                                     <p></p>
                                                                                                 </div>
                                                                                                 <label>Descriptions</label>
-                                                                                                <input class="form-control" type="text" name="Descriptions" />
+                                                                                                <input class="form-control" type="text" required name="Descriptions" />
                                                                                                 <h1>Value & Cost </h1>
                                                                                                 <div id="Aussen_Innen_ProfilDopel">
                                                                                                     <div id="valueNGF">
-                                                                                                                    <input type="text" class="form-control" placeholder="valueNGF" name="valueNGF" />
+                                                                                                                    <input type="text" class="form-control" required placeholder="valueNGF" name="valueNGF" />
 
                                                                                                     </div>
                                                                                                     <div id="costNGF">
-                                                                                                         <input type="number" class="form-control" placeholder="costNGF" step="0.01" name="costNGF" />
+                                                                                                         <input type="number" class="form-control" required placeholder="costNGF" step="0.01" name="costNGF" />
                                                                                                     </div>
                                                                                                        <input type="hidden" id="counter" name="inputCounter" />
                                                                                                 </div>

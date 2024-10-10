@@ -63,13 +63,13 @@ function selectParamIntern(idBlock, type, selectId)
     {
         for (let i = 0; i <= oldAussen.value; i++)
         {
-            if (kleinSize.length > 0)
+            if (kleinKnayf.length > 0)
             {
-                if (Aussen.value > 29)
+                if (kleinKnayf.includes(Number(Aussen.value)))
                 {
-                    costItems.value = parseFloat(costItems.value) - (priceKnayfInternCost[i]);
+                    costItems.value = parseFloat(costItems.value) - (kleinKnayfPrice[i]);
 
-                    AllPrice.value = parseFloat(AllPrice.value) - (priceKnayfInternCost[i] * Number(countSchluss.value));
+                    AllPrice.value = parseFloat(AllPrice.value) - (kleinKnayfPrice[i] * Number(countSchluss.value));
 
                     let Costen = AllPrice.value.replace(/,/g, '.');
 
@@ -77,9 +77,9 @@ function selectParamIntern(idBlock, type, selectId)
                 }
                 else
                 {
-                    costItems.value = parseFloat(costItems.value) - (kleinKnayfPrice[i]);
+                    costItems.value = parseFloat(costItems.value) - (priceKnayfInternCost[i]);
 
-                    AllPrice.value = parseFloat(AllPrice.value) - (kleinKnayfPrice[i] * Number(countSchluss.value));
+                    AllPrice.value = parseFloat(AllPrice.value) - (priceKnayfInternCost[i] * Number(countSchluss.value));
 
                     let Costen = AllPrice.value.replace(/,/g, '.');
 
@@ -145,19 +145,14 @@ function selectParamIntern(idBlock, type, selectId)
 
     }
 
-    if (type === "Knaufzylinder") {
-        for (let s = 0; s <= SelectItemId; s++) {
-            if (kleinSize.length > 0) {
-                if (Aussen.value > 29) {
-                    costItems.value = parseFloat(costItems.value) + (priceKnayfInternCost[s]);
+    if (type === "Knaufzylinder")
+    {
+        for (let s = 0; s <= SelectItemId; s++)
+        {
+            if (kleinKnayf.length > 0)
+            {
+                if (kleinKnayf.includes(Number(Aussen.value))) {
 
-                    AllPrice.value = parseFloat(AllPrice.value) + (priceKnayfInternCost[s] * Number(countSchluss.value));
-
-                    let Costen = AllPrice.value.replace(/,/g, '.');
-
-                    AllPrice.value = Costen;
-                }
-                else {
                     costItems.value = parseFloat(costItems.value) + (kleinPrice[s]);
 
                     AllPrice.value = parseFloat(AllPrice.value) + (kleinPrice[s] * Number(countSchluss.value));
@@ -165,6 +160,17 @@ function selectParamIntern(idBlock, type, selectId)
                     let Costen = AllPrice.value.replace(/,/g, '.');
 
                     AllPrice.value = Costen;
+                }
+                else
+                {
+                    costItems.value = parseFloat(costItems.value) + (priceKnayfInternCost[s]);
+
+                    AllPrice.value = parseFloat(AllPrice.value) + (priceKnayfInternCost[s] * Number(countSchluss.value));
+
+                    let Costen = AllPrice.value.replace(/,/g, '.');
+
+                    AllPrice.value = Costen;
+                   
 
                 }
             }

@@ -24,6 +24,9 @@ using OfficeOpenXml.ConditionalFormatting;
 using NuGet.ContentModel;
 using System;
 using Microsoft.Ajax.Utilities;
+using Microsoft.AspNetCore.Diagnostics;
+using NuGet.Packaging.Signing;
+using SixLabors.ImageSharp;
 namespace schliessanlagen_konfigurator.Controllers
 {
     public class HomeController : Controller
@@ -186,7 +189,7 @@ namespace schliessanlagen_konfigurator.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create_Sys(string KeyName, List<IFormFile> Images, float KeyCost, bool? coppy, int? coppyId)
+        public async Task<IActionResult> Create_Sys(string KeyName, List<IFormFile> Images, float KeyCost, bool? coppy, int? coppyId,string Server_render, string OldImage)
         {
             var key = new SysteamPriceKey
             {
@@ -262,9 +265,28 @@ namespace schliessanlagen_konfigurator.Controllers
                         db.ProductGalery.Add(itemGalary);
                         db.SaveChanges();
                     }
+                   
                 }
             }
+            else
+            {
+                var itemGalary = new ProductGalery
+                {
+                    SysteamPriceKeyId = key.Id,
+                };
+                if (Server_render == null)
+                {
+                    itemGalary.ImageName = OldImage.Trim();
+                }
+                else
+                {
+                    itemGalary.ImageName = Server_render.Trim();
+                }
 
+                db.ProductGalery.Add(itemGalary);
+                db.SaveChanges();
+            }
+           
             if (coppyId!=null)
             {
 
@@ -2110,7 +2132,11 @@ namespace schliessanlagen_konfigurator.Controllers
                         db.SaveChanges();
                     }
                 }
+             
+                   
+                
             }
+
 
             sys.NameSysteam = systeam.NameSysteam;
             sys.Price = systeam.Price;
@@ -6674,8 +6700,13 @@ namespace schliessanlagen_konfigurator.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            Response.StatusCode = 404;
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var context = HttpContext.Features.Get<IExceptionHandlerFeature>();
+            var errorViewModel = new ErrorViewModel
+            {
+                RequestId = HttpContext.TraceIdentifier,
+                ErrorMessage = context?.Error.Message // Дополнительно можно обработать тип ошибки
+            };
+            return View(errorViewModel);
         }
     }
 }

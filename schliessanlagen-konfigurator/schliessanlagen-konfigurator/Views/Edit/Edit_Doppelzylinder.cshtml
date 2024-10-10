@@ -352,9 +352,7 @@
     {
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script>
-        @{
-            await Html.RenderPartialAsync("_ValidationScriptsPartial");
-        }
+      
         <script>
             let TypeZylinder = @Html.Raw(Model.schliessanlagenId);
         </script>

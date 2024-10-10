@@ -145,12 +145,12 @@
 
             <div style="margin-bottom: 50px;margin-top: 50px">
              <label>Systemname</label>
-            <input name="KeyName" id="NameSys" value="@ViewBag.SystemChois.NameSysteam" type="text" class="form-control" />
+            <input name="KeyName" id="NameSys" required value="@ViewBag.SystemChois.NameSysteam" type="text" class="form-control" />
             </div>
 
             <div style="margin-bottom: 50px;">
             <label>Schlüsselkosten</label>
-            <input name="KeyCost" type="number" value="@ViewBag.SystemChois.Price" step="0,1" min="0" class="form-control" />
+            <input name="KeyCost" type="number" required value="@ViewBag.SystemChois.Price" step="0,1" min="0" class="form-control" />
             </div>
             <input type="hidden" name="coppy" value="true" />
                 <input type="hidden" name="coppyId" value="@ViewBag.SystemChois.Id"  />
@@ -200,17 +200,17 @@
 
                 <div id="Image-load_item" class="mb-5">
                     <label for="Images">Bilder auswählen:</label>
-                    <input type="file" name="Images" multiple class="form-control" />
+                    <input type="file"  name="Images" multiple class="form-control" />
                 </div>
 
             <div style="margin-bottom: 50px;margin-top: 50px">
              <label>Systemname</label>
-            <input name="KeyName" id="NameSys" type="text" class="form-control" />
+            <input name="KeyName" required id="NameSys" type="text" class="form-control" />
             </div>
 
             <div style="margin-bottom: 50px;">
             <label>Schlüsselkosten</label>
-            <input name="KeyCost" type="number" step="0,1" min="0" class="form-control" />
+            <input name="KeyCost" required type="number" step="0,1" min="0" class="form-control" />
             </div>
         }
        
@@ -280,7 +280,9 @@
 @section scripts
 {
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
     <script type="text/javascript">
 
 
@@ -401,28 +403,50 @@
 
         var formData = new FormData(form);
 
-        axios.post('/Home/Create_Sys', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
-        .then(function (response) {
+            let isValid = true;
+            $('input[required], select[required], textarea[required]').each(function () {
+                if ($(this).val() === '') {
+                    isValid = false;
+                    $(this).addClass('error'); // добавляем класс для визуального отображения ошибки
+                } else {
+                    $(this).removeClass('error');
+                }
+            });
 
-          const alertBox = document.getElementById('alertBox');
-                    alertBox.classList.remove('alert-danger');
-                    alertBox.classList.add('alert-success');
-                    showAlert(response.data.message);
+            if (isValid) {
+                axios.post('/Home/Create_Sys', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                    .then(function (response) {
 
-        refreshTable();
+                        const alertBox = document.getElementById('alertBox');
+                        alertBox.classList.remove('alert-danger');
+                        alertBox.classList.add('alert-success');
+                        showAlert(response.data.message);
 
-        })
-        .catch(function (error) {
-            
-                  const alertBox = document.getElementById('alertBox');
+                        refreshTable();
+
+                    })
+                    .catch(function (error) {
+
+                        const alertBox = document.getElementById('alertBox');
                         alertBox.classList.remove('alert-success');
                         alertBox.classList.add('alert-danger');
                         showAlert(error);
-        });
+                    });
+            }
+
+            else {
+
+                const alertBox = document.getElementById('alertBox');
+                alertBox.classList.remove('alert-success');
+                alertBox.classList.add('alert-danger');
+                showAlert("Заполнены не все поля!");
+            }
+
+       
     });
     
     </script>

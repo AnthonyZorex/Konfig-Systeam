@@ -4692,7 +4692,7 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 if (order.ZylinderId == 1)
                 {
-                    var DoppelSize = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == DopelOrderlist[dpCount].Id).ToList();
+                    var DoppelSize = db.Aussen_Innen.Include(x=>x.Doppel_Innen_klein).Where(x => x.Profil_DoppelzylinderId == DopelOrderlist[dpCount].Id).ToList();
 
                     var nÍtem = new Profil_Doppelzylinder {
 
@@ -4752,13 +4752,13 @@ namespace schliessanlagen_konfigurator.Controllers
                             break;
                         }
                     }
-                    var doppelklei = db.Doppel_Innen_klein.ToList();
+                    var doppelklei = db.Aussen_Innen.Include(x=>x.Doppel_Innen_klein).Where(x=>x.Doppel_Innen_klein.Count()>0).ToList();
 
                     var queryOrder = from t1 in DoppelSize
-                                     join t2 in doppelklei on t1.Id equals t2.Aussen_InnenId
+                                     join t2 in doppelklei on t1.Id equals t2.Id
                                      select new
                                      {
-                                         Id = t2.Aussen_InnenId
+                                         Id = t2.Id
                                      };
 
                     var ListOrder = queryOrder.Distinct().ToList();  
@@ -4779,7 +4779,9 @@ namespace schliessanlagen_konfigurator.Controllers
                         }
                         else
                         {
-                            foreach (var ine in innenSize)
+                           var innenSizeKlein = DoppelSize.SelectMany(x=>x.Doppel_Innen_klein).Where(x => x.Intern > innen).Select(x => x.Intern).Distinct().ToList();
+
+                            foreach (var ine in innenSizeKlein)
                             {
                                 if (ine < order.innen)
                                 {
@@ -4787,13 +4789,13 @@ namespace schliessanlagen_konfigurator.Controllers
                                     {
                                         for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
                                         {
-                                            var costIntern = DoppelSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
+                                            var costIntern = DoppelSize.SelectMany(x=>x.Doppel_Innen_klein).FirstOrDefault(x => x.Intern == ine).costSizeIntern;
                                             nÍtem.Price = nÍtem.Price + costIntern;
                                         }
                                     }
                                     else
                                     {
-                                        var costIntern = DoppelSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
+                                        var costIntern = DoppelSize.SelectMany(x => x.Doppel_Innen_klein).FirstOrDefault(x => x.Intern == ine).costSizeIntern;
                                         nÍtem.Price = nÍtem.Price + costIntern;
                                     }
                                 }
@@ -4803,14 +4805,14 @@ namespace schliessanlagen_konfigurator.Controllers
                                     {
                                         for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
                                         {
-                                            var costIntern = DoppelSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
+                                            var costIntern = DoppelSize.SelectMany(x => x.Doppel_Innen_klein).FirstOrDefault(x => x.Intern == ine).costSizeIntern;
                                             nÍtem.Price = nÍtem.Price + costIntern;
                                             innen = ine;
                                         }
                                     }
                                     else
                                     {
-                                        var costIntern = DoppelSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
+                                        var costIntern = DoppelSize.SelectMany(x => x.Doppel_Innen_klein).FirstOrDefault(x => x.Intern == ine).costSizeIntern;
                                         nÍtem.Price = nÍtem.Price + costIntern;
                                         innen = ine;
                                     }
@@ -4915,7 +4917,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
                 if (order.ZylinderId == 3)
                 {
-                    var KnayfSize = db.Aussen_Innen_Knauf.Where(x => x.Profil_KnaufzylinderId == KnayfOrderlist[knayfCount].Id).ToList();
+                    var KnayfSize = db.Aussen_Innen_Knauf.Include(x=>x.Aussen_Innen_Knauf_klein).Where(x => x.Profil_KnaufzylinderId == KnayfOrderlist[knayfCount].Id).ToList();
 
                     var nÍtem = new Profil_Knaufzylinder
                     {
@@ -4952,13 +4954,13 @@ namespace schliessanlagen_konfigurator.Controllers
                         }
 
                     }
-                    var doppelklei = db.Aussen_Innen_Knauf_klein.ToList();
+                    var doppelklei = db.Aussen_Innen_Knauf.Include(x=>x.Aussen_Innen_Knauf_klein).ToList();
 
                     var queryOrder = from t1 in KnayfSize
-                                     join t2 in doppelklei on t1.Id equals t2.Aussen_Innen_KnaufId
+                                     join t2 in doppelklei on t1.Id equals t2.Id
                                      select new
                                      {
-                                         Id = t2.Aussen_Innen_KnaufId
+                                         Id = t2.Id
                                      };
 
                     var ListOrder = queryOrder.Distinct().ToList();
@@ -4979,7 +4981,8 @@ namespace schliessanlagen_konfigurator.Controllers
                         }
                         else
                         {
-                            foreach (var ine in innenSize)
+                            var innenSizeKlein = KnayfSize.SelectMany(x => x.Aussen_Innen_Knauf_klein).Where(x => x.Intern > innen).Select(x => x.Intern).Distinct().ToList();
+                            foreach (var ine in innenSizeKlein)
                             {
                                 if (ine < order.innen)
                                 {
@@ -4987,13 +4990,13 @@ namespace schliessanlagen_konfigurator.Controllers
                                     {
                                         for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
                                         {
-                                            var costIntern = KnayfSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
+                                            var costIntern = KnayfSize.SelectMany(x => x.Aussen_Innen_Knauf_klein).FirstOrDefault(x => x.Intern == ine).costSizeIntern;
                                             nÍtem.Price = nÍtem.Price + costIntern;
                                         }
                                     }
                                     else
                                     {
-                                        var costIntern = KnayfSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
+                                        var costIntern = KnayfSize.SelectMany(x => x.Aussen_Innen_Knauf_klein).FirstOrDefault(x => x.Intern == ine).costSizeIntern;
                                         nÍtem.Price = nÍtem.Price + costIntern;
                                     }
                                 }
@@ -5003,14 +5006,14 @@ namespace schliessanlagen_konfigurator.Controllers
                                     {
                                         for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
                                         {
-                                            var costIntern = KnayfSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
+                                            var costIntern = KnayfSize.SelectMany(x => x.Aussen_Innen_Knauf_klein).FirstOrDefault(x => x.Intern == ine).costSizeIntern;
                                             nÍtem.Price = nÍtem.Price + costIntern;
                                             innen = ine;
                                         }
                                     }
                                     else
                                     {
-                                        var costIntern = KnayfSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
+                                        var costIntern = KnayfSize.SelectMany(x => x.Aussen_Innen_Knauf_klein).FirstOrDefault(x => x.Intern == ine).costSizeIntern;
                                         nÍtem.Price = nÍtem.Price + costIntern;
                                         innen = ine;
                                     }
@@ -5154,42 +5157,43 @@ namespace schliessanlagen_konfigurator.Controllers
             foreach (var list in AussenD)
             {
                 var inter = new List<float>();
-                var DoppelSize = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == DopelOrderlist.First().Id).ToList();
+                var DoppelSize = db.Aussen_Innen.Include(x=>x.Doppel_Innen_klein).Where(x => x.Profil_DoppelzylinderId == DopelOrderlist.First().Id).ToList();
                 var Aussenitem = DoppelSize.Where(x => x.aussen > list.aussen || x.aussen == list.aussen).Min(x => x.aussen);                
-                var doppelklei = db.Doppel_Innen_klein.ToList();
+                var doppelklei = db.Aussen_Innen.Include(x=>x.Doppel_Innen_klein).Where(x=>x.Doppel_Innen_klein.Count()>0).ToList();
 
                 var queryOrder = from t1 in DoppelSize
-                                 join t2 in doppelklei on t1.Id equals t2.Aussen_InnenId
+                                 join t2 in doppelklei on t1.Id equals t2.Id
                                  select new
                                  {
-                                     Id = t2.Aussen_InnenId
+                                     Id = t2.Id
                                  };
 
-               var ListDoppelKlein = queryOrder.Distinct().ToList();
-
-                if (ListDoppelKlein.Count() > 0 )
-                {
-                    var f = db.Aussen_Innen.FirstOrDefault(x => x.Id == ListDoppelKlein[0].Id);
+               var ListDoppelKlein = queryOrder.ToList();
                    
-                    if (f.aussen == Aussenitem)
-                    {
-                        foreach (var s in f.Doppel_Innen_klein)
-                        {
-                            inter.Add(s.Intern);
-                        }
-                        var Innenitem = f.Doppel_Innen_klein.Where(x => x.Intern > list.innen || x.Intern == list.innen).Min(x => x.Intern);
+                if (ListDoppelKlein.Count() > 0)
+                {
+                        var f = db.Aussen_Innen.FirstOrDefault(x => x.Id == ListDoppelKlein[0].Id);
 
-                        InenActual.Add(Innenitem);
-                    }
-                    else
-                    {
-                        var Innenitem = DoppelSize.Where(x => x.Intern > list.innen || x.Intern == list.innen).Min(x => x.Intern);
-                        InenActual.Add(Innenitem);
-                    }
+                        if (f.aussen == Aussenitem)
+                        {
+                            foreach (var s in f.Doppel_Innen_klein)
+                            {
+                                inter.Add(s.Intern);
+                            }
+                            var Innenitem = f.Doppel_Innen_klein.FirstOrDefault(x => x.Intern > list.innen || x.Intern == list.innen).Intern;
+
+                            InenActual.Add(Innenitem);
+                        }
+                        else
+                        {
+                            var Innenitem = DoppelSize.SelectMany(x=>x.Doppel_Innen_klein).FirstOrDefault(x => x.Intern > list.innen || x.Intern == list.innen).Intern;
+
+                            InenActual.Add(Innenitem);
+                        }  
                 }
                 else
                 {
-                    var Innenitem = DoppelSize.Where(x => x.Intern > list.innen || x.Intern == list.innen).Min(x => x.Intern);
+                    var Innenitem = DoppelSize.FirstOrDefault(x => x.Intern > list.innen || x.Intern == list.innen).Intern;
 
                     InenActual.Add(Innenitem);
                 }
@@ -5361,6 +5365,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     ViewBag.KnayfzylinderInternNormal = JsonConvert.SerializeObject(Kanyf_AussenInen.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
                     ViewBag.KnayfInternKlein = JsonConvert.SerializeObject(KnayfKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
                     ViewBag.KnayfzylinderInternKleinPreis = JsonConvert.SerializeObject(KnayfKleinSize.Select(x => x.costSizeIntern).ToList());
+                    ViewBag.CountKnayfInter = JsonConvert.SerializeObject(Kanyf_AussenInen.Where(x => x.Aussen_Innen_Knauf_klein.Count() > 0).Select(x => x.Aussen_Innen_Knauf_klein.Count()).ToList());
 
                 }
                 else
@@ -5372,7 +5377,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     ViewBag.KnayfInternKlein = JsonConvert.SerializeObject(KnayfKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
                     ViewBag.KnayfzylinderInternKleinPreis = JsonConvert.SerializeObject(KnayfKleinSize.Select(x => x.costSizeIntern).ToList());
 
-                    ViewBag.CountDoppelInter = JsonConvert.SerializeObject(null);
+                    ViewBag.CountKnayfInter = JsonConvert.SerializeObject(null);
                 }
 
               
@@ -6418,52 +6423,72 @@ namespace schliessanlagen_konfigurator.Controllers
                     int CountkeyOrders;
                     string FurNameKeyValue;
 
-                    if (s >= CountKey.Count())
-                    {
-                        CountkeyOrders = CountKey.Last();
-                    }
-                    else
-                    {
-                        CountkeyOrders = CountKey[s];
-                    }
-                    if (s >= NameKey.Count())
-                    {
-                        NameKeyValue = NameKey.Last();
-                    }
-                    else
-                    {
-                        NameKeyValue = NameKey[s];
-                    }
-                    if (s >= FurNameKey.Count())
-                    {
-                        FurNameKeyValue = FurNameKey.Last();
-                    }
-                    else
-                    {
-                        FurNameKeyValue = FurNameKey[s];
-                    }
-                    var Open_value = new isOpen_value
-                    {
-                        isOpen_OrderId = order_open.Last(),
-                        NameKey = NameKeyValue,
-                        CountKey = CountkeyOrders,
-                        ForNameKey = FurNameKeyValue
-                    };
+                    int startIndex = d; // Стартовый индекс
+                    int endIndex = startIndex + itemsCount; // Конечный индекс (не включительно)
 
-                    db.isOpen_value.Add(Open_value);
+                    // Take(endIndex - startIndex) корректно вычислит количество элементов в диапазоне
+                    bool containsTrue = isOpenList
+                      .Skip(startIndex) // Пропускаем элементы до startIndex
+                      .Take(endIndex - startIndex) // Берём нужное количество элементов
+                      .Any(b => b == true);
 
-                    db.SaveChanges();
+                    var Test = isOpenList
+                      .Skip(startIndex) // Пропускаем элементы до startIndex
+                      .Take(endIndex - startIndex).ToList();
 
-                    for (var f = 0; f < itemsCount; f++)
+                    if (containsTrue)
                     {
-                        var KeyValueC = new KeyValue
+                        if (s >= CountKey.Count())
                         {
-                            OpenKeyId = Open_value.Id,
-                            isOpen = isOpenList[d]
+                            CountkeyOrders = CountKey.Last();
+                        }
+                        else
+                        {
+                            CountkeyOrders = CountKey[s];
+                        }
+                        if (s >= NameKey.Count())
+                        {
+                            NameKeyValue = NameKey.Last();
+                        }
+                        else
+                        {
+                            NameKeyValue = NameKey[s];
+                        }
+                        if (s >= FurNameKey.Count())
+                        {
+                            FurNameKeyValue = FurNameKey.Last();
+                        }
+                        else
+                        {
+                            FurNameKeyValue = FurNameKey[s];
+                        }
+                        var Open_value = new isOpen_value
+                        {
+                            isOpen_OrderId = order_open.Last(),
+                            NameKey = NameKeyValue,
+                            CountKey = CountkeyOrders,
+                            ForNameKey = FurNameKeyValue
                         };
-                        db.KeyValue.Add(KeyValueC);
+
+                        db.isOpen_value.Add(Open_value);
+
                         db.SaveChanges();
-                        d++;
+
+                        for (var f = 0; f < itemsCount; f++)
+                        {
+                            var KeyValueC = new KeyValue
+                            {
+                                OpenKeyId = Open_value.Id,
+                                isOpen = isOpenList[d]
+                            };
+                            db.KeyValue.Add(KeyValueC);
+                            db.SaveChanges();
+                            d++;
+                        }
+                    }
+                    else
+                    {
+                        d = d + itemsCount;
                     }
 
                 }
@@ -6475,44 +6500,63 @@ namespace schliessanlagen_konfigurator.Controllers
                     string NameKeyValue;
                     int CountkeyOrders;
 
-                    var itemsCount =  CountOrders;
+                    var itemsCount = CountOrders;
 
-                    if (s >= CountKey.Count())
-                    {
-                        CountkeyOrders = CountKey.Last();
-                    }
-                    else
-                    {
-                        CountkeyOrders = CountKey[s];
-                    }
-                    if (s >= NameKey.Count())
-                    {
-                        NameKeyValue = NameKey.Last();
-                    }
-                    else
-                    {
-                        NameKeyValue = NameKey[s];
-                    }
-                    var Open_value = new isOpen_value
-                    {
-                        isOpen_OrderId = order_open.Last(),
-                        NameKey = NameKeyValue,
-                        CountKey = CountkeyOrders,
-                    };
-                    db.isOpen_value.Add(Open_value);
-                    db.SaveChanges();
+                    int startIndex = d; // Стартовый индекс
+                    int endIndex = startIndex + itemsCount; // Конечный индекс (не включительно)
 
-                    for (var f = 0; f < itemsCount; f++)
-                    {
+                    // Take(endIndex - startIndex) корректно вычислит количество элементов в диапазоне
+                    bool containsTrue = isOpenList
+                      .Skip(startIndex) // Пропускаем элементы до startIndex
+                      .Take(endIndex - startIndex) // Берём нужное количество элементов
+                      .Any(b => b == true);
 
-                        var KeyValueC = new KeyValue
+                    var Test = isOpenList
+                      .Skip(startIndex) // Пропускаем элементы до startIndex
+                      .Take(endIndex - startIndex).ToList();
+
+                    if (containsTrue)
+                    {
+                        if (s >= CountKey.Count())
                         {
-                            OpenKeyId = Open_value.Id,
-                            isOpen = isOpenList[d]
+                            CountkeyOrders = CountKey.Last();
+                        }
+                        else
+                        {
+                            CountkeyOrders = CountKey[s];
+                        }
+                        if (s >= NameKey.Count())
+                        {
+                            NameKeyValue = NameKey.Last();
+                        }
+                        else
+                        {
+                            NameKeyValue = NameKey[s];
+                        }
+                        var Open_value = new isOpen_value
+                        {
+                            isOpen_OrderId = order_open.Last(),
+                            NameKey = NameKeyValue,
+                            CountKey = CountkeyOrders,
                         };
-                        db.KeyValue.Add(KeyValueC);
+                        db.isOpen_value.Add(Open_value);
                         db.SaveChanges();
-                        d++;
+
+                        for (var f = 0; f < itemsCount; f++)
+                        {
+                            var KeyValueC = new KeyValue
+                            {
+                                OpenKeyId = Open_value.Id,
+                                isOpen = isOpenList[d]
+                            };
+                            db.KeyValue.Add(KeyValueC);
+                            db.SaveChanges();
+                            d++;
+                        }
+                    }
+                    else
+                    {
+                        d = d+ itemsCount;
                     }
 
                 }

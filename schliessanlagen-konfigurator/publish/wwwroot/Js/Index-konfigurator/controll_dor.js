@@ -363,7 +363,7 @@ function selectTur(value)
         for (let i = blockTur; i > value; i--) {
             blockTur--;
 
-            let blocks = container.querySelectorAll('.block');
+            let blocks = document.querySelectorAll('.block');
 
             blocks[blocks.length - 1].remove();
 

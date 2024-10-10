@@ -146,7 +146,7 @@
                
                 for (let i = 0; i <= oldIntern.value; i++)
                 {
-                    if (kleinSize.length > 0 && oldIntern.value > 0)
+                    if (kleinSize.length > 0)
                     {
                         if (SelectItemId > kleinCountItem.length || oldIntern.value > kleinPrice.length)
                         {
@@ -217,8 +217,10 @@
     {
         if (kleinKnayf.length > 0)
         {
-            if (Aussen.value > 29 && is_GrossSize == false) {
-                for (let i = 0; i < KnayfZiseNormal.length; i++) {
+            if (SelectItemId >= kleinCountItem.length && is_GrossSize == false)
+            {
+                for (let i = 0; i < KnayfZiseNormal.length; i++)
+                {
                     if (i >= InnenItem.length) {
                         let options = document.createElement("option");
                         options.id = "OptionI";
@@ -233,19 +235,12 @@
                     }
 
                 }
-                for (let i = 0; i <= oldIntern.value; i++) {
-                    if (kleinKnayf.length > 0) {
-                        if (Aussen.value > 29) {
-
-                            costItems.value = parseFloat(costItems.value) - (priceKnayfInternCost[i]);
-
-                            AllPrice.value = parseFloat(AllPrice.value) - (priceKnayfInternCost[i] * Number(countSchluss.value));
-
-                            let Costen = AllPrice.value.replace(/,/g, '.');
-
-                            AllPrice.value = Costen;
-                        }
-                        else {
+                for (let i = 0; i <= oldIntern.value; i++)
+                {
+                    if (kleinKnayf.length > 0)
+                    {
+                        if (kleinKnayf.includes(Number(Aussen.value)))
+                        {
                             costItems.value = parseFloat(costItems.value) - (kleinKnayfPrice[i]);
 
                             AllPrice.value = parseFloat(AllPrice.value) - (kleinKnayfPrice[i] * Number(countSchluss.value));
@@ -253,7 +248,17 @@
                             let Costen = AllPrice.value.replace(/,/g, '.');
 
                             AllPrice.value = Costen;
+                            
+                        }
+                        else {
+                            
+                            costItems.value = parseFloat(costItems.value) - (priceKnayfInternCost[i]);
 
+                            AllPrice.value = parseFloat(AllPrice.value) - (priceKnayfInternCost[i] * Number(countSchluss.value));
+
+                            let Costen = AllPrice.value.replace(/,/g, '.');
+
+                            AllPrice.value = Costen;
                         }
                     }
                     else {
@@ -273,19 +278,23 @@
             else {
 
                 for (let i = 0; i < InnenItem.length; i++) {
-                    if (i >= kleinKnayf.length) {
+                    if (i >= kleinKnayfCountItem[SelectItemId]) {
                         InnenItem[i].style.display = "none";
                     }
                     else {
                         InnenItem[i].value = kleinKnayf[i];
                         InnenItem[i].textContent = kleinKnayf[i];
+                        InnenItem[i].style.display = "block";
                     }
 
                 }
 
-                for (let i = 0; i <= oldIntern.value; i++) {
-                    if (kleinKnayf.length > 0 && oldIntern.value > 0) {
-                        if (Aussen.value > 29 || oldIntern.value > kleinKnayfPrice.length) {
+                for (let i = 0; i <= oldIntern.value; i++)
+                {
+                    if (kleinKnayf.length > 0)
+                    {
+                        if (SelectItemId > kleinKnayfCountItem.length || oldIntern.value > kleinKnayfPrice.length)
+                        {
                             costItems.value = parseFloat(costItems.value) - (priceKnayfInternCost[i]);
 
                             AllPrice.value = parseFloat(AllPrice.value) - (priceKnayfInternCost[i] * Number(countSchluss.value));

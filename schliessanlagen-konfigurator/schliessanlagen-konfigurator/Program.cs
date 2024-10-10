@@ -98,7 +98,7 @@ app.UseStaticFiles(new StaticFileOptions
 
 app.UseDefaultFiles();
 
-//app.UseResponseCompression();
+app.UseResponseCompression();
 
 var supportedCultures = new[] { new CultureInfo("de-DE") };
 
@@ -121,7 +121,6 @@ app.UseCors();
 
 app.UseEndpoints(endpoints =>
 {
-
     endpoints.MapControllerRoute(
             name: "default",
             pattern: "{controller=Konfigurator}/{action=IndexKonfigurator}");
@@ -135,16 +134,15 @@ app.UseEndpoints(endpoints =>
         pattern: "sitemap.xml",
         defaults: new { controller = "Sitemap", action = "Index" });
 
-    //endpoints.MapControllerRoute(
-    //    name: "NotFound",
-    //    pattern: "{*url}",
-    //    defaults: new { controller = "Home", action = "Error" });
-
+    endpoints.MapControllerRoute(
+      name: "robots",
+      pattern: "robots.txt",
+      defaults: new { controller = "Sitemap", action = "Robots" });
 
     endpoints.MapControllerRoute(
-       name: "robots",
-       pattern: "robots.txt",
-       defaults: new { controller = "Sitemap", action = "Robots" });
+        name: "NotFound",
+        pattern: "{*url}",
+        defaults: new { controller = "Home", action = "Error" });
 
     endpoints.MapRazorPages();
 
