@@ -1,0 +1,45 @@
+﻿@page
+@model Service
+@{
+    ViewData["Title"] = "Service";
+
+    ViewData["ActivePage"] = ManageNavPages.Service;
+}
+
+
+<h3>@ViewData["Title"]</h3>
+<partial name="_StatusMessage" for="StatusMessage" />
+<div class="row">
+    <div class="col-md-6">
+        
+        <div>
+            <a class="text-dark"  href=" @Url.Action("Kontakt", "Kontact_Fromular")"><b>Kundenkonto & Funktionen</b></a>
+        </div>
+       
+        <div>
+            <a class="text-dark" href=" @Url.Action("Kontakt", "Kontact_Fromular")"> <b>Bestellablauf</b></a>
+        </div>
+        
+        <div>
+            <b> <a class="text-dark" href=" @Url.Action("Kontakt", "Kontact_Fromular")">Lieferung</a></b> 
+        </div>
+      
+        <div>
+            <b> <a class="text-dark" href=" @Url.Action("Kontakt", "Kontact_Fromular")">Zahlung</a></b>
+        </div>
+        
+         <div>
+            <b> <a class=" text-dark" href=" @Url.Action("Kontakt", "Kontact_Fromular")"> Schließplan</a></b>
+        </div>
+       
+        <div>
+            <b><a class=" text-dark" href=" @Url.Action("Kontakt", "Kontact_Fromular")">  FAQ & Lexikon</a></b>
+        </div>
+       
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

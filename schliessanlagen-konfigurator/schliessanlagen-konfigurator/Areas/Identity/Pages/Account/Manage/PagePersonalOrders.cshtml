@@ -27,7 +27,7 @@
 
                     <div id="AllProductUser" class="shadow-lg  mb-5 bg-body-tertiary rounded">
                         <div id="hederBlockOrder">
-                            <h4>Article</h4>
+                            <h4>Schließsystem</h4>
                             <div id="orderCostHeader">
                                 <h4>Price</h4>
                             </div>
@@ -50,38 +50,53 @@
                                     </div>
                                     <div class="modal-body">
                                         <form id="myForm" method="post">
-                                            <div id="blockSchrite" class="shadow-lg  mb-4 bg-body-tertiary rounded">
+
+                                            <div id="blockSchrite" class="shadow-lg  mb-5 bg-body-tertiary rounded">
                                                     <div style="display:flex;gap:10px;">
                                                         <span id="schrit">1</span>
-                                                        <h2><strong>Versandadresse</strong></h2>
+                                                        <h2><strong>Rechnungsadresse</strong></h2>
+                                                    </div>
+                                                    <div style="display:flex;gap:30px">
+                                                    <input type="checkbox" name="Rehnung" checked onchange="changeAdress(event.target.checked,@z)" />
+                                                        <h4>Gleiche Adresse für Bestellung und Versand</h4>
                                                     </div>
                                                     <br />
-                                                    <input type="hidden" name="userKey" value="@orderList[z].UserId" />
-                                                        
-                                                    <div class="form-floating mb-3">
-                                                            <input class="form-control" type="email" id="floatingInput" required name="SendAdresse" placeholder="E-Mail-Adresse" />
+                                                    <div id="rechnungSend">
+                                                    </div>
+                                                </div>
+
+                                            <div id="blockSchrite" class="shadow-lg  mb-4 bg-body-tertiary rounded">
+                                                <div style="display:flex;gap:10px;">
+                                                    <span id="schrit">1</span>
+                                                    <h2><strong>Versandadresse</strong></h2>
+                                                </div>
+                                                <br />
+                                                <input type="hidden" name="userKey" value="@orderList[z].UserId" />
+
+                                                <div class="form-floating mb-3">
+                                                    <input class="form-control" type="email" id="floatingInput" required name="SendAdresse" placeholder="E-Mail-Adresse" />
                                                     <label for="floatingInput">E-Mail-Adresse</label>
-                                                    </div>
+                                                </div>
 
-                                                        <div class="form-floating mb-3">
-                                                        <input class="form-control" required id="floatingInput" name="SendVorname" placeholder="Vorname / first name *" />
-                                                        <label for="floatingInput">Vorname / first name *</label>
-                                                        </div>
+                                                <div class="form-floating mb-3">
+                                                    <input class="form-control" required id="floatingInput" name="SendVorname" placeholder="Vorname / first name *" />
+                                                    <label for="floatingInput">Vorname / first name *</label>
+                                                </div>
 
-                                                    <div class="form-floating mb-3">
-                                                        <input class="form-control" required id="floatingInput" name="SendNachname" placeholder="Nachname / surname *" />
-                                                        <label for="floatingInput">Nachname / surname *</label>
-                                                    </div>
+                                                <div class="form-floating mb-3">
+                                                    <input class="form-control" required id="floatingInput" name="SendNachname" placeholder="Nachname / surname *" />
+                                                    <label for="floatingInput">Nachname / surname *</label>
+                                                </div>
 
-                                                    <div class="form-floating mb-3">
-                                                        <input class="form-control" id="floatingInput" name="SendFirma" placeholder="Firma / company" />
-                                                        <label for="floatingInput">Firma / company</label>
-                                                    </div>
+                                                <div class="form-floating mb-3">
+                                                    <input class="form-control" id="floatingInput" name="SendFirma" placeholder="Firma / company" />
+                                                    <label for="floatingInput">Firma / company</label>
+                                                </div>
 
-                                                    <div class="form-floating mb-3">
-                                                        <input class="form-control" id="floatingInput" name="SendVat" placeholder="USt - IdNr. / VAT id" />
-                                                        <label for="floatingInput">USt - IdNr. / VAT id</label>
-                                                    </div>
+                                                <div class="form-floating mb-3">
+                                                    <input class="form-control" id="floatingInput" name="SendVat" placeholder="USt - IdNr. / VAT id" />
+                                                    <label for="floatingInput">USt - IdNr. / VAT id</label>
+                                                </div>
 
                                                 <div class="form-floating mb-3">
                                                     <input class="form-control" required id="floatingInput" name="SendStrasse" placeholder="Straße und Hausnummer / street address *" />
@@ -360,23 +375,9 @@
                                                     <input class="form-control" id="floatingInput" required name="SendTelefon" placeholder="Telefonnummer / phone number *" />
                                                     <label for="floatingInput">Telefonnummer / phone number *</label>
                                                 </div>
-                                               
-                                                </div>
 
-                       
-                                            <div id="blockSchrite" class="shadow-lg  mb-5 bg-body-tertiary rounded">
-                                                    <div style="display:flex;gap:10px;">
-                                                        <span id="schrit">2</span>
-                                                        <h2><strong>Rechnungsadresse</strong></h2>
-                                                    </div>
-                                                    <div style="display:flex;gap:30px">
-                                                    <input type="checkbox" name="Rehnung" checked onchange="changeAdress(event.target.checked,@z)" />
-                                                        <h4>Gleiche Adresse für Bestellung und Versand</h4>
-                                                    </div>
-                                                    <br />
-                                                    <div id="rechnungSend">
-                                                    </div>
-                                                </div>
+                                            </div>
+
 
                                             <div id="blockSchrite" class="shadow-lg  mb-5 bg-body-tertiary rounded">
                                                     <div style="display:flex;gap:10px;">
@@ -385,7 +386,6 @@
                                                     </div>
                                                     <br />
                                                     <div>
-
                                                         @{
                                                             float gram = countProduct[z] * float.Parse("0,400");
                                                         }
@@ -400,8 +400,7 @@
                                                         <input type="radio" readonly style="border: none;" onchange="changeSend(@z)" id="Plase-@z" name="DhlSend" value="0,00 €">
                                                         <label for="css" style="margin-left: -25px;">0,00 €</label><br>
                                                         <h4>
-                                                            Brunnenstrasse 8
-                                                            10119 Berlin
+                                                         Abholung in Berlin (Brunnenstraße 8, 10119 Berlin)
                                                         </h4>
                                                     </div>
                                                 </div>
@@ -523,11 +522,11 @@
                                 </div>
                             <div>
                                 <button class="btn danger">
-                                    <a href="@Url.Action("System_Auswählen","Konfigurator",new{Id = @orderList[z].Id ,userName = @orderList[z].UserOrderKey , isNewKonfig = true, Biarbeiten = true} )">Überarbeiten Sie den Plan</a>
+                                    <a href="@Url.Action("System_Auswählen","Konfigurator",new{Id = @orderList[z].Id ,userName = @orderList[z].UserOrderKey , isNewKonfig = true, Biarbeiten = true} )">Schließplan bearbeiten</a>
                                 </button>
                             </div>
                             <div style="margin-left: auto;">
-                                 <button id="removeOrder" class="btn danger" onclick="(remove(@UserOrderId))">RemovaOrder</button>
+                                <button id="removeOrder" class="btn danger" onclick="(remove(@orderList[z].Id))">Bestellung entfernen</button>
                             </div>
                         </div>
                     </div>
@@ -538,15 +537,7 @@
             }
            
         </div>
-        @if(orderList != null)
-        {
-
-            <h2 style="color:red">Preis: @costed.ToString("C")</h2>
-        }
-        else
-        {
-            <h2 style="color:red">Preis: 0,00 €</h2>
-        }
+     
     </div>
 </div>
 @section Scripts {

@@ -5770,7 +5770,7 @@ namespace schliessanlagen_konfigurator.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RemoveOrder(int data)
+        public IActionResult RemoveOrder(int data)
         { 
             ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
             string loginInform = ident.Claims.Select(x => x.Value).First();
@@ -5791,16 +5791,10 @@ namespace schliessanlagen_konfigurator.Controllers
                 db.UserOrdersShop.Remove(listOrder);
 
             }
-            string destinationFilePath = @$"wwwroot/Orders/{users.FirstName + users.LastName + currentTime.Minute + currentTime.Hour + currentTime.Day + currentTime.Month + currentTime.Year} OrderFile.xlsx";
-
-            if (System.IO.File.Exists(destinationFilePath))
-            {
-                System.IO.File.Delete(destinationFilePath);
-            }
-
-            db.SaveChanges();
            
-            return Redirect("/Identity/Account/Manage/PagePersonalOrders");
+            db.SaveChanges();
+
+            return Ok();
         }
         public async Task<IActionResult> SaveUserOrders(string user, List<string> TurName, List<string> DopelName, List<float> DoppelAussen, List<float> DoppelIntern
         ,List<string> DoppelOption, List<string> KnayfOption, List<string> HalbOption, List<string> HebelOption, List<string> VorhnaOption, List<string> AussenOption,

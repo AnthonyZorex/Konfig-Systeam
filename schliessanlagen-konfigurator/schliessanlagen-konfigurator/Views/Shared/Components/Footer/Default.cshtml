@@ -1,5 +1,13 @@
 ﻿@model schliessanlagen_konfigurator.ViewComponent.FooterViewModel
 
+<style>
+    .modal-body {
+        text-align: start;
+        position: relative;
+        flex: 1 1 auto;
+        padding: 1rem;
+    }
+</style>
 <div class="footer">
     <div class="container">
         <div class="row">
@@ -53,6 +61,16 @@
                         <li><a data-bs-toggle="modal" id="footerItem" onclick="system_name('@t.NameSysteam','@t.Id')" data-bs-target="#FooterItemRender">@t.NameSysteam</a></li>
                     }
                 </ul>
+            </div>
+            <div class="col-md-4 mt-2 p-2">
+                <div>
+                    <h3>Zahlungsarten:</h3>
+                </div>
+                <div>
+                    <img style="background:#323232" src="@Url.Content("~/compression/Zahlungsmethodennew.svg")" alt="Zahlungsmethod" height="89" width="275" />
+                </div>
+
+                
             </div>
         </div>
     </div>

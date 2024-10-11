@@ -83,6 +83,21 @@ namespace schliessanlagen_konfigurator.Controllers
             return View();
         }
         [HttpGet]
+        public async Task<IActionResult> datenschutzbelehrung()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult AcceptCookies()
+        {
+            // Устанавливаем cookie с согласием на 1 год
+            CookieOptions option = new CookieOptions();
+            option.Expires = DateTime.Now.AddYears(1);
+            Response.Cookies.Append("CookiesAccepted", "true", option);
+
+            return Ok();
+        }
+        [HttpGet]
         public async Task<IActionResult> Impressum()
         {
 

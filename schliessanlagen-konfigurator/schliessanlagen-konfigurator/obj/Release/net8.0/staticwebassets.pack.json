@@ -545,34 +545,6 @@
       "PackagePath": "staticwebassets\\Orders\\CES_schliessplan_DE_schliessanlagen.xlsx"
     },
     {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\SchlüsselDiscount241310102024 OrderFile.xlsx",
-      "PackagePath": "staticwebassets\\Orders\\SchlüsselDiscount241310102024 OrderFile.xlsx"
-    },
-    {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\SchlüsselDiscount29189102024 OrderFile.xlsx",
-      "PackagePath": "staticwebassets\\Orders\\SchlüsselDiscount29189102024 OrderFile.xlsx"
-    },
-    {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\SchlüsselDiscount30189102024 OrderFile.xlsx",
-      "PackagePath": "staticwebassets\\Orders\\SchlüsselDiscount30189102024 OrderFile.xlsx"
-    },
-    {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\SchlüsselDiscount5141992024 OrderFile.xlsx",
-      "PackagePath": "staticwebassets\\Orders\\SchlüsselDiscount5141992024 OrderFile.xlsx"
-    },
-    {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\SchlüsselDiscount561710102024 OrderFile.xlsx",
-      "PackagePath": "staticwebassets\\Orders\\SchlüsselDiscount561710102024 OrderFile.xlsx"
-    },
-    {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\SchlüsselDiscount71210102024 OrderFile.xlsx",
-      "PackagePath": "staticwebassets\\Orders\\SchlüsselDiscount71210102024 OrderFile.xlsx"
-    },
-    {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Rehnung\\SK2262.pdf",
-      "PackagePath": "staticwebassets\\Rehnung\\SK2262.pdf"
-    },
-    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\4ks-Hebelzylinder-MB23g.webp",
       "PackagePath": "staticwebassets\\compression\\4ks-Hebelzylinder-MB23g.webp"
     },
@@ -827,6 +799,10 @@
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\WO-System.WEBP",
       "PackagePath": "staticwebassets\\compression\\WO-System.WEBP"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\Zahlungsmethodennew.svg",
+      "PackagePath": "staticwebassets\\compression\\Zahlungsmethodennew.svg"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\Zolit1000_Z1410.WEBP",

@@ -98,7 +98,7 @@ app.UseStaticFiles(new StaticFileOptions
 
 app.UseDefaultFiles();
 
-app.UseResponseCompression();
+//app.UseResponseCompression();
 
 var supportedCultures = new[] { new CultureInfo("de-DE") };
 
@@ -118,6 +118,16 @@ app.MapRazorPages();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseCors();
+
+app.Use(async (context, next) =>
+{
+    if (!context.Request.Cookies.ContainsKey("CookiesAccepted"))
+    {
+        context.Items["ShowCookieConsent"] = true;
+    }
+
+    await next.Invoke();
+});
 
 app.UseEndpoints(endpoints =>
 {

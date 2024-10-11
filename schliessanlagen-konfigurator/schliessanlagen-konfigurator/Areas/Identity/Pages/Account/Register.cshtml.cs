@@ -79,10 +79,7 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account
             public string FirstName { get; set; }
 
             [Required]
-            public string LastName { get; set; }
-
-            [Required]       
-            public string Address { get; set; }
+            public string LastName { get; set; }        
             
             [Required]
             public string PhoneNumber { get; set; }
@@ -133,8 +130,7 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
                     UserName = Input.Email,
-                    PhoneNumber = Input.PhoneNumber,
-                    Address = Input.Address,
+                    PhoneNumber = Input.PhoneNumber,                  
                     isSend = Input.isSend,
                     CreatedAT = DateTime.Now,
                 };

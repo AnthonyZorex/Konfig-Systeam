@@ -51,25 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "5ae718d5-f5d3-4520-a6bf-a9d16e0a1d13",
+                            Id = "60fea330-b4f7-4aec-a731-071ea3b4c96b",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "0aca8139-7dd5-42ce-81b9-17f82bde514d",
+                            Id = "e7b892da-a805-48c3-939a-3bb457bcaefa",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "a6f3d2b4-f574-4744-b78b-66de4d3f6b95",
+                            Id = "b470cf90-f055-483e-b303-682b18f73fa3",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "7bc0cf40-497b-4077-8098-6b5c8e6f0e55",
+                            Id = "cdd16481-03b1-4885-b01c-8c0eb7fe4b3c",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -1319,6 +1319,18 @@ namespace schliessanlagen_konfigurator.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Liefer_Land")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Liefer_Postleitzahl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Liefer_Stadt")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Liefer_Straße")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -1341,6 +1353,18 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Rechnun_Land")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Rechnun_Postleitzahl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Rechnun_Stadt")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Rechnun_Straße")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");

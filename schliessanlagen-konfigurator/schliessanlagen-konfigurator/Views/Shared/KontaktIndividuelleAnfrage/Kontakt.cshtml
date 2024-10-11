@@ -1,0 +1,104 @@
+﻿@model schliessanlagen_konfigurator.Controllers.Formular;
+@{
+    ViewData["Title"] = "Kontakt & Individuelle Anfrage";
+}
+
+<div class="container shadow-lg p-3 mb-5 bg-body-tertiary rounded bg-white">
+
+    <div class="row">
+        <div class="col-sm-6 col-md-6">
+            <form asp-action="SendKontakt" asp-controller="Kontact_Fromular">
+
+                <div class="mb-5 mt-5" style="display:flex;gap:50px">
+                    <select asp-for="Gender" class="form-select">
+                        <option selected>
+                            Herr
+                        </option>
+
+                        <option>
+                            Frau
+                        </option>
+
+                        <option>
+                            Firma
+                        </option>
+                    </select>
+                </div>
+
+                <div class="mb-5">
+                    <input asp-for="Name" class="form-control" type="text" placeholder="Name" />
+                </div>
+                <div class="mb-5">
+                    <input asp-for="Addresse" class="form-control" type="text" placeholder="Anschrift" />
+                </div>
+                <div class="mb-5">
+                    <input asp-for="Email" class="form-control" type="email" placeholder="E-Mail" />
+                </div>
+                <div class="mb-5">
+                    <input asp-for="Phone" class="form-control" type="tel" placeholder="Tel" />
+                </div>
+
+                <div class="mb-5" style="display:flex;gap:50px">
+
+                    <select asp-for="Rubric" class="form-select">
+                        <option selected>
+                            Anfrage
+                        </option>
+
+                        <option>
+                            Bestellung
+                        </option>
+
+                        <option>
+                            Sonstiges
+                        </option>
+                    </select>                  
+                </div>
+
+                <div class="mb-5">
+                    <textarea asp-for="Message" class="form-control">
+
+                    </textarea>
+                </div>
+                <input class="btn danger" type="submit" />
+            </form>
+        </div>
+        <div class="col-sm-6 col-md-6">
+            <div class="mb-2 mt-5">
+                <div style="display:flex;gap:20px">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-phone"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" /></svg>
+                    <h3>Shop: +49 30 450 87 619</h3>
+                </div>
+            </div>
+            <div class="mb-5">
+                <div style="display:flex;gap:20px">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-phone"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" /></svg>
+                    <h3>Fax: +49 30 450 87 629</h3>
+                </div>
+            </div>
+
+            <div class="mb-2 mt-5">
+                <h3><strong>Anfrage</strong></h3>
+            </div>
+            <div class="mb-5">
+                <p>Wir stehen Ihnen gerne zur Seite bei jeder individuellen  Anfrage rund um Ihre Sicherheit. Bitte beschreiben Sie Ihr Anliegen so genau wie möglich – wir melden uns umgehend bei Ihnen mit einem passenden Angebot.</p>
+            </div>
+            <div class ="mb-2">
+                <h3><strong>Bestellung</strong></h3>
+            </div>
+            <div class="mb-5">
+                <p>Sie möchten ein Produkt aus unserem Onlineshop nachbestellen? Wir führen tausende Produkte von namhaften Partnern und können diese auf Wunsch für Sie liefern. Führen Sie eine individuelle Bestellung durch. Ein passendes Angebot mit Mengenrabatt erwartet Sie!.</p>
+            </div>
+            <div class="mb-2">
+                <h3><strong>Sonstiges</strong></h3>
+            </div>
+            <div class="mb-5">
+                <p>Lassen Sie uns wissen, was Ihnen am Herzen liegt. Wir sind offen für Verbesserungen und freuen uns über Ihr Lob oder Kritik!</p>
+            </div>
+        </div>
+      
+    </div>
+
+</div>
+
+

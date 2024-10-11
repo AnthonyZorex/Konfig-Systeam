@@ -3,6 +3,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -52,21 +53,50 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
         /// </summary>
         public class InputModel
         {
+            [Required]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [EmailAddress]
+            [Display(Name = "Email")]
+            public string Email { get; set; }
+
+            [DataType(DataType.Password)]
+            public string OldPassword { get; set; }
+
+            [DataType(DataType.Password)]
+            public string NewPassword { get; set; }
+
+            [DataType(DataType.Password)]
+            [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+            public string ConfirmPassword { get; set; }
         }
 
         private async Task LoadAsync(User user)
-        {
-            var userName = await _userManager.GetUserNameAsync(user);
+        {         
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
-            Username = userName;
+            var firstName = user.FirstName;  
+            var lastName = user.LastName;
+            var Email = user.UserName;
+            
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                FirstName = firstName,
+                LastName = lastName,
+                Email = Email,
+                OldPassword = string.Empty,
+                NewPassword = string.Empty,
+                ConfirmPassword = string.Empty
             };
         }
 
@@ -77,7 +107,7 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
-
+           
             await LoadAsync(user);
             return Page();
         }
@@ -85,30 +115,22 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);
+           
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            if (!ModelState.IsValid)
-            {
-                await LoadAsync(user);
-                return Page();
-            }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
-            {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
-                {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
-                    return RedirectToPage();
-                }
-            }
+            user.FirstName = Input.FirstName;
+            user.LastName = Input.LastName;
+            user.PhoneNumber = Input.PhoneNumber;
+            user.UserName = Input.Email;
+
+            var updateResult = await _userManager.UpdateAsync(user);
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+            StatusMessage = "Ihr Profil wurde aktualisiert";
             return RedirectToPage();
         }
     }

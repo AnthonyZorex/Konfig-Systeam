@@ -42,6 +42,8 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
             string loginInform = ident.Claims.Select(x => x.Value).First();
             var users = db.Users.Find(loginInform);
 
+            ViewData["users"] = users;  
+
             var userOrder = db.UserOrdersShop.Where(x => x.UserId == users.Id).ToList();
 
             if (userOrder.Count()>0)

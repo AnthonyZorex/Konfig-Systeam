@@ -67,12 +67,34 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" href=" @Url.Action("Index", "Blog")">Blog</a>
                         </li>
+
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
-        
+        @if (Context.Items["ShowCookieConsent"] != null && (bool)Context.Items["ShowCookieConsent"])
+        {
+            <div id="cookie-consent" style="position:fixed; bottom:0; width:100%; background-color:#f8f9fa; padding:20px; box-shadow:0 -2px 10px rgba(0,0,0,0.1); z-index:1000; display:block;">
+                <div style="max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center;">
+                    <div style="flex-grow:1;">
+                        <h4 style="margin:0; font-size:16px;">Wir verwenden Cookies</h4>
+                        <p style="margin:5px 0;">Um Ihnen ein umfassendes Leistungsspektrum anbieten zu können, verwenden wir Cookies. Vielen Dank, dass Sie der Verwendung von Cookies zugestimmt haben.</p>
+                    </div>
+                    <div>
+                        <div style="display:block" class="mb-1">
+                            <button id="accept-all-cookies" class="btn danger">Annehmen</button>
+                        </div>
+                        <div>
+                            <a href=" @Url.Action("datenschutzbelehrung", "Home")" id="settings-cookies" class="btn btn-light">Mehr Infos</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+           
+        }
+      
     </header>
     <div class="page-wrapper">
         <div class="content">
@@ -85,5 +107,15 @@
     <script src="~/lib/jquery/dist/jquery.min.js" ></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" ></script>
     <script src="~/Js/footer.js" ></script>
+    <script>
+        document.getElementById('accept-all-cookies').addEventListener('click', function () {
+    
+            fetch('/Home/AcceptCookies', {
+                method: 'POST'
+            }).then(function () {
+                document.getElementById('cookie-consent').style.display = 'none';
+            });
+        });
+    </script>
 </body>
 </html>

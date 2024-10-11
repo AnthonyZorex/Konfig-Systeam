@@ -59,7 +59,6 @@
   <ItemGroup>
     <Folder Include="Interface\" />
     <Folder Include="wwwroot\Image\" />
-    <Folder Include="wwwroot\compression\" />
     <Folder Include="wwwroot\Rehnung\" />
   </ItemGroup>
 

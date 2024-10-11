@@ -19,11 +19,11 @@
         </a>
         <ul class="dropdown-menu">
                 <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">
-                        Profile 
+                        Profil
                     </a></li>
                 
             <li><hr class="dropdown-divider"/></li>
-                <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Context.Request.Path">Logout</a></li>
+                <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Context.Request.Path">Abmeldung</a></li>
         </ul>
     </li>
 
@@ -34,7 +34,7 @@ else
             <a class="nav-link text-dark" onclick="" asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Context.Request.Path">Register</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" onclick="saveReturnUrl()" asp-area="Identity" asp-route-returnUrl="@Context.Request.Path" asp-page="/Account/Login">Login</a>
+            <a class="nav-link text-dark" onclick="saveReturnUrl()" asp-area="Identity" asp-route-returnUrl="@Context.Request.Path" asp-page="/Account/Login">Anmeldung</a>
         </li>
 }
   

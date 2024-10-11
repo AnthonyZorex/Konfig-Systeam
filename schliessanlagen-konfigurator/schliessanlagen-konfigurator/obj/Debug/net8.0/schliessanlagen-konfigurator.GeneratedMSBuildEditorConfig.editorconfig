@@ -70,6 +70,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/Adresse.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcQWRyZXNzZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/ChangePassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcQ2hhbmdlUGFzc3dvcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -120,6 +124,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/ResetAuthenticator.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcUmVzZXRBdXRoZW50aWNhdG9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/Service.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcU2VydmljZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Areas/Identity/Pages/Account/Manage/SetPassword.cshtml]
@@ -250,6 +258,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxCbG9ncy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/datenschutzbelehrung.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxkYXRlbnNjaHV0emJlbGVocnVuZy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Home/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFcnJvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -328,6 +340,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/Components/Footer/Default.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcRm9vdGVyXERlZmF1bHQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/KontaktIndividuelleAnfrage/Kontakt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEtvbnRha3RJbmRpdmlkdWVsbGVBbmZyYWdlXEtvbnRha3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Konfig-Systeam/schliessanlagen-konfigurator/schliessanlagen-konfigurator/Views/Shared/_LoginPartial.cshtml]

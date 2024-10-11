@@ -3,10 +3,15 @@
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
 <ul class="nav nav-pills flex-column">
-    <li class="nav-item"><a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Profil</a></li>
+    <li class="nav-item "><a class="nav-link  @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index" role="button">Mein Konto</a> </li>
 
-    <li class="nav-item"><a class="nav-link @ManageNavPages.PersonalOrderNavClass(ViewContext)" id="profile" asp-page="./PagePersonalOrders">Persönliche Bestellungen</a></li>
+    <li class="nav-item"><a class="nav-link @ManageNavPages.AdresseNavClass(ViewContext)" id="profile" asp-page="./Adresse" role="button">Adresse</a></li>
+
+    <li class="nav-item"><a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" asp-page="./ChangePassword" id="profile" role="button">Passwort</a></li>
+
+    <li class="nav-item"><a class="nav-link @ManageNavPages.PersonalOrderNavClass(ViewContext)" id="profile" asp-page="./PagePersonalOrders" role="button">Persönliche Bestellungen</a></li>
     
-    <li class="nav-item"><a class="nav-link @ManageNavPages.HistoriOrderNavClass(ViewContext)" id="profile" asp-page="./HistoriOrders">Historische Bestellungen</a></li>
+    <li class="nav-item"><a class="nav-link @ManageNavPages.HistoriOrderNavClass(ViewContext)" id="profile" asp-page="./HistoriOrders" role="button">Historische Bestellungen</a></li>
 
+    <li class="nav-item"><a class="nav-link @ManageNavPages.ServiceNavClass(ViewContext)" id="profile" asp-page="./Service" role="button">Service</a></li>
 </ul>
