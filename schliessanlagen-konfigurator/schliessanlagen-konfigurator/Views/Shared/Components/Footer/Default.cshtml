@@ -101,7 +101,55 @@
     </div>
 
     <hr style="height: 3px;">
-    <h2><a href="@Url.Action("Impressum", "Home")">Impressum</a></h2>
-    <h2><a href="@Url.Action("datenschutzbelehrung", "Home")">Datenschutzerklärung</a></h2>
-    <h2><a href="@Url.Action("AGB", "Home")">AGB</a></h2>
+    <div class="container">
+    <div class="row">
+        <div class="col-md-4 mt-2 p-2">
+            <a>Information</a>
+        </div>
+        <div class="col-md-4 mt-2 p-2">
+            <a>Service</a>           
+        </div>
+    </div>
+    <div class="row">
+    <div class="col-md-4 mt-2 p-2">
+        <div>
+            <a href="@Url.Action("Impressum", "Home")">Impressum</a>
+        </div>
+        <div>
+            <a href="@Url.Action("datenschutzbelehrung", "Home")">Datenschutzerklärung</a>
+        </div>
+        <div>
+           <a href="@Url.Action("AGB", "Home")">AGB</a>
+        </div>
+    </div>
+
+    <div class="col-md-4 mt-2 p-2">  
+        <div>
+               <a href=" @Url.Action("Kontakt", "Kontact_Fromular")">Kundenkonto & Funktionen</a>
+        </div>
+                <div>
+                    <a href=" @Url.Action("Kontakt", "Kontact_Fromular")">Bestellablauf</a>
+                </div>
+                <div>
+                    <a href=" @Url.Action("Lieferung", "Home")">Lieferung</a>
+                </div>
+
+                <div>
+                    <a href=" @Url.Action("Kontakt", "Kontact_Fromular")">Zahlung</a>
+                </div>
+
+                <div>
+                   <a href=" @Url.Action("Kontakt", "Kontact_Fromular")">Schließplan</a>
+                </div>
+
+                <div>
+                    
+                        <a href=" @Url.Action("FAQLexikon", "Home")">
+                            FAQ & Lexikon
+                        </a>
+                    
+                </div>
+    </div>
+    </div>
+</div>
 </div>

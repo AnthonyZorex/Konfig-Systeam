@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "T8zE4j0VzitjNz2VH+oQxE6XP0SbwDmLUPPqdiC48UY=",
+  "Hash": "t3rfCiyJVcc3aps0h3sAHiI/C3iJtug05hp+To4GIuM=",
   "Source": "schliessanlagen-konfigurator",
   "BasePath": "_content/schliessanlagen-konfigurator",
   "Mode": "Default",
@@ -9175,12 +9175,12 @@
       "OriginalItemSpec": "wwwroot\\Orders\\CES_schliessplan_DE_schliessanlagen.xlsx"
     },
     {
-      "Identity": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\SchlüsselDiscount141414102024 OrderFile.xlsx",
+      "Identity": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\SchlüsselDiscount11714102024 OrderFile.xlsx",
       "SourceId": "schliessanlagen-konfigurator",
       "SourceType": "Discovered",
       "ContentRoot": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\",
       "BasePath": "_content/schliessanlagen-konfigurator",
-      "RelativePath": "Orders/SchlüsselDiscount141414102024 OrderFile.xlsx",
+      "RelativePath": "Orders/SchlüsselDiscount11714102024 OrderFile.xlsx",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -9191,26 +9191,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Orders\\SchlüsselDiscount141414102024 OrderFile.xlsx"
-    },
-    {
-      "Identity": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\SchlüsselDiscount291014102024 OrderFile.xlsx",
-      "SourceId": "schliessanlagen-konfigurator",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\",
-      "BasePath": "_content/schliessanlagen-konfigurator",
-      "RelativePath": "Orders/SchlüsselDiscount291014102024 OrderFile.xlsx",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Orders\\SchlüsselDiscount291014102024 OrderFile.xlsx"
+      "OriginalItemSpec": "wwwroot\\Orders\\SchlüsselDiscount11714102024 OrderFile.xlsx"
     }
   ]
 }

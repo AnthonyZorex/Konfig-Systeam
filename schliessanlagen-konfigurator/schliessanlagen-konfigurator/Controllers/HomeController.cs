@@ -87,6 +87,17 @@ namespace schliessanlagen_konfigurator.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public async Task<IActionResult> Lieferung()
+        {
+            return View();
+        }
+      
+        [HttpGet]
+        public async Task<IActionResult> FAQLexikon()
+        {
+            return View();
+        }
         public async Task<IActionResult> AGB()
         {
             return View();

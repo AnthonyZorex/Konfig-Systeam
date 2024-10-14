@@ -100,10 +100,9 @@
                                                         <input class="form-control" required id="floatingInput" value="@order.Rechnun_Stadt" name="RechnungStadt" placeholder="Stadt / city *" />
                                                             <label for="floatingInput">Stadt / city *</label>
                                                         </div>
-
+                                                      
                                                         <div class="form-floating mb-3">
-                                                        <select class="form-select" required value="@order.Rechnun_Land" name="RechnungLand" onchange="ProcentMwst(event,@z)" id="floatingInput" placeholder="Land / country *">
-                                                            <option selected></option>
+                                                        <select class="form-select" required  name="RechnungLand" onchange="ProcentMwst(event,@z)" id="floatingInput" placeholder="Land / country *">
                                                             <option value="DE">Deutschland</option>
                                                                 <option value="AF">Afghanistan</option>
                                                                 <option value="EG">Ägypten</option>
@@ -476,21 +475,21 @@
                                                 </div>
 
 
-                                            <div class="shadow-lg  mb-5 bg-body-tertiary rounded">
+                                            <div id="blockSchrite" style="display: grid;justify-content: center;" class="shadow-lg  mb-5 bg-body-tertiary rounded">
 
-                                                <div style="display:flex;gap:50px;">
+                                                <div style="grid-template-columns: auto auto;display: grid;">
                                                     <input id="procent-@z" style="outline:none;border:none;max-width:120px" type="text" readonly name="procent" value="Steuer:" />
-                                                    <input redonly name="Steuer" style="border: none;outline:none" type="text" value="0" id="aldProcent-@z" />
+                                                    <input redonly name="Steuer" style="text-align: end;border: none;outline: none" type="text" value="0" id="aldProcent-@z" />
                                                 </div>
 
-                                                <div style="display:flex;gap:50px;">
-                                                    <h4>Versand:</h4>
-                                                    <input name="Versand" type="text" redonly style="border: none;outline:none" value="0" id="CostGram-@z" />
+                                                <div style="grid-template-columns: auto auto;display: grid;">
+                                                    <h5>Versand:</h5>
+                                                    <input name="Versand" type="text" redonly style="text-align: end;border: none;outline: none" value="0" id="CostGram-@z" />
                                                 </div>
 
-                                                <div style="display:flex;gap:50px;">
-                                                    <h4>Bestellsumme:</h4>
-                                                    <input name="OrderSum" redonly style="border:none;outline:none" value="@orderList[z].OrderSum.ToString("C")" id="costedI-@z" />
+                                                <div style="grid-template-columns: auto auto;display: grid;">
+                                                    <h5>Bestellsumme:</h5>
+                                                    <input name="OrderSum" redonly style="text-align: end;border: none;outline: none" value="@orderList[z].OrderSum.ToString("C")" id="costedI-@z" />
                                                 </div>
 
                                                 <input type="hidden" id="Aufrechnung-@z" name="aufRechnung" value="false" />
@@ -543,6 +542,7 @@
     <script src="https://x.klarnacdn.net/kp/lib/v1/api.js"></script>
 
 <script src="https://www.paypal.com/sdk/js?client-id=AcBDGr9EZyKwRHBxrvvXq2u-vFWhg-e2l09CS97O5fbcwx0JYkjJRfsNUS_lJ6QjdTOwGe830IkBill9&currency=EUR"></script>
+
 <script>
 
     let removeButton = document.getElementById("removeOrder");
@@ -633,7 +633,7 @@
                 alert('Transaktion fehlgeschlagen');
             }
         }).render(`#paypal-button-container-${id}`);
-
+   
     }
 
 
@@ -643,6 +643,31 @@
         count.forEach((item) => {
             item.value = 1;
         })
+        
+
+        let z = 0;
+
+            let selectCountry = document.querySelectorAll("[name='RechnungLand']");
+            selectCountry.forEach((item) => {
+                if (item.value == '@Model.Users[0].Rechnun_Land') {
+                    item.selected = true;
+                    // Создаем новое событие change
+                    const event = new Event('change', {
+                        bubbles: true, // Событие всплывает
+                        cancelable: true // Событие можно отменить
+                    });
+
+                    // Диспатчим (вызываем) событие на текущем элементе
+                    item.dispatchEvent(event);
+                }
+            });
+            selectCountry.forEach((item) => {
+                item.addEventListener('change', (event) => {
+                    ProcentMwst(event.target, z); 
+                    z++;
+                });
+            });
+       
     });
 
     function remove(empty) 

@@ -61,10 +61,6 @@ namespace  schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
 
         public static string AdresseNavClass(ViewContext viewContext) => PageNavClass(viewContext, Adresse);
         public static string HistoriOrderNavClass(ViewContext viewContext) => PageNavClass(viewContext, HistoriOrders);
-
-        public static string Service => "Service";
-
-        public static string ServiceNavClass(ViewContext viewContext) => PageNavClass(viewContext, Service);
         public static string TwoFactorAuthenticationNavClass(ViewContext viewContext) => PageNavClass(viewContext, TwoFactorAuthentication);
 
         public static string PageNavClass(ViewContext viewContext, string page)
