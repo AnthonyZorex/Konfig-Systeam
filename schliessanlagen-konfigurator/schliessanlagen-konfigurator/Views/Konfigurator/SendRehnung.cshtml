@@ -25,21 +25,21 @@
             10119 Berlin`;
 
         let Rechnungsadresse = `${Info.SendVorname + " " + Info.SendNachname}
-                ${Info.SendStrasse} ${Info.SemdAdressZusatz},
+                ${Info.SendStrasse},
                 ${Info.SendZip} ${Info.SendStadt} , ${Info.SendLand} `;
 
         let Lieferadresse = "";
         if (Info.Rehnung == "on") 
         {
             Lieferadresse = `${Info.SendVorname + " " + Info.SendNachname}
-                    ${Info.SendStrasse} ${Info.SemdAdressZusatz},
+                    ${Info.SendStrasse},
                     ${Info.SendZip} ${Info.SendStadt} , ${Info.SendLand} `;
             Email = Info.SendAdresse;
         }
         else 
         {
             Lieferadresse = `${Info.RechnungVorname + " " + Info.RechnungNachname}
-                    ${Info.RechnungStrasse} ${Info.RechnungAdressZusatz},
+                    ${Info.RechnungStrasse},
                     ${Info.RechnungZip} ${Info.RechnungSendStadt} , ${Info.RechnungLand} `;
 
             Email = Info.RechnungAdresse;

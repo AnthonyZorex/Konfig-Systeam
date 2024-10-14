@@ -26,31 +26,38 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
         schliessanlagen_konfiguratorContext db;
         private IWebHostEnvironment Environment;
         private readonly IHttpContextAccessor _contextAccessor;
-
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
         public PagePersonalOrdersModel(schliessanlagen_konfiguratorContext context, IWebHostEnvironment _environment
-       , IHttpContextAccessor httpContextAccessor)
+        , IHttpContextAccessor httpContextAccessor, UserManager<User> userManager,SignInManager<User> signInManager)
         {
             db = context;
             Environment = _environment;
             _contextAccessor = httpContextAccessor;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
+        public List<User> Users { get; set; } = new List<User>();
         public async Task<IActionResult> OnGet()
         {
             ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
 
-            string loginInform = ident.Claims.Select(x => x.Value).First();
-            var users = db.Users.Find(loginInform);
+            string loginInform = ident.Claims.Select(x => x.Value).FirstOrDefault();
+            var user = await db.Users.FirstOrDefaultAsync(u => u.Id == loginInform);
 
-            ViewData["users"] = users;  
+            Users.Add(user);
 
-            var userOrder = db.UserOrdersShop.Where(x => x.UserId == users.Id).ToList();
+            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            
+
+            var userOrder = db.UserOrdersShop.Where(x => x.UserId == user.Id).ToList();
 
             if (userOrder.Count()>0)
             {
                 var ListItem = new List<UserOrdersShop>();
 
-                var OrderList = db.UserOrdersShop.Where(x => x.UserId == users.Id && x.OrderStatus == "Nicht bezahlt").Distinct().ToList();
+                var OrderList = db.UserOrdersShop.Where(x => x.UserId == user.Id && x.OrderStatus == "Nicht bezahlt").Distinct().ToList();
 
                 foreach (var list in OrderList)
                 {
@@ -134,9 +141,9 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
 
         }
         public async Task<IActionResult> OnPost(string SendAdresse,string SendVorname, string SendNachname,string SendFirma,
-        string SendVat,string SendStrasse, string SemdAdressZusatz, string SendZip, string SendStadt, string SendLand, string SendTelefon,
+        string SendVat,string SendStrasse, string SendZip, string SendStadt, string SendLand, string SendTelefon,
         string DhlSend,string Pay,string Steuer, string Versand, string OrderSum,string Rehnung, string RechnungAdresse,string RechnungVorname,
-        string RechnungNachname, string RechnungFirma, string RechnungVat, string RechnungStrasse, string RechnungAdressZusatz, string RechnungZip,
+        string RechnungNachname, string RechnungFirma, string RechnungVat, string RechnungStrasse, string RechnungZip,
         string RechnungStadt, string RechnungLand, string RechnungTelefon, string userName,string procent,bool aufRechnung)
         {
 
@@ -148,7 +155,7 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
                 SendFirma = SendFirma,
                 SendVat = SendVat,
                 SendStrasse = SendStrasse,
-                SemdAdressZusatz = SemdAdressZusatz,
+
                 SendZip = SendZip,
                 SendStadt = SendStadt,
                 SendLand = SendLand,
@@ -167,7 +174,6 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
                 RechnungFirma = RechnungFirma,
                 RechnungVat = RechnungVat,
                 RechnungStrasse = RechnungStrasse,
-                RechnungAdressZusatz = RechnungAdressZusatz,
                 RechnungZip = RechnungZip,
                 RechnungStadt = RechnungStadt,
                 RechnungLand = RechnungLand,

@@ -217,7 +217,7 @@
     {
         if (kleinKnayf.length > 0)
         {
-            if (SelectItemId >= kleinCountItem.length && is_GrossSize == false)
+            if (SelectItemId >= kleinKnayfCountItem.length && is_GrossSize == false)
             {
                 for (let i = 0; i < KnayfZiseNormal.length; i++)
                 {

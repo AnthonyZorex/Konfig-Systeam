@@ -3979,6 +3979,8 @@ namespace schliessanlagen_konfigurator.Controllers
 
         }
 
+
+
         [HttpGet]
         public ActionResult OrdersKey(string Lieferzeit, string Systeam, int DopelId, List<string> dopelOption, string param2, int KnayfID, int Halb, int Hebel, int Aussen, int Vorhan)
         {
@@ -5273,55 +5275,58 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 var HalbInfo = db.Profil_Halbzylinder.Where(x => x.NameSystem == Systeam).ToList();
                 ViewBag.HalbJson = JsonConvert.SerializeObject(HalbInfo.ToList());
-
-                var HalbInfoSize =  db.Aussen_Innen_Halbzylinder.Where(x => x.Profil_HalbzylinderId == HalbInfo[0].Id).ToList();
-
-                ViewBag.CostHalbSize = JsonConvert.SerializeObject(HalbInfoSize.Select(x => x.costAussen).ToList());
-                ViewBag.AussenHalb = HalbInfoSize.Select(x => x.aussen).ToList();
-
-                var option =  db.Profil_Halbzylinder_Options.Where(x => x.Profil_HalbzylinderId == HalbInfo[0].Id).ToList();
-                ViewBag.countOptionsQueryHalbI = option.Count();
-
-                var halboptions = new List<Halbzylinder_Options>();
-
-                foreach(var list in option)
+               
+                if (HalbInfo.Count > 0)
                 {
-                    var item = db.Halbzylinder_Options.Where(x => x.OptionsId == list.Id).ToList();
+                    var HalbInfoSize = db.Aussen_Innen_Halbzylinder.Where(x => x.Profil_HalbzylinderId == HalbInfo[0].Id).ToList();
 
-                    foreach(var listI in item)
+                    ViewBag.CostHalbSize = JsonConvert.SerializeObject(HalbInfoSize.Select(x => x.costAussen).ToList());
+                    ViewBag.AussenHalb = HalbInfoSize.Select(x => x.aussen).ToList();
+
+                    var option = db.Profil_Halbzylinder_Options.Where(x => x.Profil_HalbzylinderId == HalbInfo[0].Id).ToList();
+                    ViewBag.countOptionsQueryHalbI = option.Count();
+
+                    var halboptions = new List<Halbzylinder_Options>();
+
+                    foreach (var list in option)
                     {
-                        halboptions.Add(listI);
+                        var item = db.Halbzylinder_Options.Where(x => x.OptionsId == list.Id).ToList();
+
+                        foreach (var listI in item)
+                        {
+                            halboptions.Add(listI);
+                        }
                     }
-                }
 
-                ViewBag.HalbOptionsNameJson = JsonConvert.SerializeObject(halboptions.Select(x => x.Name).ToList());
-            
+                    ViewBag.HalbOptionsNameJson = JsonConvert.SerializeObject(halboptions.Select(x => x.Name).ToList());
 
-                var halbOptionsValue = new List<Halbzylinder_Options_value>();
 
-                foreach(var value in halboptions)
-                {
-                    var item = db.Halbzylinder_Options_value.Where(x => x.Halbzylinder_OptionsId == value.Id).ToList();
-                    
-                    foreach(var l in item)
+                    var halbOptionsValue = new List<Halbzylinder_Options_value>();
+
+                    foreach (var value in halboptions)
                     {
-                        halbOptionsValue.Add(l);
+                        var item = db.Halbzylinder_Options_value.Where(x => x.Halbzylinder_OptionsId == value.Id).ToList();
+
+                        foreach (var l in item)
+                        {
+                            halbOptionsValue.Add(l);
+                        }
                     }
+                    var L = new List<int>();
+
+                    foreach (var fs in halboptions)
+                    {
+                        L.Add(fs.Halbzylinder_Options_value.Count());
+                    }
+
+                    ViewBag.HalbOptionsValueICount = L;
+
+                    ViewBag.HalbOptionsNameI = halboptions.Select(x => x).ToList();
+                    ViewBag.HalbOptionsValueI = halbOptionsValue.Select(x => x.Value).ToList();
+
+                    ViewBag.HalbOptionsValueJson = JsonConvert.SerializeObject(halbOptionsValue.Select(x => x.Value).ToList());
+                    ViewBag.HalbOptionsValueCostJson = JsonConvert.SerializeObject(halbOptionsValue.Select(x => x.Cost).ToList());
                 }
-                var L = new List<int>();
-
-                foreach (var fs in halboptions)
-                {
-                    L.Add(fs.Halbzylinder_Options_value.Count());
-                }
-
-                ViewBag.HalbOptionsValueICount = L;
-
-                ViewBag.HalbOptionsNameI = halboptions.Select(x => x).ToList();
-                ViewBag.HalbOptionsValueI = halbOptionsValue.Select(x => x.Value).ToList();
-
-                ViewBag.HalbOptionsValueJson = JsonConvert.SerializeObject(halbOptionsValue.Select(x=>x.Value).ToList());
-                ViewBag.HalbOptionsValueCostJson = JsonConvert.SerializeObject(halbOptionsValue.Select(x => x.Cost).ToList());
             }
 
             ViewBag.HalbItem = Halbzylinder.Select(x => x.Id).ToList();
@@ -5373,11 +5378,10 @@ namespace schliessanlagen_konfigurator.Controllers
                     ViewBag.KnayfZelinderIntern = Kanyf_AussenInen.Where(x => x.Intern > 0).Select(x => x.Intern).ToList();
                     ViewBag.KnayfInternCost = JsonConvert.SerializeObject(Kanyf_AussenInen.Select(x => x.costSizeIntern).ToList());
                     ViewBag.KnayfAussenCost = JsonConvert.SerializeObject(Kanyf_AussenInen.Select(x => x.costSizeAussen).ToList());
+                    
                     ViewBag.KnayfzylinderInternNormal = JsonConvert.SerializeObject(Kanyf_AussenInen.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
                     ViewBag.KnayfInternKlein = JsonConvert.SerializeObject(KnayfKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
                     ViewBag.KnayfzylinderInternKleinPreis = JsonConvert.SerializeObject(KnayfKleinSize.Select(x => x.costSizeIntern).ToList());
-
-                    ViewBag.CountKnayfInter = JsonConvert.SerializeObject(null);
                 }
 
               
@@ -5435,79 +5439,92 @@ namespace schliessanlagen_konfigurator.Controllers
                 var KnayfInfo = db.Profil_Knaufzylinder.Where(x => x.NameSystem == Systeam).ToList();
                 ViewBag.KnayfZelinderJson = JsonConvert.SerializeObject(KnayfInfo.ToList());
 
-                ViewBag.KnayfDescriptions = JsonConvert.SerializeObject(KnayfInfo.Select(x => x.description).First());
-
-                var KnayfSize = db.Aussen_Innen_Knauf.Include(x=>x.Aussen_Innen_Knauf_klein).Where(x => x.Profil_KnaufzylinderId == KnayfInfo[0].Id).ToList();
-
-                var KnayfKleinSize = KnayfSize.First().Aussen_Innen_Knauf_klein;
-
-                if (KnayfKleinSize.Count() > 0)
+                if (KnayfInfo.Count > 0)
                 {
-                    ViewBag.KnayfZelinderIntern = KnayfKleinSize.Select(x => x.Intern).Distinct().ToList();
-                    ViewBag.KnayfInternCost = JsonConvert.SerializeObject(KnayfSize.Select(x => x.costSizeIntern).Skip(1).ToList());
+                    ViewBag.KnayfDescriptions = JsonConvert.SerializeObject(KnayfInfo.Select(x => x.description).First());
 
-                    ViewBag.KnayfzylinderInternNormal = JsonConvert.SerializeObject(KnayfSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
-                    ViewBag.KnayfInternKlein = JsonConvert.SerializeObject(KnayfKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
-                    ViewBag.KnayfzylinderInternKleinPreis = JsonConvert.SerializeObject(KnayfKleinSize.Select(x => x.costSizeIntern).ToList());
+                    var KnayfSize = db.Aussen_Innen_Knauf.Include(x => x.Aussen_Innen_Knauf_klein).Where(x => x.Profil_KnaufzylinderId == KnayfInfo[0].Id).ToList();
 
-                }
-                else
-                {
-                    ViewBag.KnayfZelinderIntern = KnayfSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList();
-                    ViewBag.KnayfInternCost = JsonConvert.SerializeObject(KnayfSize.Select(x => x.costSizeIntern).ToList());
+                    var KnayfKleinSize = KnayfSize.First().Aussen_Innen_Knauf_klein;
 
-                    ViewBag.KnayfzylinderInternNormal = JsonConvert.SerializeObject(KnayfSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
-                    ViewBag.KnayfInternKlein = JsonConvert.SerializeObject(KnayfKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
-                    ViewBag.KnayfzylinderInternKleinPreis = JsonConvert.SerializeObject(KnayfKleinSize.Select(x => x.costSizeIntern).Skip(1).ToList());
-                }
-
-                ViewBag.KnayfZelinderAussen = KnayfSize.Select(x => x.aussen).ToList();
-
-                ViewBag.KnayfAussenCost = JsonConvert.SerializeObject(KnayfSize.Select(x => x.costSizeAussen).ToList());
-
-                var K_option = db.Profil_Knaufzylinder_Options.Where(x => x.Profil_KnaufzylinderId == KnayfInfo[0].Id).ToList();
-
-                var KnayfOptionList = new List<Knayf_Options>();
-
-                foreach(var list in K_option)
-                {
-                    var OptionKnayf = db.Knayf_Options.Where(x => x.OptionsId == list.Id).ToList();
-
-                    foreach(var item in OptionKnayf)
+                    if (KnayfKleinSize.Count() > 0)
                     {
-                        KnayfOptionList.Add(item);
+                        var arrayCountItemIntern = KnayfSize.Where(x => x.Aussen_Innen_Knauf_klein.Count() > 0).Select(x => x.Aussen_Innen_Knauf_klein.Count()).ToList();
+                        var x = arrayCountItemIntern.Sum();
+
+                        var arrayCountItemAussen = KnayfSize.Where(x => x.Aussen_Innen_Knauf_klein.Count() > 0).Select(x => x.aussen).Count();
+
+                        var y = arrayCountItemAussen;
+
+                        ViewBag.KnayfZelinderIntern = KnayfKleinSize.Select(x => x.Intern).Distinct().ToList();
+                        ViewBag.KnayfInternCost = JsonConvert.SerializeObject(KnayfSize.Select(x => x.costSizeIntern).Skip(y).ToList());
+                        ViewBag.KnayfAussenCost = JsonConvert.SerializeObject(KnayfSize.Select(x => x.costSizeAussen).ToList());
+
+                        ViewBag.KnayfzylinderInternNormal = JsonConvert.SerializeObject(KnayfSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
+                        ViewBag.KnayfInternKlein = JsonConvert.SerializeObject(KnayfKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
+                        ViewBag.KnayfzylinderInternKleinPreis = JsonConvert.SerializeObject(KnayfKleinSize.Select(x => x.costSizeIntern).ToList());
+                        ViewBag.CountKnayfInter = JsonConvert.SerializeObject(KnayfSize.Where(x => x.Aussen_Innen_Knauf_klein.Count() > 0).Select(x => x.Aussen_Innen_Knauf_klein.Count()).ToList());
+
                     }
-                }
-
-                ViewBag.OptionsNameKnayfJson = JsonConvert.SerializeObject(KnayfOptionList.Select(x => x.Name).ToList());
-                ViewBag.optionsNameKnayfI = KnayfOptionList.Select(x => x).ToList();
-
-                var KnayfOptionsValue = new List<Knayf_Options_value>();
-
-                foreach (var list in KnayfOptionList)
-                {
-                    var OptionKnayf = db.Knayf_Options_value.Where(x => x.Knayf_OptionsId == list.Id).ToList();
-
-                    foreach (var item in OptionKnayf)
+                    else
                     {
-                        KnayfOptionsValue.Add(item);
+                        ViewBag.KnayfZelinderIntern = KnayfSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList();
+                        ViewBag.KnayfInternCost = JsonConvert.SerializeObject(KnayfSize.Select(x => x.costSizeIntern).ToList());
+                        ViewBag.KnayfAussenCost = JsonConvert.SerializeObject(KnayfSize.Select(x => x.costSizeAussen).ToList());
+                        ViewBag.KnayfzylinderInternNormal = JsonConvert.SerializeObject(KnayfSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
+                        ViewBag.KnayfInternKlein = JsonConvert.SerializeObject(KnayfKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
+                        ViewBag.KnayfzylinderInternKleinPreis = JsonConvert.SerializeObject(KnayfKleinSize.Select(x => x.costSizeIntern).ToList());
                     }
+
+                    ViewBag.KnayfZelinderAussen = KnayfSize.Select(x => x.aussen).ToList();
+
+                    ViewBag.KnayfAussenCost = JsonConvert.SerializeObject(KnayfSize.Select(x => x.costSizeAussen).ToList());
+
+                    var K_option = db.Profil_Knaufzylinder_Options.Where(x => x.Profil_KnaufzylinderId == KnayfInfo[0].Id).ToList();
+
+                    var KnayfOptionList = new List<Knayf_Options>();
+
+                    foreach (var list in K_option)
+                    {
+                        var OptionKnayf = db.Knayf_Options.Where(x => x.OptionsId == list.Id).ToList();
+
+                        foreach (var item in OptionKnayf)
+                        {
+                            KnayfOptionList.Add(item);
+                        }
+                    }
+
+                    ViewBag.OptionsNameKnayfJson = JsonConvert.SerializeObject(KnayfOptionList.Select(x => x.Name).ToList());
+                    ViewBag.optionsNameKnayfI = KnayfOptionList.Select(x => x).ToList();
+
+                    var KnayfOptionsValue = new List<Knayf_Options_value>();
+
+                    foreach (var list in KnayfOptionList)
+                    {
+                        var OptionKnayf = db.Knayf_Options_value.Where(x => x.Knayf_OptionsId == list.Id).ToList();
+
+                        foreach (var item in OptionKnayf)
+                        {
+                            KnayfOptionsValue.Add(item);
+                        }
+                    }
+                    ViewBag.countOptionsQueryKnayfI = K_option.Count();
+
+                    var L = new List<int>();
+
+                    foreach (var fs in KnayfOptionList)
+                    {
+                        L.Add(fs.Knayf_Options_value.Count());
+                    }
+
+
+                    ViewBag.countOptionsListKnayfI = L;
+
+                    ViewBag.optionsValueKnayfI = KnayfOptionsValue.Select(x => x.Value).ToList();
+                    ViewBag.optionsPriseKnayf = JsonConvert.SerializeObject(KnayfOptionsValue.Select(x => x.Cost).ToList());
+                    ViewBag.optionsValueKnayfJson = JsonConvert.SerializeObject(KnayfOptionsValue.Select(x => x.Value).ToList());
                 }
-                ViewBag.countOptionsQueryKnayfI = K_option.Count();
-
-                var L = new List<int>();
-
-                foreach (var fs in KnayfOptionList)
-                {
-                    L.Add(fs.Knayf_Options_value.Count());
-                }
-
-
-                ViewBag.countOptionsListKnayfI = L;
-
-                ViewBag.optionsValueKnayfI = KnayfOptionsValue.Select(x => x.Value).ToList();
-                ViewBag.optionsPriseKnayf = JsonConvert.SerializeObject(KnayfOptionsValue.Select(x => x.Cost).ToList());
-                ViewBag.optionsValueKnayfJson = JsonConvert.SerializeObject(KnayfOptionsValue.Select(x => x.Value).ToList());
+               
 
             }
 
@@ -5553,7 +5570,6 @@ namespace schliessanlagen_konfigurator.Controllers
                     ViewBag.DopelzylinderInternNormal = JsonConvert.SerializeObject(AussenInen.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
                     ViewBag.DopelzylinderInternKlein = JsonConvert.SerializeObject(doppelKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
                     ViewBag.DopelzylinderInternKleinPreis = JsonConvert.SerializeObject(doppelKleinSize.Select(x => x.costSizeIntern).ToList());
-                    ViewBag.CountDoppelInter = JsonConvert.SerializeObject(null);
                 }
 
                 var option = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == DopelOrderlist[0].Id).ToList();
@@ -5605,81 +5621,101 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             else
             {
-               var DoppelInfo = db.Profil_Doppelzylinder.Where(x => x.NameSystem == Systeam).ToList();
-               ViewBag.DopelzylinderJson = JsonConvert.SerializeObject(DoppelInfo);
+                var DoppelInfo = db.Profil_Doppelzylinder.Where(x => x.NameSystem == Systeam).ToList();
+                ViewBag.DopelzylinderJson = JsonConvert.SerializeObject(DoppelInfo);
 
-               var DSize = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == DoppelInfo[0].Id).ToList();
-
-                ViewBag.Dopelzylinderaussen = DSize.Select(x => x.aussen).ToList();
-                ViewBag.DopelzylinderIntern = DSize.Select(x => x.Intern).ToList();
-
-                var doppelKleinSize = DSize.First().Doppel_Innen_klein;
-
-                if (doppelKleinSize.Count() > 0)
+                if (DoppelInfo.Count > 0)
                 {
-                    ViewBag.DopelzylinderIntern = doppelKleinSize.Select(x => x.Intern).ToList();
-                    ViewBag.CostDoppelIntern = JsonConvert.SerializeObject(DSize.Select(x => x.costSizeIntern).Skip(1).ToList());
+                    var DSize = db.Aussen_Innen.Include(x=>x.Doppel_Innen_klein).Where(x => x.Profil_DoppelzylinderId == DoppelInfo[0].Id).ToList();
 
-                    ViewBag.DopelzylinderInternNormal = JsonConvert.SerializeObject(DSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
-                    ViewBag.DopelzylinderInternKlein = JsonConvert.SerializeObject(doppelKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
-                    ViewBag.DopelzylinderInternKleinPreis = JsonConvert.SerializeObject(doppelKleinSize.Select(x => x.costSizeIntern).ToList());
-
-                }
-                else
-                {
+                    ViewBag.Dopelzylinderaussen = DSize.Select(x => x.aussen).ToList();
                     ViewBag.DopelzylinderIntern = DSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList();
-                    ViewBag.CostDoppelIntern = JsonConvert.SerializeObject(DSize.Select(x => x.costSizeIntern).ToList());
 
-                    ViewBag.DopelzylinderInternNormal = JsonConvert.SerializeObject(DSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
-                    ViewBag.DopelzylinderInternKlein = JsonConvert.SerializeObject(doppelKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
-                    ViewBag.DopelzylinderInternKleinPreis = JsonConvert.SerializeObject(doppelKleinSize.Select(x => x.costSizeIntern).ToList());
-                }
+                    var doppelKleinSize = DSize.SelectMany(x => x.Doppel_Innen_klein).ToList();
 
-                ViewBag.CostDoppelAussen = JsonConvert.SerializeObject(DSize.Select(x => x.costSizeAussen).ToList());
-
-                var option = db.Profil_Doppelzylinder_Options.Where(x=>x.DoppelzylinderId == DoppelInfo[0].Id).ToList();
-                
-                var ngf = new List<NGF>();
-                var ngfValue = new List<NGF_Value>();
-
-                foreach (var list in option)
-                {
-                    var items = db.NGF.Where(x => x.OptionsId == list.Id).ToList();
-                    
-                    foreach(var i in items)
+                    if (doppelKleinSize.Count() > 0)
                     {
-                        ngf.Add(i);
+                        var arrayCountItemIntern = DSize.Where(x => x.Doppel_Innen_klein.Count() > 0).Select(x => x.Doppel_Innen_klein.Count()).ToList();
+                        var x = arrayCountItemIntern.Sum();
+
+                        var arrayCountItemAussen = DSize.Where(x => x.Doppel_Innen_klein.Count() > 0).Select(x => x.aussen).Count();
+
+                        var y = arrayCountItemAussen;
+
+                        ViewBag.DopelzylinderIntern = doppelKleinSize.Select(x => x.Intern).ToList();
+                        ViewBag.CostDoppelIntern = JsonConvert.SerializeObject(DSize.Select(x => x.costSizeIntern).Skip(y).ToList());
+
+                        ViewBag.CostDoppelAussen = JsonConvert.SerializeObject(DSize.Select(x => x.costSizeAussen).ToList());
+
+                        ViewBag.DopelzylinderInternNormal = JsonConvert.SerializeObject(DSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
+                        ViewBag.DopelzylinderInternKlein = JsonConvert.SerializeObject(doppelKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
+                        ViewBag.DopelzylinderInternKleinPreis = JsonConvert.SerializeObject(doppelKleinSize.Select(x => x.costSizeIntern).ToList());
+
+                        ViewBag.CountKlein = arrayCountItemIntern[0];
+
+                        ViewBag.CountDoppelInter = JsonConvert.SerializeObject(DSize.Where(x => x.Doppel_Innen_klein.Count() > 0).Select(x => x.Doppel_Innen_klein.Count()).ToList());
+
+
                     }
-                }
-
-                foreach(var list in ngf)
-                {
-                    var items =  db.NGF_Value.Where(x => x.NGFId == list.Id).ToList();
-
-                    foreach (var i in items)
+                    else
                     {
-                        ngfValue.Add(i);
+                        ViewBag.DopelzylinderIntern = DSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList();
+                        ViewBag.CostDoppelIntern = JsonConvert.SerializeObject(DSize.Select(x => x.costSizeIntern).ToList());
+
+                        ViewBag.CostDoppelAussen = JsonConvert.SerializeObject(DSize.Select(x => x.costSizeAussen).ToList());
+
+                        ViewBag.DopelzylinderInternNormal = JsonConvert.SerializeObject(DSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
+                        ViewBag.DopelzylinderInternKlein = JsonConvert.SerializeObject(doppelKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
+                        ViewBag.DopelzylinderInternKleinPreis = JsonConvert.SerializeObject(doppelKleinSize.Select(x => x.costSizeIntern).ToList());
                     }
+
+                    ViewBag.CostDoppelAussen = JsonConvert.SerializeObject(DSize.Select(x => x.costSizeAussen).ToList());
+
+                    var option = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == DoppelInfo[0].Id).ToList();
+
+                    var ngf = new List<NGF>();
+                    var ngfValue = new List<NGF_Value>();
+
+                    foreach (var list in option)
+                    {
+                        var items = db.NGF.Where(x => x.OptionsId == list.Id).ToList();
+
+                        foreach (var i in items)
+                        {
+                            ngf.Add(i);
+                        }
+                    }
+
+                    foreach (var list in ngf)
+                    {
+                        var items = db.NGF_Value.Where(x => x.NGFId == list.Id).ToList();
+
+                        foreach (var i in items)
+                        {
+                            ngfValue.Add(i);
+                        }
+                    }
+
+                    ViewBag.countOptionsQueryI = option.Count();
+
+                    var L = new List<int>();
+
+                    foreach (var fs in ngf)
+                    {
+                        L.Add(fs.NGF_Value.Count());
+                    }
+
+
+                    ViewBag.countOptionsListI = L;
+
+                    ViewBag.DoppelOptionsNameJsonI = JsonConvert.SerializeObject(ngf.Select(x => x.Name).ToList());
+                    ViewBag.DoppelOptionsValueI = JsonConvert.SerializeObject(ngfValue.Select(x => x.Value).ToList());
+                    ViewBag.optionsPrise = JsonConvert.SerializeObject(ngfValue.Select(x => x.Cost).ToList());
+
+                    ViewBag.optionsNameI = ngf.Select(x => x).ToList();
+                    ViewBag.optionsValueI = ngfValue.Select(x => x.Value).ToList();
                 }
-
-                ViewBag.countOptionsQueryI = option.Count();
-
-                var L = new List<int>();
-
-                foreach (var fs in ngf)
-                {
-                    L.Add(fs.NGF_Value.Count());
-                }
-
-
-                ViewBag.countOptionsListI = L;
-
-                ViewBag.DoppelOptionsNameJsonI = JsonConvert.SerializeObject(ngf.Select(x => x.Name).ToList());
-                ViewBag.DoppelOptionsValueI = JsonConvert.SerializeObject(ngfValue.Select(x => x.Value).ToList());
-                ViewBag.optionsPrise = JsonConvert.SerializeObject(ngfValue.Select(x => x.Cost).ToList());
-
-                ViewBag.optionsNameI = ngf.Select(x => x).ToList();
-                ViewBag.optionsValueI = ngfValue.Select(x => x.Value).ToList();
+               
             }
 
             if (HelbZ.Count() > 0)
@@ -5747,7 +5783,51 @@ namespace schliessanlagen_konfigurator.Controllers
 
             ViewBag.UserJson = JsonConvert.SerializeObject(key.Select(x => x.userKey).Distinct().ToList());
 
-            ViewBag.AllType =  db.Schliessanlagen.ToList();
+            List<int> itemType = new List<int>();
+
+            if (sys.Count()>0)
+            {
+                var Doppel = db.Profil_Doppelzylinder.Where(d => sys.Select(s => s.NameSysteam).Contains(d.NameSystem)).ToList();
+
+                if (Doppel.Count() > 0)
+                {
+                    itemType.Add(1);
+                }
+                var Knayf = db.Profil_Knaufzylinder.Where(x => sys.Select(f => f.NameSysteam).Contains(x.NameSystem)).ToList();
+
+                if (Knayf.Count() > 0)
+                {
+                    itemType.Add(3);
+                }
+                var HalbT = db.Profil_Halbzylinder.Where(x => sys.Select(f => f.NameSysteam).Contains(x.NameSystem)).ToList();
+
+                if (HalbT.Count() > 0)
+                {
+                    itemType.Add(2);
+                }
+                var HebelT = db.Hebelzylinder.Where(x => sys.Select(f => f.NameSysteam).Contains(x.NameSystem)).ToList();
+
+                if (HebelT.Count() > 0)
+                {
+                    itemType.Add(4);
+                }
+                var Vorhang = db.Vorhangschloss.Where(x => sys.Select(f => f.NameSysteam).Contains(x.NameSystem)).ToList();
+
+                if (Vorhang.Count() > 0)
+                {
+                    itemType.Add(5);
+                }
+                var AussenT = db.Aussenzylinder_Rundzylinder.Where(x => sys.Select(f => f.NameSysteam).Contains(x.NameSystem)).ToList();
+
+                if (AussenT.Count() > 0)
+                {
+                    itemType.Add(6);
+                }
+            }
+           
+
+
+            ViewBag.AllType = db.Schliessanlagen.Where(x => itemType.Contains(x.Id)).ToList();
 
             var SumCost = DopelOrderlist.Select(x => x.Price).Sum() + KnaufZelinder.Select(x => x.Price).Sum() + Halbzylinder.Select(x => x.Price).Sum() +
                 HelbZ.Select(x => x.Price).Sum() + Vorhanschlos.Select(x => x.Price).Sum() + Aussenzylinder.Select(x => x.Price).Sum() + DoppelAussenCost

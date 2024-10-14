@@ -87,6 +87,10 @@ namespace schliessanlagen_konfigurator.Controllers
         {
             return View();
         }
+        public async Task<IActionResult> AGB()
+        {
+            return View();
+        }
         [HttpPost]
         public IActionResult AcceptCookies()
         {
