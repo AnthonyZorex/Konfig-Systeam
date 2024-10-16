@@ -51,25 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "60fea330-b4f7-4aec-a731-071ea3b4c96b",
+                            Id = "c75efa13-dec3-4c25-b2ef-47efabb99ad4",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "e7b892da-a805-48c3-939a-3bb457bcaefa",
+                            Id = "a1880869-4469-4475-9c2c-4c6b2460cbdb",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "b470cf90-f055-483e-b303-682b18f73fa3",
+                            Id = "057432d8-5374-41db-900a-9941de42641d",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "cdd16481-03b1-4885-b01c-8c0eb7fe4b3c",
+                            Id = "6117ee5f-e271-4bf8-939c-41714a94fd61",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -1402,6 +1402,9 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     b.Property<DateTime?>("BezalenDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<float?>("Gramm")
+                        .HasColumnType("real");
 
                     b.Property<float?>("KeyCost")
                         .HasColumnType("real");

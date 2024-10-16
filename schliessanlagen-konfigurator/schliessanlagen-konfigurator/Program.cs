@@ -98,7 +98,7 @@ app.UseStaticFiles(new StaticFileOptions
 
 app.UseDefaultFiles();
 
-//app.UseResponseCompression();
+app.UseResponseCompression();
 
 var supportedCultures = new[] { new CultureInfo("de-DE") };
 

@@ -11,6 +11,8 @@
     var countProduct = (List<int>)ViewData["CounterProduct"];
     var descriptions = (List<string>)ViewData["Descriptions"];
 
+    var Gramm = (List<float>)ViewData["Gewicht"];
+
     float costed = 0;
     int ProudctItemCounter = 0;
     int UserOrderId = 0;
@@ -32,12 +34,22 @@
                                 <h4>Price</h4>
                             </div>
                         </div>
+                        @{
+                            // Вычисляем 19% от суммы
+                            decimal KeyCost = Math.Round(Convert.ToDecimal(@orderList[z].OrderSum) * 0.19m, 2);
+
+                            // // Вычисляем итоговую сумму после вычитания 19%
+                            decimal resultKey = Math.Round(Convert.ToDecimal(@orderList[z].OrderSum) - KeyCost, 2);
+
+                            // // Форматируем результат как валюту
+                            string formattedResultKey = resultKey.ToString("C");
+                        }
 
                         <div id="producktInfo">
                             <img src="@("/compression/Schliarticle.webp")" alt="Schliarticle" height="150" width="150" />
                             <h4>@orderList[z].ProductName</h4>
                             <div id="costedInfo">
-                                <div style="display:flex"><h4 id="costedI-@z">@orderList[z].OrderSum.ToString("C")</h4></div>
+                                <div style="display:flex"><h4 id="costedI-@z">@formattedResultKey</h4></div>
 
                             </div>
                         </div>
@@ -60,6 +72,7 @@
                                                  <input type="hidden" name="userKey" value="@orderList[z].UserId" />
                                                 @foreach (var order in Model.Users)
                                                 {
+
                                                        <div class="form-floating mb-3">
                                                         <input class="form-control" id="floatingInput" value="@order.UserName" required name="RechnungAdresse" placeholder="E-Mail-Adresse" />
                                                             <label for="floatingInput">E-Mail-Adresse</label>
@@ -102,7 +115,7 @@
                                                         </div>
                                                       
                                                         <div class="form-floating mb-3">
-                                                        <select class="form-select" required  name="RechnungLand" onchange="ProcentMwst(event,@z)" id="floatingInput" placeholder="Land / country *">
+                                                        <select class="form-select" required  name="RechnungLand" onchange="ProcentMwst(event.target.value,@z)" id="floatingInput" placeholder="Land / country *">
                                                             <option value="DE">Deutschland</option>
                                                                 <option value="AF">Afghanistan</option>
                                                                 <option value="EG">Ägypten</option>
@@ -384,14 +397,11 @@
                                                     </div>
                                                     <br />
                                                     <div>
-                                                        @{
-                                                            float gram = countProduct[z] * float.Parse("0,400");
-                                                        }
 
-                                                        <input type="hidden" id="gramWert-@z" value="@gram" />
+                                                    <input type="hidden" id="gramWert-@z" value="@Gramm[z]" />
 
                                                         <input type="radio" id="dhl-@z" onchange="changeSend(@z)" checked name="DhlSend" value="DHL">
-                                                        <label for="html"> <input type="text" readonly style="border: none;outline:none" value="0" id="CostGram-@z" /> </label><br>
+                                                        <input type="text" readonly style="border: none;outline:none" value="0" id="CostGram-@z" /> <br>
                                                     </div>
 
                                                     <div style="display: flex;gap: 30px;align-items: center;">
@@ -415,13 +425,24 @@
                                                         <img src="@("/compression/paypal.webp")" height="30" width="30" />
                                                             <h4>PayPall</h4>
                                                         </label><br>                                                   
-                                                      <label>
+                                                  @*     <label>
                                                             <input type="radio" onchange="BezaleMethod(@z)" name="Pay" value="auf Rechnung">
                                                         <img src="@("/compression/cash-on-delivery.png")" height="40" width="40" />
                                                             <h4>auf Rechnung</h4>
-                                                        </label> 
+                                                        </label> *@ 
                                                     </div>
                                                 </div>
+
+
+                                           @{
+                                                decimal costProcentKey = Math.Round(Convert.ToDecimal(orderList[z].KeyCost) * 0.19m, 2);
+
+                                                // Вычисляем итоговую сумму после вычитания 19%
+                                                decimal resultKeyItem = Math.Round(Convert.ToDecimal(orderList[z].KeyCost) - costProcentKey, 2);
+
+                                                // Форматируем результат как валюту
+                                                string formattedResultKeyI = resultKeyItem.ToString("C");
+                                            }
 
                                             <div id="blockSchrite" class="shadow-lg  mb-5 bg-body-tertiary rounded">
 
@@ -433,10 +454,12 @@
                                                         <div class="col-md-8">
                                                             <div class="card-body">
                                                                 <h3>@orderList[z].ProductName</h3>
-                                                                <div class="card-text">
+                                                                <div class="card-text" id="schlüssel-@z">
                                                                     <h4>Schlüssel</h4>
                                                                     <h4>Anzahl: @orderList[z].KeyCount</h4>
-                                                                    <h4>Preis: @orderList[z].KeyCost,00 €</h4>
+                                                                    <h4 id="PreisProduct-@z">Preis: @formattedResultKeyI</h4>
+                                                                    <input type="hidden" id="PreisProductBruttoSchlussel-@z" value="@orderList[z].KeyCost" />
+                                                                    <input type="hidden" id="PreisProductNettoSchlussel-@z" value="@resultKeyItem" />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -445,7 +468,16 @@
 
                                                         @for (int s = 0; s < countProduct[z]; s++)
                                                         {
-                                                            <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                                                            decimal costProcentItem = Math.Round(Convert.ToDecimal(orderItem[ProudctItemCounter].Price) * 0.19m, 2);
+
+                                                            // Вычисляем итоговую сумму после вычитания 19%
+                                                            decimal resultItem = Math.Round(Convert.ToDecimal(orderItem[ProudctItemCounter].Price) - costProcentItem, 2);
+
+                                                            // Форматируем результат как валюту
+                                                            string formattedResultItem = resultItem.ToString("C");
+
+
+                                                             <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                                                 <div class="row g-0">
                                                                     <div class="col-md-4">
                                                                 <img src="@($"/compression/{imageList[ProudctItemCounter]}")" class="img-fluid rounded-start" alt="@orderItem[ProudctItemCounter].Name">
@@ -453,14 +485,16 @@
                                                                     <div class="col-md-8">
                                                                         <div class="card-body">
                                                                             <h3 class="card-title">Name: @orderItem[ProudctItemCounter].Name</h3>
-                                                                            <div class="card-text">
+                                                                            <div class="card-text" id="cardProductPrice-@z">
                                                                                   @Html.Raw(descriptions[ProudctItemCounter])
-                                                                        <br />
+                                                                            <br />
                                                                                 <h4>aussen: @orderItem[ProudctItemCounter].Aussen</h4>
                                                                                 <h4>innen: @orderItem[ProudctItemCounter].Intern</h4>
                                                                                 <h4>Option - @orderItem[ProudctItemCounter].Option</h4>
-                                                                            <h4>Anzahl: @orderItem[ProudctItemCounter].Count</h4>
-                                                                            <h4>Preis: @orderItem[ProudctItemCounter].Price,00 €</h4>
+                                                                                <h4>Anzahl: @orderItem[ProudctItemCounter].Count</h4>
+                                                                                <h4 id="PreisProduct-@z">Preis: @formattedResultItem</h4>
+                                                                                <input type="hidden" id="PreisProductBrutto-@z" value="@orderItem[ProudctItemCounter].Price" />
+                                                                                <input type="hidden" id="PreisProductNetto-@z" value="@resultItem" />
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -471,9 +505,7 @@
                                                             ProudctItemCounter++;
                                                         }
 
-                                              
-                                                </div>
-
+                                                </div>                                          
 
                                             <div id="blockSchrite" style="display: grid;justify-content: center;" class="shadow-lg  mb-5 bg-body-tertiary rounded">
 
@@ -487,10 +519,11 @@
                                                     <input name="Versand" type="text" redonly style="text-align: end;border: none;outline: none" value="0" id="CostGram-@z" />
                                                 </div>
 
-                                                <div style="grid-template-columns: auto auto;display: grid;">
+                                                <div style="grid-template-columns: auto auto; display: grid;">
                                                     <h5>Bestellsumme:</h5>
-                                                    <input name="OrderSum" redonly style="text-align: end;border: none;outline: none" value="@orderList[z].OrderSum.ToString("C")" id="costedI-@z" />
-                                                </div>
+                                                    <input name="OrderSum" readonly style="text-align: end; border: none; outline: none" value="@formattedResultKey" id="costedI-@z" />
+                                                    <input readonly type="hidden" style="text-align: end; border: none; outline: none" value="@orderList[z].OrderSum" id="costedР-@z" />
+                                                </div> 
 
                                                 <input type="hidden" id="Aufrechnung-@z" name="aufRechnung" value="false" />
                                                 <input type="submit" class="btn btn-success" id="SendRechnung-@z" style="display:none; padding:10px 20px 10px 20px" value="Bezahlen an der Kasse" />
@@ -503,8 +536,6 @@
                                             </div>
 
                                                 <input type="hidden" id="@z" value="true" />
-
-                                         
 
                                         </form>
                                     </div>
@@ -600,6 +631,7 @@
 
         
     }
+
     function OpenModalInfo(id,IdOrder) 
     {
         let OrderNum = document.getElementById("invoiceNumber-" + id);
@@ -608,32 +640,35 @@
 
         let cheker = document.getElementById(id);
 
+        let modal = document.getElementById("paypal-button-container-" + id)
+
         let cost = document.getElementById("costedI-" + id);
         var stringWithoutEuro = cost.innerHTML.replace("€", "");
         var costen = parseFloat(stringWithoutEuro.replace(',', '.').trim());
-  
-        paypal.Buttons({
-            createOrder: function (data, actions) {
-                return actions.order.create({
-                    purchase_units: [{
-                        amount: {
-                            value: currentPrice
-                        },
-                        invoice_id: invoiceNumber
-                    }]
-                });
-            },
-            onApprove: function (data, actions) 
-            {
-                return actions.order.capture().then(function (details) {
-                    document.getElementById('myForm').submit();
-                });
-            },
-            onError: function (err) {
-                alert('Transaktion fehlgeschlagen');
+
+            if (modal.childNodes.length<2) {   
+                paypal.Buttons({
+                    createOrder: function (data, actions) {
+                        return actions.order.create({
+                            purchase_units: [{
+                                amount: {
+                                    value: currentPrice
+                                },
+                                invoice_id: invoiceNumber
+                            }]
+                        });
+                    },
+                    onApprove: function (data, actions) {
+                        return actions.order.capture().then(function (details) {
+                            document.getElementById('myForm').submit();
+                        });
+                    },
+                    onError: function (err) {
+                        alert('Transaktion fehlgeschlagen');
+                    }
+                }).render(`#paypal-button-container-${id}`);
             }
-        }).render(`#paypal-button-container-${id}`);
-   
+           
     }
 
 
@@ -644,9 +679,6 @@
             item.value = 1;
         })
         
-
-        let z = 0;
-
             let selectCountry = document.querySelectorAll("[name='RechnungLand']");
             selectCountry.forEach((item) => {
                 if (item.value == '@Model.Users[0].Rechnun_Land') {
@@ -661,10 +693,11 @@
                     item.dispatchEvent(event);
                 }
             });
-            selectCountry.forEach((item) => {
+
+            selectCountry.forEach((item,index) => {
                 item.addEventListener('change', (event) => {
-                    ProcentMwst(event.target, z); 
-                    z++;
+                    ProcentMwst(item.value, index);
+                    
                 });
             });
        

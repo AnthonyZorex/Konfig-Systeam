@@ -6059,7 +6059,8 @@ namespace schliessanlagen_konfigurator.Controllers
                             Aussen = DoppelAussen[DoppelCounter],
                             Intern = DoppelIntern[DoppelCounter],
                             Count = countT,
-                            Price = ProductCosted[i]
+                            Price = ProductCosted[i],
+
                         };
 
                         if (Option != "")

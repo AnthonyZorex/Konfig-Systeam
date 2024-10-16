@@ -49,7 +49,6 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
             Users.Add(user);
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            
 
             var userOrder = db.UserOrdersShop.Where(x => x.UserId == user.Id).ToList();
 
@@ -65,6 +64,12 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
                 }
 
                 var ListItemProduct = new List<Models.Users.ProductSysteam>();
+                List<float> gramm = new List<float>();
+                List<string> images = new List<string>();
+                List<string> descriptions = new List<string>();
+
+                List<float> SumGramm = new List<float>();
+                var countIterationProduct = new List<int>();
 
                 for (int f = 0; f < ListItem.Count(); f++)
                 {
@@ -73,52 +78,55 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
                     foreach (var list in ProductList)
                     {
                         ListItemProduct.Add(list);
+                        var doppel = db.Profil_Doppelzylinder.FirstOrDefault(x => x.Name == list.Name);
+                        var knayf = db.Profil_Knaufzylinder.FirstOrDefault(x => x.Name == list.Name);
+                        var halb = db.Profil_Halbzylinder.FirstOrDefault(x => x.Name == list.Name);
+                        var hebel = db.Hebelzylinder.FirstOrDefault(x => x.Name == list.Name);
+                        var Vorhan = db.Vorhangschloss.FirstOrDefault(x => x.Name == list.Name);
+                        var Aussen = db.Aussenzylinder_Rundzylinder.FirstOrDefault(x => x.Name == list.Name);
+
+                        if (doppel != null)
+                        {
+                            gramm.Add(doppel.Gramm ?? 0);
+                            images.Add(doppel.ImageName);
+                            descriptions.Add(doppel.description);
+                        }
+                        if (knayf != null)
+                        {
+                            gramm.Add(knayf.Gramm ?? 0);
+                            images.Add(knayf.ImageName);
+                            descriptions.Add(knayf.description);
+                        }
+                        if (halb != null)
+                        {
+                            gramm.Add(halb.Gramm ?? 0);
+                            images.Add(halb.ImageName);
+                            descriptions.Add(halb.description);
+                        }
+                        if (hebel != null)
+                        {
+                            gramm.Add(hebel.Gramm ?? 0);
+                            images.Add(hebel.ImageName);
+                            descriptions.Add(hebel.description);
+                        }
+                        if (Vorhan != null)
+                        {
+                            gramm.Add(Vorhan.Gramm ?? 0);
+                            images.Add(Vorhan.ImageName);
+                            descriptions.Add(Vorhan.description);
+                        }
+                        if (Aussen != null)
+                        {
+                            gramm.Add(Aussen.Gramm ?? 0);
+                            images.Add(Aussen.ImageName);
+                            descriptions.Add(Aussen.description);
+                        }
                     }
+                    countIterationProduct.Add(ProductList.Count);
+                    SumGramm.Add(gramm.Sum());
+                    gramm = new List<float>();
                 }
 
-
-                List<string> images = new List<string>();
-                List<string> descriptions = new List<string>();
-                foreach (var list in ListItemProduct)
-                {
-                    var doppel = db.Profil_Doppelzylinder.FirstOrDefault(x => x.Name == list.Name);
-                    var knayf = db.Profil_Knaufzylinder.FirstOrDefault(x => x.Name == list.Name);
-                    var halb = db.Profil_Halbzylinder.FirstOrDefault(x => x.Name == list.Name);
-                    var hebel = db.Hebelzylinder.FirstOrDefault(x => x.Name == list.Name);
-                    var Vorhan = db.Vorhangschloss.FirstOrDefault(x => x.Name == list.Name);
-                    var Aussen = db.Aussenzylinder_Rundzylinder.FirstOrDefault(x => x.Name == list.Name);
-
-                    if (doppel != null)
-                    {
-                        images.Add(doppel.ImageName);
-                        descriptions.Add(doppel.description);
-                    }
-                    if (knayf != null)
-                    {
-                        images.Add(knayf.ImageName);
-                        descriptions.Add(knayf.description);
-                    }
-                    if (halb != null)
-                    {
-                        images.Add(halb.ImageName);
-                        descriptions.Add(halb.description);
-                    }
-                    if (hebel != null)
-                    {
-                        images.Add(hebel.ImageName);
-                        descriptions.Add(hebel.description);
-                    }
-                    if (Vorhan != null)
-                    {
-                        images.Add(Vorhan.ImageName);
-                        descriptions.Add(Vorhan.description);
-                    }
-                    if (Aussen != null)
-                    {
-                        images.Add(Aussen.ImageName);
-                        descriptions.Add(Aussen.description);
-                    }
-                }
 
                 ViewData["Image"] = images;
                 ViewData["Descriptions"] = descriptions;
@@ -126,15 +134,8 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
                 ViewData["OrderLis"] = ListItem;
                 ViewData["OrderItem"] = ListItemProduct.OrderBy(x => x.UserOrdersShopId).ToList();
 
-                var countIterationProduct = new List<int>();
-
-                foreach (var list in ListItem)
-                {
-                    var p = ListItemProduct.Where(x => x.UserOrdersShopId == list.Id).ToList();
-                    countIterationProduct.Add(p.Count);
-                }
-
                 ViewData["CounterProduct"] = countIterationProduct;
+                ViewData["Gewicht"] = SumGramm;
             }
 
             return Page();

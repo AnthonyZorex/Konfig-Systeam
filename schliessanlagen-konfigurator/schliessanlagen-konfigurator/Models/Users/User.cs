@@ -32,6 +32,7 @@ namespace schliessanlagen_konfigurator.Models.Users
     public class UserOrdersShop
     {
         public int Id { get; set; }
+        public float? Gramm { get; set; }
         public float OrderSum { get; set; }
         public string ProductName { get; set; }
         public int? KeyCount { get; set; }
@@ -63,7 +64,7 @@ namespace schliessanlagen_konfigurator.Models.Users
         public string? Option { get; set; }
         public int? UserOrdersShopId { get; set; }
         public int? Count { get; set; }
-        public float? Price { get; set; }
+        public float? Price { get; set; }   
         public UserOrdersShop UserOrdersShop { get; set; }
 
     }

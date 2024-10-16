@@ -2430,6 +2430,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     ViewBag.KleinAussen = SizeDoppel.Where(x => x.Doppel_Innen_klein.Count > 0).ToList();
                 }
 
+                ViewBag.Size = SizeDoppel;
                 ViewBag.DoppelKleinSize = kleidDoppelSize;
 
                 var AllDoppel = await db.Profil_Doppelzylinder.OrderBy(x => x.Price).Select(x => x.NameSystem).ToListAsync();
@@ -4887,6 +4888,7 @@ namespace schliessanlagen_konfigurator.Controllers
         {
             var Items = db.Profil_Doppelzylinder.Find(profil_Doppelzylinder.Id);
             Items.schliessanlagenId = profil_Doppelzylinder.schliessanlagenId;
+            Items.Gramm = profil_Doppelzylinder.Gramm;
             Items.Type = profil_Doppelzylinder.Type;
             Items.Name = profil_Doppelzylinder.Name;
             Items.companyName = profil_Doppelzylinder.companyName;
@@ -5430,6 +5432,7 @@ namespace schliessanlagen_konfigurator.Controllers
         {
             var Items = db.Profil_Halbzylinder.Find(profil_Halbzylinder.Id);
             Items.schliessanlagenId = profil_Halbzylinder.schliessanlagenId;
+            Items.Gramm = profil_Halbzylinder.Gramm;
             Items.Name = profil_Halbzylinder.Name;
             Items.Type = profil_Halbzylinder.Type;
             Items.companyName = profil_Halbzylinder.companyName;
@@ -5721,6 +5724,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             Items.schliessanlagenId = profil_Halbzylinder.schliessanlagenId;
             Items.Name = profil_Halbzylinder.Name;
+            Items.Gramm = profil_Halbzylinder.Gramm;
             Items.Type = profil_Halbzylinder.Type;
             Items.companyName = profil_Halbzylinder.companyName;
             Items.NameSystem = profil_Halbzylinder.NameSystem;
@@ -5920,7 +5924,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
             }
 
-
+            Items.Gramm = profil_Halbzylinder.Gramm;
             Items.schliessanlagenId = profil_Halbzylinder.schliessanlagenId;
             Items.Name = profil_Halbzylinder.Name;
             Items.Type = profil_Halbzylinder.Type;
@@ -6122,6 +6126,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             Items.schliessanlagenId = profil_Halbzylinder.schliessanlagenId;
             Items.Name = profil_Halbzylinder.Name;
+            Items.Gramm = profil_Halbzylinder.Gramm;
             Items.Type = profil_Halbzylinder.Type;
             Items.companyName = profil_Halbzylinder.companyName;
             Items.NameSystem = profil_Halbzylinder.NameSystem;
@@ -6277,6 +6282,7 @@ namespace schliessanlagen_konfigurator.Controllers
         {
             var Items = db.Profil_Knaufzylinder.Find(profil_Knayf.Id);
             Items.schliessanlagenId = profil_Knayf.schliessanlagenId;
+            Items.Gramm = profil_Knayf.Gramm;
             Items.Name = profil_Knayf.Name;
             Items.Type = profil_Knayf.Type;
             Items.companyName = profil_Knayf.companyName;
