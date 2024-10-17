@@ -530,6 +530,8 @@
 
                                                 <div id="paypal-button-container-@z">
                                                 </div>
+                                                <div id="google-pay-button-container-@z"></div>
+                                                <div id="apple-pay-button-container"></div>
 
                                                 <input type="hidden" value="@orderList[z].Id" id="invoiceNumber-@z" />
                                                 <input type="hidden" value="@orderList[z].UserOrderKey" name="userName" />
@@ -572,9 +574,15 @@
 @section Scripts {
     <script src="https://x.klarnacdn.net/kp/lib/v1/api.js"></script>
 
-<script src="https://www.paypal.com/sdk/js?client-id=AcBDGr9EZyKwRHBxrvvXq2u-vFWhg-e2l09CS97O5fbcwx0JYkjJRfsNUS_lJ6QjdTOwGe830IkBill9&currency=EUR"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AcBDGr9EZyKwRHBxrvvXq2u-vFWhg-e2l09CS97O5fbcwx0JYkjJRfsNUS_lJ6QjdTOwGe830IkBill9&currency=EUR"></script>
+    <script src="https://pay.google.com/gp/p/js/pay.js" async></script>
+
 
 <script>
+
+    let googlePayClient;
+
+    let currentPrice = '0.00';
 
     let removeButton = document.getElementById("removeOrder");
     let AllOrderID = document.querySelector("#OrderId");
@@ -583,7 +591,55 @@
 
     let s = 0;
 
-    let currentPrice = '0.00';
+        function onGooglePayLoaded(id,price) {
+            // Создаем клиента Google Pay
+            googlePayClient = new google.payments.api.PaymentsClient({ environment: 'TEST' });
+
+            // Создаем кнопку Google Pay
+            const googlePayButton = googlePayClient.createButton({
+                onClick: function () {
+                    onGooglePayClicked(price); // Передаем стоимость как параметр
+                }
+            });
+            document.getElementById('google-pay-button-container-' + id).appendChild(googlePayButton);
+        }
+
+        function onGooglePayClicked(price) {
+            const paymentRequest = {
+                apiVersion: 2,
+                apiVersionMinor: 0,
+                allowedPaymentMethods: [{
+                    type: 'CARD',
+                    parameters: {
+                        allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+                        allowedCardNetworks: ['MASTERCARD', 'VISA']
+                    },
+                    tokenizationSpecification: {
+                        type: 'PAYMENT_GATEWAY',
+                        parameters: {
+                            gateway: 'paypal',
+                            gatewayMerchantId: '110827058' // Ваш Merchant ID
+                        }
+                    }
+                }],
+                transactionInfo: {
+                    totalPriceStatus: 'FINAL',
+                    totalPrice: price.toFixed(2), // Используем переданную стоимость
+                    currencyCode: 'EUR' // Укажите вашу валюту
+                },
+            };
+
+            // Загрузка данных платежа
+            googlePayClient.loadPaymentData(paymentRequest)
+                .then(function (paymentData) {
+                    console.log('Получены данные платежа:', paymentData);
+                    // Обработайте платеж здесь
+                })
+                .catch(function (err) {
+                    console.error('Ошибка платежа:', err);
+                    alert('Произошла ошибка: ' + err);
+                });
+        }
 
     function changeSend(BlockItem) 
     {
@@ -668,9 +724,61 @@
                     }
                 }).render(`#paypal-button-container-${id}`);
             }
+            onGooglePayLoaded(id, currentPrice);
            
     }
+        function onApplePayClicked(price) {
+            const paymentRequest = {
+                countryCode: 'DE', // Ваш код страны
+                currencyCode: 'EUR', // Ваш код валюты
+                total: {
+                    label: 'Schlüssel Discount Shop', // Название вашего магазина
+                    amount: price.toFixed(2) // Сумма
+                },
+                supportedNetworks: ['visa', 'mastercard', 'amex'], // Поддерживаемые карты
+                merchantCapabilities: ['supports3DS'], // Возможности мерчанта
+            };
 
+            const session = new ApplePaySession(3, paymentRequest);
+
+            session.onvalidatemerchant = function (event) {
+                // Проверка валидности мерчанта
+                const promise = performValidation(event); // Замените performValidation на вашу функцию
+                promise.then(function (merchantSession) {
+                    session.completeMerchantValidation(merchantSession);
+                }).catch(function (err) {
+                    console.error('Ошибка валидации мерчанта:', err);
+                    session.abort();
+                });
+            };
+
+            session.onpaymentauthorized = function (event) {
+                // Обработка авторизации платежа
+                const payment = event.payment;
+                console.log('Платеж авторизован:', payment);
+                // Обработайте платеж здесь
+                session.completePayment(ApplePaySession.STATUS_SUCCESS); // Или STATUS_FAILURE
+            };
+
+            session.begin();
+        }
+
+        // Проверка поддержки Apple Pay
+        function supportsApplePay() {
+            return window.ApplePaySession && ApplePaySession.canMakePayments();
+        }
+
+        // Загружаем Google Pay API и создаем кнопки с разными ценами
+        window.onload = function () {          
+            if (supportsApplePay()) {
+                const applePayButton = document.createElement('button');
+                applePayButton.innerHTML = 'Оплатить через Apple Pay';
+                applePayButton.onclick = () => onApplePayClicked(15.00); // Передайте нужную цену
+                document.getElementById('apple-pay-button-container').appendChild(applePayButton);
+            } else {
+                console.error('Apple Pay не поддерживается на этом устройстве');
+            }
+        };
 
     document.addEventListener("DOMContentLoaded", function () 
     {

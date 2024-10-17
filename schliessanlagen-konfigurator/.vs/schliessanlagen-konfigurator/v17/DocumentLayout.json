@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|d:\\konfig-systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\areas\\identity\\pages\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|solutionrelative:schliessanlagen-konfigurator\\areas\\identity\\pages\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|d:\\konfig-systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\areas\\identity\\pages\\account\\manage\\pagepersonalorders.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|solutionrelative:schliessanlagen-konfigurator\\areas\\identity\\pages\\account\\manage\\pagepersonalorders.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|d:\\konfig-systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|solutionrelative:schliessanlagen-konfigurator\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|d:\\konfig-systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\areas\\identity\\pages\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|solutionrelative:schliessanlagen-konfigurator\\areas\\identity\\pages\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2EAADC48-A3E3-49D8-B5BF-E83ACC70597B}|schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj|d:\\konfig-systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\areas\\identity\\pages\\account\\manage\\pagepersonalorders.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -42,11 +46,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "HistoriOrders.cshtml",
               "DocumentMoniker": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Areas\\Identity\\Pages\\Account\\Manage\\HistoriOrders.cshtml",
               "RelativeDocumentMoniker": "schliessanlagen-konfigurator\\Areas\\Identity\\Pages\\Account\\Manage\\HistoriOrders.cshtml",
@@ -59,13 +63,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "PagePersonalOrders.cshtml",
               "DocumentMoniker": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Areas\\Identity\\Pages\\Account\\Manage\\PagePersonalOrders.cshtml",
               "RelativeDocumentMoniker": "schliessanlagen-konfigurator\\Areas\\Identity\\Pages\\Account\\Manage\\PagePersonalOrders.cshtml",
               "ToolTip": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Areas\\Identity\\Pages\\Account\\Manage\\PagePersonalOrders.cshtml",
               "RelativeToolTip": "schliessanlagen-konfigurator\\Areas\\Identity\\Pages\\Account\\Manage\\PagePersonalOrders.cshtml",
-              "ViewState": "AgIAALgBAAAAAAAAAAAAAMwBAAB4AAAAAAAAAA==",
+              "ViewState": "AgIAANYCAAAAAAAAAAAgwOYCAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-10-14T08:23:25.019Z",
               "IsPinned": true,
@@ -73,7 +77,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "PagePersonalOrders.cshtml.cs",
               "DocumentMoniker": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Areas\\Identity\\Pages\\Account\\Manage\\PagePersonalOrders.cshtml.cs",
               "RelativeDocumentMoniker": "schliessanlagen-konfigurator\\Areas\\Identity\\Pages\\Account\\Manage\\PagePersonalOrders.cshtml.cs",
@@ -82,12 +86,11 @@
               "ViewState": "AgIAAKAAAAAAAAAAAAAqwLUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-14T08:38:08.159Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "Bezale_Method.js",
               "DocumentMoniker": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Js\\Page_Personal_Order\\Bezale_Method.js",
               "RelativeDocumentMoniker": "schliessanlagen-konfigurator\\wwwroot\\Js\\Page_Personal_Order\\Bezale_Method.js",
@@ -96,12 +99,11 @@
               "ViewState": "AgIAADMAAAAAAAAAAAAQwEUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2024-10-14T14:52:14.144Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "KonfiguratorController.cs",
               "DocumentMoniker": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Controllers\\KonfiguratorController.cs",
               "RelativeDocumentMoniker": "schliessanlagen-konfigurator\\Controllers\\KonfiguratorController.cs",
@@ -114,7 +116,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Program.cs",
+              "RelativeDocumentMoniker": "schliessanlagen-konfigurator\\Program.cs",
+              "ToolTip": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Program.cs",
+              "RelativeToolTip": "schliessanlagen-konfigurator\\Program.cs",
+              "ViewState": "AgIAADMAAAAAAAAAAAAAAFMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-17T10:23:42.475Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "ChangePassword.cshtml.cs",
               "DocumentMoniker": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Areas\\Identity\\Pages\\Account\\Manage\\ChangePassword.cshtml.cs",
               "RelativeDocumentMoniker": "schliessanlagen-konfigurator\\Areas\\Identity\\Pages\\Account\\Manage\\ChangePassword.cshtml.cs",
@@ -122,12 +137,11 @@
               "RelativeToolTip": "schliessanlagen-konfigurator\\Areas\\Identity\\Pages\\Account\\Manage\\ChangePassword.cshtml.cs",
               "ViewState": "AgIAADIAAAAAAAAAAAAIwEsAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-16T15:47:19.882Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-16T15:47:19.882Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Register.cshtml",
               "DocumentMoniker": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
               "RelativeDocumentMoniker": "schliessanlagen-konfigurator\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
@@ -140,7 +154,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "schliessanlagen-konfigurator\\Views\\Shared\\_Layout.cshtml",
