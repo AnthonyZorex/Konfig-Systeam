@@ -778,27 +778,26 @@
             item.value = 1;
         })
         
-            // let selectCountry = document.querySelectorAll("[name='RechnungLand']");
-            // selectCountry.forEach((item) => {
-            //     if (item.value == '@Model.Users[0].Rechnun_Land') {
-            //         item.selected = true;
-            //         // Создаем новое событие change
-            //         const event = new Event('change', {
-            //             bubbles: true, // Событие всплывает
-            //             cancelable: true // Событие можно отменить
-            //         });
+            let selectCountry = document.querySelectorAll("[name='RechnungLand']");
+            selectCountry.forEach((item) => {
+                if (item.value == '@Model.Users[0].Rechnun_Land') {
+                    item.selected = true;
 
-            //         // Диспатчим (вызываем) событие на текущем элементе
-            //         item.dispatchEvent(event);
-            //     }
-            // });
+                    const event = new Event('change', {
+                        bubbles: true, 
+                        cancelable: true 
+                    });
 
-            // selectCountry.forEach((item,index) => {
-            //     item.addEventListener('change', (event) => {
-            //         ProcentMwst(item.value, index);
+                    item.dispatchEvent(event);
+                }
+            });
+
+            selectCountry.forEach((item,index) => {
+                item.addEventListener('change', (event) => {
+                    ProcentMwst(item.value, index);
                     
-            //     });
-            // });
+                });
+            });
        
     });
 
