@@ -83,7 +83,7 @@
 
                     costItems.value = parseFloat(costItems.value) + (DoppelCostValue[selectedOption]);
 
-                    AllPrice.value = parseFloat(AllPrice.value) + (DoppelCostValue[selectedOption] * Number(countSchluss.value));
+                    AllPrice.value = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim()) + (DoppelCostValue[selectedOption] * Number(countSchluss.value));
 
                     OptionOldCheker.value = DoppelCostValue[selectedOption];
 
@@ -95,7 +95,7 @@
 
                     costItems.value = parseFloat(costItems.value) + (KnayfOptionPrice[selectedOption]);
 
-                    AllPrice.value = parseFloat(AllPrice.value) + (KnayfOptionPrice[selectedOption] * Number(countSchluss.value));
+                    AllPrice.value = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim()) + (KnayfOptionPrice[selectedOption] * Number(countSchluss.value));
                     OptionOldCheker.value = KnayfOptionPrice[selectedOption];
                 }
                 if (TypeSylinder === "Halb") {
@@ -115,7 +115,7 @@
 
                     costItems.value = parseFloat(costItems.value) + (HebelOptionsCost[selectedOption]);
 
-                    AllPrice.value = parseFloat(AllPrice.value) + (HebelOptionsCost[selectedOption] * Number(countSchluss.value));
+                    AllPrice.value = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim()) + (HebelOptionsCost[selectedOption] * Number(countSchluss.value));
                     OptionOldCheker.value = HebelOptionsCost[selectedOption];
                 }
                 if (TypeSylinder === "Vorhan") {
@@ -125,7 +125,7 @@
 
                     costItems.value = parseFloat(costItems.value) + (VorhanSchlossValueCost[selectedOption]);
 
-                    AllPrice.value = parseFloat(AllPrice.value) + (VorhanSchlossValueCost[selectedOption] * Number(countSchluss.value));
+                    AllPrice.value = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim()) + (VorhanSchlossValueCost[selectedOption] * Number(countSchluss.value));
                     OptionOldCheker.value = VorhanSchlossValueCost[selectedOption];
                 }
                 if (TypeSylinder === "Aussen") {
@@ -135,7 +135,7 @@
 
                     costItems.value = parseFloat(costItems.value) + (AussenRundOptionsCostValue[selectedOption]);
 
-                    AllPrice.value = parseFloat(AllPrice.value) + (AussenRundOptionsCostValue[selectedOption] * Number(countSchluss.value));
+                    AllPrice.value = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim()) + (AussenRundOptionsCostValue[selectedOption] * Number(countSchluss.value));
                     OptionOldCheker.value = AussenRundOptionsCostValue[selectedOption];
                 }
             }
@@ -157,7 +157,7 @@
 
                     costItems.value = parseFloat(costItems.value) - (OptionOldCheker.value);
 
-                    AllPrice.value = (parseFloat(AllPrice.value) - (OptionOldCheker.value * Number(countSchluss.value)));
+                    AllPrice.value = (parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim()) - (OptionOldCheker.value * Number(countSchluss.value)));
                     item.value = OptionsName;
 
                     item.style.color = "black";
@@ -173,7 +173,8 @@
 
                     costItems.value = parseFloat(costItems.value) - (OptionOldCheker.value);
 
-                    AllPrice.value = (parseFloat(AllPrice.value) - (OptionOldCheker.value * Number(countSchluss.value)));
+                    AllPrice.value = (parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim()) - (OptionOldCheker.value * Number(countSchluss.value)));
+
                     item.value = OptionsName;
                     item.style.color = "black";
                 }
@@ -188,7 +189,8 @@
 
                     costItems.value = parseFloat(costItems.value) - (OptionOldCheker.value);
 
-                    AllPrice.value = (parseFloat(AllPrice.value) - (OptionOldCheker.value * Number(countSchluss.value)));
+                    AllPrice.value = (parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim()) - (OptionOldCheker.value * Number(countSchluss.value)));
+
                     item.value = OptionsName;
                     item.style.color = "black";
                 }
@@ -203,7 +205,8 @@
 
                     costItems.value = parseFloat(costItems.value) - (OptionOldCheker.value);
 
-                    AllPrice.value = (parseFloat(AllPrice.value) - (OptionOldCheker.value * Number(countSchluss.value)));
+                    AllPrice.value = (parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim()) - (OptionOldCheker.value * Number(countSchluss.value)));
+
                     item.value = OptionsName;
                     item.style.color = "black";
                 }
@@ -218,7 +221,8 @@
 
                     costItems.value = parseFloat(costItems.value) - (OptionOldCheker.value);
 
-                    AllPrice.value = (parseFloat(AllPrice.value) - (OptionOldCheker.value * Number(countSchluss.value)));
+                    AllPrice.value = (parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim()) - (OptionOldCheker.value * Number(countSchluss.value)));
+
                     item.value = OptionsName;
                     item.style.color = "black";
                 }
@@ -233,7 +237,8 @@
 
                     costItems.value = parseFloat(costItems.value) - (OptionOldCheker.value);
 
-                    AllPrice.value = (parseFloat(AllPrice.value) - (OptionOldCheker.value * Number(countSchluss.value)));
+                    AllPrice.value = (parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim()) - (OptionOldCheker.value * Number(countSchluss.value)));
+
                     item.value = OptionsName;
                     item.style.color = "black";
                 }

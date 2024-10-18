@@ -1101,13 +1101,13 @@
               @Html.Raw(ViewBag.Lieferzeit)
            </div>
         <div id="orderCost">
-                <input readonly type="hidden" value="@ViewBag.Cost.ToString("C")" id="cost" />
-                <input name="Sum" id="costed" type="hidden" style="border:none;font-size:24px" value="@ViewBag.Cost" />
+                <input readonly type="hidden" value="@ViewBag.Cost.ToString("C2", System.Globalization.CultureInfo.CurrentCulture)" id="cost" />
+                <input name="Sum" id="costed" type="hidden" style="border:none;font-size:24px" value="@ViewBag.Cost.ToString("C2", System.Globalization.CultureInfo.CurrentCulture)" />
         </div>
 
             <div id="orderCost" style="display:flex;align-items: baseline;">
                 <h4>inkl. 19 % MwSt.</h4>
-                <input name="cost" readonly type="text" value="@ViewBag.Cost.ToString("C")" id="Allcost" /> 
+                <input name="cost" readonly type="text" value="@ViewBag.Cost.ToString("C2", System.Globalization.CultureInfo.CurrentCulture)" id="Allcost" />
             </div>
         <br/>
         <div id="buttonActionFinishBlock">
@@ -1217,11 +1217,15 @@
 
     function procent()
     {
-        let Allcost = document.getElementById("Allcost");
-        Allcost.value = (parseFloat(AllPrice.value)).toLocaleString('de-DE', {
-            style: 'currency',
-            currency: 'EUR'
-        });
+
+            let Allcost = document.getElementById("Allcost");
+            let allPriceValue = AllPrice.value.replace("€", "").replace(",", ".").trim(); 
+            let parsedPrice = parseFloat(allPriceValue);
+
+            Allcost.value = parsedPrice.toLocaleString('de-DE', {
+                style: 'currency',
+                currency: 'EUR'
+            });
     }
 
     function switchTypeSylinder(BlockN, value, elemNum) 

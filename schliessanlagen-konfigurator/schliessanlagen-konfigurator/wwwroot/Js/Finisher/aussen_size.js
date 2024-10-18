@@ -27,40 +27,67 @@
         oldAussen.value = 0;
     }
 
-    if (type === "Doppelzylinder") {
+    if (type === "Doppelzylinder")
+    {
         for (let i = 0; i <= oldAussen.value; i++) {
 
-            costItems.value = parseFloat(costItems.value) - (priceDoppelAussenCost[i]);
 
-            AllPrice.value = parseFloat(AllPrice.value) - (priceDoppelAussenCost[i] * Number(countSchluss.value));
+            let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
 
-            let Costen = AllPrice.value.replace(/,/g, '.');
+            // Убедимся, что priceDoppelAussenCost[i] - это число
+            let currentPriceDoppelAussen = parseFloat(priceDoppelAussenCost[i].toString().replace(",", ".").trim());
 
-            AllPrice.value = Costen;
+            // Умножаем на количество и вычитаем из текущей цены
+            let newAllPrice = currentAllPriceValue - (currentPriceDoppelAussen * Number(countSchluss.value));
+
+            // Форматируем результат
+            AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
 
         }
     }
-    if (type === "Halbzylinder") {
-        for (let i = 0; i <= oldAussen.value; i++) {
-            costItems.value = parseFloat(costItems.value) - (halbAussenCost[i]);
+    if (type === "Halbzylinder")
+    {
+        for (let i = 0; i <= oldAussen.value; i++)
+        {
+            let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
 
-            AllPrice.value = parseFloat(AllPrice.value) - (halbAussenCost[i] * Number(countSchluss.value));
+            // Получаем текущее значение AllPrice и очищаем от лишних символов
+            let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
 
-            let Costen = AllPrice.value.replace(/,/g, '.');
+            // Получаем цену из halbAussenCost и очищаем её
+            let currentHalbAussenCost = parseFloat(halbAussenCost[i].toString().replace(",", ".").trim());
 
-            AllPrice.value = Costen;
+            // Вычитаем цену из costItems
+            let newCostItems = currentCostItemsValue - currentHalbAussenCost;
+
+            // Обновляем AllPrice, вычитая цену, умноженную на количество
+            let newAllPrice = currentAllPriceValue - (currentHalbAussenCost * Number(countSchluss.value));
+
+            // Форматируем значения для отображения
+            costItems.value = newCostItems.toFixed(2); 
+            AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
         }
     }
     if (type === "Knaufzylinder") {
         for (let i = 0; i <= oldAussen.value; i++) {
 
-            costItems.value = parseFloat(costItems.value) - (priceKnayfAussenCost[i]);
+            let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
 
-            AllPrice.value = parseFloat(AllPrice.value) - (priceKnayfAussenCost[i] * Number(countSchluss.value));
+            // Получаем текущее значение AllPrice и очищаем его от лишних символов
+            let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
 
-            let Costen = AllPrice.value.replace(/,/g, '.');
+            // Получаем цену из priceKnayfAussenCost и очищаем её
+            let currentPriceKnayfAussenCost = parseFloat(priceKnayfAussenCost[i].toString().replace(",", ".").trim());
 
-            AllPrice.value = Costen;
+            // Вычитаем цену из costItems
+            let newCostItems = currentCostItemsValue - currentPriceKnayfAussenCost;
+
+            // Обновляем AllPrice, вычитая цену, умноженную на количество
+            let newAllPrice = currentAllPriceValue - (currentPriceKnayfAussenCost * Number(countSchluss.value));
+
+            // Форматируем значения для отображения
+            costItems.value = newCostItems.toFixed(2); // Оставляем два знака после запятой и добавляем символ €
+            AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €"; 
 
         }
     }
@@ -94,34 +121,58 @@
                     {
                         if (kleinSize.includes(Number(Aussen.value)))
                         {
-                            costItems.value = parseFloat(costItems.value) - (kleinPrice[i]);
+                            let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
 
-                            AllPrice.value = parseFloat(AllPrice.value) - (kleinPrice[i] * Number(countSchluss.value));
+                            // Получаем текущее значение AllPrice и очищаем его от лишних символов
+                            let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
 
-                            let Costen = AllPrice.value.replace(/,/g, '.');
+                            // Получаем цену из kleinPrice и очищаем её
+                            let currentKleinPrice = parseFloat(kleinPrice[i].toString().replace(",", ".").trim());
 
-                            AllPrice.value = Costen;
+                            // Вычитаем цену из costItems
+                            let newCostItems = currentCostItemsValue - currentKleinPrice;
+
+                            // Обновляем AllPrice, вычитая цену, умноженную на количество
+                            let newAllPrice = currentAllPriceValue - (currentKleinPrice * Number(countSchluss.value));
+
+                            // Форматируем значения для отображения
+                            costItems.value = newCostItems.toFixed(2); // Оставляем два знака после запятой и добавляем символ €
+                            AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
                         }
                         else {
-                            costItems.value = parseFloat(costItems.value) - (priceDoppelInternCost[i]);
+                            let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
 
-                            AllPrice.value = parseFloat(AllPrice.value) - (priceDoppelInternCost[i] * Number(countSchluss.value));
+                            // Получаем текущее значение AllPrice и очищаем его от лишних символов
+                            let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
 
-                            let Costen = AllPrice.value.replace(/,/g, '.');
+                            // Получаем цену из priceDoppelInternCost[i]
+                            let currentPriceDoppelIntern = parseFloat(priceDoppelInternCost[i].toString().replace(",", ".").trim());
 
-                            AllPrice.value = Costen;
-                           
+                            // Вычитаем цену из costItems
+                            let newCostItems = currentCostItemsValue - currentPriceDoppelIntern;
 
+                            // Обновляем AllPrice, вычитая цену, умноженную на количество
+                            let newAllPrice = currentAllPriceValue - (currentPriceDoppelIntern * Number(countSchluss.value));
+
+                            // Форматируем значения для отображения
+                            costItems.value = newCostItems.toFixed(2); // Оставляем два знака после запятой и добавляем символ €
+                            AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
                         }
                     }
                     else {
-                        costItems.value = parseFloat(costItems.value) - (priceDoppelInternCost[i]);
+                        let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
+                        let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
 
-                        AllPrice.value = parseFloat(AllPrice.value) - (priceDoppelInternCost[i] * Number(countSchluss.value));
+                        // Получаем цену из priceDoppelInternCost[i] и очищаем от лишних символов
+                        let currentPriceDoppelIntern = parseFloat(priceDoppelInternCost[i].toString().replace(",", ".").trim());
 
-                        let Costen = AllPrice.value.replace(/,/g, '.');
+                        // Обновляем значения с вычитанием
+                        let newCostItems = currentCostItemsValue - currentPriceDoppelIntern;
+                        let newAllPrice = currentAllPriceValue - (currentPriceDoppelIntern * Number(countSchluss.value));
 
-                        AllPrice.value = Costen;
+                        // Устанавливаем новое значение для costItems и AllPrice
+                        costItems.value = (newCostItems).toFixed(2); // Форматируем и добавляем символ €
+                        AllPrice.value = (newAllPrice).toFixed(2).replace(".", ",") + " €";
                     }
                 }
                 is_GrossSize = true;
@@ -150,34 +201,64 @@
                     {
                         if (SelectItemId > kleinCountItem.length || oldIntern.value > kleinPrice.length)
                         {
-                            costItems.value = parseFloat(costItems.value) - (priceDoppelInternCost[i]);
+                            let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
 
-                            AllPrice.value = parseFloat(AllPrice.value) - (priceDoppelInternCost[i] * Number(countSchluss.value));
+                            // Получаем текущее значение AllPrice и очищаем от лишних символов
+                            let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
 
-                            let Costen = AllPrice.value.replace(/,/g, '.');
+                            // Получаем цену из priceDoppelInternCost и очищаем её
+                            let currentPriceDoppelIntern = parseFloat(priceDoppelInternCost[i].toString().replace(",", ".").trim());
 
-                            AllPrice.value = Costen;
+                            // Вычитаем цену из costItems
+                            let newCostItems = currentCostItemsValue - currentPriceDoppelIntern;
+
+                            // Обновляем AllPrice, вычитая цену, умноженную на количество
+                            let newAllPrice = currentAllPriceValue - (currentPriceDoppelIntern * Number(countSchluss.value));
+
+                            // Форматируем значения для отображения
+                            costItems.value = newCostItems.toFixed(2); // Оставляем два знака после запятой и добавляем символ €
+                            AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €"; 
                         }
                         else
                         {
-                            costItems.value = parseFloat(costItems.value) - (kleinPrice[i]);
+                            let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
 
-                            AllPrice.value = parseFloat(AllPrice.value) - (kleinPrice[i] * Number(countSchluss.value));
+                            // Получаем текущее значение AllPrice и очищаем от лишних символов
+                            let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
 
-                            let Costen = AllPrice.value.replace(/,/g, '.');
+                            // Убедимся, что kleinPrice[i] - это число
+                            let currentKleinPrice = parseFloat(kleinPrice[i].toString().replace(",", ".").trim());
 
-                            AllPrice.value = Costen;
+                            // Вычитаем цену из kleinPrice из costItems
+                            let newCostItems = currentCostItemsValue - currentKleinPrice;
+
+                            // Обновляем AllPrice, вычитая цену, умноженную на количество
+                            let newAllPrice = currentAllPriceValue - (currentKleinPrice * Number(countSchluss.value));
+
+                            // Форматируем значения для отображения
+                            costItems.value = newCostItems.toFixed(2); // Оставляем два знака после запятой и добавляем символ €
+                            AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €"; // 
                         }
                     }
                     else
                     {
-                        costItems.value = parseFloat(costItems.value) - (priceDoppelInternCost[i]);
+                        let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
 
-                        AllPrice.value = parseFloat(AllPrice.value) - (priceDoppelInternCost[i] * Number(countSchluss.value));
+                        // Получаем текущее значение AllPrice и очищаем от лишних символов
+                        let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
 
-                        let Costen = AllPrice.value.replace(/,/g, '.');
+                        // Убедимся, что priceDoppelInternCost[i] - это число
+                        let currentPriceDoppelIntern = parseFloat(priceDoppelInternCost[i].toString().replace(",", ".").trim());
 
-                        AllPrice.value = Costen;
+                        // Вычитаем цену из priceDoppelInternCost из costItems
+                        let newCostItems = currentCostItemsValue - currentPriceDoppelIntern;
+
+                        // Обновляем AllPrice, вычитая цену умноженную на количество
+                        let newAllPrice = currentAllPriceValue - (currentPriceDoppelIntern * Number(countSchluss.value));
+
+                        // Форматируем значения для отображения
+                        costItems.value = newCostItems.toFixed(2); // Оставляем два знака после запятой и добавляем символ €
+                        AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
                     }
                 }
 
@@ -189,28 +270,44 @@
         }
 
 
-        for (let s = 0; s <= SelectItemId; s++) {
+        for (let s = 0; s <= SelectItemId; s++)
+        {
 
-            costItems.value = parseFloat(costItems.value) + (priceDoppelAussenCost[s]);
+            let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
 
-            AllPrice.value = parseFloat(AllPrice.value) + (priceDoppelAussenCost[s] * Number(countSchluss.value));
+            // Получаем текущее значение AllPrice и очищаем от лишних символов
+            let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
 
-            let Costen = AllPrice.value.replace(/,/g, '.');
+            // Убедимся, что priceDoppelAussenCost[s] - это число
+            let currentPriceDoppelAussen = parseFloat(priceDoppelAussenCost[s].toString().replace(",", ".").trim());
 
-            AllPrice.value = Costen;
+            // Добавляем цену из priceDoppelAussenCost к costItems
+            let newCostItems = currentCostItemsValue + currentPriceDoppelAussen;
 
+            // Обновляем AllPrice, добавляя цену умноженную на количество
+            let newAllPrice = currentAllPriceValue + (currentPriceDoppelAussen * Number(countSchluss.value));
+
+            // Форматируем значения для отображения
+            costItems.value = newCostItems.toFixed(2); // Оставляем два знака после запятой и добавляем символ €
+            AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
+
+          
         }
     }
     if (type === "Halbzylinder") {
-        for (let s = 0; s <= SelectItemId; s++) {
-            costItems.value = parseFloat(costItems.value) + (halbAussenCost[s]);
+        for (let s = 0; s <= SelectItemId; s++)
+        {
+            let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
+            let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
+            let currentHalbAussenCost = parseFloat(halbAussenCost[s].toString().replace(",", ".").trim());
 
-            AllPrice.value = parseFloat(AllPrice.value) + (halbAussenCost[s] * Number(countSchluss.value));
+            costItems.value = (currentCostItemsValue + currentHalbAussenCost).toFixed(2);
 
-            let Costen = AllPrice.value.replace(/,/g, '.');
+            // Учитываем количество и выполняем расчеты для AllPrice
+            let newAllPrice = currentAllPriceValue + (currentHalbAussenCost * Number(countSchluss.value));
 
-            AllPrice.value = Costen;
-
+            // Форматируем AllPrice, заменяем точку на запятую и добавляем символ €
+            AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
         }
     }
     if (type === "Knaufzylinder")
@@ -241,34 +338,48 @@
                     {
                         if (kleinKnayf.includes(Number(Aussen.value)))
                         {
-                            costItems.value = parseFloat(costItems.value) - (kleinKnayfPrice[i]);
+                            let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
+                            let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
 
-                            AllPrice.value = parseFloat(AllPrice.value) - (kleinKnayfPrice[i] * Number(countSchluss.value));
+                            // Получаем цену из kleinKnayfPrice[i] и очищаем от лишних символов
+                            let currentKleinKnayfPrice = parseFloat(kleinKnayfPrice[i].toString().replace(",", ".").trim());
+                            let newCostItems = currentCostItemsValue - currentKleinKnayfPrice;
+                            let newAllPrice = currentAllPriceValue - (currentKleinKnayfPrice * Number(countSchluss.value));
 
-                            let Costen = AllPrice.value.replace(/,/g, '.');
-
-                            AllPrice.value = Costen;
-                            
+                            // Устанавливаем новое значение для costItems и AllPrice с форматированием
+                            costItems.value = (newCostItems).toFixed(2); // Форматируем и добавляем символ €
+                            AllPrice.value = (newAllPrice).toFixed(2).replace(".", ",") + " €"; 
                         }
                         else {
                             
-                            costItems.value = parseFloat(costItems.value) - (priceKnayfInternCost[i]);
+                            let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
+                            let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
 
-                            AllPrice.value = parseFloat(AllPrice.value) - (priceKnayfInternCost[i] * Number(countSchluss.value));
+                            // Получаем цену из priceKnayfInternCost[i] и очищаем от лишних символов
+                            let currentPriceKnayfInternCost = parseFloat(priceKnayfInternCost[i].toString().replace(",", ".").trim());
 
-                            let Costen = AllPrice.value.replace(/,/g, '.');
+                            let newCostItems = currentCostItemsValue - currentPriceKnayfInternCost;
+                            let newAllPrice = currentAllPriceValue - (currentPriceKnayfInternCost * Number(countSchluss.value));
 
-                            AllPrice.value = Costen;
+                            // Устанавливаем новое значение для costItems и AllPrice с форматированием
+                            costItems.value = (newCostItems).toFixed(2); // Форматируем и добавляем символ €
+                            AllPrice.value = (newAllPrice).toFixed(2).replace(".", ",") + " €"; 
                         }
                     }
                     else {
-                        costItems.value = parseFloat(costItems.value) - (priceKnayfInternCost[i]);
+                        let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
 
-                        AllPrice.value = parseFloat(AllPrice.value) - (priceKnayfInternCost[i] * Number(countSchluss.value));
+                        // Получаем текущее значение AllPrice и очищаем его
+                        let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
 
-                        let Costen = AllPrice.value.replace(/,/g, '.');
+                        // Получаем текущую цену из priceKnayfInternCost[i]
+                        let currentPriceKnayfInternCost = parseFloat(priceKnayfInternCost[i].toString().replace(",", ".").trim());
+                        let newCostItems = currentCostItemsValue - currentPriceKnayfInternCost;
+                        let newAllPrice = currentAllPriceValue - (currentPriceKnayfInternCost * Number(countSchluss.value));
 
-                        AllPrice.value = Costen;
+                        // Устанавливаем новое значение для costItems и AllPrice с форматированием
+                        costItems.value = (newCostItems).toFixed(2); // Форматируем и добавляем символ €
+                        AllPrice.value = (newAllPrice).toFixed(2).replace(".", ",") + " €";
                     }
                 }
                 is_GrossSize = true;
@@ -295,32 +406,48 @@
                     {
                         if (SelectItemId > kleinKnayfCountItem.length || oldIntern.value > kleinKnayfPrice.length)
                         {
-                            costItems.value = parseFloat(costItems.value) - (priceKnayfInternCost[i]);
+                            let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
 
-                            AllPrice.value = parseFloat(AllPrice.value) - (priceKnayfInternCost[i] * Number(countSchluss.value));
+                            // Преобразуем значение AllPrice, очищая его от символов и меняя формат
+                            let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
 
-                            let Costen = AllPrice.value.replace(/,/g, '.');
+                            // Получаем текущую цену из priceKnayfInternCost[i], меняя формат
+                            let currentPriceKnayfInternCost = parseFloat(priceKnayfInternCost[i].toString().replace(",", ".").trim());
+                            
+                            let newCostItems = currentCostItemsValue - currentPriceKnayfInternCost;
+                            let newAllPrice = currentAllPriceValue - (currentPriceKnayfInternCost * Number(countSchluss.value));
 
-                            AllPrice.value = Costen;
+                            // Форматируем и устанавливаем новое значение для costItems
+                            costItems.value = (newCostItems).toFixed(2); // Форматируем и добавляем символ €
+
+                            // Форматируем и устанавливаем новое значение для AllPrice
+                            AllPrice.value = (newAllPrice).toFixed(2).replace(".", ",") + " €";
                         }
                         else {
-                            costItems.value = parseFloat(costItems.value) - (kleinKnayfPrice[i]);
+                            let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
+                            let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
+                            let currentKleinKnayfPrice = parseFloat(kleinKnayfPrice[i].toString().replace(",", ".").trim());
 
-                            AllPrice.value = parseFloat(AllPrice.value) - (kleinKnayfPrice[i] * Number(countSchluss.value));
+                            let newCostItems = currentCostItemsValue - currentKleinKnayfPrice;
+                            let newAllPrice = currentAllPriceValue - (currentKleinKnayfPrice * Number(countSchluss.value));
 
-                            let Costen = AllPrice.value.replace(/,/g, '.');
-
-                            AllPrice.value = Costen;
+                            // Форматируем значения, добавляем символ € и заменяем точку на запятую
+                            costItems.value = (newCostItems).toFixed(2); // Форматируем для costItems
+                            AllPrice.value = (newAllPrice).toFixed(2).replace(".", ",") + " €";
                         }
                     }
                     else {
-                        costItems.value = parseFloat(costItems.value) - (priceKnayfInternCost[i]);
+                        let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
+                        let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
+                        let currentPriceKnayfInternCost = parseFloat(priceKnayfInternCost[i].toString().replace(",", ".").trim());
 
-                        AllPrice.value = parseFloat(AllPrice.value) - (priceKnayfInternCost[i] * Number(countSchluss.value));
+                        costItems.value = (currentCostItemsValue - currentPriceKnayfInternCost).toFixed(2);
 
-                        let Costen = AllPrice.value.replace(/,/g, '.');
+                        // Учитываем количество и выполняем расчеты для AllPrice
+                        let newAllPrice = currentAllPriceValue - (currentPriceKnayfInternCost * Number(countSchluss.value));
 
-                        AllPrice.value = Costen;
+                        // Форматируем AllPrice, заменяем точку на запятую и добавляем символ €
+                        AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
                     }
                 }
 
@@ -333,13 +460,16 @@
 
         for (let s = 0; s <= SelectItemId; s++) {
 
-            costItems.value = parseFloat(costItems.value) + (priceKnayfAussenCost[s]);
+            let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
+            let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
+            let currentPriceKnayfAussenCost = parseFloat(priceKnayfAussenCost[s].toString().replace(",", ".").trim());
+            costItems.value = (currentCostItemsValue + currentPriceKnayfAussenCost).toFixed(2);
 
-            AllPrice.value = parseFloat(AllPrice.value) + (priceKnayfAussenCost[s] * Number(countSchluss.value));
+            // Учитываем количество и выполняем расчеты для AllPrice
+            let newAllPrice = currentAllPriceValue + (currentPriceKnayfAussenCost * Number(countSchluss.value));
 
-            let Costen = AllPrice.value.replace(/,/g, '.');
-
-            AllPrice.value = Costen;
+            // Форматируем AllPrice, заменяем точку на запятую и добавляем символ €
+            AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
         }
     }
 

@@ -27,34 +27,45 @@ function selectParamIntern(idBlock, type, selectId)
             {
                 if (kleinSize.includes(Number(Aussen.value)))
                 {
-                    costItems.value = parseFloat(costItems.value) - (kleinPrice[i]);
+                    let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
+                    let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
+                    let currentKleinPrice = parseFloat(kleinPrice[i].toString().replace(",", ".").trim());
 
-                    AllPrice.value = parseFloat(AllPrice.value) - (kleinPrice[i] * Number(countSchluss.value));
+                    costItems.value = (currentCostItemsValue - currentKleinPrice).toFixed(2);
 
-                    let Costen = AllPrice.value.replace(/,/g, '.');
+                    // Учитываем количество и выполняем расчеты для AllPrice
+                    let newAllPrice = currentAllPriceValue - (currentKleinPrice * Number(countSchluss.value));
 
-                    AllPrice.value = Costen;
+                    // Форматируем AllPrice, заменяем точку на запятую и добавляем символ €
+                    AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
                 }
                 else
                 {
-                    costItems.value = parseFloat(costItems.value) - (priceDoppelInternCost[i]);
+                    let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
+                    let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
+                    let currentPriceDoppelInternCost = parseFloat(priceDoppelInternCost[i]);
 
-                    AllPrice.value = parseFloat(AllPrice.value) - (priceDoppelInternCost[i] * Number(countSchluss.value));
+                    costItems.value = (currentCostItemsValue - currentPriceDoppelInternCost).toFixed(2);
 
-                    let Costen = AllPrice.value.replace(/,/g, '.');
+                    // Учитываем количество и обновляем AllPrice
+                    let newAllPrice = currentAllPriceValue - (currentPriceDoppelInternCost * Number(countSchluss.value));
 
-                    AllPrice.value = Costen;
+                    // Форматируем AllPrice, заменяем точку на запятую и добавляем символ €
+                    AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
                 }
             }
             else
             {
-                costItems.value = parseFloat(costItems.value) - (priceDoppelInternCost[i]);
+                let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
+                let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
+                let currentPriceDoppelInternCost = parseFloat(priceDoppelInternCost[i]);
+                costItems.value = (currentCostItemsValue - currentPriceDoppelInternCost).toFixed(2);
 
-                AllPrice.value = parseFloat(AllPrice.value) - (priceDoppelInternCost[i] * Number(countSchluss.value));
+                // Учитываем количество и обновляем AllPrice
+                let newAllPrice = currentAllPriceValue - (currentPriceDoppelInternCost * Number(countSchluss.value));
 
-                let Costen = AllPrice.value.replace(/,/g, '.');
-
-                AllPrice.value = Costen;
+                // Форматируем AllPrice, заменяем точку на запятую и добавляем символ €
+                AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
             }
         }
     }
@@ -67,35 +78,46 @@ function selectParamIntern(idBlock, type, selectId)
             {
                 if (kleinKnayf.includes(Number(Aussen.value)))
                 {
-                    costItems.value = parseFloat(costItems.value) - (kleinKnayfPrice[i]);
+                    let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
+                    let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
+                    let currentKleinKnayfPrice = parseFloat(kleinKnayfPrice[i]);
 
-                    AllPrice.value = parseFloat(AllPrice.value) - (kleinKnayfPrice[i] * Number(countSchluss.value));
+                    costItems.value = (currentCostItemsValue - currentKleinKnayfPrice).toFixed(2).replace(".", ",") + " €";
 
-                    let Costen = AllPrice.value.replace(/,/g, '.');
+                    // Учитываем количество и обновляем AllPrice
+                    let newAllPrice = currentAllPriceValue - (currentKleinKnayfPrice * Number(countSchluss.value));
 
-                    AllPrice.value = Costen;
+                    // Форматируем AllPrice, заменяем точку на запятую и добавляем символ €
+                    AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
                 }
                 else
                 {
-                    costItems.value = parseFloat(costItems.value) - (priceKnayfInternCost[i]);
+                    let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
+                    let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
+                    let currentPriceKnayfIntern = parseFloat(priceKnayfInternCost[i]);
 
-                    AllPrice.value = parseFloat(AllPrice.value) - (priceKnayfInternCost[i] * Number(countSchluss.value));
 
-                    let Costen = AllPrice.value.replace(/,/g, '.');
+                    costItems.value = (currentCostItemsValue - currentPriceKnayfIntern).toFixed(2).replace(".", ",") + " €";
 
-                    AllPrice.value = Costen;
+                    // Обновляем AllPrice
+                    let newAllPrice = currentAllPriceValue - (currentPriceKnayfIntern * Number(countSchluss.value));
+
+                    // Форматируем AllPrice
+                    AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
 
                 }
             }
             else
             {
-                costItems.value = parseFloat(costItems.value) - (priceKnayfInternCost[i]);
+                let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
+                let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
+                let currentPriceKnayfIntern = parseFloat(priceKnayfInternCost[i]);
 
-                AllPrice.value = parseFloat(AllPrice.value) - (priceKnayfInternCost[i] * Number(countSchluss.value));
 
-                let Costen = AllPrice.value.replace(/,/g, '.');
-
-                AllPrice.value = Costen;
+                costItems.value = (currentCostItemsValue - currentPriceKnayfIntern).toFixed(2);
+                AllPrice.value = ((currentAllPriceValue - (currentPriceKnayfIntern * Number(countSchluss.value)))
+                    .toFixed(2)
+                    .replace(".", ",")) + " €";
             }
         }
 
@@ -110,34 +132,38 @@ function selectParamIntern(idBlock, type, selectId)
             {
                 if (kleinSize.includes(Number(Aussen.value)))
                 {
-                    costItems.value = parseFloat(costItems.value) + (kleinPrice[s]);
+                    let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
+                    let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
+                    let currentKleinPrice = parseFloat(kleinPrice[s]);
 
-                    AllPrice.value = parseFloat(AllPrice.value) + (kleinPrice[s] * Number(countSchluss.value));
-
-                    let Costen = AllPrice.value.replace(/,/g, '.');
-
-                    AllPrice.value = Costen;
+                    costItems.value = (currentCostItemsValue + currentKleinPrice).toFixed(2);
+                    AllPrice.value = (currentAllPriceValue + (currentKleinPrice * Number(countSchluss.value)))
+                        .toFixed(2)
+                        .replace(".", ",") + " €";
                     
                 }
                 else {
                    
-                    costItems.value = parseFloat(costItems.value) + (priceDoppelInternCost[s]);
+                    let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
+                    let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
+                    let currentPriceDoppelInternCost = parseFloat(priceDoppelInternCost[s]);
 
-                    AllPrice.value = parseFloat(AllPrice.value) + (priceDoppelInternCost[s] * Number(countSchluss.value));
 
-                    let Costen = AllPrice.value.replace(/,/g, '.');
-
-                    AllPrice.value = Costen;
+                    costItems.value = (currentCostItemsValue + currentPriceDoppelInternCost).toFixed(2);
+                    AllPrice.value = (currentAllPriceValue + (currentPriceDoppelInternCost * Number(countSchluss.value)))
+                        .toFixed(2)
+                        .replace(".", ",") + " €";
                 }
             }
             else {
-                costItems.value = parseFloat(costItems.value) + (priceDoppelInternCost[s]);
+                let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
+                let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
+                let currentPriceDoppelInternCost = parseFloat(priceDoppelInternCost[s]);
 
-                AllPrice.value = parseFloat(AllPrice.value) + (priceDoppelInternCost[s] * Number(countSchluss.value));
-
-                let Costen = AllPrice.value.replace(/,/g, '.');
-
-                AllPrice.value = Costen;
+                costItems.value = (currentCostItemsValue + currentPriceDoppelInternCost).toFixed(2);
+                AllPrice.value = (currentAllPriceValue + (currentPriceDoppelInternCost * Number(countSchluss.value)))
+                    .toFixed(2)
+                    .replace(".", ",") + " €";
             }
 
 
@@ -153,35 +179,36 @@ function selectParamIntern(idBlock, type, selectId)
             {
                 if (kleinKnayf.includes(Number(Aussen.value))) {
 
-                    costItems.value = parseFloat(costItems.value) + (kleinPrice[s]);
-
-                    AllPrice.value = parseFloat(AllPrice.value) + (kleinPrice[s] * Number(countSchluss.value));
-
-                    let Costen = AllPrice.value.replace(/,/g, '.');
-
-                    AllPrice.value = Costen;
+                    let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
+                    let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
+                    let currentKleinPriceValue = parseFloat(kleinPrice[s]);
+                    costItems.value = (currentCostItemsValue + currentKleinPriceValue).toFixed(2);
+                    AllPrice.value = (currentAllPriceValue + (currentKleinPriceValue * Number(countSchluss.value)))
+                        .toFixed(2)
+                        .replace(".", ",") + " €";
                 }
                 else
                 {
-                    costItems.value = parseFloat(costItems.value) + (priceKnayfInternCost[s]);
+                    let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
+                    let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
+                    let currentKnayfInternCostValue = parseFloat(priceKnayfInternCost[s]);
 
-                    AllPrice.value = parseFloat(AllPrice.value) + (priceKnayfInternCost[s] * Number(countSchluss.value));
-
-                    let Costen = AllPrice.value.replace(/,/g, '.');
-
-                    AllPrice.value = Costen;
-                   
+                    costItems.value = (currentCostItemsValue + currentKnayfInternCostValue).toFixed(2);
+                    AllPrice.value = (currentAllPriceValue + (currentKnayfInternCostValue * Number(countSchluss.value)))
+                        .toFixed(2)
+                        .replace(".", ",") + " €";
 
                 }
             }
             else {
-                costItems.value = parseFloat(costItems.value) + (priceKnayfInternCost[s]);
+                let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
+                let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
+                let currentKnayfInternCostValue = parseFloat(priceKnayfInternCost[s]);
 
-                AllPrice.value = parseFloat(AllPrice.value) + (priceKnayfInternCost[s] * Number(countSchluss.value));
-
-                let Costen = AllPrice.value.replace(/,/g, '.');
-
-                AllPrice.value = Costen;
+                costItems.value = (currentCostItemsValue + currentKnayfInternCostValue).toFixed(2);
+                AllPrice.value = (currentAllPriceValue + (currentKnayfInternCostValue * Number(countSchluss.value)))
+                    .toFixed(2)
+                    .replace(".", ",") + " €";
             }
 
 

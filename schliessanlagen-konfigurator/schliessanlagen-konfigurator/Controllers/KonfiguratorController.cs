@@ -5836,11 +5836,12 @@ namespace schliessanlagen_konfigurator.Controllers
             var SumCostProduct = DopelOrderlist.Select(x => x.Price).Sum() + KnaufZelinder.Select(x => x.Price).Sum() + Halbzylinder.Select(x => x.Price).Sum() +
                 HelbZ.Select(x => x.Price).Sum() + Vorhanschlos.Select(x => x.Price).Sum() + Aussenzylinder.Select(x => x.Price).Sum() + costKey;
 
-            int precision = 2;
+            decimal xConvert = Convert.ToDecimal(SumCost);
 
-            double Costed = Math.Round(SumCost, precision);
+            decimal yConvert = Convert.ToDecimal(SumCostProduct);
+            decimal Costed = Math.Round(xConvert, 2);
 
-            double CostedProduct = Math.Round(SumCostProduct, precision);
+            decimal CostedProduct = Math.Round(yConvert, 2);
 
             ViewBag.CostProducted = JsonConvert.SerializeObject(CostedProduct);
 

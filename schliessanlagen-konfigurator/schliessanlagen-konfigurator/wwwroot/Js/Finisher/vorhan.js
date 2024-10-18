@@ -12,18 +12,24 @@
         oldAussen.value = 0;
     }
 
-    AllPrice.value = parseFloat(AllPrice.value) - (VorhanSizeCost[oldAussen.value] * Number(countSchluss.value));
-    costItems.value = parseFloat(costItems.value) - (VorhanSizeCost[oldAussen.value]);
+    let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
 
+    // Получаем текущее значение costItems
+    let currentCostItemValue = parseFloat(costItems.value.replace(",", ".").trim());
+
+    currentAllPriceValue -= (VorhanSizeCost[oldAussen.value] * Number(countSchluss.value));
+    currentCostItemValue -= VorhanSizeCost[oldAussen.value];
+
+    // Обновляем значение oldAussen
     oldAussen.value = SelectItemId;
 
+    // Добавляем стоимость для нового SelectItemId
+    currentCostItemValue += VorhanSizeCost[SelectItemId];
+    currentAllPriceValue += (VorhanSizeCost[SelectItemId] * Number(countSchluss.value));
 
-    costItems.value = parseFloat(costItems.value) + (VorhanSizeCost[SelectItemId]);
-    AllPrice.value = parseFloat(AllPrice.value) + (VorhanSizeCost[SelectItemId] * Number(countSchluss.value));
-
-    let Costen = AllPrice.value.replace(/,/g, '.');
-
-    AllPrice.value = Costen;
+    // Округляем до двух знаков после запятой и форматируем
+    AllPrice.value = currentAllPriceValue.toFixed(2).replace(".", ",") + " €";
+    costItems.value = currentCostItemValue.toFixed(2).replace(".", ",");
 
     procent();
 }

@@ -141,8 +141,8 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
             return Page();
 
         }
-        public async Task<IActionResult> OnPost(string SendAdresse,string SendVorname, string SendNachname,string SendFirma,
-        string SendVat,string SendStrasse, string SendZip, string SendStadt, string SendLand, string SendTelefon,
+        public async Task<IActionResult> OnPost(string SendVorname, string SendNachname,string SendFirma,
+        string SendVat,string SendStrasse, string SendZip, string SendStadt, string SendLand, string SendTelefon,string NettoSum,
         string DhlSend,string Pay,string Steuer, string Versand, string OrderSum,string Rehnung, string RechnungAdresse,string RechnungVorname,
         string RechnungNachname, string RechnungFirma, string RechnungVat, string RechnungStrasse, string RechnungZip,
         string RechnungStadt, string RechnungLand, string RechnungTelefon, string userName,string procent,bool aufRechnung)
@@ -150,7 +150,6 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
 
             var model = new
             {
-                SendAdresse = SendAdresse,
                 SendVorname = SendVorname,
                 SendNachname = SendNachname,
                 SendFirma = SendFirma,
@@ -163,13 +162,13 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
                 Steuer = Steuer,
                 Versand = Versand,
                 OrderSum = OrderSum,
+                NettoSum = NettoSum,
                 SendTelefon = SendTelefon,
                 DhlSend = DhlSend,
                 Rehnung = Rehnung,
                 Pay = Pay,
                 procent = procent,
 
-                RechnungAdresse = SendAdresse,
                 RechnungVorname = RechnungVorname,
                 RechnungNachname = RechnungNachname,
                 RechnungFirma = RechnungFirma,

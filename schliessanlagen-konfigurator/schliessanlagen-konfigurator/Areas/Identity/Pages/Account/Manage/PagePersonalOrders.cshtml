@@ -425,11 +425,11 @@
                                                         <img src="@("/compression/paypal.webp")" height="30" width="30" />
                                                             <h4>PayPall</h4>
                                                         </label><br>                                                   
-                                                  @*     <label>
+                                                         <label>
                                                             <input type="radio" onchange="BezaleMethod(@z)" name="Pay" value="auf Rechnung">
                                                         <img src="@("/compression/cash-on-delivery.png")" height="40" width="40" />
                                                             <h4>auf Rechnung</h4>
-                                                        </label> *@ 
+                                                        </label>  
                                                     </div>
                                                 </div>
 
@@ -531,7 +531,7 @@
                                                 <div id="paypal-button-container-@z">
                                                 </div>
                                                 <div id="google-pay-button-container-@z"></div>
-                                                <div id="apple-pay-button-container"></div>
+                                                <div id="apple-pay-button-container-@z"></div>
 
                                                 <input type="hidden" value="@orderList[z].Id" id="invoiceNumber-@z" />
                                                 <input type="hidden" value="@orderList[z].UserOrderKey" name="userName" />
@@ -576,7 +576,7 @@
 
     <script src="https://www.paypal.com/sdk/js?client-id=AcBDGr9EZyKwRHBxrvvXq2u-vFWhg-e2l09CS97O5fbcwx0JYkjJRfsNUS_lJ6QjdTOwGe830IkBill9&currency=EUR"></script>
     <script src="https://pay.google.com/gp/p/js/pay.js" async></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/big.js/6.1.1/big.min.js"></script>
 
 <script>
 
@@ -617,29 +617,68 @@
                     tokenizationSpecification: {
                         type: 'PAYMENT_GATEWAY',
                         parameters: {
-                            gateway: 'paypal',
-                            gatewayMerchantId: '110827058' // Ваш Merchant ID
+                            gateway: 'paypal', // Убедитесь, что это правильно настроено
+                            gatewayMerchantId: '110827058' // Ваш Merchant ID для продуктивной среды
                         }
                     }
                 }],
                 transactionInfo: {
                     totalPriceStatus: 'FINAL',
-                    totalPrice: price.toFixed(2), // Используем переданную стоимость
+                    totalPrice: price.toFixed(2),
                     currencyCode: 'EUR' // Укажите вашу валюту
                 },
             };
 
-            // Загрузка данных платежа
             googlePayClient.loadPaymentData(paymentRequest)
                 .then(function (paymentData) {
-                    console.log('Получены данные платежа:', paymentData);
-                    // Обработайте платеж здесь
+                    document.getElementById('myForm').submit();
                 })
                 .catch(function (err) {
                     console.error('Ошибка платежа:', err);
                     alert('Произошла ошибка: ' + err);
                 });
         }
+
+        // function onApplePayClicked(price) {
+        //     const paymentRequest = {
+        //         countryCode: 'DE', // Ваш код страны
+        //         currencyCode: 'EUR', // Ваш код валюты
+        //         total: {
+        //             label: 'Schlüssel Discount Shop', // Название вашего магазина
+        //             amount: price.toFixed(2) // Сумма
+        //         },
+        //         supportedNetworks: ['visa', 'mastercard', 'amex'], // Поддерживаемые карты
+        //         merchantCapabilities: ['supports3DS'], // Возможности мерчанта
+        //     };
+
+        //     const session = new ApplePaySession(3, paymentRequest);
+
+        //     session.onvalidatemerchant = function (event) {
+        //         // Проверка валидности мерчанта
+        //         const promise = performValidation(event); // Замените performValidation на вашу функцию
+        //         promise.then(function (merchantSession) {
+        //             session.completeMerchantValidation(merchantSession);
+        //         }).catch(function (err) {
+        //             console.error('Ошибка валидации мерчанта:', err);
+        //             session.abort();
+        //         });
+        //     };
+
+        //     session.onpaymentauthorized = function (event) {
+        //         // Обработка авторизации платежа
+        //         const payment = event.payment;
+        //         console.log('Платеж авторизован:', payment);
+        //         // Обработайте платеж здесь
+        //         session.completePayment(ApplePaySession.STATUS_SUCCESS); // Или STATUS_FAILURE
+        //     };
+
+        //     session.begin();
+        // }
+
+
+        // function supportsApplePay() {
+        //     return window.ApplePaySession && ApplePaySession.canMakePayments();
+        // }
 
     function changeSend(BlockItem) 
     {
@@ -719,66 +758,18 @@
                             document.getElementById('myForm').submit();
                         });
                     },
-                    onError: function (err) {
-                        alert('Transaktion fehlgeschlagen');
+                    onError: function (err) {                      
                     }
                 }).render(`#paypal-button-container-${id}`);
             }
             onGooglePayLoaded(id, currentPrice);
-           
+
+            // const applePayButton = document.createElement('button');
+            // applePayButton.innerHTML = 'Оплатить через Apple Pay';
+            // applePayButton.onclick = () => onApplePayClicked(currentPrice); // Передайте нужную цену
+            // document.getElementById('apple-pay-button-container-'+id).appendChild(applePayButton);
     }
-        function onApplePayClicked(price) {
-            const paymentRequest = {
-                countryCode: 'DE', // Ваш код страны
-                currencyCode: 'EUR', // Ваш код валюты
-                total: {
-                    label: 'Schlüssel Discount Shop', // Название вашего магазина
-                    amount: price.toFixed(2) // Сумма
-                },
-                supportedNetworks: ['visa', 'mastercard', 'amex'], // Поддерживаемые карты
-                merchantCapabilities: ['supports3DS'], // Возможности мерчанта
-            };
-
-            const session = new ApplePaySession(3, paymentRequest);
-
-            session.onvalidatemerchant = function (event) {
-                // Проверка валидности мерчанта
-                const promise = performValidation(event); // Замените performValidation на вашу функцию
-                promise.then(function (merchantSession) {
-                    session.completeMerchantValidation(merchantSession);
-                }).catch(function (err) {
-                    console.error('Ошибка валидации мерчанта:', err);
-                    session.abort();
-                });
-            };
-
-            session.onpaymentauthorized = function (event) {
-                // Обработка авторизации платежа
-                const payment = event.payment;
-                console.log('Платеж авторизован:', payment);
-                // Обработайте платеж здесь
-                session.completePayment(ApplePaySession.STATUS_SUCCESS); // Или STATUS_FAILURE
-            };
-
-            session.begin();
-        }
-
-        // Проверка поддержки Apple Pay
-        function supportsApplePay() {
-            return window.ApplePaySession && ApplePaySession.canMakePayments();
-        }
-
-        // Загружаем Google Pay API и создаем кнопки с разными ценами
-        window.onload = function () {          
-            if (supportsApplePay()) {
-                const applePayButton = document.createElement('button');
-                applePayButton.innerHTML = 'Оплатить через Apple Pay';
-                applePayButton.onclick = () => onApplePayClicked(15.00); // Передайте нужную цену
-                document.getElementById('apple-pay-button-container').appendChild(applePayButton);
-            } else {
-                console.error('Apple Pay не поддерживается на этом устройстве');
-            }
-        };
+        
 
     document.addEventListener("DOMContentLoaded", function () 
     {
@@ -787,27 +778,27 @@
             item.value = 1;
         })
         
-            let selectCountry = document.querySelectorAll("[name='RechnungLand']");
-            selectCountry.forEach((item) => {
-                if (item.value == '@Model.Users[0].Rechnun_Land') {
-                    item.selected = true;
-                    // Создаем новое событие change
-                    const event = new Event('change', {
-                        bubbles: true, // Событие всплывает
-                        cancelable: true // Событие можно отменить
-                    });
+            // let selectCountry = document.querySelectorAll("[name='RechnungLand']");
+            // selectCountry.forEach((item) => {
+            //     if (item.value == '@Model.Users[0].Rechnun_Land') {
+            //         item.selected = true;
+            //         // Создаем новое событие change
+            //         const event = new Event('change', {
+            //             bubbles: true, // Событие всплывает
+            //             cancelable: true // Событие можно отменить
+            //         });
 
-                    // Диспатчим (вызываем) событие на текущем элементе
-                    item.dispatchEvent(event);
-                }
-            });
+            //         // Диспатчим (вызываем) событие на текущем элементе
+            //         item.dispatchEvent(event);
+            //     }
+            // });
 
-            selectCountry.forEach((item,index) => {
-                item.addEventListener('change', (event) => {
-                    ProcentMwst(item.value, index);
+            // selectCountry.forEach((item,index) => {
+            //     item.addEventListener('change', (event) => {
+            //         ProcentMwst(item.value, index);
                     
-                });
-            });
+            //     });
+            // });
        
     });
 

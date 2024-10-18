@@ -33,7 +33,7 @@ function ProcentMwst(value, BlockItem)
 {
     let cost = document.querySelectorAll("#costedI-" + BlockItem);
     let modalItem = document.getElementById("myModal-" + BlockItem);
-    let proc = document.getElementById("aldProcent-" + BlockItem);
+   
     let procent = document.getElementById("procent-" + BlockItem);
     let mvstr = cost[0].innerHTML.replace("€", "");
     let Gram = document.getElementById("gramWert-" + BlockItem);
@@ -41,16 +41,19 @@ function ProcentMwst(value, BlockItem)
     let sendDhl = document.getElementById("dhl-" + BlockItem);
 
     let Plase = document.getElementById("Plase-" + BlockItem);
-    let bruttoCost = document.getElementById("costedР-" + BlockItem);
-    let pr = proc.value.replace(".", ",");
-    let costProcent = 0;
 
+    let bruttoCost = document.getElementById("costedР-" + BlockItem).value; // Получаем значение из DOM
+    let bruttoCostValue = new Big(bruttoCost.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
+
+    let proc = document.getElementById("aldProcent-" + BlockItem);
+    let pr = new Big(proc.value.replace("€", "").replace(",", ".").trim());
+
+    let costProcent;
     let Prodct = document.querySelectorAll("#cardProductPrice-" + BlockItem);
     let cardProductPrice = Array.from(Prodct).map(product => product.querySelector("#PreisProduct-" + BlockItem));
     let PreisProductBrutto = Array.from(Prodct).map(product => product.querySelector("#PreisProductBrutto-" + BlockItem));
     let PreisProductNetto = Array.from(Prodct).map(product => product.querySelector("#PreisProductNetto-" + BlockItem));
     let ProductProcent = [];
-
 
     let schlüssel = document.querySelectorAll("#schlüssel-" + BlockItem);
     let schlüsselPrice = Array.from(schlüssel).map(product => product.querySelector("#PreisProduct-" + BlockItem));
@@ -58,24 +61,27 @@ function ProcentMwst(value, BlockItem)
     let SchlusselProcent = [];
     let PreisProductNettoSchlussel = Array.from(schlüssel).map(product => product.querySelector("#PreisProductNettoSchlussel-" + BlockItem));
 
-    let Sum = parseFloat(mvstr.replace("&nbsp;", "").trim().replace(",", "."));
-    let price = parseFloat(pr.replace("€", "").replace(",", ".").trim());
+    // Вычисляем сумму
+    let Sum = new Big(mvstr.replace("&nbsp;", "").trim().replace(",", "."));
+    let price = new Big(pr.toString()); // Используйте new Big(pr) вместо new Bis(pr), так как это ошибка
 
-    Sum = Sum - price;
+    Sum = Sum.minus(price);
 
+    // Обновление стоимости грамма
     let CostGram = document.querySelectorAll("#CostGram-" + BlockItem);
-    let costGramValue = parseFloat(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+    let costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
 
-    Sum = Sum - costGramValue;
+    Sum = Sum.minus(costGramValue);
 
-    Sum = Math.round(Sum * 100) / 100;
+    // Окончательное значение
+    Sum = Sum.toFixed(2)
 
 
     switch (value) {
         case "AT":
             {
-                costProcent = bruttoCost.value * 0.20;
-                costProcent = Math.round(costProcent * 100) / 100; 
+                costProcent = bruttoCost.times(0.21).toFixed(2);
+
                 procent.value = "20% MwSt";
                 Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
 
@@ -414,65 +420,47 @@ function ProcentMwst(value, BlockItem)
             }
         case "DE":
             {
-                costProcent = bruttoCost.value * 0.19;
-                costProcent = Math.round(costProcent * 100) / 100; 
+                costProcent = bruttoCostValue.times(0.19).toFixed(2);
 
                 PreisProductBrutto.forEach((item) => {
-                    // Преобразуем строку в число, заменив запятую на точку
-                    let value = parseFloat(item.value.trim().replace(",", "."));
+                    // Преобразуем строку в число, заменяя запятую на точку
+                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                    let valueBig = new Big(value); // Создаем объект Big
 
-                    // Проверяем, является ли число корректным
-                    if (!isNaN(value)) {
-                        // Вычисляем 20% с точным округлением до двух знаков
-                        let x = Math.round((value * 0.19) * 100) / 100;
-                        ProductProcent.push(x); // Добавляем результат в массив
-                    } else {
-                        console.warn(`Некорректное значение в PreisProductBrutto: ${item.value}`);
-                        ProductProcent.push(0); // Добавляем 0 для некорректных значений
-                    }
+                    let x = valueBig.times(0.19).toFixed(2);
+                    ProductProcent.push(x); // Добавляем результат в массив
                 });
 
-                // Для priceBrutto
+                // Обработка priceBrutto
                 priceBrutto.forEach((item) => {
-                    // Преобразуем строку в число, заменив запятую на точку
-                    let value = parseFloat(item.value.trim().replace(",", "."));
+                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                    let valueBig = new Big(value); // Создаем объект Big
 
-                    // Проверяем, является ли число корректным
-                    if (!isNaN(value)) {
-                        // Вычисляем 20% с точным округлением до двух знаков
-                        let x = Math.round((value * 0.19) * 100) / 100;
-                        SchlusselProcent.push(x); // Добавляем результат в массив
-                    } else {
-                        console.warn(`Некорректное значение в priceBrutto: ${item.value}`);
-                        SchlusselProcent.push(0); // Добавляем 0 для некорректных значений
-                    }
+                    let x = valueBig.times(0.19).toFixed(2);
+                    SchlusselProcent.push(x); // Добавляем результат в массив
                 });
 
                 procent.value = "19% MwSt";
 
-                if (sendDhl.checked == true)
-                {
-                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+                // Обработка стоимости в зависимости от веса
+                if (sendDhl.checked) {
+                    let gramValue = new Big(Gram.value.trim().replace(",", "."));
 
-                    if (Gram.value <= 2)
-                    {
-                        CostGram[BlockItem].value = 6;
+                    if (gramValue.lte(2)) {
+                        CostGram[BlockItem].value = new Big(6).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                    } else if (gramValue.gt(2) && gramValue.lte(5)) {
+                        CostGram[BlockItem].value = new Big(7).toFixed(2).replace(".", ",") + " €"; // 7,00 €
+                    } else if (gramValue.gt(5) && gramValue.lte(10)) {
+                        CostGram[BlockItem].value = new Big(12).toFixed(2).replace(".", ",") + " €"; // 12,00 €
+                    } else if (gramValue.gt(10) && gramValue.lte(20)) {
+                        CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                    } else if (gramValue.gt(20) && gramValue.lte(31.5)) {
+                        CostGram[BlockItem].value = new Big(20).toFixed(2).replace(".", ",") + " €"; // 20,00 €
                     }
-                    else if (Gram.value > 2 && Gram.value <= 5) {
-                        CostGram[BlockItem].value = 7;                      
-                    }
-                    else if (Gram.value > 5 && Gram.value <= 10) {
-                        CostGram[BlockItem].value = 12;
-                    }
-                    else if (Gram.value > 10 && Gram.value <= 20) {
-                        CostGram[BlockItem].value = 15;
-                    }
-                    else if (Gram.value > 21 && Gram.value <= 31, 5) {
-                        CostGram[BlockItem].value = 20;
-                    }
-                }
-                else {
-                    CostGram[BlockItem].value = 0;
+                    costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                } else {
+                    CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    costGramValue = new Big(0);
                 }
 
                 mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
@@ -1338,18 +1326,20 @@ function ProcentMwst(value, BlockItem)
             }
         case "MT":
             {
-                costProcent = bruttoCost.value * 0.18;
-                costProcent = Math.round(costProcent * 100) / 100;
+
+                costProcent = bruttoCost.times(0.18).toFixed(2);;
 
                 PreisProductBrutto.forEach((item) => {
                     // Преобразуем строку в число, заменив запятую на точку
-                    let value = parseFloat(item.value.trim().replace(",", "."));
+                    let valueBig = new Big(value);
 
                     // Проверяем, является ли число корректным
                     if (!isNaN(value)) {
-                        // Вычисляем 20% с точным округлением до двух знаков
-                        let x = Math.round((value * 0.18) * 100) / 100;
-                        ProductProcent.push(x); // Добавляем результат в массив
+                        // Вычисляем 19% от value с точным округлением
+                        let x = valueBig.times(0.18).toFixed(2);
+
+                        // Добавляем результат в массив ProductProcent
+                        ProductProcent.push(x);
                     } else {
                         console.warn(`Некорректное значение в PreisProductBrutto: ${item.value}`);
                         ProductProcent.push(0); // Добавляем 0 для некорректных значений
@@ -1358,14 +1348,16 @@ function ProcentMwst(value, BlockItem)
 
                 // Для priceBrutto
                 priceBrutto.forEach((item) => {
-                    // Преобразуем строку в число, заменив запятую на точку
-                    let value = parseFloat(item.value.trim().replace(",", "."));
+
+                    let valueBig = new Big(value);
 
                     // Проверяем, является ли число корректным
                     if (!isNaN(value)) {
-                        // Вычисляем 20% с точным округлением до двух знаков
-                        let x = Math.round((value * 0.18) * 100) / 100;
-                        SchlusselProcent.push(x); // Добавляем результат в массив
+                        // Вычисляем 19% от value с точным округлением
+                        let x = valueBig.times(0.18).toFixed(2);
+
+                        // Добавляем результат в массив ProductProcent
+                        ProductProcent.push(x);
                     } else {
                         console.warn(`Некорректное значение в priceBrutto: ${item.value}`);
                         SchlusselProcent.push(0); // Добавляем 0 для некорректных значений
@@ -1404,13 +1396,14 @@ function ProcentMwst(value, BlockItem)
                 }
                 mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
                 break;
-
+                  
             }
         case "NL":
             {
                 costProcent = bruttoCost.value * 0.21;
                 costProcent = Math.round(costProcent * 100) / 100;
 
+                let costProcent = bruttoCostValue.times(0.21).toFixed(2);
                 PreisProductBrutto.forEach((item) => {
                     // Преобразуем строку в число, заменив запятую на точку
                     let value = parseFloat(item.value.trim().replace(",", "."));
@@ -2023,9 +2016,9 @@ function ProcentMwst(value, BlockItem)
         currency: 'EUR'
     });;
 
-    let ALLSUM = Sum + costProcent + parseFloat(CostGram[BlockItem].value);
+    let ALLSUM = new Big(Sum).plus(costProcent).plus(costGramValue);
 
-    ALLSUM = Math.round(ALLSUM * 100) / 100;
+    ALLSUM = ALLSUM.toFixed(2);
 
     CostGram.forEach((item) => {
         item.value = parseFloat(CostGram[BlockItem].value).toLocaleString('de-DE', {
@@ -2058,37 +2051,31 @@ function ProcentMwst(value, BlockItem)
 function mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent)
 {
     for (let i = 0; i < cardProductPrice.length; i++) {
-        // Получаем текущее значение цены, очищая ненужные символы
-        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+        // Получаем текущее значение цены, очищая ненужные символы и создаем объект Big
+        let currentPrice = new Big(PreisProductNetto[i].value.replace(",", ".").trim());
 
-        // Получаем значение из PreisProductBrutto
-        let additionalPrice = ProductProcent[i];
+        // Получаем значение из ProductProcent и создаем объект Big
+        let additionalPrice = new Big(ProductProcent[i]);
 
         // Вычисляем новую цену
-        let newPrice = currentPrice + additionalPrice;
+        let newPrice = currentPrice.plus(additionalPrice); // Используем метод plus для сложения
 
         // Обновляем innerHTML с отформатированной новой ценой
-        cardProductPrice[i].innerHTML = newPrice.toLocaleString('de-DE', {
-            style: 'currency',
-            currency: 'EUR'
-        });
+        cardProductPrice[i].innerHTML = newPrice.toFixed(2).replace(".", ",") + " €"; // Форматируем цену
     }
 
     for (let i = 0; i < schlüsselPrice.length; i++) {
-        // Получаем текущее значение цены, очищая ненужные символы
-        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+        // Получаем текущее значение цены, очищая ненужные символы и создаем объект Big
+        let currentPrice = new Big(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
 
-        // Получаем значение из PreisProductBrutto
-        let additionalPrice = SchlusselProcent[i];
+        // Получаем значение из SchlusselProcent и создаем объект Big
+        let additionalPrice = new Big(SchlusselProcent[i]);
 
         // Вычисляем новую цену
-        let newPrice = currentPrice + additionalPrice;
+        let newPrice = currentPrice.plus(additionalPrice); // Используем метод plus для сложения
 
         // Обновляем innerHTML с отформатированной новой ценой
-        schlüsselPrice[i].innerHTML = newPrice.toLocaleString('de-DE', {
-            style: 'currency',
-            currency: 'EUR'
-        });
+        schlüsselPrice[i].innerHTML = newPrice.toFixed(2).replace(".", ",") + " €"; // Форматируем цену
     }
 
 }
