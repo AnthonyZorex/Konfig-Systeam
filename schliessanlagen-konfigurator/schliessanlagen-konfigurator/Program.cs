@@ -98,7 +98,7 @@ app.UseStaticFiles(new StaticFileOptions
 
 app.UseDefaultFiles();
 
-//app.UseResponseCompression();
+app.UseResponseCompression();
 
 var supportedCultures = new[] { new CultureInfo("de-DE") };
 
@@ -149,10 +149,10 @@ app.UseEndpoints(endpoints =>
       pattern: "robots.txt",
       defaults: new { controller = "Sitemap", action = "Robots" });
 
-    endpoints.MapControllerRoute(
-        name: "NotFound",
-        pattern: "{*url}",
-        defaults: new { controller = "Home", action = "Error" });
+    //endpoints.MapControllerRoute(
+    //    name: "NotFound",
+    //    pattern: "{*url}",
+    //    defaults: new { controller = "Home", action = "Error" });
 
     endpoints.MapRazorPages();
 

@@ -561,7 +561,7 @@ namespace schliessanlagen_konfigurator.Controllers
             SchopAlarm();
             ViewBag.Info = info;
 
-            string cleanedString = OrderSum.Replace("€", "").Trim();
+            string cleanedString = OrderSum.Replace(".", ",").Replace("€", "").Trim();
 
             ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
 
@@ -6262,7 +6262,8 @@ namespace schliessanlagen_konfigurator.Controllers
                         {
                             UserOrdersShopId = UserOrder.Id,
                             Name = AussenName[AussenCounter],
-                            Price = ProductCosted[i]
+                            Price = ProductCosted[i],
+                            Count = countT
                         };
                         if (Option != "")
                         {

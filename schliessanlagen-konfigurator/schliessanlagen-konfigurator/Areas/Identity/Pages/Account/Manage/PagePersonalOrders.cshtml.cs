@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using schliessanlagen_konfigurator.Data;
 using System.Security.Claims;
@@ -18,6 +18,7 @@ using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.General;
 using schliessanlagen_konfigurator.Models.Users;
 using System.Net.Http.Headers;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
+using System.Globalization;
 
 namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
 {
@@ -141,12 +142,35 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
             return Page();
 
         }
-        public async Task<IActionResult> OnPost(string SendVorname, string SendNachname,string SendFirma,
-        string SendVat,string SendStrasse, string SendZip, string SendStadt, string SendLand, string SendTelefon,string NettoSum,
+        public async Task<IActionResult> OnPost(string SendVorname, string SendNachname, string SendFirma, string userKey, List<string> PreisProduct, string PreisKey,
+        string SendVat,string SendStrasse, string SendZip, string SendStadt, string SendLand, string SendTelefon,string NettoSumOrder,
         string DhlSend,string Pay,string Steuer, string Versand, string OrderSum,string Rehnung, string RechnungAdresse,string RechnungVorname,
         string RechnungNachname, string RechnungFirma, string RechnungVat, string RechnungStrasse, string RechnungZip,
         string RechnungStadt, string RechnungLand, string RechnungTelefon, string userName,string procent,bool aufRechnung)
         {
+            var userOrder = db.UserOrdersShop.Where(x => x.UserId == userKey).ToList();
+
+            userOrder.Last().KeyCost = float.Parse(PreisKey.Replace(".",","));
+
+            // Обновляем заказ
+            db.UserOrdersShop.Update(userOrder.Last());
+            db.SaveChanges();
+            // Получаем список продуктов для данного заказа
+            var ProductList = db.ProductSysteam.Where(x => x.UserOrdersShopId == userOrder.Last().Id).ToList();
+
+            // Убедитесь, что PreisProduct имеет нужное количество элементов
+            if (ProductList.Count() > 0 && PreisProduct.Count() == ProductList.Count())
+            {
+                // Обновляем цены продуктов
+                for (int i = 0; i < ProductList.Count(); i++)
+                {
+                    var product = ProductList[i];
+
+                    product.Price = float.Parse(PreisProduct[i].Replace(".", ","));
+                    db.ProductSysteam.Update(product);
+                    db.SaveChanges();
+                }
+            }
 
             var model = new
             {
@@ -156,13 +180,14 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
                 SendVat = SendVat,
                 SendStrasse = SendStrasse,
 
+                NettoSum = NettoSumOrder,
+
                 SendZip = SendZip,
                 SendStadt = SendStadt,
                 SendLand = SendLand,
                 Steuer = Steuer,
                 Versand = Versand,
                 OrderSum = OrderSum,
-                NettoSum = NettoSum,
                 SendTelefon = SendTelefon,
                 DhlSend = DhlSend,
                 Rehnung = Rehnung,
