@@ -531,8 +531,8 @@
                                                 <input type="hidden" id="Aufrechnung-@z" name="aufRechnung" value="false" />
                                                 <input type="submit" class="btn btn-success" id="SendRechnung-@z" style="display:none; padding:10px 20px 10px 20px" value="Bezahlen an der Kasse" />
 
-                                                <div id="paypal-button-container-@z">
-                                                </div>
+                                                <div id="paypal-button-container-@z"> </div>
+                                                <div id="klarna-button-container-@z"></div>
                                               
                                                 <input type="hidden" value="@orderList[z].Id" id="invoiceNumber-@z" />
                                                 <input type="hidden" value="@orderList[z].UserOrderKey" name="userName" />
@@ -573,13 +573,11 @@
     </div>
 </div>
 @section Scripts {
-    <script src="https://x.klarnacdn.net/kp/lib/v1/api.js"></script>
-    <script src="https://www.paypal.com/sdk/js?client-id=AcBDGr9EZyKwRHBxrvvXq2u-vFWhg-e2l09CS97O5fbcwx0JYkjJRfsNUS_lJ6QjdTOwGe830IkBill9&currency=EUR&components=buttons,funding-eligibility"></script>
+    <script src="https://x.klarnacdn.net/kp-sdk/v1/klarna.js"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AcBDGr9EZyKwRHBxrvvXq2u-vFWhg-e2l09CS97O5fbcwx0JYkjJRfsNUS_lJ6QjdTOwGe830IkBill9&components=buttons&currency=EUR"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/big.js/6.1.1/big.min.js"></script>
-
+   
 <script>
-
-    let googlePayClient;
 
     let currentPrice = '0.00';
 
@@ -652,13 +650,55 @@
         var stringWithoutEuro = cost.innerHTML.replace("€", "");
         var costen = parseFloat(stringWithoutEuro.replace(',', '.').trim());
 
-            if (modal.childNodes.length<2) {   
+            if (modal.childNodes.length<2) 
+            {
+                paypal.Buttons({
+                    fundingSource: paypal.FUNDING.APPLEPAY,
+                    createOrder: function (data, actions) {
+                        return actions.order.create({
+                            purchase_units: [{
+                                amount: {
+                                    value: currentPrice
+                                },
+                                invoice_id: invoiceNumber
+                            }]
+                        });
+                    },
+                    onApprove: function (data, actions) {
+                        return actions.order.capture().then(function (details) {
+                            document.getElementById('myForm').submit();
+                        });
+                    },
+                    onError: function (err) {
+                    }
+                }).render(`#paypal-button-container-${id}`);
+
+                paypal.Buttons({
+                    fundingSource: paypal.FUNDING.GOOGLEPAY,
+                    createOrder: function (data, actions) {
+                        return actions.order.create({
+                            purchase_units: [{
+                                amount: {
+                                    value: currentPrice
+                                },
+                                invoice_id: invoiceNumber
+                            }]
+                        });
+                    },
+                    onApprove: function (data, actions) {
+                        return actions.order.capture().then(function (details) {
+                            document.getElementById('myForm').submit();
+                        });
+                    },
+                    onError: function (err) {
+                    }
+                }).render(`#paypal-button-container-${id}`);
+
+             
+
                 paypal.Buttons({
 
-                    funding: {
-                        allowed: [paypal.FUNDING.APPLEPAY, paypal.FUNDING.GOOGLEPAY, paypal.FUNDING.CARD],
-                        disallowed: [paypal.FUNDING.CREDIT]
-                    },
+                    fundingSource: paypal.FUNDING.CARD,
                     createOrder: function (data, actions) {
                         return actions.order.create({
                             purchase_units: [{
@@ -678,12 +718,6 @@
                     }
                 }).render(`#paypal-button-container-${id}`);
 
-                // if (paypal.FUNDING.APPLEPAY && paypal.FUNDING.APPLEPAY.isEligible) {
-                //     // Отображаем кнопку Apple Pay, если она доступна
-                //     document.getElementById('apple-pay-button-' + id).style.display = 'block';
-                // } else {
-                //     document.getElementById('apple-pay-button-' + id).style.display = 'none';
-                // }
             }
     }
         
