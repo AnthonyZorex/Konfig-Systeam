@@ -11,7 +11,10 @@
         <button type="button" class="btn danger">1. Schließplan erstellen</button>
         @if (User.IsInRole("client") || User.IsInRole("admin"))
         {
-            <button type="button" class="btn btn-secondary"><a href="@Url.Action("System_Auswählen","Konfigurator",new{userName = @ViewBag.UserNameItem , isNewKonfig = true} )">2. System auswählen</a></button>
+            if (ViewBag.CountOrder > 0)
+            {
+                <button type="button" class="btn btn-secondary"><a href="@Url.Action("System_Auswählen","Konfigurator",new{userName = @ViewBag.UserNameItem , isNewKonfig = true} )">2. System auswählen</a></button>
+            }
         }
         <a class="btn danger" asp-controller="Schop" asp-action="Index">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart" aria-hidden="true">

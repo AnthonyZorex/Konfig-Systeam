@@ -533,9 +533,7 @@
 
                                                 <div id="paypal-button-container-@z">
                                                 </div>
-                                                <div id="google-pay-button-container-@z"></div>
-                                                <div id="apple-pay-button-container-@z"></div>
-
+                                              
                                                 <input type="hidden" value="@orderList[z].Id" id="invoiceNumber-@z" />
                                                 <input type="hidden" value="@orderList[z].UserOrderKey" name="userName" />
                                             </div>
@@ -576,9 +574,7 @@
 </div>
 @section Scripts {
     <script src="https://x.klarnacdn.net/kp/lib/v1/api.js"></script>
-
-    <script src="https://www.paypal.com/sdk/js?client-id=AcBDGr9EZyKwRHBxrvvXq2u-vFWhg-e2l09CS97O5fbcwx0JYkjJRfsNUS_lJ6QjdTOwGe830IkBill9&currency=EUR"></script>
-    <script src="https://pay.google.com/gp/p/js/pay.js" async></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AcBDGr9EZyKwRHBxrvvXq2u-vFWhg-e2l09CS97O5fbcwx0JYkjJRfsNUS_lJ6QjdTOwGe830IkBill9&currency=EUR&components=buttons,funding-eligibility"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/big.js/6.1.1/big.min.js"></script>
 
 <script>
@@ -594,102 +590,6 @@
 
     let s = 0;
 
-        function onGooglePayLoaded(id,price) {
-   
-            googlePayClient = new google.payments.api.PaymentsClient({ environment: 'PRODUCTION' });
-
-            const googlePayButton = googlePayClient.createButton({
-                onClick: function () {
-                    onGooglePayClicked(price); 
-                }
-            });
-            document.getElementById('google-pay-button-container-' + id).appendChild(googlePayButton);
-        }
-
-        function onGooglePayClicked(price) {
-            const paymentDataRequest = {
-                apiVersion: 2,
-                apiVersionMinor: 0,
-                merchantInfo: {
-                    merchantId: '110827058', // Ваш PayPal Merchant-ID
-                    merchantName: 'Schlüssel Discount Shop'
-                },
-                allowedPaymentMethods: [{
-                    type: 'CARD',
-                    parameters: {
-                        allowedCardNetworks: ['MASTERCARD', 'VISA'],
-                        billingAddressRequired: true,
-                        billingAddressParameters: {
-                            format: 'FULL',
-                            phoneNumberRequired: true
-                        }
-                    },
-                    tokenizationSpecification: {
-                        type: 'PAYMENT_GATEWAY',
-                        parameters: {
-                            gateway: 'paypal', // Укажите 'paypal' для PayPal
-                            merchantId: '110827058' // Ваш PayPal Merchant-ID
-                        }
-                    }
-                }],
-                transactionInfo: {
-                    totalPriceStatus: 'FINAL',
-                    totalPrice: price, // Общая сумма
-                    currencyCode: 'EUR',  // Корректный код валюты
-                    countryCode: 'DE'     // Код страны
-                }
-            };
-
-            googlePayClient.loadPaymentData(paymentDataRequest)
-                .then(function (paymentDataRequest) {
-                    document.getElementById('myForm').submit();
-                })
-                .catch(function (err) {
-                    console.error('Ошибка платежа:', err);
-                    alert('Произошла ошибка: ' + err);
-                });
-        }
-
-        // function onApplePayClicked(price) {
-        //     const paymentRequest = {
-        //         countryCode: 'DE', // Ваш код страны
-        //         currencyCode: 'EUR', // Ваш код валюты
-        //         total: {
-        //             label: 'Schlüssel Discount Shop', // Название вашего магазина
-        //             amount: price.toFixed(2) // Сумма
-        //         },
-        //         supportedNetworks: ['visa', 'mastercard', 'amex'], // Поддерживаемые карты
-        //         merchantCapabilities: ['supports3DS'], // Возможности мерчанта
-        //     };
-
-        //     const session = new ApplePaySession(3, paymentRequest);
-
-        //     session.onvalidatemerchant = function (event) {
-        //         // Проверка валидности мерчанта
-        //         const promise = performValidation(event); // Замените performValidation на вашу функцию
-        //         promise.then(function (merchantSession) {
-        //             session.completeMerchantValidation(merchantSession);
-        //         }).catch(function (err) {
-        //             console.error('Ошибка валидации мерчанта:', err);
-        //             session.abort();
-        //         });
-        //     };
-
-        //     session.onpaymentauthorized = function (event) {
-        //         // Обработка авторизации платежа
-        //         const payment = event.payment;
-        //         console.log('Платеж авторизован:', payment);
-        //         // Обработайте платеж здесь
-        //         session.completePayment(ApplePaySession.STATUS_SUCCESS); // Или STATUS_FAILURE
-        //     };
-
-        //     session.begin();
-        // }
-
-
-        // function supportsApplePay() {
-        //     return window.ApplePaySession && ApplePaySession.canMakePayments();
-        // }
 
     function changeSend(BlockItem) 
     {
@@ -754,6 +654,11 @@
 
             if (modal.childNodes.length<2) {   
                 paypal.Buttons({
+
+                    funding: {
+                        allowed: [paypal.FUNDING.APPLEPAY, paypal.FUNDING.GOOGLEPAY, paypal.FUNDING.CARD],
+                        disallowed: [paypal.FUNDING.CREDIT]
+                    },
                     createOrder: function (data, actions) {
                         return actions.order.create({
                             purchase_units: [{
@@ -772,13 +677,14 @@
                     onError: function (err) {                      
                     }
                 }).render(`#paypal-button-container-${id}`);
-            }
-            onGooglePayLoaded(id, currentPrice);
 
-            // const applePayButton = document.createElement('button');
-            // applePayButton.innerHTML = 'Оплатить через Apple Pay';
-            // applePayButton.onclick = () => onApplePayClicked(currentPrice); // Передайте нужную цену
-            // document.getElementById('apple-pay-button-container-'+id).appendChild(applePayButton);
+                // if (paypal.FUNDING.APPLEPAY && paypal.FUNDING.APPLEPAY.isEligible) {
+                //     // Отображаем кнопку Apple Pay, если она доступна
+                //     document.getElementById('apple-pay-button-' + id).style.display = 'block';
+                // } else {
+                //     document.getElementById('apple-pay-button-' + id).style.display = 'none';
+                // }
+            }
     }
         
 

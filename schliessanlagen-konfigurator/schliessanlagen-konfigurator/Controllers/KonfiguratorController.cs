@@ -661,7 +661,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 if (users != null)
                 {
                     var OrderList = db.UserOrdersShop.Where(x => x.UserId == users.Id && x.OrderStatus == "Nicht bezahlt").Distinct().ToList();
-
+                    ViewBag.UserNameItem = OrderList.Last().UserOrderKey;
                     ViewBag.CountOrder = OrderList.Count();
                 }
             }

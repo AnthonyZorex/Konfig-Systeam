@@ -17,9 +17,9 @@
     <h1>@ViewData["Title"]</h1>
     <div>
 
-        <div>
+       @*  <div>
             <a href="@Url.ActionLink("Schipeed", "Home")" class="btn danger">Schipeed</a>
-        </div>
+        </div> *@
         <div>
 
         </div>
@@ -131,8 +131,6 @@
 
                                 <input type="text" class="form-control" name="Name" value="@list.FirstName @list.LastName" />
 
-                         
-
                                 <input type="text" class="form-control" name="email" value="@list.Email" />
 
                                 <input type="hidden" name="id" value="@list.Id" />
@@ -155,6 +153,7 @@
                                         <option>Aufrechnung</option>
                                         <option>Nicht bezahlt</option>
                                     </select>
+
                                 </div>
                                 <br/>
                                 <input class="btn btn-success" type="submit" value="Speichern" />

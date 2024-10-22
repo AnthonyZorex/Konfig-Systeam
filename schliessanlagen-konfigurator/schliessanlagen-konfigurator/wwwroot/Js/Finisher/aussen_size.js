@@ -64,7 +64,7 @@
             let newAllPrice = currentAllPriceValue - (currentHalbAussenCost * Number(countSchluss.value));
 
             // Форматируем значения для отображения
-            costItems.value = newCostItems.toFixed(2); 
+            costItems.value = newCostItems; 
             AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
         }
     }
@@ -86,7 +86,7 @@
             let newAllPrice = currentAllPriceValue - (currentPriceKnayfAussenCost * Number(countSchluss.value));
 
             // Форматируем значения для отображения
-            costItems.value = newCostItems.toFixed(2); // Оставляем два знака после запятой и добавляем символ €
+            costItems.value = newCostItems; // Оставляем два знака после запятой и добавляем символ €
             AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €"; 
 
         }
@@ -136,7 +136,7 @@
                             let newAllPrice = currentAllPriceValue - (currentKleinPrice * Number(countSchluss.value));
 
                             // Форматируем значения для отображения
-                            costItems.value = newCostItems.toFixed(2); // Оставляем два знака после запятой и добавляем символ €
+                            costItems.value = newCostItems; // Оставляем два знака после запятой и добавляем символ €
                             AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
                         }
                         else {
@@ -155,7 +155,7 @@
                             let newAllPrice = currentAllPriceValue - (currentPriceDoppelIntern * Number(countSchluss.value));
 
                             // Форматируем значения для отображения
-                            costItems.value = newCostItems.toFixed(2); // Оставляем два знака после запятой и добавляем символ €
+                            costItems.value = newCostItems; // Оставляем два знака после запятой и добавляем символ €
                             AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
                         }
                     }
@@ -171,7 +171,7 @@
                         let newAllPrice = currentAllPriceValue - (currentPriceDoppelIntern * Number(countSchluss.value));
 
                         // Устанавливаем новое значение для costItems и AllPrice
-                        costItems.value = (newCostItems).toFixed(2); // Форматируем и добавляем символ €
+                        costItems.value = newCostItems; // Форматируем и добавляем символ €
                         AllPrice.value = (newAllPrice).toFixed(2).replace(".", ",") + " €";
                     }
                 }
@@ -216,7 +216,7 @@
                             let newAllPrice = currentAllPriceValue - (currentPriceDoppelIntern * Number(countSchluss.value));
 
                             // Форматируем значения для отображения
-                            costItems.value = newCostItems.toFixed(2); // Оставляем два знака после запятой и добавляем символ €
+                            costItems.value = newCostItems; // Оставляем два знака после запятой и добавляем символ €
                             AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €"; 
                         }
                         else
@@ -236,7 +236,7 @@
                             let newAllPrice = currentAllPriceValue - (currentKleinPrice * Number(countSchluss.value));
 
                             // Форматируем значения для отображения
-                            costItems.value = newCostItems.toFixed(2); // Оставляем два знака после запятой и добавляем символ €
+                            costItems.value = newCostItems; // Оставляем два знака после запятой и добавляем символ €
                             AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €"; // 
                         }
                     }
@@ -257,7 +257,7 @@
                         let newAllPrice = currentAllPriceValue - (currentPriceDoppelIntern * Number(countSchluss.value));
 
                         // Форматируем значения для отображения
-                        costItems.value = newCostItems.toFixed(2); // Оставляем два знака после запятой и добавляем символ €
+                        costItems.value = newCostItems; // Оставляем два знака после запятой и добавляем символ €
                         AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
                     }
                 }
@@ -288,7 +288,7 @@
             let newAllPrice = currentAllPriceValue + (currentPriceDoppelAussen * Number(countSchluss.value));
 
             // Форматируем значения для отображения
-            costItems.value = newCostItems.toFixed(2); // Оставляем два знака после запятой и добавляем символ €
+            costItems.value = newCostItems; // Оставляем два знака после запятой и добавляем символ €
             AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
 
           
@@ -301,7 +301,7 @@
             let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
             let currentHalbAussenCost = parseFloat(halbAussenCost[s].toString().replace(",", ".").trim());
 
-            costItems.value = (currentCostItemsValue + currentHalbAussenCost).toFixed(2);
+            costItems.value = (currentCostItemsValue + currentHalbAussenCost);
 
             // Учитываем количество и выполняем расчеты для AllPrice
             let newAllPrice = currentAllPriceValue + (currentHalbAussenCost * Number(countSchluss.value));
@@ -347,7 +347,7 @@
                             let newAllPrice = currentAllPriceValue - (currentKleinKnayfPrice * Number(countSchluss.value));
 
                             // Устанавливаем новое значение для costItems и AllPrice с форматированием
-                            costItems.value = (newCostItems).toFixed(2); // Форматируем и добавляем символ €
+                            costItems.value = newCostItems; // Форматируем и добавляем символ €
                             AllPrice.value = (newAllPrice).toFixed(2).replace(".", ",") + " €"; 
                         }
                         else {
@@ -362,7 +362,7 @@
                             let newAllPrice = currentAllPriceValue - (currentPriceKnayfInternCost * Number(countSchluss.value));
 
                             // Устанавливаем новое значение для costItems и AllPrice с форматированием
-                            costItems.value = (newCostItems).toFixed(2); // Форматируем и добавляем символ €
+                            costItems.value = newCostItems; // Форматируем и добавляем символ €
                             AllPrice.value = (newAllPrice).toFixed(2).replace(".", ",") + " €"; 
                         }
                     }
@@ -378,7 +378,7 @@
                         let newAllPrice = currentAllPriceValue - (currentPriceKnayfInternCost * Number(countSchluss.value));
 
                         // Устанавливаем новое значение для costItems и AllPrice с форматированием
-                        costItems.value = (newCostItems).toFixed(2); // Форматируем и добавляем символ €
+                        costItems.value = newCostItems; // Форматируем и добавляем символ €
                         AllPrice.value = (newAllPrice).toFixed(2).replace(".", ",") + " €";
                     }
                 }
@@ -432,7 +432,7 @@
                             let newAllPrice = currentAllPriceValue - (currentKleinKnayfPrice * Number(countSchluss.value));
 
                             // Форматируем значения, добавляем символ € и заменяем точку на запятую
-                            costItems.value = (newCostItems).toFixed(2); // Форматируем для costItems
+                            costItems.value = newCostItems; // Форматируем для costItems
                             AllPrice.value = (newAllPrice).toFixed(2).replace(".", ",") + " €";
                         }
                     }
