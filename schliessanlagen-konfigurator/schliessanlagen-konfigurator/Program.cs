@@ -155,6 +155,7 @@ app.UseEndpoints(endpoints =>
     //    defaults: new { controller = "Home", action = "Error" });
 
     endpoints.MapRazorPages();
+    endpoints.MapControllers();
 
 });
 

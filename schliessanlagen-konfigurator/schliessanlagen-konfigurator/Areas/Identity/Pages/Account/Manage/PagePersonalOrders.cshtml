@@ -18,7 +18,13 @@
     int UserOrderId = 0;
 }
 <h3>@ViewData["Title"]</h3>
-
+<style>
+    #siwk-button-container {
+        border: 1px solid red; /* Для визуализации границы контейнера */
+        padding: 10px;
+        margin: 10px;
+    }
+</style>
 <div class="row">
     <div>
         <div id="AllOrderUser">
@@ -532,7 +538,7 @@
                                                 <input type="submit" class="btn btn-success" id="SendRechnung-@z" style="display:none; padding:10px 20px 10px 20px" value="Bezahlen an der Kasse" />
 
                                                 <div id="paypal-button-container-@z"> </div>
-                                                <div id="klarna-button-container-@z"></div>
+                                                
                                               
                                                 <input type="hidden" value="@orderList[z].Id" id="invoiceNumber-@z" />
                                                 <input type="hidden" value="@orderList[z].UserOrderKey" name="userName" />
@@ -549,6 +555,7 @@
                             </div>
                         </div>
                         <div id="card_controll">
+                         
                             <div>
                                 <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#myModal-@z" onclick="OpenModalInfo(@z,@orderList[z].Id)">Bezahlen</button>
                                 </div>
@@ -562,7 +569,7 @@
                             </div>
                         </div>
                     </div>
-
+                   @*  <div id="container"></div> *@
                     costed = costed + orderList[z].OrderSum;
                 }
                 
@@ -572,11 +579,75 @@
      
     </div>
 </div>
-@section Scripts {
-    <script src="https://x.klarnacdn.net/kp-sdk/v1/klarna.js"></script>
+@section Scripts 
+{  
     <script src="https://www.paypal.com/sdk/js?client-id=AcBDGr9EZyKwRHBxrvvXq2u-vFWhg-e2l09CS97O5fbcwx0JYkjJRfsNUS_lJ6QjdTOwGe830IkBill9&components=buttons&currency=EUR"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/big.js/6.1.1/big.min.js"></script>
-   
+     <script defer src="https://x.klarnacdn.net/kp/lib/v1/api.js"></script>  
+
+    <script type="text/javascript">
+        window.klarnaAsyncCallback = function () {
+            window.Klarna.Payments.Buttons.init({
+                client_id: "54fa6b3e-bd34-4f97-b30d-aebe79849f3c",
+            }).load(
+                {
+                    container: '#container',
+                    theme: 'default',
+                    shape: 'default',
+                    locale: 'de-DE',
+                    on_click: (authorize) => {
+                        // Создайте orderPayload с актуальными данными
+                        const orderPayload = {
+                            purchase_country: 'DE',
+                            purchase_currency: 'EUR',
+                            order_amount: 10000, // Сумма в центах
+                            order_lines: [
+                                {
+                                    quantity: 1,
+                                    name: "Товар 1",
+                                    total_amount: 10000,
+                                    total_discount_amount: 0,
+                                    total_tax_amount: 0,
+                                    currency: "EUR",
+                                },
+                            ],
+                        };
+
+                        if (authorize) {
+                            authorize({ auto_finalize: true, collect_shipping_address: true }, orderPayload, (result) => {
+                                if (result && result.authorization_token) {
+                                    console.log('Authorization successful:', result.authorization_token);
+                                    console.log('Session ID:', result.session_id);
+
+                                    // Получение информации о доставке, если collect_shipping_address был установлен в true
+                                    if (result.collected_shipping_address) {
+                                        const shippingAddress = result.collected_shipping_address;
+                                        console.log('Collected shipping address:', shippingAddress);
+
+                                        // Вы можете использовать эти данные для обработки доставки
+                                        // Например, сохранить их в базе данных или отобразить пользователю
+                                    }
+
+                                    // Дополнительная обработка, например, перенаправление пользователя или уведомление о завершении заказа
+                                    alert("Ваш заказ успешно оформлен!");
+                                } else {
+                                    console.error('Authorization failed:', result);
+                                    alert("Ошибка авторизации. Пожалуйста, попробуйте снова.");
+                                }
+                            });
+                        } else {
+                            console.error('Authorization method is not defined. Ensure load was successful.');
+                        }
+                    }
+                },
+                function load_callback(loadResult) {
+                    // Here you can handle the result of loading the button
+                }
+            )
+        }
+       
+    </script>
+
 <script>
 
     let currentPrice = '0.00';
@@ -587,8 +658,8 @@
     var span = document.getElementsByClassName("close")[0];
 
     let s = 0;
-
-
+       
+      
     function changeSend(BlockItem) 
     {
         let sendDhl = document.getElementById("dhl-" + BlockItem);
@@ -653,52 +724,6 @@
             if (modal.childNodes.length<2) 
             {
                 paypal.Buttons({
-                    fundingSource: paypal.FUNDING.APPLEPAY,
-                    createOrder: function (data, actions) {
-                        return actions.order.create({
-                            purchase_units: [{
-                                amount: {
-                                    value: currentPrice
-                                },
-                                invoice_id: invoiceNumber
-                            }]
-                        });
-                    },
-                    onApprove: function (data, actions) {
-                        return actions.order.capture().then(function (details) {
-                            document.getElementById('myForm').submit();
-                        });
-                    },
-                    onError: function (err) {
-                    }
-                }).render(`#paypal-button-container-${id}`);
-
-                paypal.Buttons({
-                    fundingSource: paypal.FUNDING.GOOGLEPAY,
-                    createOrder: function (data, actions) {
-                        return actions.order.create({
-                            purchase_units: [{
-                                amount: {
-                                    value: currentPrice
-                                },
-                                invoice_id: invoiceNumber
-                            }]
-                        });
-                    },
-                    onApprove: function (data, actions) {
-                        return actions.order.capture().then(function (details) {
-                            document.getElementById('myForm').submit();
-                        });
-                    },
-                    onError: function (err) {
-                    }
-                }).render(`#paypal-button-container-${id}`);
-
-             
-
-                paypal.Buttons({
-
-                    fundingSource: paypal.FUNDING.CARD,
                     createOrder: function (data, actions) {
                         return actions.order.create({
                             purchase_units: [{
@@ -717,6 +742,8 @@
                     onError: function (err) {                      
                     }
                 }).render(`#paypal-button-container-${id}`);
+
+               
 
             }
     }

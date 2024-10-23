@@ -442,54 +442,73 @@ namespace schliessanlagen_konfigurator.Controllers
                     int CountkeyOrders;
                     string FurNameKeyValue;
 
-                    if (s >= CountKey.Count())
-                    {
-                        CountkeyOrders = CountKey.Last();
-                    }
-                    else
-                    {
-                        CountkeyOrders = CountKey[s];
-                    }
-                    if (s >= NameKey.Count())
-                    {
-                        NameKeyValue = NameKey.Last();
-                    }
-                    else
-                    {
-                        NameKeyValue = NameKey[s];
-                    }
-                    if (s >= FurNameKey.Count())
-                    {
-                        FurNameKeyValue = FurNameKey.Last();
-                    }
-                    else
-                    {
-                        FurNameKeyValue = FurNameKey[s];
-                    }
-                    var Open_value = new isOpen_value
-                    {
-                        isOpen_OrderId = order_open.Last(),
-                        NameKey = NameKeyValue,
-                        CountKey = CountkeyOrders,
-                        ForNameKey = FurNameKeyValue
-                    };
+                    int startIndex = d; // Стартовый индекс
+                    int endIndex = startIndex + itemsCount; // Конечный индекс (не включительно)
 
-                    db.isOpen_value.Add(Open_value);
+                    // Take(endIndex - startIndex) корректно вычислит количество элементов в диапазоне
+                    bool containsTrue = isOpenList
+                      .Skip(startIndex) // Пропускаем элементы до startIndex
+                      .Take(endIndex - startIndex) // Берём нужное количество элементов
+                      .Any(b => b == true);
 
-                    db.SaveChanges();
-
-                    for (var f = 0; f < itemsCount; f++)
+                    var Test = isOpenList
+                      .Skip(startIndex) // Пропускаем элементы до startIndex
+                      .Take(endIndex - startIndex).ToList();
+                    
+                    if (containsTrue)
                     {
-                        var KeyValueC = new KeyValue
+                        if (s >= CountKey.Count())
                         {
-                            OpenKeyId = Open_value.Id,
-                            isOpen = isOpenList[d]
+                            CountkeyOrders = CountKey.Last();
+                        }
+                        else
+                        {
+                            CountkeyOrders = CountKey[s];
+                        }
+                        if (s >= NameKey.Count())
+                        {
+                            NameKeyValue = NameKey.Last();
+                        }
+                        else
+                        {
+                            NameKeyValue = NameKey[s];
+                        }
+                        if (s >= FurNameKey.Count())
+                        {
+                            FurNameKeyValue = FurNameKey.Last();
+                        }
+                        else
+                        {
+                            FurNameKeyValue = FurNameKey[s];
+                        }
+                        var Open_value = new isOpen_value
+                        {
+                            isOpen_OrderId = order_open.Last(),
+                            NameKey = NameKeyValue,
+                            CountKey = CountkeyOrders,
+                            ForNameKey = FurNameKeyValue
                         };
-                        db.KeyValue.Add(KeyValueC);
-                        db.SaveChanges();
-                        d++;
-                    }
 
+                        db.isOpen_value.Add(Open_value);
+
+                        db.SaveChanges();
+
+                        for (var f = 0; f < itemsCount; f++)
+                        {
+                            var KeyValueC = new KeyValue
+                            {
+                                OpenKeyId = Open_value.Id,
+                                isOpen = isOpenList[d]
+                            };
+                            db.KeyValue.Add(KeyValueC);
+                            db.SaveChanges();
+                            d++;
+                        }
+                    }
+                    else
+                    {
+                        d = d + itemsCount;
+                    }
                 }
             }
             else
@@ -501,44 +520,63 @@ namespace schliessanlagen_konfigurator.Controllers
 
                     var itemsCount = CountOrders;
 
-                    if (s >= CountKey.Count())
-                    {
-                        CountkeyOrders = CountKey.Last();
-                    }
-                    else
-                    {
-                        CountkeyOrders = CountKey[s];
-                    }
-                    if (s >= NameKey.Count())
-                    {
-                        NameKeyValue = NameKey.Last();
-                    }
-                    else
-                    {
-                        NameKeyValue = NameKey[s];
-                    }
-                    var Open_value = new isOpen_value
-                    {
-                        isOpen_OrderId = order_open.Last(),
-                        NameKey = NameKeyValue,
-                        CountKey = CountkeyOrders,
-                    };
-                    db.isOpen_value.Add(Open_value);
-                    db.SaveChanges();
+                    int startIndex = d; // Стартовый индекс
+                    int endIndex = startIndex + itemsCount; // Конечный индекс (не включительно)
 
-                    for (var f = 0; f < itemsCount; f++)
-                    {
+                    // Take(endIndex - startIndex) корректно вычислит количество элементов в диапазоне
+                    bool containsTrue = isOpenList
+                      .Skip(startIndex) // Пропускаем элементы до startIndex
+                      .Take(endIndex - startIndex) // Берём нужное количество элементов
+                      .Any(b => b == true);
 
-                        var KeyValueC = new KeyValue
+                    var Test = isOpenList
+                      .Skip(startIndex) // Пропускаем элементы до startIndex
+                      .Take(endIndex - startIndex).ToList();
+                    
+                    if (containsTrue)
+                    {
+                        if (s >= CountKey.Count())
                         {
-                            OpenKeyId = Open_value.Id,
-                            isOpen = isOpenList[d]
+                            CountkeyOrders = CountKey.Last();
+                        }
+                        else
+                        {
+                            CountkeyOrders = CountKey[s];
+                        }
+                        if (s >= NameKey.Count())
+                        {
+                            NameKeyValue = NameKey.Last();
+                        }
+                        else
+                        {
+                            NameKeyValue = NameKey[s];
+                        }
+                        var Open_value = new isOpen_value
+                        {
+                            isOpen_OrderId = order_open.Last(),
+                            NameKey = NameKeyValue,
+                            CountKey = CountkeyOrders,
                         };
-                        db.KeyValue.Add(KeyValueC);
+                        db.isOpen_value.Add(Open_value);
                         db.SaveChanges();
-                        d++;
-                    }
 
+                        for (var f = 0; f < itemsCount; f++)
+                        {
+
+                            var KeyValueC = new KeyValue
+                            {
+                                OpenKeyId = Open_value.Id,
+                                isOpen = isOpenList[d]
+                            };
+                            db.KeyValue.Add(KeyValueC);
+                            db.SaveChanges();
+                            d++;
+                        }
+                    }
+                    else
+                    {
+                        d = d + itemsCount;
+                    }
                 }
             }
             db.SaveChanges();
@@ -661,7 +699,6 @@ namespace schliessanlagen_konfigurator.Controllers
                 if (users != null)
                 {
                     var OrderList = db.UserOrdersShop.Where(x => x.UserId == users.Id && x.OrderStatus == "Nicht bezahlt").Distinct().ToList();
-                    ViewBag.UserNameItem = OrderList.Last().UserOrderKey;
                     ViewBag.CountOrder = OrderList.Count();
                 }
             }
@@ -671,7 +708,25 @@ namespace schliessanlagen_konfigurator.Controllers
         {
             SchopAlarm();   
             ViewData["Description"] = "Gestalten Sie Ihre individuelle Schließanlage mit unserem benutzerfreundlichen Konfigurator! Wählen Sie aus verschiedenen Modellen und Sicherheitsstufen, um optimalen Schutz für Ihr Zuhause oder Unternehmen zu gewährleisten. Jetzt starten und die perfekte Lösung finden!";
-         
+
+            ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
+
+            if (ident.IsAuthenticated != false)
+            {
+                string loginInform = ident.Claims.Select(x => x.Value).First();
+                var users = db.Users.Find(loginInform);
+
+                if (users != null)
+                {
+                    var OrderList = db.UserOrdersShop.Where(x => x.UserId == users.Id && x.OrderStatus == "Nicht bezahlt").Distinct().ToList();
+                   
+                    if(OrderList.Count() > 0)
+                    {
+                        ViewBag.UserNameItem = OrderList.Last().UserOrderKey; 
+                    }
+                }
+            }
+
             ViewBag.Zylinder_Typ = db.Schliessanlagen.ToList();
 
             ViewBag.Zylinder_TypJson = JsonConvert.SerializeObject(db.Schliessanlagen.Select(x=>x.nameType).ToList());
@@ -1153,16 +1208,24 @@ namespace schliessanlagen_konfigurator.Controllers
                     }
             }
 
+            var Gallery = db.ProductGalery.ToList();
+            ViewBag.Gallery = Gallery;
+
+            var keySum = db.SysteamPriceKey
+               .Select(x => new
+               {
+                   NameSysteam = x.NameSysteam,
+                   Price = x.Price,
+                   Id = x.Id,
+                   LieferzeitGrosse = x.LieferzeitGrosse,
+                   Lieferzeit = x.Lieferzeit
+               })
+               .ToList();
+            int precision = 2;
+
             #region presset
             if (cheked.Count() > 0 && cheked2.Count==0 && cheked3.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
-
-                int precision = 2;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
-                var Gallery = db.ProductGalery.ToList();
-
                 var queryOrder = from t1 in cheked
                                  join t2 in allUserListOrder on t1.schliessanlagenId equals t2.ZylinderId
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
@@ -1182,7 +1245,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      cheked = t1.Id,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t3.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x=>x.Count.Value).Sum() +
                                      (t3.Price * isOpen.Count()), precision),
@@ -1203,13 +1265,6 @@ namespace schliessanlagen_konfigurator.Controllers
 
            if (cheked2.Count() > 0 && cheked.Count == 0 && cheked3.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
            {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked2
                                  join t2 in allUserListOrder on t1.schliessanlagenId equals t2.ZylinderId
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
@@ -1228,7 +1283,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t3.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum()+
                                        (t3.Price * isOpen.Count()), precision),
@@ -1245,14 +1299,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 ViewBag.Knaufzylinder = Knaufzylinder.Distinct().OrderBy(x => x.Cost).ToList();
            }
             if (cheked3.Count() > 0 && cheked2.Count == 0 && cheked.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
-            {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
+            {               
                 var query = from t1 in cheked3
                             join t2 in allUserListOrder on t1.schliessanlagenId equals t2.ZylinderId
                             join t3 in keySum on t1.NameSystem equals t3.NameSysteam
@@ -1271,7 +1318,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                 userKey = keyUser.userKey,
                                 Name = t1.Name,
                                 companyName = t1.companyName,
-                                description = t3.DesctiptionsSysteam,
                                 NameSystem = t1.NameSystem,
                                 Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum()+
                                 (t3.Price * isOpen.Count()), precision),
@@ -1289,13 +1335,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked4.Count() > 0 && cheked2.Count == 0 && cheked3.Count == 0 && cheked.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var query = from t1 in cheked4
                             join t2 in allUserListOrder on t1.schliessanlagenId equals t2.ZylinderId
                             join t3 in keySum on t1.NameSystem equals t3.NameSysteam
@@ -1314,7 +1353,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                 userKey = keyUser.userKey,
                                 Name = t1.Name,
                                 companyName = t1.companyName,
-                                description = t3.DesctiptionsSysteam,
                                 NameSystem = t1.NameSystem,
                                 Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum()+
                                 (t3.Price * isOpen.Count()), precision),
@@ -1331,13 +1369,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked5.Count() > 0 && cheked2.Count == 0 && cheked3.Count == 0 && cheked4.Count == 0 && cheked.Count == 0 && cheked6.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var query = from t1 in cheked5
                             join t2 in allUserListOrder on t1.schliessanlagenId equals t2.ZylinderId
                             join t3 in keySum on t1.NameSystem equals t3.NameSysteam
@@ -1356,7 +1387,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                 userKey = keyUser.userKey,
                                 Name = t1.Name,
                                 companyName = t1.companyName,
-                                description = t3.DesctiptionsSysteam,
                                 NameSystem = t1.NameSystem,
                                 Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum()+
                                 (t3.Price * isOpen.Count()), precision),
@@ -1373,13 +1403,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked6.Count() > 0 && cheked2.Count == 0 && cheked3.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var query = from t1 in cheked6
                             join t2 in allUserListOrder on t1.schliessanlagenId equals t2.ZylinderId
                             join t3 in keySum on t1.NameSystem equals t3.NameSysteam
@@ -1398,7 +1421,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                 userKey = keyUser.userKey,
                                 Name = t1.Name,
                                 companyName = t1.companyName,
-                                description = t3.DesctiptionsSysteam,
                                 NameSystem = t1.NameSystem,
                                 Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum()+
                                   (t3.Price * isOpen.Count()), precision),
@@ -1415,13 +1437,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked3.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in keySum on t2.NameSystem equals t3.NameSysteam
@@ -1441,7 +1456,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      Id = t1.Id,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t3.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum()+
                                         (t3.Price * isOpen.Count()), precision),
@@ -1458,13 +1472,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked.Count() > 0 && cheked3.Count() > 0 && cheked2.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in keySum on t2.NameSystem equals t3.NameSysteam
@@ -1483,7 +1490,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      cheked2 = 0,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t3.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum()+
                                       (t3.Price * isOpen.Count()), precision),
@@ -1499,13 +1505,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked.Count() > 0 && cheked4.Count() > 0 && cheked2.Count == 0 && cheked3.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
                                  join t3 in keySum on t2.NameSystem equals t3.NameSysteam
@@ -1524,7 +1523,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t3.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum()+
                                       (t3.Price * isOpen.Count()), precision),
@@ -1541,13 +1539,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked.Count() > 0 && cheked5.Count() > 0 && cheked2.Count == 0 && cheked4.Count == 0 && cheked3.Count == 0 && cheked6.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked5 on t1.NameSystem equals t2.NameSystem
                                  join t3 in keySum on t2.NameSystem equals t3.NameSysteam
@@ -1566,7 +1557,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t3.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum()+
                                    (t3.Price * isOpen.Count()), precision),
@@ -1584,13 +1574,6 @@ namespace schliessanlagen_konfigurator.Controllers
 
             if (cheked.Count() > 0 && cheked6.Count() > 0 && cheked2.Count == 0 && cheked4.Count == 0 && cheked3.Count == 0 && cheked5.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked6 on t1.NameSystem equals t2.NameSystem
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
@@ -1609,7 +1592,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t3.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum()+
                                       (t3.Price * isOpen.Count()), precision),
@@ -1627,13 +1609,6 @@ namespace schliessanlagen_konfigurator.Controllers
 
             if (cheked2.Count() > 0 && cheked3.Count() > 0 && cheked.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked2
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
@@ -1652,7 +1627,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t3.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum()+
                                     (t3.Price * isOpen.Count()), precision),
@@ -1669,13 +1643,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked2.Count() > 0 && cheked4.Count() > 0 && cheked.Count == 0 && cheked3.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked2
                                  join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
@@ -1694,7 +1661,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t3.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum()+
                                      (t3.Price * isOpen.Count()), precision),
@@ -1711,13 +1677,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked2.Count() > 0 && cheked5.Count() > 0 && cheked.Count == 0 && cheked3.Count == 0 && cheked4.Count == 0 && cheked6.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked2
                                  join t2 in cheked5 on t1.NameSystem equals t2.NameSystem
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
@@ -1736,7 +1695,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t3.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum()+
                                      (t3.Price * isOpen.Count()), precision),
@@ -1753,13 +1711,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked2.Count() > 0 && cheked6.Count() > 0 && cheked.Count == 0 && cheked3.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked2
                                  join t2 in cheked6 on t1.NameSystem equals t2.NameSystem
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
@@ -1778,7 +1729,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t3.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum()+
                                        (t3.Price * isOpen.Count()), precision),
@@ -1795,10 +1745,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked3.Count() > 0 && cheked4.Count() > 0 && cheked.Count == 0 && cheked2.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
-                int precision = 2;
-                
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked3
                                  join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
@@ -1817,7 +1763,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t3.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum()+
                                        (t3.Price * isOpen.Count()), precision),
@@ -1835,12 +1780,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked3.Count() > 0 && cheked5.Count() > 0 && cheked.Count == 0 && cheked2.Count == 0 && cheked6.Count == 0 && cheked4.Count == 0)
             {
-                int precision = 2;
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked3
                                  join t2 in cheked5 on t1.NameSystem equals t2.NameSystem
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
@@ -1860,7 +1799,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      Id = t1.Id,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t3.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum()+
                                      (t3.Price * isOpen.Count()), precision),
@@ -1878,13 +1816,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked3.Count() > 0 && cheked6.Count() > 0 && cheked.Count == 0 && cheked2.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked3
                                  join t2 in cheked6 on t1.NameSystem equals t2.NameSystem
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
@@ -1903,7 +1834,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t3.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum()+
                                      (t3.Price * isOpen.Count()), precision),
@@ -1921,13 +1851,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked4.Count() > 0 && cheked5.Count() > 0 && cheked.Count == 0 && cheked2.Count == 0 && cheked3.Count == 0 && cheked6.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked4
                                  join t2 in cheked5 on t1.NameSystem equals t2.NameSystem
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
@@ -1946,7 +1869,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t3.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum()+
                                      (t3.Price * isOpen.Count()), precision),
@@ -1964,13 +1886,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked4.Count() > 0 && cheked6.Count() > 0 && cheked.Count == 0 && cheked2.Count == 0 && cheked3.Count == 0 && cheked4.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked4
                                  join t2 in cheked6 on t1.NameSystem equals t2.NameSystem
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
@@ -1990,7 +1905,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      Id = t1.Id,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t3.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum()+
                                       (t3.Price * isOpen.Count()), precision),
@@ -2008,13 +1922,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked5.Count() > 0 && cheked6.Count() > 0 && cheked.Count == 0 && cheked2.Count == 0 && cheked3.Count == 0 && cheked4.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked5
                                  join t2 in cheked6 on t1.NameSystem equals t2.NameSystem
                                  join t3 in keySum on t1.NameSystem equals t3.NameSysteam
@@ -2033,7 +1940,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t3.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum()+
                                        (t3.Price * isOpen.Count()), precision),
@@ -2051,13 +1957,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked3.Count() > 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
@@ -2077,7 +1976,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t4.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + 
                                      t3.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
@@ -2094,13 +1992,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked4.Count() > 0 && cheked3.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
-                int precision = 2;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
@@ -2120,7 +2011,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t4.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
                                      t3.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
@@ -2137,13 +2027,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked5.Count() > 0 && cheked4.Count == 0 && cheked3.Count == 0 && cheked6.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
@@ -2163,7 +2046,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t4.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
                                      t3.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
@@ -2180,13 +2062,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked6.Count() > 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked3.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
@@ -2206,7 +2081,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t4.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
                                      t3.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
@@ -2223,13 +2097,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked3.Count() > 0 && cheked.Count() > 0 && cheked4.Count() > 0 && cheked6.Count == 0 && cheked5.Count == 0 && cheked2.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
@@ -2249,7 +2116,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t4.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
                                      t3.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum()+ (t4.Price * isOpen.Count()), precision),
@@ -2266,13 +2132,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked3.Count() > 0 && cheked.Count() > 0 && cheked5.Count() > 0 && cheked6.Count == 0 && cheked4.Count == 0 && cheked2.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
@@ -2292,7 +2151,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t4.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
                                      t3.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum()+ (t4.Price * isOpen.Count()), precision),
@@ -2309,13 +2167,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked3.Count() > 0 && cheked.Count() > 0 && cheked6.Count() > 0 && cheked5.Count == 0 && cheked4.Count == 0 && cheked2.Count == 0)
             {
-                int precision = 2;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
@@ -2335,7 +2186,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t4.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
                                      t3.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
@@ -2353,13 +2203,6 @@ namespace schliessanlagen_konfigurator.Controllers
 
             if (cheked4.Count() > 0 && cheked.Count() > 0 && cheked5.Count() > 0 && cheked2.Count == 0 && cheked3.Count == 0 && cheked6.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
@@ -2379,7 +2222,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t4.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
                                      t3.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum()+ (t4.Price * isOpen.Count()), precision),
@@ -2396,13 +2238,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked4.Count() > 0 && cheked.Count() > 0 && cheked6.Count() > 0 && cheked2.Count == 0 && cheked3.Count == 0 && cheked5.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
@@ -2422,7 +2257,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t4.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
                                      t3.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum()+(t4.Price * isOpen.Count()), precision),
@@ -2439,13 +2273,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked5.Count() > 0 && cheked.Count() > 0 && cheked6.Count() > 0 && cheked2.Count == 0 && cheked3.Count == 0 && cheked4.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked5 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
@@ -2465,7 +2292,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t4.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
                                      t3.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
@@ -2483,13 +2309,6 @@ namespace schliessanlagen_konfigurator.Controllers
 
             if (cheked3.Count() > 0 && cheked2.Count() > 0 && cheked4.Count() > 0 && cheked.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked2
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
@@ -2509,7 +2328,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t4.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
                                      t3.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
@@ -2526,13 +2344,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked3.Count() > 0 && cheked2.Count() > 0 && cheked5.Count() > 0 && cheked.Count == 0 && cheked4.Count == 0 && cheked6.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked2
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
@@ -2552,7 +2363,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t4.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
                                      t3.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
@@ -2569,13 +2379,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked3.Count() > 0 && cheked2.Count() > 0 && cheked6.Count() > 0 && cheked.Count == 0 && cheked5.Count == 0 && cheked4.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked2
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
@@ -2595,7 +2398,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t4.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
                                      t3.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
@@ -2612,13 +2414,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked4.Count() > 0 && cheked2.Count() > 0 && cheked5.Count() > 0 && cheked.Count == 0 && cheked3.Count == 0 && cheked6.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked2
                                  join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
@@ -2638,7 +2433,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t4.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
                                      t3.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
@@ -2655,13 +2449,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked4.Count() > 0 && cheked2.Count() > 0 && cheked6.Count() > 0 && cheked.Count == 0 && cheked5.Count == 0 && cheked3.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked2
                                  join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
@@ -2681,7 +2468,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t4.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
                                      t3.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
@@ -2698,14 +2484,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked5.Count() > 0 && cheked2.Count() > 0 && cheked6.Count() > 0 && cheked.Count == 0 && cheked4.Count == 0 && cheked3.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-                
                 var queryOrder = from t1 in cheked2
                                  join t2 in cheked5 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
@@ -2725,7 +2503,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t4.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
                                      t3.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
@@ -2742,13 +2519,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked4.Count() > 0 && cheked3.Count() > 0 && cheked5.Count() > 0 && cheked.Count == 0 && cheked2.Count == 0 && cheked6.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked3
                                  join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
@@ -2768,7 +2538,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t4.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
                                      t3.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
@@ -2785,13 +2554,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked4.Count() > 0 && cheked3.Count() > 0 && cheked6.Count() > 0 && cheked.Count == 0 && cheked2.Count == 0 && cheked5.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked3
                                  join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
@@ -2811,7 +2573,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t4.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
                                      t3.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
@@ -2828,14 +2589,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked5.Count() > 0 && cheked3.Count() > 0 && cheked6.Count() > 0 && cheked.Count == 0 && cheked2.Count == 0 && cheked4.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked3
                                  join t2 in cheked5 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
@@ -2855,7 +2608,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t4.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
                                      t3.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
@@ -2872,13 +2624,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked5.Count() > 0 && cheked4.Count() > 0 && cheked6.Count() > 0 && cheked.Count == 0 && cheked2.Count == 0 && cheked3.Count == 0)
             {
-                int precision = 2;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
                 var queryOrder = from t1 in cheked4
                                  join t2 in cheked5 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked6 on t2.NameSystem equals t3.NameSystem
@@ -2898,7 +2643,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t4.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 5).Select(x => x.Count.Value).Sum() +
                                      t3.Price * allUserListOrder.Where(x => x.ZylinderId == 6).Select(x => x.Count.Value).Sum() + (t4.Price * isOpen.Count()), precision),
@@ -2916,13 +2660,6 @@ namespace schliessanlagen_konfigurator.Controllers
 
             if (cheked.Count() > 0 && cheked2.Count() > 0 && cheked3.Count() > 0 && cheked4.Count>0 && cheked5.Count == 0 && cheked6.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
@@ -2943,7 +2680,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t5.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + t2.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
                                      t3.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
@@ -2961,13 +2697,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked.Count() > 0 && cheked2.Count() > 0 && cheked3.Count() > 0 && cheked5.Count > 0 && cheked4.Count == 0 && cheked6.Count == 0)
             {
-                int precision = 2;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
@@ -2988,7 +2717,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t5.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() + 
                                      t2.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
@@ -3007,13 +2735,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked.Count() > 0 && cheked2.Count() > 0 && cheked3.Count() > 0 && cheked6.Count > 0 && cheked4.Count == 0 && cheked5.Count == 0)
             {
-                int precision = 2;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
@@ -3034,7 +2755,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t5.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
                                      t2.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
@@ -3053,14 +2773,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked.Count() > 0 && cheked2.Count() > 0 && cheked4.Count() > 0 && cheked5.Count > 0 && cheked3.Count == 0 && cheked6.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
@@ -3081,7 +2793,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t5.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
                                      t2.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
@@ -3100,13 +2811,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked.Count() > 0 && cheked2.Count() > 0 && cheked4.Count() > 0 && cheked6.Count > 0 && cheked3.Count == 0 && cheked5.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
@@ -3127,7 +2831,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t5.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
                                      t2.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
@@ -3146,13 +2849,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked.Count() > 0 && cheked2.Count() > 0 && cheked5.Count() > 0 && cheked6.Count > 0 && cheked3.Count == 0 && cheked4.Count == 0)
             {
-                int precision = 2;
-
-                var keySum = db.SysteamPriceKey.ToList();
-               
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
@@ -3173,7 +2869,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t5.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
                                      t2.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
@@ -3193,13 +2888,6 @@ namespace schliessanlagen_konfigurator.Controllers
 
             if (cheked.Count() > 0 && cheked3.Count() > 0 && cheked4.Count() > 0 && cheked5.Count > 0 && cheked2.Count == 0 && cheked6.Count == 0)
             {
-                int precision = 2;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
@@ -3220,7 +2908,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t5.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
                                      t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
@@ -3239,14 +2926,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked.Count() > 0 && cheked3.Count() > 0 && cheked4.Count() > 0 && cheked6.Count > 0 && cheked2.Count == 0 && cheked5.Count == 0)
             {
-                int precision = 2;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
@@ -3267,7 +2946,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t5.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
                                      t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
@@ -3287,13 +2965,6 @@ namespace schliessanlagen_konfigurator.Controllers
 
             if (cheked.Count() > 0 && cheked3.Count() > 0 && cheked5.Count() > 0 && cheked6.Count > 0 && cheked2.Count == 0 && cheked4.Count == 0)
             {
-                int precision = 2;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
@@ -3314,7 +2985,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t5.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
                                      t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
@@ -3333,13 +3003,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked.Count() > 0 && cheked4.Count() > 0 && cheked5.Count() > 0 && cheked6.Count > 0 && cheked2.Count == 0 && cheked3.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
@@ -3360,7 +3023,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t5.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
                                      t2.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
@@ -3379,13 +3041,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked2.Count() > 0 && cheked3.Count() > 0 && cheked4.Count() > 0 && cheked5.Count > 0 && cheked.Count == 0 && cheked6.Count == 0)
             {
-                int precision = 2;
-
-                var keySum = db.SysteamPriceKey.ToList();
-                
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
                 var queryOrder = from t1 in cheked2
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
@@ -3406,7 +3061,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t5.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
                                      t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
@@ -3425,13 +3079,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked2.Count() > 0 && cheked3.Count() > 0 && cheked4.Count() > 0 && cheked6.Count > 0 && cheked.Count == 0 && cheked5.Count == 0)
             {
-                int precision = 2;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
                 var queryOrder = from t1 in cheked2
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked4 on t2.NameSystem equals t3.NameSystem
@@ -3452,7 +3099,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t5.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
                                      t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
@@ -3471,13 +3117,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked2.Count() > 0 && cheked3.Count() > 0 && cheked5.Count() > 0 && cheked6.Count > 0 && cheked.Count == 0 && cheked4.Count == 0)
             {
-                int precision = 2;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
                 var queryOrder = from t1 in cheked2
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
@@ -3498,7 +3137,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t5.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
                                      t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
@@ -3517,13 +3155,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked2.Count() > 0 && cheked4.Count() > 0 && cheked5.Count() > 0 && cheked6.Count > 0 && cheked.Count == 0 && cheked3.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked2
                                  join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
@@ -3544,7 +3175,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t5.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
                                      t2.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
@@ -3563,13 +3193,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked3.Count() > 0 && cheked4.Count() > 0 && cheked5.Count() > 0 && cheked6.Count > 0 && cheked.Count == 0 && cheked2.Count == 0)
             {
-                int precision = 2;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
                 var queryOrder = from t1 in cheked3
                                  join t2 in cheked4 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
@@ -3590,7 +3213,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t5.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
                                      t2.Price * allUserListOrder.Where(x => x.ZylinderId == 4).Select(x => x.Count.Value).Sum() +
@@ -3609,13 +3231,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked3.Count() > 0 && cheked4.Count() > 0 && cheked5.Count() > 0 && cheked6.Count == 0)
             {
-                int precision = 2;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
@@ -3637,7 +3252,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t6.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
                                      t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
@@ -3658,13 +3272,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked3.Count() > 0 && cheked4.Count() > 0 && cheked6.Count() > 0 && cheked5.Count == 0)
             {
-                int precision = 2;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
@@ -3686,7 +3293,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t6.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
                                      t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
@@ -3707,13 +3313,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked3.Count() > 0 && cheked5.Count() > 0 && cheked6.Count() > 0 && cheked4.Count == 0)
             {
-                int precision = 2;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked3 on t2.NameSystem equals t3.NameSystem
@@ -3735,7 +3334,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t6.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
                                      t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
@@ -3756,13 +3354,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked5.Count() > 0 && cheked4.Count() > 0 && cheked6.Count() > 0 && cheked3.Count == 0)
             {
-                int precision = 2;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked2 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
@@ -3784,7 +3375,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t6.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
                                      t2.Price * allUserListOrder.Where(x => x.ZylinderId == 3).Select(x => x.Count.Value).Sum() +
@@ -3805,13 +3395,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked3.Count() > 0 && cheked.Count() > 0 && cheked4.Count() > 0 && cheked5.Count() > 0 && cheked6.Count() > 0 && cheked2.Count == 0)
             {
-                int precision = 2;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
                 var queryOrder = from t1 in cheked
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
@@ -3833,7 +3416,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t6.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
                                      t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
@@ -3854,13 +3436,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked3.Count() > 0 && cheked2.Count() > 0 && cheked4.Count() > 0 && cheked5.Count() > 0 && cheked6.Count() > 0 && cheked.Count == 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked2
                                  join t2 in cheked3 on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked5 on t2.NameSystem equals t3.NameSystem
@@ -3882,7 +3457,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t6.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
                                      t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
@@ -3903,13 +3477,6 @@ namespace schliessanlagen_konfigurator.Controllers
             }
             if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked3.Count() > 0 && cheked4.Count() > 0 && cheked5.Count() > 0 && cheked6.Count() > 0)
             {
-                int precision = 2;
-
-                var Gallery = db.ProductGalery.ToList();
-                ViewBag.Gallery = Gallery;
-
-                var keySum = db.SysteamPriceKey.ToList();
-
                 var queryOrder = from t1 in cheked.Distinct()
                                  join t2 in cheked2.Distinct() on t1.NameSystem equals t2.NameSystem
                                  join t3 in cheked3.Distinct() on t2.NameSystem equals t3.NameSystem
@@ -3932,7 +3499,6 @@ namespace schliessanlagen_konfigurator.Controllers
                                      userKey = keyUser.userKey,
                                      Name = t1.Name,
                                      companyName = t1.companyName,
-                                     description = t7.DesctiptionsSysteam,
                                      NameSystem = t1.NameSystem,
                                      Cost = Math.Round(t1.Price * allUserListOrder.Where(x => x.ZylinderId == 1).Select(x => x.Count.Value).Sum() +
                                      t2.Price * allUserListOrder.Where(x => x.ZylinderId == 2).Select(x => x.Count.Value).Sum() +
