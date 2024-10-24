@@ -23,12 +23,15 @@
                 item.value = '\u2713' + OptionsName;
                 item.style.color = "green";
 
-                if (item.value === '\u2713' + "NGF = Not- und Gefahrenfunktion") {
+                if (item.value.includes('\u2713') && item.value.includes("Not- und Gefahrenfunktion"))
+                {
                     hasNotUndGefahrenfunktion = true;
 
-                    if (item.value === '\u2713' + "NGF = Not- und Gefahrenfunktion" && hasFreilauffunktion === true && hasNotUndGefahrenfunktion === true) {
-                        for (let i = 0; i < QueryNameOptions.length; i++) {
-                            if (QueryNameOptions[i].value === '\u2713' + "F = Freilauffunktion") {
+                    if (item.value.includes('\u2713') && item.value.includes("Not- und Gefahrenfunktion") && hasFreilauffunktion === true && hasNotUndGefahrenfunktion === true)
+                    {
+                        for (let i = 0; i < QueryNameOptions.length; i++)
+                        {
+                            if (QueryNameOptions[i].value.includes('\u2713') && QueryNameOptions[i].value.includes('Freilauf')) {
                                 let OptionOldCheker = document.getElementById(`d-${idBlock} + ${i}`);
 
                                 costItems.value = parseFloat(costItems.value) - (OptionOldCheker.value);
@@ -49,12 +52,14 @@
 
                     }
                 }
-                if (item.value === '\u2713' + "F = Freilauffunktion") {
+                if (item.value.includes('\u2713') && item.value.includes("Freilauf"))
+                {
                     hasFreilauffunktion = true;
 
-                    if (item.value === '\u2713' + "F = Freilauffunktion" && hasFreilauffunktion === true && hasNotUndGefahrenfunktion === true) {
+                    if (item.value.includes('\u2713') && item.value.includes("Freilauf") && hasFreilauffunktion === true && hasNotUndGefahrenfunktion === true)
+                    {
                         for (let i = 0; i < QueryNameOptions.length; i++) {
-                            if (QueryNameOptions[i].value === '\u2713' + "NGF = Not- und Gefahrenfunktion") {
+                            if (QueryNameOptions[i].value.includes('\u2713') && QueryNameOptions[i].value.includes('Not- und Gefahrenfunktion')) {
                                 let OptionOldCheker = document.getElementById(`d-${idBlock} + ${i}`);
 
                                 costItems.value = parseFloat(costItems.value) - (OptionOldCheker.value);
@@ -76,7 +81,8 @@
                     }
                 }
 
-                if (TypeSylinder === "Doppel") {
+                if (TypeSylinder === "Doppel")
+                {
                     let OptionOldCheker = document.getElementById(`d-${idBlock} + ${N}`);
 
                     TotalOptions.value += `${item.defaultValue}:  ${optionsValue}` + ", ";

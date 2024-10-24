@@ -1550,6 +1550,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     if (Options.Count > 0)
                     {
                         int counter = 0;
+                        int photocounter = 0;
 
                         for (var i = 0; i < Options.Count(); i++)
                         {
@@ -1570,16 +1571,46 @@ namespace schliessanlagen_konfigurator.Controllers
 
                                 };
 
-                                if (Descriptions.Count() > 0)
+                            if (Descriptions.Count() > 0)
+                            {
+                                createOptionsAussen.Description = Descriptions[i];
+                            }
+                            if (ImageNameOption.Count() > i)
+                            {
+                                createOptionsAussen.ImageName = ImageNameOption[i];
+                            }
+                            else
+                            {
+                                if (postedFile != null && postedFile.Count > 0)
                                 {
-                                    createOptionsAussen.Description = Descriptions[i];
-                                }
-                                if (Descriptions.Count() == ImageNameOption.Count())
-                                {
+                                    if (postedFile[photocounter].Length > 0)
+                                    {
+                                        string wwwRootPath = Environment.WebRootPath;
 
-                                    createOptionsAussen.ImageName = ImageNameOption[i];
+                                        string fileName = Path.GetFileNameWithoutExtension(postedFile[photocounter].FileName);
 
+                                        string extension = Path.GetExtension(postedFile[photocounter].FileName);
+
+                                        createOptionsAussen.ImageName = fileName = fileName + extension;
+
+                                        string path = Path.Combine(wwwRootPath + "/compression/", fileName);
+
+                                        string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
+
+                                        string filePathCompression = Path.Combine(uploadFolderPathCompression, fileName);
+
+                                        await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
+
+                                        using (var fileStream = new FileStream(path, FileMode.Create))
+                                        {
+                                            await postedFile[photocounter].CopyToAsync(fileStream);
+                                        }
+                                    }
+
+                                    photocounter++;
                                 }
+                            }
+
 
                                 db.NGF.Add(createOptionsAussen);
                                 db.SaveChanges();
@@ -1659,7 +1690,8 @@ namespace schliessanlagen_konfigurator.Controllers
                 if (Options.Count > 0)
                 {
                         int counter = 0;
-
+                        int photocounter = 0;
+                        
                         for (var i = 0; i < Options.Count(); i++)
                         {
                             if (Knayf[i] != "false")
@@ -1682,9 +1714,40 @@ namespace schliessanlagen_konfigurator.Controllers
                                     {
                                         createOptionsAussen.Description = Descriptions[i];
                                     }
-                                    if (Descriptions.Count() == ImageNameOption.Count())
+                                    if (ImageNameOption.Count() > i)
                                     {
                                         createOptionsAussen.ImageName = ImageNameOption[i];
+                                    }
+                                    else
+                                    {
+                                        if (postedFile != null && postedFile.Count > 0)
+                                        {
+                                            if (postedFile[photocounter].Length > 0)
+                                            {
+                                                string wwwRootPath = Environment.WebRootPath;
+
+                                                string fileName = Path.GetFileNameWithoutExtension(postedFile[photocounter].FileName);
+
+                                                string extension = Path.GetExtension(postedFile[photocounter].FileName);
+
+                                                createOptionsAussen.ImageName = fileName = fileName + extension;
+
+                                                string path = Path.Combine(wwwRootPath + "/compression/", fileName);
+
+                                                string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
+
+                                                string filePathCompression = Path.Combine(uploadFolderPathCompression, fileName);
+
+                                                await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
+
+                                                using (var fileStream = new FileStream(path, FileMode.Create))
+                                                {
+                                                    await postedFile[photocounter].CopyToAsync(fileStream);
+                                                }
+                                            }
+
+                                            photocounter++;
+                                        }
                                     }
 
 
@@ -1761,6 +1824,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 if (Options.Count > 0)
                 {
                     int counter = 0;
+                    int photocounter = 0;
 
                     for (var i = 0; i < Options.Count(); i++)
                     {
@@ -1784,9 +1848,40 @@ namespace schliessanlagen_konfigurator.Controllers
                             {
                                 createOptionsAussen.Description = Descriptions[i];
                             }
-                            if (Descriptions.Count() == ImageNameOption.Count())
+                            if (ImageNameOption.Count() > i)
                             {
                                 createOptionsAussen.ImageName = ImageNameOption[i];
+                            }
+                            else
+                            {
+                                if (postedFile != null && postedFile.Count > 0)
+                                {
+                                    if (postedFile[photocounter].Length > 0)
+                                    {
+                                        string wwwRootPath = Environment.WebRootPath;
+
+                                        string fileName = Path.GetFileNameWithoutExtension(postedFile[photocounter].FileName);
+
+                                        string extension = Path.GetExtension(postedFile[photocounter].FileName);
+
+                                        createOptionsAussen.ImageName = fileName = fileName + extension;
+
+                                        string path = Path.Combine(wwwRootPath + "/compression/", fileName);
+
+                                        string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
+
+                                        string filePathCompression = Path.Combine(uploadFolderPathCompression, fileName);
+
+                                        await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
+
+                                        using (var fileStream = new FileStream(path, FileMode.Create))
+                                        {
+                                            await postedFile[photocounter].CopyToAsync(fileStream);
+                                        }
+                                    }
+
+                                    photocounter++;
+                                }
                             }
 
                             db.Halbzylinder_Options.Add(createOptionsAussen);
@@ -1862,6 +1957,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 if (Options.Count > 0)
                 {
                     int counter = 0;
+                    int photocounter = 0;
 
                     for (var i = 0; i < Options.Count(); i++)
                     {
@@ -1885,10 +1981,42 @@ namespace schliessanlagen_konfigurator.Controllers
                             {
                                 createOptionsAussen.Description = Descriptions[i];
                             }
-                            if (Descriptions.Count() == ImageNameOption.Count())
+                            if (ImageNameOption.Count() > i)
                             {
                                 createOptionsAussen.ImageName = ImageNameOption[i];
                             }
+                            else
+                            {
+                                if (postedFile != null && postedFile.Count > 0)
+                                {
+                                    if (postedFile[photocounter].Length > 0)
+                                    {
+                                        string wwwRootPath = Environment.WebRootPath;
+
+                                        string fileName = Path.GetFileNameWithoutExtension(postedFile[photocounter].FileName);
+
+                                        string extension = Path.GetExtension(postedFile[photocounter].FileName);
+
+                                        createOptionsAussen.ImageName = fileName = fileName + extension;
+
+                                        string path = Path.Combine(wwwRootPath + "/compression/", fileName);
+
+                                        string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
+
+                                        string filePathCompression = Path.Combine(uploadFolderPathCompression, fileName);
+
+                                        await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
+
+                                        using (var fileStream = new FileStream(path, FileMode.Create))
+                                        {
+                                            await postedFile[photocounter].CopyToAsync(fileStream);
+                                        }
+                                    }
+
+                                    photocounter++;
+                                }
+                            }
+
 
                             db.Options.Add(createOptionsAussen);
                             db.SaveChanges();
@@ -1965,6 +2093,8 @@ namespace schliessanlagen_konfigurator.Controllers
                 {
                     int counter = 0;
 
+                    int photocounter = 0;
+
                     for (var i = 0; i < Options.Count(); i++)
                     {
                         if (Vorhang[i] != "false")
@@ -1987,11 +2117,41 @@ namespace schliessanlagen_konfigurator.Controllers
                             {
                                 createOptionsAussen.Description = Descriptions[i];
                             }
-                            if (Descriptions.Count() == ImageNameOption.Count())
+                            if (ImageNameOption.Count() > i)
                             {
                                 createOptionsAussen.ImageName = ImageNameOption[i];
                             }
+                            else
+                            {
+                                if (postedFile != null && postedFile.Count > 0)
+                                {
+                                    if (postedFile[photocounter].Length > 0)
+                                    {
+                                        string wwwRootPath = Environment.WebRootPath;
 
+                                        string fileName = Path.GetFileNameWithoutExtension(postedFile[photocounter].FileName);
+
+                                        string extension = Path.GetExtension(postedFile[photocounter].FileName);
+
+                                        createOptionsAussen.ImageName = fileName = fileName + extension;
+
+                                        string path = Path.Combine(wwwRootPath + "/compression/", fileName);
+
+                                        string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
+
+                                        string filePathCompression = Path.Combine(uploadFolderPathCompression, fileName);
+
+                                        await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
+
+                                        using (var fileStream = new FileStream(path, FileMode.Create))
+                                        {
+                                            await postedFile[photocounter].CopyToAsync(fileStream);
+                                        }
+                                    }
+
+                                    photocounter++;
+                                }
+                            }
                             db.OptionsVorhan.Add(createOptionsAussen);
                             db.SaveChanges();
 
@@ -2065,6 +2225,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 if (Options.Count > 0)
                 {
                     int counter = 0;
+                    int photocounter = 0;
 
                     for (var i = 0; i < Options.Count(); i++)
                     {
@@ -2087,9 +2248,40 @@ namespace schliessanlagen_konfigurator.Controllers
                             {
                                 createOptionsAussen.Description = Descriptions[i];
                             }
-                            if (Descriptions.Count() == ImageNameOption.Count() )
+                            if (ImageNameOption.Count() > i)
                             {
                                 createOptionsAussen.ImageName = ImageNameOption[i];
+                            }
+                            else
+                            {
+                                if (postedFile != null && postedFile.Count > 0)
+                                {
+                                    if (postedFile[photocounter].Length > 0)
+                                    {
+                                        string wwwRootPath = Environment.WebRootPath;
+
+                                        string fileName = Path.GetFileNameWithoutExtension(postedFile[photocounter].FileName);
+
+                                        string extension = Path.GetExtension(postedFile[photocounter].FileName);
+
+                                        createOptionsAussen.ImageName = fileName = fileName + extension;
+
+                                        string path = Path.Combine(wwwRootPath + "/compression/", fileName);
+
+                                        string uploadFolderPathCompression = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "compression");
+
+                                        string filePathCompression = Path.Combine(uploadFolderPathCompression, fileName);
+
+                                        await _imageOptimizationService.CompressImageAsync(path, filePathCompression);
+
+                                        using (var fileStream = new FileStream(path, FileMode.Create))
+                                        {
+                                            await postedFile[photocounter].CopyToAsync(fileStream);
+                                        }
+                                    }
+
+                                    photocounter++;
+                                }
                             }
                             db.Aussen_Rund_all.Add(createOptionsAussen);
                             db.SaveChanges();
