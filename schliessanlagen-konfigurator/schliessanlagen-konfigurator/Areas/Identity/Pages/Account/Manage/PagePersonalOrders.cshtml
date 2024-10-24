@@ -432,9 +432,9 @@
                                                             <h4>PayPall</h4>
                                                         </label><br>                                                   
                                                          <label>
-                                                            <input type="radio" onchange="BezaleMethod(@z)" name="Pay" value="auf Rechnung">
-                                                        <img src="@("/compression/cash-on-delivery.png")" height="40" width="40" />
-                                                            <h4>auf Rechnung</h4>
+                                                        <input type="radio" onchange="BezaleMethod(@z)" name="Pay" value="auf Vorkasse">
+                                                        <img src="@("/compression/bezahlverfahren.png")" height="40" width="40" />
+                                                        <h4>auf Vorkasse</h4>
                                                         </label>  
                                                     </div>
                                                 </div>
@@ -443,10 +443,8 @@
                                            @{
                                                 decimal costProcentKey = Math.Round(Convert.ToDecimal(orderList[z].KeyCost) * 0.19m, 2);
 
-                                                // Вычисляем итоговую сумму после вычитания 19%
                                                 decimal resultKeyItem = Math.Round(Convert.ToDecimal(orderList[z].KeyCost) - costProcentKey, 2);
 
-                                                // Форматируем результат как валюту
                                                 string formattedResultKeyI = resultKeyItem.ToString("C");
                                             }
 
@@ -454,8 +452,8 @@
 
                                                 <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                                     <div class="row g-0">
-                                                        <div class="col-md-4">
-                                                            <img src="@("/compression/Schliarticle.webp")" class="img-fluid rounded-start" alt="Schliarticle">
+                                                        <div class="col-md-2">
+                                                            <img style="align-self: center;text-align: center;" src="@("/compression/Schliarticle.webp")" class="img-fluid rounded-start" width="100" height="100" alt="Schliarticle">
                                                         </div>
                                                         <div class="col-md-8">
                                                             <div class="card-body">
@@ -486,17 +484,16 @@
 
                                                              <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                                                 <div class="row g-0">
-                                                                    <div class="col-md-4">
-                                                                <img src="@($"/compression/{imageList[ProudctItemCounter]}")" class="img-fluid rounded-start" alt="@orderItem[ProudctItemCounter].Name">
+                                                                    <div class="col-md-2">
+                                                                        <img style="align-self: center;text-align: center;" src="@($"/compression/{imageList[ProudctItemCounter]}")" class="img-fluid rounded-start" alt="@orderItem[ProudctItemCounter].Name" width="100" height="100">
                                                                     </div>
                                                                     <div class="col-md-8">
                                                                         <div class="card-body">
                                                                             <h3 class="card-title">Name: @orderItem[ProudctItemCounter].Name</h3>
                                                                             <div class="card-text" id="cardProductPrice-@z">
-                                                                                  @Html.Raw(descriptions[ProudctItemCounter])
+                                                                                  
                                                                             <br />
-                                                                                <h4>aussen: @orderItem[ProudctItemCounter].Aussen</h4>
-                                                                                <h4>innen: @orderItem[ProudctItemCounter].Intern</h4>
+                                                                               <h4>aussen: @orderItem[ProudctItemCounter].Aussen || innen: @orderItem[ProudctItemCounter].Intern</h4>
                                                                                 <h4>Option - @orderItem[ProudctItemCounter].Option</h4>
                                                                                 <h4>Anzahl: @orderItem[ProudctItemCounter].Count</h4>
                                                                                 <h4 id="PreisProduct-@z">Preis: @formattedResultItem</h4>
@@ -523,12 +520,12 @@
                                                 </div>
 
                                                 <div style="grid-template-columns: auto auto;display: grid;">
-                                                    <h5>Versand:</h5>
+                                                    <h3>Versand:</h3>
                                                     <input name="Versand" type="text" redonly style="text-align: end;border: none;outline: none" value="0" id="CostGram-@z" />
                                                 </div>
 
                                                 <div style="grid-template-columns: auto auto; display: grid;">
-                                                    <h5>Bestellsumme:</h5>
+                                                    <h3>Bestellsumme:</h3>
                                                     <input name="OrderSum" readonly style="text-align: end; border: none; outline: none" value="@formattedResultKey" id="costedI-@z" />
                                                     <input readonly type="hidden" style="text-align: end; border: none; outline: none" value="@orderList[z].OrderSum" id="costedР-@z" />
                                                     <input readonly type="hidden" name="NettoSumOrder" style="text-align: end; border: none; outline: none" value="@formattedResultKey" />
