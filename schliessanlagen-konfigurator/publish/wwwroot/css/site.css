@@ -51,6 +51,9 @@
 .ExelItem {
     background: var(--text-color-primary); 
 }
+.ExelItem2 {
+    background: var(--text-color-primary);
+}
 :root {
     --bg-color: #e4e4e4;
     --primary-color: #f00;
@@ -294,17 +297,6 @@ body::-webkit-scrollbar-thumb:hover {
     .footer a:hover {
         text-decoration: underline;
     }
-
-    #schrit {
-        font-weight: 600;
-        font-size: 20px;
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        text-align: center;
-        border: 2px solid #f00;
-    }
-
     #orderCost {
         color: red;
         text-align: end;
@@ -348,9 +340,6 @@ body::-webkit-scrollbar-thumb:hover {
             gap: 5px;
             display: grid;
             padding: 10px;
-        }
-        #blockSchrite{
-
         }
 
         #card_controll > div {
@@ -541,6 +530,13 @@ body::-webkit-scrollbar-thumb:hover {
         margin-bottom: 20px;
         /* gap:10px;*/
     }
+        .ExelItem2 {
+            padding-bottom: 10px;
+            padding-top: 10px;
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+            width: auto;
+            text-align: center;
+        }
     .ExelItem {
         padding-bottom: 10px;
         padding-top: 10px;
@@ -1123,6 +1119,13 @@ body::-webkit-scrollbar-thumb:hover {
         width: auto;
         text-align: center;
     }
+    .ExelItem2 {
+        padding-bottom: 10px;
+        padding-top: 10px;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        width: auto;
+        text-align: center;
+    }
 
     #konfigMenu {
         margin-top: 10px;
@@ -1458,7 +1461,6 @@ body::-webkit-scrollbar-thumb:hover {
         font-family: var(--primary-font);
     }
     #filteblock {
-        border-top: 3px solid red;
         padding: 10px;
         gap: 20px;
         grid-template-columns: 100px repeat(5, auto);
@@ -1894,6 +1896,14 @@ body::-webkit-scrollbar-thumb:hover {
         margin-right: auto;
         border-radius: 5px;
     }
+    .ExelItem2 {
+        grid-template-columns: 200px auto;
+        display: grid;
+        background: white;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 5px;
+    }
 
     #ExelMenu {
         background-color: #EDEDED;
@@ -1909,7 +1919,6 @@ body::-webkit-scrollbar-thumb:hover {
 
     #productImage {
         padding: 20px;
-        border-right: 3px solid red;
     }
 
     #ProductNameUndCost {
@@ -1939,7 +1948,7 @@ body::-webkit-scrollbar-thumb:hover {
     #textInform {
         margin-top: 20px;
         display: flex;
-        gap: 100px;
+        gap: 80px;
     }
 
     #chekProduct {
@@ -2530,7 +2539,6 @@ body::-webkit-scrollbar-thumb:hover {
 
     
     #filteblock {
-        border-top: 3px solid red;
         padding: 10px;
         gap: 20px;
         grid-template-columns: 100px repeat(5, auto);
@@ -2880,7 +2888,6 @@ body::-webkit-scrollbar-thumb:hover {
 
     #productImage {
         padding: 20px;
-        border-right: 3px solid red;
     }
     #selected_inform_text {
         padding: 5px;
@@ -2917,7 +2924,7 @@ body::-webkit-scrollbar-thumb:hover {
     #textInform {
         margin-top: 20px;
         display: flex;
-        gap: 100px;
+        gap: 80px;
     }
 
     #chekProduct {

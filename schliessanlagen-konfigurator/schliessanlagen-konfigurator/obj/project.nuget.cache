@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "BmQ45SWIq2w=",
+  "dgSpecHash": "pWGLVEHfnTw=",
   "success": true,
   "projectFilePath": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator.csproj",
   "expectedPackageFiles": [
@@ -260,6 +260,7 @@
     "C:\\Users\\owsd_\\.nuget\\packages\\system.xml.xpath\\4.3.0\\system.xml.xpath.4.3.0.nupkg.sha512",
     "C:\\Users\\owsd_\\.nuget\\packages\\system.xml.xpath.xmldocument\\4.3.0\\system.xml.xpath.xmldocument.4.3.0.nupkg.sha512",
     "C:\\Users\\owsd_\\.nuget\\packages\\tinify\\1.6.0\\tinify.1.6.0.nupkg.sha512",
+    "C:\\Users\\owsd_\\.nuget\\packages\\viesapi.viesapiclient\\1.2.6\\viesapi.viesapiclient.1.2.6.nupkg.sha512",
     "C:\\Users\\owsd_\\.nuget\\packages\\webgrease\\1.5.2\\webgrease.1.5.2.nupkg.sha512"
   ],
   "logs": [

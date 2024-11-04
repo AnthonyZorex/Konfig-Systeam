@@ -5,40 +5,67 @@
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
-<h3>Willkommen, @User.Identity.Name !</h3>
+<h3>Willkommen, @ViewData["user"]!</h3>
 <partial name="_StatusMessage" for="StatusMessage" />
 <div class="row">
     <div class="col-md-6">
         <form id="profile-form" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
 
+            <div class="form-floating mb-3 mt-3">
+                <input asp-for="Input.Firma" class="form-control" />
+                <label asp-for="Input.Firma" class="form-label"></label>
+                <span asp-validation-for="Input.Firma" class="text-danger"></span>
+            </div>
+           
+            <div style="display:flex;gap:100px" class="mt-3 mb-3">
+                <div class="form-check">
+                    <input asp-for="Input.Gender" class="form-check-input" type="radio" id="flexRadioDefault1" value="Herr" checked>
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        Herr
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input asp-for="Input.Gender" class="form-check-input" type="radio" id="flexRadioDefault2" value="Frau">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        Frau
+                    </label>
+                </div>
+            </div>
+            
+
             <div class="form-floating mb-3">
-                <input asp-for="Input.FirstName" class="form-control" placeholder="Enter your first name" />
+                <input asp-for="Input.FirstName" class="form-control" placeholder="Vorname" />
                 <label asp-for="Input.FirstName" class="form-label"></label>
                 <span asp-validation-for="Input.FirstName" class="text-danger"></span>
             </div>
 
             <div class="form-floating mb-3">
-                <input asp-for="Input.LastName" class="form-control" placeholder="Enter your last name" />
+                <input asp-for="Input.LastName" class="form-control" placeholder="Nachname" />
                 <label asp-for="Input.LastName" class="form-label"></label>
                 <span asp-validation-for="Input.LastName" class="text-danger"></span>
             </div>
 
             <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" placeholder="Enter your last name" />
+                <input asp-for="Input.Email" class="form-control" placeholder="E-Mail Adresse" />
                 <label asp-for="Input.Email" class="form-label"></label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
 
             <div class="form-floating mb-3">
-                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number."/>
+                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Telefon" />
                 <label asp-for="Input.PhoneNumber" class="form-label"></label>
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
 
+            <div class="form-floating mb-3">
+                <input asp-for="Input.UStNumber" class="form-control" placeholder="Telefon" />
+                <label asp-for="Input.UStNumber" class="form-label"></label>
+                <span asp-validation-for="Input.UStNumber" class="text-danger"></span>
+            </div>
           
 
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg danger">Save</button>
+            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg danger">Aktualisieren</button>
         </form>
     </div>
 </div>

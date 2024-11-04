@@ -38,16 +38,16 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
             //public string Rechnun_Land { get; set; }
 
             [Required]
-            [Display(Name = "Rechnun Postleitzahl")]
+            [Display(Name = "PLZ *")]
 
             public string Rechnun_Postleitzahl { get; set; }
 
             [Required]
-            [Display(Name = "Rechnun Stadt")]
+            [Display(Name = "Stadt *")]
             public string Rechnun_Stadt { get; set; }
 
             [Required]
-            [Display(Name = "Rechnun Straße")]
+            [Display(Name = "Straße *")]
             public string Rechnun_Straße { get; set; }
 
 
@@ -56,16 +56,16 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
             //public string Liefer_Land { get; set; }
 
             [Required]
-            [Display(Name = "Liefer Postleitzahl")]
+            [Display(Name = "PLZ *")]
 
             public string Liefer_Postleitzahl { get; set; }
 
             [Required]
-            [Display(Name = "Liefer Stadt")]
+            [Display(Name = "Stadt *")]
             public string Liefer_Stadt { get; set; }
 
             [Required]
-            [Display(Name = "Liefer Straße")]
+            [Display(Name = "Straße *")]
             public string Liefer_Straße { get; set; }
 
         }

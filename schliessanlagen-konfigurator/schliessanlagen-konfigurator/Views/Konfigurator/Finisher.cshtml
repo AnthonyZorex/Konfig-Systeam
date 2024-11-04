@@ -7,6 +7,8 @@
     int z = 0;
     int countFalse = 0;
     int d = 0;
+
+    string url="";
 }
 
 <style>
@@ -63,6 +65,7 @@
         <h4 id="keyInform">
             Sie können sehen, welcher Schlüssel welches Schloss öffnet, und die erforderliche Anzahl an Schlüsseln auswählen.
         </h4>
+
     <div>
         @foreach (var item in ViewBag.Order)
         {
@@ -83,7 +86,7 @@
                 </div>
 
                 <div id="numerKey">
-                    <h4>Schlüssel Nr.@z </h4>
+                    <h4>@item.NameKey</h4>
                 </div>
                 <div id="OpenValue">
                             @for (int i = 0; i < ViewBag.DorName.Count; i++)
@@ -104,8 +107,8 @@
         }
         <div>
         </div>
-        <div id="FinisherAnderes">
-            <a class="btn btn-danger" href="@Url.Action("ChangedKonfigPlan","Konfigurator",new{ userKey = @Model.userKey})">SCHLIESSPLAN BEARBEITEN</a>
+        <div id="FinisherAnderes">   
+            <a id="editPlanLink" class="btn btn-danger" href="#">SCHLIESSPLAN BEARBEITEN</a>
         </div>
         <h3>Türen konfigurieren</h3>
         <h4 id="infoTuren">
@@ -122,7 +125,7 @@
                     <div id="ExelItem-@d" class="ExelItem shadow-lg  mb-5 bg-body-tertiary rounded">
                         <input value="@item.Id" type="hidden" name="DopelItem" />
                         <div id="productImage">
-                            <img decoding="async" data-bs-toggle="modal" data-bs-target="#ModalItemDoppel-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                            <img decoding="async" data-bs-toggle="modal" data-bs-target="#ModalItemDoppel-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                             <div>
                                 @foreach(var list in ViewBag.DoppelGalery)
                                 {
@@ -133,7 +136,7 @@
                         <div id="productMenuInfo">
                             <div id="ProductNameUndCost">
                                 <div>
-                                    <h3>Tür name: @ViewBag.DorName[d]</h3>
+                                    <h3>Türbezeichnung: @ViewBag.DorName[d]</h3>
                                     <input style="border: none;width:250px" readonly type="text" name="DopelName" value="@item.Name" />
                                     <input style="border: none;width:250px" type="hidden" name="NameSystem" value="@item.NameSystem" />
 
@@ -163,9 +166,10 @@
 
                             <div id="Size-@d" class="SizeProduct">
 
-                                <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                <div class="btn-group" role="group" aria-label="Basic outlined example">            
                                 <div>
                                     <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
+                                        <h6>außen</h6>
                                     <select class="form-select" name="DoppelAussen" id="Aussen" onchange="selectParamAussen(@d,'Doppelzylinder',event.target.selectedIndex)">
                                         <option style="display:none" selected>@ViewBag.DAussen[elemNum]</option>
 
@@ -177,6 +181,7 @@
                                     <input type="hidden" id="Aussen-@d" />
                                 </div>
                                 <div>
+                                        <h6>innen</h6>
                                     <select class="form-select" name="DoppelIntern" id="Intern" onchange="selectParamIntern(@d,'Doppelzylinder',event.target.selectedIndex)">
                                         <option style="display:none" selected>@ViewBag.DInter[elemNum]</option>
 
@@ -211,7 +216,7 @@
                                 </div>
                                 </div>
 
-                                <div class="btn-group count_control" role="group" aria-label="Basic outlined example">
+                                <div class="btn-group count_control align-items-end" role="group" aria-label="Basic outlined example">
                                     <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
                                     <input readonly class="count_input_controll" name="TurCounter" id="countSchlusse-@d" type="number" min="1" value="@ViewBag.CounterTur[@elemNum]" />
                                     <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
@@ -342,7 +347,7 @@
                         <div id="ProductNameUndCost">
 
                             <div>
-                                    <h3>Tür name: @ViewBag.DorName[d]</h3>
+                                    <h3>Türbezeichnung: @ViewBag.DorName[d]</h3>
                                     <input style="border: none;width:250px" readonly type="text" name="KnayfName" value="@item.Name" />
                                     <input style="border: none;width:250px" type="hidden" name="NameSystem" value="@item.NameSystem" />
                                     <input id="costItems-@d" name="ProductCosted" type="hidden" value="@item.Price" />
@@ -372,6 +377,7 @@
                             <div id="Size-@d" class="SizeProduct">
                             <div class="btn-group" role="group" aria-label="Basic outlined example">
                             <div>
+                                        <h6>außen</h6>
                                     <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
                                     <select class="form-select" name="KnayfAussen" id="Aussen" onchange="selectParamAussen(@d,'Knaufzylinder',event.target.selectedIndex)">
                                     <option style="display:none" selected>@ViewBag.KAussen[elemNum]</option>
@@ -383,6 +389,7 @@
                                     <input type="hidden" id="Aussen-@d" />
                             </div>
                             <div>
+                                <h6>innen</h6>
                                     <select class="form-select" name="KnayfIntern" id="Intern" onchange="selectParamIntern(@d,'Knaufzylinder',event.target.selectedIndex)">
                                     <option style="display:none" selected>@ViewBag.KInter[elemNum]</option>
 
@@ -409,7 +416,7 @@
                                  <input type="hidden" id="Innen-@d" />
                             </div>
                              </div>
-                                <div class="btn-group count_control" role="group" aria-label="Basic outlined example">
+                                <div class="btn-group count_control align-items-end" role="group" aria-label="Basic outlined example">
                                     <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
                                     <input readonly class="count_input_controll" id="countSchlusse-@d" type="number" min="1" value="@ViewBag.CounterTurKnayf[@elemNum]" name="TurCounter" />
                                     <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
@@ -534,7 +541,7 @@
 
                     <input type="hidden" name="Halb" value="@item.Id" />
                     <div id="productImage">
-                            <img decoding="async" data-bs-toggle="modal" alt="@item.Name" data-bs-target="#ModalHalb-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/image/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                            <img decoding="async" data-bs-toggle="modal" alt="@item.Name" data-bs-target="#ModalHalb-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
                             
                             <div>
                                 @foreach (var list in ViewBag.HalbGalery)
@@ -547,7 +554,7 @@
                         <div id="ProductNameUndCost">
 
                             <div>
-                                    <h3>Tür name: @ViewBag.DorName[d]</h3>
+                                    <h3>Türbezeichnung: @ViewBag.DorName[d]</h3>
                                     <input style="border: none;width:250px" readonly type="text" name="HalbName" value="@item.Name" />
                                     <input style="border: none;width:250px" type="hidden" name="NameSystem" value="@item.NameSystem" />
                                     <input id="costItems-@d" name="ProductCosted" type="hidden" value="@item.Price" />
@@ -576,6 +583,7 @@
                         </div>
                             <div id="Size-@d" class="SizeProduct">
                             <div>
+                                <h6>außen</h6>
                                     <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
                                     <select name="HalbAussen" id="Aussen" class="form-select" onchange="selectParamAussen(@d,'Halbzylinder',event.target.selectedIndex)">
                                     <option style="display:none" selected>@ViewBag.HalbOrderAussen[elemNum]</option>
@@ -587,7 +595,7 @@
                                     <input type="hidden" id="Aussen-@d" />
                             </div>
 
-                                <div class="btn-group count_control_Aussen" role="group" aria-label="Basic outlined example">
+                                <div class="btn-group count_control_Aussen align-items-end" role="group" aria-label="Basic outlined example">
                                     <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
                                     <input readonly class="count_input_controll" value="@ViewBag.CounterTurHalb[@elemNum]" type="number" min="1" name="TurCounter" id="countSchlusse-@d" />
                                     <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
@@ -723,7 +731,7 @@
                     <div id="productMenuInfo">
                         <div id="ProductNameUndCost">
                             <div>
-                                    <h3>Tür name: @ViewBag.DorName[d]</h3>
+                                    <h3>Türbezeichnung: @ViewBag.DorName[d]</h3>
                                     <input style="border: none;width:250px" readonly type="text" name="HelbName" value="@item.Name" />
                                     <input style="border: none;width:250px" type="hidden" name="NameSystem" value="@item.NameSystem" />
                                     <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
@@ -753,7 +761,7 @@
                         </div>
                             <div id="Size-@d" class="SizeProduct">
 
-                           <div class="btn-group" role="group" aria-label="Basic outlined example">
+                           <div class="btn-group " role="group" aria-label="Basic outlined example">
                                     <button onclick="CylinderMinus(@d)" type="button" class="btn btn-success">-</button>
                                     <input readonly class="count_input_controll" name="TurCounter" type="number" min="1" value="@ViewBag.CounterTurHebel[@elemNum]" id="countSchlusse-@d" />
                                     <button onclick="CylinderPlus(@d)" type="button" class="btn btn-success">+</button>
@@ -848,7 +856,7 @@
                     <div id="productMenuInfo">
                         <div id="ProductNameUndCost">
                             <div>
-                                    <h3>Tür name: @ViewBag.DorName[d]</h3>
+                                    <h3>Türbezeichnung: @ViewBag.DorName[d]</h3>
                                     <input style="border: none;width:250px" readonly type="text" name="VorhanName" value="@item.Name" />
                                     <input style="border: none;width:250px" type="hidden" name="NameSystem" value="@item.NameSystem" />
                                     <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
@@ -990,7 +998,7 @@
                             <div id="ProductNameUndCost">
 
                                 <div>
-                                    <h3>Tür name: @ViewBag.DorName[d]</h3>
+                                    <h3>Türbezeichnung: @ViewBag.DorName[d]</h3>
                                     <input style="border: none;width:250px" readonly type="text" name="AussenName" value="@item.Name" />
                                     <input style="border: none;width:250px" type="hidden" name="NameSystem" value="@item.NameSystem" />
                                     <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
@@ -1214,6 +1222,8 @@
     let liferungGroz = @Html.Raw(ViewBag.LieferzeitGroz);
     let liferun = @Html.Raw(ViewBag.LieferzeitJson);
 
+    let currentUrl = window.location.href;
+
     function procent()
     {
 
@@ -1253,7 +1263,7 @@
                         <div id="productMenuInfo">
                             <div id="ProductNameUndCost">
                                 <div>
-                                        <h3>Tür name: ${Dorname[BlockN]}</h3>
+                                                <h3>Türbezeichnung: ${Dorname[BlockN]}</h3>
                                             <input style="border: none;" readonly type="text" name="DopelName" value="${[DoppelInfo[0].Name]}" />
                                                 <input style="border: none;" type="hidden" name="NameSystem" value="${[DoppelInfo[0].NameSystem]}" />
 
@@ -1283,6 +1293,7 @@
                                       @if(@ViewBag.Dopelzylinderaussen!=null)
                                       {
                                                         <div>
+                                                                    <h6>außen</h6>
                                                                                   <input style="border: none;" id="compName" type="hidden" value="${[DoppelInfo[0].companyName]}" />
                                                                                   <select class="form-select" name="DoppelAussen" id="Aussen" onchange="selectParamAussen(${BlockN},'Doppelzylinder',event.target.selectedIndex+1)">
 
@@ -1297,6 +1308,7 @@
                                                @if(ViewBag.DopelzylinderIntern!=null)
                                                {
                                                                  <div>
+                                                                             <h6>innen</h6>
                                                                   <select class="form-select" name="DoppelIntern" id="Intern" onchange="selectParamIntern(${BlockN},'Doppelzylinder',event.target.selectedIndex+1)">
 
                                                             @for (int i = 0; i < @ViewBag.DopelzylinderIntern.Count; i++)
@@ -1308,7 +1320,7 @@
                                                     </div>
                                                }
 
-                                                    <div class="btn-group count_control" role="group" aria-label="Basic outlined example">
+                                                            <div class="btn-group count_control align-items-end" role="group" aria-label="Basic outlined example">
                                                 <button type="button" onclick="CylinderMinus(${BlockN})" class="btn btn-success">-</button>
                                                         <input readonly  class="count_input_controll" name="TurCounter" id="countSchlusse-${BlockN}" type="number" min="1" value="1" />
                                                     <button type="button" onclick="CylinderPlus(${BlockN})" class="btn btn-success">+</button>
@@ -1442,7 +1454,7 @@
                                     <div id="ProductNameUndCost">
 
                                         <div>
-                                                    <h3>Tür name: ${Dorname[BlockN]}</h3>
+                                                            <h3>Türbezeichnung: ${Dorname[BlockN]}</h3>
                                                         <input style="border: none;" readonly type="text" name="HalbName" value="${HalbInfo[0].Name}" />
                                                         <input style="border: none;" type="hidden" name="NameSystem" value="${HalbInfo[0].NameSystem}" />
                                                             <input id="costItems-${BlockN}" type="hidden" value="${HalbInfo[0].Price}" />
@@ -1469,6 +1481,7 @@
         @if (ViewBag.AussenHalb != null)
                                         {
                                                           <div>
+                                                                      <h6>außen</h6>
                                                                                            <input style="border: none;" id="compName" type="hidden" value="${HalbInfo[0].companyName}" />
                                                                                            <select name="HalbAussen" id="Aussen" class="form-select" onchange="selectParamAussen(${BlockN},'Halbzylinder',event.target.selectedIndex+1)">
 
@@ -1481,8 +1494,8 @@
                                                                                                 <input type="hidden" id="Aussen-${BlockN}" />
                                                                                     </div>
                                         }
-      
-                                        <div class="btn-group count_control" role="group" aria-label="Basic outlined example">
+
+                                                <div class="btn-group count_control align-items-end" role="group" aria-label="Basic outlined example">
 
                                                     <button type="button" onclick="CylinderMinus(${BlockN})" class="btn btn-success">-</button>
                                                         <input readonly class="count_input_controll" value="1" type="number" min="1" name="TurCounter" id="countSchlusse-${BlockN}" />
@@ -1607,7 +1620,7 @@
                             <div id="productMenuInfo">
                                 <div id="ProductNameUndCost">
                                     <div>
-                                            <h3>Tür name: ${Dorname[BlockN]}</h3>
+                                                    <h3>Türbezeichnung: ${Dorname[BlockN]}</h3>
                                                     <input style="border: none;" readonly type="text" name="DopelName" value="${[KnayfInfo[0].Name]}" />
                                                         <input style="border: none;" type="hidden" name="NameSystem" value="${[KnayfInfo[0].NameSystem]}" />
 
@@ -1637,6 +1650,7 @@
                                 @if (ViewBag.KnayfZelinderAussen != null)
                                 {
                                                <div>
+                                                           <h6>außen</h6>
                                                                                       <input style="border: none;" id="compName" type="hidden" value="${[KnayfInfo[0].companyName]}" />
 
 
@@ -1657,6 +1671,7 @@
                                         @if(ViewBag.KnayfZelinderIntern!=null)
                                         {
                                               <div>
+                                                          <h6>innen</h6>
 
                                                               <select class="form-select" name="KnayfIntern" id="Intern" onchange="selectParamIntern(${BlockN},'Knaufzylinder',event.target.selectedIndex+1)">
 
@@ -1670,7 +1685,7 @@
                                                    <input type="hidden" id="Innen-${BlockN}" />
                                           </div>
                                         }
-                                              <div class="btn-group count_control" role="group" aria-label="Basic outlined example">
+                                              <div class="btn-group count_control align-items-end" role="group" aria-label="Basic outlined example">
                                                   <button type="button" onclick="CylinderMinus(${BlockN})" class="btn btn-success">-</button>
                                                           <input readonly class="count_input_controll" id="countSchlusse-${BlockN}" type="number" min="1" value="1" name="TurCounter" />
                                                   <button type="button" onclick="CylinderPlus(${BlockN})" class="btn btn-success">+</button>
@@ -1797,7 +1812,7 @@
                                 <div id="productMenuInfo">
                                     <div id="ProductNameUndCost">
                                         <div>
-                                                    <h3>Tür name: ${Dorname[BlockN]}</h3>
+                                                            <h3>Türbezeichnung: ${Dorname[BlockN]}</h3>
                                                     <input style="border: none;" readonly type="text" name="HelbName" value="${[HelbInfo[0].Name]}" />
                                                         <input style="border: none;" type="hidden" name="NameSystem" value="${[HelbInfo[0].NameSystem]}" />
                                                         <input style="border: none;" id="compName" type="hidden" value=${[HelbInfo[0].companyName]}" />
@@ -1891,7 +1906,7 @@
                                 <div id="productMenuInfo">
                                     <div id="ProductNameUndCost">
                                         <div>
-                                                    <h3>Tür name: ${Dorname[BlockN]}</h3>
+                                                            <h3>Türbezeichnung: ${Dorname[BlockN]}</h3>
                                                         <input style="border: none;" readonly type="text" name="VorhanName" value="${VorhanschlosInfo[0].Name}" />
                                                         <input style="border: none;" type="hidden" name="NameSystem" value="${VorhanschlosInfo[0].NameSystem}" />
                                                         <input style="border: none;" id="compName" type="hidden" value="${VorhanschlosInfo[0].companyName}" />
@@ -1928,7 +1943,7 @@
                                                 </select>
                                                <input type="hidden" id="Aussen-${BlockN}" />
                                         </div>
-                                        <div style="gap: 10px;display: flex;margin-left: 50px;">
+                                        <div style="gap: 10px;display: flex;margin-left: 85px;">
                                           <button type="button" onclick="CylinderMinus(${BlockN})" class="btn btn-success">-</button>
                                           <input name="TurCounter" readonly style="border: none;max-width: 30px;" type="number" min="1" id="countSchlusse-${BlockN}" value="1" />
                                           <button type="button" onclick="CylinderPlus(${BlockN})" class="btn btn-success">+</button>
@@ -1992,7 +2007,7 @@
                     <div id="productMenuInfo">
                         <div id="ProductNameUndCost">
                             <div>
-                               <h3>Tür name: ${Dorname[BlockN]}</h3>
+                                       <h3>Türbezeichnung: ${Dorname[BlockN]}</h3>
                                 <input style="border: none;" readonly type="text" name="AussenName" value="${[AussenzylinderInfo[0].Name]}" />
                                     <input style="border: none;" type="hidden" name="NameSystem" value="${[AussenzylinderInfo[0].NameSystem]}" />
                                        <input style="border: none;" id="compName" type="hidden" value="${[AussenzylinderInfo[0].companyName]}" />
@@ -2038,7 +2053,7 @@
             @for (int i = 0; i < ViewBag.AussenName.Count; i++)
             {
                                                        <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.AussenName[i]" />
-                                                         <img onclick="OpenDescriptions(@i)"  id="hilfeOptionsIcon" src="@("/Image/question.png")" height="20" width="20" />
+                                                                         <img onclick="OpenDescriptions(@i)"  id="hilfeOptionsIcon" src="@("/compression/question.png")" height="20" width="20" />
                                                        <select style="margin-bottom: 10px;"  class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Aussen',event.target.id,event.target.value,@ValueAussen,'@ViewBag.AussenName[i]',@i,@d)">
 
                     @for (int j = 0; j < ViewBag.AussenValue[i]; j++)
@@ -2104,7 +2119,29 @@
         localStorage.setItem('currentURL', currentURL);
     }
 
-    saveCurrentURL()
+    saveCurrentURL();
+
+      document.getElementById("editPlanLink").addEventListener("click", function (event) {
+        event.preventDefault(); // Предотвращаем переход по умолчанию
+
+        // Получаем текущий URL
+        var currentUrl = window.location.href;
+
+        // Получаем userKey из модели
+        var userKey = '@Model.userKey'; 
+
+        // Создаем URL для перехода
+        var redirectUrl = '@Url.Action("ChangedKonfigPlan", "Konfigurator")'; 
+
+        // Полный URL с параметрами
+        var finalUrl = redirectUrl + '?userKey=' + encodeURIComponent(userKey) + '&currentUrl=' + encodeURIComponent(currentUrl);
+        
+        console.log("Финальный URL:", finalUrl); // Проверяем, что получается в итоге
+
+        // Переход по созданному URL
+        window.location.href = finalUrl; // Выполняем переход
+    });
+    
 
      document.addEventListener('DOMContentLoaded', async function() 
      {

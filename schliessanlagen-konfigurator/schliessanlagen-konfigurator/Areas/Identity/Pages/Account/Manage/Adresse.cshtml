@@ -1,7 +1,7 @@
 ﻿@page
 @model Adresse
 @{
-    ViewData["Title"] = "Adressen ändern";
+    ViewData["Title"] = "Adresse";
 
     ViewData["ActivePage"] = ManageNavPages.Adresse;
 }
@@ -262,29 +262,29 @@
                     <option value="EH">Westsahara</option>
                     <option value="CF">Zentralafrikanische Republik</option>
                     <option value="CY">Zypern</option>
-                </select>
-                
+                </select>                
             </div>
             
             <div class="form-floating mb-3">
-                <input asp-for="Input.Rechnun_Postleitzahl" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Rechnung Postleitzahl" />
+                <input asp-for="Input.Rechnun_Postleitzahl" class="form-control" autocomplete="new-password" aria-required="true" placeholder="PLZ *" />
                 <label asp-for="Input.Rechnun_Postleitzahl" class="form-label"></label>
                 <span asp-validation-for="Input.Rechnun_Postleitzahl" class="text-danger"></span>
             </div>
 
             <div class="form-floating mb-3">
-                <input asp-for="Input.Rechnun_Stadt" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Rechnung Stadt" />
+                <input asp-for="Input.Rechnun_Stadt" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Stadt *" />
                 <label asp-for="Input.Rechnun_Stadt" class="form-label"></label>
                 <span asp-validation-for="Input.Rechnun_Stadt" class="text-danger"></span>
             </div>
 
 
             <div class="form-floating mb-3">
-                <input asp-for="Input.Rechnun_Straße" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Rechnung Straße" />
+                <input asp-for="Input.Rechnun_Straße" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Straße *" />
                 <label asp-for="Input.Rechnun_Straße" class="form-label"></label>
                 <span asp-validation-for="Input.Rechnun_Straße" class="text-danger"></span>
             </div>
 
+            <h4>Lieferung Adresse</h4>
 
             <div class="form-floating mb-3">
                 <select class="form-select" asp-for="Liefer_Land" name="Liefer_Land" id="countries floatingInput" placeholder="Land / country *">
@@ -539,20 +539,20 @@
             </div>
 
             <div class="form-floating mb-3">
-                <input asp-for="Input.Liefer_Postleitzahl" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Liefer Postleitzahl" />
+                <input asp-for="Input.Liefer_Postleitzahl" class="form-control" autocomplete="new-password" aria-required="true" placeholder="PLZ *" />
                 <label asp-for="Input.Liefer_Postleitzahl" class="form-label"></label>
                 <span asp-validation-for="Input.Liefer_Postleitzahl" class="text-danger"></span>
             </div>
 
             <div class="form-floating mb-3">
-                <input asp-for="Input.Liefer_Stadt" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Liefer Stadt" />
+                <input asp-for="Input.Liefer_Stadt" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Stadt *" />
                 <label asp-for="Input.Liefer_Stadt" class="form-label"></label>
                 <span asp-validation-for="Input.Liefer_Stadt" class="text-danger"></span>
             </div>
 
 
             <div class="form-floating mb-3">
-                <input asp-for="Input.Liefer_Straße" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Liefer Straße" />
+                <input asp-for="Input.Liefer_Straße" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Straße *" />
                 <label asp-for="Input.Liefer_Straße" class="form-label"></label>
                 <span asp-validation-for="Input.Liefer_Straße" class="text-danger"></span>
             </div>

@@ -51,25 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c75efa13-dec3-4c25-b2ef-47efabb99ad4",
+                            Id = "5d7fd56c-1a14-419f-8bbe-1c6a8f1b9198",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "a1880869-4469-4475-9c2c-4c6b2460cbdb",
+                            Id = "2d12b30b-2b71-43ba-93f2-da6ada417c37",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "057432d8-5374-41db-900a-9941de42641d",
+                            Id = "b832bd88-4e9d-4b2a-a8b8-03bad5c95c26",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "6117ee5f-e271-4bf8-939c-41714a94fd61",
+                            Id = "cb4b1cea-5604-48d5-ab5e-3a0406f22b69",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -1311,8 +1311,14 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Firma")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Gender")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
@@ -1371,6 +1377,9 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
+
+                    b.Property<string>("USt_IdNr")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)

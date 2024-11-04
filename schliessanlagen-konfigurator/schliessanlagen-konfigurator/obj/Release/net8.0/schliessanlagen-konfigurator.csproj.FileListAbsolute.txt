@@ -2794,3 +2794,4 @@ D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\SixLabors.ImageSharp.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\SixLabors.ImageSharp.Web.dll
 D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\Tinify.dll
+D:\Konfig-Systeam\schliessanlagen-konfigurator\schliessanlagen-konfigurator\bin\Release\net8.0\viesapiLibrary.dll

@@ -17,60 +17,59 @@
 
 <div class="shadow-lg  mb-5 bg-body-tertiary rounded" id="selectedSystem_filter">
     <div>
-        <h5>
+        <h3>
             System auswählen
-        </h5>
-    </div>
-   <div>
-        <h5>
-            Bitte wählen Sie das passende Schließsystem aus.
-        </h5>
-    </div>
-    <div class="shadow-lg mb-2 bg-body-tertiary rounded" id="selected_system_block">
-   <div id="selected_inform_text">
-        <h5>Systemfilterung</h5>
-    </div>
-    <div id="filteblock">
-    <div>
-        <button onclick="clean()" class="btn danger">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-filter-x"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M13.758 19.414l-4.758 1.586v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v1.5" /><path d="M22 22l-5 -5" /><path d="M17 22l5 -5" />
-              <title>clean</title>
-          </svg>
-        </button>
-    </div>
-    <div>
-            <h5>Hersteller</h5>
-        <select id="company-name" onchange="selectCompany(event.target.value)" class="form-control">
-            <option selected></option>
-            <option>CES</option>
-            <option>ABUS</option>
-            <option>BASI</option>
-            <option>EVVA</option>
-        </select>
+        </h3>
     </div>
 
-    <div>
-        <h5>Lieferzeit</h5>
-        <select id="liferzeit" onchange="serchLiferZeit(event.target.value)" class="form-control">
-        </select>
-    </div>
+   <div id="selected_system_block">
+    <div id="filteblock" class="p-3">
+        <div class="mb-3 text-center mt-3">
+    <button onclick="clean()" class="btn btn-danger">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-filter-x">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M13.758 19.414l-4.758 1.586v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v1.5" />
+            <path d="M22 22l-5 -5" />
+            <path d="M17 22l5 -5" />
+        </svg>
+        <span class="visually-hidden">Filter zurücksetzen</span>
+    </button>
+</div>
 
-    <div>
-        <h5>SystemName</h5>
-        <input id="serchSystemName" onchange="selectSysteam(event.target.value)" type="text" class="form-control" />
-    </div>
-
-        <div id="Gesamtpreis">
-            <h5>Gesamtpreis von </h5>
-                <input id="minSelect" type="text" onchange="minPrise(event.target.value)" class="form-control" min="0" step="0,1" />
+        <div class="mb-3">
+            <h4>Hersteller</h4>
+            <select id="company-name" onchange="selectCompany(event.target.value)" class="form-select" aria-label="Hersteller auswählen">
+                <option selected disabled>Hersteller wählen</option>
+                <option>CES</option>
+                <option>ABUS</option>
+                <option>BASI</option>
+                <option>EVVA</option>
+            </select>
         </div>
 
-        <div>
-                <h5>Gesamtpreis bis</h5>
-            <input id="maxSelect" type="text" onchange="maxPrise(event.target.value)" class="form-control" min="0" step="0,1" />
+        <div class="mb-3">
+            <h4>Lieferzeit</h4>
+            <select id="liferzeit" onchange="serchLiferZeit(event.target.value)" class="form-select" aria-label="Lieferzeit auswählen">
+                <option selected disabled>Lieferzeit wählen</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <h4>System</h4>
+            <input id="serchSystemName" onchange="selectSysteam(event.target.value)" type="text" class="form-control" placeholder="Systemname eingeben" aria-label="Systemname eingeben" />
+        </div>
+
+        <div class="mb-3">
+            <h4>Preis von</h4>
+            <input id="minSelect" type="number" onchange="minPrise(event.target.value)" class="form-control" placeholder="Mindestens 0" min="0" step="0.01" aria-label="Minimaler Preis" />
+        </div>
+
+        <div class="mb-3">
+            <h4>Preis bis</h4>
+            <input id="maxSelect" type="number" onchange="maxPrise(event.target.value)" class="form-control" placeholder="Maximal 0" min="0" step="0.01" aria-label="Maximaler Preis" />
         </div>
     </div>
-    </div>
+</div>
 </div>
 
 <div id="ExelMenu">
@@ -80,6 +79,7 @@
         @{
             if (ViewBag.Doppel != null)
             {
+               
                 foreach (var item in ViewBag.Doppel)
                 {
                             <div class="ExelItem2 shadow-lg mb-4 bg-body-tertiary rounded" id="@countItem">
@@ -121,9 +121,13 @@
                                             <div id="productChek">
                                                 <div>
                                                     <div>
+                                                        <h5>inkl. 19 % MwSt.</h5>
+                                                    </div>
+                                                    <div>
                                                        @Html.Raw(@item.Lieferzeit)
                                                     </div>
-                                                    <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
+                                                        <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
+
                                                 </div>
 
                                             </div>
@@ -136,6 +140,7 @@
 
             else if (ViewBag.Knaufzylinder != null)
             {
+                
                 foreach (var item in ViewBag.Knaufzylinder)
                 {
                             <div class="ExelItem2 shadow-lg mb-4 bg-body-tertiary rounded" id="@countItem">
@@ -178,8 +183,8 @@
                                                 <div>
                                                     @Html.Raw(@item.Lieferzeit)
                                                 </div>
-                                                <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem,DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
-                                            </div>
+                                                   <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
+                                                </div>
                                         </div>
                                     </div>
                     countItem++;
@@ -187,6 +192,7 @@
             }
             else if (ViewBag.Halb != null)
             {
+               
                 foreach (var item in ViewBag.Halb)
                 {
                             <div class="ExelItem2 shadow-lg mb-4 bg-body-tertiary rounded" id="@countItem">
@@ -230,9 +236,9 @@
                                                     <div id="productChek">
                                                 <div>
                                                     @Html.Raw(@item.Lieferzeit)
+                                                 </div>
+                                                      <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
                                                 </div>
-                                                <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
-                                            </div>
                                         </div>
                                     </div>
                     countItem++;
@@ -240,6 +246,7 @@
             }
             else if (ViewBag.Hebel != null)
             {
+
                 foreach (var item in ViewBag.Hebel)
                 {
                             <div class="ExelItem2 shadow-lg mb-4 bg-body-tertiary rounded" id="@countItem">
@@ -282,9 +289,9 @@
                                                 <div id="productChek">
                                                 <div>
                                                     @Html.Raw(@item.Lieferzeit)
+                                                </div>  
+                                                      <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
                                                 </div>
-                                                <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
-                                            </div>
                                         </div>
                                     </div>
                     countItem++;
@@ -334,8 +341,10 @@
                                                 <div>
                                                     @Html.Raw(@item.Lieferzeit)
                                                 </div>
-                                                <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem,DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
-                                            </div>
+                                                   
+                                                        <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
+                                                   
+                                               </div>
                                         </div>
                                     </div>
                     countItem++;
@@ -343,6 +352,7 @@
             }
             else if (ViewBag.Aussen != null)
             {
+               
                 foreach (var item in ViewBag.Aussen)
                 {
                             <div class="ExelItem2 shadow-lg mb-4 bg-body-tertiary rounded" id="@countItem">
@@ -384,8 +394,8 @@
                                                 <div>
                                                     @Html.Raw(@item.Lieferzeit)
                                                 </div>
-                                                <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem,DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
-                                            </div>
+                                                        <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
+                                                </div>
                                         </div>
                                     </div>
                     countItem++;
@@ -469,8 +479,6 @@
         allDoc.forEach((item) => {
 
             let companyTime = item.querySelectorAll("#lifer")[0];
-
-            console.log(companyTime);
 
             if (value.trim() == "") {
                 item.style.display = "grid";

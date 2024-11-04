@@ -47,6 +47,7 @@ using Antlr.Runtime;
 using schliessanlagen_konfigurator.Migrations;
 using OptionsVorhan = schliessanlagen_konfigurator.Models.Vorhan.OptionsVorhan;
 using System.Diagnostics;
+using System.Linq.Dynamic.Core;
 namespace schliessanlagen_konfigurator.Controllers
 {
     [EnableCors("*")]
@@ -64,19 +65,19 @@ namespace schliessanlagen_konfigurator.Controllers
         }
 
         [HttpGet]
-        public ActionResult ChangedKonfigPlan(string userKey)
+        public ActionResult ChangedKonfigPlan(string userKey, string currentUrl)
         {
             SchopAlarm();
 
             var Orders = db.Orders.Where(x => x.userKey == userKey).ToList();
-            
+
             var isOpen = new List<isOpen_Order>();
             
             foreach (var list in Orders)
             {
                 var open = db.isOpen_Order.Where(x => x.OrdersId == list.Id).ToList();
-                
-                foreach(var item in open)
+
+                foreach (var item in open)
                 {
                     isOpen.Add(item);
                 }
@@ -194,6 +195,8 @@ namespace schliessanlagen_konfigurator.Controllers
             ViewBag.SizeKnayfAussen = JsonConvert.SerializeObject(listKnayfAussen.Distinct());
             ViewBag.SizeKnayfIntern = JsonConvert.SerializeObject(listKnayfIntern.Distinct());
 
+            ViewBag.Url = JsonConvert.SerializeObject(currentUrl);
+
             ViewBag.SizeHalb = JsonConvert.SerializeObject(HalbzylinderAussen.Distinct());
 
             return View(user);
@@ -202,7 +205,7 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpPost]
         public ActionResult ChangedKonfigPlanPost(List<string> FurNameKey, string userName, Orders Key, List<string> Turname, 
         List<string> ZylinderId, List<float> aussen, List<float> innen, List<string> NameKey, List<int> CountKey,
-        List<string> IsOppen, List<int> CountTur)
+        List<string> IsOppen, List<int> CountTur, string url)
         {
 
             if (IsOppen.Count > 1)
@@ -302,6 +305,8 @@ namespace schliessanlagen_konfigurator.Controllers
                     if (zylinderTyp == "Doppelzylinder")
                     {
                         idZylinder = 1;
+
+
                     }
                     if (zylinderTyp == "Halbzylinder")
                     {
@@ -581,7 +586,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
             }
             db.SaveChanges();
-            return RedirectToAction("System_Auswählen", "Konfigurator", new { userName });
+            return RedirectToAction("System_Auswählen", "Konfigurator", new { userName, url });
         }
         public ActionResult DowloadRehnung(int? Id)
         {
@@ -918,71 +923,98 @@ namespace schliessanlagen_konfigurator.Controllers
             }
         }
         [HttpGet]
-        public ActionResult System_Auswählen(int Id, string Key, string userName, bool isNewKonfig,bool Biarbeiten,bool Reorder)
+        public ActionResult System_Auswählen(int Id, string Key, string userName,string url,bool isNewKonfig,bool Biarbeiten,bool Reorder)
         {
-            
-            var stopwatch = Stopwatch.StartNew();
+            string prufSystem = "";
+            if (url != null)
+            {
+                Regex regex = new Regex(@"(Systeam=)([^&]*)");
+
+                Match match = regex.Match(url);
+
+                // Проверяем, найдено ли совпадение
+                if (match.Success)
+                {
+                    // Вторая группа содержит значение параметра
+                    string systeamValue = match.Groups[2].Value;
+                    prufSystem = systeamValue;
+                }
+
+
+            }
+           
+     
 
             SchopAlarm();
-           
+            var liferzeiten = db.SysteamPriceKey
+                      .Select(x => x.Lieferzeit)
+                      .Distinct()
+                      .ToList();
+            ViewBag.SortLiferzeit = JsonConvert.SerializeObject(liferzeiten); 
 
-            var Liferzeit = db.SysteamPriceKey.Select(x => x.Lieferzeit).Distinct().ToList();
+            
+            var ordersQuery = db.Orders.AsQueryable(); // Используем IQueryable для отложенного выполнения запросов
 
-            ViewBag.SortLiferzeit = JsonConvert.SerializeObject(Liferzeit.Distinct().ToList());
-
-            var orders = db.Orders.ToList();
-
-            if (userName!=null && isNewKonfig == true )
+            if (!string.IsNullOrEmpty(userName) && isNewKonfig)
             {
-               orders = orders.Where(x => x.userKey == userName).ToList();
-                
-                if (Biarbeiten == true)
+                ordersQuery = ordersQuery.Where(x => x.userKey == userName); // Фильтрация по userName
+
+                if (Biarbeiten)
                 {
-                    ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
-                    string loginInform = ident.Claims.Select(x => x.Value).First();
-                    var users = db.Users.FirstOrDefault(x => x.Id == loginInform);
+                    var ident = HttpContext.User.Identity as ClaimsIdentity;
+                    string loginInform = ident?.Claims.FirstOrDefault()?.Value; // Получаем первый Claim
+                    var user = db.Users.FirstOrDefault(x => x.Id == loginInform);
 
-                    var RemoveOrder = db.UserOrdersShop.Include(x=>x.ProductSysteam).FirstOrDefault(x => x.UserOrderKey == userName && x.Id==Id);
-
-                    var currentTime = RemoveOrder.createData.Value;
-
-                    foreach (var listProduct in RemoveOrder.ProductSysteam)
+                    if (user != null)
                     {
-                        db.ProductSysteam.Remove(listProduct);
+                        var removeOrder = db.UserOrdersShop
+                                            .Include(x => x.ProductSysteam)
+                                            .FirstOrDefault(x => x.UserOrderKey == userName && x.Id == Id);
+
+                        if (removeOrder != null)
+                        {
+                            var currentTime = removeOrder.createData.Value;
+
+                            // Удаление продуктов из ProductSysteam
+                            db.ProductSysteam.RemoveRange(removeOrder.ProductSysteam);
+
+                            // Удаление заказа из UserOrdersShop
+                            db.UserOrdersShop.Remove(removeOrder);
+
+                            // Формирование имени файла более безопасным способом
+                            string fileName = $"{user.FirstName}{user.LastName}_{currentTime:yyyyMMdd_HHmm}_OrderFile.xlsx";
+                            string destinationFilePath = Path.Combine("wwwroot", "Orders", fileName);
+
+                            // Проверка и удаление файла
+                            if (System.IO.File.Exists(destinationFilePath))
+                            {
+                                System.IO.File.Delete(destinationFilePath);
+                            }
+
+                            db.SaveChanges();
+                        }
                     }
-
-                    db.UserOrdersShop.Remove(RemoveOrder);
-
-                    string destinationFilePath = @$"wwwroot/Orders/{users.FirstName + users.LastName + currentTime.Minute + currentTime.Hour + currentTime.Day + currentTime.Month + currentTime.Year} OrderFile.xlsx";
-
-                    if (System.IO.File.Exists(destinationFilePath))
-                    {
-                        System.IO.File.Delete(destinationFilePath);
-                    }
-
-                    db.SaveChanges();
                 }
-                if (Reorder == true)
+
+                if (Reorder)
                 {
-                    var UserOrder = db.UserOrdersShop.FirstOrDefault(x => x.UserOrderKey == userName && x.Id == Id);
-                    orders = orders.Where(x => x.userKey == UserOrder.UserOrderKey).ToList();
-               
+                    var userOrder = db.UserOrdersShop.FirstOrDefault(x => x.UserOrderKey == userName && x.Id == Id);
+                    if (userOrder != null)
+                    {
+                        ordersQuery = ordersQuery.Where(x => x.userKey == userOrder.UserOrderKey); // Фильтрация по UserOrderKey
+                    }
                 }
             }
             else
             {
-                if (Key != null)
-                {
-                    orders = orders.Where(x => x.userKey == Key).ToList();
-                }
-                else
-                {
-                    orders = orders.Where(x => x.userKey == userName).ToList();
-                }
-               
+                // Унификация логики фильтрации
+                ordersQuery = !string.IsNullOrEmpty(Key)
+                    ? ordersQuery.Where(x => x.userKey == Key)
+                    : ordersQuery.Where(x => x.userKey == userName);
             }
 
-            var keyUser = orders.Last();
+            // Получение последнего заказа
+            var keyUser = ordersQuery.OrderByDescending(x => x.Id).FirstOrDefault();
 
             var allUserListOrder = db.Orders.Where(x => x.userKey == keyUser.userKey).ToList();
 
@@ -1036,6 +1068,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             int VorhCount = 0;
             var allOderDopelSyze = allUserListOrder.Where(x => x.ZylinderId == dopelType).ToList();
+
 
             if (allOderDopelSyze.Count() > 0)
             {
@@ -1259,6 +1292,27 @@ namespace schliessanlagen_konfigurator.Controllers
                 .OrderBy(x => x.Cost)
                 .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach(var item in ListOrder.Distinct())
+                    {
+                        if(item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
                 ViewBag.Doppel = ListOrder.Distinct().OrderBy(x => x.Cost).ToList();
 
                 ViewBag.Gallery = Gallery;
@@ -1297,6 +1351,29 @@ namespace schliessanlagen_konfigurator.Controllers
                   .OrderBy(x => x.Cost)
                   .ToList();
 
+
+                if (prufSystem != "")
+                {
+                    foreach (var item in Knaufzylinder.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Knaufzylinder = Knaufzylinder.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked3.Count() > 0 && cheked2.Count == 0 && cheked.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
@@ -1330,6 +1407,28 @@ namespace schliessanlagen_konfigurator.Controllers
                   .Distinct()
                   .OrderBy(x => x.Cost)
                   .ToList();
+
+                if (prufSystem != "")
+                {
+                    foreach (var item in rl.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
 
                 ViewBag.Halb = rl.Distinct().OrderBy(x => x.Cost).ToList();
 
@@ -1366,6 +1465,28 @@ namespace schliessanlagen_konfigurator.Controllers
                   .OrderBy(x => x.Cost)
                   .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in rl.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Hebel = rl.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked5.Count() > 0 && cheked2.Count == 0 && cheked3.Count == 0 && cheked4.Count == 0 && cheked.Count == 0 && cheked6.Count == 0)
@@ -1400,6 +1521,28 @@ namespace schliessanlagen_konfigurator.Controllers
                   .OrderBy(x => x.Cost)
                   .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in rl.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.VorhanSchloss = rl.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked6.Count() > 0 && cheked2.Count == 0 && cheked3.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked.Count == 0)
@@ -1433,6 +1576,28 @@ namespace schliessanlagen_konfigurator.Controllers
                   .Distinct()
                   .OrderBy(x => x.Cost)
                   .ToList();
+
+                if (prufSystem != "")
+                {
+                    foreach (var item in rl.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
 
                 ViewBag.Aussen = rl.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -1470,6 +1635,28 @@ namespace schliessanlagen_konfigurator.Controllers
                   .OrderBy(x => x.Cost)
                   .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked.Count() > 0 && cheked3.Count() > 0 && cheked2.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
@@ -1502,6 +1689,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .Distinct()
               .OrderBy(x => x.Cost)
               .ToList();
+
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
 
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -1537,6 +1746,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .OrderBy(x => x.Cost)
               .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked.Count() > 0 && cheked5.Count() > 0 && cheked2.Count == 0 && cheked4.Count == 0 && cheked3.Count == 0 && cheked6.Count == 0)
@@ -1570,6 +1801,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .Distinct()
               .OrderBy(x => x.Cost)
               .ToList();
+
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
 
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -1606,6 +1859,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .OrderBy(x => x.Cost)
               .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList(); 
             }
 
@@ -1641,6 +1916,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .OrderBy(x => x.Cost)
               .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked2.Count() > 0 && cheked4.Count() > 0 && cheked.Count == 0 && cheked3.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
@@ -1674,6 +1971,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .Distinct()
               .OrderBy(x => x.Cost)
               .ToList();
+
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -1709,6 +2028,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .OrderBy(x => x.Cost)
               .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked2.Count() > 0 && cheked6.Count() > 0 && cheked.Count == 0 && cheked3.Count == 0 && cheked4.Count == 0 && cheked5.Count == 0)
@@ -1743,6 +2084,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .OrderBy(x => x.Cost)
               .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked3.Count() > 0 && cheked4.Count() > 0 && cheked.Count == 0 && cheked2.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
@@ -1776,6 +2139,29 @@ namespace schliessanlagen_konfigurator.Controllers
               .Distinct()
               .OrderBy(x => x.Cost)
               .ToList();
+
+
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
 
                 ViewBag.Halb = Join.Distinct().OrderBy(x => x.Cost).ToList();
                
@@ -1813,6 +2199,29 @@ namespace schliessanlagen_konfigurator.Controllers
                   .OrderBy(x => x.Cost)
                   .ToList();
 
+
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Halb = Join.Distinct().OrderBy(x => x.Cost).ToList(); 
 
             }
@@ -1848,6 +2257,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .OrderBy(x => x.Cost)
               .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Halb = Join.Distinct().OrderBy(x => x.Cost).ToList(); 
          
             }
@@ -1882,6 +2313,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .Distinct()
               .OrderBy(x => x.Cost)
               .ToList();
+
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
 
                 ViewBag.Hebel = Join.Distinct().OrderBy(x => x.Cost).ToList(); 
                 
@@ -1919,6 +2372,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .OrderBy(x => x.Cost)
               .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Hebel = Join.Distinct().OrderBy(x => x.Cost).ToList(); 
                 
             }
@@ -1953,6 +2428,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .Distinct()
               .OrderBy(x => x.Cost)
               .ToList();
+
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
 
                 ViewBag.VorhanSchloss = Join.Distinct().OrderBy(x => x.Cost).ToList(); 
              
@@ -1990,6 +2487,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .OrderBy(x => x.Cost)
               .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked4.Count() > 0 && cheked3.Count == 0 && cheked5.Count == 0 && cheked6.Count == 0)
@@ -2024,6 +2543,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .Distinct()
               .OrderBy(x => x.Cost)
               .ToList();
+
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
 
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2060,6 +2601,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .OrderBy(x => x.Cost)
               .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked2.Count() > 0 && cheked.Count() > 0 && cheked6.Count() > 0 && cheked4.Count == 0 && cheked5.Count == 0 && cheked3.Count == 0)
@@ -2094,6 +2657,28 @@ namespace schliessanlagen_konfigurator.Controllers
                   .Distinct()
                   .OrderBy(x => x.Cost)
                   .ToList();
+
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
 
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2130,6 +2715,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .OrderBy(x => x.Cost)
               .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked3.Count() > 0 && cheked.Count() > 0 && cheked5.Count() > 0 && cheked6.Count == 0 && cheked4.Count == 0 && cheked2.Count == 0)
@@ -2165,6 +2772,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .OrderBy(x => x.Cost)
               .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked3.Count() > 0 && cheked.Count() > 0 && cheked6.Count() > 0 && cheked5.Count == 0 && cheked4.Count == 0 && cheked2.Count == 0)
@@ -2199,6 +2828,28 @@ namespace schliessanlagen_konfigurator.Controllers
                   .Distinct()
                   .OrderBy(x => x.Cost)
                   .ToList();
+
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
 
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2236,6 +2887,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .OrderBy(x => x.Cost)
               .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked4.Count() > 0 && cheked.Count() > 0 && cheked6.Count() > 0 && cheked2.Count == 0 && cheked3.Count == 0 && cheked5.Count == 0)
@@ -2271,6 +2944,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .OrderBy(x => x.Cost)
               .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked5.Count() > 0 && cheked.Count() > 0 && cheked6.Count() > 0 && cheked2.Count == 0 && cheked3.Count == 0 && cheked4.Count == 0)
@@ -2305,6 +3000,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .Distinct()
               .OrderBy(x => x.Cost)
               .ToList();
+
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
 
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2342,6 +3059,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .OrderBy(x => x.Cost)
               .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked3.Count() > 0 && cheked2.Count() > 0 && cheked5.Count() > 0 && cheked.Count == 0 && cheked4.Count == 0 && cheked6.Count == 0)
@@ -2376,6 +3115,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .Distinct()
               .OrderBy(x => x.Cost)
               .ToList();
+
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2412,6 +3173,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .OrderBy(x => x.Cost)
               .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked4.Count() > 0 && cheked2.Count() > 0 && cheked5.Count() > 0 && cheked.Count == 0 && cheked3.Count == 0 && cheked6.Count == 0)
@@ -2446,6 +3229,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .Distinct()
               .OrderBy(x => x.Cost)
               .ToList();
+
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2482,6 +3287,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .OrderBy(x => x.Cost)
               .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked5.Count() > 0 && cheked2.Count() > 0 && cheked6.Count() > 0 && cheked.Count == 0 && cheked4.Count == 0 && cheked3.Count == 0)
@@ -2516,6 +3343,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .Distinct()
               .OrderBy(x => x.Cost)
               .ToList();
+
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2552,6 +3401,28 @@ namespace schliessanlagen_konfigurator.Controllers
                   .OrderBy(x => x.Cost)
                   .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked4.Count() > 0 && cheked3.Count() > 0 && cheked6.Count() > 0 && cheked.Count == 0 && cheked2.Count == 0 && cheked5.Count == 0)
@@ -2586,6 +3457,28 @@ namespace schliessanlagen_konfigurator.Controllers
                   .Distinct()
                   .OrderBy(x => x.Cost)
                   .ToList();
+
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2622,6 +3515,28 @@ namespace schliessanlagen_konfigurator.Controllers
                   .OrderBy(x => x.Cost)
                   .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked5.Count() > 0 && cheked4.Count() > 0 && cheked6.Count() > 0 && cheked.Count == 0 && cheked2.Count == 0 && cheked3.Count == 0)
@@ -2656,6 +3571,28 @@ namespace schliessanlagen_konfigurator.Controllers
                   .Distinct()
                   .OrderBy(x => x.Cost)
                   .ToList();
+
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2695,6 +3632,28 @@ namespace schliessanlagen_konfigurator.Controllers
                   .OrderBy(x => x.Cost)
                   .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked.Count() > 0 && cheked2.Count() > 0 && cheked3.Count() > 0 && cheked5.Count > 0 && cheked4.Count == 0 && cheked6.Count == 0)
@@ -2732,6 +3691,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .Distinct()
               .OrderBy(x => x.Cost)
               .ToList();
+
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2771,6 +3752,28 @@ namespace schliessanlagen_konfigurator.Controllers
                   .OrderBy(x => x.Cost)
                   .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked.Count() > 0 && cheked2.Count() > 0 && cheked4.Count() > 0 && cheked5.Count > 0 && cheked3.Count == 0 && cheked6.Count == 0)
@@ -2808,6 +3811,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .Distinct()
               .OrderBy(x => x.Cost)
               .ToList();
+
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2847,6 +3872,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .OrderBy(x => x.Cost)
               .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked.Count() > 0 && cheked2.Count() > 0 && cheked5.Count() > 0 && cheked6.Count > 0 && cheked3.Count == 0 && cheked4.Count == 0)
@@ -2884,6 +3931,28 @@ namespace schliessanlagen_konfigurator.Controllers
                   .Distinct()
                   .OrderBy(x => x.Cost)
                   .ToList();
+
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -2924,6 +3993,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .OrderBy(x => x.Cost)
               .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked.Count() > 0 && cheked3.Count() > 0 && cheked4.Count() > 0 && cheked6.Count > 0 && cheked2.Count == 0 && cheked5.Count == 0)
@@ -2961,6 +4052,28 @@ namespace schliessanlagen_konfigurator.Controllers
                   .Distinct()
                   .OrderBy(x => x.Cost)
                   .ToList();
+
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -3001,6 +4114,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .OrderBy(x => x.Cost)
               .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked.Count() > 0 && cheked4.Count() > 0 && cheked5.Count() > 0 && cheked6.Count > 0 && cheked2.Count == 0 && cheked3.Count == 0)
@@ -3038,6 +4173,28 @@ namespace schliessanlagen_konfigurator.Controllers
                   .Distinct()
                   .OrderBy(x => x.Cost)
                   .ToList();
+
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -3077,6 +4234,28 @@ namespace schliessanlagen_konfigurator.Controllers
                   .OrderBy(x => x.Cost)
                   .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked2.Count() > 0 && cheked3.Count() > 0 && cheked4.Count() > 0 && cheked6.Count > 0 && cheked.Count == 0 && cheked5.Count == 0)
@@ -3114,6 +4293,28 @@ namespace schliessanlagen_konfigurator.Controllers
                   .Distinct()
                   .OrderBy(x => x.Cost)
                   .ToList();
+
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -3153,6 +4354,28 @@ namespace schliessanlagen_konfigurator.Controllers
                   .OrderBy(x => x.Cost)
                   .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked2.Count() > 0 && cheked4.Count() > 0 && cheked5.Count() > 0 && cheked6.Count > 0 && cheked.Count == 0 && cheked3.Count == 0)
@@ -3191,6 +4414,28 @@ namespace schliessanlagen_konfigurator.Controllers
                   .OrderBy(x => x.Cost)
                   .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
             if (cheked3.Count() > 0 && cheked4.Count() > 0 && cheked5.Count() > 0 && cheked6.Count > 0 && cheked.Count == 0 && cheked2.Count == 0)
@@ -3228,6 +4473,28 @@ namespace schliessanlagen_konfigurator.Controllers
                   .Distinct()
                   .OrderBy(x => x.Cost)
                   .ToList();
+
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
 
                 ViewBag.Knaufzylinder = Join.Distinct().OrderBy(x => x.Cost).ToList();
             }
@@ -3268,6 +4535,28 @@ namespace schliessanlagen_konfigurator.Controllers
                   .Distinct()
                   .OrderBy(x => x.Cost)
                   .ToList();
+
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
 
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
 
@@ -3310,6 +4599,28 @@ namespace schliessanlagen_konfigurator.Controllers
                   .OrderBy(x => x.Cost)
                   .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
 
             }
@@ -3350,6 +4661,28 @@ namespace schliessanlagen_konfigurator.Controllers
                   .Distinct()
                   .OrderBy(x => x.Cost)
                   .ToList();
+
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
 
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
 
@@ -3392,6 +4725,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .OrderBy(x => x.Cost)
               .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
 
             }
@@ -3433,6 +4788,28 @@ namespace schliessanlagen_konfigurator.Controllers
               .OrderBy(x => x.Cost)
               .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
 
             }
@@ -3473,6 +4850,28 @@ namespace schliessanlagen_konfigurator.Controllers
                   .Distinct()
                   .OrderBy(x => x.Cost)
                   .ToList();
+
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
 
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
 
@@ -3517,13 +4916,33 @@ namespace schliessanlagen_konfigurator.Controllers
                   .OrderBy(x => x.Cost)
                   .ToList();
 
+                if (prufSystem != "")
+                {
+                    foreach (var item in Join.Distinct())
+                    {
+                        if (item.NameSystem == prufSystem)
+                        {
+                            return RedirectToAction("OrdersKey", new
+                            {
+                                Lieferzeit = item.Lieferzeit,
+                                Systeam = item.NameSystem,
+                                DopelId = item.cheked,
+                                param2 = item.userKey,
+                                KnayfID = item.cheked2,
+                                Halb = item.cheked3,
+                                Hebel = item.cheked4,
+                                Vorhan = item.cheked5,
+                                Aussen = item.cheked6
+                            });
+                        }
+                    }
+                }
+
                 ViewBag.Doppel = Join.Distinct().OrderBy(x => x.Cost).ToList();
              
             }
             #endregion
 
-            stopwatch.Stop();
-            var elapsedTime = stopwatch.ElapsedMilliseconds;
             return View(keyUser);
         }
 
@@ -3551,7 +4970,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
 
         [HttpGet]
-        public ActionResult OrdersKey(string Lieferzeit, string Systeam, int DopelId, List<string> dopelOption, string param2, int KnayfID, int Halb, int Hebel, int Aussen, int Vorhan)
+        public ActionResult OrdersKey(string Lieferzeit, string Systeam, int DopelId, string param2, int KnayfID, int Halb, int Hebel, int Aussen, int Vorhan)
         {
             SchopAlarm();
 
@@ -4779,7 +6198,7 @@ namespace schliessanlagen_konfigurator.Controllers
             }
 
             var systeamkeyPrice = db.SysteamPriceKey.Where(x => x.NameSysteam == Systeam).Select(x => x.Price).ToList();
-
+   
             ViewBag.KeyCost = JsonConvert.SerializeObject(systeamkeyPrice.First());
 
             var costKey = systeamkeyPrice.First() * keycount.Select(x=>x.CountKey).Sum();

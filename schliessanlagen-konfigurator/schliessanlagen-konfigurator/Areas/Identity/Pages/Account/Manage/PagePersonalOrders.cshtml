@@ -2,7 +2,7 @@
 @model schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage.PagePersonalOrdersModel;
 
 @{
-    ViewData["Title"] = "Profilbestellungen";
+    ViewData["Title"] = "Ihre Projekte";
     ViewData["ActivePage"] = ManageNavPages.PersonalOrderNavClass;
 
     var orderList = (List<UserOrdersShop>)ViewData["OrderLis"];
@@ -71,7 +71,6 @@
 
                                             <div id="blockSchrite" class="shadow-lg  mb-5 bg-body-tertiary rounded">
                                                     <div style="display:flex;gap:10px;">
-                                                        <span id="schrit">1</span>
                                                         <h2><strong>Rechnungsadresse</strong></h2>
                                                     </div>
                                                 <br />
@@ -96,12 +95,12 @@
 
 
                                                         <div class="form-floating mb-3">
-                                                            <input class="form-control" id="floatingInput" name="RechnungFirma" placeholder="Firma / company" />
+                                                        <input class="form-control" id="floatingInput" name="RechnungFirma" value="@order.Firma" placeholder="Firma / company" />
                                                             <label for="floatingInput">Firma / company</label>
                                                         </div>
 
                                                         <div class="form-floating mb-3">
-                                                            <input class="form-control" id="floatingInput" name="RechnungVat" placeholder="USt - IdNr. / VAT id" />
+                                                        <input class="form-control" id="floatingInput" name="RechnungVat" value="@order.USt_IdNr" placeholder="USt - IdNr. / VAT id" />
                                                             <label for="floatingInput">USt - IdNr. / VAT id</label>
                                                         </div>
 
@@ -382,7 +381,6 @@
 
                                             <div id="blockSchrite" class="shadow-lg  mb-5 bg-body-tertiary rounded">
                                                 <div style="display:flex;gap:10px;">
-                                                    <span id="schrit">2</span>
                                                     <h2><strong>Versandadresse</strong></h2>
                                                 </div>
                                                 <div style="display:flex;gap:30px">
@@ -398,7 +396,6 @@
 
                                             <div id="blockSchrite" class="shadow-lg  mb-5 bg-body-tertiary rounded">
                                                     <div style="display:flex;gap:10px;">
-                                                        <span id="schrit">3</span>
                                                         <h2><strong>Versandarten</strong></h2>
                                                     </div>
                                                     <br />
@@ -421,7 +418,6 @@
 
                                             <div id="blockSchrite" class="shadow-lg  mb-5 bg-body-tertiary rounded">
                                                     <div style="display:flex;gap:10px;">
-                                                        <span id="schrit">4</span>
                                                         <h2><strong>Zahlungsart</strong></h2>
                                                     </div>
                                                     <br />
@@ -432,9 +428,9 @@
                                                             <h4>PayPall</h4>
                                                         </label><br>                                                   
                                                          <label>
-                                                        <input type="radio" onchange="BezaleMethod(@z)" name="Pay" value="auf Vorkasse">
+                                                        <input type="radio" onchange="BezaleMethod(@z)" name="Pay" value="Vorkasse">
                                                         <img src="@("/compression/bezahlverfahren.png")" height="40" width="40" />
-                                                        <h4>auf Vorkasse</h4>
+                                                        <h4>Vorkasse</h4>
                                                         </label>  
                                                     </div>
                                                 </div>
@@ -583,6 +579,11 @@
      <script defer src="https://x.klarnacdn.net/kp/lib/v1/api.js"></script>  
 
     <script type="text/javascript">
+
+
+        const apiKey = '0928aaf5e30b2777f31177d6a2ea6f1c';
+
+
         window.klarnaAsyncCallback = function () {
             window.Klarna.Payments.Buttons.init({
                 client_id: "54fa6b3e-bd34-4f97-b30d-aebe79849f3c",
@@ -766,15 +767,50 @@
                     item.dispatchEvent(event);
                 }
             });
+            const vatNumber = document.querySelector('[name="RechnungVat"]');
 
-            selectCountry.forEach((item,index) => {
+            console.log(vatNumber.value);
+            selectCountry.forEach((item, index) => {
                 item.addEventListener('change', (event) => {
-                    ProcentMwst(item.value, index);
-                    
+
+                    fetch(`https://apilayer.net/api/validate?access_key=${apiKey}&vat_number=${vatNumber.value}`)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok ' + response.statusText);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+
+                            if (data.valid) {
+                                console.log(`<strong>Результат проверки:</strong><br>
+                                        Номер VAT: ${data.vat_number}<br>
+                                        Страна: ${data.country_name}<br>
+                                        Статус: Действителен`);
+
+                                console.log(data);
+                                ProcentMwst(item.value, index, "Действителен");
+                            }
+                            else {
+                                console.log(`<strong>Результат проверки:</strong><br>
+                                        Номер VAT: ${data.vat_number}<br>
+                                        Страна: ${country_code}<br>
+                                        Статус: Недействителен`);
+                                console.log(data);
+                                ProcentMwst(item.value, index, "Недействителен");
+                            }
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
+
                 });
             });
-       
+
     });
+
+
+           
 
     function remove(empty) 
     {

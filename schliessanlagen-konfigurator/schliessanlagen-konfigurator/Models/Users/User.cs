@@ -9,7 +9,11 @@ namespace schliessanlagen_konfigurator.Models.Users
         public string FirstName { get; set; } = "";
         public string LastName { get; set; } = "";
         public string? Address { get; set; } = "";
-        
+
+        public bool? Pruf_Firma = false;
+        public string? Gender { get; set; } = "";
+        public string? Firma { get; set; } = "";
+        public string? USt_IdNr { get; set; } = "";
         public string? Rechnun_Land { get; set; } = "";
         public string? Rechnun_Straße { get; set; } = "";
         public string? Rechnun_Postleitzahl { get; set; } = "";

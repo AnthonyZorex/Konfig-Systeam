@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Information;
 using schliessanlagen_konfigurator.Models.Users;
 
 namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
@@ -54,19 +55,28 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
         public class InputModel
         {
             [Required]
-            [Display(Name = "First Name")]
+            [Display(Name = "Vorname")]
             public string FirstName { get; set; }
 
+            [Display(Name = "Firma")]
+            public string Firma { get; set; }
+
+            [Display(Name = "USt-IdNr.")]
+            public string UStNumber { get; set; }
+
             [Required]
-            [Display(Name = "Last Name")]
+            public string Gender { get; set; }
+
+            [Required]
+            [Display(Name = "Nachname")]
             public string LastName { get; set; }
 
             [Phone]
-            [Display(Name = "Phone number")]
+            [Display(Name = "Telefon")]
             public string PhoneNumber { get; set; }
 
             [EmailAddress]
-            [Display(Name = "Email")]
+            [Display(Name = "E-Mail Adresse")]
             public string Email { get; set; }
 
             [DataType(DataType.Password)]
@@ -86,10 +96,15 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
             var firstName = user.FirstName;  
             var lastName = user.LastName;
             var Email = user.UserName;
-            
+            var firma = user.Firma;
+            var ust = user.USt_IdNr;
+            var gender = user.Gender;
 
             Input = new InputModel
             {
+                Gender = gender,
+                UStNumber = ust,
+                Firma = firma,
                 PhoneNumber = phoneNumber,
                 FirstName = firstName,
                 LastName = lastName,
@@ -108,6 +123,8 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
            
+            ViewData["user"] = user.FirstName + " " + user.LastName;
+
             await LoadAsync(user);
             return Page();
         }
@@ -126,7 +143,9 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
             user.LastName = Input.LastName;
             user.PhoneNumber = Input.PhoneNumber;
             user.UserName = Input.Email;
-
+            user.Firma = Input.Firma;
+            user.USt_IdNr = Input.UStNumber;
+            user.Gender = Input.Gender;
             var updateResult = await _userManager.UpdateAsync(user);
 
             await _signInManager.RefreshSignInAsync(user);

@@ -29,7 +29,7 @@
 
 let preis_schluessel;
 let preis_product ;
-function ProcentMwst(value, BlockItem)
+function ProcentMwst(value, BlockItem,pruf)
 {
     let cost = document.querySelectorAll("#costedI-" + BlockItem);
     let modalItem = document.getElementById("myModal-" + BlockItem);
@@ -77,11 +77,10 @@ function ProcentMwst(value, BlockItem)
 
     Sum = Sum.minus(costGramValue);
 
-    // Окончательное значение
     Sum = Sum.toFixed(2)
 
-
     switch (value) {
+
         case "AT":
             {
                 costProcent = bruttoCostValue.times(0.20).toFixed(2); // 20% for Austria

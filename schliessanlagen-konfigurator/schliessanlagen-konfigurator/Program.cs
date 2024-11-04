@@ -52,7 +52,10 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequiredLength = 6;
     options.Password.RequiredUniqueChars = 1;
 });
-
+builder.Services.AddControllers().AddJsonOptions(options =>
+ {
+     options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+ });
 builder.Services.AddResponseCompression(options =>
 {
     options.EnableForHttps = true;
