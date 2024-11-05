@@ -1500,6 +1500,8 @@ namespace schliessanlagen_konfigurator.Controllers
         {
             var dopple = db.Profil_Doppelzylinder.FirstOrDefault(x => x.NameSystem == AltName);          
 
+            int optionsItem = 0;
+
             if (dopple != null)
             {
                 dopple.NameSystem = systeam.NameSysteam;
@@ -1630,7 +1632,7 @@ namespace schliessanlagen_konfigurator.Controllers
                             }
                             else
                             {
-
+                             counter = counter + inputCounter[i];
                             } 
                         }
 
@@ -1767,6 +1769,10 @@ namespace schliessanlagen_konfigurator.Controllers
                                     }
                                     db.SaveChanges();
                             }
+                            else
+                            {
+                                counter = counter + inputCounter[i];
+                            }
   
                         }
                     
@@ -1899,6 +1905,10 @@ namespace schliessanlagen_konfigurator.Controllers
                                 counter++;
                             }
                             db.SaveChanges();
+                        }
+                        else
+                        {
+                            counter = counter + inputCounter[i];
                         }
                     }
 
@@ -2034,7 +2044,11 @@ namespace schliessanlagen_konfigurator.Controllers
                             }
                             db.SaveChanges();
                         }
-                        
+                        else
+                        {
+                            counter = counter + inputCounter[i];
+                        }
+
                     }
 
                 }
@@ -2168,7 +2182,11 @@ namespace schliessanlagen_konfigurator.Controllers
                             }
                             db.SaveChanges();
                         }
-                        
+                        else
+                        {
+                            counter = counter + inputCounter[i];
+                        }
+
                     }
                 }
             }
@@ -2299,7 +2317,11 @@ namespace schliessanlagen_konfigurator.Controllers
                             }
                             db.SaveChanges();
                         }
-                          
+                        else
+                        {
+                            counter = counter + inputCounter[i];
+                        }
+
                     }
 
                 }

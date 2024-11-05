@@ -131,6 +131,10 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                                             </div>
                                             <div class="modal-body">
+                                                <div class="input-group mb-3">
+                                                    <input type="text" class="form-control" id="SearchItem" aria-describedby="button-addon2">
+                                                    <button class="btn btn-outline-secondary" onclick="findImg()" type="button" id="serch">Bilde finden</button>
+                                                </div>
                                                 <div style="display:grid;grid-template-columns:repeat(2,auto)">
                                                     @foreach (var imageName in ViewBag.ServerImages)
                                                     {
@@ -311,6 +315,10 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                                             </div>
                                             <div class="modal-body">
+                                                <div class="input-group mb-3">
+                                                    <input type="text" class="form-control" id="SearchItem" aria-describedby="button-addon2">
+                                                    <button class="btn btn-outline-secondary" onclick="findImg()" type="button" id="serch">Bilde finden</button>
+                                                </div>
                                                 <div style="display:grid;grid-template-columns:repeat(2,auto)">
                                                     @foreach (var imageName in ViewBag.ServerImages)
                                                     {
@@ -504,6 +512,28 @@
                     console.log(item.childNodes[3].alt);
                    serverImg.value = item.childNodes[3].alt;
                 }
+            });
+        }
+
+        function findImg() {
+            let allServerImg = document.querySelectorAll("#ChoiseItem"); // Используем класс вместо ID
+            let SearchItem = document.getElementById("SearchItem");
+            let find = SearchItem.value;
+
+            allServerImg.forEach((item) => {
+
+                let valueItem = item.children[1].alt;
+                if (valueItem.includes(find)) {
+                    item.style.display = "grid";
+                }
+                else {
+                    item.style.display = "none";
+                }
+
+                if (find == "") {
+                    item.style.display = "grid";
+                }
+
             });
         }
 

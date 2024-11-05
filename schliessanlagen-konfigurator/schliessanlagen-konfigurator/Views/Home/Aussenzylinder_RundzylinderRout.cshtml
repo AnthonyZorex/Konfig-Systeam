@@ -110,7 +110,7 @@
                                 </div>
 
                                 <div id="Image-load_item">
-                                    <label asp-for="ImageFile" class="control-label"></label>
+                                    <label  class="control-label">Bild</label>
                                     <input asp-for="ImageFile" class="btn btn-success" accept="image/*" />
                                     <span asp-validation-for="ImageFile" class="text-danger"></span>
                                     @Html.ValidationMessageFor(m => m.ImageFile, "", new { @class = "error" })
@@ -119,7 +119,7 @@
                                 <div id="loadServerItem" style="display:none">
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" name="Server_render" readonly id="loadItem" aria-describedby="button-addon2">
-                                        <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#AllServerImage" type="button" id="button-addon2">Load</button>
+                                        <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#AllServerImage" type="button" id="button-addon2">Laden</button>
                                     </div>
                                 </div>
 
@@ -131,12 +131,17 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                                             </div>
                                             <div class="modal-body">
+                                                <div class="input-group mb-3">
+                                                    <input type="text" class="form-control" id="SearchItem" aria-describedby="button-addon2">
+                                                    <button class="btn btn-outline-secondary" onclick="findImg()" type="button" id="serch">Bilde finden</button>
+                                                </div>
                                                 <div style="display:grid;grid-template-columns:repeat(2,auto)">
                                                     @foreach (var imageName in ViewBag.ServerImages)
-                                                    {
+                                                    {   
                                                         <div style="border:1px solid red" id="ChoiseItem">
                                                             <input type="checkbox" class="form-check" height="30" width="30" />
                                                             <img src="@("/compression/" + imageName)" style="padding:5px" height="300" width="300" alt="@imageName" />
+                                                            <input type="hidden" value="imageName" id="name_img" />
                                                         </div>
                                                     }
                                                 </div>
@@ -144,7 +149,7 @@
 
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary" onclick="ChoiseImage()" data-bs-dismiss="modal">Load</button>
+                                                <button type="button" class="btn btn-primary" onclick="ChoiseImage()" data-bs-dismiss="modal">Laden</button>
                                                 <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
                                             </div>
                                         </div>
@@ -198,13 +203,13 @@
                                 </div>
 
                             <div>
-                                <label>Firmenname</label>
+                                  <label>Hersteller</label>
                                 <input asp-for="companyName" value="@ViewBag.AussenZyl.companyName" required class="form-control" type="text" />
                             </div>
 
                             <div>
 
-                                <label>Name System</label>
+                                <label>System</label>
                                 <select asp-for="NameSystem" required id="DoppelSys" class="form-select">
 
                                     @foreach (var list in ViewBag.System)
@@ -229,7 +234,7 @@
                             
 
                             <div>
-                                <label>Price</label>
+                                    <label>Preis</label>
                                 <input asp-for="Price" value="@ViewBag.AussenZyl.Price" required class="form-control" />
                             </div>
                             
@@ -253,7 +258,7 @@
                                 </div>
 
                                 <div id="Image-load_item">
-                                    <label asp-for="ImageFile" class="control-label"></label>
+                                    <label class="control-label">Bild</label>
                                     <input asp-for="ImageFile" class="btn btn-success" accept="image/*" />
                                     <span asp-validation-for="ImageFile" class="text-danger"></span>
                                     @Html.ValidationMessageFor(m => m.ImageFile, "", new { @class = "error" })
@@ -262,7 +267,7 @@
                                 <div id="loadServerItem" style="display:none">
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" name="Server_render" readonly id="loadItem" aria-describedby="button-addon2">
-                                        <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#AllServerImage" type="button" id="button-addon2">Load</button>
+                                        <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#AllServerImage" type="button" id="button-addon2">Laden</button>
                                     </div>
                                 </div>
 
@@ -272,6 +277,10 @@
                                             <div class="modal-header">
                                                 <h6 class="modal-title"></h6>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" id="SearchItem" aria-describedby="button-addon2">
+                                                <button class="btn btn-outline-secondary" onclick="findImg()" type="button" id="serch">Bilde finden</button>
                                             </div>
                                             <div class="modal-body">
                                                 <div style="display:grid;grid-template-columns:repeat(2,auto)">
@@ -286,7 +295,7 @@
 
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary" onclick="ChoiseImage()" data-bs-dismiss="modal">Load</button>
+                                                <button type="button" class="btn btn-primary" onclick="ChoiseImage()" data-bs-dismiss="modal">Laden</button>
                                                 <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
                                             </div>
                                         </div>
@@ -319,12 +328,12 @@
                                 </div>
 
                             <div>
-                                <label>Firmenname</label>
+                                <label>Hersteller</label>
                                 <input asp-for="companyName" required class="form-control" type="text" />
                             </div>
 
                             <div>
-                                <label>Name System</label>
+                                <label>System</label>
                                 <input asp-for="NameSystem" required class="form-control" type="text" />
                             </div>
 
@@ -341,7 +350,7 @@
                             }
 
                             <div>
-                                <label>Price</label>
+                                 <label>Preis</label>
                                 <input asp-for="Price" required class="form-control" />
                             </div>
 
@@ -445,6 +454,29 @@
                     console.log(item.childNodes[3].alt);
                     serverImg.value = item.childNodes[3].alt;
                 }
+            });
+        }
+
+        function findImg() {
+            let allServerImg = document.querySelectorAll("#ChoiseItem"); // Используем класс вместо ID
+            let SearchItem = document.getElementById("SearchItem");
+            let find = SearchItem.value;
+
+            allServerImg.forEach((item) => {
+                
+                let valueItem = item.children[1].alt;
+                if (valueItem.includes(find)) 
+                {
+                    item.style.display = "grid";
+                }
+                else {
+                    item.style.display = "none";
+                }
+
+                if (find == "") {
+                    item.style.display = "grid";
+                }
+ 
             });
         }
 
@@ -583,7 +615,7 @@
                 return block;
             }
 
-
+            
 
             function addInputs(block) {
 

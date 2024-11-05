@@ -99,7 +99,7 @@
                 <div id="loadServerItem" style="display:none">
                     <div class="input-group mb-5">
                         <input type="text" class="form-control" name="Server_render" readonly id="loadItem" aria-describedby="button-addon2">
-                        <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#AllServerImage" type="button" id="button-addon2">Load</button>
+                <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#AllServerImage" type="button" id="button-addon2">Laden</button>
                     </div>
                 </div>
 
@@ -111,6 +111,11 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                             </div>
                             <div class="modal-body">
+
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control"  id="SearchItem" aria-describedby="button-addon2">
+                                    <button class="btn btn-outline-secondary" onclick="findImg()" type="button" id="serch">Bilde finden</button>
+                                </div>
                                 <div style="display:grid;grid-template-columns:repeat(2,auto)">
                                     @foreach (var imageName in ViewBag.ServerImages)
                                     {
@@ -124,7 +129,7 @@
 
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" onclick="ChoiseImage()" data-bs-dismiss="modal">Load</button>
+                                     <button type="button" class="btn btn-primary" onclick="ChoiseImage()" data-bs-dismiss="modal">Laden</button>
                                 <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
                             </div>
                         </div>
@@ -165,7 +170,7 @@
                 <div id="loadServerItem" style="display:none">
                     <div class="input-group mb-5">
                         <input type="text" class="form-control" name="Server_render" readonly id="loadItem" aria-describedby="button-addon2">
-                        <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#AllServerImage" type="button" id="button-addon2">Load</button>
+                <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#AllServerImage" type="button" id="button-addon2">Laden</button>
                     </div>
                 </div>
 
@@ -177,6 +182,11 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                             </div>
                             <div class="modal-body">
+
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" id="SearchItem" aria-describedby="button-addon2">
+                                    <button class="btn btn-outline-secondary" onclick="findImg()" type="button" id="serch">Bilde finden</button>
+                                </div>
                                 <div style="display:grid;grid-template-columns:repeat(2,auto)">
                                     @foreach (var imageName in ViewBag.ServerImages)
                                     {
@@ -190,7 +200,7 @@
 
                             </div>
                             <div class="modal-footer" >
-                                <button type="button" class="btn btn-primary" onclick="ChoiseImage()" data-bs-dismiss="modal">Load</button>
+                        <button type="button" class="btn btn-primary" onclick="ChoiseImage()" data-bs-dismiss="modal">Laden</button>
                                 <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
                             </div>
                         </div>
@@ -204,12 +214,12 @@
                 </div>
 
             <div style="margin-bottom: 50px;margin-top: 50px">
-             <label>Systemname</label>
+             <label>System</label>
             <input name="KeyName" required id="NameSys" type="text" class="form-control" />
             </div>
 
             <div style="margin-bottom: 50px;">
-            <label>Schlüsselkosten</label>
+            <label>Schlüssel Preis</label>
             <input name="KeyCost" required type="number" step="0,1" min="0" class="form-control" />
             </div>
         }
@@ -300,6 +310,29 @@
             }
 
         }
+
+        function findImg() {
+            let allServerImg = document.querySelectorAll("#ChoiseItem"); 
+            let SearchItem = document.getElementById("SearchItem");
+            let find = SearchItem.value;
+
+            allServerImg.forEach((item) => {
+
+                let valueItem = item.children[1].alt;
+                if (valueItem.includes(find)) {
+                    item.style.display = "grid";
+                }
+                else {
+                    item.style.display = "none";
+                }
+
+                if (find == "") {
+                    item.style.display = "grid";
+                }
+
+            });
+        }
+
         function ChoiseImage() {
 
             let All_Items_Img = document.querySelectorAll("#ChoiseItem");
