@@ -10,9 +10,11 @@
         public float Intern { get; set; }
         public Profil_Doppelzylinder Profil_Doppelzylinder { get; set; }
         public ICollection<Doppel_Innen_klein> Doppel_Innen_klein { get; set; }
+        public ICollection<Doppel_Aussen_klein> Doppel_Aussen_klein { get; set; }
         public Aussen_Innen()
         {
             Doppel_Innen_klein = new List<Doppel_Innen_klein>();
+            Doppel_Aussen_klein = new List<Doppel_Aussen_klein>();
         }
     }
     public class Doppel_Innen_klein
@@ -23,4 +25,14 @@
         public int Aussen_InnenId { get; set; }
         public Aussen_Innen Aussen_Innen { get; set; }
     }
+
+    public class Doppel_Aussen_klein
+    {
+        public int Id { get; set; }
+        public float aussen { get; set; }
+        public float costSizeAussen { get; set; }
+        public int Aussen_InnenId { get; set; }
+        public Aussen_Innen Aussen_Innen { get; set; }
+    }
+
 }

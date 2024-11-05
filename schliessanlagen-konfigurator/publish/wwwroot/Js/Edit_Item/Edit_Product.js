@@ -104,6 +104,61 @@ function newKlein() {
     countValue.value = count / 2;
 }
 
+
+function newKleinIntern() {
+
+    let Aussen_innen_klein = document.getElementById("Aussen_innen_klein");
+
+    countKleinBlock++;
+
+    let block = ` <div id="kleinGrose" class="kleinZise-${countKleinBlock}">
+                                        <div>
+                                            <div>
+                                                <h5>Innen</h5>
+                                            <input type="number" class="form-control" required value="" name="innenKlein" />
+                                            </div>
+                                            <div>
+                                                <h5>Preis</h5>
+                                            <input type="number" class="form-control" required step="0,00" value="" name="innenKleinPreis" />
+                                            </div>
+                                        </div>
+                                        <div class="arrow-right">
+                                        </div>
+                                        <div>
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Wert</th>
+                                                        <th>Preis</th>
+                                                             <th><button type="button" onclick="PlusKleinAussen(${countKleinBlock})" class="btn btn-success">+</button><button type="button" class="btn danger" onclick="MinusKleinAussen(${countKleinBlock})">-</button></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="kleiIntern">
+
+
+                                                            <tr>
+                                                            <th><input name="aussenDoppelKlein" required class="form-control" value="" type="number" step="0,01" /></th>
+                                                            <td><input name="aussen_priesDoppelKlein" required class="form-control" type="number" value="" step="0,01" /></td>
+                                                            </tr>         
+                                                </tbody>
+                                            </table>
+                                                        <input type="hidden" name="KleinZiseCountInter"  />
+                                        </div>
+                                    </div>`;
+
+    Aussen_innen_klein.insertAdjacentHTML('beforeend', block);
+
+    let blockItem = document.querySelector(`.kleinZise-${countKleinBlock}`);
+
+    let tableSearch = blockItem.childNodes[5].childNodes[1].childNodes[3];
+
+    let count = tableSearch.querySelectorAll('input[type="number"]').length;
+
+    let countValue = blockItem.childNodes[5].childNodes[3];
+
+    countValue.value = count / 2;
+}
+
 function goBack() {
     if (document.referrer !== "") {
         window.location.href = document.referrer;
@@ -314,6 +369,48 @@ function PlusKleinIntert(blockNumber) {
 }
 
 function MinusKleinIntern(blockNumber) {
+    let block = document.querySelector(`.kleinZise-${blockNumber}`);
+
+    let tableSearch = block.childNodes[5].childNodes[1].childNodes[3];
+
+    let countelem = tableSearch.querySelectorAll("tr");
+
+    if (countelem.length == 0) {
+        block.remove();
+    }
+    else {
+        countelem[countelem.length - 1].remove();
+    }
+
+
+    let count = tableSearch.querySelectorAll('input[type="number"]').length;
+
+    let countValue = block.childNodes[5].childNodes[3];
+
+    countValue.value = count / 2;
+}
+
+
+function PlusKleinAussen(blockNumber) {
+
+    let block = document.querySelector(`.kleinZise-${blockNumber}`);
+    let tableSearch = block.childNodes[5].childNodes[1].childNodes[3];
+
+    let row = `   <tr>
+                 <th><input name="aussenDoppelKlein" required class="form-control" value="" type="number" step="0,01" /></th>
+                <td><input name="aussen_priesDoppelKlein" required class="form-control" type="number" value="" step="0,01" /></td>
+                                </tr> `;
+
+    tableSearch.insertAdjacentHTML('beforeend', row);
+
+    let count = tableSearch.querySelectorAll('input[type="number"]').length;
+
+    let countValue = block.childNodes[5].childNodes[3];
+
+    countValue.value = count / 2;
+}
+
+function MinusKleinAussen(blockNumber) {
     let block = document.querySelector(`.kleinZise-${blockNumber}`);
 
     let tableSearch = block.childNodes[5].childNodes[1].childNodes[3];

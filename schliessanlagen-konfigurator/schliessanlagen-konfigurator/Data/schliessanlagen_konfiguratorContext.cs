@@ -53,6 +53,8 @@ namespace schliessanlagen_konfigurator.Data
             builder.Entity<IdentityRole>().HasData(admin, client);
         }
         public DbSet<Blog> Blogs { get; set; }
+        public DbSet<Doppel_Aussen_klein> Doppel_Aussen_klein { get; set; }
+        public DbSet<Aussen_Knauf_klein> Aussen_Knauf_klein { get; set; }
         public DbSet<SystemOptionValue> SystemOptionValue { get; set; }
         public DbSet<SystemOptionen> SystemOptionen { get; set; }
         public DbSet<SystemOptionInfo> SystemOptionInfo { get; set; }

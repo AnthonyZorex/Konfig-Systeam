@@ -93,47 +93,55 @@
         const submitButton = document.getElementById('update-profile-button');
 
         submitButton.addEventListener('click', function (e) {
-            // Останавливаем стандартное поведение кнопки отправки формы
-            e.preventDefault();
-
-            const apiKey = '0928aaf5e30b2777f31177d6a2ea6f1c';
+            
             const vatNumber = document.getElementById("Vat");
+           
+            console.log(vatNumber.value);
 
-            // Выполняем запрос к API для проверки номера НДС
-            fetch(`https://apilayer.net/api/validate?access_key=${apiKey}&vat_number=${vatNumber.value}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok ' + response.statusText);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    const alertBox = document.getElementById('alertBox');
+            if(vatNumber.value=="")
+            {
 
-                    if (data.valid === true) {
-                        // Успешная валидация
-                        alertBox.classList.remove('alert-danger');
-                        alertBox.classList.add('alert-success');
-                        showAlert(`Ergebnis der Überprüfung:
-                                    USt-IdNr.: ${data.vat_number}
-                                    Status: Gültig`);
+            }
+          else{
+                      e.preventDefault();
 
-                        // Задержка перед отправкой формы
-                        setTimeout(() => {
-                            form.submit();
-                        }, 2000);
+                     const apiKey = '0928aaf5e30b2777f31177d6a2ea6f1c';
+                  fetch(`https://apilayer.net/api/validate?access_key=${apiKey}&vat_number=${vatNumber.value}`)
+                      .then(response => {
+                          if (!response.ok) {
+                              throw new Error('Network response was not ok ' + response.statusText);
+                          }
+                          return response.json();
+                      })
+                      .then(data => {
+                          const alertBox = document.getElementById('alertBox');
 
-                    } else {
-                        // Неверный номер НДС
-                        alertBox.classList.remove('alert-success');
-                        alertBox.classList.add('alert-danger');
-                        showAlert(`Ergebnis der Überprüfung:
-                                    Status: Ungültig`);
-                    }
-                })
-                .catch(error => {
-                    console.error('Ошибка:', error);
-                });
+                          if (data.valid === true) {
+                              // Успешная валидация
+                              alertBox.classList.remove('alert-danger');
+                              alertBox.classList.add('alert-success');
+                              showAlert(`Ergebnis der Überprüfung:
+                                          USt-IdNr.: ${data.vat_number}
+                                          Status: Gültig`);
+
+                              // Задержка перед отправкой формы
+                              setTimeout(() => {
+                                  form.submit();
+                              }, 2000);
+
+                          } else {
+                              // Неверный номер НДС
+                              alertBox.classList.remove('alert-success');
+                              alertBox.classList.add('alert-danger');
+                              showAlert(`Ergebnis der Überprüfung:
+                                          Status: Ungültig`);
+                          }
+                      })
+                      .catch(error => {
+                          console.error('Ошибка:', error);
+                      });
+          }
+             
         });
 
            
