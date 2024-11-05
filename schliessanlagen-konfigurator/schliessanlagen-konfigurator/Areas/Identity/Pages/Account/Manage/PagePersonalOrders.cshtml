@@ -120,7 +120,7 @@
                                                         </div>
                                                       
                                                         <div class="form-floating mb-3">
-                                                        <select class="form-select" required  name="RechnungLand" onchange="ProcentMwst(event.target.value,@z)" id="floatingInput" placeholder="Land / country *">
+                                                        <select class="form-select" required asp-for="@order.Rechnun_Land" name="RechnungLand" onchange="ProcentMwst(event.target.value,@z)" id="floatingInput" placeholder="Land / country *">
                                                             <option value="DE">Deutschland</option>
                                                                 <option value="AF">Afghanistan</option>
                                                                 <option value="EG">Ägypten</option>
@@ -453,7 +453,6 @@
                                                         </div>
                                                         <div class="col-md-8">
                                                             <div class="card-body">
-                                                                <h3>@orderList[z].ProductName</h3>
                                                                 <div class="card-text" id="schlüssel-@z">
                                                                     <h4>Schlüssel</h4>
                                                                     <h4>Anzahl: @orderList[z].KeyCount</h4>
@@ -562,7 +561,7 @@
                             </div>
                         </div>
                     </div>
-                   @*  <div id="container"></div> *@
+                    @* <div id="container"></div>  *@
                     costed = costed + orderList[z].OrderSum;
                 }
                 
@@ -579,10 +578,6 @@
      <script defer src="https://x.klarnacdn.net/kp/lib/v1/api.js"></script>  
 
     <script type="text/javascript">
-
-
-        const apiKey = '0928aaf5e30b2777f31177d6a2ea6f1c';
-
 
         window.klarnaAsyncCallback = function () {
             window.Klarna.Payments.Buttons.init({
@@ -716,7 +711,9 @@
         let modal = document.getElementById("paypal-button-container-" + id)
 
         let cost = document.getElementById("costedI-" + id);
+
         var stringWithoutEuro = cost.innerHTML.replace("€", "");
+
         var costen = parseFloat(stringWithoutEuro.replace(',', '.').trim());
 
             if (modal.childNodes.length<2) 
@@ -740,9 +737,7 @@
                     onError: function (err) {                      
                     }
                 }).render(`#paypal-button-container-${id}`);
-
-               
-
+              
             }
     }
         
@@ -767,42 +762,12 @@
                     item.dispatchEvent(event);
                 }
             });
-            const vatNumber = document.querySelector('[name="RechnungVat"]');
 
             console.log(vatNumber.value);
             selectCountry.forEach((item, index) => {
                 item.addEventListener('change', (event) => {
 
-                    fetch(`https://apilayer.net/api/validate?access_key=${apiKey}&vat_number=${vatNumber.value}`)
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok ' + response.statusText);
-                            }
-                            return response.json();
-                        })
-                        .then(data => {
-
-                            if (data.valid) {
-                                console.log(`<strong>Результат проверки:</strong><br>
-                                        Номер VAT: ${data.vat_number}<br>
-                                        Страна: ${data.country_name}<br>
-                                        Статус: Действителен`);
-
-                                console.log(data);
-                                ProcentMwst(item.value, index, "Действителен");
-                            }
-                            else {
-                                console.log(`<strong>Результат проверки:</strong><br>
-                                        Номер VAT: ${data.vat_number}<br>
-                                        Страна: ${country_code}<br>
-                                        Статус: Недействителен`);
-                                console.log(data);
-                                ProcentMwst(item.value, index, "Недействителен");
-                            }
-                        })
-                        .catch(error => {
-                            console.log(error);
-                        });
+                    ProcentMwst(item.value, index);
 
                 });
             });

@@ -51,25 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "5d7fd56c-1a14-419f-8bbe-1c6a8f1b9198",
+                            Id = "01f0a817-92ab-4a62-ab32-b3ee5d8a6efe",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "2d12b30b-2b71-43ba-93f2-da6ada417c37",
+                            Id = "d6c52207-c256-439a-a088-19d472407bb2",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "b832bd88-4e9d-4b2a-a8b8-03bad5c95c26",
+                            Id = "569a6da2-7d1e-4ca1-869a-53a58c65c97a",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "cb4b1cea-5604-48d5-ab5e-3a0406f22b69",
+                            Id = "59ea1319-7df2-436f-a161-febab24d9b27",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -1249,6 +1249,9 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     b.Property<float?>("Price")
                         .HasColumnType("real");
+
+                    b.Property<int?>("TypeZylinder")
+                        .HasColumnType("int");
 
                     b.Property<int?>("UserOrdersShopId")
                         .HasColumnType("int");

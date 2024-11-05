@@ -55,18 +55,18 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
             //[Display(Name = "Liefer Land")]
             //public string Liefer_Land { get; set; }
 
-            [Required]
-            [Display(Name = "PLZ *")]
+            //[Required]
+            //[Display(Name = "PLZ *")]
 
-            public string Liefer_Postleitzahl { get; set; }
+            //public string Liefer_Postleitzahl { get; set; }
 
-            [Required]
-            [Display(Name = "Stadt *")]
-            public string Liefer_Stadt { get; set; }
+            //[Required]
+            //[Display(Name = "Stadt *")]
+            //public string Liefer_Stadt { get; set; }
 
-            [Required]
-            [Display(Name = "Straße *")]
-            public string Liefer_Straße { get; set; }
+            //[Required]
+            //[Display(Name = "Straße *")]
+            //public string Liefer_Straße { get; set; }
 
         }
 
@@ -80,9 +80,9 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
             Input = new InputModel
             {
               
-                Liefer_Postleitzahl = user.Liefer_Postleitzahl,
-                Liefer_Stadt = user.Liefer_Stadt,
-                Liefer_Straße = user.Liefer_Straße,
+                //Liefer_Postleitzahl = user.Liefer_Postleitzahl,
+                //Liefer_Stadt = user.Liefer_Stadt,
+                //Liefer_Straße = user.Liefer_Straße,
 
               
                 Rechnun_Postleitzahl = user.Rechnun_Postleitzahl,
@@ -113,10 +113,10 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            user.Liefer_Land = Liefer_Land;
-            user.Liefer_Postleitzahl = Input.Liefer_Postleitzahl;
-            user.Liefer_Stadt = Input.Liefer_Stadt;
-            user.Liefer_Straße = Input.Liefer_Straße;
+            //user.Liefer_Land = Liefer_Land;
+            //user.Liefer_Postleitzahl = Input.Liefer_Postleitzahl;
+            //user.Liefer_Stadt = Input.Liefer_Stadt;
+            //user.Liefer_Straße = Input.Liefer_Straße;
 
             user.Rechnun_Land = Rechnun_Land;
             user.Rechnun_Postleitzahl = Input.Rechnun_Postleitzahl;

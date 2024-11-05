@@ -7049,7 +7049,7 @@ namespace schliessanlagen_konfigurator.Controllers
                             Intern = DoppelIntern[DoppelCounter],
                             Count = countT,
                             Price = ProductCosted[i],
-
+                            TypeZylinder = 1,
                         };
 
                         if (Option != "")
@@ -7085,7 +7085,8 @@ namespace schliessanlagen_konfigurator.Controllers
                             Aussen = KnayfAussen[KnayfCounter],
                             Intern = KnayfIntern[KnayfCounter],
                             Count = countT,
-                            Price = ProductCosted[i]
+                            Price = ProductCosted[i],
+                            TypeZylinder = 3,
                         };
                         if (Option!="")
                         {
@@ -7122,7 +7123,8 @@ namespace schliessanlagen_konfigurator.Controllers
                             Name = HalbName[HablCounter],
                             Aussen = HalbAussen[HablCounter],
                             Count = countT,
-                            Price = ProductCosted[i]
+                            Price = ProductCosted[i],
+                            TypeZylinder = 2,
                         };
                         if (Option != "")
                         {
@@ -7157,7 +7159,8 @@ namespace schliessanlagen_konfigurator.Controllers
                             UserOrdersShopId = UserOrder.Id,
                             Name = HelbName[HebelCounter],
                             Count = countT,
-                            Price = ProductCosted[i]
+                            Price = ProductCosted[i],
+                            TypeZylinder = 4,
                         };
 
                         if (Option != "")
@@ -7194,7 +7197,8 @@ namespace schliessanlagen_konfigurator.Controllers
                                 Name = VorhanName[VorhanCounter],
                                 Aussen = VorhanAussen[VorhanCounter],
                                 Count = countT,
-                                Price = ProductCosted[i]
+                                Price = ProductCosted[i],
+                                TypeZylinder = 5,
                             };
                             if (Option != "")
                             {
@@ -7251,7 +7255,8 @@ namespace schliessanlagen_konfigurator.Controllers
                             UserOrdersShopId = UserOrder.Id,
                             Name = AussenName[AussenCounter],
                             Price = ProductCosted[i],
-                            Count = countT
+                            Count = countT,
+                            TypeZylinder = 6,
                         };
                         if (Option != "")
                         {

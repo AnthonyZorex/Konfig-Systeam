@@ -12,15 +12,8 @@
             submitRechnung.style.display = "none";
             Inputrechnung.value = false;
         }
-        //if (selectedRadio[0].value === "Google Pay") {
-        //    submitRechnung.style.display = "none";
-        //    Inputrechnung.value = false;
-        //}
-        //if (selectedRadio[0].value === "Apple Pay") {
-        //    submitRechnung.style.display = "none";
-        //    Inputrechnung.value = false;
-        //}
-        if (selectedRadio[0].value === "auf Rechnung") {
+      
+        if (selectedRadio[0].value === "Vorkasse") {
             submitRechnung.style.display = "block";
             Inputrechnung.value = true;
         }
@@ -29,7 +22,7 @@
 
 let preis_schluessel;
 let preis_product ;
-function ProcentMwst(value, BlockItem,pruf)
+function ProcentMwst(value, BlockItem)
 {
     let cost = document.querySelectorAll("#costedI-" + BlockItem);
     let modalItem = document.getElementById("myModal-" + BlockItem);

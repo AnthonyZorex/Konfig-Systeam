@@ -9,6 +9,12 @@
 <partial name="_StatusMessage" for="StatusMessage" />
 <div class="row">
     <div class="col-md-6">
+        
+        <div id="alertBox" class="alert alert-success d-none alert-dismissible fade" role="alert">
+            <span id="alertMessage">Die Daten wurden erfolgreich gespeichert!</span>
+            <button type="button" class="btn-close" aria-label="Close" onclick="closeAlert()"></button>
+        </div>
+
         <form id="profile-form" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
 
@@ -59,7 +65,7 @@
             </div>
 
             <div class="form-floating mb-3">
-                <input asp-for="Input.UStNumber" class="form-control" placeholder="Telefon" />
+                <input asp-for="Input.UStNumber" id="Vat" class="form-control" placeholder="Telefon" />
                 <label asp-for="Input.UStNumber" class="form-label"></label>
                 <span asp-validation-for="Input.UStNumber" class="text-danger"></span>
             </div>
@@ -72,4 +78,64 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+
+        function showAlert(message) {
+            const alertBox = document.getElementById('alertBox');
+            const alertMessage = document.getElementById('alertMessage');
+
+            alertMessage.innerText = message;
+            alertBox.classList.remove('d-none');
+            alertBox.classList.add('show');
+        }
+
+        const form = document.getElementById('profile-form');
+        const submitButton = document.getElementById('update-profile-button');
+
+        submitButton.addEventListener('click', function (e) {
+            // Останавливаем стандартное поведение кнопки отправки формы
+            e.preventDefault();
+
+            const apiKey = '0928aaf5e30b2777f31177d6a2ea6f1c';
+            const vatNumber = document.getElementById("Vat");
+
+            // Выполняем запрос к API для проверки номера НДС
+            fetch(`https://apilayer.net/api/validate?access_key=${apiKey}&vat_number=${vatNumber.value}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const alertBox = document.getElementById('alertBox');
+
+                    if (data.valid === true) {
+                        // Успешная валидация
+                        alertBox.classList.remove('alert-danger');
+                        alertBox.classList.add('alert-success');
+                        showAlert(`Ergebnis der Überprüfung:
+                                    USt-IdNr.: ${data.vat_number}
+                                    Status: Gültig`);
+
+                        // Задержка перед отправкой формы
+                        setTimeout(() => {
+                            form.submit();
+                        }, 2000);
+
+                    } else {
+                        // Неверный номер НДС
+                        alertBox.classList.remove('alert-success');
+                        alertBox.classList.add('alert-danger');
+                        showAlert(`Ergebnis der Überprüfung:
+                                    Status: Ungültig`);
+                    }
+                })
+                .catch(error => {
+                    console.error('Ошибка:', error);
+                });
+        });
+
+           
+    </script>
 }

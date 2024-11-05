@@ -106,9 +106,9 @@ function newKlein() {
 
 function goBack() {
     if (document.referrer !== "") {
-        window.location.href = document.referrer;  // Возвращаемся на предыдущую страницу
+        window.location.href = document.referrer;
     } else {
-        window.history.back();  // Если реферера нет, используем history.back()
+        window.history.back();
     }
 }
 
@@ -116,16 +116,16 @@ function showAlert(message) {
     const alertBox = document.getElementById('alertBox');
     const alertMessage = document.getElementById('alertMessage');
 
-    alertMessage.innerText = message;  // Установка сообщения
-    alertBox.classList.remove('d-none');  // Удалить класс d-none
-    alertBox.classList.add('show'); // Добавить класс show для отображения
+    alertMessage.innerText = message;
+    alertBox.classList.remove('d-none');
+    alertBox.classList.add('show');
 }
 
 
 function closeAlert() {
     const alertBox = document.getElementById('alertBox');
-    alertBox.classList.remove('show');  // Удалить класс show
-    alertBox.classList.add('d-none');  // Добавить класс d-none для скрытия
+    alertBox.classList.remove('show');
+    alertBox.classList.add('d-none');
 }
 
 document.getElementById('submitForm').addEventListener('click', function (event) {
@@ -137,7 +137,7 @@ document.getElementById('submitForm').addEventListener('click', function (event)
     $('input[required], select[required], textarea[required]').each(function () {
         if ($(this).val() === '') {
             isValid = false;
-            $(this).addClass('error'); // добавляем класс для визуального отображения ошибки
+            $(this).addClass('error');
         } else {
             $(this).removeClass('error');
         }

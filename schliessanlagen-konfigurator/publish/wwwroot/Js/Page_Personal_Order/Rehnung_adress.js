@@ -45,7 +45,7 @@
  </div>
 
  <div class="form-floating mb-3">
-     <select class="form-select" required  name="SendLand" id="countries floatingInput" placeholder="Land / country *">
+     <select class="form-select" required name="SendLand" id="countries floatingInput" placeholder="Land / country *">
          <option selected></option>
          <option value="DE">Deutschland</option>
          <option value="AF">Afghanistan</option>
