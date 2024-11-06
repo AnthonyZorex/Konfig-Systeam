@@ -51,25 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "51bfc9d3-49df-495d-a65c-72bfe490b4c1",
+                            Id = "aacdedfb-3dd3-4ad8-a293-c9ebde702dd6",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "736169ad-a5e8-4f8d-8049-3e96f837b965",
+                            Id = "44ad86b7-2b61-402c-83ca-27d01401805a",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "5e637978-9485-49a9-bd24-9ba4e43ea1c1",
+                            Id = "04f5f8cd-a986-4334-8e2a-7696c9ab5398",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "e2b5ef61-b11f-49f5-8b0c-e5acf8f98f78",
+                            Id = "f8013368-7f26-42a1-b02a-447be5ee7b2c",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -714,30 +714,6 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.ToTable("Aussen_Innen");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.Doppel_Aussen_klein", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Aussen_InnenId")
-                        .HasColumnType("int");
-
-                    b.Property<float>("aussen")
-                        .HasColumnType("real");
-
-                    b.Property<float>("costSizeAussen")
-                        .HasColumnType("real");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Aussen_InnenId");
-
-                    b.ToTable("Doppel_Aussen_klein");
-                });
-
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.Doppel_Innen_klein", b =>
                 {
                     b.Property<int>("Id")
@@ -928,30 +904,6 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasIndex("Aussen_Innen_KnaufId");
 
                     b.ToTable("Aussen_Innen_Knauf_klein");
-                });
-
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Aussen_Knauf_klein", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Aussen_Innen_KnaufId")
-                        .HasColumnType("int");
-
-                    b.Property<float>("aussen")
-                        .HasColumnType("real");
-
-                    b.Property<float>("costSizeAussen")
-                        .HasColumnType("real");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Aussen_Innen_KnaufId");
-
-                    b.ToTable("Aussen_Knauf_klein");
                 });
 
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Knayf_Options", b =>
@@ -1868,17 +1820,6 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Navigation("Profil_Doppelzylinder");
                 });
 
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.Doppel_Aussen_klein", b =>
-                {
-                    b.HasOne("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.Aussen_Innen", "Aussen_Innen")
-                        .WithMany("Doppel_Aussen_klein")
-                        .HasForeignKey("Aussen_InnenId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Aussen_Innen");
-                });
-
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.Doppel_Innen_klein", b =>
                 {
                     b.HasOne("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.Aussen_Innen", "Aussen_Innen")
@@ -1943,17 +1884,6 @@ namespace schliessanlagen_konfigurator.Migrations
                 {
                     b.HasOne("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Aussen_Innen_Knauf", "Aussen_Innen_Knauf")
                         .WithMany("Aussen_Innen_Knauf_klein")
-                        .HasForeignKey("Aussen_Innen_KnaufId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Aussen_Innen_Knauf");
-                });
-
-            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Aussen_Knauf_klein", b =>
-                {
-                    b.HasOne("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Aussen_Innen_Knauf", "Aussen_Innen_Knauf")
-                        .WithMany("Aussen_Knauf_klein")
                         .HasForeignKey("Aussen_Innen_KnaufId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -2230,8 +2160,6 @@ namespace schliessanlagen_konfigurator.Migrations
 
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.Aussen_Innen", b =>
                 {
-                    b.Navigation("Doppel_Aussen_klein");
-
                     b.Navigation("Doppel_Innen_klein");
                 });
 
@@ -2257,8 +2185,6 @@ namespace schliessanlagen_konfigurator.Migrations
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Aussen_Innen_Knauf", b =>
                 {
                     b.Navigation("Aussen_Innen_Knauf_klein");
-
-                    b.Navigation("Aussen_Knauf_klein");
                 });
 
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Profil_KnaufzylinderZylinder.Knayf_Options", b =>
