@@ -1059,15 +1059,15 @@ namespace schliessanlagen_konfigurator.Controllers
             var cheked5 = new List<Vorhangschloss>();
             var cheked6 = new List<Aussenzylinder_Rundzylinder>();
 
-            var dopelType = profilD.Where(x=> x.Type == "Mechanik").Select(x => x.schliessanlagenId).First();
-            var KnayfType = profilK.Where(x => x.Type == "Mechanik").Select(x => x.schliessanlagenId).First();
-            var HebelType = hebel.Where(x => x.Type == "Mechanik").Select(x => x.schliessanlagenId).First();
-            var HalbType = profilH.Where(x => x.Type == "Mechanik").Select(x => x.schliessanlagenId).First();
-            var VorhanType = Vorhangschloss.Where(x => x.Type == "Mechanik").Select(x => x.schliessanlagenId).First();
-            var AussenType = Aussenzylinder.Where(x => x.Type == "Mechanik").Select(x => x.schliessanlagenId).First();
+            var dopelType = profilD.Where(x=> x.Type == "Mechanik" && x.companyName == "ABUS" || x.companyName == "CES").ToList();
+            var KnayfType = profilK.Where(x => x.Type == "Mechanik" && x.companyName == "ABUS" || x.companyName == "CES").ToList();
+            var HebelType = hebel.Where(x => x.Type == "Mechanik" && x.companyName == "ABUS" || x.companyName == "CES").ToList();
+            var HalbType = profilH.Where(x => x.Type == "Mechanik" && x.companyName == "ABUS" || x.companyName == "CES").ToList();
+            var VorhanType = Vorhangschloss.Where(x => x.Type == "Mechanik" && x.companyName == "ABUS" || x.companyName == "CES").Select(x => x.schliessanlagenId).First();
+            var AussenType = Aussenzylinder.Where(x => x.Type == "Mechanik" && x.companyName == "ABUS" || x.companyName == "CES").Select(x => x.schliessanlagenId).First();
 
             int VorhCount = 0;
-            var allOderDopelSyze = allUserListOrder.Where(x => x.ZylinderId == dopelType).ToList();
+            var allOderDopelSyze = allUserListOrder.Where(x => x.ZylinderId == dopelType.First().schliessanlagenId).ToList();
 
 
             if (allOderDopelSyze.Count() > 0)
@@ -1088,7 +1088,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 {
                     var f = item[i];
 
-                    var chekedItem = db.Profil_Doppelzylinder.Where(x => x.Id == item[i]).ToList();
+                    var chekedItem = dopelType.Where(x => x.Id == item[i]).ToList();
 
                     for (int g = 0; g < chekedItem.Count(); g++)
                     {
@@ -1099,7 +1099,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 for (int i = 0; i < item.Count(); i++)
                 {
-                    var chekedItem = db.Profil_Doppelzylinder.Where(x => x.Id == item[i]).ToList();
+                    var chekedItem = dopelType.Where(x => x.Id == item[i]).ToList();
 
                     for (int g = 0; g < chekedItem.Count(); g++)
                         safeDoppelItem.Add(chekedItem[g]);
@@ -1114,11 +1114,10 @@ namespace schliessanlagen_konfigurator.Controllers
                     {
                         cheked.Add(g);
                     }
-               
-                
+
             }
 
-            var allOderKnayf = allUserListOrder.Where(x => x.ZylinderId == KnayfType).ToList();
+            var allOderKnayf = allUserListOrder.Where(x => x.ZylinderId == KnayfType.First().schliessanlagenId).ToList();
 
             if (allOderKnayf.Count() > 0)
             {
@@ -1137,7 +1136,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 {
 
                     var f = item[i];
-                    var chekedItem = db.Profil_Knaufzylinder.Where(x => x.Id == item[i]).ToList();
+                    var chekedItem = KnayfType.Where(x => x.Id == item[i]).ToList();
 
                             for (int g = 0; g < chekedItem.Count(); g++)
                             {
@@ -1148,7 +1147,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 for (int i = 0; i < item.Count(); i++)
                 {
-                    var chekedItem = db.Profil_Knaufzylinder.Where(x => x.Id == item[i]).ToList();
+                    var chekedItem = KnayfType.Where(x => x.Id == item[i]).ToList();
 
                     for (int g = 0; g < chekedItem.Count(); g++)
                         safeDoppelItem.Add(chekedItem[g]);
@@ -1167,7 +1166,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             }
 
-            var allOderHalb = allUserListOrder.Where(x => x.ZylinderId == HalbType).ToList();
+            var allOderHalb = allUserListOrder.Where(x => x.ZylinderId == HalbType.First().schliessanlagenId).ToList();
 
 
             if (allOderHalb.Count() > 0)
@@ -1184,7 +1183,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 for (int i = 0; i < items.Count(); i++)
                 {
-                    var chekedItem = db.Profil_Halbzylinder.Where(x => x.Id == items[i]).ToList();
+                    var chekedItem = HalbType.Where(x => x.Id == items[i]).ToList();
 
                     for (int g = 0; g < chekedItem.Count(); g++)
                         safeDoppelItem.Add(chekedItem[g]);
@@ -1203,7 +1202,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
 
             }
-            var allOderHebel = allUserListOrder.Where(x => x.ZylinderId == HebelType).ToList();
+            var allOderHebel = allUserListOrder.Where(x => x.ZylinderId == HebelType.First().schliessanlagenId).ToList();
 
             if (allOderHebel.Count() > 0)
             {
@@ -5698,10 +5697,10 @@ namespace schliessanlagen_konfigurator.Controllers
                     };
 
                     var aussen = DoppelSize.Min(x => x.aussen);
-                    var aussenSize = DoppelSize.Where(x => x.aussen > aussen).Select(x => x.aussen).ToList();
+                    var aussenSize = DoppelSize.Select(x => x.aussen).Distinct().ToList();
 
                     var innen = DoppelSize.Min(x => x.Intern);
-                    var innenSize = DoppelSize.Where(x => x.Intern > innen).Select(x => x.Intern).ToList();
+                    var innenSize = DoppelSize.Select(x => x.Intern).Distinct().ToList();
 
                     foreach (var aus in aussenSize)
                     {

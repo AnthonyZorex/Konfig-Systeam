@@ -661,10 +661,6 @@
       "PackagePath": "staticwebassets\\compression\\Abus_Rundzylinder_Zolit4000.webp"
     },
     {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\Blindzylinder-640x360.png",
-      "PackagePath": "staticwebassets\\compression\\Blindzylinder-640x360.png"
-    },
-    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\Bravus2000-Doppelzylinder.webp",
       "PackagePath": "staticwebassets\\compression\\Bravus2000-Doppelzylinder.webp"
     },
@@ -709,20 +705,8 @@
       "PackagePath": "staticwebassets\\compression\\DU-851.WEBP"
     },
     {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\Dualzylinder-CESentry-640x360.png",
-      "PackagePath": "staticwebassets\\compression\\Dualzylinder-CESentry-640x360.png"
-    },
-    {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\EB815_CESentry-1083x1080-1024x1021.png",
-      "PackagePath": "staticwebassets\\compression\\EB815_CESentry-1083x1080-1024x1021.png"
-    },
-    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\EVVA.webp",
       "PackagePath": "staticwebassets\\compression\\EVVA.webp"
-    },
-    {
-      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\Halbzylinder-640x360.png",
-      "PackagePath": "staticwebassets\\compression\\Halbzylinder-640x360.png"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\RHM-215.WEBP",
