@@ -67,43 +67,65 @@
         </h4>
 
     <div>
+
+          
         @foreach (var item in ViewBag.Order)
         {
             z++;
-            <div id="finisherItem">
-                <div id="ItemCounterOrders">
 
-                    <div id="counterKey">
-                            <input onclick="minus(@z)" type="button" value="-" class="btn btn-success" />
-                            <input type="text" style="border: none;max-width: 45px;" id="countKey-@z" readonly name="countKey" value="@item.CountKey" />
-                            <input onclick="plus(@z)" type="button" value="+" class="btn btn-success" />
+                <div id="ExelItem" class="ExelItem shadow-lg  mb-5 bg-body-tertiary rounded">
+
+                    <div id="productImage">
+                        <img decoding="async" data-bs-toggle="modal"  data-bs-target="#ModalAussenzylinder-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@ViewBag.ImageSys)" asp-append-version="true" width="300px" height="300px" />
                     </div>
+                    <div id="productMenuInfo">
+                        <div id="ProductNameUndCost">
+                            <div>
+                                <input style="border: none;font-size:20px" name="key" value="@item.NameKey" />
+                                <input style="border: none;" type="hidden" name="FurKey" value="@item.ForNameKey" />
+                            </div>
 
-                </div>
-                <div id="nameItem">
-                        <input style="border: none;" name="key" value="@item.NameKey" />
-                        <input style="border: none;" type="hidden" name="FurKey" value="@item.ForNameKey" /> 
-                </div>
+                        </div>
 
-                <div id="numerKey">
-                    <h4>@item.NameKey</h4>
-                </div>
-                <div id="OpenValue">
-                            @for (int i = 0; i < ViewBag.DorName.Count; i++)
-                            {
-                                @if (ViewBag.KeyValue[countFalse] == true)
-                                {
-                                    <input type="hidden" name="keyIsOpen" value="true" />
-                                    <input name="TurName" style="border: none;max-width: 100px;" readonly type="text" id="@z-DorCount-@i" value="@ViewBag.DorName[i]" />
+                        <div id="textInform">
+                            <h4 >Stück</h4>
+                        </div>
+                        <div id="Size">
+                            <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                <input onclick="minus(@z)" type="button" value="-" class="btn btn-success" />
+                                <input type="text" class="count_input_controll" id="countKey-@z" readonly name="countKey" value="@item.CountKey" />
+                                <input onclick="plus(@z)" type="button" value="+" class="btn btn-success" />
+                            </div>                          
+                        </div>
+
+                        <div id="optionsItems" class="mb-5">
+                            <h3>Der Schlüssel öffnet:</h3>
+                            <div>
+                                @{
+                                    int valueCount = 0;
                                 }
-                                else
-                                {
-                                    <input type="hidden" name="keyIsOpen" value="false" />
-                                }
-                                countFalse++;
-                            }
+
+                                    @for (int i = 0; i < ViewBag.DorName.Count; i++)
+                                    {
+                                         @if (ViewBag.KeyValue[countFalse] == true)
+                                         {
+                                            <input class="form-control" name="TurName" style="margin-top: 5px;" readonly type="text" id="@z-DorCount-@i" value="@ViewBag.DorName[i]" />
+                                            <input type="hidden" name="keyIsOpen" value="true" />
+                                         }
+                                         else
+                                         {
+                                            <input type="hidden" name="keyIsOpen" value="false" />
+
+                                         }
+                                    
+                                             countFalse++;
+                                    }
+                                
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            
         }
         <div>
         </div>

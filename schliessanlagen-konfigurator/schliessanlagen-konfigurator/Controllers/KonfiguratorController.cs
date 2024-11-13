@@ -932,19 +932,14 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 Match match = regex.Match(url);
 
-                // Проверяем, найдено ли совпадение
                 if (match.Success)
                 {
-                    // Вторая группа содержит значение параметра
                     string systeamValue = match.Groups[2].Value;
                     prufSystem = systeamValue;
                 }
 
-
             }
            
-     
-
             SchopAlarm();
             
             var ordersQuery = db.Orders.AsQueryable(); // Используем IQueryable для отложенного выполнения запросов
@@ -5013,7 +5008,11 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var sys =  db.SysteamPriceKey.Where(x => x.NameSysteam == Systeam).ToList();
 
+            var Galery = db.ProductGalery.Where(x => x.SysteamPriceKeyId == sys.First().Id).Select(x=>x.ImageName).ToList();
+
             ViewBag.Lieferzeit = Lieferzeit;
+
+            ViewBag.ImageSys = Galery;
 
             ViewBag.LieferzeitJson = JsonConvert.SerializeObject(sys.Select(x => x.Lieferzeit));
             ViewBag.LieferzeitGroz = JsonConvert.SerializeObject(sys.Select(x => x.LieferzeitGrosse));
