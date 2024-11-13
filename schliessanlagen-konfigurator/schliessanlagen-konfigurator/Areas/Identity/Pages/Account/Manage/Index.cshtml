@@ -65,11 +65,10 @@
             </div>
 
             <div class="form-floating mb-3">
-                <input asp-for="Input.UStNumber" id="Vat" class="form-control" placeholder="Telefon" />
+                <input asp-for="Input.UStNumber" id="Vat" class="form-control" />
                 <label asp-for="Input.UStNumber" class="form-label"></label>
                 <span asp-validation-for="Input.UStNumber" class="text-danger"></span>
             </div>
-          
 
             <button id="update-profile-button" type="submit" class="w-100 btn btn-lg danger">Aktualisieren</button>
         </form>
@@ -124,7 +123,6 @@
                                           USt-IdNr.: ${data.vat_number}
                                           Status: Gültig`);
 
-                              // Задержка перед отправкой формы
                               setTimeout(() => {
                                   form.submit();
                               }, 2000);
@@ -135,7 +133,8 @@
                               alertBox.classList.add('alert-danger');
                               showAlert(`Ergebnis der Überprüfung:
                                           Status: Ungültig`);
-                          }
+
+                        }
                       })
                       .catch(error => {
                           console.error('Ошибка:', error);

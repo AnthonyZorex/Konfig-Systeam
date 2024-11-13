@@ -37,7 +37,7 @@
                         <div id="hederBlockOrder">
                             <h4>Schließsystem</h4>
                             <div id="orderCostHeader">
-                                <h4>Price</h4>
+                                <h4>Preis</h4>
                             </div>
                         </div>
                         @{
@@ -576,7 +576,7 @@
     <script src="https://www.paypal.com/sdk/js?client-id=AcBDGr9EZyKwRHBxrvvXq2u-vFWhg-e2l09CS97O5fbcwx0JYkjJRfsNUS_lJ6QjdTOwGe830IkBill9&components=buttons&currency=EUR"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/big.js/6.1.1/big.min.js"></script>
      <script defer src="https://x.klarnacdn.net/kp/lib/v1/api.js"></script>  
-
+ 
     <script type="text/javascript">
 
         window.klarnaAsyncCallback = function () {
@@ -639,7 +639,7 @@
             )
         }
        
-    </script>
+    </script> 
 
 <script>
 
@@ -651,7 +651,8 @@
     var span = document.getElementsByClassName("close")[0];
 
     let s = 0;
-       
+     const vatNumber = document.querySelector("input[name='RechnungVat']");
+
       
     function changeSend(BlockItem) 
     {
@@ -738,10 +739,10 @@
                     }
                 }).render(`#paypal-button-container-${id}`);
               
-            }
+            }          
     }
-        
 
+    
     document.addEventListener("DOMContentLoaded", function () 
     {
         let count = document.querySelectorAll("#countOrderSysteam");
@@ -763,12 +764,33 @@
                 }
             });
 
-            console.log(vatNumber.value);
             selectCountry.forEach((item, index) => {
                 item.addEventListener('change', (event) => {
 
-                    ProcentMwst(item.value, index);
+                    const vatNumberInput = document.querySelector("input[name='RechnungVat']");
+                    const apiKey = '0928aaf5e30b2777f31177d6a2ea6f1c';
 
+                    fetch(`https://apilayer.net/api/validate?access_key=${apiKey}&vat_number=${vatNumber.value}`)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok ' + response.statusText);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+
+                            if (data.valid === true) 
+                            {
+                                ProcentMwst(item.value, index, data.country_code);
+                            } else {
+                                ProcentMwst(item.value, index, "");
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Ошибка:', error);
+                        });
+                    
+                    
                 });
             });
 

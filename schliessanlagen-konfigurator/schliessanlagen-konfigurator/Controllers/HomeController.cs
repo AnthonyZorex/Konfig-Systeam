@@ -48,11 +48,9 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpGet]
         public async Task<IActionResult> ImageConfig()
         {
-
             string sourceFilePath = @"wwwroot/compression/";
             IEnumerable<string> imageFiles = Directory.GetFiles(sourceFilePath, "*").Select(Path.GetFileName);
             return View("../Edit/ImageConfig", imageFiles);
-
         }
         [HttpGet]
         public async Task<IActionResult> Blogs()
@@ -82,24 +80,40 @@ namespace schliessanlagen_konfigurator.Controllers
         {
             return View();
         }
-        [HttpGet]
-        public async Task<IActionResult> datenschutzbelehrung()
+
+        public string PageSearch(string name)
         {
+            var pages = db.Page.FirstOrDefault(x => x.Name==name);
+
+            return pages.Text;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> datenschutzbelehrung(string name)
+        {
+            ViewBag.page = PageSearch(name);
+
             return View();
         }
         [HttpGet]
-        public async Task<IActionResult> Lieferung()
+        public async Task<IActionResult> Lieferung(string name)
         {
+            ViewBag.page = PageSearch(name);
+
             return View();
         }
       
         [HttpGet]
-        public async Task<IActionResult> FAQLexikon()
+        public async Task<IActionResult> FAQLexikon(string name)
         {
+            ViewBag.page = PageSearch(name);
+
             return View();
         }
-        public async Task<IActionResult> AGB()
+        public async Task<IActionResult> AGB(string name)
         {
+            ViewBag.page = PageSearch(name);
+
             return View();
         }
         [HttpPost]
@@ -113,8 +127,9 @@ namespace schliessanlagen_konfigurator.Controllers
             return Ok();
         }
         [HttpGet]
-        public async Task<IActionResult> Impressum()
+        public async Task<IActionResult> Impressum(string name)
         {
+            ViewBag.page = PageSearch(name);
 
             return View();
         }

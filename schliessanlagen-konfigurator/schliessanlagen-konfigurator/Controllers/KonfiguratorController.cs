@@ -946,12 +946,6 @@ namespace schliessanlagen_konfigurator.Controllers
      
 
             SchopAlarm();
-            var liferzeiten = db.SysteamPriceKey
-                      .Select(x => x.Lieferzeit)
-                      .Distinct()
-                      .ToList();
-            ViewBag.SortLiferzeit = JsonConvert.SerializeObject(liferzeiten); 
-
             
             var ordersQuery = db.Orders.AsQueryable(); // Используем IQueryable для отложенного выполнения запросов
 

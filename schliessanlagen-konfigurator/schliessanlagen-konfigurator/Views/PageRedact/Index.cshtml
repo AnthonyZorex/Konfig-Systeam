@@ -1,0 +1,92 @@
+﻿@model schliessanlagen_konfigurator.Models.Page;
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    a {
+        color: black;
+    }
+
+        a:hover {
+            color: black;
+        }
+
+
+    .blogItem{
+        background:white;
+        border-left: var(--primary-border);
+    }
+
+    #productMenuInfo{
+        text-align:start;
+        align-items:center;
+    }
+</style>
+
+<div id="Blog">
+
+    <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+
+        <form method="post" asp-action="NewPage" asp-controller="PageRedact">
+
+            <div>
+                <h5>Name</h5>
+                <input asp-for="Name" class="form-control" />
+            </div>
+
+            <div>
+                <h5>Seiten</h5>
+                <textarea class="form-control" asp-for="Text" id="exampleFormControlTextarea1"></textarea>
+            </div>
+
+            <input type="submit" class="btn danger" value="Erstellen" />
+        </form>
+
+        @foreach (var item in ViewBag.AllBlog)
+        {
+            <div class="blogItem shadow-lg mb-4 mt-5 bg-body-tertiary rounded">
+
+                <div id="productMenuInfo">
+                    <div>
+                        <div>
+                            <h2 id="sys"><strong>@item.Name</strong></h2>
+                        </div>
+                    </div>
+                   
+                    <div id="productChek">
+                        <div>
+                            <a class="btn danger" id="chekProduct" name="DopelId" href="@Url.Action("Redux",new{Id = @item.Id})">Bearbeiten</a>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        }
+    </div>
+   
+</div>
+
+@section Scripts {
+    <script src="~/lib/tinymce_7.1.2/tinymce/js/tinymce/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+            selector: '#exampleFormControlTextarea1',
+            plugins: [
+                'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
+                'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen', 'insertdatetime',
+                'media', 'table', 'emoticons', 'help'
+            ],
+            toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
+                'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
+                'forecolor backcolor emoticons | help',
+            menu: {
+                favs: { title: 'Beschreibungen', items: 'code visualaid | searchreplace | emoticons' }
+            },
+            menubar: 'favs file edit view insert format tools table help',
+            content_css: 'css/content.css'
+        });
+    </script>
+
+}

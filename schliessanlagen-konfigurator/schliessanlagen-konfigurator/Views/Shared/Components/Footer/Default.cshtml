@@ -113,13 +113,13 @@
     <div class="row">
     <div class="col-md-4 mt-2 p-2">
         <div>
-            <a href="@Url.Action("Impressum", "Home")">Impressum</a>
+                    <a href="@Url.Action("Impressum", "Home",new {name="Impressum"})">Impressum</a>
         </div>
         <div>
-            <a href="@Url.Action("datenschutzbelehrung", "Home")">Datenschutzerklärung</a>
+                    <a href="@Url.Action("datenschutzbelehrung", "Home",new {name="Datenschutzerklärung"})">Datenschutzerklärung</a>
         </div>
         <div>
-           <a href="@Url.Action("AGB", "Home")">AGB</a>
+                    <a href="@Url.Action("AGB", "Home",new {name="Allgemeine Geschäftsbedingungen"})">AGB</a>
         </div>
     </div>
 
@@ -131,7 +131,7 @@
                     <a href=" @Url.Action("Kontakt", "Kontact_Fromular")">Bestellablauf</a>
                 </div>
                 <div>
-                    <a href=" @Url.Action("Lieferung", "Home")">Lieferung</a>
+                    <a href=" @Url.Action("Lieferung", "Home",new {name="Lieferung"})">Lieferung</a>
                 </div>
 
                 <div>
@@ -143,8 +143,8 @@
                 </div>
 
                 <div>
-                    
-                        <a href=" @Url.Action("FAQLexikon", "Home")">
+
+                    <a href=" @Url.Action("FAQLexikon", "Home",new {name="FAQLexikon"})">
                             FAQ & Lexikon
                         </a>
                     

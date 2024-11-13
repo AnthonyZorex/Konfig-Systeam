@@ -22,7 +22,7 @@
 
 let preis_schluessel;
 let preis_product ;
-function ProcentMwst(value, BlockItem)
+function ProcentMwst(value, BlockItem,country)
 {
     let cost = document.querySelectorAll("#costedI-" + BlockItem);
     let modalItem = document.getElementById("myModal-" + BlockItem);
@@ -71,1387 +71,2793 @@ function ProcentMwst(value, BlockItem)
     Sum = Sum.minus(costGramValue);
 
     Sum = Sum.toFixed(2)
+    if (country == "" || country == undefined)
+    {
+        switch (value) {
 
-    switch (value) {
-
-        case "AT":
-            {
-                costProcent = bruttoCostValue.times(0.20).toFixed(2); // 20% for Austria
-                procent.value = "20% MwSt";
-                Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
-
-                PreisProductBrutto.forEach((item) => {
-                    let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                    let valueBig = new Big(value);
-                    let x = valueBig.times(0.20).toFixed(2);
-                    ProductProcent.push(x);
-                });
-
-                priceBrutto.forEach((item) => {
-                    let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                    let valueBig = new Big(value);
-                    let x = valueBig.times(0.20).toFixed(2);
-                    SchlusselProcent.push(x);
-                });
-
-                // Cost by weight
-                if (sendDhl.checked) {
-                    let gramValue = new Big(Gram.value.trim().replace(",", "."));
-                    if (gramValue.lte(2))
-                    {
-                        CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €";
-                    } else if (gramValue.gt(2) && gramValue.lte(5)) {
-                        CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €";
-                    } else if (gramValue.gt(5) && gramValue.lte(10)) {
-                        CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €";
-                    } else if (gramValue.gt(10) && gramValue.lte(20)) {
-                        CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €";
-                    } else if (gramValue.gt(20) && gramValue.lte(31.5)) {
-                        CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €";
-                    }
-                    costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
-                } else {
-                    CostGram[BlockItem].value = "0 €";
-                }
-
-                mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
-                break;
-            }
-
-        case "BE":
-            {
-                costProcent = bruttoCostValue.times(0.21).toFixed(2); // 21% for Belgium
-                procent.value = "21% MwSt";
-                Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
-
-                PreisProductBrutto.forEach((item) => {
-                    let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                    let valueBig = new Big(value);
-                    let x = valueBig.times(0.21).toFixed(2);
-                    ProductProcent.push(x);
-                });
-
-                priceBrutto.forEach((item) => {
-                    let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                    let valueBig = new Big(value);
-                    let x = valueBig.times(0.21).toFixed(2);
-                    SchlusselProcent.push(x);
-                });
-
-                // Cost by weight
-                if (sendDhl.checked) {
-                    let gramValue = new Big(Gram.value.trim().replace(",", "."));
-                    if (gramValue.lte(2)) {
-                        CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €";
-                    } else if (gramValue.gt(2) && gramValue.lte(5)) {
-                        CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €";
-                    } else if (gramValue.gt(5) && gramValue.lte(10)) {
-                        CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €";
-                    } else if (gramValue.gt(10) && gramValue.lte(20)) {
-                        CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €";
-                    } else if (gramValue.gt(20) && gramValue.lte(31.5)) {
-                        CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €";
-                    }
-                    costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
-                } else {
-                    CostGram[BlockItem].value = "0 €";
-                }
-
-                mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
-                break;
-            }
-
-        case "BG":
-            {
-                costProcent = bruttoCostValue.times(0.20).toFixed(2); // 20% for Bulgaria
-                procent.value = "20% MwSt";
-                Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
-
-                PreisProductBrutto.forEach((item) => {
-                    let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                    let valueBig = new Big(value);
-                    let x = valueBig.times(0.20).toFixed(2);
-                    ProductProcent.push(x);
-                });
-
-                priceBrutto.forEach((item) => {
-                    let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                    let valueBig = new Big(value);
-                    let x = valueBig.times(0.20).toFixed(2);
-                    SchlusselProcent.push(x);
-                });
-
-                // Cost by weight
-                if (sendDhl.checked) {
-                    let gramValue = new Big(Gram.value.trim().replace(",", "."));
-                    if (gramValue.lte(2)) {
-                        CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €";
-                    } else if (gramValue.gt(2) && gramValue.lte(5)) {
-                        CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €";
-                    } else if (gramValue.gt(5) && gramValue.lte(10)) {
-                        CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €";
-                    } else if (gramValue.gt(10) && gramValue.lte(20)) {
-                        CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €";
-                    } else if (gramValue.gt(20) && gramValue.lte(31.5)) {
-                        CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €";
-                    }
-                    costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
-                } else {
-                    CostGram[BlockItem].value = "0 €";
-                }
-
-                mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
-                break;
-            }
-
-        case "CY":
-            {
-                costProcent = bruttoCostValue.times(0.19).toFixed(2); // 19% for Cyprus
-                procent.value = "19% MwSt";
-                Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
-
-                PreisProductBrutto.forEach((item) => {
-                    let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                    let valueBig = new Big(value);
-                    let x = valueBig.times(0.19).toFixed(2);
-                    ProductProcent.push(x);
-                });
-
-                priceBrutto.forEach((item) => {
-                    let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                    let valueBig = new Big(value);
-                    let x = valueBig.times(0.19).toFixed(2);
-                    SchlusselProcent.push(x);
-                });
-
-                // Cost by weight
-                if (sendDhl.checked)
+            case "AT":
                 {
-                    let gramValue = new Big(Gram.value.trim().replace(",", "."));
-                    if (gramValue.lte(2)) {
-                        CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €";
-                    } else if (gramValue.gt(2) && gramValue.lte(5)) {
-                        CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €";
-                    } else if (gramValue.gt(5) && gramValue.lte(10)) {
-                        CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €";
-                    } else if (gramValue.gt(10) && gramValue.lte(20)) {
-                        CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €";
-                    } else if (gramValue.gt(20) && gramValue.lte(31.5)) {
-                        CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €";
+                    costProcent = bruttoCostValue.times(0.20).toFixed(2); // 20% for Austria
+                    procent.value = "20% MwSt";
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    PreisProductBrutto.forEach((item) => {
+                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
+                        let valueBig = new Big(value);
+                        let x = valueBig.times(0.20).toFixed(2);
+                        ProductProcent.push(x);
+                    });
+
+                    priceBrutto.forEach((item) => {
+                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
+                        let valueBig = new Big(value);
+                        let x = valueBig.times(0.20).toFixed(2);
+                        SchlusselProcent.push(x);
+                    });
+
+                    // Cost by weight
+                    if (sendDhl.checked) {
+                        let gramValue = new Big(Gram.value.trim().replace(",", "."));
+                        if (gramValue.lte(2)) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(2) && gramValue.lte(5)) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(5) && gramValue.lte(10)) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(10) && gramValue.lte(20)) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(20) && gramValue.lte(31.5)) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €";
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €";
                     }
-                    costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
+                    break;
                 }
-                else {
-                    CostGram[BlockItem].value = "0 €";
-                }
 
-                mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
-                break;
-                }
-        case "CZ":
-            {
+            case "BE":
+                {
+                    costProcent = bruttoCostValue.times(0.21).toFixed(2); // 21% for Belgium
+                    procent.value = "21% MwSt";
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
 
-                costProcent = bruttoCostValue.times(0.21).toFixed(2);
+                    PreisProductBrutto.forEach((item) => {
+                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
+                        let valueBig = new Big(value);
+                        let x = valueBig.times(0.21).toFixed(2);
+                        ProductProcent.push(x);
+                    });
 
-                procent.value = "21% MwSt"; // Устанавливаем текстовое значение
-                Gram.value = parseFloat(Gram.value.trim().replace(",", ".")); // Преобразуем граммы
+                    priceBrutto.forEach((item) => {
+                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
+                        let valueBig = new Big(value);
+                        let x = valueBig.times(0.21).toFixed(2);
+                        SchlusselProcent.push(x);
+                    });
 
-                // Обработка PreisProductBrutto
-                PreisProductBrutto.forEach((item) => {
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-                    let x = valueBig.times(0.21).toFixed(2); // Рассчитываем налог
-                    ProductProcent.push(x); // Добавляем результат в массив
-                });
-
-                // Обработка priceBrutto
-                priceBrutto.forEach((item) => {
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-                    let x = valueBig.times(0.21).toFixed(2); // Рассчитываем налог
-                    SchlusselProcent.push(x); // Добавляем результат в массив
-                });
-
-                // Обработка стоимости в зависимости от веса
-                if (sendDhl.checked) {
-                    let gramValue = new Big(Gram.value.trim().replace(",", "."));
-
-                    if (gramValue.lte(2)) {
-                        CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
-                    } else if (gramValue.gt(2) && gramValue.lte(5)) {
-                        CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
-                    } else if (gramValue.gt(5) && gramValue.lte(10)) {
-                        CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
-                    } else if (gramValue.gt(10) && gramValue.lte(20)) {
-                        CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
-                    } else if (gramValue.gt(20) && gramValue.lte(31.5)) {
-                        CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                    // Cost by weight
+                    if (sendDhl.checked) {
+                        let gramValue = new Big(Gram.value.trim().replace(",", "."));
+                        if (gramValue.lte(2)) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(2) && gramValue.lte(5)) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(5) && gramValue.lte(10)) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(10) && gramValue.lte(20)) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(20) && gramValue.lte(31.5)) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €";
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €";
                     }
-                    costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
-                } else {
-                    CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
+                    break;
                 }
 
-                mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
-                break;
-            }
-        case "DE":
-            {
-                costProcent = bruttoCostValue.times(0.19).toFixed(2);
+            case "BG":
+                {
+                    costProcent = bruttoCostValue.times(0.20).toFixed(2); // 20% for Bulgaria
+                    procent.value = "20% MwSt";
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
 
-                PreisProductBrutto.forEach((item) => {
-                    // Преобразуем строку в число, заменяя запятую на точку
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
+                    PreisProductBrutto.forEach((item) => {
+                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
+                        let valueBig = new Big(value);
+                        let x = valueBig.times(0.20).toFixed(2);
+                        ProductProcent.push(x);
+                    });
 
-                    let x = valueBig.times(0.19).toFixed(2);
-                    ProductProcent.push(x); // Добавляем результат в массив
-                });
+                    priceBrutto.forEach((item) => {
+                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
+                        let valueBig = new Big(value);
+                        let x = valueBig.times(0.20).toFixed(2);
+                        SchlusselProcent.push(x);
+                    });
 
-                // Обработка priceBrutto
-                priceBrutto.forEach((item) => {
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.19).toFixed(2);
-                    SchlusselProcent.push(x); // Добавляем результат в массив
-                });
-
-                procent.value = "19% MwSt";
-
-                // Обработка стоимости в зависимости от веса
-                if (sendDhl.checked) {
-                    let gramValue = new Big(Gram.value.trim().replace(",", "."));
-
-                    if (gramValue.lte(2))
-                    {
-                        CostGram[BlockItem].value = new Big(6).toFixed(2).replace(".", ",") + " €"; // 15,00 €
-                    } else if (gramValue.gt(2) && gramValue.lte(5)) {
-                        CostGram[BlockItem].value = new Big(7).toFixed(2).replace(".", ",") + " €"; // 7,00 €
-                    } else if (gramValue.gt(5) && gramValue.lte(10)) {
-                        CostGram[BlockItem].value = new Big(12).toFixed(2).replace(".", ",") + " €"; // 12,00 €
-                    } else if (gramValue.gt(10) && gramValue.lte(20)) {
-                        CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
-                    } else if (gramValue.gt(20) && gramValue.lte(31.5)) {
-                        CostGram[BlockItem].value = new Big(20).toFixed(2).replace(".", ",") + " €"; // 20,00 €
+                    // Cost by weight
+                    if (sendDhl.checked) {
+                        let gramValue = new Big(Gram.value.trim().replace(",", "."));
+                        if (gramValue.lte(2)) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(2) && gramValue.lte(5)) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(5) && gramValue.lte(10)) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(10) && gramValue.lte(20)) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(20) && gramValue.lte(31.5)) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €";
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €";
                     }
-                    costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
-                } else {
-                    CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
-                    costGramValue = new Big(0);
+
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
+                    break;
                 }
 
-                mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
-                break;
-            }
-        case "DK":
-            {
-                costProcent = bruttoCostValue.times(0.25).toFixed(2);
-                procent.value = "25% MwSt"; // Устанавливаем текстовое значение
+            case "CY":
+                {
+                    costProcent = bruttoCostValue.times(0.19).toFixed(2); // 19% for Cyprus
+                    procent.value = "19% MwSt";
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
 
-                // Обработка PreisProductBrutto
-                PreisProductBrutto.forEach((item) => {
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, '');
-                    let valueBig = new Big(value); // Создаем объект Big
-                    let x = valueBig.times(0.25).toFixed(2); // Рассчитываем налог
-                    ProductProcent.push(x); // Добавляем результат в массив
-                });
+                    PreisProductBrutto.forEach((item) => {
+                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
+                        let valueBig = new Big(value);
+                        let x = valueBig.times(0.19).toFixed(2);
+                        ProductProcent.push(x);
+                    });
 
-                // Обработка priceBrutto
-                priceBrutto.forEach((item) => {
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, '');
-                    let valueBig = new Big(value); // Создаем объект Big
-                    let x = valueBig.times(0.25).toFixed(2); // Рассчитываем налог
-                    SchlusselProcent.push(x); // Добавляем результат в массив
-                });
+                    priceBrutto.forEach((item) => {
+                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
+                        let valueBig = new Big(value);
+                        let x = valueBig.times(0.19).toFixed(2);
+                        SchlusselProcent.push(x);
+                    });
 
-                Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
-
-                // Обработка стоимости в зависимости от веса
-                if (sendDhl.checked) {
-                    if (Gram.value <= 2) {
-                        CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
-                    } else if (Gram.value > 2 && Gram.value <= 5) {
-                        CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
-                    } else if (Gram.value > 5 && Gram.value <= 10) {
-                        CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
-                    } else if (Gram.value > 10 && Gram.value <= 20) {
-                        CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
-                    } else if (Gram.value > 20 && Gram.value <= 31.5) {
-                        CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                    // Cost by weight
+                    if (sendDhl.checked) {
+                        let gramValue = new Big(Gram.value.trim().replace(",", "."));
+                        if (gramValue.lte(2)) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(2) && gramValue.lte(5)) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(5) && gramValue.lte(10)) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(10) && gramValue.lte(20)) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(20) && gramValue.lte(31.5)) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €";
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
                     }
-                    costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
-                } else {
-                    CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
-                }
-
-                mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
-                break;
-            }
-
-        case "EE":
-            {
-                costProcent = bruttoCostValue.times(0.20).toFixed(2);
-                procent.value = "20% MwSt"; // Устанавливаем текстовое значение
-
-                // Обработка PreisProductBrutto
-                PreisProductBrutto.forEach((item) => {
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, '');
-                    let valueBig = new Big(value); // Создаем объект Big
-                    let x = valueBig.times(0.20).toFixed(2); // Рассчитываем налог
-                    ProductProcent.push(x); // Добавляем результат в массив
-                });
-
-                // Обработка priceBrutto
-                priceBrutto.forEach((item) => {
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, '');
-                    let valueBig = new Big(value); // Создаем объект Big
-                    let x = valueBig.times(0.20).toFixed(2); // Рассчитываем налог
-                    SchlusselProcent.push(x); // Добавляем результат в массив
-                });
-
-                Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
-
-                // Обработка стоимости в зависимости от веса
-                if (sendDhl.checked) {
-                    if (Gram.value <= 2) {
-                        CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
-                    } else if (Gram.value > 2 && Gram.value <= 5) {
-                        CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
-                    } else if (Gram.value > 5 && Gram.value <= 10) {
-                        CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
-                    } else if (Gram.value > 10 && Gram.value <= 20) {
-                        CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
-                    } else if (Gram.value > 20 && Gram.value <= 31.5) {
-                        CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                    else {
+                        CostGram[BlockItem].value = "0 €";
                     }
-                    costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
-                } else {
-                    CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
+                    break;
                 }
-
-                mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
-                break;
-            }
-
-        case "ES":
-            {
-                // Налоговая ставка для Испании
-                costProcent = bruttoCostValue.times(0.21).toFixed(2);
-                procent.value = "21% MwSt"; // Устанавливаем текстовое значение
-
-                // Обработка PreisProductBrutto
-                PreisProductBrutto.forEach((item) => {
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, '');
-                    let valueBig = new Big(value); // Создаем объект Big
-                    let x = valueBig.times(0.21).toFixed(2); // Рассчитываем налог
-                    ProductProcent.push(x); // Добавляем результат в массив
-                });
-
-                // Обработка priceBrutto
-                priceBrutto.forEach((item) => {
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, '');
-                    let valueBig = new Big(value); // Создаем объект Big
-                    let x = valueBig.times(0.21).toFixed(2); // Рассчитываем налог
-                    SchlusselProcent.push(x); // Добавляем результат в массив
-                });
-
-                Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
-
-                // Обработка стоимости в зависимости от веса
-                if (sendDhl.checked) {
-                    if (Gram.value <= 2) {
-                        CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
-                    } else if (Gram.value > 2 && Gram.value <= 5) {
-                        CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
-                    } else if (Gram.value > 5 && Gram.value <= 10) {
-                        CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
-                    } else if (Gram.value > 10 && Gram.value <= 20) {
-                        CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
-                    } else if (Gram.value > 20 && Gram.value <= 31.5) {
-                        CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
-                    }
-                    costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
-                } else {
-                    CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
-                }
-
-                mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
-                break;
-            }
-
-        case "FI":
-            {
-                costProcent = bruttoCostValue.times(0.24).toFixed(2);
-                procent.value = "24% MwSt"; // Устанавливаем текстовое значение
-
-                // Обработка PreisProductBrutto
-                PreisProductBrutto.forEach((item) => {
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, '');
-                    let valueBig = new Big(value); // Создаем объект Big
-                    let x = valueBig.times(0.24).toFixed(2); // Рассчитываем налог
-                    ProductProcent.push(x); // Добавляем результат в массив
-                });
-
-                // Обработка priceBrutto
-                priceBrutto.forEach((item) => {
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, '');
-                    let valueBig = new Big(value); // Создаем объект Big
-                    let x = valueBig.times(0.24).toFixed(2); // Рассчитываем налог
-                    SchlusselProcent.push(x); // Добавляем результат в массив
-                });
-
-                Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
-
-                // Обработка стоимости в зависимости от веса
-                if (sendDhl.checked) {
-                    if (Gram.value <= 2) {
-                        CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
-                    } else if (Gram.value > 2 && Gram.value <= 5) {
-                        CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
-                    } else if (Gram.value > 5 && Gram.value <= 10) {
-                        CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
-                    } else if (Gram.value > 10 && Gram.value <= 20) {
-                        CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
-                    } else if (Gram.value > 20 && Gram.value <= 31.5) {
-                        CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
-                    }
-                    costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
-                } else {
-                    CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
-                }
-
-                mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
-                break;
-            }
-        case "FR":
-            {
-                
-                procent.value = "20% MwSt";
-                Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
-
-                costProcent = bruttoCostValue.times(0.20).toFixed(2);
-
-                PreisProductBrutto.forEach((item) => {
-                    // Преобразуем строку в число, заменяя запятую на точку
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.20).toFixed(2);
-                    ProductProcent.push(x); // Добавляем результат в массив
-                });
-
-                // Обработка priceBrutto
-                priceBrutto.forEach((item) => {
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.20).toFixed(2);
-                    SchlusselProcent.push(x); // Добавляем результат в массив
-                });
-
-                if (sendDhl.checked) {
-                    if (Gram.value <= 2) {
-                        CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
-                    } else if (Gram.value > 2 && Gram.value <= 5) {
-                        CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
-                    } else if (Gram.value > 5 && Gram.value <= 10) {
-                        CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
-                    } else if (Gram.value > 10 && Gram.value <= 20) {
-                        CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
-                    } else if (Gram.value > 20 && Gram.value <= 31.5) {
-                        CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
-                    }
-                    costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
-                } else {
-                    CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
-                }
-
-                mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
-                break;
-            }
-        case "GR":
-            {
- 
-                procent.value = "24% MwSt";
-                Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
-
-                costProcent = bruttoCostValue.times(0.24).toFixed(2);
-
-                PreisProductBrutto.forEach((item) => {
-                    // Преобразуем строку в число, заменяя запятую на точку
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.24).toFixed(2);
-                    ProductProcent.push(x); // Добавляем результат в массив
-                });
-
-                // Обработка priceBrutto
-                priceBrutto.forEach((item) => {
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.24).toFixed(2);
-                    SchlusselProcent.push(x); // Добавляем результат в массив
-                });
-
-                if (sendDhl.checked) {
-                    if (Gram.value <= 2) {
-                        CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
-                    } else if (Gram.value > 2 && Gram.value <= 5) {
-                        CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
-                    } else if (Gram.value > 5 && Gram.value <= 10) {
-                        CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
-                    } else if (Gram.value > 10 && Gram.value <= 20) {
-                        CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
-                    } else if (Gram.value > 20 && Gram.value <= 31.5) {
-                        CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
-                    }
-                    costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
-                } else {
-                    CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
-                }
-                mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
-                break;
-            }
-        case "HR":
-            {
-                procent.value = "25% MwSt";
-                Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
-
-                costProcent = bruttoCostValue.times(0.25).toFixed(2);
-
-                PreisProductBrutto.forEach((item) => {
-                    // Преобразуем строку в число, заменяя запятую на точку
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.25).toFixed(2);
-                    ProductProcent.push(x); // Добавляем результат в массив
-                });
-
-                // Обработка priceBrutto
-                priceBrutto.forEach((item) => {
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.25).toFixed(2);
-                    SchlusselProcent.push(x); // Добавляем результат в массив
-                });
-
-                if (sendDhl.checked) {
-                    if (Gram.value <= 2) {
-                        CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
-                    } else if (Gram.value > 2 && Gram.value <= 5) {
-                        CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
-                    } else if (Gram.value > 5 && Gram.value <= 10) {
-                        CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
-                    } else if (Gram.value > 10 && Gram.value <= 20) {
-                        CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
-                    } else if (Gram.value > 20 && Gram.value <= 31.5) {
-                        CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
-                    }
-                    costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
-                } else {
-                    CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
-                }
-
-                mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
-
-                break;
-            }
-        case "HU":
-            {
-
-                procent.value = "27% MwSt";
-                Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
-
-                costProcent = bruttoCostValue.times(0.27).toFixed(2);
-
-                PreisProductBrutto.forEach((item) => {
-                    // Преобразуем строку в число, заменяя запятую на точку
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.27).toFixed(2);
-                    ProductProcent.push(x); // Добавляем результат в массив
-                });
-
-                // Обработка priceBrutto
-                priceBrutto.forEach((item) => {
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.27).toFixed(2);
-                    SchlusselProcent.push(x); // Добавляем результат в массив
-                });
-
-                if (sendDhl.checked) {
-                    if (Gram.value <= 2) {
-                        CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
-                    } else if (Gram.value > 2 && Gram.value <= 5) {
-                        CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
-                    } else if (Gram.value > 5 && Gram.value <= 10) {
-                        CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
-                    } else if (Gram.value > 10 && Gram.value <= 20) {
-                        CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
-                    } else if (Gram.value > 20 && Gram.value <= 31.5) {
-                        CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
-                    }
-                    costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
-                } else {
-                    CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
-                }
-                mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
-                break;
-            }
-        case "IE":
-            {
-                procent.value = "23% MwSt";
-
-                costProcent = bruttoCostValue.times(0.23).toFixed(2);
-
-                PreisProductBrutto.forEach((item) => {
-                    // Преобразуем строку в число, заменяя запятую на точку
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.23).toFixed(2);
-                    ProductProcent.push(x); // Добавляем результат в массив
-                });
-
-                // Обработка priceBrutto
-                priceBrutto.forEach((item) => {
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.23).toFixed(2);
-                    SchlusselProcent.push(x); // Добавляем результат в массив
-                });
-
-                Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
-
-                if (sendDhl.checked) {
-                    if (Gram.value <= 2) {
-                        CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
-                    } else if (Gram.value > 2 && Gram.value <= 5) {
-                        CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
-                    } else if (Gram.value > 5 && Gram.value <= 10) {
-                        CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
-                    } else if (Gram.value > 10 && Gram.value <= 20) {
-                        CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
-                    } else if (Gram.value > 20 && Gram.value <= 31.5) {
-                        CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
-                    }
-                    costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
-                } else {
-                    CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
-                }
-                mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
-                break;
-
-            }
-        case "IT":
-            {
-                costProcent = bruttoCostValue.times(0.22).toFixed(2);
-
-                PreisProductBrutto.forEach((item) => {
-                    // Преобразуем строку в число, заменяя запятую на точку
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.22).toFixed(2);
-                    ProductProcent.push(x); // Добавляем результат в массив
-                });
-
-                // Обработка priceBrutto
-                priceBrutto.forEach((item) => {
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.22).toFixed(2);
-                    SchlusselProcent.push(x); // Добавляем результат в массив
-                });
-
-                procent.value = "22% MwSt";
-                Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
-
-                if (sendDhl.checked) {
-                    if (Gram.value <= 2) {
-                        CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
-                    } else if (Gram.value > 2 && Gram.value <= 5) {
-                        CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
-                    } else if (Gram.value > 5 && Gram.value <= 10) {
-                        CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
-                    } else if (Gram.value > 10 && Gram.value <= 20) {
-                        CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
-                    } else if (Gram.value > 20 && Gram.value <= 31.5) {
-                        CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
-                    }
-                    costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
-                } else {
-                    CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
-                }
-                mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
-                break;
-
-            }
-        case "LT":
-            {
-                procent.value = "21% MwSt";
-
-                costProcent = bruttoCostValue.times(0.21).toFixed(2);
-
-                PreisProductBrutto.forEach((item) => {
-                    // Преобразуем строку в число, заменяя запятую на точку
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.21).toFixed(2);
-                    ProductProcent.push(x); // Добавляем результат в массив
-                });
-
-                // Обработка priceBrutto
-                priceBrutto.forEach((item) => {
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.21).toFixed(2);
-                    SchlusselProcent.push(x); // Добавляем результат в массив
-                });
-
-                Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
-
-                if (sendDhl.checked) {
-                    if (Gram.value <= 2) {
-                        CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
-                    } else if (Gram.value > 2 && Gram.value <= 5) {
-                        CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
-                    } else if (Gram.value > 5 && Gram.value <= 10) {
-                        CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
-                    } else if (Gram.value > 10 && Gram.value <= 20) {
-                        CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
-                    } else if (Gram.value > 20 && Gram.value <= 31.5) {
-                        CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
-                    }
-                    costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
-                } else {
-                    CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
-                }
-                mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
-                break;
-
-            }
-        case "LU":
-            {
-                costProcent = bruttoCostValue.times(0.17).toFixed(2);
-
-                PreisProductBrutto.forEach((item) => {
-                    // Преобразуем строку в число, заменяя запятую на точку
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.17).toFixed(2);
-                    ProductProcent.push(x); // Добавляем результат в массив
-                });
-
-                // Обработка priceBrutto
-                priceBrutto.forEach((item) => {
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.17).toFixed(2);
-                    SchlusselProcent.push(x); // Добавляем результат в массив
-                });
-
-                procent.value = "17% MwSt";
-
-                Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
-                if (sendDhl.checked) {
-                    if (Gram.value <= 2) {
-                        CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
-                    } else if (Gram.value > 2 && Gram.value <= 5) {
-                        CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
-                    } else if (Gram.value > 5 && Gram.value <= 10) {
-                        CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
-                    } else if (Gram.value > 10 && Gram.value <= 20) {
-                        CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
-                    } else if (Gram.value > 20 && Gram.value <= 31.5) {
-                        CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
-                    }
-                    costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
-                } else {
-                    CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
-                }
-                mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
-                break;
-
-            }
-        case "LV":
-            {
-                costProcent = bruttoCostValue.times(0.21).toFixed(2);
-
-                PreisProductBrutto.forEach((item) => {
-                    // Преобразуем строку в число, заменяя запятую на точку
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.21).toFixed(2);
-                    ProductProcent.push(x); // Добавляем результат в массив
-                });
-
-                // Обработка priceBrutto
-                priceBrutto.forEach((item) => {
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.21).toFixed(2);
-                    SchlusselProcent.push(x); // Добавляем результат в массив
-                });
-
-                procent.value = "21% MwSt";
-                Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
-
-                if (sendDhl.checked) {
-                    if (Gram.value <= 2) {
-                        CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
-                    } else if (Gram.value > 2 && Gram.value <= 5) {
-                        CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
-                    } else if (Gram.value > 5 && Gram.value <= 10) {
-                        CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
-                    } else if (Gram.value > 10 && Gram.value <= 20) {
-                        CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
-                    } else if (Gram.value > 20 && Gram.value <= 31.5) {
-                        CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
-                    }
-                    costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
-                } else {
-                    CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
-                }
-                mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
-                break;
-
-            }
-        case "MT":
-            {
-
-                costProcent = bruttoCostValue.times(0.18).toFixed(2);
-
-                PreisProductBrutto.forEach((item) => {
-                    // Преобразуем строку в число, заменяя запятую на точку
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.18).toFixed(2);
-                    ProductProcent.push(x); // Добавляем результат в массив
-                });
-
-                // Обработка priceBrutto
-                priceBrutto.forEach((item) => {
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.18).toFixed(2);
-                    SchlusselProcent.push(x); // Добавляем результат в массив
-                });
-
-                procent.value = "18% MwSt";
-                Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
-
-
-                if (sendDhl.checked) {
-                    if (Gram.value <= 2) {
-                        CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
-                    } else if (Gram.value > 2 && Gram.value <= 5) {
-                        CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
-                    } else if (Gram.value > 5 && Gram.value <= 10) {
-                        CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
-                    } else if (Gram.value > 10 && Gram.value <= 20) {
-                        CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
-                    } else if (Gram.value > 20 && Gram.value <= 31.5) {
-                        CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
-                    }
-                    costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
-                } else {
-                    CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
-                }
-                mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
-                break;
-                  
-            }
-        case "NL":
-            {
-                costProcent = bruttoCostValue.times(0.21).toFixed(2);
-
-                PreisProductBrutto.forEach((item) => {
-                    // Преобразуем строку в число, заменяя запятую на точку
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.21).toFixed(2);
-                    ProductProcent.push(x); // Добавляем результат в массив
-                });
-
-                // Обработка priceBrutto
-                priceBrutto.forEach((item) => {
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.21).toFixed(2);
-                    SchlusselProcent.push(x); // Добавляем результат в массив
-                });
-
-
-                procent.value = "21% MwSt";
-                Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
-                
-                if (sendDhl.checked) {
-                    if (Gram.value <= 2) {
-                        CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
-                    } else if (Gram.value > 2 && Gram.value <= 5) {
-                        CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
-                    } else if (Gram.value > 5 && Gram.value <= 10) {
-                        CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
-                    } else if (Gram.value > 10 && Gram.value <= 20) {
-                        CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
-                    } else if (Gram.value > 20 && Gram.value <= 31.5) {
-                        CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
-                    }
-                    costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
-                } else {
-                    CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
-                }
-                mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
-                break;
-
-            }
-        case "PL":
-            {
-                costProcent = bruttoCostValue.times(0.23).toFixed(2);
-
-                PreisProductBrutto.forEach((item) => {
-                    // Преобразуем строку в число, заменяя запятую на точку
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.23).toFixed(2);
-                    ProductProcent.push(x); // Добавляем результат в массив
-                });
-
-                // Обработка priceBrutto
-                priceBrutto.forEach((item) => {
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.23).toFixed(2);
-                    SchlusselProcent.push(x); // Добавляем результат в массив
-                });
-
-                procent.value = "23% MwSt";
-                Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
-
-                if (sendDhl.checked) {
-                    if (Gram.value <= 2) {
-                        CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
-                    } else if (Gram.value > 2 && Gram.value <= 5) {
-                        CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
-                    } else if (Gram.value > 5 && Gram.value <= 10) {
-                        CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
-                    } else if (Gram.value > 10 && Gram.value <= 20) {
-                        CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
-                    } else if (Gram.value > 20 && Gram.value <= 31.5) {
-                        CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
-                    }
-                    costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
-                } else {
-                    CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
-                }
-
-                mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
-
-                break;
-
-            }
-        case "PT":
-            {
-                costProcent = bruttoCostValue.times(0.23).toFixed(2);
-
-                PreisProductBrutto.forEach((item) => {
-                    // Преобразуем строку в число, заменяя запятую на точку
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.23).toFixed(2);
-                    ProductProcent.push(x); // Добавляем результат в массив
-                });
-
-                // Обработка priceBrutto
-                priceBrutto.forEach((item) => {
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.23).toFixed(2);
-                    SchlusselProcent.push(x); // Добавляем результат в массив
-                });
-
-
-                procent.value = "23% MwSt";
-                Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
-
-                if (sendDhl.checked) {
-                    if (Gram.value <= 2) {
-                        CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
-                    } else if (Gram.value > 2 && Gram.value <= 5) {
-                        CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
-                    } else if (Gram.value > 5 && Gram.value <= 10) {
-                        CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
-                    } else if (Gram.value > 10 && Gram.value <= 20) {
-                        CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
-                    } else if (Gram.value > 20 && Gram.value <= 31.5) {
-                        CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
-                    }
-                    costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
-                } else {
-                    CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
-                }
-
-                mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
-
-                break;
-            }
-        case "RO":
-            {
-
-                Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
-               
-                procent.value = "19% MwSt";
-
-                costProcent = bruttoCostValue.times(0.19).toFixed(2);
-
-                PreisProductBrutto.forEach((item) => {
-                    // Преобразуем строку в число, заменяя запятую на точку
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.19).toFixed(2);
-                    ProductProcent.push(x); // Добавляем результат в массив
-                });
-
-                // Обработка priceBrutto
-                priceBrutto.forEach((item) => {
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.19).toFixed(2);
-                    SchlusselProcent.push(x); // Добавляем результат в массив
-                });
-
-
-                if (sendDhl.checked) {
-                    if (Gram.value <= 2) {
-                        CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
-                    } else if (Gram.value > 2 && Gram.value <= 5) {
-                        CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
-                    } else if (Gram.value > 5 && Gram.value <= 10) {
-                        CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
-                    } else if (Gram.value > 10 && Gram.value <= 20) {
-                        CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
-                    } else if (Gram.value > 20 && Gram.value <= 31.5) {
-                        CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
-                    }
-                    costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
-                } else {
-                    CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
-                }
-
-                mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
-
-                break;
-            }
-        case "SE":
-            {
-               
-                procent.value = "25% MwSt";
-
-                costProcent = bruttoCostValue.times(0.25).toFixed(2);
-
-                PreisProductBrutto.forEach((item) => {
-                    // Преобразуем строку в число, заменяя запятую на точку
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.25).toFixed(2);
-                    ProductProcent.push(x); // Добавляем результат в массив
-                });
-
-                // Обработка priceBrutto
-                priceBrutto.forEach((item) => {
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.25).toFixed(2);
-                    SchlusselProcent.push(x); // Добавляем результат в массив
-                });
-
-                Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
-
-                if (sendDhl.checked) {
-                    if (Gram.value <= 2) {
-                        CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
-                    } else if (Gram.value > 2 && Gram.value <= 5) {
-                        CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
-                    } else if (Gram.value > 5 && Gram.value <= 10) {
-                        CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
-                    } else if (Gram.value > 10 && Gram.value <= 20) {
-                        CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
-                    } else if (Gram.value > 20 && Gram.value <= 31.5) {
-                        CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
-                    }
-                    costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
-                } else {
-                    CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
-                }
-
-                mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
-
-                break;
-            }
-        case "SI":
-            {
-                
-                procent.value = "22% MwSt";
-                Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
-
-                costProcent = bruttoCostValue.times(0.22).toFixed(2);
-
-                PreisProductBrutto.forEach((item) => {
-                    // Преобразуем строку в число, заменяя запятую на точку
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.22).toFixed(2);
-                    ProductProcent.push(x); // Добавляем результат в массив
-                });
-
-                // Обработка priceBrutto
-                priceBrutto.forEach((item) => {
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.22).toFixed(2);
-                    SchlusselProcent.push(x); // Добавляем результат в массив
-                });
-
-                if (sendDhl.checked) {
-                    if (Gram.value <= 2) {
-                        CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
-                    } else if (Gram.value > 2 && Gram.value <= 5) {
-                        CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
-                    } else if (Gram.value > 5 && Gram.value <= 10) {
-                        CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
-                    } else if (Gram.value > 10 && Gram.value <= 20) {
-                        CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
-                    } else if (Gram.value > 20 && Gram.value <= 31.5) {
-                        CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
-                    }
-                    costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
-                } else {
-                    CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
-                }
-
-                mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
-
-                break;
-            }
-        case "SK":
-            {
-
-                procent.value = "20% MwSt";
-                Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
-                costProcent = bruttoCostValue.times(0.20).toFixed(2);
-
-                PreisProductBrutto.forEach((item) => {
-                    // Преобразуем строку в число, заменяя запятую на точку
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.20).toFixed(2);
-                    ProductProcent.push(x); // Добавляем результат в массив
-                });
-
-                // Обработка priceBrutto
-                priceBrutto.forEach((item) => {
-                    let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
-                    let valueBig = new Big(value); // Создаем объект Big
-
-                    let x = valueBig.times(0.20).toFixed(2);
-                    SchlusselProcent.push(x); // Добавляем результат в массив
-                });
-
-                if (sendDhl.checked) {
-                    if (Gram.value <= 2) {
-                        CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
-                    } else if (Gram.value > 2 && Gram.value <= 5) {
-                        CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
-                    } else if (Gram.value > 5 && Gram.value <= 10) {
-                        CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
-                    } else if (Gram.value > 10 && Gram.value <= 20) {
-                        CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
-                    } else if (Gram.value > 20 && Gram.value <= 31.5) {
-                        CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
-                    }
-                    costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
-                } else {
-                    CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
-                }
-
-                mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
-                break;
-            }
-        default:
-        {
-                procent.value = "Steuer";
-                costProcent = bruttoCostValue.times(0.0).toFixed(2);
-            if (sendDhl.checked == true)
-            {
-                Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
-
-                if (value == "US")
+            case "CZ":
                 {
 
+                    costProcent = bruttoCostValue.times(0.21).toFixed(2);
+
+                    procent.value = "21% MwSt"; // Устанавливаем текстовое значение
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", ".")); // Преобразуем граммы
+
+                    // Обработка PreisProductBrutto
+                    PreisProductBrutto.forEach((item) => {
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+                        let x = valueBig.times(0.21).toFixed(2); // Рассчитываем налог
+                        ProductProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    // Обработка priceBrutto
+                    priceBrutto.forEach((item) => {
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+                        let x = valueBig.times(0.21).toFixed(2); // Рассчитываем налог
+                        SchlusselProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    // Обработка стоимости в зависимости от веса
+                    if (sendDhl.checked) {
+                        let gramValue = new Big(Gram.value.trim().replace(",", "."));
+
+                        if (gramValue.lte(2)) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (gramValue.gt(2) && gramValue.lte(5)) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (gramValue.gt(5) && gramValue.lte(10)) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (gramValue.gt(10) && gramValue.lte(20)) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (gramValue.gt(20) && gramValue.lte(31.5)) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
+                    break;
+                }
+            case "DE":
+                {
+                    costProcent = bruttoCostValue.times(0.19).toFixed(2);
+
+                    PreisProductBrutto.forEach((item) => {
+                        // Преобразуем строку в число, заменяя запятую на точку
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.19).toFixed(2);
+                        ProductProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    // Обработка priceBrutto
+                    priceBrutto.forEach((item) => {
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.19).toFixed(2);
+                        SchlusselProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    procent.value = "19% MwSt";
+
+                    // Обработка стоимости в зависимости от веса
+                    if (sendDhl.checked) {
+                        let gramValue = new Big(Gram.value.trim().replace(",", "."));
+
+                        if (gramValue.lte(2)) {
+                            CostGram[BlockItem].value = new Big(6).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (gramValue.gt(2) && gramValue.lte(5)) {
+                            CostGram[BlockItem].value = new Big(7).toFixed(2).replace(".", ",") + " €"; // 7,00 €
+                        } else if (gramValue.gt(5) && gramValue.lte(10)) {
+                            CostGram[BlockItem].value = new Big(12).toFixed(2).replace(".", ",") + " €"; // 12,00 €
+                        } else if (gramValue.gt(10) && gramValue.lte(20)) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (gramValue.gt(20) && gramValue.lte(31.5)) {
+                            CostGram[BlockItem].value = new Big(20).toFixed(2).replace(".", ",") + " €"; // 20,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                        costGramValue = new Big(0);
+                    }
+
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
+                    break;
+                }
+            case "DK":
+                {
+                    costProcent = bruttoCostValue.times(0.25).toFixed(2);
+                    procent.value = "25% MwSt"; // Устанавливаем текстовое значение
+
+                    // Обработка PreisProductBrutto
+                    PreisProductBrutto.forEach((item) => {
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, '');
+                        let valueBig = new Big(value); // Создаем объект Big
+                        let x = valueBig.times(0.25).toFixed(2); // Рассчитываем налог
+                        ProductProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    // Обработка priceBrutto
+                    priceBrutto.forEach((item) => {
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, '');
+                        let valueBig = new Big(value); // Создаем объект Big
+                        let x = valueBig.times(0.25).toFixed(2); // Рассчитываем налог
+                        SchlusselProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    // Обработка стоимости в зависимости от веса
+                    if (sendDhl.checked) {
                         if (Gram.value <= 2) {
-                            CostGram[BlockItem].value = new Big(30).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
                         } else if (Gram.value > 2 && Gram.value <= 5) {
-                            CostGram[BlockItem].value = new Big(40).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
                         } else if (Gram.value > 5 && Gram.value <= 10) {
-                            CostGram[BlockItem].value = new Big(50).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
                         } else if (Gram.value > 10 && Gram.value <= 20) {
-                            CostGram[BlockItem].value = new Big(60).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
                         } else if (Gram.value > 20 && Gram.value <= 31.5) {
-                            CostGram[BlockItem].value = new Big(70).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
                         }
                         costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
-                    
-
-                    for (let i = 0; i < cardProductPrice.length; i++) {
-                        // Получаем текущее значение цены, очищая ненужные символы
-                        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
-
-                        cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
-                            style: 'currency',
-                            currency: 'EUR'
-                        });
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
 
-                    for (let i = 0; i < schlüsselPrice.length; i++) {
-                        // Получаем текущее значение цены, очищая ненужные символы
-                        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
-
-                        schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
-                            style: 'currency',
-                            currency: 'EUR'
-                        });
-                    }
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
+                    break;
                 }
-                else if (value == "RU" || value == "UA" || value == "BR" || value == "KZ")
+
+            case "EE":
                 {
-                        if (Gram.value <= 5) {
-                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                    costProcent = bruttoCostValue.times(0.20).toFixed(2);
+                    procent.value = "20% MwSt"; // Устанавливаем текстовое значение
+
+                    // Обработка PreisProductBrutto
+                    PreisProductBrutto.forEach((item) => {
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, '');
+                        let valueBig = new Big(value); // Создаем объект Big
+                        let x = valueBig.times(0.20).toFixed(2); // Рассчитываем налог
+                        ProductProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    // Обработка priceBrutto
+                    priceBrutto.forEach((item) => {
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, '');
+                        let valueBig = new Big(value); // Создаем объект Big
+                        let x = valueBig.times(0.20).toFixed(2); // Рассчитываем налог
+                        SchlusselProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    // Обработка стоимости в зависимости от веса
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
                         } else if (Gram.value > 5 && Gram.value <= 10) {
-                            CostGram[BlockItem].value = new Big(39).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
                         } else if (Gram.value > 10 && Gram.value <= 20) {
-                            CostGram[BlockItem].value = new Big(59).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
                         }
-
                         costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
-                   
-
-                    for (let i = 0; i < cardProductPrice.length; i++) {
-                        // Получаем текущее значение цены, очищая ненужные символы
-                        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
-
-                        cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
-                            style: 'currency',
-                            currency: 'EUR'
-                        });
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
 
-                    for (let i = 0; i < schlüsselPrice.length; i++) {
-                        // Получаем текущее значение цены, очищая ненужные символы
-                        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
-
-                        schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
-                            style: 'currency',
-                            currency: 'EUR'
-                        });
-                    }
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
+                    break;
                 }
 
-                else if (value == "CHE" || value == "GBR")
+            case "ES":
+                {
+                    // Налоговая ставка для Испании
+                    costProcent = bruttoCostValue.times(0.21).toFixed(2);
+                    procent.value = "21% MwSt"; // Устанавливаем текстовое значение
+
+                    // Обработка PreisProductBrutto
+                    PreisProductBrutto.forEach((item) => {
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, '');
+                        let valueBig = new Big(value); // Создаем объект Big
+                        let x = valueBig.times(0.21).toFixed(2); // Рассчитываем налог
+                        ProductProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    // Обработка priceBrutto
+                    priceBrutto.forEach((item) => {
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, '');
+                        let valueBig = new Big(value); // Создаем объект Big
+                        let x = valueBig.times(0.21).toFixed(2); // Рассчитываем налог
+                        SchlusselProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    // Обработка стоимости в зависимости от веса
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
+                    break;
+                }
+
+            case "FI":
+                {
+                    costProcent = bruttoCostValue.times(0.24).toFixed(2);
+                    procent.value = "24% MwSt"; // Устанавливаем текстовое значение
+
+                    // Обработка PreisProductBrutto
+                    PreisProductBrutto.forEach((item) => {
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, '');
+                        let valueBig = new Big(value); // Создаем объект Big
+                        let x = valueBig.times(0.24).toFixed(2); // Рассчитываем налог
+                        ProductProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    // Обработка priceBrutto
+                    priceBrutto.forEach((item) => {
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, '');
+                        let valueBig = new Big(value); // Создаем объект Big
+                        let x = valueBig.times(0.24).toFixed(2); // Рассчитываем налог
+                        SchlusselProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    // Обработка стоимости в зависимости от веса
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
+                    break;
+                }
+            case "FR":
                 {
 
-                    if (Gram.value <= 2) {
-                        CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 15,00 €
-                    } else if (Gram.value > 2 && Gram.value <= 5) {
-                        CostGram[BlockItem].value = new Big(29).toFixed(2).replace(".", ",") + " €"; // 17,00 €
-                    } else if (Gram.value > 5 && Gram.value <= 10) {
-                        CostGram[BlockItem].value = new Big(38).toFixed(2).replace(".", ",") + " €"; // 22,00 €
-                    } else if (Gram.value > 10 && Gram.value <= 20) {
-                        CostGram[BlockItem].value = new Big(52).toFixed(2).replace(".", ",") + " €"; // 35,00 €
-                    } else if (Gram.value > 21 && Gram.value <= 31.5) {
-                        CostGram[BlockItem].value = new Big(59).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                    procent.value = "20% MwSt";
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    costProcent = bruttoCostValue.times(0.20).toFixed(2);
+
+                    PreisProductBrutto.forEach((item) => {
+                        // Преобразуем строку в число, заменяя запятую на точку
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.20).toFixed(2);
+                        ProductProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    // Обработка priceBrutto
+                    priceBrutto.forEach((item) => {
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.20).toFixed(2);
+                        SchlusselProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
-                    costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
 
-                    for (let i = 0; i < cardProductPrice.length; i++) {
-                        // Получаем текущее значение цены, очищая ненужные символы
-                        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
-
-                        cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
-                            style: 'currency',
-                            currency: 'EUR'
-                        });
-                    }
-
-                    for (let i = 0; i < schlüsselPrice.length; i++) {
-                        // Получаем текущее значение цены, очищая ненужные символы
-                        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
-
-                        schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
-                            style: 'currency',
-                            currency: 'EUR'
-                        });
-                    }
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
+                    break;
                 }
-                else {
-                    CostGram[BlockItem].value = 0;  
-                    
-                    for (let i = 0; i < cardProductPrice.length; i++) {
-                        // Получаем текущее значение цены, очищая ненужные символы
-                        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+            case "GR":
+                {
 
-                        cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
-                            style: 'currency',
-                            currency: 'EUR'
-                        });
+                    procent.value = "24% MwSt";
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    costProcent = bruttoCostValue.times(0.24).toFixed(2);
+
+                    PreisProductBrutto.forEach((item) => {
+                        // Преобразуем строку в число, заменяя запятую на точку
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.24).toFixed(2);
+                        ProductProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    // Обработка priceBrutto
+                    priceBrutto.forEach((item) => {
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.24).toFixed(2);
+                        SchlusselProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
-
-                    for (let i = 0; i < schlüsselPrice.length; i++) {
-                        // Получаем текущее значение цены, очищая ненужные символы
-                        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
-
-                        schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
-                            style: 'currency',
-                            currency: 'EUR'
-                        });
-                    }
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
+                    break;
                 }
-            }
-           
-            break;
+            case "HR":
+                {
+                    procent.value = "25% MwSt";
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    costProcent = bruttoCostValue.times(0.25).toFixed(2);
+
+                    PreisProductBrutto.forEach((item) => {
+                        // Преобразуем строку в число, заменяя запятую на точку
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.25).toFixed(2);
+                        ProductProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    // Обработка priceBrutto
+                    priceBrutto.forEach((item) => {
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.25).toFixed(2);
+                        SchlusselProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
+
+                    break;
+                }
+            case "HU":
+                {
+
+                    procent.value = "27% MwSt";
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    costProcent = bruttoCostValue.times(0.27).toFixed(2);
+
+                    PreisProductBrutto.forEach((item) => {
+                        // Преобразуем строку в число, заменяя запятую на точку
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.27).toFixed(2);
+                        ProductProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    // Обработка priceBrutto
+                    priceBrutto.forEach((item) => {
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.27).toFixed(2);
+                        SchlusselProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
+                    break;
+                }
+            case "IE":
+                {
+                    procent.value = "23% MwSt";
+
+                    costProcent = bruttoCostValue.times(0.23).toFixed(2);
+
+                    PreisProductBrutto.forEach((item) => {
+                        // Преобразуем строку в число, заменяя запятую на точку
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.23).toFixed(2);
+                        ProductProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    // Обработка priceBrutto
+                    priceBrutto.forEach((item) => {
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.23).toFixed(2);
+                        SchlusselProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
+                    break;
+
+                }
+            case "IT":
+                {
+                    costProcent = bruttoCostValue.times(0.22).toFixed(2);
+
+                    PreisProductBrutto.forEach((item) => {
+                        // Преобразуем строку в число, заменяя запятую на точку
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.22).toFixed(2);
+                        ProductProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    // Обработка priceBrutto
+                    priceBrutto.forEach((item) => {
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.22).toFixed(2);
+                        SchlusselProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    procent.value = "22% MwSt";
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
+                    break;
+
+                }
+            case "LT":
+                {
+                    procent.value = "21% MwSt";
+
+                    costProcent = bruttoCostValue.times(0.21).toFixed(2);
+
+                    PreisProductBrutto.forEach((item) => {
+                        // Преобразуем строку в число, заменяя запятую на точку
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.21).toFixed(2);
+                        ProductProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    // Обработка priceBrutto
+                    priceBrutto.forEach((item) => {
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.21).toFixed(2);
+                        SchlusselProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
+                    break;
+
+                }
+            case "LU":
+                {
+                    costProcent = bruttoCostValue.times(0.17).toFixed(2);
+
+                    PreisProductBrutto.forEach((item) => {
+                        // Преобразуем строку в число, заменяя запятую на точку
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.17).toFixed(2);
+                        ProductProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    // Обработка priceBrutto
+                    priceBrutto.forEach((item) => {
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.17).toFixed(2);
+                        SchlusselProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    procent.value = "17% MwSt";
+
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
+                    break;
+
+                }
+            case "LV":
+                {
+                    costProcent = bruttoCostValue.times(0.21).toFixed(2);
+
+                    PreisProductBrutto.forEach((item) => {
+                        // Преобразуем строку в число, заменяя запятую на точку
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.21).toFixed(2);
+                        ProductProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    // Обработка priceBrutto
+                    priceBrutto.forEach((item) => {
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.21).toFixed(2);
+                        SchlusselProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    procent.value = "21% MwSt";
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
+                    break;
+
+                }
+            case "MT":
+                {
+
+                    costProcent = bruttoCostValue.times(0.18).toFixed(2);
+
+                    PreisProductBrutto.forEach((item) => {
+                        // Преобразуем строку в число, заменяя запятую на точку
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.18).toFixed(2);
+                        ProductProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    // Обработка priceBrutto
+                    priceBrutto.forEach((item) => {
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.18).toFixed(2);
+                        SchlusselProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    procent.value = "18% MwSt";
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
+                    break;
+
+                }
+            case "NL":
+                {
+                    costProcent = bruttoCostValue.times(0.21).toFixed(2);
+
+                    PreisProductBrutto.forEach((item) => {
+                        // Преобразуем строку в число, заменяя запятую на точку
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.21).toFixed(2);
+                        ProductProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    // Обработка priceBrutto
+                    priceBrutto.forEach((item) => {
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.21).toFixed(2);
+                        SchlusselProcent.push(x); // Добавляем результат в массив
+                    });
+
+
+                    procent.value = "21% MwSt";
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
+                    break;
+
+                }
+            case "PL":
+                {
+                    costProcent = bruttoCostValue.times(0.23).toFixed(2);
+
+                    PreisProductBrutto.forEach((item) => {
+                        // Преобразуем строку в число, заменяя запятую на точку
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.23).toFixed(2);
+                        ProductProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    // Обработка priceBrutto
+                    priceBrutto.forEach((item) => {
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.23).toFixed(2);
+                        SchlusselProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    procent.value = "23% MwSt";
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
+
+                    break;
+
+                }
+            case "PT":
+                {
+                    costProcent = bruttoCostValue.times(0.23).toFixed(2);
+
+                    PreisProductBrutto.forEach((item) => {
+                        // Преобразуем строку в число, заменяя запятую на точку
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.23).toFixed(2);
+                        ProductProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    // Обработка priceBrutto
+                    priceBrutto.forEach((item) => {
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.23).toFixed(2);
+                        SchlusselProcent.push(x); // Добавляем результат в массив
+                    });
+
+
+                    procent.value = "23% MwSt";
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
+
+                    break;
+                }
+            case "RO":
+                {
+
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    procent.value = "19% MwSt";
+
+                    costProcent = bruttoCostValue.times(0.19).toFixed(2);
+
+                    PreisProductBrutto.forEach((item) => {
+                        // Преобразуем строку в число, заменяя запятую на точку
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.19).toFixed(2);
+                        ProductProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    // Обработка priceBrutto
+                    priceBrutto.forEach((item) => {
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.19).toFixed(2);
+                        SchlusselProcent.push(x); // Добавляем результат в массив
+                    });
+
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
+
+                    break;
+                }
+            case "SE":
+                {
+
+                    procent.value = "25% MwSt";
+
+                    costProcent = bruttoCostValue.times(0.25).toFixed(2);
+
+                    PreisProductBrutto.forEach((item) => {
+                        // Преобразуем строку в число, заменяя запятую на точку
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.25).toFixed(2);
+                        ProductProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    // Обработка priceBrutto
+                    priceBrutto.forEach((item) => {
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.25).toFixed(2);
+                        SchlusselProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
+
+                    break;
+                }
+            case "SI":
+                {
+
+                    procent.value = "22% MwSt";
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    costProcent = bruttoCostValue.times(0.22).toFixed(2);
+
+                    PreisProductBrutto.forEach((item) => {
+                        // Преобразуем строку в число, заменяя запятую на точку
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.22).toFixed(2);
+                        ProductProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    // Обработка priceBrutto
+                    priceBrutto.forEach((item) => {
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.22).toFixed(2);
+                        SchlusselProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
+
+                    break;
+                }
+            case "SK":
+                {
+
+                    procent.value = "20% MwSt";
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+                    costProcent = bruttoCostValue.times(0.20).toFixed(2);
+
+                    PreisProductBrutto.forEach((item) => {
+                        // Преобразуем строку в число, заменяя запятую на точку
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.20).toFixed(2);
+                        ProductProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    // Обработка priceBrutto
+                    priceBrutto.forEach((item) => {
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.20).toFixed(2);
+                        SchlusselProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
+                    break;
+                }
+            default:
+                {
+                    procent.value = "Steuer";
+                    costProcent = bruttoCostValue.times(0.0).toFixed(2);
+                    if (sendDhl.checked == true) {
+                        Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                        if (value == "US") {
+
+                            if (Gram.value <= 2) {
+                                CostGram[BlockItem].value = new Big(30).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                            } else if (Gram.value > 2 && Gram.value <= 5) {
+                                CostGram[BlockItem].value = new Big(40).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                            } else if (Gram.value > 5 && Gram.value <= 10) {
+                                CostGram[BlockItem].value = new Big(50).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                            } else if (Gram.value > 10 && Gram.value <= 20) {
+                                CostGram[BlockItem].value = new Big(60).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                            } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                                CostGram[BlockItem].value = new Big(70).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                            }
+                            costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+
+
+                            for (let i = 0; i < cardProductPrice.length; i++) {
+                                // Получаем текущее значение цены, очищая ненужные символы
+                                let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                                cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                                    style: 'currency',
+                                    currency: 'EUR'
+                                });
+                            }
+
+                            for (let i = 0; i < schlüsselPrice.length; i++) {
+                                // Получаем текущее значение цены, очищая ненужные символы
+                                let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                                schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                                    style: 'currency',
+                                    currency: 'EUR'
+                                });
+                            }
+                        }
+                        else if (value == "RU" || value == "UA" || value == "BR" || value == "KZ") {
+                            if (Gram.value <= 5) {
+                                CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                            } else if (Gram.value > 5 && Gram.value <= 10) {
+                                CostGram[BlockItem].value = new Big(39).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                            } else if (Gram.value > 10 && Gram.value <= 20) {
+                                CostGram[BlockItem].value = new Big(59).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                            }
+
+                            costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+
+
+                            for (let i = 0; i < cardProductPrice.length; i++) {
+                                // Получаем текущее значение цены, очищая ненужные символы
+                                let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                                cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                                    style: 'currency',
+                                    currency: 'EUR'
+                                });
+                            }
+
+                            for (let i = 0; i < schlüsselPrice.length; i++) {
+                                // Получаем текущее значение цены, очищая ненужные символы
+                                let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                                schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                                    style: 'currency',
+                                    currency: 'EUR'
+                                });
+                            }
+                        }
+
+                        else if (value == "CHE" || value == "GBR") {
+
+                            if (Gram.value <= 2) {
+                                CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                            } else if (Gram.value > 2 && Gram.value <= 5) {
+                                CostGram[BlockItem].value = new Big(29).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                            } else if (Gram.value > 5 && Gram.value <= 10) {
+                                CostGram[BlockItem].value = new Big(38).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                            } else if (Gram.value > 10 && Gram.value <= 20) {
+                                CostGram[BlockItem].value = new Big(52).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                            } else if (Gram.value > 21 && Gram.value <= 31.5) {
+                                CostGram[BlockItem].value = new Big(59).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                            }
+                            costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+
+                            for (let i = 0; i < cardProductPrice.length; i++) {
+                                // Получаем текущее значение цены, очищая ненужные символы
+                                let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                                cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                                    style: 'currency',
+                                    currency: 'EUR'
+                                });
+                            }
+
+                            for (let i = 0; i < schlüsselPrice.length; i++) {
+                                // Получаем текущее значение цены, очищая ненужные символы
+                                let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                                schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                                    style: 'currency',
+                                    currency: 'EUR'
+                                });
+                            }
+                        }
+                        else {
+                            CostGram[BlockItem].value = 0;
+
+                            for (let i = 0; i < cardProductPrice.length; i++) {
+                                // Получаем текущее значение цены, очищая ненужные символы
+                                let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                                cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                                    style: 'currency',
+                                    currency: 'EUR'
+                                });
+                            }
+
+                            for (let i = 0; i < schlüsselPrice.length; i++) {
+                                // Получаем текущее значение цены, очищая ненужные символы
+                                let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                                schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                                    style: 'currency',
+                                    currency: 'EUR'
+                                });
+                            }
+                        }
+                    }
+
+                    break;
+                }
         }
     }
+    else {
+        switch (value) {
+
+            case "AT":
+                {
+                    procent.value = "Steuer";
+                    costProcent = bruttoCostValue.times(0.0).toFixed(2);
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    if (sendDhl.checked) {
+                        let gramValue = new Big(Gram.value.trim().replace(",", "."));
+                        if (gramValue.lte(2)) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(2) && gramValue.lte(5)) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(5) && gramValue.lte(10)) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(10) && gramValue.lte(20)) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(20) && gramValue.lte(31.5)) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €";
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €";
+                    }
+
+                    for (let i = 0; i < cardProductPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                        cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    for (let i = 0; i < schlüsselPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                        schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    break;
+                }
+
+            case "BE":
+                {
+                    procent.value = "Steuer";
+                    costProcent = bruttoCostValue.times(0.0).toFixed(2);
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    for (let i = 0; i < cardProductPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                        cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    for (let i = 0; i < schlüsselPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                        schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    // Cost by weight
+                    if (sendDhl.checked) {
+                        let gramValue = new Big(Gram.value.trim().replace(",", "."));
+                        if (gramValue.lte(2)) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(2) && gramValue.lte(5)) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(5) && gramValue.lte(10)) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(10) && gramValue.lte(20)) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(20) && gramValue.lte(31.5)) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €";
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €";
+                    }
+
+                    break;
+                }
+
+            case "BG":
+                {
+                    procent.value = "Steuer";
+                    costProcent = bruttoCostValue.times(0.0).toFixed(2);
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    for (let i = 0; i < cardProductPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                        cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    for (let i = 0; i < schlüsselPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                        schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    // Cost by weight
+                    if (sendDhl.checked) {
+                        let gramValue = new Big(Gram.value.trim().replace(",", "."));
+                        if (gramValue.lte(2)) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(2) && gramValue.lte(5)) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(5) && gramValue.lte(10)) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(10) && gramValue.lte(20)) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(20) && gramValue.lte(31.5)) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €";
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €";
+                    }
+
+                    break;
+                }
+
+            case "CY":
+                {
+                    procent.value = "Steuer";
+                    costProcent = bruttoCostValue.times(0.0).toFixed(2);
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    for (let i = 0; i < cardProductPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                        cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    for (let i = 0; i < schlüsselPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                        schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    // Cost by weight
+                    if (sendDhl.checked) {
+                        let gramValue = new Big(Gram.value.trim().replace(",", "."));
+                        if (gramValue.lte(2)) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(2) && gramValue.lte(5)) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(5) && gramValue.lte(10)) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(10) && gramValue.lte(20)) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €";
+                        } else if (gramValue.gt(20) && gramValue.lte(31.5)) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €";
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    }
+                    else {
+                        CostGram[BlockItem].value = "0 €";
+                    }
+
+                    break;
+                }
+            case "CZ":
+                {
+                    procent.value = "Steuer";
+                    costProcent = bruttoCostValue.times(0.0).toFixed(2);
+
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", ".")); // Преобразуем граммы
+
+                    for (let i = 0; i < cardProductPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                        cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    for (let i = 0; i < schlüsselPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                        schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+                    // Обработка стоимости в зависимости от веса
+                    if (sendDhl.checked) {
+                        let gramValue = new Big(Gram.value.trim().replace(",", "."));
+
+                        if (gramValue.lte(2)) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (gramValue.gt(2) && gramValue.lte(5)) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (gramValue.gt(5) && gramValue.lte(10)) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (gramValue.gt(10) && gramValue.lte(20)) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (gramValue.gt(20) && gramValue.lte(31.5)) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+
+                    break;
+                }
+            case "DE":
+                {
+                    costProcent = bruttoCostValue.times(0.19).toFixed(2);
+
+                    PreisProductBrutto.forEach((item) => {
+                        // Преобразуем строку в число, заменяя запятую на точку
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.19).toFixed(2);
+                        ProductProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    // Обработка priceBrutto
+                    priceBrutto.forEach((item) => {
+                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
+                        let valueBig = new Big(value); // Создаем объект Big
+
+                        let x = valueBig.times(0.19).toFixed(2);
+                        SchlusselProcent.push(x); // Добавляем результат в массив
+                    });
+
+                    procent.value = "19% MwSt";
+
+                    // Обработка стоимости в зависимости от веса
+                    if (sendDhl.checked) {
+                        let gramValue = new Big(Gram.value.trim().replace(",", "."));
+
+                        if (gramValue.lte(2)) {
+                            CostGram[BlockItem].value = new Big(6).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (gramValue.gt(2) && gramValue.lte(5)) {
+                            CostGram[BlockItem].value = new Big(7).toFixed(2).replace(".", ",") + " €"; // 7,00 €
+                        } else if (gramValue.gt(5) && gramValue.lte(10)) {
+                            CostGram[BlockItem].value = new Big(12).toFixed(2).replace(".", ",") + " €"; // 12,00 €
+                        } else if (gramValue.gt(10) && gramValue.lte(20)) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (gramValue.gt(20) && gramValue.lte(31.5)) {
+                            CostGram[BlockItem].value = new Big(20).toFixed(2).replace(".", ",") + " €"; // 20,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                        costGramValue = new Big(0);
+                    }
+
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent);
+                    break;
+                }
+            case "DK":
+                {
+                    procent.value = "Steuer";
+                    costProcent = bruttoCostValue.times(0.0).toFixed(2);
+
+                    for (let i = 0; i < cardProductPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                        cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    for (let i = 0; i < schlüsselPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                        schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    // Обработка стоимости в зависимости от веса
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+
+                    break;
+                }
+
+            case "EE":
+                {
+                    procent.value = "Steuer";
+                    costProcent = bruttoCostValue.times(0.0).toFixed(2);
+
+                    for (let i = 0; i < cardProductPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                        cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    for (let i = 0; i < schlüsselPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                        schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    // Обработка стоимости в зависимости от веса
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+
+                    break;
+                }
+
+            case "ES":
+                {
+                    procent.value = "Steuer";
+                    costProcent = bruttoCostValue.times(0.0).toFixed(2);
+
+                    for (let i = 0; i < cardProductPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                        cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    for (let i = 0; i < schlüsselPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                        schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+
+                    break;
+                }
+
+            case "FI":
+                {
+                    procent.value = "Steuer";
+                    costProcent = bruttoCostValue.times(0.0).toFixed(2);
+
+                    for (let i = 0; i < cardProductPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                        cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    for (let i = 0; i < schlüsselPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                        schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    // Обработка стоимости в зависимости от веса
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+
+                    break;
+                }
+            case "FR":
+                {
+                    procent.value = "Steuer";
+                    costProcent = bruttoCostValue.times(0.0).toFixed(2);
+
+                    for (let i = 0; i < cardProductPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                        cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    for (let i = 0; i < schlüsselPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                        schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+
+                    break;
+                }
+            case "GR":
+                {
+                    procent.value = "Steuer";
+                    costProcent = bruttoCostValue.times(0.0).toFixed(2);
+
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    for (let i = 0; i < cardProductPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                        cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    for (let i = 0; i < schlüsselPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                        schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+
+                    break;
+                }
+            case "HR":
+                {
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+                    procent.value = "Steuer";
+                    costProcent = bruttoCostValue.times(0.0).toFixed(2);
+
+                    for (let i = 0; i < cardProductPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                        cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    for (let i = 0; i < schlüsselPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                        schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+
+                    break;
+                }
+            case "HU":
+                {
+                    procent.value = "Steuer";
+                    costProcent = bruttoCostValue.times(0.0).toFixed(2);
+
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    for (let i = 0; i < cardProductPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                        cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    for (let i = 0; i < schlüsselPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                        schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+                 
+                    break;
+                }
+            case "IE":
+                {
+                    procent.value = "Steuer";
+                    costProcent = bruttoCostValue.times(0.0).toFixed(2);
+
+                    for (let i = 0; i < cardProductPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                        cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    for (let i = 0; i < schlüsselPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                        schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+                 
+                    break;
+
+                }
+            case "IT":
+                {
+                    procent.value = "Steuer";
+                    costProcent = bruttoCostValue.times(0.0).toFixed(2);
+
+                    for (let i = 0; i < cardProductPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                        cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    for (let i = 0; i < schlüsselPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                        schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+                    
+                    break;
+
+                }
+            case "LT":
+                {
+                    procent.value = "Steuer";
+                    costProcent = bruttoCostValue.times(0.0).toFixed(2);
+
+                    for (let i = 0; i < cardProductPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                        cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    for (let i = 0; i < schlüsselPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                        schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+                   
+                    break;
+
+                }
+            case "LU":
+                {
+                    procent.value = "Steuer";
+                    costProcent = bruttoCostValue.times(0.0).toFixed(2);
+
+                    for (let i = 0; i < cardProductPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                        cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    for (let i = 0; i < schlüsselPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                        schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+                    
+                    break;
+
+                }
+            case "LV":
+                {
+                    procent.value = "Steuer";
+                    costProcent = bruttoCostValue.times(0.0).toFixed(2);
+
+                    for (let i = 0; i < cardProductPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                        cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    for (let i = 0; i < schlüsselPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                        schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+                    
+                    break;
+
+                }
+            case "MT":
+                {
+                    procent.value = "Steuer";
+                    costProcent = bruttoCostValue.times(0.0).toFixed(2);
+
+                    for (let i = 0; i < cardProductPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                        cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    for (let i = 0; i < schlüsselPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                        schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+                  
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+
+                    break;
+
+                }
+            case "NL":
+                {
+                    procent.value = "Steuer";
+                    costProcent = bruttoCostValue.times(0.0).toFixed(2);
+
+
+                    for (let i = 0; i < cardProductPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                        cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    for (let i = 0; i < schlüsselPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                        schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+
+                    break;
+
+                }
+            case "PL":
+                {
+                    procent.value = "Steuer";
+                    costProcent = bruttoCostValue.times(0.0).toFixed(2);
+
+
+                    for (let i = 0; i < cardProductPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                        cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    for (let i = 0; i < schlüsselPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                        schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+
+                    break;
+
+                }
+            case "PT":
+                {
+                    procent.value = "Steuer";
+                    costProcent = bruttoCostValue.times(0.0).toFixed(2);
+
+
+                    for (let i = 0; i < cardProductPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                        cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    for (let i = 0; i < schlüsselPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                        schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+
+                    break;
+                }
+            case "RO":
+                {
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    procent.value = "Steuer";
+                    costProcent = bruttoCostValue.times(0.0).toFixed(2);
+
+                    for (let i = 0; i < cardProductPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                        cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    for (let i = 0; i < schlüsselPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                        schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+
+                    break;
+                }
+            case "SE":
+                {
+                    procent.value = "Steuer";
+                    costProcent = bruttoCostValue.times(0.0).toFixed(2);
+
+                    for (let i = 0; i < cardProductPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                        cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    for (let i = 0; i < schlüsselPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                        schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+
+                    break;
+                }
+            case "SI":
+                {
+
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                    procent.value = "Steuer";
+                    costProcent = bruttoCostValue.times(0.0).toFixed(2);
+
+                    for (let i = 0; i < cardProductPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                        cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    for (let i = 0; i < schlüsselPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                        schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+
+                    break;
+                }
+            case "SK":
+                {
+                    Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+                    procent.value = "Steuer";
+                    costProcent = bruttoCostValue.times(0.0).toFixed(2);
+
+                    for (let i = 0; i < cardProductPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                        cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    for (let i = 0; i < schlüsselPrice.length; i++) {
+                        // Получаем текущее значение цены, очищая ненужные символы
+                        let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                        schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                            style: 'currency',
+                            currency: 'EUR'
+                        });
+                    }
+
+                    if (sendDhl.checked) {
+                        if (Gram.value <= 2) {
+                            CostGram[BlockItem].value = new Big(15).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                        } else if (Gram.value > 2 && Gram.value <= 5) {
+                            CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                        } else if (Gram.value > 5 && Gram.value <= 10) {
+                            CostGram[BlockItem].value = new Big(22).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                        } else if (Gram.value > 10 && Gram.value <= 20) {
+                            CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                        } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                            CostGram[BlockItem].value = new Big(49).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                        }
+                        costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+                    } else {
+                        CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
+                    }
+
+                    break;
+                }
+            default:
+                {
+                    procent.value = "Steuer";
+                    costProcent = bruttoCostValue.times(0.0).toFixed(2);
+                    if (sendDhl.checked == true) {
+                        Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
+
+                        if (value == "US") {
+
+                            if (Gram.value <= 2) {
+                                CostGram[BlockItem].value = new Big(30).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                            } else if (Gram.value > 2 && Gram.value <= 5) {
+                                CostGram[BlockItem].value = new Big(40).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                            } else if (Gram.value > 5 && Gram.value <= 10) {
+                                CostGram[BlockItem].value = new Big(50).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                            } else if (Gram.value > 10 && Gram.value <= 20) {
+                                CostGram[BlockItem].value = new Big(60).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                            } else if (Gram.value > 20 && Gram.value <= 31.5) {
+                                CostGram[BlockItem].value = new Big(70).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                            }
+                            costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+
+
+                            for (let i = 0; i < cardProductPrice.length; i++) {
+                                // Получаем текущее значение цены, очищая ненужные символы
+                                let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                                cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                                    style: 'currency',
+                                    currency: 'EUR'
+                                });
+                            }
+
+                            for (let i = 0; i < schlüsselPrice.length; i++) {
+                                // Получаем текущее значение цены, очищая ненужные символы
+                                let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                                schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                                    style: 'currency',
+                                    currency: 'EUR'
+                                });
+                            }
+                        }
+                        else if (value == "RU" || value == "UA" || value == "BR" || value == "KZ") {
+                            if (Gram.value <= 5) {
+                                CostGram[BlockItem].value = new Big(35).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                            } else if (Gram.value > 5 && Gram.value <= 10) {
+                                CostGram[BlockItem].value = new Big(39).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                            } else if (Gram.value > 10 && Gram.value <= 20) {
+                                CostGram[BlockItem].value = new Big(59).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                            }
+
+                            costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+
+
+                            for (let i = 0; i < cardProductPrice.length; i++) {
+                                // Получаем текущее значение цены, очищая ненужные символы
+                                let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                                cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                                    style: 'currency',
+                                    currency: 'EUR'
+                                });
+                            }
+
+                            for (let i = 0; i < schlüsselPrice.length; i++) {
+                                // Получаем текущее значение цены, очищая ненужные символы
+                                let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                                schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                                    style: 'currency',
+                                    currency: 'EUR'
+                                });
+                            }
+                        }
+
+                        else if (value == "CHE" || value == "GBR") {
+
+                            if (Gram.value <= 2) {
+                                CostGram[BlockItem].value = new Big(17).toFixed(2).replace(".", ",") + " €"; // 15,00 €
+                            } else if (Gram.value > 2 && Gram.value <= 5) {
+                                CostGram[BlockItem].value = new Big(29).toFixed(2).replace(".", ",") + " €"; // 17,00 €
+                            } else if (Gram.value > 5 && Gram.value <= 10) {
+                                CostGram[BlockItem].value = new Big(38).toFixed(2).replace(".", ",") + " €"; // 22,00 €
+                            } else if (Gram.value > 10 && Gram.value <= 20) {
+                                CostGram[BlockItem].value = new Big(52).toFixed(2).replace(".", ",") + " €"; // 35,00 €
+                            } else if (Gram.value > 21 && Gram.value <= 31.5) {
+                                CostGram[BlockItem].value = new Big(59).toFixed(2).replace(".", ",") + " €"; // 49,00 €
+                            }
+                            costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+
+                            for (let i = 0; i < cardProductPrice.length; i++) {
+                                // Получаем текущее значение цены, очищая ненужные символы
+                                let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                                cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                                    style: 'currency',
+                                    currency: 'EUR'
+                                });
+                            }
+
+                            for (let i = 0; i < schlüsselPrice.length; i++) {
+                                // Получаем текущее значение цены, очищая ненужные символы
+                                let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                                schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                                    style: 'currency',
+                                    currency: 'EUR'
+                                });
+                            }
+                        }
+                        else {
+                            CostGram[BlockItem].value = 0;
+
+                            for (let i = 0; i < cardProductPrice.length; i++) {
+                                // Получаем текущее значение цены, очищая ненужные символы
+                                let currentPrice = parseFloat(PreisProductNetto[i].value.replace(",", ".").trim());
+
+                                cardProductPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                                    style: 'currency',
+                                    currency: 'EUR'
+                                });
+                            }
+
+                            for (let i = 0; i < schlüsselPrice.length; i++) {
+                                // Получаем текущее значение цены, очищая ненужные символы
+                                let currentPrice = parseFloat(PreisProductNettoSchlussel[i].value.replace(",", ".").trim());
+
+                                schlüsselPrice[i].innerHTML = currentPrice.toLocaleString('de-DE', {
+                                    style: 'currency',
+                                    currency: 'EUR'
+                                });
+                            }
+                        }
+                    }
+
+                    break;
+                }
+        }
+    }
+    
+    
     proc.value = parseFloat(costProcent).toLocaleString('de-DE', {
         style: 'currency',
         currency: 'EUR'

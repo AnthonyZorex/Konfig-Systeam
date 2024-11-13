@@ -42,8 +42,8 @@
                 <option selected disabled>Hersteller wählen</option>
                 <option>CES</option>
                 <option>ABUS</option>
-                <option>BASI</option>
-                <option>EVVA</option>
+@*                 <option>BASI</option>
+                <option>EVVA</option> *@
             </select>
         </div>
 
@@ -51,6 +51,9 @@
             <h4>Lieferzeit</h4>
             <select id="liferzeit" onchange="serchLiferZeit(event.target.value)" class="form-select" aria-label="Lieferzeit auswählen">
                 <option selected disabled>Lieferzeit wählen</option>
+                    <option>30 Werktage</option>
+                    <option>20 Werktage</option>
+                    <option>7 Werktage</option>
             </select>
         </div>
 
@@ -79,60 +82,60 @@
         @{
             if (ViewBag.Doppel != null)
             {
-               
+
                 foreach (var item in ViewBag.Doppel)
                 {
-                            <div class="ExelItem2 shadow-lg mb-4 bg-body-tertiary rounded" id="@countItem">
-                                        <div id="productImage">
+                                    <div class="ExelItem2 shadow-lg mb-4 bg-body-tertiary rounded sortItem" id="@countItem">
+                                                <div id="productImage">
 
-                                            <img decoding="async" alt="@item.NameSystem" id="ImgSelecter-@countItem" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="150px" height="150px" />
+                                                    <img decoding="async" alt="@item.NameSystem" id="ImgSelecter-@countItem" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="150px" height="150px" />
 
-                                            <div class="galerry" id="Galery-@countItem">
-                                            @foreach (var list in ViewBag.Gallery)
+                                                    <div class="galerry" id="Galery-@countItem">
+                                                    @foreach (var list in ViewBag.Gallery)
                                             {
-                                                    @if (item.SystemId == list.SysteamPriceKeyId)
+                                                            @if (item.SystemId == list.SysteamPriceKeyId)
                                                 {
-                                                       <img src="@("/compression/"+@list.ImageName)" onclick="imageSwitcher(event,@countItem)" height="50" width="50" />
+                                                               <img src="@("/compression/"+@list.ImageName)" onclick="imageSwitcher(event,@countItem)" height="50" width="50" />
                                                 }
                                             }
-                                            </div>
-
-                                        </div>
-                                        <div id="productMenuInfo">
-                                            <div id="ProductNameUndCost">
-                                                <div>
-                                            <h3 id="sys">@item.companyName @item.NameSystem</h3>
-                                                    <input type="hidden" value="@item.companyName" id="name" />
-                                                </div>
-                                                <div style="margin-left: auto;">
-                                                    <h4 id="cost">ab @item.Cost.ToString("C")</h4>
-                                                </div>
-                                            </div>
-
-                                            <div>
-                                                <input type="button" id="button-@countItem" onclick="showInfo('@countItem','@item.NameSystem')" value="&#8595; mehr Details" class="btn btn-danger" />
-                                            </div>
-                                           
-                                            <div id="product_desciptions-@countItem">
-                                           
-                                            <div id="description-@countItem"></div>
-                                            </div>
-
-                                            <div id="productChek">
-                                                <div>
-                                                    <div>
-                                                        <h5>inkl. 19 % MwSt.</h5>
                                                     </div>
-                                                    <div>
-                                                       @Html.Raw(@item.Lieferzeit)
-                                                    </div>
-                                                        <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
 
                                                 </div>
+                                                <div id="productMenuInfo">
+                                                    <div id="ProductNameUndCost">
+                                                        <div>
+                                                    <h3 id="sys">@item.companyName @item.NameSystem</h3>
+                                                            <input type="hidden" value="@item.companyName" id="name" />
+                                                        </div>
+                                                        <div style="margin-left: auto;">
+                                                            <h4 id="cost">ab @item.Cost.ToString("C")</h4>
+                                                        </div>
+                                                    </div>
 
+                                                    <div>
+                                                        <input type="button" id="button-@countItem" onclick="showInfo('@countItem','@item.NameSystem')" value="&#8595; mehr Details" class="btn btn-danger" />
+                                                    </div>
+                                                   
+                                                    <div id="product_desciptions-@countItem">
+                                                   
+                                                    <div id="description-@countItem"></div>
+                                                    </div>
+
+                                                    <div id="productChek">
+                                                        <div>
+                                                            <div>
+                                                                <h5>inkl. 19 % MwSt.</h5>
+                                                            </div>
+                                                            <div>
+                                                               @Html.Raw(@item.Lieferzeit)
+                                                            </div>
+                                                                <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
                     countItem++;
                    
                 }
@@ -143,50 +146,50 @@
                 
                 foreach (var item in ViewBag.Knaufzylinder)
                 {
-                            <div class="ExelItem2 shadow-lg mb-4 bg-body-tertiary rounded" id="@countItem">
-                                        <div id="productImage">
+                            <div class="ExelItem2 shadow-lg mb-4 bg-body-tertiary rounded sortItem" id="@countItem">
+                                                <div id="productImage">
 
-                                    <img decoding="async" alt="@item.NameSystem" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="150px" height="150px" />
+                                            <img decoding="async" alt="@item.NameSystem" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="150px" height="150px" />
 
-                                        <div id="Galery-@countItem" class="galerry">
-                                            @foreach (var list in ViewBag.Gallery)
+                                                <div id="Galery-@countItem" class="galerry">
+                                                    @foreach (var list in ViewBag.Gallery)
                                             {
-                                                @if (item.SystemId == list.SysteamPriceKeyId)
+                                                        @if (item.SystemId == list.SysteamPriceKeyId)
                                                 {
-                                                    <img src="@("/compression/"+@list.ImageName)" onclick="imageSwitcher(event,@countItem)" height="50" width="50" />
+                                                            <img src="@("/compression/"+@list.ImageName)" onclick="imageSwitcher(event,@countItem)" height="50" width="50" />
                                                 }
                                             }
-                                        </div>
-
-                                    </div>
-                                        <div id="productMenuInfo">
-                                            <div id="ProductNameUndCost">
-                                                <div>
-                                                    <h3 id="sys">@item.NameSystem</h3>
-                                                    <input type="hidden" value="@item.companyName" id="name" />
                                                 </div>
-                                                <div style="margin-left: auto;">
-                                                    <h4 id="cost">ab @item.Cost.ToString("C")</h4>
+
+                                            </div>
+                                                <div id="productMenuInfo">
+                                                    <div id="ProductNameUndCost">
+                                                        <div>
+                                                            <h3 id="sys">@item.NameSystem</h3>
+                                                            <input type="hidden" value="@item.companyName" id="name" />
+                                                        </div>
+                                                        <div style="margin-left: auto;">
+                                                            <h4 id="cost">ab @item.Cost.ToString("C")</h4>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <input type="button" id="button-@countItem" onclick="showInfo('@countItem','@item.NameSystem')" value="▾ mehr Details" class="btn btn-danger" />
+                                                    </div>
+
+                                                    <div id="product_desciptions-@countItem">
+
+                                                        <div id="description-@countItem"></div>
+                                                    </div>
+
+
+                                                    <div id="productChek">
+                                                        <div>
+                                                            @Html.Raw(@item.Lieferzeit)
+                                                        </div>
+                                                           <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
+                                                        </div>
                                                 </div>
                                             </div>
-                                            <div>
-                                                <input type="button" id="button-@countItem" onclick="showInfo('@countItem','@item.NameSystem')" value="▾ mehr Details" class="btn btn-danger" />
-                                            </div>
-
-                                            <div id="product_desciptions-@countItem">
-
-                                                <div id="description-@countItem"></div>
-                                            </div>
-
-
-                                            <div id="productChek">
-                                                <div>
-                                                    @Html.Raw(@item.Lieferzeit)
-                                                </div>
-                                                   <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
-                                                </div>
-                                        </div>
-                                    </div>
                     countItem++;
                 }
             }
@@ -195,52 +198,52 @@
                
                 foreach (var item in ViewBag.Halb)
                 {
-                            <div class="ExelItem2 shadow-lg mb-4 bg-body-tertiary rounded" id="@countItem">
-                                        <div id="productImage">
+                            <div class="ExelItem2 shadow-lg mb-4 bg-body-tertiary rounded sortItem" id="@countItem">
+                                                <div id="productImage">
 
-                                    <img decoding="async" alt="@item.NameSystem" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="150px" height="150px" />
+                                            <img decoding="async" alt="@item.NameSystem" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="150px" height="150px" />
 
-                                        <div id="Galery-@countItem" class="galerry">
-                                            @foreach (var list in ViewBag.Gallery)
+                                                <div id="Galery-@countItem" class="galerry">
+                                                    @foreach (var list in ViewBag.Gallery)
                                             {
-                                                @if (item.SystemId == list.SysteamPriceKeyId)
+                                                        @if (item.SystemId == list.SysteamPriceKeyId)
                                                 {
-                                                    <img src="@("/compression/"+@list.ImageName)" onclick="imageSwitcher(event,@countItem)" height="50" width="50" />
+                                                            <img src="@("/compression/"+@list.ImageName)" onclick="imageSwitcher(event,@countItem)" height="50" width="50" />
                                                 }
                                             }
-                                        </div>
-
-
-                                    </div>
-                                        <div id="productMenuInfo">
-                                            <div id="ProductNameUndCost">
-                                                <div>
-                                                    <h3 id="sys">@item.NameSystem</h3>
-                                                    <input type="hidden" value="@item.companyName" id="name" />
                                                 </div>
-                                                <div style="margin-left: auto;">
-                                                    <h4 id="cost">ab @item.Cost.ToString("C")</h4>
+
+
+                                            </div>
+                                                <div id="productMenuInfo">
+                                                    <div id="ProductNameUndCost">
+                                                        <div>
+                                                            <h3 id="sys">@item.NameSystem</h3>
+                                                            <input type="hidden" value="@item.companyName" id="name" />
+                                                        </div>
+                                                        <div style="margin-left: auto;">
+                                                            <h4 id="cost">ab @item.Cost.ToString("C")</h4>
+                                                        </div>
+                                                    </div>
+                                                            <div>
+                                                                <input type="button" id="button-@countItem" onclick="showInfo('@countItem','@item.NameSystem')" value="&#8595; mehr Details" class="btn btn-danger" />
+                                                            </div>
+
+
+
+                                                            <div id="product_desciptions-@countItem">
+
+                                                                <div id="description-@countItem"></div>
+                                                            </div>
+
+                                                            <div id="productChek">
+                                                        <div>
+                                                            @Html.Raw(@item.Lieferzeit)
+                                                         </div>
+                                                              <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
+                                                        </div>
                                                 </div>
                                             </div>
-                                                    <div>
-                                                        <input type="button" id="button-@countItem" onclick="showInfo('@countItem','@item.NameSystem')" value="&#8595; mehr Details" class="btn btn-danger" />
-                                                    </div>
-
-
-
-                                                    <div id="product_desciptions-@countItem">
-
-                                                        <div id="description-@countItem"></div>
-                                                    </div>
-
-                                                    <div id="productChek">
-                                                <div>
-                                                    @Html.Raw(@item.Lieferzeit)
-                                                 </div>
-                                                      <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
-                                                </div>
-                                        </div>
-                                    </div>
                     countItem++;
                 }
             }
@@ -249,51 +252,51 @@
 
                 foreach (var item in ViewBag.Hebel)
                 {
-                            <div class="ExelItem2 shadow-lg mb-4 bg-body-tertiary rounded" id="@countItem">
-                                        <div id="productImage">
-                                    <img decoding="async" alt="@item.NameSystem" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="150px" height="150px" />
+                            <div class="ExelItem2 shadow-lg mb-4 bg-body-tertiary rounded sortItem" id="@countItem">
+                                                <div id="productImage">
+                                            <img decoding="async" alt="@item.NameSystem" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="150px" height="150px" />
 
-                                        <div id="Galery-@countItem" class="galerry">
-                                            
-                                            @foreach (var list in ViewBag.Gallery)
+                                                <div id="Galery-@countItem" class="galerry">
+                                                    
+                                                    @foreach (var list in ViewBag.Gallery)
                                             {
-                                                @if (item.SystemId == list.SysteamPriceKeyId)
+                                                        @if (item.SystemId == list.SysteamPriceKeyId)
                                                 {
-                                                    <img src="@("/compression/"+@list.ImageName)" onclick="imageSwitcher(event,@countItem)" height="50" width="50" />
+                                                            <img src="@("/compression/"+@list.ImageName)" onclick="imageSwitcher(event,@countItem)" height="50" width="50" />
                                                 }
                                             }
-                                        </div>
-
-                                    </div>
-                                        <div id="productMenuInfo">
-                                            <div id="ProductNameUndCost">
-                                                <div>
-                                                    <h3 id="sys">@item.NameSystem</h3>
-                                                    <input type="hidden" value="@item.companyName" id="name" />
                                                 </div>
-                                                <div style="margin-left: auto;">
-                                                    <h4 id="cost">ab @item.Cost.ToString("C")</h4>
+
+                                            </div>
+                                                <div id="productMenuInfo">
+                                                    <div id="ProductNameUndCost">
+                                                        <div>
+                                                            <h3 id="sys">@item.NameSystem</h3>
+                                                            <input type="hidden" value="@item.companyName" id="name" />
+                                                        </div>
+                                                        <div style="margin-left: auto;">
+                                                            <h4 id="cost">ab @item.Cost.ToString("C")</h4>
+                                                        </div>
+                                                    </div>
+                                                        <div>
+                                                             <input type="button" id="button-@countItem" onclick="showInfo('@countItem','@item.NameSystem')" value="&#8595; mehr Details" class="btn btn-danger" />
+                                                        </div>
+
+
+
+                                                        <div id="product_desciptions-@countItem">
+
+                                                            <div id="description-@countItem"></div>
+                                                        </div>
+
+                                                        <div id="productChek">
+                                                        <div>
+                                                            @Html.Raw(@item.Lieferzeit)
+                                                        </div>  
+                                                              <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
+                                                        </div>
                                                 </div>
                                             </div>
-                                                <div>
-                                                     <input type="button" id="button-@countItem" onclick="showInfo('@countItem','@item.NameSystem')" value="&#8595; mehr Details" class="btn btn-danger" />
-                                                </div>
-
-
-
-                                                <div id="product_desciptions-@countItem">
-
-                                                    <div id="description-@countItem"></div>
-                                                </div>
-
-                                                <div id="productChek">
-                                                <div>
-                                                    @Html.Raw(@item.Lieferzeit)
-                                                </div>  
-                                                      <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
-                                                </div>
-                                        </div>
-                                    </div>
                     countItem++;
                 }
             }
@@ -301,52 +304,52 @@
             {
                 foreach (var item in ViewBag.VorhanSchloss)
                 {
-                            <div class="ExelItem2 shadow-lg mb-4 bg-body-tertiary rounded" id="@countItem">
-                                        <div id="productImage">
-                                    <img decoding="async" alt="@item.NameSystem" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="150px" height="150px" />
+                            <div class="ExelItem2 shadow-lg mb-4 bg-body-tertiary rounded sortItem" id="@countItem">
+                                                <div id="productImage">
+                                            <img decoding="async" alt="@item.NameSystem" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="150px" height="150px" />
 
-                                                <div id="Galery-@countItem" class="galerry">
-                                                    @foreach (var list in ViewBag.Gallery)
+                                                        <div id="Galery-@countItem" class="galerry">
+                                                            @foreach (var list in ViewBag.Gallery)
                                                     {
-                                                        @if (item.SystemId == list.SysteamPriceKeyId)
+                                                                @if (item.SystemId == list.SysteamPriceKeyId)
                                                         {
-                                                            <img src="@("/compression/"+@list.ImageName)" onclick="imageSwitcher(event,@countItem)" height="50" width="50" />
+                                                                    <img src="@("/compression/"+@list.ImageName)" onclick="imageSwitcher(event,@countItem)" height="50" width="50" />
                                                         }
                                                     }
-                                                </div>
+                                                        </div>
 
+                                                    </div>
+                                                <div id="productMenuInfo">
+                                                    <div id="ProductNameUndCost">
+                                                        <div>
+                                                            <h3 id="sys"> @item.NameSystem</h3>
+                                                            <input type="hidden" value="@item.companyName" id="name" />
+                                                        </div>
+                                                        <div style="margin-left: auto;">
+                                                            <h4 id="cost">ab @item.Cost.ToString("C")</h4>
+                                                        </div>
+                                                    </div>
+                                                        <div>
+                                                                <input type="button" id="button-@countItem" onclick="showInfo('@countItem','@item.NameSystem')" value="&#8595; mehr Details" class="btn btn-danger" />
+                                                        </div>
+
+
+
+                                                        <div id="product_desciptions-@countItem">
+
+                                                            <div id="description-@countItem"></div>
+                                                        </div>
+
+                                                        <div id="productChek">
+                                                        <div>
+                                                            @Html.Raw(@item.Lieferzeit)
+                                                        </div>
+                                                           
+                                                                <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
+                                                           
+                                                       </div>
+                                                </div>
                                             </div>
-                                        <div id="productMenuInfo">
-                                            <div id="ProductNameUndCost">
-                                                <div>
-                                                    <h3 id="sys"> @item.NameSystem</h3>
-                                                    <input type="hidden" value="@item.companyName" id="name" />
-                                                </div>
-                                                <div style="margin-left: auto;">
-                                                    <h4 id="cost">ab @item.Cost.ToString("C")</h4>
-                                                </div>
-                                            </div>
-                                                <div>
-                                                        <input type="button" id="button-@countItem" onclick="showInfo('@countItem','@item.NameSystem')" value="&#8595; mehr Details" class="btn btn-danger" />
-                                                </div>
-
-
-
-                                                <div id="product_desciptions-@countItem">
-
-                                                    <div id="description-@countItem"></div>
-                                                </div>
-
-                                                <div id="productChek">
-                                                <div>
-                                                    @Html.Raw(@item.Lieferzeit)
-                                                </div>
-                                                   
-                                                        <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
-                                                   
-                                               </div>
-                                        </div>
-                                    </div>
                     countItem++;
                 }
             }
@@ -355,49 +358,49 @@
                
                 foreach (var item in ViewBag.Aussen)
                 {
-                            <div class="ExelItem2 shadow-lg mb-4 bg-body-tertiary rounded" id="@countItem">
-                                        <div id="productImage">
-                                            <img decoding="async" alt="@item.NameSystem" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="150px" height="150px" />
+                            <div class="ExelItem2 shadow-lg mb-4 bg-body-tertiary rounded sortItem" id="@countItem">
+                                                <div id="productImage">
+                                                    <img decoding="async" alt="@item.NameSystem" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="150px" height="150px" />
 
-                                                <div id="Galery-@countItem" class="galerry">
-                                                    @foreach (var list in ViewBag.Gallery)
+                                                        <div id="Galery-@countItem" class="galerry">
+                                                            @foreach (var list in ViewBag.Gallery)
                                                     {
-                                                        @if (item.SystemId == list.SysteamPriceKeyId)
+                                                                @if (item.SystemId == list.SysteamPriceKeyId)
                                                         {
-                                                            <img src="@("/compression/"+@list.ImageName)" onclick="imageSwitcher(event,@countItem)" height="50" width="50" />
+                                                                    <img src="@("/compression/"+@list.ImageName)" onclick="imageSwitcher(event,@countItem)" height="50" width="50" />
                                                         }
                                                     }
-                                                </div>
+                                                        </div>
 
+                                                    </div>
+
+                                                <div id="productMenuInfo">
+                                                    <div id="ProductNameUndCost">
+                                                        <div>
+                                                            <h3 id="sys">@item.NameSystem</h3>
+                                                            <input type="hidden" value="@item.companyName" id="name" />
+                                                        </div>
+                                                        <div style="margin-left: auto;">
+                                                            <h4 id="cost">ab @item.Cost.ToString("C")</h4>
+                                                        </div>
+                                                    </div>
+                                                        <div>
+                                                            <input type="button" id="button-@countItem" onclick="showInfo('@countItem','@item.NameSystem')" value="&#8595; mehr Details" class="btn btn-danger" />
+                                                        </div>
+
+                                                        <div id="product_desciptions-@countItem">
+
+                                                            <div id="description-@countItem"></div>
+                                                        </div>
+
+                                                            <div id="productChek">
+                                                        <div>
+                                                            @Html.Raw(@item.Lieferzeit)
+                                                        </div>
+                                                                <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
+                                                        </div>
+                                                </div>
                                             </div>
-
-                                        <div id="productMenuInfo">
-                                            <div id="ProductNameUndCost">
-                                                <div>
-                                                    <h3 id="sys">@item.NameSystem</h3>
-                                                    <input type="hidden" value="@item.companyName" id="name" />
-                                                </div>
-                                                <div style="margin-left: auto;">
-                                                    <h4 id="cost">ab @item.Cost.ToString("C")</h4>
-                                                </div>
-                                            </div>
-                                                <div>
-                                                    <input type="button" id="button-@countItem" onclick="showInfo('@countItem','@item.NameSystem')" value="&#8595; mehr Details" class="btn btn-danger" />
-                                                </div>
-
-                                                <div id="product_desciptions-@countItem">
-
-                                                    <div id="description-@countItem"></div>
-                                                </div>
-
-                                                    <div id="productChek">
-                                                <div>
-                                                    @Html.Raw(@item.Lieferzeit)
-                                                </div>
-                                                        <a class="btn btn-danger" id="chekProduct" name="DopelId" href=" @Url.Action("OrdersKey", "Konfigurator", new {Lieferzeit = @item.Lieferzeit,Systeam =  @item.NameSystem, DopelId = item.cheked, param2 = item.userKey,KnayfID = item.cheked2, Halb = item.cheked3 ,Hebel = item.cheked4,Vorhan = item.cheked5 ,Aussen = item.cheked6, userInfo = @ViewBag.User})">WÄHLEN</a>
-                                                </div>
-                                        </div>
-                                    </div>
                     countItem++;
                 }
             }
@@ -451,28 +454,26 @@
         img.src = e.target.src;        
     }
 
-    let allDoc = document.querySelectorAll(".ExelItem");
+    let allDoc = document.querySelectorAll(".sortItem");
+
+    console.log(allDoc);
 
     function clean() {
         allDoc.forEach((item) => {
             item.style.display = "grid";
         });
+
+        let searchCompany = document.getElementById("serchSystemName");
+        let minPrice = document.getElementById("minSelect");
+        let maxPrice = document.getElementById("maxSelect");
+        
+        searchCompany.value ="";
+        minPrice.value = "";
+        maxPrice.value = "";
     }
 
     let selectLiferzeit = document.getElementById("liferzeit");
 
-    document.addEventListener("DOMContentLoaded", () => {
-        
-        let uniqueItems = @Html.Raw(ViewBag.SortLiferzeit);
-
-        uniqueItems.forEach((item) => {
-
-            let options = document.createElement("option");
-            options.innerHTML = item;
-            selectLiferzeit.appendChild(options);
-
-        })
-    });
 
     function serchLiferZeit(value) {
 
@@ -544,13 +545,13 @@
 
             if (value == "") 
             {
-                if (companyName.textContent == selectorCompany.value && maxPrise.value.trim() == "" || parseFloat(value.replace(",", ".").trim()) <= maxPrise.value.trim() && companyName.textContent == selectorCompany.value) {
+                if (companyName.textContent == selectorCompany.value && maxPrise.value == "" || parseFloat(value) <= maxPrise.value && companyName.textContent == selectorCompany.value) {
                     item.style.display = "grid";
                 }
             }
-            else if (maxPrise.value.trim() != "") 
+            else if (maxPrise.value != "") 
             {
-                if (parseFloat(result.replace(",", ".").trim()) >= parseFloat(value.replace(",", ".").trim()) && parseFloat(result.replace(",", ".").trim()) <= parseFloat(maxPrise.value.trim())) {
+                if (parseFloat(result) >= parseFloat(value) && parseFloat(result) <= parseFloat(maxPrise.value)) {
                     item.style.display = "grid";
                 }
                 else {
@@ -558,7 +559,7 @@
                 }
             }
             else {
-                if (parseFloat(result.replace(",", ".").trim()) >= parseFloat(value.replace(",", ".").trim())) {
+                if (parseFloat(result) >= parseFloat(value)) {
                     item.style.display = "grid";
                 }
                 else {
@@ -583,7 +584,7 @@
             }
             else if (minPrise.value.trim() != "") 
             {
-                if (parseFloat(result.replace(",", ".").trim()) <= parseFloat(value.replace(",", ".").trim()) && parseFloat(result.replace(",", ".").trim()) >= parseFloat(minPrise.value(",", ".").trim())) {
+                if (parseFloat(result) <= parseFloat(value) && parseFloat(result) >= parseFloat(minPrise)) {
                     item.style.display = "grid";
                 }
                 else {
@@ -591,7 +592,7 @@
                 }
             }
             else {
-                if (parseFloat(result.replace(",", ".").trim()) <= parseFloat(value.replace(",", ".").trim())) {
+                if (parseFloat(result) <= parseFloat(value)) {
                     item.style.display = "grid";
                 }
                 else {
@@ -600,5 +601,5 @@
             }
         });
     }
-
+    
 </script>

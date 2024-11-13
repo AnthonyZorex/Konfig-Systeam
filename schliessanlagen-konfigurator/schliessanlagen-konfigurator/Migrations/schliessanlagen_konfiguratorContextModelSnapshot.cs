@@ -51,25 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "aacdedfb-3dd3-4ad8-a293-c9ebde702dd6",
+                            Id = "0adfb3de-c3d0-47b8-81d9-ca723f7423b8",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "44ad86b7-2b61-402c-83ca-27d01401805a",
+                            Id = "67453df2-274d-43fc-a416-d4671c306017",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "04f5f8cd-a986-4334-8e2a-7696c9ab5398",
+                            Id = "e68c39e2-8321-429f-9f80-733255fbebc7",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "f8013368-7f26-42a1-b02a-447be5ee7b2c",
+                            Id = "de7f0db1-dbf3-4cd1-8572-143b21cac6f4",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -682,6 +682,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasIndex("isOpen_OrderId");
 
                     b.ToTable("isOpen_value");
+                });
+
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Page", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Page");
                 });
 
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.ProfilDopelZylinder.Aussen_Innen", b =>

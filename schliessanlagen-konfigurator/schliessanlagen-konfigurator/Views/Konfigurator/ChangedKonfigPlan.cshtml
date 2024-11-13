@@ -142,15 +142,21 @@
                                             <select id="TypeSelectTurItem" class="aussen" name="aussen">
                                                 @foreach (var list in ViewBag.DoppelAussen)
                                                 {
-                                                    if (info.aussen == list)
+                                                    if (info.ZylinderId == 1 || info.ZylinderId == 3 || info.ZylinderId == 2)
                                                     {
-                                                        <option selected id="OptionA">@list</option>
+                                                        if (info.aussen == list)
+
+                                                        {
+                                                            <option selected id="OptionA">@list</option>
+                                                        }
+
+                                                        else
+
+                                                        {
+                                                            <option id="OptionA">@list</option>
+                                                        }
+
                                                     }
-                                                    else
-                                                    {
-                                                        <option id="OptionA">@list</option>
-                                                    }
-                                                   
                                                 }
                                             </select>
 

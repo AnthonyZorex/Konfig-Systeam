@@ -508,12 +508,10 @@ body::-webkit-scrollbar-thumb:hover {
         a:hover {
             text-decoration-color: transparent;
             text-decoration-color: none;
-            color: white;
         }
         a {
             text-decoration-color: none;
             text-decoration-color: transparent;
-            color: white;
         }
 
         #lifer {
@@ -917,7 +915,6 @@ body::-webkit-scrollbar-thumb:hover {
 {
     a {
         text-decoration-color: none;
-        color: #fff;
     }
     .pagination {
         font-size: 16px;
