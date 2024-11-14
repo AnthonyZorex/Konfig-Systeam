@@ -5008,7 +5008,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var sys =  db.SysteamPriceKey.Where(x => x.NameSysteam == Systeam).ToList();
 
-            var Galery = db.ProductGalery.Where(x => x.SysteamPriceKeyId == sys.First().Id).Select(x=>x.ImageName).ToList();
+            var Galery = db.ProductGalery.Where(x => x.SysteamPriceKeyId == sys.First().Id).ToList();
 
             ViewBag.Lieferzeit = Lieferzeit;
 
