@@ -132,8 +132,22 @@ app.Use(async (context, next) =>
     await next.Invoke();
 });
 
+app.UseStatusCodePagesWithRedirects("/Error/{0}");
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+else
+{
+    app.UseExceptionHandler("/Error/500");
+    app.UseHsts();
+}
+
+
 app.UseEndpoints(endpoints =>
 {
+    // Ваши основные маршруты
     endpoints.MapControllerRoute(
             name: "default",
             pattern: "{controller=Konfigurator}/{action=IndexKonfigurator}");
@@ -152,14 +166,15 @@ app.UseEndpoints(endpoints =>
       pattern: "robots.txt",
       defaults: new { controller = "Sitemap", action = "Robots" });
 
-    //endpoints.MapControllerRoute(
-    //    name: "NotFound",
-    //    pattern: "{*url}",
-    //    defaults: new { controller = "Home", action = "Error" });
+    // Catch-all для 404 ошибок
+    endpoints.MapControllerRoute(
+        name: "NotFound",
+        pattern: "{*url}",
+        defaults: new { controller = "Error", action = "NotFound" });
 
+    // Настройки для Razor Pages и MVC контроллеров
     endpoints.MapRazorPages();
     endpoints.MapControllers();
-
 });
 
 app.Run();

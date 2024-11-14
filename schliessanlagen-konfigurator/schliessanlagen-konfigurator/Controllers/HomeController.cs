@@ -7028,16 +7028,6 @@ namespace schliessanlagen_konfigurator.Controllers
             return File(filepath, "application/pdf", $"{Rehnung.RehnungsId}");
 
         }
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            var context = HttpContext.Features.Get<IExceptionHandlerFeature>();
-            var errorViewModel = new ErrorViewModel
-            {
-                RequestId = HttpContext.TraceIdentifier,
-                ErrorMessage = context?.Error.Message // Дополнительно можно обработать тип ошибки
-            };
-            return View(errorViewModel);
-        }
+
     }
 }
