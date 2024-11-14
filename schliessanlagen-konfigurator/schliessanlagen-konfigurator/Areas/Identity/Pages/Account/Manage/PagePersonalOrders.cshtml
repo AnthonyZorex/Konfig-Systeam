@@ -35,7 +35,7 @@
 
                     <div id="AllProductUser" class="shadow-lg  mb-5 bg-body-tertiary rounded">
                         <div id="hederBlockOrder">
-                            <h4>Schließsystem</h4>
+                            <h4>@orderList[z].ProjektName</h4>
                             <div id="orderCostHeader">
                                 <h4>Preis</h4>
                             </div>
@@ -447,16 +447,13 @@
                                             <div id="blockSchrite" class="shadow-lg  mb-5 bg-body-tertiary rounded">
 
                                                 <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
-                                                    <div class="row g-0">
-                                                        <div class="col-md-2">
-                                                            <img style="align-self: center;text-align: center;" src="@("/compression/Schliarticle.webp")" class="img-fluid rounded-start" width="100" height="100" alt="Schliarticle">
-                                                        </div>
-                                                        <div class="col-md-8">
+                                                    <div class="row g-0"> 
+                                                        <div class="col-md-12">
                                                             <div class="card-body">
                                                                 <div class="card-text" id="schlüssel-@z">
                                                                     <h4>Schlüssel</h4>
                                                                     <h4>Anzahl: @orderList[z].KeyCount</h4>
-                                                                    <h4 id="PreisProduct-@z">Preis: @formattedResultKeyI</h4>
+                                                                    <h4 id="PreisProduct-@z" class="danger">Preis: @formattedResultKeyI</h4>
                                                                     <input type="hidden" id="preis_schluessel-@z" name="PreisKey" />
                                                                     <input type="hidden" id="PreisProductBruttoSchlussel-@z" value="@orderList[z].KeyCost" />
                                                                     <input type="hidden" id="PreisProductNettoSchlussel-@z" value="@resultKeyItem" />
@@ -478,21 +475,18 @@
 
 
                                                              <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
-                                                                <div class="row g-0">
-                                                                    <div class="col-md-2">
-                                                                        <img style="align-self: center;text-align: center;" src="@($"/compression/{imageList[ProudctItemCounter]}")" class="img-fluid rounded-start" alt="@orderItem[ProudctItemCounter].Name" width="100" height="100">
-                                                                    </div>
-                                                                    <div class="col-md-8">
+                                                                <div class="row g-0">                                                             
+                                                                    <div class="col-md-12">
                                                                         <div class="card-body">
-                                                                            <h3 class="card-title">Name: @orderItem[ProudctItemCounter].Name</h3>
+                                                                            <h3 class="card-title">@orderItem[ProudctItemCounter].Name</h3>
                                                                             <div class="card-text" id="cardProductPrice-@z">
                                                                                   
                                                                             <br />
                                                                                <h4>aussen: @orderItem[ProudctItemCounter].Aussen || innen: @orderItem[ProudctItemCounter].Intern</h4>
                                                                                 <h4>Option - @orderItem[ProudctItemCounter].Option</h4>
                                                                                 <h4>Anzahl: @orderItem[ProudctItemCounter].Count</h4>
-                                                                                <h4 id="PreisProduct-@z">Preis: @formattedResultItem</h4>
-                                                                                <input type="hidden" id="preis_product-@z"  name="PreisProduct" />
+                                                                                <h4 id="PreisProduct-@z" class="danger">Preis: @formattedResultItem</h4>
+                                                                                <input type="hidden" id="preis_product-@z"   name="PreisProduct" />
                                                                                 <input type="hidden" id="PreisProductBrutto-@z" value="@orderItem[ProudctItemCounter].Price" />
                                                                                 <input type="hidden" id="PreisProductNetto-@z" value="@resultItem" />
                                                                             </div>

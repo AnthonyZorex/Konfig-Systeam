@@ -13,6 +13,10 @@ namespace schliessanlagen_konfigurator.Models.System
         public string? DesctiptionsSysteam { get; set; }
         public string? Lieferzeit { get; set; }
         public string? LieferzeitGrosse { get; set; }
+        public string? KeyImage { get; set; }
+        [NotMapped]
+        [DisplayName("Upload your photo")]
+        public List<IFormFile>? KeyImages { get; set; }
         public ICollection<SystemOptionen>? SystemOptionen { get; set; }
         public ICollection<ProductGalery>? ProductGalery { get; set; }
         public SysteamPriceKey()

@@ -5,6 +5,7 @@
         public int Id { get; set; }
         public string userKey { get; set; }
         public string? DorName { get; set; }
+        public string? ProjektName { get; set; }
         public int ZylinderId { get; set; }
         public float? aussen { get; set; }
         public float? innen { get; set; }

@@ -67,8 +67,7 @@
         </h4>
 
     <div>
-
-          
+ 
         @foreach (var item in ViewBag.Order)
         {
             z++;
@@ -76,7 +75,7 @@
                 <div id="ExelItem" class="ExelItem shadow-lg  mb-5 bg-body-tertiary rounded">
 
                     <div id="productImage">
-                        <img decoding="async" data-bs-toggle="modal" data-bs-target="#ModalAussenzylinder-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@ViewBag.ImageSys[0].ImageName)" asp-append-version="true" width="300px" height="300px" />
+                        <img decoding="async" data-bs-toggle="modal" data-bs-target="#ModalAussenzylinder-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@ViewBag.ImageSys)" asp-append-version="true" width="300px" height="300px" />
                     </div>
                     <div id="productMenuInfo">
                         <div id="ProductNameUndCost">
@@ -109,7 +108,7 @@
                                     {
                                          @if (ViewBag.KeyValue[countFalse] == true)
                                          {
-                                            <input class="form-control" name="TurName" style="margin-top: 5px;" readonly type="text" id="@z-DorCount-@i" value="@ViewBag.DorName[i]" />
+                                            <input class="form-control" name="TurName" style="background-color: white !important;" readonly type="text" id="@z-DorCount-@i" value="@ViewBag.DorName[i]" />
                                             <input type="hidden" name="keyIsOpen" value="true" />
                                          }
                                          else
@@ -117,7 +116,6 @@
                                             <input type="hidden" name="keyIsOpen" value="false" />
 
                                          }
-                                    
                                              countFalse++;
                                     }
                                 

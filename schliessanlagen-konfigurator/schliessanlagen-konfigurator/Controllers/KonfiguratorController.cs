@@ -204,7 +204,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
         [HttpPost]
         public ActionResult ChangedKonfigPlanPost(List<string> FurNameKey, string userName, Orders Key, List<string> Turname, 
-        List<string> ZylinderId, List<float> aussen, List<float> innen, List<string> NameKey, List<int> CountKey,
+        List<string> ZylinderId, List<float> aussen, List<float> innen, List<string> NameKey, List<int> CountKey, string ProjektName,
         List<string> IsOppen, List<int> CountTur, string url)
         {
 
@@ -375,7 +375,8 @@ namespace schliessanlagen_konfigurator.Controllers
                     DorName = TurnameValue,
                     ZylinderId = idZylinder,
                     Created = DateTime.Now,
-                    Count = CountTur[i]
+                    Count = CountTur[i],
+                    ProjektName= ProjektName
                 };
 
 
@@ -5008,11 +5009,9 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var sys =  db.SysteamPriceKey.Where(x => x.NameSysteam == Systeam).ToList();
 
-            var Galery = db.ProductGalery.Where(x => x.SysteamPriceKeyId == sys.First().Id).ToList();
-
             ViewBag.Lieferzeit = Lieferzeit;
 
-            ViewBag.ImageSys = Galery;
+            ViewBag.ImageSys = sys.First().KeyImage;
 
             ViewBag.LieferzeitJson = JsonConvert.SerializeObject(sys.Select(x => x.Lieferzeit));
             ViewBag.LieferzeitGroz = JsonConvert.SerializeObject(sys.Select(x => x.LieferzeitGrosse));
@@ -6927,6 +6926,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 UserOrderKey = user,
                 KeyCount = countKey.Max(),
                 KeyCost = sysKey * countKey.Max(),
+                ProjektName = Orders.Last().ProjektName
             };
             db.UserOrdersShop.Add(UserOrder);
             db.SaveChanges();
@@ -7303,7 +7303,7 @@ namespace schliessanlagen_konfigurator.Controllers
       
         [HttpPost]
         public async Task<IActionResult> SaveOrder(List<string>FurNameKey,string userName, Orders Key, List<string> Turname, 
-        List<string> ZylinderId, List<float> aussen, List<float> innen, List<string> NameKey, List<int> CountKey, 
+        List<string> ZylinderId, List<float> aussen, List<float> innen, List<string> NameKey, List<int> CountKey, string ProjektName,
         string IsOppen,List<int>CountTur)
         {
             int CountOrders = Turname.Count();
@@ -7412,7 +7412,8 @@ namespace schliessanlagen_konfigurator.Controllers
                     DorName = TurnameValue,
                     ZylinderId = idZylinder,
                     Created = DateTime.Now,
-                    Count  = CountTur[i]
+                    Count  = CountTur[i],
+                    ProjektName = ProjektName
                 };
 
 

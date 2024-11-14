@@ -25,6 +25,13 @@
                     <input required asp-for="NameSysteam" class="form-control" />
                     <span asp-validation-for="NameSysteam" class="text-danger"></span>
                 </div>
+                <div class="form-group">
+                    <label class="control-label">Schlüssel Bild</label>
+                    <input asp-for="KeyImage" name="KeyImage" type="text" id="opt" class="form-control" />
+                    <br />
+                    <img src="@("/compression/"+@Model.KeyImage)" height="300" width="300" />
+                    <br />
+                </div>
                 <div class="form-group" id="Galerry">
                     <label class="control-label">Produkt-Galerie:</label>
                     <br />

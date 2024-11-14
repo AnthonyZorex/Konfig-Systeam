@@ -51,25 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "0adfb3de-c3d0-47b8-81d9-ca723f7423b8",
+                            Id = "56ac110f-e6b4-4b90-956b-a533d7b2415b",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "67453df2-274d-43fc-a416-d4671c306017",
+                            Id = "71998798-5f0f-452c-9cc7-7c89a4eddd46",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "e68c39e2-8321-429f-9f80-733255fbebc7",
+                            Id = "f8ddb587-2e1f-45e9-a56d-29c2601f88dd",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "de7f0db1-dbf3-4cd1-8572-143b21cac6f4",
+                            Id = "458e0687-36b3-422a-910a-7755a22d721d",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -621,6 +621,9 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Property<string>("Options")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ProjektName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("ZylinderId")
                         .HasColumnType("int");
 
@@ -1117,6 +1120,9 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Property<string>("DesctiptionsSysteam")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("KeyImage")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Lieferzeit")
                         .HasColumnType("nvarchar(max)");
 
@@ -1454,6 +1460,9 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     b.Property<string>("ProductName")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProjektName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ShippingStatus")

@@ -32,9 +32,14 @@
   
     <form asp-action="SaveOrder" enctype="multipart/form-data"  class="shadow-lg p-3 mb-5 bg-body-tertiary rounded" asp-controller="Konfigurator">
   
-        @Html.HiddenFor(m => m.userKey)
-        <input type="hidden" value="@ViewBag.UserNameItem" name="userName" />
+    @Html.HiddenFor(m => m.userKey)
+    <input type="hidden" value="@ViewBag.UserNameItem" name="userName" />
 
+        <div class="mt-5">
+            <h5>Projektname</h5>
+          <input type="text" class="form-control" name="ProjektName" />
+        </div>
+      
     <div id="InformBar">
         <div id="blockSclussel" >
             <div id="sclusselInfo">

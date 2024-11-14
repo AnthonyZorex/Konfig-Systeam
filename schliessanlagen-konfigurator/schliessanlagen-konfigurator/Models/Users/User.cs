@@ -37,6 +37,7 @@ namespace schliessanlagen_konfigurator.Models.Users
     {
         public int Id { get; set; }
         public float? Gramm { get; set; }
+        public string? ProjektName { get; set; }
         public float OrderSum { get; set; }
         public string ProductName { get; set; }
         public int? KeyCount { get; set; }

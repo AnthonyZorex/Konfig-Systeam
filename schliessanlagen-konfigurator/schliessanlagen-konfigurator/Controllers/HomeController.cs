@@ -234,13 +234,76 @@ namespace schliessanlagen_konfigurator.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create_Sys(string KeyName, List<IFormFile> Images, float KeyCost, bool? coppy, int? coppyId,string Server_render, string OldImage)
+        public async Task<IActionResult> Create_Sys(List<IFormFile> ImagesKey, string KeyName, List<IFormFile> Images, float KeyCost, bool? coppy, int? coppyId,string Server_render, string OldImage)
         {
             var key = new SysteamPriceKey
             {
                 NameSysteam = KeyName,
                 Price = KeyCost,
             };
+
+            if (ImagesKey != null && ImagesKey.Count > 0)
+            {
+                foreach (var image in ImagesKey)
+                {
+                    if (image.Length > 0)
+                    {
+                        string wwwRootPath = Environment.WebRootPath;
+
+                        string fileName = Path.GetFileNameWithoutExtension(image.FileName);
+
+                        string extension = Path.GetExtension(image.FileName);
+
+                        string path = Path.Combine(wwwRootPath + "/compression/", fileName + extension);
+
+                        key.KeyImage = fileName = fileName + extension;
+
+                        using (var fileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await image.CopyToAsync(fileStream);
+                        }
+
+
+                        // Путь к папке для сохранения изображений
+                        string uploadFolderPath = Path.Combine(wwwRootPath, "compression");
+                        string uploadFolderPathCompression = Path.Combine(wwwRootPath, "compression");
+
+                        // Проверяем наличие папки "image", создаем, если ее нет
+                        if (!Directory.Exists(uploadFolderPath))
+                        {
+                            Directory.CreateDirectory(uploadFolderPath);
+                        }
+
+                        // Формируем полный путь для сохранения загруженного файла
+                        string filePath = Path.Combine(uploadFolderPath, image.FileName);
+
+                        // Сохраняем загруженный файл
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await image.CopyToAsync(fileStream);
+                        }
+
+                        // Формируем имя и путь для файла в формате WebP
+                        string webpFileName = Path.GetFileNameWithoutExtension(image.FileName) + ".webp";
+                        string webpFilePath = Path.Combine(uploadFolderPathCompression, webpFileName);
+
+                        // Проверяем наличие папки "compression", создаем, если ее нет
+                        if (!Directory.Exists(uploadFolderPathCompression))
+                        {
+                            Directory.CreateDirectory(uploadFolderPathCompression);
+                        }
+
+                        using (var imageSharpImage = await Image.LoadAsync(filePath)) // Загружаем по пути к оригинальному файлу
+                        {
+                            await imageSharpImage.SaveAsync(webpFilePath, new WebpEncoder()); // Сохраняем как WebP
+                        }
+
+                        // Сжимаем изображение (если нужно)
+                        await _imageOptimizationService.CompressImageAsync(filePath, webpFilePath);
+                    }
+
+                }
+            }
             db.SysteamPriceKey.Add(key);
             db.SaveChanges();
 
@@ -2402,6 +2465,7 @@ namespace schliessanlagen_konfigurator.Controllers
             sys.DesctiptionsSysteam = systeam.DesctiptionsSysteam;
             sys.Lieferzeit = systeam.Lieferzeit;
             sys.LieferzeitGrosse = systeam.LieferzeitGrosse;
+            sys.KeyImage = systeam.KeyImage;
             db.SysteamPriceKey.Update(sys);
             db.SaveChanges();
 

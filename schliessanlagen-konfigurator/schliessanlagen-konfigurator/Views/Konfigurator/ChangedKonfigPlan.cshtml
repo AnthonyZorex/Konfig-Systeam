@@ -20,6 +20,11 @@
         <input type="hidden" value="@Model.userKey" name="userName" />
         <input type="hidden" value="@ViewBag.Url" name="url" />
 
+        <div class="mt-5">
+            <h5>Projektname</h5>
+            <input type="text" class="form-control" value="@ViewBag.Orders[0].ProjektName" name="ProjektName" />
+        </div>
+
         <div id="InformBar">
             <div id="blockSclussel">
                 <div id="sclusselInfo">
