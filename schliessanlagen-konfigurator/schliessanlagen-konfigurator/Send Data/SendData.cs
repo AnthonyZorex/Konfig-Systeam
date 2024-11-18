@@ -11,7 +11,8 @@ namespace schliessanlagen_konfigurator.Send_Data
             serviceProvider.GetRequiredService<
             DbContextOptions<schliessanlagen_konfiguratorContext>>()))
             {
-
+                context.Database.Migrate();
+                context.SaveChanges();
             }
         }
     }

@@ -176,7 +176,8 @@ document.getElementById('submitForm').addEventListener('click', function (event)
                     showAlert(error);
                 });
         }
-        else if (TypeZylinder == 2) {
+            else if (TypeZylinder == 2)
+            {
             axios.post('/Home/SaveHalbzylinder', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'

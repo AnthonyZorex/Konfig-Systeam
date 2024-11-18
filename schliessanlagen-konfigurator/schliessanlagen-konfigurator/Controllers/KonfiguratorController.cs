@@ -1049,12 +1049,12 @@ namespace schliessanlagen_konfigurator.Controllers
             var cheked5 = new List<Vorhangschloss>();
             var cheked6 = new List<Aussenzylinder_Rundzylinder>();
 
-            var dopelType = profilD.Where(x=> x.Type == "Mechanik" && x.companyName == "ABUS" || x.companyName == "CES").ToList();
-            var KnayfType = profilK.Where(x => x.Type == "Mechanik" && x.companyName == "ABUS" || x.companyName == "CES").ToList();
-            var HebelType = hebel.Where(x => x.Type == "Mechanik" && x.companyName == "ABUS" || x.companyName == "CES").ToList();
-            var HalbType = profilH.Where(x => x.Type == "Mechanik" && x.companyName == "ABUS" || x.companyName == "CES").ToList();
-            var VorhanType = Vorhangschloss.Where(x => x.Type == "Mechanik" && x.companyName == "ABUS" || x.companyName == "CES").Select(x => x.schliessanlagenId).First();
-            var AussenType = Aussenzylinder.Where(x => x.Type == "Mechanik" && x.companyName == "ABUS" || x.companyName == "CES").Select(x => x.schliessanlagenId).First();
+            var dopelType = profilD.Where(x=> x.Type == "Mechanik" ).ToList();
+            var KnayfType = profilK.Where(x => x.Type == "Mechanik").ToList();
+            var HebelType = hebel.Where(x => x.Type == "Mechanik" ).ToList();
+            var HalbType = profilH.Where(x => x.Type == "Mechanik").ToList();
+            var VorhanType = Vorhangschloss.Where(x => x.Type == "Mechanik").Select(x => x.schliessanlagenId).First();
+            var AussenType = Aussenzylinder.Where(x => x.Type == "Mechanik").Select(x => x.schliessanlagenId).First();
 
             int VorhCount = 0;
             var allOderDopelSyze = allUserListOrder.Where(x => x.ZylinderId == dopelType.First().schliessanlagenId).ToList();
@@ -4973,7 +4973,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             ViewBag.DoppelGalery = DoppelGalery;
 
-            var AussenInen =  db.Aussen_Innen.Include(x=>x.Doppel_Innen_klein).Where(x => x.Profil_DoppelzylinderId == Convert.ToInt32(DopelId)).Select(x => new { x.aussen, x.Intern, x.costSizeIntern,x.costSizeAussen,x.Doppel_Innen_klein }).ToList();
+            var AussenInen =  db.Aussen_Innen.OrderBy(x=>x.aussen).Include(x=>x.Doppel_Innen_klein).Where(x => x.Profil_DoppelzylinderId == Convert.ToInt32(DopelId)).Select(x => new { x.aussen, x.Intern, x.costSizeIntern,x.costSizeAussen,x.Doppel_Innen_klein }).ToList();
 
             var Halbzylinder = new List<Profil_Halbzylinder>();
 
@@ -4991,7 +4991,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             ViewBag.KnaufGalery = KnaufGalery;
 
-            var Kanyf_AussenInen =  db.Aussen_Innen_Knauf.Include(x=>x.Aussen_Innen_Knauf_klein).Where(x => x.Profil_KnaufzylinderId == Convert.ToInt32(KnayfID)).ToList();
+            var Kanyf_AussenInen =  db.Aussen_Innen_Knauf.OrderBy(x => x.aussen).Include(x=>x.Aussen_Innen_Knauf_klein).Where(x => x.Profil_KnaufzylinderId == Convert.ToInt32(KnayfID)).Select(x => new { x.aussen, x.Intern, x.costSizeIntern, x.costSizeAussen, x.Aussen_Innen_Knauf_klein }).ToList();
 
             var IsOpenValue = new List<isOpen_value>();
 
@@ -5673,7 +5673,7 @@ namespace schliessanlagen_konfigurator.Controllers
             {
                 if (order.ZylinderId == 1)
                 {
-                    var DoppelSize = db.Aussen_Innen.Include(x=>x.Doppel_Innen_klein).Where(x => x.Profil_DoppelzylinderId == DopelOrderlist[dpCount].Id).ToList();
+                    var DoppelSize = db.Aussen_Innen.OrderBy(x => x.aussen).Include(x=>x.Doppel_Innen_klein).Where(x => x.Profil_DoppelzylinderId == DopelOrderlist[dpCount].Id).ToList();
 
                     var nÍtem = new Profil_Doppelzylinder {
 
@@ -5692,7 +5692,20 @@ namespace schliessanlagen_konfigurator.Controllers
                     var aussenSize = DoppelSize.Select(x => x.aussen).Distinct().ToList();
 
                     var innen = DoppelSize.Min(x => x.Intern);
-                    var innenSize = DoppelSize.Select(x => x.Intern).Distinct().ToList();
+                    
+                    var dp = DoppelSize.SelectMany(x => x.Doppel_Innen_klein).ToList();
+
+                    var allItems = new List<(float DopelInnen, float Dopelprice)>();
+
+                    foreach(var list in DoppelSize)
+                    {
+                        allItems.Add((list.Intern, list.costSizeIntern));
+                    }
+                    foreach (var list in dp)
+                    {
+                        allItems.Add((list.Intern, list.costSizeIntern));
+                    }
+                    var sortedItems = allItems.Where(x=>x.DopelInnen>0).OrderBy(x => x.DopelInnen).Distinct().ToList();
 
                     foreach (var aus in aussenSize)
                     {
@@ -5711,11 +5724,11 @@ namespace schliessanlagen_konfigurator.Controllers
                                 var costAussen = DoppelSize.FirstOrDefault(x => x.aussen == aus).costSizeAussen;
                                 nÍtem.Price = nÍtem.Price + costAussen;
                             }
-                          
+
                         }
                         else
                         {
-                            if(countZylinder.Count() > CountAussenDoppel)
+                            if (countZylinder.Count() > CountAussenDoppel)
                             {
                                 for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
                                 {
@@ -5732,124 +5745,47 @@ namespace schliessanlagen_konfigurator.Controllers
                             }
                             break;
                         }
-                    }
-                    var doppelklei = db.Aussen_Innen.Include(x=>x.Doppel_Innen_klein).Where(x=>x.Doppel_Innen_klein.Count()>0).ToList();
-
-                    var queryOrder = from t1 in DoppelSize
-                                     join t2 in doppelklei on t1.Id equals t2.Id
-                                     select new
-                                     {
-                                         Id = t2.Id
-                                     };
-
-                    var ListOrder = queryOrder.Distinct().ToList();  
-
-                    if (ListOrder.Count() > 0)
-                    {
-                        var f = db.Aussen_Innen.FirstOrDefault(x => x.Id == ListOrder[0].Id);
-                        
-                        if(f.aussen == aussen)
-                        {
-                            foreach (var list in f.Doppel_Innen_klein)
-                            {
-                                if (list.Intern <= order.innen)
-                                {
-                                    nÍtem.Price = nÍtem.Price + list.costSizeIntern;
-                                }
-                            }
-                        }
-                        else
-                        {
-                           var innenSizeKlein = DoppelSize.SelectMany(x=>x.Doppel_Innen_klein).Where(x => x.Intern > innen).Select(x => x.Intern).Distinct().ToList();
-
-                            foreach (var ine in innenSizeKlein)
-                            {
-                                if (ine < order.innen)
-                                {
-                                    if (countZylinder.Count() > CountAussenDoppel)
-                                    {
-                                        for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
-                                        {
-                                            var costIntern = DoppelSize.SelectMany(x=>x.Doppel_Innen_klein).FirstOrDefault(x => x.Intern == ine).costSizeIntern;
-                                            nÍtem.Price = nÍtem.Price + costIntern;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        var costIntern = DoppelSize.SelectMany(x => x.Doppel_Innen_klein).FirstOrDefault(x => x.Intern == ine).costSizeIntern;
-                                        nÍtem.Price = nÍtem.Price + costIntern;
-                                    }
-                                }
-                                else
-                                {
-                                    if (countZylinder.Count() > CountAussenDoppel)
-                                    {
-                                        for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
-                                        {
-                                            var costIntern = DoppelSize.SelectMany(x => x.Doppel_Innen_klein).FirstOrDefault(x => x.Intern == ine).costSizeIntern;
-                                            nÍtem.Price = nÍtem.Price + costIntern;
-                                            innen = ine;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        var costIntern = DoppelSize.SelectMany(x => x.Doppel_Innen_klein).FirstOrDefault(x => x.Intern == ine).costSizeIntern;
-                                        nÍtem.Price = nÍtem.Price + costIntern;
-                                        innen = ine;
-                                    }
-
-                                    break;
-                                }
-
-                            }
-                        }
-                        
 
                     }
-                    else
+                    foreach (var ine in sortedItems)
                     {
-                        foreach (var ine in innenSize)
+                        if (ine.DopelInnen < order.innen)
                         {
-                            if (ine < order.innen)
+                            if (countZylinder.Count() > CountAussenDoppel)
                             {
-                                if (countZylinder.Count() > CountAussenDoppel)
+                                for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
                                 {
-                                    for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
-                                    {
-                                        var costIntern = DoppelSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
-                                        nÍtem.Price = nÍtem.Price + costIntern;
-                                    }
-                                }
-                                else
-                                {
-                                    var costIntern = DoppelSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
-                                    nÍtem.Price = nÍtem.Price + costIntern;
+                                    nÍtem.Price = nÍtem.Price + ine.Dopelprice;
                                 }
                             }
                             else
                             {
-                                if (countZylinder.Count() > CountAussenDoppel)
+                                nÍtem.Price = nÍtem.Price + ine.Dopelprice;
+                            }
+                        }
+                        else
+                        {
+                            if (countZylinder.Count() > CountAussenDoppel)
+                            {
+                                for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
                                 {
-                                    for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
-                                    {
-                                        var costIntern = DoppelSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
-                                        nÍtem.Price = nÍtem.Price + costIntern;
-                                        innen = ine;
-                                    }
+                                    nÍtem.Price = nÍtem.Price + ine.Dopelprice;
+                                    innen = ine.DopelInnen;
                                 }
-                                else
-                                {
-                                    var costIntern = DoppelSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
-                                    nÍtem.Price = nÍtem.Price + costIntern;
-                                    innen = ine;
-                                }
-
-                                break;
+                            }
+                            else
+                            {
+                                nÍtem.Price = nÍtem.Price + ine.Dopelprice;
+                                innen = ine.DopelInnen;
                             }
 
+                            break;
                         }
+
                     }
-                   
+
+
+
                     DopelOrderlist[dpCount] = nÍtem;
                     CountAussenDoppel++;
                     dpCount++;
@@ -5876,7 +5812,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                     var aussen = SizeHalbzylinder.Min(x => x.aussen);
 
-                    var aussenSize = SizeHalbzylinder.Where(x => x.aussen > aussen).Select(x => x.aussen).ToList();
+                    var aussenSize = SizeHalbzylinder.Select(x => x.aussen).Distinct().ToList();
 
                     foreach (var aus in aussenSize)
                     {
@@ -5914,144 +5850,104 @@ namespace schliessanlagen_konfigurator.Controllers
                     };
 
                     var aussen = KnayfSize.Min(x => x.aussen);
-                    var aussenSize = KnayfSize.Where(x => x.aussen > aussen).Select(x => x.aussen).ToList();
+                    var aussenSize = KnayfSize.Select(x => x.aussen).Distinct().ToList();
 
                     var innen = KnayfSize.Min(x => x.Intern);
-                    var innenSize = KnayfSize.Where(x => x.Intern> innen).Select(x => x.Intern).ToList();
-                   
+                    var innenSize = KnayfSize.Select(x => x.Intern).Distinct().ToList();
+
+                    var dp = KnayfSize.SelectMany(x => x.Aussen_Innen_Knauf_klein).ToList();
+
+                    var allItems = new List<(float KnayfInnen, float Knayfprice)>();
+
+                    foreach (var list in KnayfSize)
+                    {
+                        allItems.Add((list.Intern, list.costSizeIntern));
+                    }
+                    foreach (var list in dp)
+                    {
+                        allItems.Add((list.Intern, list.costSizeIntern));
+                    }
+                    var sortedItems = allItems.Where(x => x.KnayfInnen > 0).OrderBy(x => x.KnayfInnen).Distinct().ToList();
+
                     foreach (var aus in aussenSize)
                     {
                         if(aus < order.aussen)
                         {
-                            var costAussen = KnayfSize.FirstOrDefault(x => x.aussen == aus).costSizeAussen;
-                            nÍtem.Price = nÍtem.Price + costAussen;
-                        }
-                        else
-                        {
-                            var costAussen = KnayfSize.FirstOrDefault(x => x.aussen == aus).costSizeAussen;
-                            nÍtem.Price = nÍtem.Price + costAussen;
-                            aussen = aus;
-                            break;
-                        }
-
-                    }
-                    var doppelklei = db.Aussen_Innen_Knauf.Include(x=>x.Aussen_Innen_Knauf_klein).ToList();
-
-                    var queryOrder = from t1 in KnayfSize
-                                     join t2 in doppelklei on t1.Id equals t2.Id
-                                     select new
-                                     {
-                                         Id = t2.Id
-                                     };
-
-                    var ListOrder = queryOrder.Distinct().ToList();
-
-                    if (ListOrder.Count() > 0)
-                    {
-                        var f = db.Aussen_Innen_Knauf.FirstOrDefault(x => x.Id == ListOrder[0].Id);
-
-                        if (f.aussen == aussen)
-                        {
-                            foreach (var list in f.Aussen_Innen_Knauf_klein)
+                            if (countZylinder.Count() > CountAussenDoppel)
                             {
-                                if (list.Intern <= order.innen)
+                                for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
                                 {
-                                    nÍtem.Price = nÍtem.Price + list.costSizeIntern;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            var innenSizeKlein = KnayfSize.SelectMany(x => x.Aussen_Innen_Knauf_klein).Where(x => x.Intern > innen).Select(x => x.Intern).Distinct().ToList();
-                            foreach (var ine in innenSizeKlein)
-                            {
-                                if (ine < order.innen)
-                                {
-                                    if (countZylinder.Count() > CountAussenDoppel)
-                                    {
-                                        for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
-                                        {
-                                            var costIntern = KnayfSize.SelectMany(x => x.Aussen_Innen_Knauf_klein).FirstOrDefault(x => x.Intern == ine).costSizeIntern;
-                                            nÍtem.Price = nÍtem.Price + costIntern;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        var costIntern = KnayfSize.SelectMany(x => x.Aussen_Innen_Knauf_klein).FirstOrDefault(x => x.Intern == ine).costSizeIntern;
-                                        nÍtem.Price = nÍtem.Price + costIntern;
-                                    }
-                                }
-                                else
-                                {
-                                    if (countZylinder.Count() > CountAussenDoppel)
-                                    {
-                                        for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
-                                        {
-                                            var costIntern = KnayfSize.SelectMany(x => x.Aussen_Innen_Knauf_klein).FirstOrDefault(x => x.Intern == ine).costSizeIntern;
-                                            nÍtem.Price = nÍtem.Price + costIntern;
-                                            innen = ine;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        var costIntern = KnayfSize.SelectMany(x => x.Aussen_Innen_Knauf_klein).FirstOrDefault(x => x.Intern == ine).costSizeIntern;
-                                        nÍtem.Price = nÍtem.Price + costIntern;
-                                        innen = ine;
-                                    }
-
-                                    break;
-                                }
-
-                            }
-                        }
-
-
-                    }
-                    else
-                    {
-                        foreach (var ine in innenSize)
-                        {
-                            if (ine < order.innen)
-                            {
-                                if (countZylinder.Count() > CountAussenDoppel)
-                                {
-                                    for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
-                                    {
-                                        var costIntern = KnayfSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
-                                        nÍtem.Price = nÍtem.Price + costIntern;
-                                    }
-                                }
-                                else
-                                {
-                                    var costIntern = KnayfSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
-                                    nÍtem.Price = nÍtem.Price + costIntern;
+                                    var costAussen = KnayfSize.FirstOrDefault(x => x.aussen == aus).costSizeAussen;
+                                    nÍtem.Price = nÍtem.Price + costAussen;
                                 }
                             }
                             else
                             {
-                                if (countZylinder.Count() > CountAussenDoppel)
-                                {
-                                    for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
-                                    {
-                                        var costIntern = KnayfSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
-                                        nÍtem.Price = nÍtem.Price + costIntern;
-                                        innen = ine;
-                                    }
-                                }
-                                else
-                                {
-                                    var costIntern = KnayfSize.FirstOrDefault(x => x.Intern == ine).costSizeIntern;
-                                    nÍtem.Price = nÍtem.Price + costIntern;
-                                    innen = ine;
-                                }
-
-                                break;
+                                var costAussen = KnayfSize.FirstOrDefault(x => x.aussen == aus).costSizeAussen;
+                                nÍtem.Price = nÍtem.Price + costAussen;
                             }
+                        }
+                        else
+                        {
+                            if (countZylinder.Count() > CountAussenDoppel)
+                            {
+                                for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
+                                {
+                                    var costAussen = KnayfSize.FirstOrDefault(x => x.aussen == aus).costSizeAussen;
+                                    nÍtem.Price = nÍtem.Price + costAussen;
+                                    aussen = aus;
+                                }
+                            }
+                            else
+                            {
+                                var costAussen = KnayfSize.FirstOrDefault(x => x.aussen == aus).costSizeAussen;
+                                nÍtem.Price = nÍtem.Price + costAussen;
+                                aussen = aus;
+                            }
+                            break;
 
                         }
+
+                    }
+                    foreach (var ine in sortedItems)
+                    {
+                        if (ine.KnayfInnen < order.innen)
+                        {
+                            if (countZylinder.Count() > CountAussenDoppel)
+                            {
+                                for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
+                                {
+                                    nÍtem.Price = nÍtem.Price + ine.Knayfprice;
+                                }
+                            }
+                            else
+                            {
+                                nÍtem.Price = nÍtem.Price + ine.Knayfprice;
+                            }
+                        }
+                        else
+                        {
+                            if (countZylinder.Count() > CountAussenDoppel)
+                            {
+                                for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
+                                {
+                                    nÍtem.Price = nÍtem.Price + ine.Knayfprice;
+                                    innen = ine.KnayfInnen;
+                                }
+                            }
+                            else
+                            {
+                                nÍtem.Price = nÍtem.Price + ine.Knayfprice;
+                                innen = ine.KnayfInnen;
+                            }
+
+                            break;
+                        }
+
                     }
 
                     KnayfOrderlist[knayfCount] = nÍtem;
+                    CountAussenDoppel++;
                     knayfCount++;
                 }
                 if (order.ZylinderId == 5)
@@ -6335,21 +6231,67 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 if (KnayfKleinSize.Count() > 0 && Kanyf_AussenInen.Select(x => x.aussen).Contains(KnayfaussenActual.First()))
                 {
-                    var arrayCountItemIntern = Kanyf_AussenInen.Where(x => x.Aussen_Innen_Knauf_klein.Count() > 0).Select(x => x.Aussen_Innen_Knauf_klein.Count()).ToList();
-                    var x = arrayCountItemIntern.Sum();
+                    var KnayfInnen = new List<float>();
+                    var Knayfprice = new List<float>();
+                    var allItems = new List<(float KnayfInnen, float Knayfprice)>();
 
-                    var arrayCountItemAussen = Kanyf_AussenInen.Where(x => x.Aussen_Innen_Knauf_klein.Count() > 0).Select(x => x.aussen).Count();
+                    if (Kanyf_AussenInen.Where(x => x.Intern > 0).Count() > 0 && KnayfKleinSize.Count() > 0)
+                    {
+                        if (Kanyf_AussenInen.Where(x => x.Intern > 0).Min(x => x.Intern) > KnayfKleinSize[0].Intern)
+                        {
+                            foreach (var list in KnayfKleinSize)
+                            {
+                                allItems.Add((list.Intern, list.costSizeIntern));
 
-                    var y = arrayCountItemAussen;
+                            }
+                            foreach (var list in Kanyf_AussenInen)
+                            {
+                                allItems.Add((list.Intern, list.costSizeIntern));
+                            }
+                        }
+                        else
+                        {
+                            foreach (var item in Kanyf_AussenInen)
+                            {
+                                allItems.Add((item.Intern, item.costSizeIntern));
 
-                    ViewBag.KnayfZelinderIntern = KnayfKleinSize.Select(x => x.Intern).Distinct().ToList();
-                    ViewBag.KnayfInternCost = JsonConvert.SerializeObject(Kanyf_AussenInen.Select(x => x.costSizeIntern).Skip(y).ToList());
-                    ViewBag.KnayfAussenCost = JsonConvert.SerializeObject(Kanyf_AussenInen.Select(x => x.costSizeAussen).ToList());
+                            }
+                            foreach (var item in KnayfKleinSize)
+                            {
+                                allItems.Add((item.Intern, item.costSizeIntern));
+                            }
+                        }
+                    }
+                    else if (KnayfKleinSize.Count() > 0)
+                    {
+                        foreach (var list in KnayfKleinSize)
+                        {
+                            KnayfInnen.Add(list.Intern);
+                            Knayfprice.Add(list.costSizeIntern);
+                        }
+                    }
+                    else
+                    {
+                        foreach (var list in Kanyf_AussenInen)
+                        {
+                            KnayfInnen.Add(list.Intern);
+                            Knayfprice.Add(list.costSizeIntern);
+                        }
+                    }
+
+                    var sortedItems = allItems.Where(x=>x.KnayfInnen>0).OrderBy(x => x.KnayfInnen).ToList();
+
+                    foreach (var item in sortedItems)
+                    {
+                        KnayfInnen.Add(item.KnayfInnen);
+                        Knayfprice.Add(item.Knayfprice);
+                    }
+
+                    ViewBag.KnayfZelinderIntern = KnayfInnen.ToList();
+                    ViewBag.KnayfInternCost = JsonConvert.SerializeObject(Knayfprice.ToList());
+                    ViewBag.KnayfAussenCost = JsonConvert.SerializeObject(System.Linq.Enumerable.DistinctBy(Kanyf_AussenInen, x => x.aussen).Select(x => x.costSizeAussen).ToList());
 
                     ViewBag.KnayfzylinderInternNormal = JsonConvert.SerializeObject(Kanyf_AussenInen.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
-                    ViewBag.KnayfInternKlein = JsonConvert.SerializeObject(KnayfKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
-                    ViewBag.KnayfzylinderInternKleinPreis = JsonConvert.SerializeObject(KnayfKleinSize.Select(x => x.costSizeIntern).ToList());
-                    ViewBag.CountKnayfInter = JsonConvert.SerializeObject(Kanyf_AussenInen.Where(x => x.Aussen_Innen_Knauf_klein.Count() > 0).Select(x => x.Aussen_Innen_Knauf_klein.Count()).ToList());
 
                 }
                 else
@@ -6357,14 +6299,10 @@ namespace schliessanlagen_konfigurator.Controllers
                     ViewBag.KnayfZelinderIntern = Kanyf_AussenInen.Where(x => x.Intern > 0).Select(x => x.Intern).ToList();
                     ViewBag.KnayfInternCost = JsonConvert.SerializeObject(Kanyf_AussenInen.Select(x => x.costSizeIntern).ToList());
                     ViewBag.KnayfAussenCost = JsonConvert.SerializeObject(Kanyf_AussenInen.Select(x => x.costSizeAussen).ToList());
-                    
                     ViewBag.KnayfzylinderInternNormal = JsonConvert.SerializeObject(Kanyf_AussenInen.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
-                    ViewBag.KnayfInternKlein = JsonConvert.SerializeObject(KnayfKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
-                    ViewBag.KnayfzylinderInternKleinPreis = JsonConvert.SerializeObject(KnayfKleinSize.Select(x => x.costSizeIntern).ToList());
+                  
                 }
 
-              
-               
 
                 ViewBag.KAussen = KnayfaussenActual.ToList();
                 ViewBag.KInter = KnayfInenActual.ToList();
@@ -6416,7 +6354,7 @@ namespace schliessanlagen_konfigurator.Controllers
             else
             {
                 var KnayfInfo = db.Profil_Knaufzylinder.Where(x => x.NameSystem == Systeam).ToList();
-                ViewBag.KnayfZelinderJson = JsonConvert.SerializeObject(KnayfInfo.ToList());
+                ViewBag.KnayfZelinderJson = JsonConvert.SerializeObject(KnayfInfo);
 
                 if (KnayfInfo.Count > 0)
                 {
@@ -6424,35 +6362,82 @@ namespace schliessanlagen_konfigurator.Controllers
 
                     var KnayfSize = db.Aussen_Innen_Knauf.Include(x => x.Aussen_Innen_Knauf_klein).Where(x => x.Profil_KnaufzylinderId == KnayfInfo[0].Id).ToList();
 
-                    var KnayfKleinSize = KnayfSize.First().Aussen_Innen_Knauf_klein;
+                    var KnayfKleinSize = Kanyf_AussenInen.SelectMany(x => x.Aussen_Innen_Knauf_klein).ToList();
 
                     if (KnayfKleinSize.Count() > 0)
                     {
-                        var arrayCountItemIntern = KnayfSize.Where(x => x.Aussen_Innen_Knauf_klein.Count() > 0).Select(x => x.Aussen_Innen_Knauf_klein.Count()).ToList();
-                        var x = arrayCountItemIntern.Sum();
+                        var KnayfInnen = new List<float>();
+                        var Knayfprice = new List<float>();
 
-                        var arrayCountItemAussen = KnayfSize.Where(x => x.Aussen_Innen_Knauf_klein.Count() > 0).Select(x => x.aussen).Count();
+                        var allItems = new List<(float KnayfInnen, float Knayfprice)>();
 
-                        var y = arrayCountItemAussen;
+                        if (Kanyf_AussenInen.Where(x => x.Intern > 0).Count() > 0 && KnayfKleinSize.Count() > 0)
+                        {
+                            if (Kanyf_AussenInen.Where(x => x.Intern > 0).Min(x => x.Intern) > KnayfKleinSize[0].Intern)
+                            {
+                                foreach (var list in KnayfKleinSize)
+                                {
+                                    allItems.Add((list.Intern, list.costSizeIntern));
 
-                        ViewBag.KnayfZelinderIntern = KnayfKleinSize.Select(x => x.Intern).Distinct().ToList();
-                        ViewBag.KnayfInternCost = JsonConvert.SerializeObject(KnayfSize.Select(x => x.costSizeIntern).Skip(y).ToList());
-                        ViewBag.KnayfAussenCost = JsonConvert.SerializeObject(KnayfSize.Select(x => x.costSizeAussen).ToList());
+                                }
+                                foreach (var list in Kanyf_AussenInen)
+                                {
+                                    allItems.Add((list.Intern, list.costSizeIntern));
+                                }
 
-                        ViewBag.KnayfzylinderInternNormal = JsonConvert.SerializeObject(KnayfSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
-                        ViewBag.KnayfInternKlein = JsonConvert.SerializeObject(KnayfKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
-                        ViewBag.KnayfzylinderInternKleinPreis = JsonConvert.SerializeObject(KnayfKleinSize.Select(x => x.costSizeIntern).ToList());
-                        ViewBag.CountKnayfInter = JsonConvert.SerializeObject(KnayfSize.Where(x => x.Aussen_Innen_Knauf_klein.Count() > 0).Select(x => x.Aussen_Innen_Knauf_klein.Count()).ToList());
+                            }
+                            else
+                            {
+                                foreach (var item in Kanyf_AussenInen)
+                                {
+                                    allItems.Add((item.Intern, item.costSizeIntern));
+
+                                }
+                                foreach (var item in KnayfKleinSize)
+                                {
+                                    allItems.Add((item.Intern, item.costSizeIntern));
+                                }
+
+                            }
+                        }
+                        else if (KnayfKleinSize.Count() > 0)
+                        {
+                            foreach (var list in KnayfKleinSize)
+                            {
+                                KnayfInnen.Add(list.Intern);
+                                Knayfprice.Add(list.costSizeIntern);
+                            }
+                        }
+                        else
+                        {
+                            foreach (var list in Kanyf_AussenInen)
+                            {
+                                KnayfInnen.Add(list.Intern);
+                                Knayfprice.Add(list.costSizeIntern);
+                            }
+                        }
+
+                        var sortedItems = allItems.Where(x => x.KnayfInnen > 0).OrderBy(x => x.KnayfInnen).ToList();
+
+                        foreach (var item in sortedItems)
+                        {
+                            KnayfInnen.Add(item.KnayfInnen);
+                            Knayfprice.Add(item.Knayfprice);
+                        }
+
+                        ViewBag.KnayfZelinderIntern = KnayfInnen.ToList();
+                        ViewBag.KnayfInternCost = JsonConvert.SerializeObject(Knayfprice.ToList());
+                        ViewBag.KnayfAussenCost = JsonConvert.SerializeObject(System.Linq.Enumerable.DistinctBy(Kanyf_AussenInen, x => x.aussen).Select(x => x.costSizeAussen).ToList());
+
+                        ViewBag.KnayfzylinderInternNormal = JsonConvert.SerializeObject(Kanyf_AussenInen.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
 
                     }
                     else
                     {
-                        ViewBag.KnayfZelinderIntern = KnayfSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList();
-                        ViewBag.KnayfInternCost = JsonConvert.SerializeObject(KnayfSize.Select(x => x.costSizeIntern).ToList());
-                        ViewBag.KnayfAussenCost = JsonConvert.SerializeObject(KnayfSize.Select(x => x.costSizeAussen).ToList());
-                        ViewBag.KnayfzylinderInternNormal = JsonConvert.SerializeObject(KnayfSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
-                        ViewBag.KnayfInternKlein = JsonConvert.SerializeObject(KnayfKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
-                        ViewBag.KnayfzylinderInternKleinPreis = JsonConvert.SerializeObject(KnayfKleinSize.Select(x => x.costSizeIntern).ToList());
+                        ViewBag.KnayfZelinderIntern = Kanyf_AussenInen.Where(x => x.Intern > 0).Select(x => x.Intern).ToList();
+                        ViewBag.KnayfInternCost = JsonConvert.SerializeObject(Kanyf_AussenInen.Select(x => x.costSizeIntern).ToList());
+                        ViewBag.KnayfAussenCost = JsonConvert.SerializeObject(Kanyf_AussenInen.Select(x => x.costSizeAussen).ToList());
+                        ViewBag.KnayfzylinderInternNormal = JsonConvert.SerializeObject(Kanyf_AussenInen.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
                     }
 
                     ViewBag.KnayfZelinderAussen = KnayfSize.Select(x => x.aussen).ToList();
@@ -6515,40 +6500,80 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 ViewBag.Dopelzylinderaussen = AussenInen.Select(x => x.aussen).Distinct().ToList();
 
-                var doppelKleinSize = AussenInen.SelectMany(x=>x.Doppel_Innen_klein).ToList();
+                var doppelKleinSize = AussenInen.Where(x=>x.aussen == DaussenActual.First()).SelectMany(x=>x.Doppel_Innen_klein).ToList();
+
+                var DopelInnen = new List<float>();
+                var Dopelprice = new List<float>();
+
+                var allItems = new List<(float DopelInnen, float Dopelprice)>();
 
                 if (doppelKleinSize.Count() > 0 && AussenInen.Select(x=>x.aussen).Contains(DaussenActual.First()))
                 {
-                    var arrayCountItemIntern = AussenInen.Where(x => x.Doppel_Innen_klein.Count() > 0).Select(x => x.Doppel_Innen_klein.Count()).ToList();
-                    var x = arrayCountItemIntern.Sum();
+                    if (AussenInen.Where(x => x.Intern > 0).Count() > 0 && doppelKleinSize.Count() > 0)
+                    {
+                        if (AussenInen.Where(x => x.Intern > 0).Min(x => x.Intern) > doppelKleinSize[0].Intern)
+                        {
+                            foreach (var item in doppelKleinSize)
+                            {
+                                allItems.Add((item.Intern, item.costSizeIntern));
+                            }
 
-                    var arrayCountItemAussen = AussenInen.Where(x => x.Doppel_Innen_klein.Count() > 0).Select(x => x.aussen).Count();
+                            foreach (var item in AussenInen.Where(x => x.Intern > 0))
+                            {
+                                allItems.Add((item.Intern, item.costSizeIntern));
+                            }
 
-                    var y = arrayCountItemAussen;
+                        }
+                        else
+                        {
+                            foreach (var item in AussenInen.Where(x => x.Intern > 0))
+                            {
+                                allItems.Add((item.Intern, item.costSizeIntern));
+                            }
+                            foreach (var item in doppelKleinSize)
+                            {
+                                allItems.Add((item.Intern, item.costSizeIntern));
+                            }
 
-                    ViewBag.DopelzylinderIntern = doppelKleinSize.Select(x => x.Intern).ToList();
-                    ViewBag.CostDoppelIntern = JsonConvert.SerializeObject(AussenInen.Select(x => x.costSizeIntern).Skip(y).ToList());
+                        }
+                    }
+                    else if (doppelKleinSize.Count() > 0)
+                    {
+                        foreach (var list in doppelKleinSize)
+                        {
+                            DopelInnen.Add(list.Intern);
+                            Dopelprice.Add(list.costSizeIntern);
+                        }
+                    }
+                    else
+                    {
+                        foreach (var list in doppelKleinSize)
+                        {
+                            DopelInnen.Add(list.Intern);
+                            Dopelprice.Add(list.costSizeIntern);
+                        }
+                    }
 
-                    ViewBag.CostDoppelAussen = JsonConvert.SerializeObject(AussenInen.Select(x => x.costSizeAussen).ToList());
+                    var sortedItems = allItems.Where(x=>x.DopelInnen>0).OrderBy(x => x.DopelInnen).ToList();
 
+                    // Заполняем DopelInnen и Dopelprice
+                    foreach (var item in sortedItems)
+                    {
+                        DopelInnen.Add(item.DopelInnen);
+                        Dopelprice.Add(item.Dopelprice);
+                    }
+
+                    ViewBag.DopelzylinderIntern = DopelInnen.ToList();
+                    ViewBag.CostDoppelIntern = JsonConvert.SerializeObject(Dopelprice.ToList());
+                    ViewBag.CostDoppelAussen = JsonConvert.SerializeObject(System.Linq.Enumerable.DistinctBy(AussenInen, x => x.aussen).Select(x => x.costSizeAussen).ToList());
                     ViewBag.DopelzylinderInternNormal = JsonConvert.SerializeObject(AussenInen.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
-                    ViewBag.DopelzylinderInternKlein = JsonConvert.SerializeObject(doppelKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
-                    ViewBag.DopelzylinderInternKleinPreis = JsonConvert.SerializeObject(doppelKleinSize.Select(x => x.costSizeIntern).ToList());
-
-                    ViewBag.CountKlein = arrayCountItemIntern[0];
-
-                    ViewBag.CountDoppelInter = JsonConvert.SerializeObject(AussenInen.Where(x => x.Doppel_Innen_klein.Count() > 0).Select(x => x.Doppel_Innen_klein.Count()).ToList());
                 }
                 else
                 {
                     ViewBag.DopelzylinderIntern = AussenInen.Where(x => x.Intern > 0).Select(x => x.Intern).ToList();
                     ViewBag.CostDoppelIntern = JsonConvert.SerializeObject(AussenInen.Select(x => x.costSizeIntern).ToList());
-
                     ViewBag.CostDoppelAussen = JsonConvert.SerializeObject(AussenInen.Select(x => x.costSizeAussen).ToList());
-
-                    ViewBag.DopelzylinderInternNormal = JsonConvert.SerializeObject(AussenInen.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
-                    ViewBag.DopelzylinderInternKlein = JsonConvert.SerializeObject(doppelKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
-                    ViewBag.DopelzylinderInternKleinPreis = JsonConvert.SerializeObject(doppelKleinSize.Select(x => x.costSizeIntern).ToList());
+                    ViewBag.DopelzylinderInternNormal = JsonConvert.SerializeObject(AussenInen.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());                  
                 }
 
                 var option = db.Profil_Doppelzylinder_Options.Where(x => x.DoppelzylinderId == DopelOrderlist[0].Id).ToList();
@@ -6610,42 +6635,77 @@ namespace schliessanlagen_konfigurator.Controllers
                     ViewBag.Dopelzylinderaussen = DSize.Select(x => x.aussen).ToList();
                     ViewBag.DopelzylinderIntern = DSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList();
 
+                    var DopelInnen = new List<float>();
+                    var Dopelprice = new List<float>();
+                    var allItems = new List<(float DopelInnen, float Dopelprice)>();
+
                     var doppelKleinSize = DSize.SelectMany(x => x.Doppel_Innen_klein).ToList();
 
                     if (doppelKleinSize.Count() > 0)
                     {
-                        var arrayCountItemIntern = DSize.Where(x => x.Doppel_Innen_klein.Count() > 0).Select(x => x.Doppel_Innen_klein.Count()).ToList();
-                        var x = arrayCountItemIntern.Sum();
+                        if (AussenInen.Where(x => x.Intern > 0).Count() > 0 && doppelKleinSize.Count() > 0)
+                        {
+                            if (AussenInen.Where(x => x.Intern > 0).Min(x => x.Intern) > doppelKleinSize[0].Intern)
+                            {
+                                foreach (var item in doppelKleinSize)
+                                {
+                                    allItems.Add((item.Intern, item.costSizeIntern));
+                                }
 
-                        var arrayCountItemAussen = DSize.Where(x => x.Doppel_Innen_klein.Count() > 0).Select(x => x.aussen).Count();
+                                foreach (var item in AussenInen.Where(x => x.Intern > 0))
+                                {
+                                    allItems.Add((item.Intern, item.costSizeIntern));
+                                }
+                            }
+                            else
+                            {
+                                foreach (var item in AussenInen.Where(x => x.Intern > 0))
+                                {
+                                    allItems.Add((item.Intern, item.costSizeIntern));
+                                }
+                                foreach (var item in doppelKleinSize)
+                                {
+                                    allItems.Add((item.Intern, item.costSizeIntern));
+                                }
+                            }
+                        }
+                        else if (doppelKleinSize.Count() > 0)
+                        {
+                            foreach (var list in doppelKleinSize)
+                            {
+                                DopelInnen.Add(list.Intern);
+                                Dopelprice.Add(list.costSizeIntern);
+                            }
+                        }
+                        else
+                        {
+                            foreach (var list in doppelKleinSize)
+                            {
+                                DopelInnen.Add(list.Intern);
+                                Dopelprice.Add(list.costSizeIntern);
+                            }
+                        }
 
-                        var y = arrayCountItemAussen;
+                        var sortedItems = allItems.Where(x => x.DopelInnen > 0).OrderBy(x => x.DopelInnen).ToList();
 
-                        ViewBag.DopelzylinderIntern = doppelKleinSize.Select(x => x.Intern).ToList();
-                        ViewBag.CostDoppelIntern = JsonConvert.SerializeObject(DSize.Select(x => x.costSizeIntern).Skip(y).ToList());
+                        foreach (var item in sortedItems)
+                        {
+                            DopelInnen.Add(item.DopelInnen);
+                            Dopelprice.Add(item.Dopelprice);
+                        }
 
-                        ViewBag.CostDoppelAussen = JsonConvert.SerializeObject(DSize.Select(x => x.costSizeAussen).ToList());
-
-                        ViewBag.DopelzylinderInternNormal = JsonConvert.SerializeObject(DSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
-                        ViewBag.DopelzylinderInternKlein = JsonConvert.SerializeObject(doppelKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
-                        ViewBag.DopelzylinderInternKleinPreis = JsonConvert.SerializeObject(doppelKleinSize.Select(x => x.costSizeIntern).ToList());
-
-                        ViewBag.CountKlein = arrayCountItemIntern[0];
-
-                        ViewBag.CountDoppelInter = JsonConvert.SerializeObject(DSize.Where(x => x.Doppel_Innen_klein.Count() > 0).Select(x => x.Doppel_Innen_klein.Count()).ToList());
-
+                        ViewBag.DopelzylinderIntern = DopelInnen.ToList();
+                        ViewBag.CostDoppelIntern = JsonConvert.SerializeObject(Dopelprice.ToList());
+                        ViewBag.CostDoppelAussen = JsonConvert.SerializeObject(AussenInen.Select(x => x.costSizeAussen).ToList());
+                        ViewBag.DopelzylinderInternNormal = JsonConvert.SerializeObject(AussenInen.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
 
                     }
                     else
                     {
                         ViewBag.DopelzylinderIntern = DSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList();
                         ViewBag.CostDoppelIntern = JsonConvert.SerializeObject(DSize.Select(x => x.costSizeIntern).ToList());
-
                         ViewBag.CostDoppelAussen = JsonConvert.SerializeObject(DSize.Select(x => x.costSizeAussen).ToList());
-
                         ViewBag.DopelzylinderInternNormal = JsonConvert.SerializeObject(DSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
-                        ViewBag.DopelzylinderInternKlein = JsonConvert.SerializeObject(doppelKleinSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());
-                        ViewBag.DopelzylinderInternKleinPreis = JsonConvert.SerializeObject(doppelKleinSize.Select(x => x.costSizeIntern).ToList());
                     }
 
                     ViewBag.CostDoppelAussen = JsonConvert.SerializeObject(DSize.Select(x => x.costSizeAussen).ToList());
@@ -6803,9 +6863,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     itemType.Add(6);
                 }
             }
-           
-
-
+ 
             ViewBag.AllType = db.Schliessanlagen.Where(x => itemType.Contains(x.Id)).ToList();
 
             var SumCost = DopelOrderlist.Select(x => x.Price).Sum() + KnaufZelinder.Select(x => x.Price).Sum() + Halbzylinder.Select(x => x.Price).Sum() +
@@ -6856,6 +6914,143 @@ namespace schliessanlagen_konfigurator.Controllers
 
             return Ok();
         }
+
+        public async Task<IActionResult> RewriteInnen(int id, int Grose, int Type)
+        {
+            if(Type == 1)
+            {
+                var DopelInnen = new List<float>();
+                var Dopelprice = new List<float>();
+                var allItems = new List<(float DopelInnen, float Dopelprice)>();
+
+                var allIntern = db.Aussen_Innen.Where(x => x.Profil_DoppelzylinderId == id && x.Intern > 0).ToList();
+
+                var aussenInnen = db.Aussen_Innen.Include(x => x.Doppel_Innen_klein).Where(x => x.Profil_DoppelzylinderId == id && x.aussen == Grose).ToList();
+                var doppelKlein = aussenInnen.SelectMany(x => x.Doppel_Innen_klein).ToList();
+
+                if (aussenInnen.Where(x => x.Intern > 0).Count()>0 && doppelKlein.Count() > 0)
+                {
+                    if (aussenInnen.Where(x=>x.Intern>0).Min(x=>x.Intern) > doppelKlein[0].Intern)
+                    {
+                        foreach (var list in doppelKlein)
+                        {
+                            allItems.Add((list.Intern, list.costSizeIntern));
+                        }
+                        foreach (var list in allIntern)
+                        {
+                            allItems.Add((list.Intern, list.costSizeIntern));
+                        }
+                        
+                    }
+                    else
+                    {
+                        foreach (var list in allIntern)
+                        {
+                            allItems.Add((list.Intern, list.costSizeIntern));
+                        }
+                        foreach (var list in doppelKlein)
+                        {
+                            allItems.Add((list.Intern, list.costSizeIntern));
+                        }
+                        
+                    }
+                }
+                else if (doppelKlein.Count() > 0)
+                {
+                    foreach (var list in doppelKlein)
+                    {
+                        DopelInnen.Add(list.Intern);
+                        Dopelprice.Add(list.costSizeIntern);
+                    }
+                }
+                else
+                {
+                    foreach (var list in allIntern)
+                    {
+                        DopelInnen.Add(list.Intern);
+                        Dopelprice.Add(list.costSizeIntern);
+                    }
+                }
+
+                var sortedItems = allItems.OrderBy(x => x.DopelInnen).ToList();
+
+                // Заполняем DopelInnen и Dopelprice
+                foreach (var item in sortedItems)
+                {
+                    DopelInnen.Add(item.DopelInnen);
+                    Dopelprice.Add(item.Dopelprice);
+                }
+
+                return Ok(new { DopelInnen = DopelInnen, Dopelprice = Dopelprice });
+            }
+            else if (Type == 3)
+            {
+                var KnayfInnen = new List<float>();
+                var Knayfprice = new List<float>();
+                var allItems = new List<(float KnayfInnen, float Knayfprice)>();
+
+                var allIntern = db.Aussen_Innen_Knauf.Where(x => x.Profil_KnaufzylinderId == id && x.Intern > 0).ToList();
+
+                var aussenInnen = db.Aussen_Innen_Knauf.Include(x => x.Aussen_Innen_Knauf_klein).Where(x => x.Profil_KnaufzylinderId == id && x.aussen == Grose).ToList();
+                var doppelKlein = aussenInnen.SelectMany(x => x.Aussen_Innen_Knauf_klein).ToList();
+
+                if (aussenInnen.Where(x => x.Intern > 0).Count() > 0 && doppelKlein.Count() > 0)
+                {
+                    if (aussenInnen.Where(x => x.Intern > 0).Min(x => x.Intern) > doppelKlein[0].Intern)
+                    {
+                        foreach (var list in doppelKlein)
+                        {
+                            allItems.Add((list.Intern, list.costSizeIntern));
+                        }
+                        foreach (var list in allIntern)
+                        {
+                            allItems.Add((list.Intern, list.costSizeIntern));
+                        }
+
+                    }
+                    else
+                    {
+                        foreach (var list in allIntern)
+                        {
+                            allItems.Add((list.Intern, list.costSizeIntern));
+                        }
+                        foreach (var list in doppelKlein)
+                        {
+                            allItems.Add((list.Intern, list.costSizeIntern));
+                        }
+
+                    }
+                }
+                else if (doppelKlein.Count() > 0)
+                {
+                    foreach (var list in doppelKlein)
+                    {
+                        KnayfInnen.Add(list.Intern);
+                        Knayfprice.Add(list.costSizeIntern);
+                    }
+                }
+                else
+                {
+                    foreach (var list in allIntern)
+                    {
+                        KnayfInnen.Add(list.Intern);
+                        Knayfprice.Add(list.costSizeIntern);
+                    }
+                }
+                var sortedItems = allItems.OrderBy(x => x.KnayfInnen).ToList();
+
+                foreach (var item in sortedItems)
+                {
+                    KnayfInnen.Add(item.KnayfInnen);
+                    Knayfprice.Add(item.Knayfprice);
+                }
+
+                return Ok(new { KnayfInnen = KnayfInnen, Knayfprice = Knayfprice });
+            }
+
+            return Ok("");
+        }
+
         public async Task<IActionResult> SaveUserOrders(string user, List<string> TurName, List<string> DopelName, List<float> DoppelAussen, List<float> DoppelIntern
         ,List<string> DoppelOption, List<string> KnayfOption, List<string> HalbOption, List<string> HebelOption, List<string> VorhnaOption, List<string> AussenOption,
         List<string> KnayfName, List<float> KnayfAussen, List<float> KnayfIntern, List<string> HalbName, List<float> HalbAussen, List<string> HelbName,

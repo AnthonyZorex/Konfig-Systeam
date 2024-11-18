@@ -34,9 +34,9 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(60);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
+    options.IdleTimeout = TimeSpan.FromMinutes(60);
 
 });
 builder.Services.AddRazorPages();
@@ -52,6 +52,12 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequiredLength = 6;
     options.Password.RequiredUniqueChars = 1;
 });
+
+builder.Services.Configure<IISServerOptions>(options =>
+{
+    options.MaxRequestBodySize = 10485760;
+});
+
 builder.Services.AddControllers().AddJsonOptions(options =>
  {
      options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
@@ -69,6 +75,15 @@ builder.Services.AddResponseCompression(options =>
         });
     options.Providers.Add<BrotliCompressionProvider>();
     options.Providers.Add<GzipCompressionProvider>();
+});
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always; 
+    options.Cookie.SameSite = SameSiteMode.Strict;
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+    options.SlidingExpiration = true; 
 });
 
 builder.Services.Configure<BrotliCompressionProviderOptions>(options =>
@@ -95,7 +110,8 @@ app.UseStaticFiles(new StaticFileOptions
 {
     OnPrepareResponse = ctx =>
     {
-        ctx.Context.Response.Headers.Append("Cache-Control", "public,max-age=604800"); 
+        ctx.Context.Response.Headers.Append("Cache-Control", "public,max-age=604800");
+        ctx.Context.Response.Headers.Append("X-Content-Type-Options", "nosniff");
     }
 });
 
