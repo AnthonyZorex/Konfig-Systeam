@@ -191,15 +191,12 @@
                                     <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
                                         <h6>außen</h6>
                                         <select class="form-select" name="DoppelAussen" id="Aussen" onchange="selectParamAussen(@d,'Doppelzylinder',event.target.selectedIndex,event.target.value,@item.Id)">
+                                          <option style="display:none" selected>@ViewBag.DAussen[elemNum]</option>
                                         @for (int i = 0; i < ViewBag.Dopelzylinderaussen.Count; i++)
                                         {
-                                                if (@ViewBag.Dopelzylinderaussen[i] == @ViewBag.DAussen[elemNum])
-                                                {
-                                                    <option selected id="OptionA">@ViewBag.Dopelzylinderaussen[i]</option>
-                                                }
-                                                else{
-                                                     <option id="OptionA">@ViewBag.Dopelzylinderaussen[i]</option>
-                                                }
+                                               
+                                             <option id="OptionA">@ViewBag.Dopelzylinderaussen[i]</option>
+                                               
                                         }
                                     </select>
                                     <input type="hidden" id="Aussen-@d" />
@@ -207,17 +204,12 @@
                                 <div>
                                         <h6>innen</h6>
                                     <select class="form-select" name="DoppelIntern" id="Intern" onchange="selectParamIntern(@d,'Doppelzylinder',event.target.selectedIndex)">
-                                        
+                                     
+                                        <option style="display:none" selected>@ViewBag.DInter[elemNum]</option>
                                      @for (int i = 0; i < ViewBag.DopelzylinderIntern.Count; i++)
                                      {
-                                                    if (@ViewBag.DopelzylinderIntern[i] == @ViewBag.DInter[elemNum])
-                                                    {
-                                                    <option id="OptionI" selected>@ViewBag.DopelzylinderIntern[i]</option>
-                                                    }
-                                                    else
-                                                    {
-                                                      <option id="OptionI">@ViewBag.DopelzylinderIntern[i]</option> 
-                                                    }
+                                          <option id="OptionI">@ViewBag.DopelzylinderIntern[i]</option> 
+                                              
                                      }
                                     
                                  </select>
@@ -390,17 +382,11 @@
                                         <h6>außen</h6>
                                     <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
                                         <select class="form-select" name="KnayfAussen" id="Aussen" onchange="selectParamAussen(@d,'Knaufzylinder',event.target.selectedIndex,event.target.value,@item.Id)">
+                                            <option style="display:none" selected>@ViewBag.KAussen[elemNum]</option>
                                     @for (int i = 0; i < ViewBag.KnayfZelinderAussen.Count; i++)
                                     {
-                                                if (@ViewBag.KnayfZelinderAussen[i] == @ViewBag.KAussen[elemNum])
-                                                {
-                                                    <option selected id="OptionA">@ViewBag.KnayfZelinderAussen[i]</option>
-                                                }
-                                                else
-                                                {
-                                                    <option id="OptionA">@ViewBag.KnayfZelinderAussen[i]</option>
-                                                }
-                                        
+                                        <option id="OptionA">@ViewBag.KnayfZelinderAussen[i]</option>
+  
                                     }
                                 </select>
                                     <input type="hidden" id="Aussen-@d" />
@@ -408,17 +394,10 @@
                             <div>
                                 <h6>innen</h6>
                                     <select class="form-select" name="KnayfIntern" id="Intern" onchange="selectParamIntern(@d,'Knaufzylinder',event.target.selectedIndex)">
-
+                                      <option style="display:none" selected>@ViewBag.KInter[elemNum]</option>
                                     @for (int i = 0; i < ViewBag.KnayfZelinderIntern.Count; i++)
-                                    {
-                                                    if (@ViewBag.KnayfZelinderIntern[i] == @ViewBag.KInter[elemNum])
-                                                    {
-                                                    <option selected id="OptionI">@ViewBag.KnayfZelinderIntern[i]</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option id="OptionI">@ViewBag.KnayfZelinderIntern[i]</option>
-                                                    }
+                                    {         
+                                        <option id="OptionI">@ViewBag.KnayfZelinderIntern[i]</option>       
                                     }
 
                                 </select>
@@ -598,16 +577,8 @@
                                     <option style="display:none" selected>@ViewBag.HalbOrderAussen[elemNum]</option>
                                     @for (int i = 0; i < ViewBag.AussenHalb.Count; i++)
                                     {
-                                         if (@ViewBag.AussenHalb[i] == @ViewBag.HalbOrderAussen[elemNum])
-                                         {
-                                             <option selected id="OptionA">@ViewBag.AussenHalb[i]</option>
-                                         }
-                                         else
-                                         {
                                                 <option id="OptionA">@ViewBag.AussenHalb[i]</option>
-                                         }
 
-                                      
                                     }
                                 </select>
                                     <input type="hidden" id="Aussen-@d" />

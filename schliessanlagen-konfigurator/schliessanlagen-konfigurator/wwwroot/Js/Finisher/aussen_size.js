@@ -1,6 +1,6 @@
 ﻿function selectParamAussen(idBlock, type, selectId,value,id) {
 
-    let SelectItemId = selectId;
+    let SelectItemId = selectId-1;
     let is_GrossSize = false;
     let BlockTur = document.getElementById("Size-" + idBlock);
     let countSchluss = BlockTur.querySelector("#countSchlusse-" + idBlock);
@@ -45,7 +45,7 @@
     }
     if (type === "Halbzylinder")
     {
-        for (let i = 0; i < oldAussen.value; i++)
+        for (let i = 0; i <= oldAussen.value; i++)
         {
             let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
 
@@ -204,7 +204,7 @@
 
     if (type === "Halbzylinder")
     {
-        for (let s = 0; s < SelectItemId; s++)
+        for (let s = 0; s <= SelectItemId; s++)
         {
             let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
             let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
