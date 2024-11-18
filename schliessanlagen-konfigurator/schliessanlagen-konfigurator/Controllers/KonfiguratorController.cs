@@ -1167,7 +1167,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 var products =  db.Aussen_Innen_Halbzylinder.ToList();
 
-                var items = products.Where(x => x.aussen == maxAussenParameter).Select(x => x.Profil_HalbzylinderId).Distinct().ToList();
+                var items = products.Where(x => x.aussen >= maxAussenParameter).Select(x => x.Profil_HalbzylinderId).Distinct().ToList();
 
                 var safeDoppelItem = new List<Profil_Halbzylinder>();
 
@@ -5976,7 +5976,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             foreach (var list in SizeHalb)
             {
-                var SizeHalbzylinder =  db.Aussen_Innen_Halbzylinder.Where(x => x.Profil_HalbzylinderId == Halbzylinder.First().Id).ToList();
+                var SizeHalbzylinder =  db.Aussen_Innen_Halbzylinder.Where(x => x.Profil_HalbzylinderId == Halb).ToList();
                 var Aussenitem = SizeHalbzylinder.Where(x => x.aussen > list.aussen || x.aussen == list.aussen).Min(x => x.aussen);
 
                 HalbaussenActual.Add(Aussenitem);
@@ -6208,7 +6208,7 @@ namespace schliessanlagen_konfigurator.Controllers
             ViewBag.HalbItemJson = JsonConvert.SerializeObject(Halbzylinder.Select(x => x.Id).ToList());
 
             ViewBag.HalbAussenList = HablAussen.Select(x => x.aussen).Distinct().ToList();
-            ViewBag.HalbOrderAussen = key.Where(x => x.ZylinderId == 2).Select(x => x.aussen).ToList();
+            ViewBag.HalbOrderAussen = HalbaussenActual.ToList();
 
             ViewBag.KnayfZelinder = KnayfOrderlist.ToList();
 
