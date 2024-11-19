@@ -4991,7 +4991,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             ViewBag.KnaufGalery = KnaufGalery;
 
-            var Kanyf_AussenInen =  db.Aussen_Innen_Knauf.OrderBy(x => x.aussen).Include(x=>x.Aussen_Innen_Knauf_klein).Where(x => x.Profil_KnaufzylinderId == Convert.ToInt32(KnayfID)).Select(x => new { x.aussen, x.Intern, x.costSizeIntern, x.costSizeAussen, x.Aussen_Innen_Knauf_klein }).ToList();
+            var Kanyf_AussenInen =  db.Aussen_Innen_Knauf.OrderBy(x => x.aussen).Include(x => x.Aussen_Innen_Knauf_klein).Where(x => x.Profil_KnaufzylinderId == Convert.ToInt32(KnayfID)).Select(x => new { x.aussen, x.Intern, x.costSizeIntern, x.costSizeAussen, x.Aussen_Innen_Knauf_klein }).ToList();
 
             var IsOpenValue = new List<isOpen_value>();
 
@@ -5664,7 +5664,11 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var CountAussenDoppel = 0;
             var countZylinder = countDoppel.Distinct().ToList();
-           
+
+            var countKnayfZylinder = countKnayf.Distinct().ToList();
+
+            var CountAussenKnayf = 0;
+
             int dpCount = 0;
             int knayfCount = 0;
             int HalbCount = 0;
@@ -5834,7 +5838,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
                 if (order.ZylinderId == 3)
                 {
-                    var KnayfSize = db.Aussen_Innen_Knauf.Include(x=>x.Aussen_Innen_Knauf_klein).Where(x => x.Profil_KnaufzylinderId == KnayfOrderlist[knayfCount].Id).ToList();
+                    var KnayfSize = db.Aussen_Innen_Knauf.OrderBy(x => x.aussen).Include(x=>x.Aussen_Innen_Knauf_klein).Where(x => x.Profil_KnaufzylinderId == KnayfOrderlist[knayfCount].Id).ToList();
 
                     var nÍtem = new Profil_Knaufzylinder
                     {
@@ -5849,8 +5853,8 @@ namespace schliessanlagen_konfigurator.Controllers
                         schliessanlagenId = KnayfOrderlist[knayfCount].schliessanlagenId
                     };
 
-                    var aussen = KnayfSize.Min(x => x.aussen);
-                    var aussenSize = KnayfSize.Select(x => x.aussen).Distinct().ToList();
+                    var aussen = Kanyf_AussenInen.Min(x => x.aussen);
+                    var aussenSize = Kanyf_AussenInen.Select(x => x.aussen).Distinct().ToList();
 
                     var innen = KnayfSize.Min(x => x.Intern);
                     var innenSize = KnayfSize.Select(x => x.Intern).Distinct().ToList();
@@ -5873,9 +5877,9 @@ namespace schliessanlagen_konfigurator.Controllers
                     {
                         if(aus < order.aussen)
                         {
-                            if (countZylinder.Count() > CountAussenDoppel)
+                            if (countKnayfZylinder.Count() > CountAussenKnayf)
                             {
-                                for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
+                                for (int c = 0; c < countKnayfZylinder[CountAussenKnayf]; c++)
                                 {
                                     var costAussen = KnayfSize.FirstOrDefault(x => x.aussen == aus).costSizeAussen;
                                     nÍtem.Price = nÍtem.Price + costAussen;
@@ -5889,9 +5893,9 @@ namespace schliessanlagen_konfigurator.Controllers
                         }
                         else
                         {
-                            if (countZylinder.Count() > CountAussenDoppel)
+                            if (countKnayfZylinder.Count() > CountAussenKnayf)
                             {
-                                for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
+                                for (int c = 0; c < countKnayfZylinder[CountAussenKnayf]; c++)
                                 {
                                     var costAussen = KnayfSize.FirstOrDefault(x => x.aussen == aus).costSizeAussen;
                                     nÍtem.Price = nÍtem.Price + costAussen;
@@ -5913,9 +5917,9 @@ namespace schliessanlagen_konfigurator.Controllers
                     {
                         if (ine.KnayfInnen < order.innen)
                         {
-                            if (countZylinder.Count() > CountAussenDoppel)
+                            if (countKnayfZylinder.Count() > CountAussenKnayf)
                             {
-                                for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
+                                for (int c = 0; c < countKnayfZylinder[CountAussenKnayf]; c++)
                                 {
                                     nÍtem.Price = nÍtem.Price + ine.Knayfprice;
                                 }
@@ -5927,9 +5931,9 @@ namespace schliessanlagen_konfigurator.Controllers
                         }
                         else
                         {
-                            if (countZylinder.Count() > CountAussenDoppel)
+                            if (countKnayfZylinder.Count() > CountAussenKnayf)
                             {
-                                for (int c = 0; c < countZylinder[CountAussenDoppel]; c++)
+                                for (int c = 0; c < countKnayfZylinder[CountAussenKnayf]; c++)
                                 {
                                     nÍtem.Price = nÍtem.Price + ine.Knayfprice;
                                     innen = ine.KnayfInnen;
@@ -5947,7 +5951,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     }
 
                     KnayfOrderlist[knayfCount] = nÍtem;
-                    CountAussenDoppel++;
+                    CountAussenKnayf++;
                     knayfCount++;
                 }
                 if (order.ZylinderId == 5)
@@ -6866,11 +6870,11 @@ namespace schliessanlagen_konfigurator.Controllers
  
             ViewBag.AllType = db.Schliessanlagen.Where(x => itemType.Contains(x.Id)).ToList();
 
-            var SumCost = DopelOrderlist.Select(x => x.Price).Sum() + KnaufZelinder.Select(x => x.Price).Sum() + Halbzylinder.Select(x => x.Price).Sum() +
+            var SumCost = DopelOrderlist.Select(x => x.Price).Sum() + KnayfOrderlist.Select(x => x.Price).Sum() + Halbzylinder.Select(x => x.Price).Sum() +
                 HelbZ.Select(x => x.Price).Sum() + Vorhanschlos.Select(x => x.Price).Sum() + Aussenzylinder.Select(x => x.Price).Sum() + DoppelAussenCost
                 + KhaufAussenCost + halbAussenCost + SumcostedDopSylinder + costKey;
 
-            var SumCostProduct = DopelOrderlist.Select(x => x.Price).Sum() + KnaufZelinder.Select(x => x.Price).Sum() + Halbzylinder.Select(x => x.Price).Sum() +
+            var SumCostProduct = DopelOrderlist.Select(x => x.Price).Sum() + KnayfOrderlist.Select(x => x.Price).Sum() + Halbzylinder.Select(x => x.Price).Sum() +
                 HelbZ.Select(x => x.Price).Sum() + Vorhanschlos.Select(x => x.Price).Sum() + Aussenzylinder.Select(x => x.Price).Sum() + costKey;
 
             decimal xConvert = Convert.ToDecimal(SumCost);

@@ -173,8 +173,8 @@
                     });
 
                 is_GrossSize = false;
-                oldIntern.value = 0;   
-                Innen.selectedIndex = 0;
+                oldIntern.value = 1;   
+                Innen.selectedIndex = 1;
 
                 for (let s = 0; s <= SelectItemId; s++) {
 
@@ -289,8 +289,8 @@
             });
 
         is_GrossSize = false;
-        oldIntern.value = 0;
-        Innen.selectedIndex = 0;
+        oldIntern.value = 1;
+        Innen.selectedIndex = 1;
 
 
         for (let s = 0; s <= SelectItemId; s++)
