@@ -399,12 +399,15 @@
                                                         <h2><strong>Versandarten</strong></h2>
                                                     </div>
                                                     <br />
-                                                    <div>
 
+                                                <div style="display: flex;align-items: center;">
                                                     <input type="hidden" id="gramWert-@z" value="@Gramm[z]" />
 
                                                         <input type="radio" id="dhl-@z" onchange="changeSend(@z)" checked name="DhlSend" value="DHL">
                                                         <input type="text" readonly style="border: none;outline:none" value="0" id="CostGram-@z" /> <br>
+                                                    <h4>
+                                                       DHL
+                                                    </h4>
                                                     </div>
 
                                                     <div style="display: flex;gap: 30px;align-items: center;">
@@ -637,16 +640,13 @@
 
 <script>
 
-    let currentPrice = '0.00';
-
     let removeButton = document.getElementById("removeOrder");
     let AllOrderID = document.querySelector("#OrderId");
 
     var span = document.getElementsByClassName("close")[0];
 
     let s = 0;
-     const vatNumber = document.querySelector("input[name='RechnungVat']");
-
+    const vatNumber = document.querySelector("input[name='RechnungVat']");
       
     function changeSend(BlockItem) 
     {
@@ -709,6 +709,8 @@
 
         var stringWithoutEuro = cost.innerHTML.replace("€", "");
 
+        let price = document.querySelectorAll("input[name='OrderSum']");
+
         var costen = parseFloat(stringWithoutEuro.replace(',', '.').trim());
 
             if (modal.childNodes.length<2) 
@@ -718,7 +720,7 @@
                         return actions.order.create({
                             purchase_units: [{
                                 amount: {
-                                    value: currentPrice
+                                    value: parseFloat(price[id].value.replace("€", "").replace(",", ".").trim())
                                 },
                                 invoice_id: invoiceNumber
                             }]

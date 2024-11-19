@@ -823,9 +823,9 @@ namespace schliessanlagen_konfigurator.Controllers
             for (int i = 0; i < size.Count(); i++)
                 VorhanSchlossSize.Add(size[i]);
 
-            var session = _contextAccessor.HttpContext.Session;
+            var session = _contextAccessor.HttpContext.Session.GetString("UserKey");
 
-            var UserKey = session.Id;
+            var UserKey = _contextAccessor.HttpContext.Session.Id;
             Orders user = new Orders();
 
             user.userKey = UserKey;
@@ -4964,6 +4964,7 @@ namespace schliessanlagen_konfigurator.Controllers
             SchopAlarm();
 
             var key =  db.Orders.Where(x => x.userKey == param2).Distinct().ToList();
+
 
             var DopelOrderlist = new List<Profil_Doppelzylinder>();
 

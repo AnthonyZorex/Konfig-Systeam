@@ -74,6 +74,8 @@ namespace schliessanlagen_konfigurator.Data
         public DbSet<NGF_Value> NGF_Value { get; set; }
 
 
+        public DbSet<Guest> Guest { get; set; }
+
         public DbSet<Profil_Halbzylinder> Profil_Halbzylinder { get; set; }
         public DbSet<Profil_Halbzylinder_Options> Profil_Halbzylinder_Options { get; set; }
         public DbSet<Halbzylinder_Options> Halbzylinder_Options { get; set; }

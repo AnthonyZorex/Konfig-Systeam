@@ -32,6 +32,8 @@ builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfi
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+builder.Services.AddDistributedMemoryCache();
+
 builder.Services.AddSession(options =>
 {
     options.Cookie.HttpOnly = true;
@@ -39,6 +41,8 @@ builder.Services.AddSession(options =>
     options.IdleTimeout = TimeSpan.FromMinutes(60);
 
 });
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 BundleTable.EnableOptimizations = true;

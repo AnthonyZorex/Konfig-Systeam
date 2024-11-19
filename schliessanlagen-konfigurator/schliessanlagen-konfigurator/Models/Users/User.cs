@@ -46,6 +46,8 @@ namespace schliessanlagen_konfigurator.Models.Users
         public DateTime? createData { get; set; }
         public string? Lieferzeit { get; set; }
         public string? UserId { get; set; }
+        public int? GuestId { get; set; }
+        public Guest Guest { get; set; }
         public User User { get; set; }
         public string? OrderStatus { get; set; }
         public DateTime? BezalenDate { get; set; }

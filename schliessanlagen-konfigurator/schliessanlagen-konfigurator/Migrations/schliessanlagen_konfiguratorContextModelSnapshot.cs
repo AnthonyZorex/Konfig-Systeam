@@ -51,25 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "56ac110f-e6b4-4b90-956b-a533d7b2415b",
+                            Id = "d311c00c-31df-4ead-9138-52f39b12637a",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "71998798-5f0f-452c-9cc7-7c89a4eddd46",
+                            Id = "79caa8f4-d88b-41c3-963b-9d38ea6abac1",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "f8ddb587-2e1f-45e9-a56d-29c2601f88dd",
+                            Id = "e6b2dc4c-53d9-49fd-88f6-1c151e6903b1",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "458e0687-36b3-422a-910a-7755a22d721d",
+                            Id = "8b755913-c9fc-4249-babb-3fedd47e6c53",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -318,6 +318,58 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Blogs");
+                });
+
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Guest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Bestelung")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Liefer_Land")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Liefer_Postleitzahl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Liefer_Stadt")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Liefer_Straße")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nachname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Vorhname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("news")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("orderId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Guest");
                 });
 
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Halbzylinder.Aussen_Innen_Halbzylinder", b =>
@@ -1443,6 +1495,9 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Property<float?>("Gramm")
                         .HasColumnType("real");
 
+                    b.Property<int?>("GuestId")
+                        .HasColumnType("int");
+
                     b.Property<float?>("KeyCost")
                         .HasColumnType("real");
 
@@ -1482,6 +1537,8 @@ namespace schliessanlagen_konfigurator.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GuestId");
 
                     b.HasIndex("UserId");
 
@@ -2062,9 +2119,15 @@ namespace schliessanlagen_konfigurator.Migrations
 
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Users.UserOrdersShop", b =>
                 {
+                    b.HasOne("schliessanlagen_konfigurator.Models.Guest", "Guest")
+                        .WithMany("UserOrdersShop")
+                        .HasForeignKey("GuestId");
+
                     b.HasOne("schliessanlagen_konfigurator.Models.Users.User", "User")
                         .WithMany("UserOrdersShop")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Guest");
 
                     b.Navigation("User");
                 });
@@ -2133,6 +2196,11 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Navigation("Aussen_Rund_options");
 
                     b.Navigation("ProductGalery");
+                });
+
+            modelBuilder.Entity("schliessanlagen_konfigurator.Models.Guest", b =>
+                {
+                    b.Navigation("UserOrdersShop");
                 });
 
             modelBuilder.Entity("schliessanlagen_konfigurator.Models.Halbzylinder.Halbzylinder_Options", b =>

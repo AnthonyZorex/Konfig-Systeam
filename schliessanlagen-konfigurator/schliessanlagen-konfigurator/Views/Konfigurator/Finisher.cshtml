@@ -1116,8 +1116,47 @@
                         <input id="chekProduct" type="submit" value="IN DEN WARENKORB" class="btn btn-danger" />
                     }
                     else
-                    {                       
-                        <a class="btn btn-danger" asp-area="Identity" asp-page="/Account/Register">IN DEN WARENKORB</a>
+                    {      
+                         <a class="btn btn-danger"  onclick="handleClick(event)" href="#" >IN DEN WARENKORB</a>
+
+                       <script>
+
+                              function handleClick(event) {
+                                event.preventDefault(); 
+
+                                const countKeyInputs = document.querySelectorAll("input[name='countKey']");
+                                const countTürInputs = document.querySelectorAll("input[name='TurCounter']");
+
+                             
+                                const countKey = Array.from(countKeyInputs).map(input => parseInt(input.value, 10));
+                                const countTür = Array.from(countTürInputs).map(input => parseInt(input.value, 10));
+@* 
+                                const requestData = {
+                                    UserKey: @Model.UserKey, 
+                                    aussen: [12.5, 15.3, 20.1], 
+                                    innen: [10.2, 13.4, 18.7],  
+                                    Options: ["Option1", "Option2", "Option3"],
+                                    count: countTür, 
+                                    CountKey: countKey
+                                };
+ *@
+                             
+                                axios.post('/GuestController/OrdersUpdate', requestData, {
+                                    headers: {
+                                        'Content-Type': 'application/json' // Указываем формат JSON
+                                    }
+                                })
+                                .then(function(response) {
+                                    console.log('Успешно:', response.data);
+                                   
+                                    window.location.href = '/Identity/Account/Register';
+                                })
+                                .catch(function(error) {
+                                    console.error('Ошибка:', error);
+                                    alert('Произошла ошибка при отправке данных. Попробуйте снова.');
+                                });
+                            }
+                        </script>
                     }
             </div>
                 

@@ -176,6 +176,8 @@
 @section Scripts {
     <script>
 
+        sessionStorage.setItem('UserKey', '@Model.userKey');
+
         let zylinderTypList = @Html.Raw(ViewBag.Zylinder_TypJson);
         let doppelAussenList = @Html.Raw(ViewBag.DoppelAussenJson);
         let doppelInternList = @Html.Raw(ViewBag.DoppelInternJson);
