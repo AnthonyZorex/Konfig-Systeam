@@ -1,5 +1,21 @@
 [
   {
+    "ContainingType": "schliessanlagen_konfigurator.Controllers.GuestController",
+    "Method": "OrdersUpdate",
+    "RelativePath": "api/Guest/OrdersUpdate",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "schliessanlagen_konfigurator.Controllers.GuestController\u002BSaveOrders",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "schliessanlagen_konfigurator.Controllers.SystemController",
     "Method": "GetData",
     "RelativePath": "api/System/GetData",

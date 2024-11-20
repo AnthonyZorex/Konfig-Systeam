@@ -5990,48 +5990,39 @@ namespace schliessanlagen_konfigurator.Controllers
             foreach (var list in KnayfSizeItem)
             {
                 var inter = new List<float>();
-                var KnayfSize =  db.Aussen_Innen_Knauf.Where(x => x.Profil_KnaufzylinderId == KnayfOrderlist.First().Id).ToList();
+                var KnayfSize =  db.Aussen_Innen_Knauf.Include(x=>x.Aussen_Innen_Knauf_klein).Where(x => x.Profil_KnaufzylinderId == KnayfOrderlist.First().Id).ToList();
                 var Aussenitem = KnayfSize.Where(x => x.aussen > list.aussen || x.aussen == list.aussen).Min(x => x.aussen);
-                var Innenitem = KnayfSize.Where(x => x.aussen > list.innen || x.aussen == list.innen).Min(x => x.Intern);
+                var doppelklei = KnayfSize.Where(x => x.Aussen_Innen_Knauf_klein.Count() > 0 && x.aussen == Aussenitem).SelectMany(x => x.Aussen_Innen_Knauf_klein).ToList();
 
-                var doppelklei =  db.Aussen_Innen_Knauf_klein.ToList();
-
-                var queryOrder = from t1 in KnayfSize
-                                 join t2 in doppelklei on t1.Id equals t2.Aussen_Innen_KnaufId
-                                 select new
-                                 {
-                                     Id = t2.Aussen_Innen_KnaufId
-                                 };
-
-                var ListDoppelKlein = queryOrder.Distinct().ToList();
-
-                if (ListDoppelKlein.Count() > 0)
+                if (doppelklei.Count() > 0)
                 {
-                    var f = db.Aussen_Innen_Knauf.FirstOrDefault(x => x.Id == ListDoppelKlein[0].Id);
-
-                    if (f.aussen == Aussenitem)
+                    foreach (var item in doppelklei)
                     {
-                        foreach (var s in f.Aussen_Innen_Knauf_klein)
-                        {
-                            inter.Add(s.Intern);
-                        }
-                         Innenitem = f.Aussen_Innen_Knauf_klein.Where(x => x.Intern > list.innen || x.Intern == list.innen).Min(x => x.Intern);
+                        inter.Add(item.Intern);
+                    }
+                    var dopS = KnayfSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList();
 
-                        KnayfInenActual.Add(Innenitem);
-                    }
-                    else
+                    foreach (var f in dopS)
                     {
-                         Innenitem = KnayfSize.Where(x => x.Intern > list.innen || x.Intern == list.innen).Min(x => x.Intern);
-                        KnayfInenActual.Add(Innenitem);
+
+                        inter.Add(f);
                     }
+
                 }
                 else
                 {
-                    Innenitem = KnayfSize.Where(x => x.Intern > list.innen || x.Intern == list.innen).Min(x => x.Intern);
+                    var dopS = KnayfSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList();
 
-                    KnayfInenActual.Add(Innenitem);
+                    foreach (var f in dopS)
+                    {
+
+                        inter.Add(f);
+                    }
                 }
 
+                var Innenitem = inter.OrderBy(x => x).FirstOrDefault(x => x > list.innen || x == list.innen);
+
+                KnayfInenActual.Add(Innenitem);
                 KnayfaussenActual.Add(Aussenitem);
 
                
@@ -6041,44 +6032,37 @@ namespace schliessanlagen_konfigurator.Controllers
                 var inter = new List<float>();
                 var DoppelSize = db.Aussen_Innen.Include(x=>x.Doppel_Innen_klein).Where(x => x.Profil_DoppelzylinderId == DopelOrderlist.First().Id).ToList();
                 var Aussenitem = DoppelSize.Where(x => x.aussen > list.aussen || x.aussen == list.aussen).Min(x => x.aussen);                
-                var doppelklei = db.Aussen_Innen.Include(x=>x.Doppel_Innen_klein).Where(x=>x.Doppel_Innen_klein.Count()>0).ToList();
+                var doppelklei = DoppelSize.Where(x=>x.Doppel_Innen_klein.Count()>0 && x.aussen == Aussenitem).SelectMany(x=>x.Doppel_Innen_klein).ToList();
 
-                var queryOrder = from t1 in DoppelSize
-                                 join t2 in doppelklei on t1.Id equals t2.Id
-                                 select new
-                                 {
-                                     Id = t2.Id
-                                 };
-
-               var ListDoppelKlein = queryOrder.ToList();
-                   
-                if (ListDoppelKlein.Count() > 0)
+                if (doppelklei.Count() > 0)
                 {
-                        var f = db.Aussen_Innen.FirstOrDefault(x => x.Id == ListDoppelKlein[0].Id);
+                    foreach (var item in doppelklei)
+                    {
+                        inter.Add(item.Intern);
+                    }
+                    var dopS = DoppelSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList();
 
-                        if (f.aussen == Aussenitem)
-                        {
-                            foreach (var s in f.Doppel_Innen_klein)
-                            {
-                                inter.Add(s.Intern);
-                            }
-                            var Innenitem = f.Doppel_Innen_klein.FirstOrDefault(x => x.Intern > list.innen || x.Intern == list.innen).Intern;
+                    foreach (var f in dopS)
+                    {
 
-                            InenActual.Add(Innenitem);
-                        }
-                        else
-                        {
-                            var Innenitem = DoppelSize.SelectMany(x=>x.Doppel_Innen_klein).FirstOrDefault(x => x.Intern > list.innen || x.Intern == list.innen).Intern;
-
-                            InenActual.Add(Innenitem);
-                        }  
+                        inter.Add(f);
+                    }
                 }
                 else
                 {
-                    var Innenitem = DoppelSize.FirstOrDefault(x => x.Intern > list.innen || x.Intern == list.innen).Intern;
+                    var dopS = DoppelSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList();
 
-                    InenActual.Add(Innenitem);
+                    foreach (var f in dopS)
+                    {
+
+                        inter.Add(f);
+                    }
+
                 }
+                var Innenitem = inter.OrderBy(x=>x).FirstOrDefault(x => x > list.innen || x == list.innen);
+
+                InenActual.Add(Innenitem);
+
                 DaussenActual.Add(Aussenitem);
             }
 
@@ -6284,7 +6268,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         }
                     }
 
-                    var sortedItems = allItems.Where(x=>x.KnayfInnen>0).OrderBy(x => x.KnayfInnen).ToList();
+                    var sortedItems = allItems.Where(x=>x.KnayfInnen>0).OrderBy(x => x.KnayfInnen).Distinct().ToList();
 
                     foreach (var item in sortedItems)
                     {
@@ -6422,7 +6406,7 @@ namespace schliessanlagen_konfigurator.Controllers
                             }
                         }
 
-                        var sortedItems = allItems.Where(x => x.KnayfInnen > 0).OrderBy(x => x.KnayfInnen).ToList();
+                        var sortedItems = allItems.Where(x => x.KnayfInnen > 0).OrderBy(x => x.KnayfInnen).Distinct().ToList();
 
                         foreach (var item in sortedItems)
                         {
@@ -6576,7 +6560,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 else
                 {
                     ViewBag.DopelzylinderIntern = AussenInen.Where(x => x.Intern > 0).Select(x => x.Intern).ToList();
-                    ViewBag.CostDoppelIntern = JsonConvert.SerializeObject(AussenInen.Select(x => x.costSizeIntern).ToList());
+                    ViewBag.CostDoppelIntern = JsonConvert.SerializeObject(AussenInen.Where(x => x.Intern > 0).Select(x => x.costSizeIntern).ToList());
                     ViewBag.CostDoppelAussen = JsonConvert.SerializeObject(AussenInen.Select(x => x.costSizeAussen).ToList());
                     ViewBag.DopelzylinderInternNormal = JsonConvert.SerializeObject(AussenInen.Where(x => x.Intern > 0).Select(x => x.Intern).ToList());                  
                 }
@@ -7030,16 +7014,14 @@ namespace schliessanlagen_konfigurator.Controllers
                 {
                     foreach (var list in doppelKlein)
                     {
-                        KnayfInnen.Add(list.Intern);
-                        Knayfprice.Add(list.costSizeIntern);
+                        allItems.Add((list.Intern, list.costSizeIntern));
                     }
                 }
                 else
                 {
                     foreach (var list in allIntern)
                     {
-                        KnayfInnen.Add(list.Intern);
-                        Knayfprice.Add(list.costSizeIntern);
+                        allItems.Add((list.Intern, list.costSizeIntern));
                     }
                 }
                 var sortedItems = allItems.OrderBy(x => x.KnayfInnen).ToList();

@@ -533,6 +533,10 @@
       "PackagePath": "staticwebassets\\Js\\Page_Personal_Order\\Rehnung_adress.js"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Js\\RegisterForm\\RegistForm.js",
+      "PackagePath": "staticwebassets\\Js\\RegisterForm\\RegistForm.js"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Js\\Schop\\search_Item.js",
       "PackagePath": "staticwebassets\\Js\\Schop\\search_Item.js"
     },

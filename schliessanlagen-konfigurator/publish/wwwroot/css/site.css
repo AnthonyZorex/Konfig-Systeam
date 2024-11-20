@@ -778,6 +778,61 @@ body::-webkit-scrollbar-thumb:hover {
         width: 235px;
         text-align: start;
     }
+        .step-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            flex-wrap: wrap; /* Даем возможность переноса элементов на меньших экранах */
+        }
+
+        .step {
+            position: relative;
+            text-align: center;
+            padding: 10px;
+            background-color: #ddd;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            min-width: 120px; /* Ограничиваем минимальную ширину для каждого шага */
+            margin: 5px; /* Добавляем немного пространства между шагами */
+            flex-grow: 1; /* Растягиваем шаги, чтобы они заполняли пространство */
+        }
+
+           
+            .step:first-child::before {
+                left: 0;
+            }
+
+        .step-active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+            .step-active::before {
+                background-color: var(--primary-color);
+            }
+
+        .step-completed {
+            background-color: #198754;
+            color: white;
+        }
+
+            .step-completed::before {
+                background-color: #198754;
+            }
+
+        .step-form {
+            display: none;
+        }
+
+            .step-form.active {
+                display: block;
+            }
+
+        .step-active + .step::after,
+        .step-completed + .step::after {
+            background-color: #28a745;
+        }
 
     #schlussel {
         margin-top: 5px;
@@ -1437,6 +1492,86 @@ body::-webkit-scrollbar-thumb:hover {
 }
 @media (min-width: 900px) and (max-width: 1440px) 
 {
+    .step-progress {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        flex-wrap: wrap; /* Даем возможность переноса элементов на меньших экранах */
+    }
+
+    .step {
+        position: relative;
+        text-align: center;
+        padding: 10px;
+        background-color: #ddd;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+        min-width: 120px; /* Ограничиваем минимальную ширину для каждого шага */
+        margin: 5px; /* Добавляем немного пространства между шагами */
+        flex-grow: 1; /* Растягиваем шаги, чтобы они заполняли пространство */
+    }
+
+        .step::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: -20px;
+            width: 20px;
+            height: 20px;
+            background-color: #ddd;
+            border-radius: 50%;
+            transform: translateY(-50%);
+            transition: background-color 0.3s ease;
+        }
+
+        .step:first-child::before {
+            left: 0;
+        }
+
+    .step-active {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+        .step-active::before {
+            background-color: var(--primary-color);
+        }
+
+    .step-completed {
+        background-color: #198754;
+        color: white;
+    }
+
+        .step-completed::before {
+            background-color: #198754;
+        }
+
+    .step:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 100%;
+        width: 100%;
+        height: 2px;
+        background-color: #ddd;
+        transform: translateY(-50%);
+        transition: background-color 0.3s ease;
+    }
+
+    .step-form {
+        display: none;
+    }
+
+        .step-form.active {
+            display: block;
+        }
+
+    .step-active + .step::after,
+    .step-completed + .step::after {
+        background-color: #28a745;
+    }
+
     #product_desciptions > div > p > img {
         max-width: 500px;
         font-size: 20px;
@@ -2998,7 +3133,85 @@ body::-webkit-scrollbar-thumb:hover {
         border: none;
         margin-left: 10px;
     }
+    .step-progress {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        flex-wrap: wrap; /* Даем возможность переноса элементов на меньших экранах */
+    }
 
+    .step {
+        position: relative;
+        text-align: center;
+        padding: 10px;
+        background-color: #ddd;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+        min-width: 120px; /* Ограничиваем минимальную ширину для каждого шага */
+        margin: 5px; /* Добавляем немного пространства между шагами */
+        flex-grow: 1; /* Растягиваем шаги, чтобы они заполняли пространство */
+    }
+
+        .step::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: -20px;
+            width: 20px;
+            height: 20px;
+            background-color: #ddd;
+            border-radius: 50%;
+            transform: translateY(-50%);
+            transition: background-color 0.3s ease;
+        }
+
+        .step:first-child::before {
+            left: 0;
+        }
+
+    .step-active {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+        .step-active::before {
+            background-color: var(--primary-color);
+        }
+
+    .step-completed {
+        background-color: #198754;
+        color: white;
+    }
+
+        .step-completed::before {
+            background-color: #198754;
+        }
+
+    .step:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 100%;
+        width: 100%;
+        height: 2px;
+        background-color: #ddd;
+        transform: translateY(-50%);
+        transition: background-color 0.3s ease;
+    }
+
+    .step-form {
+        display: none;
+    }
+
+        .step-form.active {
+            display: block;
+        }
+
+    .step-active + .step::after,
+    .step-completed + .step::after {
+        background-color: #28a745;
+    }
     #schlussel {
         margin-top: 5px;
     }
