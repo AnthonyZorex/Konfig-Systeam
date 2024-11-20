@@ -89,6 +89,11 @@ function selectParamIntern(idBlock, type, selectId, value, id)
                         {
                             Aussen.selectedIndex = f;
                             oldAussen.value = f;
+                            break;
+                        }
+                        else if (f == (normalDopelASize.length - 1)) {
+                            Aussen.selectedIndex = 0;
+                            oldAussen.value = 0;
                         }
                     }
                 })
@@ -170,10 +175,17 @@ function selectParamIntern(idBlock, type, selectId, value, id)
                     }
                 }
 
-                for (let f = 0; f < normalDopelASize.length; f++) {
-                    if (normalDopelASize[f] == Number(selectedValue)) {
+                for (let f = 0; f < normalDopelASize.length; f++)
+                {
+                    if (normalDopelASize[f] == Number(selectedValue))
+                    {
                         Aussen.selectedIndex = f;
                         oldAussen.value = f;
+                        break;
+                    }
+                    else if (f == (normalDopelASize.length - 1)) {
+                        Aussen.selectedIndex = 0;
+                        oldAussen.value = 0;
                     }
                 }
 
@@ -195,8 +207,6 @@ function selectParamIntern(idBlock, type, selectId, value, id)
                 .replace(".", ",") + " €";
 
         }
-        //oldAussen.value = 0;
-        //Aussen.selectedIndex = 0;
     }
    
     oldIntern.value = SelectItemId;

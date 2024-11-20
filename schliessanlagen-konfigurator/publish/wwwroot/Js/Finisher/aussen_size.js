@@ -50,28 +50,6 @@
             AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
         }
 
-        for (let i = 0; i <= oldIntern.value; i++) {
-
-            let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
-
-            // Получаем текущее значение AllPrice и очищаем от лишних символов
-            let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
-
-            // Убедимся, что priceDoppelInternCost[i] - это число
-            let currentPriceDoppelIntern = parseFloat(priceDoppelInternCost[i].toString().replace(",", ".").trim());
-
-            // Вычитаем цену из priceDoppelInternCost из costItems
-            let newCostItems = currentCostItemsValue - currentPriceDoppelIntern;
-
-            // Обновляем AllPrice, вычитая цену умноженную на количество
-            let newAllPrice = currentAllPriceValue - (currentPriceDoppelIntern * Number(countSchluss.value));
-
-            // Форматируем значения для отображения
-            costItems.value = newCostItems; // Оставляем два знака после запятой и добавляем символ €
-            AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
-
-        }
-
         axios.post(`/Konfigurator/RewriteInnen?id=${id}&Grose=${value}&Type=1`, {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -81,6 +59,7 @@
 
                 normalDopelSize = response.data.dopelInnen;
                 priceDoppelInternCost = response.data.dopelprice;
+                let selectedValue = Innen.value;
 
                 if (InnenItem.length > normalDopelSize.length) {
                     for (let i = 0; i < InnenItem.length; i++) {
@@ -112,6 +91,42 @@
                     }
                 }
 
+                for (let f = 0; f < normalDopelSize.length; f++)
+                {
+                    if (normalDopelSize[f] == Number(selectedValue))
+                    {
+                        Innen.selectedIndex = f;
+                        oldIntern.value = f;
+                        break;
+                    }
+                    else if (f == (normalDopelSize.length - 1))
+                    {
+                        for (let i = 0; i <= oldIntern.value; i++)
+                        {
+
+                            let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
+
+                            // Получаем текущее значение AllPrice и очищаем от лишних символов
+                            let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
+
+                            // Убедимся, что priceDoppelInternCost[i] - это число
+                            let currentPriceDoppelIntern = parseFloat(priceDoppelInternCost[i].toString().replace(",", ".").trim());
+
+                            // Вычитаем цену из priceDoppelInternCost из costItems
+                            let newCostItems = currentCostItemsValue - currentPriceDoppelIntern;
+
+                            // Обновляем AllPrice, вычитая цену умноженную на количество
+                            let newAllPrice = currentAllPriceValue - (currentPriceDoppelIntern * Number(countSchluss.value));
+
+                            // Форматируем значения для отображения
+                            costItems.value = newCostItems; // Оставляем два знака после запятой и добавляем символ €
+                            AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
+
+                        }
+                        Innen.selectedIndex = 0;
+                        oldIntern.value = 0;
+                    }
+                }
 
             })
             .catch(function (error) {
@@ -120,16 +135,6 @@
 
         is_GrossSize = false;
 
-        //InnenItem.forEach((item, index) => {
-        //    if (oldIntern.value == item.value)
-        //    {
-        //        Innen.selectedIndex = index;
-        //        oldIntern.value = item.value;
-        //    }
-        //});
-
-        oldIntern.value = 0;
-        Innen.selectedIndex = 0;
 
         for (let s = 0; s <= SelectItemId; s++) {
 
@@ -213,22 +218,7 @@
             AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
 
         }
-        for (let i = 0; i <= oldIntern.value; i++) {
-
-            let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
-            let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
-            let currentPriceKnayfInternCost = parseFloat(priceKnayfInternCost[i].toString().replace(",", ".").trim());
-
-            costItems.value = (currentCostItemsValue - currentPriceKnayfInternCost).toFixed(2);
-
-            // Учитываем количество и выполняем расчеты для AllPrice
-            let newAllPrice = currentAllPriceValue - (currentPriceKnayfInternCost * Number(countSchluss.value));
-
-            // Форматируем AllPrice, заменяем точку на запятую и добавляем символ €
-            AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
-
-        }
-
+      
         axios.post(`/Konfigurator/RewriteInnen?id=${id}&Grose=${value}&Type=3`, {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -238,6 +228,7 @@
 
                 KnayfZiseNormal = response.data.knayfInnen;
                 priceKnayfInternCost = response.data.knayfprice;
+                let selectedValue = Innen.value;
 
                 if (InnenItem.length > KnayfZiseNormal.length) {
                     for (let i = 0; i < InnenItem.length; i++) {
@@ -268,17 +259,40 @@
                         }
                     }
                 }
+                for (let f = 0; f < KnayfZiseNormal.length; f++) {
+                    if (KnayfZiseNormal[f] == Number(selectedValue)) {
+                        Innen.selectedIndex = f;
+                        oldIntern.value = f;
+                        break;
+                    }
+                    else if (f == (KnayfZiseNormal.length - 1))
+                    {
+                        for (let i = 0; i <= oldIntern.value; i++) {
 
+                            let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
+                            let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
+                            let currentPriceKnayfInternCost = parseFloat(priceKnayfInternCost[i].toString().replace(",", ".").trim());
 
+                            costItems.value = (currentCostItemsValue - currentPriceKnayfInternCost).toFixed(2);
+
+                            // Учитываем количество и выполняем расчеты для AllPrice
+                            let newAllPrice = currentAllPriceValue - (currentPriceKnayfInternCost * Number(countSchluss.value));
+
+                            // Форматируем AllPrice, заменяем точку на запятую и добавляем символ €
+                            AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
+
+                        }
+                        Innen.selectedIndex = 0;
+                        oldIntern.value = 0;
+                    }
+                }
+               
             })
             .catch(function (error) {
                 console.error(error);  // Обработка ошибки
             });
 
         is_GrossSize = false;
-        oldIntern.value = 0;
-        Innen.selectedIndex = 0;
-
 
         for (let s = 0; s <= SelectItemId; s++) {
 

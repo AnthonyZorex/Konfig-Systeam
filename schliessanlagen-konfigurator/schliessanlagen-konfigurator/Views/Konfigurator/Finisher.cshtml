@@ -596,10 +596,19 @@
                                 <h6>außen</h6>
                                     <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
                                     <select name="HalbAussen" id="Aussen" class="form-select" onchange="selectParamAussen(@d,'Halbzylinder',event.target.selectedIndex,event.target.value,@item.Id)">
-                                    <option style="display:none" selected>@ViewBag.HalbOrderAussen[elemNum]</option>
+
                                     @for (int i = 0; i < ViewBag.AussenHalb.Count; i++)
                                     {
+                                            if (ViewBag.HalbOrderAussen[elemNum] == ViewBag.AussenHalb[i])
+                                            {
+                                                <option id="OptionA" selected>@ViewBag.AussenHalb[i]</option>
+                                            }
+                                            else
+                                            {
                                                 <option id="OptionA">@ViewBag.AussenHalb[i]</option>
+                                            }
+
+                                                
 
                                     }
                                 </select>
