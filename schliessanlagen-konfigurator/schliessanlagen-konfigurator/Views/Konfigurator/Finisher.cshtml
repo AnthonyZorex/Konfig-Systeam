@@ -1164,6 +1164,8 @@
                                     });
                                 };
 
+                                let ProjektName = sessionStorage.getItem('ProjektName');
+
                                 const countKey = getValues("input[name='countKey']", 'number');
                                 const countTür = getValues("input[name='TurCounter']", 'number');
                                 const aussen = getValues("#Aussen", 'number');
@@ -1195,6 +1197,7 @@
                                     SystemName: NameSystem.length ? NameSystem : [0],
                                     Price: product_Price.length ? product_Price : [0],
                                     Summe: Summe.value,
+                                    ProjektName:ProjektName,
                                 };
 
                                 axios.post('/api/Guest/OrdersUpdate', requestData, {

@@ -207,6 +207,9 @@
 
         function bolleanCheked() 
         {
+            let ProjektName = document.querySelectorAll("input[name='ProjektName']");
+            sessionStorage.setItem('ProjektName', ProjektName[0].value);
+
             let dorCounter = document.querySelectorAll("#inputTur");
             let keyCounter = document.querySelectorAll("#inputS");
             let boolV = document.getElementById('vBool');

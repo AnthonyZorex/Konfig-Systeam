@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MimeKit.Tnef;
 using schliessanlagen_konfigurator.Data;
+using schliessanlagen_konfigurator.Migrations;
 using schliessanlagen_konfigurator.Models.OrdersOpen;
 using System.Threading.Tasks;
 
@@ -214,8 +215,8 @@ namespace schliessanlagen_konfigurator.Controllers
                 KnayfName = KnayfZylinder.First().Name,
                 HebelZylinder = HebelZylinder.First().Name,
                 VorhangZylinder = VorhangZylinder.First().Name,
-                AussenZylinder = AussenZylinder.First().Name
-
+                AussenZylinder = AussenZylinder.First().Name,
+                ProjektName = model.ProjektName
             };
 
 
@@ -239,6 +240,7 @@ namespace schliessanlagen_konfigurator.Controllers
             public List<float> Price { get; set; }
             public List<int> CountKey { get; set; }
             public string Summe { get; set; }
+            public string ProjektName { get; set; }
         }
     }
 }

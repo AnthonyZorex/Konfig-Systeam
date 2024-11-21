@@ -12,20 +12,20 @@ document.addEventListener("DOMContentLoaded", function () {
     let userkey = sessionStorage.getItem('UserKey');
     let ordersInfo = sessionStorage.getItem('OrdersData');
 
+    ordersInfo = JSON.parse(ordersInfo); 
+
     axios.get(`/api/Guest/GetOrders?UserKey=${userkey}`, {
         headers: {
             'Content-Type': 'application/json'
         }
     })
-
-
         .then(function (response)
         {
             console.log('Успешно:', response.data);
 
             const ProjektName = document.createElement('div');
 
-            ProjektName.innerHTML = `<p><strong>ProjektName:</strong> ${response.data.orders.projektName || 'Не указано'}</p>`;
+            ProjektName.innerHTML = `<p><strong>ProjektName:</strong> ${ordersInfo.projektName || 'Не указано'}</p>`;
 
             Projekt.appendChild(ProjektName);
 
@@ -52,27 +52,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 let cylinderType = '';
 
-                if (order.zylinderId === '1')
+                if (order.zylinderId === 1)
                 {
                     cylinderType = ordersInfo.doppelName;
                 }
-                else if (order.zylinderId === '2')
+                else if (order.zylinderId === 2)
                 {
                     cylinderType = ordersInfo.hablName;
                 } 
-                else if (order.zylinderId === '3')
+                else if (order.zylinderId === 3)
                 {
                     cylinderType = ordersInfo.knayfName;
                 }
-                else if (order.zylinderId === '4')
+                else if (order.zylinderId === 4)
                 {
                     cylinderType = ordersInfo.hebelZylinder;
                 }
-                else if (order.zylinderId === '5')
+                else if (order.zylinderId === 5)
                 {
                     cylinderType = ordersInfo.vorhangZylinder;
                 }
-                else if (order.zylinderId === '6')
+                else if (order.zylinderId === 6)
                 {
                     cylinderType = ordersInfo.aussenZylinder;
                 } 
@@ -85,8 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <div class="card-body">
                             <h5 class="card-title">${order.dorName}</h5>
                             <p><strong>Цилиндр:</strong> ${cylinderType}</p>
-                            <p><strong>aussen:</strong> ${order.aussen || ''} || innen:${order.innen || ''} cm</p>
-                            <p><strong>aussen:</strong> ${order.aussen || ''} || innen:${order.innen || ''} cm</p>
+                            <p><strong>aussen:</strong> ${order.aussen || ''} || innen:${order.innen || ''} </p>
                               <p><strong>Option -</strong> ${order.options || ''}</p>
                             <div class="info">
                                 <p><strong>Anzahl:</strong> ${order.count}</p>
