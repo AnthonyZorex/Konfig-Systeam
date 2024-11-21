@@ -58,7 +58,11 @@
             .then(function (response) {
 
                 normalDopelSize = response.data.dopelInnen;
+
+                let oldPrise = priceDoppelInternCost;
+
                 priceDoppelInternCost = response.data.dopelprice;
+
                 let selectedValue = Innen.value;
 
                 if (InnenItem.length > normalDopelSize.length) {
@@ -110,7 +114,7 @@
                             let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
 
                             // Убедимся, что priceDoppelInternCost[i] - это число
-                            let currentPriceDoppelIntern = parseFloat(priceDoppelInternCost[i].toString().replace(",", ".").trim());
+                            let currentPriceDoppelIntern = parseFloat(oldPrise[i].toString().replace(",", ".").trim());
 
                             // Вычитаем цену из priceDoppelInternCost из costItems
                             let newCostItems = currentCostItemsValue - currentPriceDoppelIntern;
@@ -122,9 +126,14 @@
                             costItems.value = newCostItems; // Оставляем два знака после запятой и добавляем символ €
                             AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
 
+                            if (i == oldIntern.value) {
+                                Innen.selectedIndex = 0;
+                                oldIntern.value = 0;
+                            }
+
                         }
-                        Innen.selectedIndex = 0;
-                        oldIntern.value = 0;
+                        
+                        
                     }
                 }
 
@@ -157,6 +166,9 @@
             AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
 
         }
+        oldAussen.value = SelectItemId;
+        procent();
+        liferung();
     }
     if (type === "Halbzylinder")
     {
@@ -194,6 +206,9 @@
             // Форматируем AllPrice, заменяем точку на запятую и добавляем символ €
             AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
         }
+        oldAussen.value = SelectItemId;
+        procent();
+        liferung();
     }
     if (type === "Knaufzylinder")
     {
@@ -259,8 +274,10 @@
                         }
                     }
                 }
-                for (let f = 0; f < KnayfZiseNormal.length; f++) {
-                    if (KnayfZiseNormal[f] == Number(selectedValue)) {
+                for (let f = 0; f < KnayfZiseNormal.length; f++)
+                {
+                    if (KnayfZiseNormal[f] == Number(selectedValue))
+                    {
                         Innen.selectedIndex = f;
                         oldIntern.value = f;
                         break;
@@ -281,9 +298,12 @@
                             // Форматируем AllPrice, заменяем точку на запятую и добавляем символ €
                             AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
 
+                            if (i == oldIntern.value) {
+                                Innen.selectedIndex = 0;
+                                oldIntern.value = 0;
+                            }
                         }
-                        Innen.selectedIndex = 0;
-                        oldIntern.value = 0;
+                        
                     }
                 }
                
@@ -307,12 +327,9 @@
             // Форматируем AllPrice, заменяем точку на запятую и добавляем символ €
             AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
         }
+        oldAussen.value = SelectItemId;
+        procent();
+        liferung();
     }
 
-        
-
-    oldAussen.value = SelectItemId;
-
-    procent();
-    liferung();
 }

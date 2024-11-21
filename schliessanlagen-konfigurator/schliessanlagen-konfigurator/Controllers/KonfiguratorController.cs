@@ -6948,16 +6948,14 @@ namespace schliessanlagen_konfigurator.Controllers
                 {
                     foreach (var list in doppelKlein)
                     {
-                        DopelInnen.Add(list.Intern);
-                        Dopelprice.Add(list.costSizeIntern);
+                        allItems.Add((list.Intern, list.costSizeIntern));
                     }
                 }
                 else
                 {
                     foreach (var list in allIntern)
                     {
-                        DopelInnen.Add(list.Intern);
-                        Dopelprice.Add(list.costSizeIntern);
+                        allItems.Add((list.Intern, list.costSizeIntern));
                     }
                 }
 

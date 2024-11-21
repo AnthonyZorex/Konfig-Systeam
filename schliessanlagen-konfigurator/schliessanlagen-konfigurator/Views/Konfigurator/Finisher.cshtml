@@ -1152,40 +1152,67 @@
 
                        <script>
 
-                              function handleClick(event) {
-                                event.preventDefault(); 
+                            function handleClick(event) {
+                                event.preventDefault();
 
-                                const countKeyInputs = document.querySelectorAll("input[name='countKey']");
-                                const countTürInputs = document.querySelectorAll("input[name='TurCounter']");
-
-                             
-                                const countKey = Array.from(countKeyInputs).map(input => parseInt(input.value, 10));
-                                const countTür = Array.from(countTürInputs).map(input => parseInt(input.value, 10));
-
-                                const requestData = {
-                                    UserKey: '@Model.userKey', 
-                                    aussen: [12.5, 15.3, 20.1], 
-                                    innen: [10.2, 13.4, 18.7],  
-                                    Options: ["Option1", "Option2", "Option3"],
-                                    count: countTür, 
-                                    CountKey: countKey
+                                const getValues = (selector, type = 'string') => {
+                                    const elements = document.querySelectorAll(selector);
+                                    if (!elements.length) return [];
+                                    return Array.from(elements).map(input => {
+                                        if (type === 'number') return parseFloat(input.value) || 0;
+                                        return input.value || '';
+                                    });
                                 };
 
-                             
-                                axios.post('/GuestController/OrdersUpdate', requestData, {
+                                const countKey = getValues("input[name='countKey']", 'number');
+                                const countTür = getValues("input[name='TurCounter']", 'number');
+                                const aussen = getValues("#Aussen", 'number');
+                                const innen = getValues("#Intern", 'number');
+
+                                const NameSystem = getValues("input[name='NameSystem']");
+
+                                const doppelOption = getValues("input[name='DoppelOption']");
+                                const knayfOption = getValues("input[name='KnayfOption']");
+                                const halbOption = getValues("input[name='HalbOption']");
+                                const hebelOption = getValues("input[name='HebelOption']");
+                                const vorhnaOption = getValues("input[name='VorhnaOption']");
+                                const aussenOption = getValues("input[name='AussenOption']");
+                                const product_Price = getValues("input[name='ProductCosted']");
+                                const Summe = document.querySelector("#cost");
+
+                                const requestData = {
+                                    UserKey: '@Model.userKey',
+                                    aussen: aussen.length ? aussen : [0],
+                                    innen: innen.length ? innen : [0],
+                                    DoppelOption: doppelOption.length ? doppelOption : [''],
+                                    KnayfOption: knayfOption.length ? knayfOption : [''],
+                                    HalbOption: halbOption.length ? halbOption : [''],
+                                    HebelOption: hebelOption.length ? hebelOption : [''],
+                                    VorhnaOption: vorhnaOption.length ? vorhnaOption : [''],
+                                    AussenOption: aussenOption.length ? aussenOption : [''],
+                                    count: countTür.length ? countTür : [0],
+                                    CountKey: countKey.length ? countKey : [0],
+                                    SystemName: NameSystem.length ? NameSystem : [0],
+                                    Price: product_Price.length ? product_Price : [0],
+                                    Summe: Summe.value,
+                                };
+
+                                axios.post('/api/Guest/OrdersUpdate', requestData, {
                                     headers: {
-                                        'Content-Type': 'application/json' // Указываем формат JSON
+                                        'Content-Type': 'application/json'
                                     }
                                 })
-                                .then(function(response) {
-                                    console.log('Успешно:', response.data);
-                                   
-                                    window.location.href = '/Identity/Account/Register';
-                                })
-                                .catch(function(error) {
-                                    console.error('Ошибка:', error);
-                                    alert('Произошла ошибка при отправке данных. Попробуйте снова.');
-                                });
+                                    .then(function (response) {
+                                        console.log('Успешно:', response.data);
+                                            
+                                        sessionStorage.setItem('OrdersData', JSON.stringify(response.data));
+
+                                        window.location.href = '/Identity/Account/Register'; 
+                                    })
+                                    .catch(function (error) {
+                                        console.error('Ошибка:', error);
+                                        alert('Произошла ошибка при отправке данных. Попробуйте снова.');
+                                    });
                             }
                         </script>
                     }

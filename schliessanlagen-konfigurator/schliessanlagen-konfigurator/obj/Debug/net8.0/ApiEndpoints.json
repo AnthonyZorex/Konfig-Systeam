@@ -1,6 +1,22 @@
 [
   {
     "ContainingType": "schliessanlagen_konfigurator.Controllers.GuestController",
+    "Method": "GetOrders",
+    "RelativePath": "api/Guest/GetOrders",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserKey",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "schliessanlagen_konfigurator.Controllers.GuestController",
     "Method": "OrdersUpdate",
     "RelativePath": "api/Guest/OrdersUpdate",
     "HttpMethod": "POST",

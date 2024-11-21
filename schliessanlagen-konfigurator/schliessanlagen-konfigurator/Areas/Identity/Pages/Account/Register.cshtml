@@ -23,8 +23,7 @@
                     <div class="step">Bestellung prüfen</div>
                 </div>
             </div>
-
-            <form>
+ 
                     <div id="step1" class="step-form active">
                         <div class="list-group">
                             <!-- Пост 1 -->
@@ -396,28 +395,69 @@
                       
                     </div>
 
-                    <!-- Форма для Шага 3 -->
-                     <div id="step4" class="step-form mt-5">
-                    <h4>Schritt 4: Подтверждение</h4>
-                        
-                            <p>Проверьте введенные данные и подтвердите отправку формы.</p>
+            <div id="step4" class="step-form mt-5">
+                <h4>Schritt 4: Zahlung</h4>
 
+                <div id="Projekt">
+                </div>
+                <div id="blockSchrite" class="shadow-lg  mb-5 bg-body-tertiary rounded">
+                    <div style="display:flex;gap:10px;">
+                        <h2><strong>Zahlungsart</strong></h2>
+                    </div>
+                    <br />
+                    <div style="display: flex;gap: 50px;" id="bezalenMethod-0">
+                        <label>
+                            <input type="radio" onchange="BezaleMethod(0)" checked name="Pay" value="PayPall">
+                            <img src="@("/compression/paypal.webp")" height="30" width="30" />
+                            <h4>PayPall</h4>
+                        </label><br>
+                        <label>
+                            <input type="radio" onchange="BezaleMethod(0)" name="Pay" value="Vorkasse">
+                            <img src="@("/compression/bezahlverfahren.png")" height="40" width="40" />
+                            <h4>Vorkasse</h4>
+                        </label>
+                    </div>
+                </div>
+                <div id="blockSchrite" style="display: grid;justify-content: center;" class="shadow-lg  mb-5 bg-body-tertiary rounded">
+
+                    <div style="grid-template-columns: auto auto;display: grid;">
+                        <input id="procent-0" style="outline:none;border:none;max-width:120px" type="text" readonly name="procent" value="Steuer:" />
+                        <input redonly name="Steuer" style="text-align: end;border: none;outline: none" type="text" value="0" id="aldProcent-0" />
                     </div>
 
-                    <!-- Форма для Шага 3 -->
-                    <div id="step5" class="step-form mt-5">
-                    <h4>Schritt 5: Подтверждение</h4>
-                     
-                            <p>Проверьте введенные данные и подтвердите отправку формы.</p>
-
+                    <div style="grid-template-columns: auto auto;display: grid;">
+                        <h3>Versand:</h3>
+                        <input name="Versand" type="text" redonly style="text-align: end;border: none;outline: none" value="0" id="CostGram-0" />
                     </div>
+
+                    <div style="grid-template-columns: auto auto; display: grid;">
+                        <h3>Bestellsumme:</h3>
+                        @*      <input name="OrderSum" readonly style="text-align: end; border: none; outline: none" value="@formattedResultKey" id="costedI-0" />
+                        <input readonly type="hidden" style="text-align: end; border: none; outline: none" value="@orderList[z].OrderSum" id="costedР-0" />
+                        <input readonly type="hidden" name="NettoSumOrder" style="text-align: end; border: none; outline: none" value="@formattedResultKey" /> *@
+                    </div>
+
+                    <input type="hidden" id="Aufrechnung-0" name="aufRechnung" value="false" />
+                    <input type="submit" class="btn btn-success" id="SendRechnung-0" style="display:none; padding:10px 20px 10px 20px" value="Bezahlen an der Kasse" />
+
+                    <div id="paypal-button-container-0"> </div>
+
+                </div>
+            </div>
+
+           
+
+            <div id="step5" class="step-form mt-5">
+                <h4>Schritt 5: Rehnung</h4>
+
+
+            </div>
 
                 <div class="mt-4">
                     <button class="btn btn-outline-success" type="button" id="nextStepBtn">Weiter als Gast</button>
                     <button class="btn btn-secondary" type="button" id="prevStepBtn">Previous Step</button>
                 </div>
-            </form>
-       
+           
         </div>
     <div class="col-lg-6 mx-auto p-5">
         
@@ -496,4 +536,38 @@
         
 </div>
 </div>
-<script src="~/Js/RegisterForm/RegistForm.js"></script>
+
+@section scripts
+{
+    <script src="https://www.paypal.com/sdk/js?client-id=AcBDGr9EZyKwRHBxrvvXq2u-vFWhg-e2l09CS97O5fbcwx0JYkjJRfsNUS_lJ6QjdTOwGe830IkBill9&components=buttons&currency=EUR"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="~/Js/RegisterForm/RegistForm.js"></script>
+
+    <script>
+        paypal.Buttons({
+            createOrder: function (data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '100'
+                        },
+                        invoice_id: invoiceNumber
+                    }]
+                });
+            },
+            onApprove: function (data, actions) {
+                return actions.order.capture().then(function (details) {
+                    document.getElementById('myForm').submit();
+                });
+            },
+            onError: function (err) {
+            }
+        }).render(`#paypal-button-container-0`);
+    </script>
+
+    <script src="~/Js/Page_Personal_Order/Bezale_Method.js"></script>
+    <script src="~/Js/Page_Personal_Order/Rehnung_adress.js"></script>
+    
+}
+
+
