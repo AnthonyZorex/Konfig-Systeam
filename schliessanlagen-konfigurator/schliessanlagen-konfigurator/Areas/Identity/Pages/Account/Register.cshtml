@@ -81,7 +81,7 @@
                 </div>
 
                 <div class="form-floating mb-3">
-                    <select class="form-select" required name="RechnungLand" onchange="ProcentMwst(event.target.value,0)" id="floatingInput" placeholder="Land / country *">
+                    <select class="form-select" required name="RechnungLand" onchange="SendRehnung(event.target.value)" id="floatingInput" placeholder="Land / country *">
                         <option value="DE">Deutschland</option>
                         <option value="AF">Afghanistan</option>
                         <option value="EG">Ägypten</option>
@@ -344,7 +344,7 @@
                 <div style="display: flex;align-items: center;">
                     <input type="hidden" id="gramWert-0" value="0" />
 
-                    <input type="radio" id="dhl-0" onchange="changeSend(0)" checked name="DhlSend" value="DHL">
+                    <input type="radio" id="dhl" onchange="changeSend()" checked name="DhlSend" value="DHL">
                     <input type="text" readonly style="border: none;outline:none" value="0" id="CostGram-0" /> <br>
                     <h4>
                         DHL
@@ -352,7 +352,7 @@
                 </div>
 
                 <div style="display: flex;gap: 30px;align-items: center;">
-                    <input type="radio" readonly style="border: none;" onchange="changeSend(0)" id="Plase-0" name="DhlSend" value="0,00 €">
+                    <input type="radio" readonly style="border: none;" onchange="changeSend()" id="Plase" name="DhlSend" value="0,00 €">
                     <label for="css" style="margin-left: -25px;">0,00 €</label><br>
                     <h4>
                         Abholung in Berlin (Brunnenstraße 8, 10119 Berlin)
@@ -397,14 +397,16 @@
                 </div>
                 <div id="blockSchrite" style="display: grid;justify-content: center;" class="shadow-lg  mb-5 bg-body-tertiary rounded">
 
+
                     <div style="grid-template-columns: auto auto;display: grid;">
-                        <h3>19% MwSt:</h3>
-                        <input redonly name="Steuer" style="text-align: end;border: none;outline: none" type="text" value="0" id="Procent-0" />
+                        <input id="proc" style="outline:none;border:none;max-width:120px" type="text" readonly name="procent" value="Steuer:" />
+                        <input redonly name="Steuer" style="text-align: end;border: none;outline: none" type="text" value="0" id="Procent" />
                     </div>
+                  
 
                     <div style="grid-template-columns: auto auto;display: grid;">
                         <h3>Versand:</h3>
-                        <input name="Versand" type="text" redonly style="text-align: end;border: none;outline: none" value="0" id="CostGram-0" />
+                        <input name="Versand" type="text" redonly style="text-align: end;border: none;outline: none" value="0" id="CostGram" />
                     </div>
 
                     <div style="grid-template-columns: auto auto; display: grid;">
