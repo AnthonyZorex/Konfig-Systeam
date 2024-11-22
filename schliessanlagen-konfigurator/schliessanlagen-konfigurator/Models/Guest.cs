@@ -10,7 +10,7 @@ namespace schliessanlagen_konfigurator.Models
         public string Nachname { get; set; }
         public string Email { get; set; }
         public string Gender { get; set; }
-        public string Bestelung { get; set; }
+        public string Telefon { get; set; }
         public bool news { get; set; } = false;
         public string? Liefer_Land { get; set; } = "";
         public string? Liefer_Straße { get; set; } = "";

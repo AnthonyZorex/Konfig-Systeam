@@ -8,7 +8,6 @@
     <div class="row">
         <div class="border-end border-danger border-2 col-lg-6 mx-auto p-5">
             <div class="container mt-5">
-                <!-- Прогресс-бар пошаговый -->
                 <div class="progress">
                     <div class="progress-bar progress-bar-striped progress-bar-animated" style="background-color: #198754" id="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                         Warenkorb
@@ -26,7 +25,6 @@
  
                     <div id="step1" class="step-form active">
                         <div class="list-group">
-                            <!-- Пост 1 -->
                             <div class="list-group-item mt-5">
                                 <div class="d-flex w-100 justify-content-between">
                                     <h4 class="mb-4">Bestellen ohne Registrierung</h4>
@@ -37,95 +35,53 @@
                  
                     </div>
 
-                    <!-- Форма для Шага 2 -->
                     <div id="step2" class="step-form mt-5">
                     <h4>
                         Schritt 2: Anmelden & Adresse
                     </h4>
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="floatingInput" value="" required name="RechnungAdresse" placeholder="E-Mail-Adresse" />
+                    <label for="floatingInput">E-Mail-Adresse</label>
+                </div>
 
-                    <label for="address" class="form-label"></label>
-                    <div style="display:flex; gap: 100px" class="mt-3 mb-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" id="flexRadioDefault1" value="Privatkunde" name="kunde" checked>
-                            <label class="form-check-label" for="flexRadioDefault1">
-                                Privatkunde
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" id="flexRadioDefault2" value="Geschäftskunde" name="kunde">
-                            <label class="form-check-label" for="flexRadioDefault2">
-                                Geschäftskunde
-                            </label>
-                        </div>
-                    </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="floatingInput" value="" required name="RechnungVorname" placeholder="Vorname / first name *" />
+                    <label for="floatingInput">Vorname / first name *</label>
+                </div>
 
-                    <h4>Persönliche Daten *</h4>
-                    <div style="display:flex; gap: 100px" class="mt-3 mb-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" id="flexRadioDefault3" value="Herr" name="gender" checked>
-                            <label class="form-check-label" for="flexRadioDefault3">
-                                Herr
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" id="flexRadioDefault4" value="Frau" name="gender">
-                            <label class="form-check-label" for="flexRadioDefault4">
-                                Frau
-                            </label>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label class="col-sm-3 col-form-label">Vorname</label>
-                        <div class="col-sm-8">
-                            <input asp-for="Input.FirstName" class="form-control" />
-                            <span asp-validation-for="Input.FirstName" class="text-danger"></span>
-                        </div>
-                    </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="floatingInput" value="" required name="RechnungNachname" placeholder="Nachname / surname *" />
+                    <label for="floatingInput">Nachname / surname *</label>
+                </div>
 
-                    <input type="hidden" name="returnUrl" id="returnUrl" />
 
-                    <div class="row mb-3">
-                        <label class="col-sm-3 col-form-label">Name</label>
-                        <div class="col-sm-8">
-                            <input asp-for="Input.LastName" class="form-control" />
-                            <span asp-validation-for="Input.LastName" class="text-danger"></span>
-                        </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="floatingInput" name="RechnungFirma" value="" placeholder="Firma / company" />
+                    <label for="floatingInput">Firma / company</label>
+                </div>
 
-                    </div>
-                    <h4>Zugangsdaten</h4>
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="floatingInput" name="RechnungVat" value="" placeholder="USt - IdNr. / VAT id" />
+                    <label for="floatingInput">USt - IdNr. / VAT id</label>
+                </div>
 
-                      <div class="row mb-3">
-                        <label class="col-sm-3 col-form-label">E-Mail Adresse</label>
-                        <div class="col-sm-8">
-                        <input  asp-for="Input.Email" class="form-control" />
-                        <span asp-validation-for="Input.Email" class="text-danger"></span>
-                        </div>
-                    </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" required id="floatingInput" value="" name="RechnungStrasse" placeholder="Straße und Hausnummer / street address *" />
+                    <label for="floatingInput">Straße und Hausnummer / street address *</label>
+                </div>
 
-                    </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="floatingInput" value="" required name="RechnungZip" placeholder="Postleitzahl / zip code *" />
+                    <label for="floatingInput">Postleitzahl / zip code *</label>
+                </div>
 
-                <div id="step3" class="step-form mt-5">
-                    <h4>Schritt 3:Bitte wählen Sie Ihre Lieferadresse</h4>
+                <div class="form-floating mb-3">
+                    <input class="form-control" required id="floatingInput" value="" name="RechnungStadt" placeholder="Stadt / city *" />
+                    <label for="floatingInput">Stadt / city *</label>
+                </div>
 
-                    <div style="display:flex; gap: 100px" class="mt-3 mb-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" id="flexRadioDefault7" value="DHL" name="SendetMethod" checked>
-                            <label class="form-check-label" for="flexRadioDefault7">
-                                DHL
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" id="flexRadioDefault8" value="Wunschadresse" name="SendetMethod">
-                            <label class="form-check-label" for="flexRadioDefault8">
-                                Abholung in Berlin (Brunnenstraße 8, 10119 Berlin)
-                            </label>
-                        </div>
-                    </div>
-
-                    <label class="mt-3 mb-3">Land *</label>
-
-                    <div class="form-floating mb-3">
-                    <select class="form-select" required  name="RechnungLand" onchange="ProcentMwst(event.target.value,0)" id="floatingInput" placeholder="Land / country *">
+                <div class="form-floating mb-3">
+                    <select class="form-select" required name="RechnungLand" onchange="ProcentMwst(event.target.value,0)" id="floatingInput" placeholder="Land / country *">
                         <option value="DE">Deutschland</option>
                         <option value="AF">Afghanistan</option>
                         <option value="EG">Ägypten</option>
@@ -373,26 +329,49 @@
                         <option value="CF">Zentralafrikanische Republik</option>
                         <option value="CY">Zypern</option>
                     </select>
+                    <label for="floatingInput">Land / country *</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" value="" required name="RechnungTelefon" id="floatingInput" placeholder="Telefonnummer / phone number *" />
+                    <label for="floatingInput">Telefonnummer / phone number *</label>
+                </div>
                     </div>
 
-                    <div class="form-floating mb-3">
-                        <input class="form-control" autocomplete="new-password" name="Liferung_PLZ" aria-required="true" placeholder="PLZ *" />
-                        <label class="form-label">PLZ *</label>
-                    </div>
+                <div id="step3" class="step-form mt-5">
+                    <h4>Schritt 3:Bitte wählen Sie Ihre Lieferadresse</h4>
 
-                    <div class="form-floating mb-3">
-                        <input class="form-control" autocomplete="new-password" name="Liferung_Stadt" aria-required="true" placeholder="Stadt *" />
-                        <label class="form-label">Stadt *</label>
-                    </div>
+                <div style="display: flex;align-items: center;">
+                    <input type="hidden" id="gramWert-0" value="0" />
 
+                    <input type="radio" id="dhl-0" onchange="changeSend(0)" checked name="DhlSend" value="DHL">
+                    <input type="text" readonly style="border: none;outline:none" value="0" id="CostGram-0" /> <br>
+                    <h4>
+                        DHL
+                    </h4>
+                </div>
 
-                    <div class="form-floating mb-3">
-                        <input class="form-control" autocomplete="new-password" name="Liferung_Straße" aria-required="true" placeholder="Straße *" />
-                        <label class="form-label">Straße *</label>
-                    </div>
-                      
-                    </div>
+                <div style="display: flex;gap: 30px;align-items: center;">
+                    <input type="radio" readonly style="border: none;" onchange="changeSend(0)" id="Plase-0" name="DhlSend" value="0,00 €">
+                    <label for="css" style="margin-left: -25px;">0,00 €</label><br>
+                    <h4>
+                        Abholung in Berlin (Brunnenstraße 8, 10119 Berlin)
+                    </h4>
+                </div>
 
+                <div id="blockSchrite" >
+                    <div style="display:flex;gap:10px;">
+                        <h2><strong>Versandadresse</strong></h2>
+                    </div>
+                    <div style="display:flex;gap:30px">
+                        <input type="checkbox" name="Rehnung" checked onchange="changeAdress(event.target.checked,0)" />
+                        <h4>Lieferadresse ist gleich Rechnungsadresse</h4>
+                    </div>
+                    <br />
+                    <div id="rechnungSend">
+                    </div>
+                </div>
+            </div>
             <div id="step4" class="step-form mt-5">
                 <h4>Schritt 4: Zahlung</h4>
 
@@ -419,8 +398,8 @@
                 <div id="blockSchrite" style="display: grid;justify-content: center;" class="shadow-lg  mb-5 bg-body-tertiary rounded">
 
                     <div style="grid-template-columns: auto auto;display: grid;">
-                        <input id="procent-0" style="outline:none;border:none;max-width:120px" type="text" readonly name="procent" value="Steuer:" />
-                        <input redonly name="Steuer" style="text-align: end;border: none;outline: none" type="text" value="0" id="aldProcent-0" />
+                        <h3>19% MwSt:</h3>
+                        <input redonly name="Steuer" style="text-align: end;border: none;outline: none" type="text" value="0" id="Procent-0" />
                     </div>
 
                     <div style="grid-template-columns: auto auto;display: grid;">
@@ -432,10 +411,12 @@
                         <h3>Bestellsumme:</h3>
                         <input name="OrderSum" readonly style="text-align: end; border: none; outline: none" value="0" id="costedI-0" />
                         <input readonly type="hidden" style="text-align: end; border: none; outline: none" value="0" id="costedР-0" />
-                        <input readonly type="hidden" name="NettoSumOrder" style="text-align: end; border: none; outline: none" value="0" /> 
+                        <input readonly type="hidden" name="NettoSumOrder" style="text-align: end; border: none; outline: none" value="0" />
                     </div>
 
                     <input type="hidden" id="Aufrechnung-0" name="aufRechnung" value="false" />
+                    <input type="hidden" value="0" id="invoiceNumber-0" />
+
                     <input type="submit" class="btn btn-success" id="SendRechnung-0" style="display:none; padding:10px 20px 10px 20px" value="Bezahlen an der Kasse" />
 
                     <div id="paypal-button-container-0"> </div>
@@ -539,33 +520,61 @@
 {
     <script src="https://www.paypal.com/sdk/js?client-id=AcBDGr9EZyKwRHBxrvvXq2u-vFWhg-e2l09CS97O5fbcwx0JYkjJRfsNUS_lJ6QjdTOwGe830IkBill9&components=buttons&currency=EUR"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/big.js/6.1.1/big.min.js"></script>
     <script src="~/Js/RegisterForm/RegistForm.js"></script>
-
+    <script src="~/Js/Page_Personal_Order/Bezale_Method.js"></script>
+    <script src="~/Js/Page_Personal_Order/Rehnung_adress.js"></script>
     <script>
+
+        let ordersInfo = sessionStorage.getItem('OrdersData');
+
+        ordersInfo = JSON.parse(ordersInfo); 
+
+        let bezahl = document.getElementById("Bezahl-0");
+        const price = parseFloat(ordersInfo.summe.replace("€", "").replace(",", ".").trim());
+
+        let invoice = document.getElementById("invoiceNumber-0");
+
         paypal.Buttons({
             createOrder: function (data, actions) {
                 return actions.order.create({
                     purchase_units: [{
                         amount: {
-                            value: 100
+                            value: price
                         },
-                        // invoice_id: invoiceNumber
+                        invoice_id: invoice.value
                     }]
                 });
             },
             onApprove: function (data, actions) {
-                return actions.order.capture().then(function (details) {
-                    document.getElementById('myForm').submit();
+                return actions.order.capture().then(function (details) 
+                {
+                    const requestData = {
+                       
+                    };
+
+                    axios.post('/api/Guest/Rechnung', requestData, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                        .then(function (response) {
+                            console.log('Успешно:', response.data);
+
+                            currentStep++;
+                            updateSteps();
+                        })
+                        .catch(function (error) {
+                            console.error('Ошибка:', error);
+                            alert('Произошла ошибка при отправке данных. Попробуйте снова.');
+                        });
+                    
                 });
             },
             onError: function (err) {
             }
         }).render(`#paypal-button-container-0`);
-    </script>
-
-    <script src="~/Js/Page_Personal_Order/Bezale_Method.js"></script>
-    <script src="~/Js/Page_Personal_Order/Rehnung_adress.js"></script>
-    
+    </script>    
 }
 
 

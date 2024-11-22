@@ -1,9 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MimeKit.Tnef;
+using Newtonsoft.Json;
 using schliessanlagen_konfigurator.Data;
 using schliessanlagen_konfigurator.Migrations;
 using schliessanlagen_konfigurator.Models.OrdersOpen;
+using schliessanlagen_konfigurator.Send_Data;
+using schliessanlagen_konfigurator.Models;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 namespace schliessanlagen_konfigurator.Controllers
 {
@@ -42,16 +46,24 @@ namespace schliessanlagen_konfigurator.Controllers
 
             foreach (var o in optionsList)
             {
+                //var optionValue = db.isOpen_value.Where(x => x.isOpen_OrderId == o.Id).OrderBy(x=>x.ForNameKey).ToList();
+
                 var optionValue = db.isOpen_value.Where(x => x.isOpen_OrderId == o.Id).ToList();
 
-                foreach (var list in optionValue)
+                if (optionValue.Count()>0) 
                 {
-                    isOpenKey.Add(list);
+                    var sort = optionValue.GroupBy(x => x.NameKey).Select(g => g.OrderBy(x => x.Id).First()).OrderBy(x => x.NameKey).ToList();
+                    foreach (var list in sort)
+                    {
+                        isOpenKey.Add(list);
+                    }
                 }
+
+                
 
             }
 
-            return Ok( new { orders = orders, isOpenKey = isOpenKey.DistinctBy(x => x.ForNameKey).ToList(), option = optionsList });
+            return Ok( new { orders = orders, isOpenKey = isOpenKey.ToList(), option = optionsList });
         }
 
         public class GetOrder()
@@ -89,6 +101,8 @@ namespace schliessanlagen_konfigurator.Controllers
             int Vorhan = 0;
             int Aussen = 0;
 
+            float Gram = 0; 
+
             var Doppel_listPrice = new List<float>();
             var Halb_listPrice = new List<float>();
             var Knayf_listPrice = new List<float>();
@@ -106,6 +120,8 @@ namespace schliessanlagen_konfigurator.Controllers
                     orders[z].innen = model.innen[Inter];
                     Doppel_listPrice.Add(model.Price[z]);
 
+                    Gram = Gram + DoppelZylinder.Select(x=>x.Gramm).Max(x=>x.Value);
+
                     Inter++;
                     if (model.DoppelOption[Doppel] != "")
                     {
@@ -118,7 +134,9 @@ namespace schliessanlagen_konfigurator.Controllers
                 {
                     orders[z].aussen = model.aussen[z];
                     Halb_listPrice.Add(model.Price[z]);
-                    
+
+                    Gram = Gram + HalbZylinder.Select(x => x.Gramm).Max(x => x.Value);
+
                     if (model.HalbOption[Halb] != "")
                     {
                         orders[z].Options = model.HalbOption[Halb];
@@ -132,6 +150,8 @@ namespace schliessanlagen_konfigurator.Controllers
                     Knayf_listPrice.Add(model.Price[z]);
                     Inter++;
 
+                    Gram = Gram + KnayfZylinder.Select(x => x.Gramm).Max(x => x.Value);
+
                     if (model.KnayfOption[Knayf] != "")
                     {
                         orders[z].Options = model.KnayfOption[Knayf];
@@ -141,6 +161,8 @@ namespace schliessanlagen_konfigurator.Controllers
                 if (orders[z].ZylinderId == 4)
                 {
                     Hebel_listPrice.Add(model.Price[z]);
+
+                    Gram = Gram + HebelZylinder.Select(x => x.Gramm).Max(x => x.Value);
 
                     if (model.HebelOption[Hebel] != "")
                     {
@@ -154,6 +176,8 @@ namespace schliessanlagen_konfigurator.Controllers
                     orders[z].Options = model.VorhnaOption[z];
                     Vorhang_listPrice.Add(model.Price[z]);
 
+                    Gram = Gram + VorhangZylinder.Select(x => x.Gramm).Max(x => x.Value);
+
                     if (model.VorhnaOption[Vorhan] != "")
                     {
                         orders[z].Options = model.VorhnaOption[Vorhan];
@@ -164,6 +188,7 @@ namespace schliessanlagen_konfigurator.Controllers
                 {
                     orders[z].Options = model.AussenOption[z];
                     AussenZylinder_listPrice.Add(model.Price[z]);
+                    Gram = Gram + AussenZylinder.Select(x => x.Gramm).Max(x => x.Value);
 
                     if (model.AussenOption[Aussen] != "")
                     {
@@ -216,13 +241,73 @@ namespace schliessanlagen_konfigurator.Controllers
                 HebelZylinder = HebelZylinder.First().Name,
                 VorhangZylinder = VorhangZylinder.First().Name,
                 AussenZylinder = AussenZylinder.First().Name,
-                ProjektName = model.ProjektName
+                ProjektName = model.ProjektName,
+                SumGram = Gram
             };
 
 
             return Ok(Guest);
         }
 
+        [HttpPost]
+        [Route("SendRechnung")]
+        public async Task<IActionResult> SendRechnung([FromBody] RehnungSend rehnung)
+        {
+
+            var guest = new Models.Guest()
+            {
+                Vorhname = rehnung.RechnungVorname,
+                Nachname = rehnung.RechnungNachname,
+                Email = rehnung.RechnungAdresse,
+                Telefon = rehnung.RechnungTelefon,
+                Liefer_Land = rehnung.SendLand,
+                Liefer_Straße = rehnung.SendStrasse,
+                Liefer_Postleitzahl = rehnung.SendZip,
+                Liefer_Stadt = rehnung.SendStadt
+            };
+
+            db.Guest.Add(guest);
+            db.SaveChanges();
+
+
+
+            var model = new
+            {
+                SendVorname = rehnung.SendVorname,
+                SendNachname = rehnung.SendNachname,
+                SendFirma = rehnung.SendFirma,
+                SendVat = rehnung.SendVat,
+                SendStrasse = rehnung.SendStrasse,
+
+                NettoSum = rehnung.NettoSumOrder,
+
+                SendZip = rehnung.SendZip,
+                SendStadt = rehnung.SendStadt,
+                SendLand = rehnung.SendLand,
+                Steuer = rehnung.Steuer,
+                Versand = rehnung.Versand,
+                OrderSum = rehnung.OrderSum,
+                SendTelefon = rehnung.SendTelefon,
+                DhlSend = rehnung.DhlSend,
+                Rehnung = rehnung.Rehnung,
+                Pay = rehnung.Pay,
+                procent = rehnung.procent,
+
+                RechnungVorname = rehnung.RechnungVorname,
+                RechnungNachname = rehnung.RechnungNachname,
+                RechnungFirma = rehnung.RechnungFirma,
+                RechnungVat = rehnung.RechnungVat,
+                RechnungStrasse = rehnung.RechnungStrasse,
+                RechnungZip = rehnung.RechnungZip,
+                RechnungStadt = rehnung.RechnungStadt,
+                RechnungLand = rehnung.RechnungLand,
+                RechnungTelefon = rehnung.RechnungTelefon,
+
+            };
+
+            var JsonObject = JsonConvert.SerializeObject(model, Formatting.Indented);
+            return RedirectToAction("SendRehnung", "Konfigurator", new { info = JsonObject/*, userName = model.userName, OrderSum = OrderSum, aufRechnung = aufRechnung */});
+        }
         public class SaveOrders()
         {
             public int Id { get; set; }
@@ -241,6 +326,45 @@ namespace schliessanlagen_konfigurator.Controllers
             public List<int> CountKey { get; set; }
             public string Summe { get; set; }
             public string ProjektName { get; set; }
+        }
+
+        public class RehnungSend()
+        {
+            public int Id { get; set; }
+            public string Gender { get; set; }
+            public string Email { get; set; }
+            public string SendVorname {  get; set; }
+            public string SendNachname { get; set; }
+            public string SendFirma { get; set; }
+            public string userKey { get; set; }
+            public List<string> PreisProduct { get; set; }
+            public string PreisKey { get; set; }
+            public string SendVat { get; set; }
+            public string SendStrasse { get; set; }
+            public string SendZip { get; set; }
+            public string SendStadt { get; set; }
+            public string SendLand { get; set; }
+            public string SendTelefon { get; set; }
+            public string NettoSumOrder { get; set; }
+            public string DhlSend { get; set; }
+            public string Pay { get; set; }
+            public string Steuer { get; set; }
+            public string Versand { get; set; }
+            public string OrderSum { get; set; }
+            public string Rehnung { get; set; }
+            public string RechnungAdresse{ get; set; }
+            public string RechnungVorname { get; set; }
+            public string RechnungNachname { get; set; }
+            public string RechnungFirma { get; set; }
+            public string RechnungVat { get; set; }
+            public string RechnungStrasse { get; set; }
+            public string RechnungZip { get; set; }
+            public string RechnungStadt { get; set; }
+            public string RechnungLand { get; set; }
+            public string RechnungTelefon { get; set; }
+            public string userName { get; set; }
+            public string procent { get; set; }
+            public bool aufRechnung { get; set; }
         }
     }
 }

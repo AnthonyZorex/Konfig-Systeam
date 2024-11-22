@@ -608,12 +608,6 @@ namespace schliessanlagen_konfigurator.Controllers
 
             string cleanedString = OrderSum.Replace(".", ",").Replace("€", "").Trim();
 
-            ClaimsIdentity ident = HttpContext.User.Identity as ClaimsIdentity;
-
-            string loginInform = ident.Claims.Select(x => x.Value).First();
-            
-            var users = db.Users.FirstOrDefault(x => x.Id == loginInform);
-
             var ProductOrder = db.UserOrdersShop.Where(x => x.UserOrderKey == userName).ToList();
 
             var Order = db.Orders.Where(x => x.userKey == userName).ToList();

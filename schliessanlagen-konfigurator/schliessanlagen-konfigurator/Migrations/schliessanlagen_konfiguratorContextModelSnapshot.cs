@@ -51,25 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d311c00c-31df-4ead-9138-52f39b12637a",
+                            Id = "76099a36-6f06-4e14-a3c1-bec4ebb3db51",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "79caa8f4-d88b-41c3-963b-9d38ea6abac1",
+                            Id = "373eb8e3-c8af-44b2-8b7e-4b63c2a45590",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "e6b2dc4c-53d9-49fd-88f6-1c151e6903b1",
+                            Id = "5aeebf2a-a578-4bf3-a6a8-cd6e61faee93",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "8b755913-c9fc-4249-babb-3fedd47e6c53",
+                            Id = "40dafba9-051d-4027-8642-e5cdca5c3900",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -328,10 +328,6 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Bestelung")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -353,6 +349,10 @@ namespace schliessanlagen_konfigurator.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nachname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telefon")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

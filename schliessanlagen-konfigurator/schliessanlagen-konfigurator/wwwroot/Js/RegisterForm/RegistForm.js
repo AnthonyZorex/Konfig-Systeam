@@ -4,15 +4,43 @@ function back() {
 }
 back()
 
-
 let Projekt = document.getElementById("Projekt");
 
-document.addEventListener("DOMContentLoaded", function () {
 
+document.addEventListener("DOMContentLoaded", function ()
+{
     let userkey = sessionStorage.getItem('UserKey');
     let ordersInfo = sessionStorage.getItem('OrdersData');
 
     ordersInfo = JSON.parse(ordersInfo); 
+
+    let cost = document.getElementById("costedI-0");
+
+    const price = parseFloat(ordersInfo.summe.replace("€", "").replace(",", ".").trim());
+
+    let percent = price * 0.19;
+
+    const mvs = percent;
+
+    cost.value = price - percent ;
+    cost.innerHTML = price - percent;
+
+    let steur = document.getElementById("aldProcent-0");
+
+    let gramItem = document.getElementById("CostGram-0");
+
+    gramItem.value = ordersInfo.sumGram;
+
+    let summBrutto = document.getElementById("costedР-0");
+
+    summBrutto.value = price;
+
+    let invoice = document.getElementById("invoiceNumber-0");
+
+    steur.value = parseFloat(mvs).toLocaleString('de-DE', {
+        style: 'currency',
+        currency: 'EUR'
+    });
 
     axios.get(`/api/Guest/GetOrders?UserKey=${userkey}`, {
         headers: {
@@ -25,24 +53,43 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const ProjektName = document.createElement('div');
 
-            ProjektName.innerHTML = `<p><strong>ProjektName:</strong> ${ordersInfo.projektName || 'Не указано'}</p>`;
+            ProjektName.innerHTML = `<h3><strong>ProjektName:</strong> ${ordersInfo.projektName || 'Не указано'}</h3>`;
 
             Projekt.appendChild(ProjektName);
 
-
             response.data.isOpenKey.forEach(order => {
+
                 const card = document.createElement('div');
                 card.classList.add('card');
 
+                let orderkeyPric = ordersInfo.keyPrice * 0.19;
+
+                let SumKeyPrice = (ordersInfo.keyPrice - orderkeyPric) * order.countKey;
+
+                let nettoKeyPrice = SumKeyPrice.toLocaleString('de-DE', {
+                    style: 'currency',
+                    currency: 'EUR'
+                });
+
                 card.innerHTML = `
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">${order.nameKey}</h5>
-                            <div class="info">
-                                <p><strong>Anzahl:</strong> ${order.countKey}</p>
-                            </div>
-                        </div>
-                    </div>
+
+                 <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                   <div class="row g-0">
+                       <div class="col-md-12">
+                           <div class="card-body">
+                               <div class="card-text" id="schlüssel-0">
+                                   <h4>Schlüssel:${order.nameKey}</h4>
+                                   <h4>Anzahl: ${order.countKey}</h4>
+                                   <h4 id="PreisProduct-0" class="danger">Preis: ${nettoKeyPrice} </h4>
+                                   <input type="hidden" id="preis_schluessel-0" name="PreisKey" />
+                                   <input type="hidden" id="PreisProductBruttoSchlussel-0" value="${ordersInfo.keyPrice * order.countKey}" />
+                                   <input type="hidden" id="PreisProductNettoSchlussel-0" value="${SumKeyPrice}" />
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+                
                 `;
 
                 Projekt.appendChild(card);
@@ -52,50 +99,264 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 let cylinderType = '';
 
+                invoice.value = `SK${order.id}`;
+
                 if (order.zylinderId === 1)
                 {
                     cylinderType = ordersInfo.doppelName;
+
+                    let orderkeyPric = ordersInfo.doppel_listPrice * 0.19;
+
+                    let SumKeyPrice = (ordersInfo.doppel_listPrice - orderkeyPric) * order.count;
+
+                    let nettoKeyPrice = SumKeyPrice.toLocaleString('de-DE', {
+                        style: 'currency',
+                        currency: 'EUR'
+                    });
+                    const card = document.createElement('div');
+                    card.classList.add('card');
+
+                    card.innerHTML = `
+
+                    <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                                                                <div class="row g-0">                                                             
+                                                                    <div class="col-md-12">
+                                                                        <div class="card-body">
+                                                                            <h3 class="card-title">${cylinderType}</h3>
+                                                                            <div class="card-text" id="cardProductPrice-0">
+                                                                                  
+                                                                            <br />
+                                                                               <h4>aussen: ${order.aussen || ''} || innen: ${order.innen || ''}</h4>
+                                                                                <h4>Option - ${order.options || ''}.Option</h4>
+                                                                                <h4>Anzahl: ${order.count}</h4>
+                                                                                <h4 id="PreisProduct-0" class="danger">Preis: ${nettoKeyPrice}</h4>
+                                                                                <input type="hidden" id="preis_product-0"   name="PreisProduct" />
+                                                                                <input type="hidden" id="PreisProductBrutto-0" value="${ordersInfo.doppel_listPrice * order.count}" />
+                                                                                <input type="hidden" id="PreisProductNetto-0" value="${SumKeyPrice}" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                `;
+
+                    // Добавляем карточку в контейнер
+                    Projekt.appendChild(card);
                 }
                 else if (order.zylinderId === 2)
                 {
                     cylinderType = ordersInfo.hablName;
+
+                    let orderkeyPric = ordersInfo.halb_listPrice * 0.19;
+
+                    let SumKeyPrice = (ordersInfo.halb_listPrice - orderkeyPric) * order.count;
+
+                    let nettoKeyPrice = SumKeyPrice.toLocaleString('de-DE', {
+                        style: 'currency',
+                        currency: 'EUR'
+                    });
+                    const card = document.createElement('div');
+                    card.classList.add('card');
+
+                    card.innerHTML = `
+
+                    <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                                                                <div class="row g-0">                                                             
+                                                                    <div class="col-md-12">
+                                                                        <div class="card-body">
+                                                                            <h3 class="card-title">${cylinderType}</h3>
+                                                                            <div class="card-text" id="cardProductPrice-0">
+                                                                                  
+                                                                            <br />
+                                                                               <h4>aussen: ${order.aussen || ''} || innen: ${order.innen || ''}</h4>
+                                                                                <h4>Option - ${order.options || ''}.Option</h4>
+                                                                                <h4>Anzahl: ${order.count}</h4>
+                                                                                <h4 id="PreisProduct-0" class="danger">Preis: ${nettoKeyPrice}</h4>
+                                                                                <input type="hidden" id="preis_product-0"   name="PreisProduct" />
+                                                                                <input type="hidden" id="PreisProductBrutto-0" value="${ordersInfo.halb_listPrice * order.count}" />
+                                                                                <input type="hidden" id="PreisProductNetto-0" value="${SumKeyPrice}" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                `;
+
+                    // Добавляем карточку в контейнер
+                    Projekt.appendChild(card);
                 } 
                 else if (order.zylinderId === 3)
                 {
                     cylinderType = ordersInfo.knayfName;
+                    let orderkeyPric = ordersInfo.knayf_listPrice * 0.19;
+
+                    let SumKeyPrice = (ordersInfo.knayf_listPrice - orderkeyPric) * order.count;
+
+                    let nettoKeyPrice = SumKeyPrice.toLocaleString('de-DE', {
+                        style: 'currency',
+                        currency: 'EUR'
+                    });
+                    const card = document.createElement('div');
+                    card.classList.add('card');
+
+                    card.innerHTML = `
+
+                    <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                                                                <div class="row g-0">                                                             
+                                                                    <div class="col-md-12">
+                                                                        <div class="card-body">
+                                                                            <h3 class="card-title">${cylinderType}</h3>
+                                                                            <div class="card-text" id="cardProductPrice-0">
+                                                                                  
+                                                                            <br />
+                                                                               <h4>aussen: ${order.aussen || ''} || innen: ${order.innen || ''}</h4>
+                                                                                <h4>Option - ${order.options || ''}.Option</h4>
+                                                                                <h4>Anzahl: ${order.count}</h4>
+                                                                                <h4 id="PreisProduct-0" class="danger">Preis: ${nettoKeyPrice}</h4>
+                                                                                <input type="hidden" id="preis_product-0"   name="PreisProduct" />
+                                                                                <input type="hidden" id="PreisProductBrutto-0" value="${ordersInfo.knayf_listPrice * order.count}" />
+                                                                                <input type="hidden" id="PreisProductNetto-0" value="${SumKeyPrice}" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                `;
+
+                    // Добавляем карточку в контейнер
+                    Projekt.appendChild(card);
                 }
                 else if (order.zylinderId === 4)
                 {
                     cylinderType = ordersInfo.hebelZylinder;
+                    let orderkeyPric = ordersInfo.hebel_listPrice * 0.19;
+
+                    let SumKeyPrice = (ordersInfo.hebel_listPrice - orderkeyPric) * order.count;
+
+                    let nettoKeyPrice = SumKeyPrice.toLocaleString('de-DE', {
+                        style: 'currency',
+                        currency: 'EUR'
+                    });
+
+                    const card = document.createElement('div');
+                    card.classList.add('card');
+
+                    card.innerHTML = `
+
+                    <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                                                                <div class="row g-0">                                                             
+                                                                    <div class="col-md-12">
+                                                                        <div class="card-body">
+                                                                            <h3 class="card-title">${cylinderType}</h3>
+                                                                            <div class="card-text" id="cardProductPrice-0">
+                                                                                  
+                                                                            <br />
+                                                                               <h4>aussen: ${order.aussen || ''} || innen: ${order.innen || ''}</h4>
+                                                                                <h4>Option - ${order.options || ''}.Option</h4>
+                                                                                <h4>Anzahl: ${order.count}</h4>
+                                                                                <h4 id="PreisProduct-0" class="danger">Preis: ${nettoKeyPrice}</h4>
+                                                                                <input type="hidden" id="preis_product-0"   name="PreisProduct" />
+                                                                                <input type="hidden" id="PreisProductBrutto-0" value="${ordersInfo.hebel_listPrice * order.count}" />
+                                                                                <input type="hidden" id="PreisProductNetto-0" value="${SumKeyPrice}" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                `;
+
+                    // Добавляем карточку в контейнер
+                    Projekt.appendChild(card);
+
                 }
                 else if (order.zylinderId === 5)
                 {
                     cylinderType = ordersInfo.vorhangZylinder;
+                    let orderkeyPric = ordersInfo.vorhang_listPrice * 0.19;
+
+                    let SumKeyPrice = (ordersInfo.vorhang_listPrice - orderkeyPric) * order.count;
+
+                    let nettoKeyPrice = SumKeyPrice.toLocaleString('de-DE', {
+                        style: 'currency',
+                        currency: 'EUR'
+                    });
+
+                    const card = document.createElement('div');
+                    card.classList.add('card');
+
+                    card.innerHTML = `
+
+                    <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                                                                <div class="row g-0">                                                             
+                                                                    <div class="col-md-12">
+                                                                        <div class="card-body">
+                                                                            <h3 class="card-title">${cylinderType}</h3>
+                                                                            <div class="card-text" id="cardProductPrice-0">
+                                                                                  
+                                                                            <br />
+                                                                               <h4>aussen: ${order.aussen || ''} || innen: ${order.innen || ''}</h4>
+                                                                                <h4>Option - ${order.options || ''}.Option</h4>
+                                                                                <h4>Anzahl: ${order.count}</h4>
+                                                                                <h4 id="PreisProduct-0" class="danger">Preis: ${nettoKeyPrice}</h4>
+                                                                                <input type="hidden" id="preis_product-0"   name="PreisProduct" />
+                                                                                <input type="hidden" id="PreisProductBrutto-0" value="${ordersInfo.vorhang_listPrice * order.count}" />
+                                                                                <input type="hidden" id="PreisProductNetto-0" value="${SumKeyPrice}" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                `;
+
+                    // Добавляем карточку в контейнер
+                    Projekt.appendChild(card);
+
                 }
                 else if (order.zylinderId === 6)
                 {
                     cylinderType = ordersInfo.aussenZylinder;
-                } 
+                    let orderkeyPric = ordersInfo.aussenZylinder_listPrice * 0.19;
 
-                const card = document.createElement('div');
-                card.classList.add('card');
+                    let SumKeyPrice = (ordersInfo.aussenZylinder_listPrice - orderkeyPric) * order.count;
 
-                card.innerHTML = `
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">${order.dorName}</h5>
-                            <p><strong>Цилиндр:</strong> ${cylinderType}</p>
-                            <p><strong>aussen:</strong> ${order.aussen || ''} || innen:${order.innen || ''} </p>
-                              <p><strong>Option -</strong> ${order.options || ''}</p>
-                            <div class="info">
-                                <p><strong>Anzahl:</strong> ${order.count}</p>
-                            </div>
-                        </div>
-                    </div>
+                    let nettoKeyPrice = SumKeyPrice.toLocaleString('de-DE', {
+                        style: 'currency',
+                        currency: 'EUR'
+                    });
+
+                    const card = document.createElement('div');
+                    card.classList.add('card');
+
+                    card.innerHTML = `
+
+                    <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                                                                <div class="row g-0">                                                             
+                                                                    <div class="col-md-12">
+                                                                        <div class="card-body">
+                                                                            <h3 class="card-title">${cylinderType}</h3>
+                                                                            <div class="card-text" id="cardProductPrice-0">
+                                                                                  
+                                                                            <br />
+                                                                               <h4>aussen: ${order.aussen || ''} || innen: ${order.innen || ''}</h4>
+                                                                                <h4>Option - ${order.options || ''}.Option</h4>
+                                                                                <h4>Anzahl: ${order.count}</h4>
+                                                                                <h4 id="PreisProduct-0" class="danger">Preis: ${nettoKeyPrice}</h4>
+                                                                                <input type="hidden" id="preis_product-0"   name="PreisProduct" />
+                                                                                <input type="hidden" id="PreisProductBrutto-0" value="${ordersInfo.aussenZylinder_listPrice * order.count}" />
+                                                                                <input type="hidden" id="PreisProductNetto-0" value="${SumKeyPrice}" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                 `;
 
-                // Добавляем карточку в контейнер
-                Projekt.appendChild(card);
+                    // Добавляем карточку в контейнер
+                    Projekt.appendChild(card);
+
+                } 
+
+                
             });
         })
         .catch(function (error) {
@@ -160,7 +421,6 @@ function showStep(step) {
     document.getElementById('step' + step).classList.add('active');
 }
 
-// Функция для перехода к следующему шагу
 function nextStep() {
     // Увеличиваем шаг, если это не последний шаг
     if (FormStep < 5) {
