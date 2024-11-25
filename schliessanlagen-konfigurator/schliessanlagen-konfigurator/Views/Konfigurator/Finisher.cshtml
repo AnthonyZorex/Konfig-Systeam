@@ -1380,7 +1380,7 @@
                                                         <div>
                                                                     <h6>außen</h6>
                                                                                   <input style="border: none;" id="compName" type="hidden" value="${[DoppelInfo[0].companyName]}" />
-                                                                                                                      <select class="form-select" name="DoppelAussen" id="Aussen" onchange="selectParamAussen(${BlockN},'Doppelzylinder',event.target.selectedIndex+1,event.target.value,${[DoppelInfo[0].Id]})">
+                                                                                                                      <select class="form-select" name="DoppelAussen" id="Aussen" onchange="selectParamAussen(${BlockN},'Doppelzylinder',event.target.selectedIndex,event.target.value,${[DoppelInfo[0].Id]})">
 
                                                     @for (int i = 0; i < @ViewBag.Dopelzylinderaussen.Count; i++)
                                                     {
@@ -1394,7 +1394,7 @@
                                                {
                                                                  <div>
                                                                              <h6>innen</h6>
-                                                                  <select class="form-select" name="DoppelIntern" id="Intern" onchange="selectParamIntern(${BlockN},'Doppelzylinder',event.target.selectedIndex+1)">
+                                                                              <select class="form-select" name="DoppelIntern" id="Intern" onchange="selectParamIntern(${BlockN},'Doppelzylinder',event.target.selectedIndex,event.target.value,${[DoppelInfo[0].Id]})">
 
                                                             @for (int i = 0; i < @ViewBag.DopelzylinderIntern.Count; i++)
                                                             {
@@ -1568,7 +1568,7 @@
                                                           <div>
                                                                       <h6>außen</h6>
                                                                                            <input style="border: none;" id="compName" type="hidden" value="${HalbInfo[0].companyName}" />
-                                                                                           <select name="HalbAussen" id="Aussen" class="form-select" onchange="selectParamAussen(${BlockN},'Halbzylinder',event.target.selectedIndex+1,event.target.value,${[HalbInfo[0].Id]})">
+                                                                                           <select name="HalbAussen" id="Aussen" class="form-select" onchange="selectParamAussen(${BlockN},'Halbzylinder',event.target.selectedIndex,event.target.value,${[HalbInfo[0].Id]})">
 
                                                     @for (int i = 0; i < ViewBag.AussenHalb.Count; i++)
                                                     {
@@ -1739,7 +1739,7 @@
                                                                                       <input style="border: none;" id="compName" type="hidden" value="${[KnayfInfo[0].companyName]}" />
 
 
-                                              <select class="form-select" name="KnayfAussen" id="Aussen" onchange="selectParamAussen(${BlockN},'Knaufzylinder',event.target.selectedIndex+1,event.target.value,${[KnayfInfo[0].Id]})">
+                                              <select class="form-select" name="KnayfAussen" id="Aussen" onchange="selectParamAussen(${BlockN},'Knaufzylinder',event.target.selectedIndex,event.target.value,${[KnayfInfo[0].Id]})">
 
                                                 @for (int i = 0; i < ViewBag.KnayfZelinderAussen.Count; i++)
                                                 {
@@ -1756,7 +1756,7 @@
                                               <div>
                                                           <h6>innen</h6>
 
-                                                              <select class="form-select" name="KnayfIntern" id="Intern" onchange="selectParamIntern(${BlockN},'Knaufzylinder',event.target.selectedIndex+1)">
+                                                                          <select class="form-select" name="KnayfIntern" id="Intern" onchange="selectParamIntern(${BlockN},'Knaufzylinder',event.target.selectedIndex,event.target.value,${[KnayfInfo[0].Id]})">
 
                                                         @for (int i = 0; i < ViewBag.KnayfZelinderIntern.Count; i++)
                                                         {
@@ -2016,7 +2016,7 @@
                                     </div>
                                             <div id="Size-${BlockN}" class="SizeProduct">
                                         <div>
-                                              <select class="form-select" name="VorhanAussen" id="Aussen" onchange="VorhanSchlus(${BlockN},event.target.selectedIndex+1)">
+                                              <select class="form-select" name="VorhanAussen" id="Aussen" onchange="VorhanSchlus(${BlockN},event.target.selectedIndex)">
 
         @for (int i = 0; i < ViewBag.VorhanSize.Count; i++)
         {

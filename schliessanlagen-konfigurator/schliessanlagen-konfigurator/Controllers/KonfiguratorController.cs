@@ -5994,7 +5994,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     {
                         inter.Add(item.Intern);
                     }
-                    var dopS = KnayfSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList();
+                    var dopS = KnayfSize.Where(x => x.Intern > 0 && x.aussen == Aussenitem).Select(x => x.Intern).ToList();
 
                     foreach (var f in dopS)
                     {
@@ -6034,7 +6034,7 @@ namespace schliessanlagen_konfigurator.Controllers
                     {
                         inter.Add(item.Intern);
                     }
-                    var dopS = DoppelSize.Where(x => x.Intern > 0).Select(x => x.Intern).ToList();
+                    var dopS = DoppelSize.Where(x => x.Intern > 0 && x.aussen == Aussenitem).Select(x => x.Intern).ToList();
 
                     foreach (var f in dopS)
                     {
