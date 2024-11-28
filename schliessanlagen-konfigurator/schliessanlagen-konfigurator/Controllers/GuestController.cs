@@ -46,8 +46,6 @@ namespace schliessanlagen_konfigurator.Controllers
 
             foreach (var o in optionsList)
             {
-                //var optionValue = db.isOpen_value.Where(x => x.isOpen_OrderId == o.Id).OrderBy(x=>x.ForNameKey).ToList();
-
                 var optionValue = db.isOpen_value.Where(x => x.isOpen_OrderId == o.Id).ToList();
 
                 if (optionValue.Count()>0) 
@@ -203,9 +201,20 @@ namespace schliessanlagen_konfigurator.Controllers
                 db.SaveChanges();
             }
 
-            var option = db.isOpen_Order.Where(x => x.OrdersId == orders.First().Id).ToList();
+            var isOpne = new List<isOpen_Order>();
 
-            foreach (var o in option) 
+            foreach (var order in orders) 
+            {
+                var option = db.isOpen_Order.Where(x => x.OrdersId == order.Id).Distinct().ToList();
+
+                foreach (var item in option) 
+                {
+                    isOpne.Add(item);
+                }
+
+            }
+
+            foreach (var o in isOpne) 
             {
                 var optionValue = db.isOpen_value.Where(x=>x.isOpen_OrderId == o.Id).ToList();
 
@@ -213,10 +222,11 @@ namespace schliessanlagen_konfigurator.Controllers
                 {
                     isOpenKey.Add(list);
                 }
-
             }
 
-            for(int i = 0; i < isOpenKey.Count(); i++) 
+            var f = isOpenKey.GroupBy(x => x.ForNameKey).Count();
+
+            for (int i = 0; i < f; i++) 
             {
                 isOpenKey[i].CountKey = model.CountKey[i];
 

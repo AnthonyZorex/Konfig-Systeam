@@ -25,23 +25,26 @@
             <span>Shop</span>
         </a> *@
     </div>
-    <div style="display:flex;gap: 20px;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;align-items: center;">
- @*        <button id="hilfeImg" style="border:none"><img src="/Image/help.png" data-bs-toggle="modal" data-bs-target="#hilfe" width="60" hight="60" /></button> *@
-        <h2>Bitte füllen Sie alle Felder im Konfigurator aus.</h2>
-    </div>
+ 
   
     <form asp-action="SaveOrder" enctype="multipart/form-data"  class="shadow-lg p-3 mb-5 bg-body-tertiary rounded" asp-controller="Konfigurator">
   
     @Html.HiddenFor(m => m.userKey)
     <input type="hidden" value="@ViewBag.UserNameItem" name="userName" />
 
-        <div class="mt-5">
-            <h5>Projektname</h5>
-          <input type="text" class="form-control" name="ProjektName" />
-        </div>
-      
+     
     <div id="InformBar">
-        <div id="blockSclussel" >
+            <div style="position:absolute">
+
+               
+
+                <div class="mt-5">
+                    <h5>Projektname</h5>
+                    <input type="text" class="form-control" name="ProjektName" />
+                </div>
+            </div>
+
+            <div id="blockSclussel" >
             <div id="sclusselInfo">
                 <div id="schlussel">
                     <h5>Schlüssel</h5>
@@ -69,7 +72,9 @@
             </div>
         </div>
         <div>
-            <div id="sclusselInfo2">
+                
+
+                <div id="sclusselInfo2">
                 <div id="schlussel">
                     <h5>Pos</h5>   
                 </div>

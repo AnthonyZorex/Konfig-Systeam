@@ -62,6 +62,25 @@ function calculateDhlCost(sendDhlChecked, sumGram)
     return "0 €";
 }
 
+function calculateDhlCostDe(sendDhlChecked, sumGram) {
+    if (sendDhlChecked) {
+        let gramValue = parseFloat(sumGram);
+
+        if (gramValue <= 2) {
+            return "6,00 €";
+        } else if (gramValue > 2 && gramValue <= 5) {
+            return "7,00 €";
+        } else if (gramValue > 5 && gramValue <= 10) {
+            return "12,00 €";
+        } else if (gramValue > 10 && gramValue <= 20) {
+            return "15,00 €";
+        } else if (gramValue > 20 && gramValue <= 31.5) {
+            return "20,00 €";
+        }
+    }
+    return "0 €";
+}
+
 function SendRehnung(value)
 {
     let ordersInfo = sessionStorage.getItem('OrdersData');
@@ -138,24 +157,9 @@ function SendRehnung(value)
             {
                 procent.value = "19% MwSt";
 
-                if (sendDhl.checked)
-                {
-                    let gramValue = parseFloat(ordersInfo.sumGram);
-                    if (gramValue <= 2) {
-                        gramItem.value = "6,00 €";
-                    } else if (gramValue > 2 && gramValue <= 5) {
-                        gramItem.value = "7,00 €";
-                    } else if (gramValue > 5 && gramValue <= 10) {
-                        gramItem.value = "12,00 €";
-                    } else if (gramValue > 10 && gramValue <= 20) {
-                        gramItem.value = "15,00 €";
-                    } else if (gramValue > 20 && gramValue <= 31.5) {
-                        gramItem.value = "20,00 €";
-                    }
-                    gramItem = parseFloat(gramItem.value.replace("€", "").replace(",", ".").trim());
-                } else {
-                    gramItem.value = "0 €";
-                }
+                gramItem.value = calculateDhlCostDe(sendDhl.checked, ordersInfo.sumGram);
+
+                const gramItemValue = parseFloat(gramItem.value.replace("€", "").replace(",", ".").trim());
 
                 break;
             }

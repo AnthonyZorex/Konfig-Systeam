@@ -18,6 +18,7 @@ using schliessanlagen_konfigurator.Service;
 using System.Security.Policy;
 using schliessanlagen_konfigurator.Controllers;
 using schliessanlagen_konfigurator.ViewComponent;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,6 +62,8 @@ builder.Services.Configure<IISServerOptions>(options =>
 {
     options.MaxRequestBodySize = 10485760;
 });
+
+builder.Services.AddSingleton<IEmailSender, EmailSender>();
 
 builder.Services.AddControllers().AddJsonOptions(options =>
  {

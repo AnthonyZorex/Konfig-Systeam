@@ -1,4 +1,5 @@
 ﻿@page
+
 @model schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage.PagePersonalOrdersModel;
 
 @{
@@ -10,6 +11,12 @@
     var imageList = (List<string>)ViewData["Image"];
     var countProduct = (List<int>)ViewData["CounterProduct"];
     var descriptions = (List<string>)ViewData["Descriptions"];
+
+    var AussenInenPrice = (List<float>)ViewData["Aussen/inen"];
+
+    var Optionen = (List<(string, float)>)ViewData["Options"];
+    var CounterOptionen = (List<int>)ViewData["CountOptions"];
+    var optionenSchritt = 0;
 
     var Gramm = (List<float>)ViewData["Gewicht"];
 
@@ -23,6 +30,30 @@
         border: 1px solid red; /* Для визуализации границы контейнера */
         padding: 10px;
         margin: 10px;
+    }
+
+    .table-row {
+        grid-template-columns: 60px 620px 100px 200px;
+        display: grid;
+        margin-bottom: 10px;
+    }
+
+    .table-cell {
+        flex: 1;
+        padding: 8px;
+        border: 1px solid #ccc;
+    }
+
+        .table-cell:first-child {
+            font-weight: bold;
+        }
+
+        .table-cell:last-child {
+            text-align: right;
+        }
+
+    .card {
+        padding: 15px;
     }
 </style>
 <div class="row">
@@ -70,7 +101,7 @@
                                         <form id="myForm" method="post">
 
                                             <div id="blockSchrite" class="shadow-lg  mb-5 bg-body-tertiary rounded">
-                                                    <div style="display:flex;gap:10px;">
+                                                    <div>
                                                         <h2><strong>Rechnungsadresse</strong></h2>
                                                     </div>
                                                 <br />
@@ -80,7 +111,7 @@
 
                                                        <div class="form-floating mb-3">
                                                         <input class="form-control" id="floatingInput" value="@order.UserName" required name="RechnungAdresse" placeholder="E-Mail-Adresse" />
-                                                            <label for="floatingInput">E-Mail-Adresse</label>
+                                                            <label for="floatingInput">E-Mail</label>
                                                         </div>
 
                                                         <div class="form-floating mb-3">
@@ -377,12 +408,7 @@
                                                         </div>
                                            
                                                 }
-                                            </div>
-
-                                            <div id="blockSchrite" class="shadow-lg  mb-5 bg-body-tertiary rounded">
-                                                <div style="display:flex;gap:10px;">
-                                                    <h2><strong>Versandadresse</strong></h2>
-                                                </div>
+                                                
                                                 <div style="display:flex;gap:30px">
                                                     <input type="checkbox" name="Rehnung" checked onchange="changeAdress(event.target.checked,@z)" />
                                                     <h4>Lieferadresse ist gleich Rechnungsadresse</h4>
@@ -391,49 +417,56 @@
                                                 <div id="rechnungSend">
                                                 </div>
                                             </div>
-                                         
-
 
                                             <div id="blockSchrite" class="shadow-lg  mb-5 bg-body-tertiary rounded">
-                                                    <div style="display:flex;gap:10px;">
-                                                        <h2><strong>Versandarten</strong></h2>
+                                                    <div>
+                                                        <h2><strong>Versandart</strong></h2>
                                                     </div>
                                                     <br />
 
-                                                <div style="display: flex;align-items: center;">
+                                                <div >
                                                     <input type="hidden" id="gramWert-@z" value="@Gramm[z]" />
 
+                                                    <div style="display: flex">
                                                         <input type="radio" id="dhl-@z" onchange="changeSend(@z)" checked name="DhlSend" value="DHL">
                                                         <input type="text" readonly style="border: none;outline:none" value="0" id="CostGram-@z" /> <br>
+                                                    </div>
+                                                      
                                                     <h4>
-                                                       DHL
+                                                        Standardversand über DHL
                                                     </h4>
                                                     </div>
 
-                                                    <div style="display: flex;gap: 30px;align-items: center;">
+                                                    <div class="mt-5">
+
+                                                    <div style="display: flex">
                                                         <input type="radio" readonly style="border: none;" onchange="changeSend(@z)" id="Plase-@z" name="DhlSend" value="0,00 €">
-                                                        <label for="css" style="margin-left: -25px;">0,00 €</label><br>
+                                                        <label for="css">0,00 €</label><br>
+                                                    </div>
+
+                                                       
                                                         <h4>
-                                                         Abholung in Berlin (Brunnenstraße 8, 10119 Berlin)
+                                                        Abholung im Store
                                                         </h4>
+                                                    <h6>Selbstabholung im Store Berlin, Brunnenstraße 8, 10119 Berlin, nach Erhalt der Abholbenachrichtigung über die Fertigstellung.</h6>
                                                     </div>
                                                 </div>
 
                                             <div id="blockSchrite" class="shadow-lg  mb-5 bg-body-tertiary rounded">
-                                                    <div style="display:flex;gap:10px;">
+                                                    <div>
                                                         <h2><strong>Zahlungsart</strong></h2>
                                                     </div>
                                                     <br />
-                                                    <div style="display: flex;gap: 50px;" id="bezalenMethod-@z">
+                                                    <div id="bezalenMethod-@z">
                                                         <label>
                                                             <input type="radio" onchange="BezaleMethod(@z)" checked name="Pay" value="PayPall">
-                                                        <img src="@("/compression/paypal.webp")" height="30" width="30" />
-                                                            <h4>PayPall</h4>
-                                                        </label><br>                                                   
+                                                        <img src="@("/compression/paypal.webp")" height="50" width="50" />
+                                                       
+                                                        </label><br>  
+                                                        
                                                          <label>
                                                         <input type="radio" onchange="BezaleMethod(@z)" name="Pay" value="Vorkasse">
-                                                        <img src="@("/compression/bezahlverfahren.png")" height="40" width="40" />
-                                                        <h4>Vorkasse</h4>
+                                                        <img src="@("/compression/bezahlverfahren.png")" height="50" width="50" />
                                                         </label>  
                                                     </div>
                                                 </div>
@@ -445,83 +478,121 @@
                                                 decimal resultKeyItem = Math.Round(Convert.ToDecimal(orderList[z].KeyCost) - costProcentKey, 2);
 
                                                 string formattedResultKeyI = resultKeyItem.ToString("C");
+
                                             }
 
-                                            <div id="blockSchrite" class="shadow-lg  mb-5 bg-body-tertiary rounded">
+                                            <div id="blockSchrite" class="shadow-lg mb-5 bg-body-tertiary rounded">
 
-                                                <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
-                                                    <div class="row g-0"> 
-                                                        <div class="col-md-12">
-                                                            <div class="card-body">
-                                                                <div class="card-text" id="schlüssel-@z">
-                                                                    <h4>Schlüssel</h4>
-                                                                    <h4>Anzahl: @orderList[z].KeyCount</h4>
-                                                                    <h4 id="PreisProduct-@z" class="danger">Preis: @formattedResultKeyI</h4>
+                                                <div class="card mb-4 bg-body-tertiary rounded ">
+
+                                                                <div class="table-row" id="schlüssel-@z">
+
+                                                                    <h4 class="table-cell">Stk.</h4>
+                                                                    <h4 class="table-cell">Artikel</h4>
+                                                                    <h4 class="table-cell">Wert</h4>
+                                                                    <h4 class="table-cell" style="text-align: end;">Preis</h4>
+
+                                                                    <h4 class="table-cell">@orderList[z].KeyCount</h4>
+                                                                    <h4 class="table-cell">Schlüssel</h4>
+                                                                    <h4 class="table-cell"></h4>
+                                                                    <h4 class="table-cell" style="text-align: end;" id="PreisProduct-@z">Preis: @formattedResultKeyI</h4>
                                                                     <input type="hidden" id="preis_schluessel-@z" name="PreisKey" />
                                                                     <input type="hidden" id="PreisProductBruttoSchlussel-@z" value="@orderList[z].KeyCost" />
                                                                     <input type="hidden" id="PreisProductNettoSchlussel-@z" value="@resultKeyItem" />
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+
 
                                                         @for (int s = 0; s < countProduct[z]; s++)
                                                         {
                                                             decimal costProcentItem = Math.Round(Convert.ToDecimal(orderItem[ProudctItemCounter].Price) * 0.19m, 2);
-
-                                                            // Вычисляем итоговую сумму после вычитания 19%
+                                                         
                                                             decimal resultItem = Math.Round(Convert.ToDecimal(orderItem[ProudctItemCounter].Price) - costProcentItem, 2);
 
-                                                            // Форматируем результат как валюту
                                                             string formattedResultItem = resultItem.ToString("C");
 
+                                                            decimal costProcentSize = Math.Round(Convert.ToDecimal(@AussenInenPrice[ProudctItemCounter]) * 0.19m, 2);
 
-                                                             <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
-                                                                <div class="row g-0">                                                             
-                                                                    <div class="col-md-12">
-                                                                        <div class="card-body">
-                                                                            <h3 class="card-title">@orderItem[ProudctItemCounter].Name</h3>
-                                                                            <div class="card-text" id="cardProductPrice-@z">
-                                                                                  
-                                                                            <br />
-                                                                               <h4>aussen: @orderItem[ProudctItemCounter].Aussen || innen: @orderItem[ProudctItemCounter].Intern</h4>
-                                                                                <h4>Option - @orderItem[ProudctItemCounter].Option</h4>
-                                                                                <h4>Anzahl: @orderItem[ProudctItemCounter].Count</h4>
-                                                                                <h4 id="PreisProduct-@z" class="danger">Preis: @formattedResultItem</h4>
+                                                            decimal resultSize = Math.Round(Convert.ToDecimal(@AussenInenPrice[ProudctItemCounter]) - costProcentSize, 2);
+
+                                                            string formattedResultSize = resultSize.ToString("C");
+
+                                                            <div class="card-text table-row" id="cardProductPrice-@z">
+
+                                                                            <h4 class ="table-cell">@orderItem[ProudctItemCounter].Count</h4>
+                                                                            <h4 class="table-cell">@orderItem[ProudctItemCounter].Name</h4>
+                                                                            <h4 class="table-cell"></h4>
+                                                                            <h4 class="table-cell" style="text-align: end;" id="PreisProduct-@z">Preis: @formattedResultItem</h4>
+                                                                            
+                                                                                <h4 class="table-cell"></h4>
+                                                                                <h4 class="table-cell">aussen | innen</h4>
+                                                                                <h4 class="table-cell">@orderItem[ProudctItemCounter].Aussen | @orderItem[ProudctItemCounter].Intern  </h4>
+                                                                                 <h4 class="table-cell" id="Zise-@z" style="text-align: end;">@formattedResultSize</h4>
+                                                                               
+                                                                                <input type="hidden" id="preisZise-@z" />
+                                                                                <input type="hidden" id="PreisZiseBrutto-@z" value="@AussenInenPrice[ProudctItemCounter]" />
+                                                                                <input type="hidden" id="PreisZiseNetto-@z" value="@resultSize" />
+                                                                               
+                                                                                @for (int r = 0; r<CounterOptionen[ProudctItemCounter]; r++)
+                                                                                {
+                                                                                    if (@Optionen[optionenSchritt].Item1 != "")
+                                                                                    {
+                                                                                        decimal costProcentOptionen = Math.Round(Convert.ToDecimal(@Optionen[optionenSchritt].Item2) * 0.19m, 2);
+
+                                                                                        decimal resultOptionen = Math.Round(Convert.ToDecimal(@Optionen[optionenSchritt].Item2) - costProcentOptionen, 2);
+
+                                                                                        string formattedResultOptionen = resultOptionen.ToString("C");
+
+                                                                                        <h4 class="table-cell"></h4>
+                                                                                        <h4 class="table-cell">@Optionen[optionenSchritt].Item1</h4>
+                                                                                        <h4 class="table-cell"></h4>
+                                                                                        <h4 class="table-cell" id="OpionPrice-@z" style="text-align: end;">@formattedResultOptionen</h4>
+
+                                                                                        <input type="hidden" id="preisOpion-@z" />
+                                                                                        <input type="hidden" id="PreisOpionBrutto-@z" value="@Optionen[optionenSchritt].Item2" />
+                                                                                        <input type="hidden" id="PreisOpionNetto-@z" value="@resultOptionen" />
+
+                                                                                    }
+                                                      
+                                                                                    optionenSchritt++;
+                                                                                }
+
                                                                                 <input type="hidden" id="preis_product-@z"   name="PreisProduct" />
                                                                                 <input type="hidden" id="PreisProductBrutto-@z" value="@orderItem[ProudctItemCounter].Price" />
                                                                                 <input type="hidden" id="PreisProductNetto-@z" value="@resultItem" />
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                                           
                                                             </div>
 
                                                             UserOrderId = @orderList[z].Id;
                                                             ProudctItemCounter++;
                                                         }
+                                              
+                                                </div> 
 
-                                                </div>                                          
-
-                                            <div id="blockSchrite" style="display: grid;justify-content: center;" class="shadow-lg  mb-5 bg-body-tertiary rounded">
+                                                <div class="card card-body  mb-4 bg-body-tertiary rounded">
 
                                                 <div style="grid-template-columns: auto auto;display: grid;">
+                                                    
                                                     <input id="procent-@z" style="outline:none;border:none;max-width:120px" type="text" readonly name="procent" value="Steuer:" />
                                                     <input redonly name="Steuer" style="text-align: end;border: none;outline: none" type="text" value="0" id="aldProcent-@z" />
                                                 </div>
 
                                                 <div style="grid-template-columns: auto auto;display: grid;">
-                                                    <h3>Versand:</h3>
+                                                    <h4>Versand:</h4>
                                                     <input name="Versand" type="text" redonly style="text-align: end;border: none;outline: none" value="0" id="CostGram-@z" />
                                                 </div>
 
                                                 <div style="grid-template-columns: auto auto; display: grid;">
-                                                    <h3>Bestellsumme:</h3>
+                                                        <h4>Gesamtsumme inkl. MwSt:</h4>
                                                     <input name="OrderSum" readonly style="text-align: end; border: none; outline: none" value="@formattedResultKey" id="costedI-@z" />
                                                     <input readonly type="hidden" style="text-align: end; border: none; outline: none" value="@orderList[z].OrderSum" id="costedР-@z" />
                                                     <input readonly type="hidden" name="NettoSumOrder" style="text-align: end; border: none; outline: none" value="@formattedResultKey" />
-                                                </div> 
+                                                </div>
+
+                                            </div>
+                                            </div>
+                                            <div id="blockSchrite" style="display: grid;justify-content: center;" class="shadow-lg  mb-5 bg-body-tertiary rounded">
+
+                                               
 
                                                 <input type="hidden" id="Aufrechnung-@z" name="aufRechnung" value="false" />
                                                 <input type="submit" class="btn btn-success" id="SendRechnung-@z" style="display:none; padding:10px 20px 10px 20px" value="Bezahlen an der Kasse" />
@@ -543,6 +614,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div id="card_controll">
                          
                             <div>

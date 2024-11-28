@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("schliessanlagen-konfigurator")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9293e59e819dfc71a5798be57e76420d8f9e5cbc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d31a9996eae81db26a02a9b365bbb159b6952a03")]
 [assembly: System.Reflection.AssemblyProductAttribute("schliessanlagen-konfigurator")]
 [assembly: System.Reflection.AssemblyTitleAttribute("schliessanlagen-konfigurator")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

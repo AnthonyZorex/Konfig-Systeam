@@ -19,6 +19,8 @@ using schliessanlagen_konfigurator.Models.Users;
 using System.Net.Http.Headers;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using System.Globalization;
+using System.Linq;
+using schliessanlagen_konfigurator.Models.Hebel;
 
 namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
 {
@@ -72,6 +74,24 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
                 List<float> SumGramm = new List<float>();
                 var countIterationProduct = new List<int>();
 
+                var SizeCost = new List<float>();
+
+                var DoppelOptionenList = new List<NGF>();
+                
+                var CounterOption = new List<int>();
+                
+                var KayfOptionenList = new List<Knayf_Options>();
+
+                var HalbOptionenList = new List<Halbzylinder_Options>();
+                var HebelOptionenList = new List<Options>();
+                var VorhengOptionenList = new List<OptionsVorhan>();
+                var AussenOptionenList = new List<Aussen_Rund_all>();   
+
+                var allOptionList = new List<(string name, float price)>();
+
+
+                var itemList = new List<string>();
+
                 for (int f = 0; f < ListItem.Count(); f++)
                 {
                     var ProductList = db.ProductSysteam.Where(x => x.UserOrdersShopId == ListItem[f].Id).Distinct().ToList();
@@ -91,36 +111,393 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
                             gramm.Add(doppel.Gramm ?? 0);
                             images.Add(doppel.ImageName);
                             descriptions.Add(doppel.description);
+
+                            var isOption = db.Profil_Doppelzylinder_Options.Where(x=>x.DoppelzylinderId == doppel.Id).ToList();
+
+                            var input = list.Option;
+
+                            if (input != null)
+                            {
+                                string pattern = @"\w+\s*=\s*[^:]+";
+
+                                MatchCollection matches = Regex.Matches(input, pattern);
+
+
+                                foreach (Match match in matches)
+                                {
+                                    itemList.Add(match.Value);
+                                }
+
+                                foreach (var option in isOption)
+                                {
+                                    var Options = db.NGF.Include(x => x.NGF_Value).Where(x => x.OptionsId == option.Id).ToList();
+
+                                    foreach (var value in Options)
+                                    {
+                                        DoppelOptionenList.Add(value);
+                                    }
+
+                                }
+                                var x = DoppelOptionenList.Where(opt => itemList.Any(item => opt.Name.Contains(item))).ToList();
+
+                                DoppelOptionenList = x;
+
+                                CounterOption.Add(x.Count());
+
+                                var PriceAusse_Innen =
+                                list.Price
+                                - doppel.Price
+                                - DoppelOptionenList
+                                    .SelectMany(x => x.NGF_Value) 
+                                    .Where(x => x.Cost != null) 
+                                    .Sum(x => x.Cost.Value); 
+
+                                var t = DoppelOptionenList.SelectMany(x => x.NGF_Value).Where(x => x.Cost > 0).Select(x=>x.Cost).ToList();
+                                var s = 0;
+
+                                foreach(var item in DoppelOptionenList)
+                                {
+                                    allOptionList.Add((item.Name, t[s] ??0f));
+                                    s++;
+                                }
+
+                                SizeCost.Add((float)PriceAusse_Innen);
+                            }
+                            else
+                            {
+                                allOptionList.Add(("", 0f));
+                                CounterOption.Add(0);
+                                var PriceAusse_Innen = list.Price- doppel.Price;
+                                SizeCost.Add((float)PriceAusse_Innen);
+                            }
+
                         }
+
                         if (knayf != null)
                         {
                             gramm.Add(knayf.Gramm ?? 0);
                             images.Add(knayf.ImageName);
                             descriptions.Add(knayf.description);
+
+                            var isOption = db.Profil_Knaufzylinder_Options.Where(x => x.Profil_KnaufzylinderId == knayf.Id).ToList();
+
+                            var input = list.Option;
+
+                            if (input != null)
+                            {
+                                string pattern = @"\w+\s*=\s*[^:]+";
+
+                                MatchCollection matches = Regex.Matches(input, pattern);
+
+                                foreach (Match match in matches)
+                                {
+                                    itemList.Add(match.Value);
+                                }
+
+                                foreach (var option in isOption)
+                                {
+                                    var Options = db.Knayf_Options.Include(x => x.Knayf_Options_value).Where(x => x.OptionsId == option.Id).ToList();
+
+                                    foreach (var value in Options)
+                                    {
+                                        KayfOptionenList.Add(value);
+                                    }
+
+                                }
+                                var x = KayfOptionenList.Where(opt => itemList.Any(item => opt.Name.Contains(item))).ToList();
+
+                                CounterOption.Add(x.Count());
+
+                                KayfOptionenList = x;
+
+                                var PriceAusse_Innen =
+                                list.Price
+                                - knayf.Price
+                                - KayfOptionenList
+                                    .SelectMany(x => x.Knayf_Options_value) // Обработка null
+                                    .Where(x => x.Cost != null) // Игнорируем null-значения Cost
+                                    .Sum(x => x.Cost.Value); // Если Cost nullable, извлекаем значение
+
+                                var t = KayfOptionenList.SelectMany(x => x.Knayf_Options_value).Where(x => x.Cost > 0).Select(x => x.Cost).ToList();
+                                var s = 0;
+
+                                foreach (var item in KayfOptionenList)
+                                {
+                                    allOptionList.Add((item.Name, t[s] ?? 0f));
+                                    s++;
+                                }
+
+                                SizeCost.Add((float)PriceAusse_Innen);
+                            }
+                            else
+                            {
+                                allOptionList.Add(("", 0f));
+                                CounterOption.Add(0);
+                                var PriceAusse_Innen = list.Price - knayf.Price;
+                                SizeCost.Add((float)PriceAusse_Innen);
+                            }
+
                         }
                         if (halb != null)
                         {
                             gramm.Add(halb.Gramm ?? 0);
                             images.Add(halb.ImageName);
                             descriptions.Add(halb.description);
+
+                            var isOption = db.Profil_Halbzylinder_Options.Where(x => x.Profil_HalbzylinderId == halb.Id).ToList();
+
+                            var input = list.Option;
+
+                            if (input != null)
+                            {
+                                string pattern = @"\w+\s*=\s*[^:]+";
+
+                                MatchCollection matches = Regex.Matches(input, pattern);
+
+
+                                foreach (Match match in matches)
+                                {
+                                    itemList.Add(match.Value);
+                                }
+
+                                foreach (var option in isOption)
+                                {
+                                    var Options = db.Halbzylinder_Options.Include(x => x.Halbzylinder_Options_value).Where(x => x.OptionsId == option.Id).ToList();
+
+                                    foreach (var value in Options)
+                                    {
+                                        HalbOptionenList.Add(value);
+                                    }
+
+                                }
+                                var x = HalbOptionenList.Where(opt => itemList.Any(item => opt.Name.Contains(item))).ToList();
+
+                                CounterOption.Add(x.Count());
+
+                                HalbOptionenList = x;
+
+                                var PriceAusse_Innen =
+                                list.Price
+                                - halb.Price
+                                - HalbOptionenList
+                                    .SelectMany(x => x.Halbzylinder_Options_value) // Обработка null
+                                    .Where(x => x.Cost != null) // Игнорируем null-значения Cost
+                                    .Sum(x => x.Cost.Value); // Если Cost nullable, извлекаем значение
+
+                                var t = HalbOptionenList.SelectMany(x => x.Halbzylinder_Options_value).Where(x => x.Cost > 0).Select(x => x.Cost).ToList();
+                                var s = 0;
+
+                                foreach (var item in HalbOptionenList)
+                                {
+                                    allOptionList.Add((item.Name, t[s] ?? 0f));
+                                    s++;
+                                }
+
+                                SizeCost.Add((float)PriceAusse_Innen);
+                            }
+                            else
+                            {
+                                allOptionList.Add(("", 0f));
+                                CounterOption.Add(0);
+                                var PriceAusse_Innen = list.Price - halb.Price;
+                                SizeCost.Add((float)PriceAusse_Innen);
+                            }
+
                         }
                         if (hebel != null)
                         {
                             gramm.Add(hebel.Gramm ?? 0);
                             images.Add(hebel.ImageName);
                             descriptions.Add(hebel.description);
+
+                            var isOption = db.Hebelzylinder_Options.Where(x => x.HebelzylinderId == hebel.Id).ToList();
+
+                            var input = list.Option;
+
+                            if (input != null)
+                            {
+                                string pattern = @"\w+\s*=\s*[^:]+";
+
+                                MatchCollection matches = Regex.Matches(input, pattern);
+
+
+                                foreach (Match match in matches)
+                                {
+                                    itemList.Add(match.Value);
+                                }
+
+                                foreach (var option in isOption)
+                                {
+                                    var Options = db.Options.Include(x => x.Options_value).Where(x => x.OptionId == option.Id).ToList();
+
+                                    foreach (var value in Options)
+                                    {
+                                        HebelOptionenList.Add(value);
+                                    }
+
+                                }
+                                var x = HebelOptionenList.Where(opt => itemList.Any(item => opt.Name.Contains(item))).ToList();
+                                
+                                CounterOption.Add(x.Count());
+
+                                HebelOptionenList = x;
+
+                                var PriceAusse_Innen =
+                                list.Price
+                                - hebel.Price
+                                - HebelOptionenList
+                                    .SelectMany(x => x.Options_value) // Обработка null
+                                    .Where(x => x.Cost != null) // Игнорируем null-значения Cost
+                                    .Sum(x => x.Cost.Value); // Если Cost nullable, извлекаем значение
+
+                                var t = HebelOptionenList.SelectMany(x => x.Options_value).Where(x => x.Cost > 0).Select(x => x.Cost).ToList();
+                                var s = 0;
+
+                                foreach (var item in HebelOptionenList)
+                                {
+                                    allOptionList.Add((item.Name, t[s] ?? 0f));
+                                    s++;
+                                }
+
+                                SizeCost.Add((float)PriceAusse_Innen);
+                            }
+                            else
+                            {
+                                allOptionList.Add(("", 0f));
+                                CounterOption.Add(0);
+                                var PriceAusse_Innen = list.Price - hebel.Price;
+                                SizeCost.Add((float)PriceAusse_Innen);
+                            }
+
                         }
                         if (Vorhan != null)
                         {
                             gramm.Add(Vorhan.Gramm ?? 0);
                             images.Add(Vorhan.ImageName);
                             descriptions.Add(Vorhan.description);
+
+                            var isOption = db.Vorhan_Options.Where(x => x.VorhangschlossId == Vorhan.Id).ToList();
+
+                            var input = list.Option;
+
+                            if (input != null)
+                            {
+                                string pattern = @"\w+\s*=\s*[^:]+";
+
+                                MatchCollection matches = Regex.Matches(input, pattern);
+
+
+                                foreach (Match match in matches)
+                                {
+                                    itemList.Add(match.Value);
+                                }
+
+                                foreach (var option in isOption)
+                                {
+                                    var Options = db.OptionsVorhan.Include(x => x.Options_value).Where(x => x.OptionId == option.Id).ToList();
+
+                                    foreach (var value in Options)
+                                    {
+                                        VorhengOptionenList.Add(value);
+                                    }
+
+                                }
+                                var x = VorhengOptionenList.Where(opt => itemList.Any(item => opt.Name.Contains(item))).ToList();
+
+                                CounterOption.Add(x.Count());
+
+                                VorhengOptionenList = x;
+
+                                var PriceAusse_Innen =
+                                list.Price
+                                - Vorhan.Price
+                                - VorhengOptionenList
+                                    .SelectMany(x => x.Options_value) // Обработка null
+                                    .Where(x => x.Cost != null) // Игнорируем null-значения Cost
+                                    .Sum(x => x.Cost.Value); // Если Cost nullable, извлекаем значение
+
+                                var t = VorhengOptionenList.SelectMany(x => x.Options_value).Where(x => x.Cost > 0).Select(x => x.Cost).ToList();
+                                var s = 0;
+
+                                foreach (var item in VorhengOptionenList)
+                                {
+                                    allOptionList.Add((item.Name, t[s] ?? 0f));
+                                    s++;
+                                }
+
+                                SizeCost.Add((float)PriceAusse_Innen);
+                            }
+                            else
+                            {
+                                allOptionList.Add(("", 0f));
+                                CounterOption.Add(0);
+                                var PriceAusse_Innen = list.Price - Vorhan.Price;
+                                SizeCost.Add((float)PriceAusse_Innen);
+                            }
                         }
                         if (Aussen != null)
                         {
                             gramm.Add(Aussen.Gramm ?? 0);
                             images.Add(Aussen.ImageName);
                             descriptions.Add(Aussen.description);
+
+                            var isOption = db.Aussen_Rund_options.Where(x => x.Aussenzylinder_RundzylinderId == Vorhan.Id).ToList();
+
+                            var input = list.Option;
+
+                            if (input != null)
+                            {
+                                string pattern = @"\w+\s*=\s*[^:]+";
+
+                                MatchCollection matches = Regex.Matches(input, pattern);
+
+
+                                foreach (Match match in matches)
+                                {
+                                    itemList.Add(match.Value);
+                                }
+
+                                foreach (var option in isOption)
+                                {
+                                    var Options = db.Aussen_Rund_all.Include(x => x.Aussen_Rouns_all_value).Where(x => x.Aussen_Rund_optionsId == option.Id).ToList();
+
+                                    foreach (var value in Options)
+                                    {
+                                        AussenOptionenList.Add(value);
+                                    }
+
+                                }
+                                var x = AussenOptionenList.Where(opt => itemList.Any(item => opt.Name.Contains(item))).ToList();
+                                CounterOption.Add(x.Count());
+
+                                AussenOptionenList = x;
+
+                                var PriceAusse_Innen =
+                                list.Price
+                                - Aussen.Price
+                                - AussenOptionenList
+                                    .SelectMany(x => x.Aussen_Rouns_all_value) 
+                                    .Where(x => x.Cost != null) 
+                                    .Sum(x => x.Cost.Value);
+
+                                var t = AussenOptionenList.SelectMany(x => x.Aussen_Rouns_all_value).Where(x => x.Cost > 0).Select(x => x.Cost).ToList();
+                                var s = 0;
+
+                                foreach (var item in AussenOptionenList)
+                                {
+                                    allOptionList.Add((item.Name, t[s] ?? 0f));
+                                    s++;
+                                }
+
+                                SizeCost.Add((float)PriceAusse_Innen);
+                            }
+                            else
+                            {
+                                allOptionList.Add(("", 0f));
+                                CounterOption.Add(0);
+                                var PriceAusse_Innen = list.Price - Aussen.Price;
+                                SizeCost.Add((float)PriceAusse_Innen);
+                            }
                         }
                     }
                     countIterationProduct.Add(ProductList.Count);
@@ -128,6 +505,11 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
                     gramm = new List<float>();
                 }
 
+                ViewData["Options"] = allOptionList.ToList();
+                ViewData["CountOptions"] = CounterOption;
+
+
+                ViewData["Aussen/inen"] = SizeCost;
 
                 ViewData["Image"] = images;
                 ViewData["Descriptions"] = descriptions;

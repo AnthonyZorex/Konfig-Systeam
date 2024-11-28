@@ -5946,7 +5946,6 @@ namespace schliessanlagen_konfigurator.Controllers
                     }
 
                     KnayfOrderlist[knayfCount] = nÍtem;
-                    CountAussenKnayf++;
                     knayfCount++;
                 }
                 if (order.ZylinderId == 5)

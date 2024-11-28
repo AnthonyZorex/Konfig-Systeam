@@ -51,14 +51,6 @@ namespace schliessanlagen_konfigurator.Models.Vorhan
             Options = new List<OptionsVorhan>();
         }
     }
-    public class OptionsVorhan_value
-    {
-        public int Id { get; set; }
-        public int? OptionsId { get; set; }
-        public OptionsVorhan Options { get; set; }
-        public string Value { get; set; }
-        public float? Cost { get; set; }
-    }
     public class OptionsVorhan
     {
         public int Id { get; set; }
@@ -77,5 +69,13 @@ namespace schliessanlagen_konfigurator.Models.Vorhan
         {
             Options_value = new List<OptionsVorhan_value>();
         }
+    }
+    public class OptionsVorhan_value
+    {
+        public int Id { get; set; }
+        public int? OptionsId { get; set; }
+        public OptionsVorhan Options { get; set; }
+        public string Value { get; set; }
+        public float? Cost { get; set; }
     }
 }
