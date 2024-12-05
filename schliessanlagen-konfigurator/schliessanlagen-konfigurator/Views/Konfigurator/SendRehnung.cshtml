@@ -67,10 +67,10 @@
                     `, style: 'bodyrs'
             },
             {
-                text: item.Price.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' }), style: 'bodyrs'
+                text: item.Count, style: 'bodyrs'
             },
             {
-                text: item.Count, style: 'bodyrs'
+                text: item.Price.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' }), style: 'bodyrs'
             },
             {
                 text: (item.Price * item.Count).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' }), style: 'bodyrs'
@@ -83,12 +83,13 @@
             {
                 text: `Schlüssel`, style: 'bodyrs'
             },
-            { 
-                text: einSchlüesselPriec.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' }), style: 'bodyrs'
-            },
             {
                 text: `${KeyInfo[0].KeyCount}`,
                 style: 'bodyrs'
+               
+            },
+            {
+                text: einSchlüesselPriec.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' }), style: 'bodyrs'
             },
             {
                 text: (einSchlüesselPriec * KeyInfo[0].KeyCount).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' }), style: 'bodyrs'
@@ -393,8 +394,8 @@
                                 [
                                     [
                                         { text: 'Produkt', style: 'bodyrs' },
-                                        { text: 'E-Preis', style: 'bodyrs' },
                                         { text: 'Menge', style: 'bodyrs' },
+                                        { text: 'E-Preis', style: 'bodyrs' },
                                         { text: 'Summe', style: 'bodyrs' },
                                     ],
 

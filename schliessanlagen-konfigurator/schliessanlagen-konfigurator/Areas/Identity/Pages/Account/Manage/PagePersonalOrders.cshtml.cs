@@ -21,6 +21,7 @@ using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using System.Globalization;
 using System.Linq;
 using schliessanlagen_konfigurator.Models.Hebel;
+using Microsoft.AspNetCore.Http;
 
 namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
 {
@@ -89,6 +90,7 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
 
                 var allOptionList = new List<(string name, float price)>();
 
+                var AllNormalPrice = new List<float>(); 
 
                 var itemList = new List<string>();
 
@@ -144,14 +146,6 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
 
                                 CounterOption.Add(x.Count());
 
-                                var PriceAusse_Innen =
-                                list.Price
-                                - doppel.Price
-                                - DoppelOptionenList
-                                    .SelectMany(x => x.NGF_Value) 
-                                    .Where(x => x.Cost != null) 
-                                    .Sum(x => x.Cost.Value); 
-
                                 var t = DoppelOptionenList.SelectMany(x => x.NGF_Value).Where(x => x.Cost > 0).Select(x=>x.Cost).ToList();
                                 var s = 0;
 
@@ -160,15 +154,11 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
                                     allOptionList.Add((item.Name, t[s] ??0f));
                                     s++;
                                 }
-
-                                SizeCost.Add((float)PriceAusse_Innen);
                             }
                             else
                             {
                                 allOptionList.Add(("", 0f));
                                 CounterOption.Add(0);
-                                var PriceAusse_Innen = list.Price- doppel.Price;
-                                SizeCost.Add((float)PriceAusse_Innen);
                             }
 
                         }
@@ -210,14 +200,6 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
 
                                 KayfOptionenList = x;
 
-                                var PriceAusse_Innen =
-                                list.Price
-                                - knayf.Price
-                                - KayfOptionenList
-                                    .SelectMany(x => x.Knayf_Options_value) // Обработка null
-                                    .Where(x => x.Cost != null) // Игнорируем null-значения Cost
-                                    .Sum(x => x.Cost.Value); // Если Cost nullable, извлекаем значение
-
                                 var t = KayfOptionenList.SelectMany(x => x.Knayf_Options_value).Where(x => x.Cost > 0).Select(x => x.Cost).ToList();
                                 var s = 0;
 
@@ -226,15 +208,11 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
                                     allOptionList.Add((item.Name, t[s] ?? 0f));
                                     s++;
                                 }
-
-                                SizeCost.Add((float)PriceAusse_Innen);
                             }
                             else
                             {
                                 allOptionList.Add(("", 0f));
                                 CounterOption.Add(0);
-                                var PriceAusse_Innen = list.Price - knayf.Price;
-                                SizeCost.Add((float)PriceAusse_Innen);
                             }
 
                         }
@@ -292,15 +270,11 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
                                     allOptionList.Add((item.Name, t[s] ?? 0f));
                                     s++;
                                 }
-
-                                SizeCost.Add((float)PriceAusse_Innen);
                             }
                             else
                             {
                                 allOptionList.Add(("", 0f));
                                 CounterOption.Add(0);
-                                var PriceAusse_Innen = list.Price - halb.Price;
-                                SizeCost.Add((float)PriceAusse_Innen);
                             }
 
                         }
@@ -341,15 +315,7 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
                                 CounterOption.Add(x.Count());
 
                                 HebelOptionenList = x;
-
-                                var PriceAusse_Innen =
-                                list.Price
-                                - hebel.Price
-                                - HebelOptionenList
-                                    .SelectMany(x => x.Options_value) // Обработка null
-                                    .Where(x => x.Cost != null) // Игнорируем null-значения Cost
-                                    .Sum(x => x.Cost.Value); // Если Cost nullable, извлекаем значение
-
+                              
                                 var t = HebelOptionenList.SelectMany(x => x.Options_value).Where(x => x.Cost > 0).Select(x => x.Cost).ToList();
                                 var s = 0;
 
@@ -358,15 +324,12 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
                                     allOptionList.Add((item.Name, t[s] ?? 0f));
                                     s++;
                                 }
-
-                                SizeCost.Add((float)PriceAusse_Innen);
                             }
                             else
                             {
                                 allOptionList.Add(("", 0f));
                                 CounterOption.Add(0);
-                                var PriceAusse_Innen = list.Price - hebel.Price;
-                                SizeCost.Add((float)PriceAusse_Innen);
+
                             }
 
                         }
@@ -408,14 +371,6 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
 
                                 VorhengOptionenList = x;
 
-                                var PriceAusse_Innen =
-                                list.Price
-                                - Vorhan.Price
-                                - VorhengOptionenList
-                                    .SelectMany(x => x.Options_value) // Обработка null
-                                    .Where(x => x.Cost != null) // Игнорируем null-значения Cost
-                                    .Sum(x => x.Cost.Value); // Если Cost nullable, извлекаем значение
-
                                 var t = VorhengOptionenList.SelectMany(x => x.Options_value).Where(x => x.Cost > 0).Select(x => x.Cost).ToList();
                                 var s = 0;
 
@@ -424,15 +379,11 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
                                     allOptionList.Add((item.Name, t[s] ?? 0f));
                                     s++;
                                 }
-
-                                SizeCost.Add((float)PriceAusse_Innen);
                             }
                             else
                             {
                                 allOptionList.Add(("", 0f));
                                 CounterOption.Add(0);
-                                var PriceAusse_Innen = list.Price - Vorhan.Price;
-                                SizeCost.Add((float)PriceAusse_Innen);
                             }
                         }
                         if (Aussen != null)
@@ -472,14 +423,6 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
 
                                 AussenOptionenList = x;
 
-                                var PriceAusse_Innen =
-                                list.Price
-                                - Aussen.Price
-                                - AussenOptionenList
-                                    .SelectMany(x => x.Aussen_Rouns_all_value) 
-                                    .Where(x => x.Cost != null) 
-                                    .Sum(x => x.Cost.Value);
-
                                 var t = AussenOptionenList.SelectMany(x => x.Aussen_Rouns_all_value).Where(x => x.Cost > 0).Select(x => x.Cost).ToList();
                                 var s = 0;
 
@@ -488,15 +431,12 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
                                     allOptionList.Add((item.Name, t[s] ?? 0f));
                                     s++;
                                 }
-
-                                SizeCost.Add((float)PriceAusse_Innen);
                             }
                             else
                             {
                                 allOptionList.Add(("", 0f));
                                 CounterOption.Add(0);
-                                var PriceAusse_Innen = list.Price - Aussen.Price;
-                                SizeCost.Add((float)PriceAusse_Innen);
+
                             }
                         }
                     }
@@ -507,9 +447,6 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
 
                 ViewData["Options"] = allOptionList.ToList();
                 ViewData["CountOptions"] = CounterOption;
-
-
-                ViewData["Aussen/inen"] = SizeCost;
 
                 ViewData["Image"] = images;
                 ViewData["Descriptions"] = descriptions;
@@ -525,7 +462,7 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
 
         }
         public async Task<IActionResult> OnPost(string SendVorname, string SendNachname, string SendFirma, string userKey, List<string> PreisProduct, string PreisKey,
-        string SendVat,string SendStrasse, string SendZip, string SendStadt, string SendLand, string SendTelefon,string NettoSumOrder,
+        string SendVat,string SendStrasse, string SendZip, string SendStadt, string SendLand, string SendTelefon,string NettoSumOrder, List<int>  OptionCount,
         string DhlSend,string Pay,string Steuer, string Versand, string OrderSum,string Rehnung, string RechnungAdresse,string RechnungVorname,
         string RechnungNachname, string RechnungFirma, string RechnungVat, string RechnungStrasse, string RechnungZip,
         string RechnungStadt, string RechnungLand, string RechnungTelefon, string userName,string procent,bool aufRechnung)
@@ -585,11 +522,11 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
                 RechnungStadt = RechnungStadt,
                 RechnungLand = RechnungLand,
                 RechnungTelefon = RechnungTelefon,
-
             };
 
             var JsonObject = JsonConvert.SerializeObject(model, Formatting.Indented);
             return RedirectToAction("SendRehnung","Konfigurator", new { info = JsonObject, userName = userName , OrderSum = OrderSum, aufRechnung= aufRechnung });
         }
     }
+    
 }

@@ -22,8 +22,7 @@
 
 let preis_schluessel;
 let preis_product;
-let Size_preis;
-let option_preis;
+
 function ProcentMwst(value, BlockItem,country)
 {
     let cost = document.querySelectorAll("#costedI-" + BlockItem);
@@ -37,59 +36,48 @@ function ProcentMwst(value, BlockItem,country)
 
     let Plase = document.getElementById("Plase-" + BlockItem);
 
-    let bruttoCost = document.getElementById("costedР-" + BlockItem).value; // Получаем значение из DOM
+    let bruttoCost = document.getElementById("costedР-" + BlockItem).value;
     let bruttoCostValue = new Big(bruttoCost.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
 
-    let proc = document.getElementById("aldProcent-" + BlockItem);
-    let pr = new Big(proc.value.replace("€", "").replace(",", ".").trim());
+    let proc = document.querySelectorAll("#aldProcent-" + BlockItem);
+    let pr = new Big(proc[1].value.replace("€", "").replace("&nbsp;","").replace(",", ".").trim());
 
     let costProcent;
     let Prodct = document.querySelectorAll("#cardProductPrice-" + BlockItem);
     let cardProductPrice = Array.from(Prodct).map(product => product.querySelector("#PreisProduct-" + BlockItem));
     let PreisProductBrutto = Array.from(Prodct).map(product => product.querySelector("#PreisProductBrutto-" + BlockItem));
     let PreisProductNetto = Array.from(Prodct).map(product => product.querySelector("#PreisProductNetto-" + BlockItem));
-
     let ProductProcent = [];
+
+    let ProductEprice = Array.from(Prodct).map(product => product.querySelector("#E-priceProduct-" + BlockItem));
+    let countProductEprice = Array.from(Prodct).map(product => product.querySelector("#E-priceProductCount-" + BlockItem));
+
 
     preis_schluessel = document.getElementById("preis_schluessel-" + BlockItem);
 
     preis_product = document.querySelectorAll("#preis_product-" + BlockItem);
 
-    Size_preis = document.querySelectorAll("#Zise-" + BlockItem);
-
-    option_preis = document.querySelectorAll("#OpionPrice-" + BlockItem);
-
-
     let schlüssel = document.querySelectorAll("#schlüssel-" + BlockItem);
+    let ePrice = Array.from(schlüssel).map(product => product.querySelector("#E-Preis-" + BlockItem));
+    let countschlüssel = Array.from(schlüssel).map(product => product.querySelector("#counterKey-" + BlockItem));
+
     let schlüsselPrice = Array.from(schlüssel).map(product => product.querySelector("#PreisProduct-" + BlockItem));
     let priceBrutto = Array.from(schlüssel).map(product => product.querySelector("#PreisProductBruttoSchlussel-" + BlockItem));
     let SchlusselProcent = [];
     let PreisProductNettoSchlussel = Array.from(schlüssel).map(product => product.querySelector("#PreisProductNettoSchlussel-" + BlockItem));
 
-    let Size = document.querySelectorAll("#cardProductPrice-" + BlockItem);
-    let SizePrice = Array.from(Size).map(product => product.querySelector("#preisZise-" + BlockItem));
-    let priceSizeBrutto = Array.from(Size).map(product => product.querySelector("#PreisZiseBrutto-" + BlockItem));
-    let SizeProcent = [];
-    let PreisSizeNetto = Array.from(Size).map(product => product.querySelector("#PreisZiseNetto-" + BlockItem));
-
-    let Option = document.querySelectorAll("#cardProductPrice-" + BlockItem);
-    let OptionPrice = Array.from(Option).map(product => product.querySelector("#preisOpion-" + BlockItem)).filter(item => item !== null);
-    let priceOptionBrutto = Array.from(Option).map(product => product.querySelector("#PreisOpionBrutto-" + BlockItem)).filter(item => item !== null);;
-    let OptionProcent = [];
-    let PreisOptionNetto = Array.from(Option).map(product => product.querySelector("#PreisOpionNetto-" + BlockItem)).filter(item => item !== null);;
-
-    // Вычисляем сумму
     let Sum = new Big(mvstr.replace("&nbsp;", "").trim().replace(",", "."));
     let price = new Big(pr.toString()); 
 
     Sum = Sum.minus(price);
 
     let CostGram = document.querySelectorAll("#CostGram-" + BlockItem);
-    let costGramValue = new Big(CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim());
+    let costGramValue = new Big(CostGram[BlockItem].value != undefined ? CostGram[BlockItem].value.replace("€", "").replace(",", ".").trim() : CostGram[BlockItem].innerHTML.replace("€", "").replace(",", ".").trim()  );
 
     Sum = Sum.minus(costGramValue);
 
     Sum = Sum.toFixed(2)
+
     if (country == "" || country == undefined)
     {
         switch (value) {
@@ -97,7 +85,7 @@ function ProcentMwst(value, BlockItem,country)
             case "AT":
                 {
                     costProcent = bruttoCostValue.times(0.20).toFixed(2); // 20% for Austria
-                    procent.value = "20% MwSt";
+                    procent.innerHTML = "20% MwSt";
                     Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
 
                     PreisProductBrutto.forEach((item) => {
@@ -107,25 +95,11 @@ function ProcentMwst(value, BlockItem,country)
                         ProductProcent.push(x);
                     });
 
-                    priceSizeBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.20).toFixed(2);
-                        SizeProcent.push(x);
-                    });
-
                     priceBrutto.forEach((item) => {
                         let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
                         let valueBig = new Big(value);
                         let x = valueBig.times(0.20).toFixed(2);
                         SchlusselProcent.push(x);
-                    });
-
-                    priceOptionBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.20).toFixed(2);
-                        OptionProcent.push(x);
                     });
 
                     if (sendDhl.checked) {
@@ -146,14 +120,14 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €";
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, SizePrice, SizeProcent, PreisSizeNetto, OptionPrice, OptionProcent, PreisOptionNetto);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
                     break;
                 }
 
             case "BE":
                 {
                     costProcent = bruttoCostValue.times(0.21).toFixed(2); // 21% for Belgium
-                    procent.value = "21% MwSt";
+                    procent.innerHTML = "21% MwSt";
                     Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
 
                     PreisProductBrutto.forEach((item) => {
@@ -163,25 +137,11 @@ function ProcentMwst(value, BlockItem,country)
                         ProductProcent.push(x);
                     });
 
-                    priceSizeBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.21).toFixed(2);
-                        SizeProcent.push(x);
-                    });
-
                     priceBrutto.forEach((item) => {
                         let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
                         let valueBig = new Big(value);
                         let x = valueBig.times(0.21).toFixed(2);
                         SchlusselProcent.push(x);
-                    });
-
-                    priceOptionBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.21).toFixed(2);
-                        OptionProcent.push(x);
                     });
 
                     if (sendDhl.checked) {
@@ -202,14 +162,14 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €";
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, SizePrice, SizeProcent, PreisSizeNetto, OptionPrice, OptionProcent, PreisOptionNetto);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
                     break;
                 }
 
             case "BG":
                 {
                     costProcent = bruttoCostValue.times(0.20).toFixed(2); // 20% for Bulgaria
-                    procent.value = "20% MwSt";
+                    procent.innerHTML = "20% MwSt";
                     Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
 
                     PreisProductBrutto.forEach((item) => {
@@ -217,20 +177,6 @@ function ProcentMwst(value, BlockItem,country)
                         let valueBig = new Big(value);
                         let x = valueBig.times(0.20).toFixed(2);
                         ProductProcent.push(x);
-                    });
-
-                    priceOptionBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.20).toFixed(2);
-                        OptionProcent.push(x);
-                    });
-
-                    priceSizeBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.20).toFixed(2);
-                        SizeProcent.push(x);
                     });
 
                     priceBrutto.forEach((item) => {
@@ -259,14 +205,14 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €";
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, SizePrice, SizeProcent, PreisSizeNetto, OptionPrice, OptionProcent, PreisOptionNetto);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
                     break;
                 }
 
             case "CY":
                 {
                     costProcent = bruttoCostValue.times(0.19).toFixed(2); // 19% for Cyprus
-                    procent.value = "19% MwSt";
+                    procent.innerHTML = "19% MwSt";
                     Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
 
                     PreisProductBrutto.forEach((item) => {
@@ -275,21 +221,7 @@ function ProcentMwst(value, BlockItem,country)
                         let x = valueBig.times(0.19).toFixed(2);
                         ProductProcent.push(x);
                     });
-
-                    priceOptionBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.19).toFixed(2);
-                        OptionProcent.push(x);
-                    });
-
-                    priceSizeBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.19).toFixed(2);
-                        SizeProcent.push(x);
-                    });
-
+                   
                     priceBrutto.forEach((item) => {
                         let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
                         let valueBig = new Big(value);
@@ -317,7 +249,7 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €";
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, SizePrice, SizeProcent, PreisSizeNetto, OptionPrice, OptionProcent, PreisOptionNetto);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
                     break;
                 }
             case "CZ":
@@ -325,7 +257,7 @@ function ProcentMwst(value, BlockItem,country)
 
                     costProcent = bruttoCostValue.times(0.21).toFixed(2);
 
-                    procent.value = "21% MwSt"; // Устанавливаем текстовое значение
+                    procent.innerHTML = "21% MwSt"; // Устанавливаем текстовое значение
                     Gram.value = parseFloat(Gram.value.trim().replace(",", ".")); // Преобразуем граммы
 
                     // Обработка PreisProductBrutto
@@ -335,21 +267,7 @@ function ProcentMwst(value, BlockItem,country)
                         let x = valueBig.times(0.21).toFixed(2); // Рассчитываем налог
                         ProductProcent.push(x); // Добавляем результат в массив
                     });
-
-                    priceSizeBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.21).toFixed(2);
-                        SizeProcent.push(x);
-                    });
-
-                    priceOptionBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.21).toFixed(2);
-                        OptionProcent.push(x);
-                    });
-
+                
                     priceBrutto.forEach((item) => {
                         let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
                         let valueBig = new Big(value); // Создаем объект Big
@@ -377,7 +295,7 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, SizePrice, SizeProcent, PreisSizeNetto, OptionPrice, OptionProcent, PreisOptionNetto);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
                     break;
                 }
             case "DE":
@@ -393,14 +311,6 @@ function ProcentMwst(value, BlockItem,country)
                         ProductProcent.push(x); // Добавляем результат в массив
                     });
 
-                    priceSizeBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.19).toFixed(2);
-                        SizeProcent.push(x);
-                    });
-
-                    // Обработка priceBrutto
                     priceBrutto.forEach((item) => {
                         let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
                         let valueBig = new Big(value); // Создаем объект Big
@@ -409,14 +319,7 @@ function ProcentMwst(value, BlockItem,country)
                         SchlusselProcent.push(x); // Добавляем результат в массив
                     });
 
-                    priceOptionBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.19).toFixed(2);
-                        OptionProcent.push(x);
-                    });
-
-                    procent.value = "19% MwSt";
+                    procent.innerHTML = "19% MwSt";
 
                     // Обработка стоимости в зависимости от веса
                     if (sendDhl.checked) {
@@ -439,13 +342,13 @@ function ProcentMwst(value, BlockItem,country)
                         costGramValue = new Big(0);
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, SizePrice, SizeProcent, PreisSizeNetto, OptionPrice, OptionProcent, PreisOptionNetto);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
                     break;
                 }
             case "DK":
                 {
                     costProcent = bruttoCostValue.times(0.25).toFixed(2);
-                    procent.value = "25% MwSt"; // Устанавливаем текстовое значение
+                    procent.innerHTML = "25% MwSt"; // Устанавливаем текстовое значение
 
                     priceOptionBrutto.forEach((item) => {
                         let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
@@ -453,21 +356,7 @@ function ProcentMwst(value, BlockItem,country)
                         let x = valueBig.times(0.25).toFixed(2);
                         OptionProcent.push(x);
                     });
-
-                    PreisProductBrutto.forEach((item) => {
-                        let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, '');
-                        let valueBig = new Big(value); // Создаем объект Big
-                        let x = valueBig.times(0.25).toFixed(2); // Рассчитываем налог
-                        ProductProcent.push(x); // Добавляем результат в массив
-                    });
-
-                    priceSizeBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.25).toFixed(2);
-                        SizeProcent.push(x);
-                    });
-
+                  
                     priceBrutto.forEach((item) => {
                         let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, '');
                         let valueBig = new Big(value); // Создаем объект Big
@@ -495,14 +384,14 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, SizePrice, SizeProcent, PreisSizeNetto, OptionPrice, OptionProcent, PreisOptionNetto);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
                     break;
                 }
 
             case "EE":
                 {
                     costProcent = bruttoCostValue.times(0.20).toFixed(2);
-                    procent.value = "20% MwSt"; // Устанавливаем текстовое значение
+                    procent.innerHTML = "20% MwSt"; // Устанавливаем текстовое значение
 
                     // Обработка PreisProductBrutto
                     PreisProductBrutto.forEach((item) => {
@@ -510,21 +399,7 @@ function ProcentMwst(value, BlockItem,country)
                         let valueBig = new Big(value); // Создаем объект Big
                         let x = valueBig.times(0.20).toFixed(2); // Рассчитываем налог
                         ProductProcent.push(x); // Добавляем результат в массив
-                    });
-
-                    priceSizeBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.20).toFixed(2);
-                        SizeProcent.push(x);
-                    });
-
-                    priceOptionBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.20).toFixed(2);
-                        OptionProcent.push(x);
-                    });
+                    });                  
 
                     priceBrutto.forEach((item) => {
                         let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, '');
@@ -553,7 +428,7 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, SizePrice, SizeProcent, PreisSizeNetto, OptionPrice, OptionProcent, PreisOptionNetto);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
                     break;
                 }
 
@@ -561,28 +436,13 @@ function ProcentMwst(value, BlockItem,country)
                 {
                     // Налоговая ставка для Испании
                     costProcent = bruttoCostValue.times(0.21).toFixed(2);
-                    procent.value = "21% MwSt"; // Устанавливаем текстовое значение
-
-                    priceSizeBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.21).toFixed(2);
-                        SizeProcent.push(x);
-                    });
-
-                    // Обработка PreisProductBrutto
+                    procent.innerHTML = "21% MwSt"; // Устанавливаем текстовое значение
+                   
                     PreisProductBrutto.forEach((item) => {
                         let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, '');
                         let valueBig = new Big(value); // Создаем объект Big
                         let x = valueBig.times(0.21).toFixed(2); // Рассчитываем налог
                         ProductProcent.push(x); // Добавляем результат в массив
-                    });
-
-                    priceOptionBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.21).toFixed(2);
-                        OptionProcent.push(x);
                     });
 
                     priceBrutto.forEach((item) => {
@@ -612,35 +472,21 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, SizePrice, SizeProcent, PreisSizeNetto, OptionPrice, OptionProcent, PreisOptionNetto);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
+
                     break;
                 }
 
             case "FI":
                 {
                     costProcent = bruttoCostValue.times(0.24).toFixed(2);
-                    procent.value = "24% MwSt"; // Устанавливаем текстовое значение
-
-                    priceSizeBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.24).toFixed(2);
-                        SizeProcent.push(x);
-                    });
-
-                    // Обработка PreisProductBrutto
+                    procent.innerHTML = "24% MwSt"; // Устанавливаем текстовое значение
+                 
                     PreisProductBrutto.forEach((item) => {
                         let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, '');
                         let valueBig = new Big(value); // Создаем объект Big
                         let x = valueBig.times(0.24).toFixed(2); // Рассчитываем налог
                         ProductProcent.push(x); // Добавляем результат в массив
-                    });
-
-                    priceOptionBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.24).toFixed(2);
-                        OptionProcent.push(x);
                     });
 
                     priceBrutto.forEach((item) => {
@@ -670,13 +516,13 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, SizePrice, SizeProcent, PreisSizeNetto, OptionPrice, OptionProcent, PreisOptionNetto);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
                     break;
                 }
             case "FR":
                 {
 
-                    procent.value = "20% MwSt";
+                    procent.innerHTML = "20% MwSt";
                     Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
 
                     costProcent = bruttoCostValue.times(0.20).toFixed(2);
@@ -690,20 +536,6 @@ function ProcentMwst(value, BlockItem,country)
                         ProductProcent.push(x); // Добавляем результат в массив
                     });
 
-                    priceSizeBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.20).toFixed(2);
-                        SizeProcent.push(x);
-                    });
-
-                    priceOptionBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.20).toFixed(2);
-                        OptionProcent.push(x);
-                    });
-
                     priceBrutto.forEach((item) => {
                         let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
                         let valueBig = new Big(value); // Создаем объект Big
@@ -729,12 +561,12 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, SizePrice, SizeProcent, PreisSizeNetto, OptionPrice, OptionProcent, PreisOptionNetto);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
                     break;
                 }
             case "GR":
                 {
-                    procent.value = "24% MwSt";
+                    procent.innerHTML = "24% MwSt";
                     Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
 
                     costProcent = bruttoCostValue.times(0.24).toFixed(2);
@@ -747,22 +579,7 @@ function ProcentMwst(value, BlockItem,country)
                         let x = valueBig.times(0.24).toFixed(2);
                         ProductProcent.push(x); // Добавляем результат в массив
                     });
-
-                    priceOptionBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.24).toFixed(2);
-                        OptionProcent.push(x);
-                    });
-
-                    priceSizeBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.24).toFixed(2);
-                        SizeProcent.push(x);
-                    });
-
-                    // Обработка priceBrutto
+                  
                     priceBrutto.forEach((item) => {
                         let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
                         let valueBig = new Big(value); // Создаем объект Big
@@ -787,12 +604,12 @@ function ProcentMwst(value, BlockItem,country)
                     } else {
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, SizePrice, SizeProcent, PreisSizeNetto, OptionPrice, OptionProcent, PreisOptionNetto);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
                     break;
                 }
             case "HR":
                 {
-                    procent.value = "25% MwSt";
+                    procent.innerHTML = "25% MwSt";
                     Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
 
                     costProcent = bruttoCostValue.times(0.25).toFixed(2);
@@ -805,21 +622,7 @@ function ProcentMwst(value, BlockItem,country)
                         let x = valueBig.times(0.25).toFixed(2);
                         ProductProcent.push(x); // Добавляем результат в массив
                     });
-
-                    priceSizeBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.25).toFixed(2);
-                        SizeProcent.push(x);
-                    });
-
-                    priceOptionBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.25).toFixed(2);
-                        OptionProcent.push(x);
-                    });
-
+                    
                     priceBrutto.forEach((item) => {
                         let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
                         let valueBig = new Big(value); // Создаем объект Big
@@ -845,24 +648,17 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, SizePrice, SizeProcent, PreisSizeNetto, OptionPrice, OptionProcent, PreisOptionNetto);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
 
                     break;
                 }
             case "HU":
                 {
 
-                    procent.value = "27% MwSt";
+                    procent.innerHTML = "27% MwSt";
                     Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
 
                     costProcent = bruttoCostValue.times(0.27).toFixed(2);
-
-                    priceSizeBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.27).toFixed(2);
-                        SizeProcent.push(x);
-                    });
 
                     PreisProductBrutto.forEach((item) => {
                         // Преобразуем строку в число, заменяя запятую на точку
@@ -873,13 +669,6 @@ function ProcentMwst(value, BlockItem,country)
                         ProductProcent.push(x); // Добавляем результат в массив
                     });
 
-                    priceOptionBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.27).toFixed(2);
-                        OptionProcent.push(x);
-                    });
-
                     priceBrutto.forEach((item) => {
                         let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
                         let valueBig = new Big(value); // Создаем объект Big
@@ -904,12 +693,12 @@ function ProcentMwst(value, BlockItem,country)
                     } else {
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, SizePrice, SizeProcent, PreisSizeNetto, OptionPrice, OptionProcent, PreisOptionNetto);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
                     break;
                 }
             case "IE":
                 {
-                    procent.value = "23% MwSt";
+                    procent.innerHTML = "23% MwSt";
 
                     costProcent = bruttoCostValue.times(0.23).toFixed(2);
 
@@ -922,21 +711,6 @@ function ProcentMwst(value, BlockItem,country)
                         ProductProcent.push(x); // Добавляем результат в массив
                     });
 
-                    priceOptionBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.23).toFixed(2);
-                        OptionProcent.push(x);
-                    });
-
-                    priceSizeBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.23).toFixed(2);
-                        SizeProcent.push(x);
-                    });
-
-                    // Обработка priceBrutto
                     priceBrutto.forEach((item) => {
                         let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
                         let valueBig = new Big(value); // Создаем объект Big
@@ -963,7 +737,7 @@ function ProcentMwst(value, BlockItem,country)
                     } else {
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, SizePrice, SizeProcent, PreisSizeNetto, OptionPrice, OptionProcent, PreisOptionNetto);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
                     break;
 
                 }
@@ -980,20 +754,6 @@ function ProcentMwst(value, BlockItem,country)
                         ProductProcent.push(x); // Добавляем результат в массив
                     });
 
-                    priceSizeBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.22).toFixed(2);
-                        SizeProcent.push(x);
-                    });
-
-                    priceOptionBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.22).toFixed(2);
-                        OptionProcent.push(x);
-                    });
-
                     priceBrutto.forEach((item) => {
                         let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
                         let valueBig = new Big(value); // Создаем объект Big
@@ -1002,7 +762,7 @@ function ProcentMwst(value, BlockItem,country)
                         SchlusselProcent.push(x); // Добавляем результат в массив
                     });
 
-                    procent.value = "22% MwSt";
+                    procent.innerHTML = "22% MwSt";
                     Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
 
                     if (sendDhl.checked) {
@@ -1021,13 +781,13 @@ function ProcentMwst(value, BlockItem,country)
                     } else {
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, SizePrice, SizeProcent, PreisSizeNetto, OptionPrice, OptionProcent, PreisOptionNetto);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
                     break;
 
                 }
             case "LT":
                 {
-                    procent.value = "21% MwSt";
+                    procent.innerHTML = "21% MwSt";
 
                     costProcent = bruttoCostValue.times(0.21).toFixed(2);
 
@@ -1040,20 +800,6 @@ function ProcentMwst(value, BlockItem,country)
                         ProductProcent.push(x); // Добавляем результат в массив
                     });
 
-                    priceSizeBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.21).toFixed(2);
-                        SizeProcent.push(x);
-                    });
-
-                    priceOptionBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.21).toFixed(2);
-                        OptionProcent.push(x);
-                    });
-
                     priceBrutto.forEach((item) => {
                         let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
                         let valueBig = new Big(value); // Создаем объект Big
@@ -1080,7 +826,7 @@ function ProcentMwst(value, BlockItem,country)
                     } else {
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, SizePrice, SizeProcent, PreisSizeNetto, OptionPrice, OptionProcent, PreisOptionNetto);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
                     break;
 
                 }
@@ -1097,20 +843,6 @@ function ProcentMwst(value, BlockItem,country)
                         ProductProcent.push(x); // Добавляем результат в массив
                     });
 
-                    priceSizeBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.17).toFixed(2);
-                        SizeProcent.push(x);
-                    });
-
-                    priceOptionBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.17).toFixed(2);
-                        OptionProcent.push(x);
-                    });
-
                     priceBrutto.forEach((item) => {
                         let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
                         let valueBig = new Big(value); // Создаем объект Big
@@ -1119,7 +851,7 @@ function ProcentMwst(value, BlockItem,country)
                         SchlusselProcent.push(x); // Добавляем результат в массив
                     });
 
-                    procent.value = "17% MwSt";
+                    procent.innerHTML = "17% MwSt";
 
                     Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
                     if (sendDhl.checked) {
@@ -1138,7 +870,7 @@ function ProcentMwst(value, BlockItem,country)
                     } else {
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, SizePrice, SizeProcent, PreisSizeNetto, OptionPrice, OptionProcent, PreisOptionNetto);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
                     break;
 
                 }
@@ -1155,13 +887,6 @@ function ProcentMwst(value, BlockItem,country)
                         ProductProcent.push(x); // Добавляем результат в массив
                     });
 
-                    priceSizeBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.21).toFixed(2);
-                        SizeProcent.push(x);
-                    });
-
                     priceBrutto.forEach((item) => {
                         let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
                         let valueBig = new Big(value); // Создаем объект Big
@@ -1169,15 +894,8 @@ function ProcentMwst(value, BlockItem,country)
                         let x = valueBig.times(0.21).toFixed(2);
                         SchlusselProcent.push(x); // Добавляем результат в массив
                     });
-
-                    priceOptionBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.21).toFixed(2);
-                        OptionProcent.push(x);
-                    });
-
-                    procent.value = "21% MwSt";
+                   
+                    procent.innerHTML = "21% MwSt";
                     Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
 
                     if (sendDhl.checked) {
@@ -1196,7 +914,7 @@ function ProcentMwst(value, BlockItem,country)
                     } else {
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, SizePrice, SizeProcent, PreisSizeNetto, OptionPrice, OptionProcent, PreisOptionNetto);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
                     break;
 
                 }
@@ -1214,20 +932,6 @@ function ProcentMwst(value, BlockItem,country)
                         ProductProcent.push(x); // Добавляем результат в массив
                     });
 
-                    priceSizeBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.18).toFixed(2);
-                        SizeProcent.push(x);
-                    });
-
-                    priceOptionBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.18).toFixed(2);
-                        OptionProcent.push(x);
-                    });
-
                     priceBrutto.forEach((item) => {
                         let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
                         let valueBig = new Big(value); // Создаем объект Big
@@ -1236,7 +940,7 @@ function ProcentMwst(value, BlockItem,country)
                         SchlusselProcent.push(x); // Добавляем результат в массив
                     });
 
-                    procent.value = "18% MwSt";
+                    procent.innerHTML = "18% MwSt";
                     Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
 
 
@@ -1256,7 +960,7 @@ function ProcentMwst(value, BlockItem,country)
                     } else {
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, SizePrice, SizeProcent, PreisSizeNetto, OptionPrice, OptionProcent, PreisOptionNetto);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
                     break;
 
                 }
@@ -1273,21 +977,6 @@ function ProcentMwst(value, BlockItem,country)
                         ProductProcent.push(x); // Добавляем результат в массив
                     });
 
-                    priceSizeBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.21).toFixed(2);
-                        SizeProcent.push(x);
-                    });
-
-                    priceOptionBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.21).toFixed(2);
-                        OptionProcent.push(x);
-                    });
-
-
                     priceBrutto.forEach((item) => {
                         let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
                         let valueBig = new Big(value); // Создаем объект Big
@@ -1296,8 +985,7 @@ function ProcentMwst(value, BlockItem,country)
                         SchlusselProcent.push(x); // Добавляем результат в массив
                     });
 
-
-                    procent.value = "21% MwSt";
+                    procent.innerHTML = "21% MwSt";
                     Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
 
                     if (sendDhl.checked) {
@@ -1316,7 +1004,7 @@ function ProcentMwst(value, BlockItem,country)
                     } else {
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, SizePrice, SizeProcent, PreisSizeNetto, OptionPrice, OptionProcent, PreisOptionNetto);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
                     break;
 
                 }
@@ -1333,20 +1021,6 @@ function ProcentMwst(value, BlockItem,country)
                         ProductProcent.push(x); // Добавляем результат в массив
                     });
 
-                    priceOptionBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.23).toFixed(2);
-                        OptionProcent.push(x);
-                    });
-
-                    priceSizeBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.23).toFixed(2);
-                        SizeProcent.push(x);
-                    });
-
                     priceBrutto.forEach((item) => {
                         let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
                         let valueBig = new Big(value); // Создаем объект Big
@@ -1355,7 +1029,7 @@ function ProcentMwst(value, BlockItem,country)
                         SchlusselProcent.push(x); // Добавляем результат в массив
                     });
 
-                    procent.value = "23% MwSt";
+                    procent.innerHTML = "23% MwSt";
                     Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
 
                     if (sendDhl.checked) {
@@ -1375,7 +1049,7 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, SizePrice, SizeProcent, PreisSizeNetto, OptionPrice, OptionProcent, PreisOptionNetto);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
 
                     break;
 
@@ -1392,14 +1066,7 @@ function ProcentMwst(value, BlockItem,country)
                         let x = valueBig.times(0.23).toFixed(2);
                         ProductProcent.push(x); // Добавляем результат в массив
                     });
-
-                    priceOptionBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.23).toFixed(2);
-                        OptionProcent.push(x);
-                    });
-
+                 
                     priceBrutto.forEach((item) => {
                         let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
                         let valueBig = new Big(value); // Создаем объект Big
@@ -1408,14 +1075,7 @@ function ProcentMwst(value, BlockItem,country)
                         SchlusselProcent.push(x); // Добавляем результат в массив
                     });
 
-                    priceSizeBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.23).toFixed(2);
-                        SizeProcent.push(x);
-                    });
-
-                    procent.value = "23% MwSt";
+                    procent.innerHTML = "23% MwSt";
                     Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
 
                     if (sendDhl.checked) {
@@ -1435,7 +1095,7 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, SizePrice, SizeProcent, PreisSizeNetto, OptionPrice, OptionProcent, PreisOptionNetto);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
 
                     break;
                 }
@@ -1444,7 +1104,7 @@ function ProcentMwst(value, BlockItem,country)
 
                     Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
 
-                    procent.value = "19% MwSt";
+                    procent.innerHTML = "19% MwSt";
 
                     costProcent = bruttoCostValue.times(0.19).toFixed(2);
 
@@ -1457,20 +1117,6 @@ function ProcentMwst(value, BlockItem,country)
                         ProductProcent.push(x); // Добавляем результат в массив
                     });
 
-                    priceSizeBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.19).toFixed(2);
-                        SizeProcent.push(x);
-                    });
-
-                    priceOptionBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.19).toFixed(2);
-                        OptionProcent.push(x);
-                    });
-
                     priceBrutto.forEach((item) => {
                         let value = item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''); // Удаляем лишние символы
                         let valueBig = new Big(value); // Создаем объект Big
@@ -1497,23 +1143,15 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, SizePrice, SizeProcent, PreisSizeNetto, OptionPrice, OptionProcent, PreisOptionNetto);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
 
                     break;
                 }
             case "SE":
                 {
-
-                    procent.value = "25% MwSt";
+                    procent.innerHTML = "25% MwSt";
 
                     costProcent = bruttoCostValue.times(0.25).toFixed(2);
-
-                    priceSizeBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.25).toFixed(2);
-                        SizeProcent.push(x);
-                    });
 
                     PreisProductBrutto.forEach((item) => {
                         // Преобразуем строку в число, заменяя запятую на точку
@@ -1522,13 +1160,6 @@ function ProcentMwst(value, BlockItem,country)
 
                         let x = valueBig.times(0.25).toFixed(2);
                         ProductProcent.push(x); // Добавляем результат в массив
-                    });
-
-                    priceOptionBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.25).toFixed(2);
-                        OptionProcent.push(x);
                     });
 
                     priceBrutto.forEach((item) => {
@@ -1558,24 +1189,16 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €"; 
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, SizePrice, SizeProcent, PreisSizeNetto, OptionPrice, OptionProcent, PreisOptionNetto);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
 
                     break;
                 }
             case "SI":
                 {
-
-                    procent.value = "22% MwSt";
+                    procent.innerHTML = "22% MwSt";
                     Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
 
                     costProcent = bruttoCostValue.times(0.22).toFixed(2);
-
-                    priceSizeBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.22).toFixed(2);
-                        SizeProcent.push(x);
-                    });
 
                     PreisProductBrutto.forEach((item) => {
                      
@@ -1584,13 +1207,6 @@ function ProcentMwst(value, BlockItem,country)
 
                         let x = valueBig.times(0.22).toFixed(2);
                         ProductProcent.push(x); 
-                    });
-
-                    priceOptionBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.22).toFixed(2);
-                        OptionProcent.push(x);
                     });
 
                     priceBrutto.forEach((item) => {
@@ -1618,21 +1234,13 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €";
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, SizePrice, SizeProcent, PreisSizeNetto, OptionPrice, OptionProcent, PreisOptionNetto);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
 
                     break;
                 }
             case "SK":
-                {
-
-                    priceSizeBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.20).toFixed(2);
-                        SizeProcent.push(x);
-                    });
-
-                    procent.value = "20% MwSt";
+                {                   
+                    procent.innerHTML = "20% MwSt";
                     Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
                     costProcent = bruttoCostValue.times(0.20).toFixed(2);
 
@@ -1643,13 +1251,6 @@ function ProcentMwst(value, BlockItem,country)
 
                         let x = valueBig.times(0.20).toFixed(2);
                         ProductProcent.push(x);
-                    });
-
-                    priceOptionBrutto.forEach((item) => {
-                        let value = parseFloat(item.value.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
-                        let valueBig = new Big(value);
-                        let x = valueBig.times(0.20).toFixed(2);
-                        OptionProcent.push(x);
                     });
 
                     priceBrutto.forEach((item) => {
@@ -1677,12 +1278,12 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, SizePrice, SizeProcent, PreisSizeNetto, OptionPrice, OptionProcent, PreisOptionNetto);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
                     break;
                 }
             default:
                 {
-                    procent.value = "Steuer";
+                    procent.innerHTML = "Steuer";
                     costProcent = bruttoCostValue.times(0.0).toFixed(2);
                     if (sendDhl.checked == true) {
                         Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
@@ -1825,7 +1426,7 @@ function ProcentMwst(value, BlockItem,country)
 
             case "AT":
                 {
-                    procent.value = "Steuer";
+                    procent.innerHTML = "Steuer";
                     costProcent = bruttoCostValue.times(0.0).toFixed(2);
                     Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
 
@@ -1872,7 +1473,7 @@ function ProcentMwst(value, BlockItem,country)
 
             case "BE":
                 {
-                    procent.value = "Steuer";
+                    procent.innerHTML = "Steuer";
                     costProcent = bruttoCostValue.times(0.0).toFixed(2);
                     Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
 
@@ -1920,7 +1521,7 @@ function ProcentMwst(value, BlockItem,country)
 
             case "BG":
                 {
-                    procent.value = "Steuer";
+                    procent.innerHTML = "Steuer";
                     costProcent = bruttoCostValue.times(0.0).toFixed(2);
                     Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
 
@@ -1968,7 +1569,7 @@ function ProcentMwst(value, BlockItem,country)
 
             case "CY":
                 {
-                    procent.value = "Steuer";
+                    procent.innerHTML = "Steuer";
                     costProcent = bruttoCostValue.times(0.0).toFixed(2);
                     Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
 
@@ -2016,7 +1617,7 @@ function ProcentMwst(value, BlockItem,country)
                 }
             case "CZ":
                 {
-                    procent.value = "Steuer";
+                    procent.innerHTML = "Steuer";
                     costProcent = bruttoCostValue.times(0.0).toFixed(2);
 
                     Gram.value = parseFloat(Gram.value.trim().replace(",", ".")); // Преобразуем граммы
@@ -2084,7 +1685,7 @@ function ProcentMwst(value, BlockItem,country)
                         SchlusselProcent.push(x); // Добавляем результат в массив
                     });
 
-                    procent.value = "19% MwSt";
+                    procent.innerHTML = "19% MwSt";
 
                     // Обработка стоимости в зависимости от веса
                     if (sendDhl.checked) {
@@ -2112,7 +1713,7 @@ function ProcentMwst(value, BlockItem,country)
                 }
             case "DK":
                 {
-                    procent.value = "Steuer";
+                    procent.innerHTML = "Steuer";
                     costProcent = bruttoCostValue.times(0.0).toFixed(2);
 
                     for (let i = 0; i < cardProductPrice.length; i++) {
@@ -2160,7 +1761,7 @@ function ProcentMwst(value, BlockItem,country)
 
             case "EE":
                 {
-                    procent.value = "Steuer";
+                    procent.innerHTML = "Steuer";
                     costProcent = bruttoCostValue.times(0.0).toFixed(2);
 
                     for (let i = 0; i < cardProductPrice.length; i++) {
@@ -2208,7 +1809,7 @@ function ProcentMwst(value, BlockItem,country)
 
             case "ES":
                 {
-                    procent.value = "Steuer";
+                    procent.innerHTML = "Steuer";
                     costProcent = bruttoCostValue.times(0.0).toFixed(2);
 
                     for (let i = 0; i < cardProductPrice.length; i++) {
@@ -2255,7 +1856,7 @@ function ProcentMwst(value, BlockItem,country)
 
             case "FI":
                 {
-                    procent.value = "Steuer";
+                    procent.innerHTML = "Steuer";
                     costProcent = bruttoCostValue.times(0.0).toFixed(2);
 
                     for (let i = 0; i < cardProductPrice.length; i++) {
@@ -2302,7 +1903,7 @@ function ProcentMwst(value, BlockItem,country)
                 }
             case "FR":
                 {
-                    procent.value = "Steuer";
+                    procent.innerHTML = "Steuer";
                     costProcent = bruttoCostValue.times(0.0).toFixed(2);
 
                     for (let i = 0; i < cardProductPrice.length; i++) {
@@ -2346,7 +1947,7 @@ function ProcentMwst(value, BlockItem,country)
                 }
             case "GR":
                 {
-                    procent.value = "Steuer";
+                    procent.innerHTML = "Steuer";
                     costProcent = bruttoCostValue.times(0.0).toFixed(2);
 
                     Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
@@ -2393,7 +1994,7 @@ function ProcentMwst(value, BlockItem,country)
             case "HR":
                 {
                     Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
-                    procent.value = "Steuer";
+                    procent.innerHTML = "Steuer";
                     costProcent = bruttoCostValue.times(0.0).toFixed(2);
 
                     for (let i = 0; i < cardProductPrice.length; i++) {
@@ -2437,7 +2038,7 @@ function ProcentMwst(value, BlockItem,country)
                 }
             case "HU":
                 {
-                    procent.value = "Steuer";
+                    procent.innerHTML = "Steuer";
                     costProcent = bruttoCostValue.times(0.0).toFixed(2);
 
                     Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
@@ -2483,7 +2084,7 @@ function ProcentMwst(value, BlockItem,country)
                 }
             case "IE":
                 {
-                    procent.value = "Steuer";
+                    procent.innerHTML = "Steuer";
                     costProcent = bruttoCostValue.times(0.0).toFixed(2);
 
                     for (let i = 0; i < cardProductPrice.length; i++) {
@@ -2530,7 +2131,7 @@ function ProcentMwst(value, BlockItem,country)
                 }
             case "IT":
                 {
-                    procent.value = "Steuer";
+                    procent.innerHTML = "Steuer";
                     costProcent = bruttoCostValue.times(0.0).toFixed(2);
 
                     for (let i = 0; i < cardProductPrice.length; i++) {
@@ -2577,7 +2178,7 @@ function ProcentMwst(value, BlockItem,country)
                 }
             case "LT":
                 {
-                    procent.value = "Steuer";
+                    procent.innerHTML = "Steuer";
                     costProcent = bruttoCostValue.times(0.0).toFixed(2);
 
                     for (let i = 0; i < cardProductPrice.length; i++) {
@@ -2624,7 +2225,7 @@ function ProcentMwst(value, BlockItem,country)
                 }
             case "LU":
                 {
-                    procent.value = "Steuer";
+                    procent.innerHTML = "Steuer";
                     costProcent = bruttoCostValue.times(0.0).toFixed(2);
 
                     for (let i = 0; i < cardProductPrice.length; i++) {
@@ -2670,7 +2271,7 @@ function ProcentMwst(value, BlockItem,country)
                 }
             case "LV":
                 {
-                    procent.value = "Steuer";
+                    procent.innerHTML = "Steuer";
                     costProcent = bruttoCostValue.times(0.0).toFixed(2);
 
                     for (let i = 0; i < cardProductPrice.length; i++) {
@@ -2717,7 +2318,7 @@ function ProcentMwst(value, BlockItem,country)
                 }
             case "MT":
                 {
-                    procent.value = "Steuer";
+                    procent.innerHTML = "Steuer";
                     costProcent = bruttoCostValue.times(0.0).toFixed(2);
 
                     for (let i = 0; i < cardProductPrice.length; i++) {
@@ -2764,7 +2365,7 @@ function ProcentMwst(value, BlockItem,country)
                 }
             case "NL":
                 {
-                    procent.value = "Steuer";
+                    procent.innerHTML = "Steuer";
                     costProcent = bruttoCostValue.times(0.0).toFixed(2);
 
 
@@ -2812,7 +2413,7 @@ function ProcentMwst(value, BlockItem,country)
                 }
             case "PL":
                 {
-                    procent.value = "Steuer";
+                    procent.innerHTML = "Steuer";
                     costProcent = bruttoCostValue.times(0.0).toFixed(2);
 
 
@@ -2860,7 +2461,7 @@ function ProcentMwst(value, BlockItem,country)
                 }
             case "PT":
                 {
-                    procent.value = "Steuer";
+                    procent.innerHTML = "Steuer";
                     costProcent = bruttoCostValue.times(0.0).toFixed(2);
 
 
@@ -2909,7 +2510,7 @@ function ProcentMwst(value, BlockItem,country)
                 {
                     Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
 
-                    procent.value = "Steuer";
+                    procent.innerHTML = "Steuer";
                     costProcent = bruttoCostValue.times(0.0).toFixed(2);
 
                     for (let i = 0; i < cardProductPrice.length; i++) {
@@ -2953,7 +2554,7 @@ function ProcentMwst(value, BlockItem,country)
                 }
             case "SE":
                 {
-                    procent.value = "Steuer";
+                    procent.innerHTML = "Steuer";
                     costProcent = bruttoCostValue.times(0.0).toFixed(2);
 
                     for (let i = 0; i < cardProductPrice.length; i++) {
@@ -3002,7 +2603,7 @@ function ProcentMwst(value, BlockItem,country)
 
                     Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
 
-                    procent.value = "Steuer";
+                    procent.innerHTML = "Steuer";
                     costProcent = bruttoCostValue.times(0.0).toFixed(2);
 
                     for (let i = 0; i < cardProductPrice.length; i++) {
@@ -3047,7 +2648,7 @@ function ProcentMwst(value, BlockItem,country)
             case "SK":
                 {
                     Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
-                    procent.value = "Steuer";
+                    procent.innerHTML = "Steuer";
                     costProcent = bruttoCostValue.times(0.0).toFixed(2);
 
                     for (let i = 0; i < cardProductPrice.length; i++) {
@@ -3091,7 +2692,7 @@ function ProcentMwst(value, BlockItem,country)
                 }
             default:
                 {
-                    procent.value = "Steuer";
+                    procent.innerHTML = "Steuer";
                     costProcent = bruttoCostValue.times(0.0).toFixed(2);
                     if (sendDhl.checked == true) {
                         Gram.value = parseFloat(Gram.value.trim().replace(",", "."));
@@ -3229,19 +2830,21 @@ function ProcentMwst(value, BlockItem,country)
                 }
         }
     }
+
+    proc.forEach((item) => {
+        item.innerHTML = parseFloat(costProcent).toLocaleString('de-DE', {
+            style: 'currency',
+            currency: 'EUR'
+        });
+    });
     
-    
-    proc.value = parseFloat(costProcent).toLocaleString('de-DE', {
-        style: 'currency',
-        currency: 'EUR'
-    });;
 
     let ALLSUM = new Big(Sum).plus(costProcent).plus(costGramValue);
 
     ALLSUM = ALLSUM.toFixed(2);
 
     CostGram.forEach((item) => {
-        item.value = parseFloat(CostGram[BlockItem].value).toLocaleString('de-DE', {
+        item.innerHTML = parseFloat(CostGram[BlockItem].value).toLocaleString('de-DE', {
             style: 'currency',
             currency: 'EUR'
         });
@@ -3268,8 +2871,10 @@ function ProcentMwst(value, BlockItem,country)
     changePrice(ALLSUM);
 }
 
-function mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, SizePrice, SizeProcent, PreisSizeNetto, OptionPrice, OptionProcent, PreisOptionNetto)
+function mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice)
 {
+   
+
     for (let i = 0; i < cardProductPrice.length; i++) {
         // Получаем текущее значение цены, очищая ненужные символы и создаем объект Big
         let currentPrice = new Big(PreisProductNetto[i].value.replace(",", ".").trim());
@@ -3283,6 +2888,25 @@ function mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNett
         // Обновляем innerHTML с отформатированной новой ценой
         cardProductPrice[i].innerHTML = newPrice.toFixed(2).replace(".", ",") + " €";
         preis_product[i].value = newPrice.toFixed(2);
+
+
+        if (Number(countProductEprice[i].innerText) > 1)
+        {
+            let einSchlüssel = newPrice.toFixed(2) / Number(countProductEprice[i].innerText);
+
+            ProductEprice[i].textContent = parseFloat(einSchlüssel.toFixed(2)).toLocaleString('de-DE', {
+                style: 'currency',
+                currency: 'EUR'
+            });
+        }
+        else {
+
+            ProductEprice[i].textContent = parseFloat(newPrice.toFixed(2)).toLocaleString('de-DE', {
+                style: 'currency',
+                currency: 'EUR'
+            });
+        }
+
     }
 
     for (let i = 0; i < schlüsselPrice.length; i++) {
@@ -3298,31 +2922,26 @@ function mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNett
         schlüsselPrice[i].innerHTML = newPrice.toFixed(2).replace(".", ",") + " €"; 
        
         preis_schluessel.value = newPrice.toFixed(2);
+
+        if (Number(countschlüssel[0].innerText) > 1)
+        {
+            let einSchlüssel = newPrice.toFixed(2) / Number(countschlüssel[0].innerText);
+
+            ePrice[0].innerHTML = parseFloat(einSchlüssel.toFixed(2)).toLocaleString('de-DE', {
+                style: 'currency',
+                currency: 'EUR'
+            });
+        }
+        else {
+
+            ePrice[0].innerHTML = parseFloat(newPrice.toFixed(2)).toLocaleString('de-DE', {
+                style: 'currency',
+                currency: 'EUR'
+            }); 
+        }
+
     }
-    for (let i = 0; i < SizePrice.length; i++)
-    {
-        let currentPrice = new Big(PreisSizeNetto[i].value.replace(",", ".").trim());
-
-        let additionalPrice = new Big(SizeProcent[i]);
-
-        let newPrice = currentPrice.plus(additionalPrice); 
-
-       Size_preis[i].innerHTML = newPrice.toFixed(2).replace(".", ",") + " €";
-
-        SizePrice[i].value = newPrice.toFixed(2);
-    }
-    for (let i = 0; i < OptionPrice.length; i++)
-    {
-        let currentPrice = new Big(PreisOptionNetto[i].value.replace(",", ".").trim());
-
-        let additionalPrice = new Big(OptionProcent[i]);
-
-        let newPrice = currentPrice.plus(additionalPrice);
-
-        option_preis[i].innerHTML = newPrice.toFixed(2).replace(".", ",") + " €";
-
-        OptionPrice[i].value = newPrice.toFixed(2);
-    }
+   
 }
 function changePrice(newPrice) {
     currentPrice = newPrice;
