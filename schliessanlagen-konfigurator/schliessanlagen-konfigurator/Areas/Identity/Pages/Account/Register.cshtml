@@ -2,7 +2,51 @@
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
+
+    // var orderList = (List<UserOrdersShop>)ViewData["OrderLis"];
+    // var orderItem = (List<ProductSysteam>)ViewData["OrderItem"];
+    // var imageList = (List<string>)ViewData["Image"];
+    // var countProduct = (List<int>)ViewData["CounterProduct"];
+    // var descriptions = (List<string>)ViewData["Descriptions"];
+
+    // var Optionen = (List<(string, float)>)ViewData["Options"];
+    // var CounterOptionen = (List<int>)ViewData["CountOptions"];
+    // var optionenSchritt = 0;
+
+    // var Gramm = (List<float>)ViewData["Gewicht"];
+
+    // float costed = 0;
+    // int ProudctItemCounter = 0;
+    // int UserOrderId = 0;
+    // int countOption = 0;
 }
+<h3>@ViewData["Title"]</h3>
+<style>
+    #siwk-button-container {
+        border: 1px solid red; /* Для визуализации границы контейнера */
+        padding: 10px;
+        margin: 10px;
+    }
+
+    .table-row {
+        padding-right: 10px;
+        padding-left: 10px;
+        grid-template-columns: repeat(4, 1fr);
+        display: grid;
+        border: 1px solid rgba(0, 0, 0, .125);
+        margin-bottom: 2px;
+        margin-top: 2px;
+    }
+
+    .table-cell {
+        flex: 1;
+        margin:1px;
+    }
+    .end{
+        margin-left:auto;
+    }
+</style>
+
 
 <div class="shadow-lg  mb-5 bg-body-tertiary rounded" id="registerPage">
     <div class="row">
@@ -23,8 +67,8 @@
                    
                 </div>
             </div>
- 
-                    <div id="step1" class="step-form active">
+
+                    <div id="step1" class="container step-form active">
                         <div class="list-group">
                             <div class="list-group-item mt-5">
                                 <div class="d-flex w-100 justify-content-between">
@@ -32,11 +76,10 @@
                                 </div>
                                 <p class="mb-4">Deine Daten werden nur für diese Bestellung erhoben und müssen für weitere Bestellungen erneut angegeben werden.</p>
                             </div>
-                        </div>
-                 
+                        </div>               
                     </div>
 
-                    <div id="step2" class="step-form mt-5">
+            <div id="step2" class="container step-form mt-5">
                     <h4>
                         Schritt 2: Anmelden & Adresse
                     </h4>
@@ -337,101 +380,120 @@
                     <input class="form-control" value="" required name="RechnungTelefon" id="floatingInput" placeholder="Telefonnummer / phone number *" />
                     <label for="floatingInput">Telefonnummer / phone number *</label>
                 </div>
+
+                <div style="display:flex;gap:30px">
+                    <input type="checkbox" name="Rehnung" checked onchange="changeAdress(event.target.checked,0)" />
+                    <h6>Lieferadresse ist gleich Rechnungsadresse</h6>
+                </div>
+                <br />
+                <div id="rechnungSend">
+                </div>
                     </div>
 
-                <div id="step3" class="step-form mt-5">
+            <div id="step3" class="container step-form mt-5">
                     <h4>Schritt 3:Bitte wählen Sie Ihre Lieferadresse</h4>
 
-                <div style="display: flex;align-items: center;">
-                    <input type="hidden" id="gramWert-0" value="0" />
-
-                    <input type="radio" id="dhl" onchange="changeSend()" checked name="DhlSend" value="DHL">
-                    <input type="text" readonly style="border: none;outline:none" value="0" id="CostGram-0" /> <br>
-                    <h4>
-                        DHL
-                    </h4>
-                </div>
-
-                <div style="display: flex;gap: 30px;align-items: center;">
-                    <input type="radio" readonly style="border: none;" onchange="changeSend()" id="Plase" name="DhlSend" value="0,00 €">
-                    <label for="css" style="margin-left: -25px;">0,00 €</label><br>
-                    <h4>
-                        Abholung in Berlin (Brunnenstraße 8, 10119 Berlin)
-                    </h4>
-                </div>
-
-                <div id="blockSchrite" >
-                    <div style="display:flex;gap:10px;">
-                        <h2><strong>Versandadresse</strong></h2>
-                    </div>
-                    <div style="display:flex;gap:30px">
-                        <input type="checkbox" name="Rehnung" checked onchange="changeAdress(event.target.checked,0)" />
-                        <h4>Lieferadresse ist gleich Rechnungsadresse</h4>
+                <div id="blockSchrite" class="card body  mb-5 bg-body-tertiary rounded">
+                    <div>
+                        <h4><strong>Versandart</strong></h4>
                     </div>
                     <br />
-                    <div id="rechnungSend">
+
+                    <div>
+                        <input type="hidden" id="gramWert-0" value="@* @Gramm[z] *@" />
+
+                        <div style="display: flex">
+                            <input type="radio" id="dhl-0" onchange="changeSend(0)" checked name="DhlSend" value="DHL">
+                            <input type="text" readonly style="border: none;outline:none" name="Versand" value="0" id="CostGram-0" /> <br>
+                        </div>
+
+                        <h6>
+                            Standardversand über DHL
+                        </h6>
+                    </div>
+
+                    <div class="mt-5">
+
+                        <div style="display: flex">
+                            <input type="radio" readonly style="border: none;" onchange="changeSend(0)" id="Plase-0" name="DhlSend" value="0,00 €">
+                            <input type="text" readonly style="border: none;outline:none" value="0,00 €" /> <br>
+                        </div>
+
+
+                        <h6>
+                            Abholung im Store
+                        </h6>
+                        <h6>Selbstabholung im Store Berlin, Brunnenstraße 8, 10119 Berlin, nach Erhalt der Abholbenachrichtigung über die Fertigstellung.</h6>
                     </div>
                 </div>
             </div>
-            <div id="step4" class="step-form mt-5">
+            <div id="step4" class="container step-form mt-5">
                 <h4>Schritt 4: Zahlung</h4>
 
                 <div id="Projekt">
                 </div>
-                <div id="blockSchrite" class="shadow-lg  mb-5 bg-body-tertiary rounded">
-                    <div style="display:flex;gap:10px;">
-                        <h2><strong>Zahlungsart</strong></h2>
+                <div id="blockSchrite" class="card body  mb-5 bg-body-tertiary rounded">
+                    <div>
+                        <h4><strong>Zahlungsart</strong></h4>
                     </div>
                     <br />
-                    <div style="display: flex;gap: 50px;" id="bezalenMethod-0">
-                        <label>
-                            <input type="radio" onchange="BezaleMethod(0)" checked name="Pay" value="PayPall">
-                            <img src="@("/compression/paypal.webp")" height="30" width="30" />
-                            <h4>PayPall</h4>
-                        </label><br>
-                        <label>
-                            <input type="radio" onchange="BezaleMethod(0)" name="Pay" value="Vorkasse">
-                            <img src="@("/compression/bezahlverfahren.png")" height="40" width="40" />
-                            <h4>Vorkasse</h4>
-                        </label>
+                    <div id="bezalenMethod-0">
+
+                        <div class="table-row">
+                            <label class="table-cell">
+                                <input type="radio" onchange="BezaleMethod(0)" checked name="Pay" value="PayPall">
+                                <img src="@("/compression/paypal.webp")" height="50" width="50" />
+
+                            </label>
+
+                        </div>
+
+                        <div class="table-row">
+
+                            <label class="table-cell">
+                                <input type="radio" onchange="BezaleMethod(0)" name="Pay" value="Vorkasse">
+                                <img src="@("/compression/bezahlverfahren.png")" height="50" width="50" />
+                            </label>
+                        </div>
+
                     </div>
                 </div>
-                <div id="blockSchrite" style="display: grid;justify-content: center;" class="shadow-lg  mb-5 bg-body-tertiary rounded">
+               <div class="table-row" id="payblock-0">
 
+                                                    <h6 class="table-cell">Nettowert:</h6>
+                                                     <h6 class="table-cell"></h6>
+                                                    <h6 class="table-cell"></h6>
+                                                    <h6 class="table-cell" style="text-align: end;">0</h6>
+                                                    <input name="NettoSumOrder" type="hidden" value="0"/>
 
-                    <div style="grid-template-columns: auto auto;display: grid;">
-                        <input id="proc" style="outline:none;border:none;max-width:120px" type="text" readonly name="procent" value="Steuer:" />
-                        <input redonly name="Steuer" style="text-align: end;border: none;outline: none" type="text" value="0" id="Procent" />
-                    </div>
-                  
+                                                    <h6 id="procent-0" class="table-cell" >Steuer:</h6>
+                                                    <input name="procent" type="hidden" value="0" id="Name_procent-0"/>
+                                                    <h6 class="table-cell"></h6>
+                                                    <h6 class="table-cell"></h6>
+                                                    <h6 class="table-cell" style="text-align: end;" id="aldProcent-0">0</h6>
+                                                    <input name="Steuer" type="hidden" value="0" id="aldProcentInput-0" /> 
 
-                    <div style="grid-template-columns: auto auto;display: grid;">
-                        <h3>Versand:</h3>
-                        <input name="Versand" type="text" redonly style="text-align: end;border: none;outline: none" value="0" id="CostGram" />
-                    </div>
-
-                    <div style="grid-template-columns: auto auto; display: grid;">
-                        <h3>Bestellsumme:</h3>
-                        <input name="OrderSum" readonly style="text-align: end; border: none; outline: none" value="0" id="costedI-0" />
-                        <input readonly type="hidden" style="text-align: end; border: none; outline: none" value="0" id="costedР-0" />
-                        <input readonly type="hidden" name="NettoSumOrder" style="text-align: end; border: none; outline: none" value="0" />
-                    </div>
-
-                    <input type="hidden" id="Aufrechnung-0" name="aufRechnung" value="false" />
-                    <input type="hidden" value="0" id="invoiceNumber-0" />
-
-                    <input type="submit" class="btn btn-success" id="SendRechnung-0" style="display:none; padding:10px 20px 10px 20px" value="Bezahlen an der Kasse" />
-
-                    <div id="paypal-button-container-0"> </div>
-
-                </div>
+                                                    <h6 class="table-cell">Versand:</h6>
+                                                    <h6 class="table-cell"></h6>
+                                                    <h6 class="table-cell"></h6>
+                                                    <h6 class="table-cell" style="text-align: end;" id="CostGram-0">0</h6>
+                                                 
+                                                    <h6 class="table-cell">Gesamtsumme inkl. MwSt:</h6>
+                                                    <h6 class="table-cell"></h6>
+                                                    <h6 class="table-cell"></h6>
+                                                    <h6 class="table-cell" style="text-align: end" id="costedI-0"> 0</h6>
+                                                    <input name="OrderSum" type="hidden"  value="0" id="costedI-0" /> 
+                                                    
+                                                    <input readonly type="hidden" style="text-align: end; border: none; outline: none" value="0" id="costedР-0" /> 
+                                      
+                                                </div>
             </div>
 
-            <div id="step5" class="step-form mt-5">
+            <div id="step5" class="container step-form mt-5">
                 <h4>Schritt 5: Rehnung</h4>
             </div>
 
-                <div class="mt-4">
+            <div class="container mt-4">
                     <button class="btn btn-outline-success" type="button" id="nextStepBtn">Weiter als Gast</button>
                     <button class="btn btn-secondary" type="button" id="prevStepBtn">Previous Step</button>
                 </div>

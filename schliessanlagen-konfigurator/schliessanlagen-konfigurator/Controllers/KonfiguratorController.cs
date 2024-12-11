@@ -4962,6 +4962,8 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var key =  db.Orders.Where(x => x.userKey == param2).Distinct().ToList();
 
+            ViewBag.OrderAllInfo = key;
+
             var DopelOrderlist = new List<Profil_Doppelzylinder>();
 
             var OrderList =  db.Profil_Doppelzylinder.Where(x => x.Id == Convert.ToInt32(DopelId)).ToList();

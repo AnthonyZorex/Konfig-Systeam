@@ -5177,8 +5177,7 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpPost] 
         public async Task<IActionResult> SaveDoppelZylinder(Profil_Doppelzylinder profil_Doppelzylinder, List<int> SizeAus, List<int> SizeInen, List<string> Options, List<string> ImageNameOption, List<IFormFile> postedFile,
         List<string> Descriptions, List<string> valueNGF, List<float> costNGF, List<int> inputCounter, List<float> costSizeAussen, List<float> costSizeIntern, List<IFormFile> UploadGalleryImages, List<string> GalleryImages,
-        List<float> internDoppelKlein, List<float> priesDoppelKlein, List<float> ausKlein, List<float> ausKleinPreis, List<int>KleinZiseCount, List<string>down, List<string> up,
-        List<float> aussen_priesDoppelKlein, List<float> aussenDoppelKlein, List<float> innenKleinPreis, List<float> innenKlein, List<int> KleinZiseCountInter)
+        List<float> internDoppelKlein, List<float> priesDoppelKlein, List<float> ausKlein, List<float> ausKleinPreis, List<int>KleinZiseCount)
         {
             var Items = db.Profil_Doppelzylinder.Find(profil_Doppelzylinder.Id);
             Items.schliessanlagenId = profil_Doppelzylinder.schliessanlagenId;
@@ -5355,7 +5354,6 @@ namespace schliessanlagen_konfigurator.Controllers
                 }
 
             }
-
 
             var DoppeltemSize = db.Aussen_Innen.Include(x=>x.Doppel_Innen_klein).Where(x => x.Profil_DoppelzylinderId == profil_Doppelzylinder.Id).ToList();
              

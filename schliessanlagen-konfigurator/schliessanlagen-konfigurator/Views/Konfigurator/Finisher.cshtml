@@ -10,6 +10,13 @@
 
     string url="";
 
+    int doppel = 0;
+    int hebel = 0;
+    int knayf = 0;
+    int halb = 0;
+    int vorhan = 0;
+    int ausse = 0;
+
 }
 
 <style>
@@ -138,993 +145,1010 @@
     </div>
     <div>
 
-        @if (ViewBag.Dopelzylinder != null)
-        {
-            int elemNum = 0;
-         
-            foreach (var item in ViewBag.Dopelzylinder)
+            @foreach (var item in ViewBag.OrderAllInfo)
             {
-                    <div id="ExelItem-@d" class="ExelItem shadow-lg  mb-5 bg-body-tertiary rounded">
-                        <input value="@item.Id" type="hidden" name="DopelItem" />
-                        <div id="productImage">
-                            <img decoding="async" data-bs-toggle="modal" data-bs-target="#ModalItemDoppel-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                            <div>
-                                @foreach(var list in ViewBag.DoppelGalery)
-                                {
-                                    <img src="@("/compression/"+@list.ImageName)" alt="@item.Name" height="100" width="100" />
-                                }
-                            </div>
-                        </div>
-                        <div id="productMenuInfo">
-                            <div id="ProductNameUndCost">
-                                <div>
-                                    <h3>Türbezeichnung: @ViewBag.DorName[d]</h3>
-                                    <input style="border: none;width:250px" readonly type="text" name="DopelName" value="@item.Name" />
-                                    <input style="border: none;width:250px" type="hidden" name="NameSystem" value="@item.NameSystem" />
+                if(item.ZylinderId == 1)
+                {
+                    @if (ViewBag.Dopelzylinder != null)
+                    {
+                        int elemNum = 0;
 
-                                    <input id="costItems-@d" name="ProductCosted" type="hidden" value="@item.Price" />
+                            <div id="ExelItem-@d" class="ExelItem shadow-lg  mb-5 bg-body-tertiary rounded">
+                            <input value="@ViewBag.Dopelzylinder[doppel].Id" type="hidden" name="DopelItem" />
+                                <div id="productImage">
+                                <img decoding="async" data-bs-toggle="modal" data-bs-target="#ModalItemDoppel-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@ViewBag.Dopelzylinder[doppel].ImageName)" asp-append-version="true" width="300px" height="300px" />
+                                    <div>
+                                        @foreach (var list in ViewBag.DoppelGalery)
+                                        {
+                                        <img src="@("/compression/"+@list.ImageName)" alt="@ViewBag.Dopelzylinder[doppel].Name" height="100" width="100" />
+                                        }
+                                    </div>
                                 </div>
-                            </div>
-                            <div>
-                                <select id="type-@d" class="form-select" onchange="switchTypeSylinder(@d,event.target.value,@elemNum)">
-                                    @foreach (var i in ViewBag.AllType)
-                                    {
-                                        if (@i.nameType == "Doppelzylinder")
-                                        {
-                                            <option selected>@i.nameType</option>
-                                        }
-                                        else
-                                        {
-                                            <option >@i.nameType</option>
-                                        }
-                                    }
+                                <div id="productMenuInfo">
+                                    <div id="ProductNameUndCost">
+                                        <div>
+                                            <h3>Türbezeichnung: @ViewBag.DorName[d]</h3>
+                                        <input style="border: none;width:250px" readonly type="text" name="DopelName" value="@ViewBag.Dopelzylinder[doppel].Name" />
+                                            <input style="border: none;width:250px" type="hidden" name="NameSystem" value="@ViewBag.Dopelzylinder[doppel].NameSystem" />
 
-                                </select>
-                            </div>
-                            <div id="textInform">
-                                <h4>Zylinderlänge</h4>
-                                <h4>Stück</h4>
-                            </div>
-
-                            <div id="Size-@d" class="SizeProduct">
-
-                                <div class="btn-group" role="group" aria-label="Basic outlined example">            
-                                <div>
-                                    <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
-                                        <h6>außen</h6>
-                                        <select class="form-select" name="DoppelAussen" id="Aussen" onchange="selectParamAussen(@d,'Doppelzylinder',event.target.selectedIndex,event.target.value,@item.Id)">                                         
-                                        @for (int i = 0; i < ViewBag.Dopelzylinderaussen.Count; i++)
-                                        {
-                                               if (ViewBag.DAussen[elemNum] == ViewBag.Dopelzylinderaussen[i])
-                                               {
-                                                    <option id="OptionA"  selected>@ViewBag.Dopelzylinderaussen[i]</option>
-                                               }
-                                               else{
-                                                   <option id="OptionA">@ViewBag.Dopelzylinderaussen[i]</option>
-                                               }
-                                             
-                                               
-                                        }
-                                    </select>
-                                    <input type="hidden" id="Aussen-@d" />
-                                </div>
-                                <div>
-                                        <h6>innen</h6>
-                                        <select class="form-select" name="DoppelIntern" id="Intern" onchange="selectParamIntern(@d,'Doppelzylinder',event.target.selectedIndex,event.target.value,@item.Id)">
-                                     
-                                     @for (int i = 0; i < ViewBag.DopelzylinderIntern.Count; i++)
-                                     {
-                                                if (ViewBag.DInter[elemNum] == ViewBag.DopelzylinderIntern[i])
+                                        <input id="costItems-@d" name="ProductCosted" type="hidden" value="@ViewBag.Dopelzylinder[doppel].Price" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <select id="type-@d" class="form-select" onchange="switchTypeSylinder(@d,event.target.value,@elemNum)">
+                                            @foreach (var i in ViewBag.AllType)
+                                            {
+                                                if (@i.nameType == "Doppelzylinder")
                                                 {
-                                                    <option id="OptionI" selected>@ViewBag.DopelzylinderIntern[i]</option>
+                                                    <option selected>@i.nameType</option>
                                                 }
                                                 else
                                                 {
-                                                    <option id="OptionI">@ViewBag.DopelzylinderIntern[i]</option>
-                                                }      
-                                     }
-                                    
-                                 </select>
-
-                                    <input type="hidden" id="Innen-@d"  />
-                                </div>
-                                </div>
-
-                                <div class="btn-group count_control align-items-end" role="group" aria-label="Basic outlined example">
-                                    <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
-                                    <input readonly class="count_input_controll" name="TurCounter" id="countSchlusse-@d" type="number" min="1" value="@ViewBag.CounterTur[@elemNum]" />
-                                    <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
-                                </div>
-                                    
-                            </div>
-
-                            <div id="optionsItems">
-                                <h3>Weitere Optionen</h3>
-                                <div>
-                                    @{
-                                        int valueCount = 0;
-                                    }
-                                    @if (ViewBag.countOptionsQuery > 0)
-                                    {
-                                        @for (int i = 0; i < ViewBag.optionsName.Count; i++)
-                                        {
-
-                                              <div class="input-group">
-                                                <div class="input-group-text" id="btnGroupAddon">  <img data-bs-toggle="modal" data-bs-target="#myModal-@i" id="hilfeOptionsIcon" alt="@ViewBag.optionsName[i].Name" src="@("/compression/question.webp")" height="20" width="20" /></div>
-                                                <input type="text" class="form-control" id="OptionName" value="@ViewBag.optionsName[i].Name" readonly aria-label="Пример группы ввода" aria-describedby="btnGroupAddon">
-                                              </div>
-
-                                            <select style="margin-bottom: 10px;" class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Doppel',event.target.id,event.target.value,@valueCount,'@ViewBag.optionsName[i].Name',@i,@d)">
-
-                                                @for (int j = 0; j < ViewBag.countOptionsList[i]; j++)
-                                                {
-                                                    <option id="@valueCount">@ViewBag.optionsValue[valueCount]</option>
-
-                                                    valueCount++;
+                                                    <option>@i.nameType</option>
                                                 }
-                                            </select>
+                                            }
 
-                                            <div class="modal fade" id="myModal-@i" tabindex="-1">
-                                                <div class="modal-dialog modal-xl">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h1 class="modal-title">@ViewBag.optionsName[i].Name</h1>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                         
-                                                                <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
-                                                                    <div class="row g-0">
-                                                                        <div class="col-md-4">
-                                                                        <img src="@("/compression/"+@ViewBag.optionsName[i].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@ViewBag.optionsName[i].Name">
-                                                                        </div>
-                                                                        <div class="col-md-8">
-                                                                            <div class="card-body">
+                                        </select>
+                                    </div>
+                                    <div id="textInform">
+                                        <h4>Zylinderlänge</h4>
+                                        <h4>Stück</h4>
+                                    </div>
 
-                                                                                <div class="card-text">
-                                                                                @Html.Raw(@ViewBag.optionsName[i].Description)
+                                    <div id="Size-@d" class="SizeProduct">
+
+                                        <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                            <div>
+                                            <input style="border: none;" id="compName" type="hidden" value="@ViewBag.Dopelzylinder[doppel].companyName" />
+                                                <h6>außen</h6>
+                                            <select class="form-select" name="DoppelAussen" id="Aussen" onchange="selectParamAussen(@d,'Doppelzylinder',event.target.selectedIndex,event.target.value,@ViewBag.Dopelzylinder[doppel].Id)">
+                                                    @for (int i = 0; i < ViewBag.Dopelzylinderaussen.Count; i++)
+                                                    {
+                                                        if (ViewBag.DAussen[elemNum] == ViewBag.Dopelzylinderaussen[i])
+                                                        {
+                                                            <option id="OptionA" selected>@ViewBag.Dopelzylinderaussen[i]</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option id="OptionA">@ViewBag.Dopelzylinderaussen[i]</option>
+                                                        }
+
+
+                                                    }
+                                                </select>
+                                                <input type="hidden" id="Aussen-@d" />
+                                            </div>
+                                            <div>
+                                                <h6>innen</h6>
+                                            <select class="form-select" name="DoppelIntern" id="Intern" onchange="selectParamIntern(@d,'Doppelzylinder',event.target.selectedIndex,event.target.value,@ViewBag.Dopelzylinder[doppel].Id)">
+
+                                                    @for (int i = 0; i < ViewBag.DopelzylinderIntern.Count; i++)
+                                                    {
+                                                        if (ViewBag.DInter[elemNum] == ViewBag.DopelzylinderIntern[i])
+                                                        {
+                                                            <option id="OptionI" selected>@ViewBag.DopelzylinderIntern[i]</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option id="OptionI">@ViewBag.DopelzylinderIntern[i]</option>
+                                                        }
+                                                    }
+
+                                                </select>
+
+                                                <input type="hidden" id="Innen-@d" />
+                                            </div>
+                                        </div>
+
+                                        <div class="btn-group count_control align-items-end" role="group" aria-label="Basic outlined example">
+                                            <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
+                                            <input readonly class="count_input_controll" name="TurCounter" id="countSchlusse-@d" type="number" min="1" value="@ViewBag.CounterTur[@elemNum]" />
+                                            <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
+                                        </div>
+
+                                    </div>
+
+                                    <div id="optionsItems">
+                                        <h3>Weitere Optionen</h3>
+                                        <div>
+                                            @{
+                                                int valueCount = 0;
+                                            }
+                                            @if (ViewBag.countOptionsQuery > 0)
+                                            {
+                                                @for (int i = 0; i < ViewBag.optionsName.Count; i++)
+                                                {
+
+                                                    <div class="input-group">
+                                                        <div class="input-group-text" id="btnGroupAddon">  <img data-bs-toggle="modal" data-bs-target="#myModal-@i" id="hilfeOptionsIcon" alt="@ViewBag.optionsName[i].Name" src="@("/compression/question.webp")" height="20" width="20" /></div>
+                                                        <input type="text" class="form-control" id="OptionName" value="@ViewBag.optionsName[i].Name" readonly aria-label="Пример группы ввода" aria-describedby="btnGroupAddon">
+                                                    </div>
+
+                                                    <select style="margin-bottom: 10px;" class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Doppel',event.target.id,event.target.value,@valueCount,'@ViewBag.optionsName[i].Name',@i,@d)">
+
+                                                        @for (int j = 0; j < ViewBag.countOptionsList[i]; j++)
+                                                        {
+                                                            <option id="@valueCount">@ViewBag.optionsValue[valueCount]</option>
+
+                                                            valueCount++;
+                                                        }
+                                                    </select>
+
+                                                    <div class="modal fade" id="myModal-@i" tabindex="-1">
+                                                        <div class="modal-dialog modal-xl">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h1 class="modal-title">@ViewBag.optionsName[i].Name</h1>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+
+                                                                    <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                                                                        <div class="row g-0">
+                                                                            <div class="col-md-4">
+                                                                                <img src="@("/compression/"+@ViewBag.optionsName[i].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@ViewBag.optionsName[i].Name">
+                                                                            </div>
+                                                                            <div class="col-md-8">
+                                                                                <div class="card-body">
+
+                                                                                    <div class="card-text">
+                                                                                        @Html.Raw(@ViewBag.optionsName[i].Description)
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <input type="hidden" id="Option-@d + @i" />
-                                            <input type="hidden" id="d-@d + @i" />
-                                        }
-                                        <input type="hidden" name="DoppelOption" id="OptionAll-@d" />
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal fade" id="ModalItemDoppel-@d" tabindex="-1">
-                            <div class="modal-dialog modal-xl">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title">@item.Name</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                                    </div>
-                                    <div class="modal-body">
-
-                                        <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
-                                            <div class="row g-0">
-                                                <div class="col-md-4">
-                                                    <img src="@("/compression/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@item.Name">
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <div class="card-body">
-
-                                                        <div class="card-text">
-                                                            @Html.Raw(@item.description)
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                </div>
-
-                    elemNum++;
-                d++;
-            }
-        }
-        
-        @if (ViewBag.Halb != null)
-        {
-            int elemNum = 0;
-           
-            foreach (var item in ViewBag.Halb)
-            {
-
-                    <div id="ExelItem-@d" class="ExelItem shadow-lg  mb-5 bg-body-tertiary rounded">
-
-                    <input type="hidden" name="Halb" value="@item.Id" />
-                    <div id="productImage">
-                            <img decoding="async" data-bs-toggle="modal" alt="@item.Name" data-bs-target="#ModalHalb-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                            
-                            <div>
-                                @foreach (var list in ViewBag.HalbGalery)
-                                {
-                                    <img src="@("/compression/"+@list.ImageName)" alt="@list.ImageName" height="100" width="100" />
-                                }
-                            </div>
-                        </div>
-                    <div id="productMenuInfo">
-                        <div id="ProductNameUndCost">
-
-                            <div>
-                                    <h3>Türbezeichnung: @ViewBag.DorName[d]</h3>
-                                    <input style="border: none;width:250px" readonly type="text" name="HalbName" value="@item.Name" />
-                                    <input style="border: none;width:250px" type="hidden" name="NameSystem" value="@item.NameSystem" />
-                                    <input id="costItems-@d" name="ProductCosted" type="hidden" value="@item.Price" />
-                            </div>
-
-                        </div>
-                        <div>
-                                <select id="type-@d" class="form-select" onchange="switchTypeSylinder(@d,event.target.value,@elemNum)" >
-  
-                                    @foreach (var i in ViewBag.AllType)
-                                    {
-                                        if (@i.nameType == "Halbzylinder")
-                                        {
-                                            <option selected>@i.nameType</option>
-                                        }
-                                        else
-                                        {
-                                            <option>@i.nameType</option>
-                                        }
-                                    }
-                            </select>
-                        </div>
-                            <div id="textInform">
-                                <h4>Zylinderlänge</h4>
-                                <h4>Stück</h4>
-                        </div>
-                            <div id="Size-@d" class="SizeProduct">
-                            <div>
-                                <h6>außen</h6>
-                                    <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
-                                    <select name="HalbAussen" id="Aussen" class="form-select" onchange="selectParamAussen(@d,'Halbzylinder',event.target.selectedIndex,event.target.value,@item.Id)">
-
-                                    @for (int i = 0; i < ViewBag.AussenHalb.Count; i++)
-                                    {
-                                            if (ViewBag.HalbOrderAussen[elemNum] == ViewBag.AussenHalb[i])
-                                            {
-                                                <option id="OptionA" selected>@ViewBag.AussenHalb[i]</option>
-                                            }
-                                            else
-                                            {
-                                                <option id="OptionA">@ViewBag.AussenHalb[i]</option>
-                                            }
-
-                                                
-
-                                    }
-                                </select>
-                                    <input type="hidden" id="Aussen-@d" />
-                            </div>
-
-                                <div class="btn-group count_control_Aussen align-items-end" role="group" aria-label="Basic outlined example">
-                                    <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
-                                    <input readonly class="count_input_controll" value="@ViewBag.CounterTurHalb[@elemNum]" type="number" min="1" name="TurCounter" id="countSchlusse-@d" />
-                                    <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
-                                </div>
-
-                        </div>
-                            <div id="optionsItems">
-                            <h3>Weitere Optionen</h3>
-                            <div>
-                                @{
-                                   int  valueCount = 0;
-                                }
-                               @if (ViewBag.countOptionsQueryHalb > 0)
-                                {
-                                    @for (int i = 0; i < ViewBag.HalbOptionsName.Count; i++)
-                                    {
-                                            <div class="input-group">
-                                                <div class="input-group-text" id="btnGroupAddon">
-                                                    <img data-bs-toggle="modal" data-bs-target="#HalbOptionsDescriptions-@i" alt="question" id="hilfeOptionsIcon" src="@("/compression/question.webp")" height="20" width="20" />
-                                                </div>
-                                                <input type="text" class="form-control" id="OptionName" value="@ViewBag.HalbOptionsName[i].Name" readonly aria-label="Пример группы ввода" aria-describedby="btnGroupAddon">
-                                            </div>
-
-                                            <select class="form-select" id="@d-Options-@i" style="margin-bottom: 10px;" onchange="OptionsSelect(@d,'Halb',event.target.id,event.target.value,@valueCount,'@ViewBag.HalbOptionsName[i].Name',@i,@d)">
-
-                                            @for (int j = 0; j < ViewBag.HalbOptionsValueCount[i]; j++)
-                                            {
-                                                
-                                                 <option id="@valueCount">@ViewBag.HalbOptionsValue[valueCount]</option>
-                                                
-                                                valueCount++;
-                                            }
-                                            </select>
-
-                                            <input type="hidden"  id="Option-@d + @i" />
-                                            <input type="hidden" id="d-@d + @i" />
-
-                                            <div class="modal fade" id="HalbOptionsDescriptions-@i" tabindex="-1">
-                                                <div class="modal-dialog modal-xl">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h1 class="modal-title">@ViewBag.HalbOptionsName[i].Name</h1>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-
-                                                            <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
-                                                                <div class="row g-0">
-                                                                    <div class="col-md-4">
-                                                                        <img src="@("/compression/"+@ViewBag.HalbOptionsName[i].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@ViewBag.HalbOptionsName[i].Name">
-                                                                    </div>
-                                                                    <div class="col-md-8">
-                                                                        <div class="card-body">
-
-                                                                            <div class="card-text">
-                                                                                @Html.Raw(@ViewBag.HalbOptionsName[i].Description)
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
+                                                    </div>
+
+                                                    <input type="hidden" id="Option-@d + @i" />
+                                                    <input type="hidden" id="d-@d + @i" />
+                                                }
+                                                <input type="hidden" name="DoppelOption" id="OptionAll-@d" />
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="ModalItemDoppel-@d" tabindex="-1">
+                                    <div class="modal-dialog modal-xl">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                            <h1 class="modal-title">@ViewBag.Dopelzylinder[doppel].Name</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                            </div>
+                                            <div class="modal-body">
+
+                                                <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                                                    <div class="row g-0">
+                                                        <div class="col-md-4">
+                                                        <img src="@("/compression/"+@ViewBag.Dopelzylinder[doppel].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@ViewBag.Dopelzylinder[doppel].Name">
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="card-body">
+
+                                                                <div class="card-text">
+                                                                @Html.Raw(@ViewBag.Dopelzylinder[doppel].description)
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                           
-                                    }
-                                        <input type="hidden" name="HalbOption" id="OptionAll-@d" /> 
-                                } 
-                            </div>
-                        </div>
-                            
-                    </div>
-                       
-                </div>
-
-                    <div class="modal fade" id="ModalHalb-@d" tabindex="-1">
-                        <div class="modal-dialog modal-xl">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title">@item.Name</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                                </div>
-                                <div class="modal-body">
-
-                                    <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
-                                        <div class="row g-0">
-                                            <div class="col-md-4">
-                                                <img src="@("/compression/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@item.Name">
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="card-body">
-
-                                                    <div class="card-text">
-                                                        @Html.Raw(@item.description)
-                                                    </div>
-                                                </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
-                                </div>
                             </div>
-                        </div>
-                    </div>
-                    elemNum++;
-                d++;
-            }
-        }
-            @if (ViewBag.KnayfZelinder != null)
-            {
-                int elemNum = 0;
-                foreach (var item in ViewBag.KnayfZelinder)
+
+                            elemNum++;
+                            d++;
+                            doppel++;
+                        
+                    }
+                }
+                if(item.ZylinderId == 2)
                 {
-                    <div id="ExelItem-@d" class="ExelItem shadow-lg  mb-5 bg-body-tertiary rounded">
-                        <input type="hidden" name="Knayf" value="@item.Id" />
-                        <div id="productImage">
-                            <img decoding="async" data-bs-toggle="modal" alt="@item.Name" data-bs-target="#ModalKnyf-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                            <div>
-                                @foreach (var list in ViewBag.KnaufGalery)
-                                {
-                                    <img src="@("/compression/"+@list.ImageName)" height="100" width="100" />
-                                }
-                            </div>
-                        </div>
-                        <div id="productMenuInfo">
-                            <div id="ProductNameUndCost">
+                    @if (ViewBag.Halb != null)
+                    {
+                        int elemNum = 0;
 
-                                <div>
-                                    <h3>Türbezeichnung: @ViewBag.DorName[d]</h3>
-                                    <input style="border: none;width:250px" readonly type="text" name="KnayfName" value="@item.Name" />
-                                    <input style="border: none;width:250px" type="hidden" name="NameSystem" value="@item.NameSystem" />
-                                    <input id="costItems-@d" name="ProductCosted" type="hidden" value="@item.Price" />
-                                </div>
+                            <div id="ExelItem-@d" class="ExelItem shadow-lg  mb-5 bg-body-tertiary rounded">
 
-                            </div>
-                            <div>
-                                <select id="type-@d" class="form-select" onchange="switchTypeSylinder(@d,event.target.value,@elemNum)">
-                                    @foreach (var i in ViewBag.AllType)
-                                    {
-                                        if (@i.nameType == "Knaufzylinder")
-                                        {
-                                            <option selected>@i.nameType</option>
-                                        }
-                                        else
-                                        {
-                                            <option>@i.nameType</option>
-                                        }
-                                    }
-                                </select>
-                            </div>
-                            <div id="textInform">
-                                <h4>Zylinderlänge</h4>
-                                <h4>Stück</h4>
-                            </div>
+                            <input type="hidden" name="Halb" value="@ViewBag.Halb[halb].Id" />
+                                <div id="productImage">
+                                <img decoding="async" data-bs-toggle="modal" alt="@ViewBag.Halb[halb].Name" data-bs-target="#ModalHalb-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@ViewBag.Halb[halb].ImageName)" asp-append-version="true" width="300px" height="300px" />
 
-                            <div id="Size-@d" class="SizeProduct">
-                                <div class="btn-group" role="group" aria-label="Basic outlined example">
                                     <div>
-                                        <h6>außen</h6>
-                                        <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
-                                        <select class="form-select" name="KnayfAussen" id="Aussen" onchange="selectParamAussen(@d,'Knaufzylinder',event.target.selectedIndex,event.target.value,@item.Id)">
+                                        @foreach (var list in ViewBag.HalbGalery)
+                                        {
+                                            <img src="@("/compression/"+@list.ImageName)" alt="@list.ImageName" height="100" width="100" />
+                                        }
+                                    </div>
+                                </div>
+                                <div id="productMenuInfo">
+                                    <div id="ProductNameUndCost">
 
-                                            @for (int i = 0; i < ViewBag.KnayfZelinderAussen.Count; i++)
+                                        <div>
+                                            <h3>Türbezeichnung: @ViewBag.DorName[d]</h3>
+                                            <input style="border: none;width:250px" readonly type="text" name="HalbName" value="@ViewBag.Halb[halb].Name" />
+                                            <input style="border: none;width:250px" type="hidden" name="NameSystem" value="@ViewBag.Halb[halb].NameSystem" />
+                                            <input id="costItems-@d" name="ProductCosted" type="hidden" value="@ViewBag.Halb[halb].Price" />
+                                        </div>
+
+                                    </div>
+                                    <div>
+                                        <select id="type-@d" class="form-select" onchange="switchTypeSylinder(@d,event.target.value,@elemNum)">
+
+                                            @foreach (var i in ViewBag.AllType)
                                             {
-                                                if (ViewBag.KAussen[elemNum] == ViewBag.KnayfZelinderAussen[i])
+                                                if (@i.nameType == "Halbzylinder")
                                                 {
-                                                    <option id="OptionA" selected>@ViewBag.KnayfZelinderAussen[i]</option>
+                                                    <option selected>@i.nameType</option>
                                                 }
                                                 else
                                                 {
-                                                    <option id="OptionA">@ViewBag.KnayfZelinderAussen[i]</option>
+                                                    <option>@i.nameType</option>
                                                 }
                                             }
                                         </select>
-                                        <input type="hidden" id="Aussen-@d" />
                                     </div>
-                                    <div>
-                                        <h6>innen</h6>
-                                        <select class="form-select" name="KnayfIntern" id="Intern" onchange="selectParamIntern(@d,'Knaufzylinder',event.target.selectedIndex,event.target.value,@item.Id)">
-
-                                            @for (int i = 0; i < ViewBag.KnayfZelinderIntern.Count; i++)
-                                            {
-                                                if (ViewBag.KInter[elemNum] == ViewBag.KnayfZelinderIntern[i])
-                                                {
-                                                    <option id="OptionI" selected>@ViewBag.KnayfZelinderIntern[i]</option>
-                                                }
-                                                else
-                                                {
-                                                    <option id="OptionI">@ViewBag.KnayfZelinderIntern[i]</option>
-                                                }
-                                            }
-
-                                        </select>
-                                        <input type="hidden" id="Innen-@d" />
+                                    <div id="textInform">
+                                        <h4>Zylinderlänge</h4>
+                                        <h4>Stück</h4>
                                     </div>
-                                </div>
-                                <div class="btn-group count_control align-items-end" role="group" aria-label="Basic outlined example">
-                                    <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
-                                    <input readonly class="count_input_controll" id="countSchlusse-@d" type="number" min="1" value="@ViewBag.CounterTurKnayf[@elemNum]" name="TurCounter" />
-                                    <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
-                                </div>
-                            </div>
-                            <div id="optionsItems">
-                                <h3>Weitere Optionen</h3>
-                                <div>
-                                    @{
-                                        int valueCount = 0;
-                                    }
-                                    @if (ViewBag.countOptionsQueryKnayf > 0)
-                                    {
-                                        @for (int i = 0; i < ViewBag.optionsNameKnayf.Count; i++)
-                                        {
+                                    <div id="Size-@d" class="SizeProduct">
+                                        <div>
+                                            <h6>außen</h6>
+                                            <input style="border: none;" id="compName" type="hidden" value="@ViewBag.Halb[halb].companyName" />
+                                            <select name="HalbAussen" id="Aussen" class="form-select" onchange="selectParamAussen(@d,'Halbzylinder',event.target.selectedIndex,event.target.value,@ViewBag.Halb[halb].Id)">
 
-                                            <div class="input-group">
-                                                <div class="input-group-text" id="btnGroupAddon">
-                                                    <img data-bs-toggle="modal" data-bs-target="#ModalKnyfOptions-@i" id="hilfeOptionsIcon" alt="@ViewBag.optionsNameKnayf[i].Name" src="@("/compression/question.webp")" height="20" width="20" />
-                                                </div>
-                                                <input type="text" class="form-control" id="OptionName" value="@ViewBag.optionsNameKnayf[i].Name" readonly aria-label="Пример группы ввода" aria-describedby="btnGroupAddon">
-                                            </div>
-
-                                            <select style="margin-bottom: 10px;" class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Knayf',event.target.id,event.target.value,@valueCount,'@ViewBag.optionsNameKnayf[i].Name',@i,@d)">
-
-                                                @for (int j = 0; j < ViewBag.countOptionsListKnayf[i]; j++)
+                                                @for (int i = 0; i < ViewBag.AussenHalb.Count; i++)
                                                 {
-                                                    <option id="@valueCount">@ViewBag.optionsValueKnayf[valueCount]</option>
+                                                    if (ViewBag.HalbOrderAussen[elemNum] == ViewBag.AussenHalb[i])
+                                                    {
+                                                        <option id="OptionA" selected>@ViewBag.AussenHalb[i]</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option id="OptionA">@ViewBag.AussenHalb[i]</option>
+                                                    }
 
-                                                    valueCount++;
+
+
                                                 }
-
                                             </select>
+                                            <input type="hidden" id="Aussen-@d" />
+                                        </div>
 
-                                            <div class="modal fade" id="ModalKnyfOptions-@i" tabindex="-1">
-                                                <div class="modal-dialog modal-xl">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h1 class="modal-title">@ViewBag.optionsNameKnayf[i].Name</h1>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                        <div class="btn-group count_control_Aussen align-items-end" role="group" aria-label="Basic outlined example">
+                                            <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
+                                            <input readonly class="count_input_controll" value="@ViewBag.CounterTurHalb[@elemNum]" type="number" min="1" name="TurCounter" id="countSchlusse-@d" />
+                                            <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
+                                        </div>
+
+                                    </div>
+                                    <div id="optionsItems">
+                                        <h3>Weitere Optionen</h3>
+                                        <div>
+                                            @{
+                                                int valueCount = 0;
+                                            }
+                                            @if (ViewBag.countOptionsQueryHalb > 0)
+                                            {
+                                                @for (int i = 0; i < ViewBag.HalbOptionsName.Count; i++)
+                                                {
+                                                    <div class="input-group">
+                                                        <div class="input-group-text" id="btnGroupAddon">
+                                                            <img data-bs-toggle="modal" data-bs-target="#HalbOptionsDescriptions-@i" alt="question" id="hilfeOptionsIcon" src="@("/compression/question.webp")" height="20" width="20" />
                                                         </div>
-                                                        <div class="modal-body">
+                                                        <input type="text" class="form-control" id="OptionName" value="@ViewBag.HalbOptionsName[i].Name" readonly aria-label="Пример группы ввода" aria-describedby="btnGroupAddon">
+                                                    </div>
 
-                                                            <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
-                                                                <div class="row g-0">
-                                                                    <div class="col-md-4">
-                                                                        <img src="@("/compression/"+@ViewBag.optionsNameKnayf[i].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@ViewBag.optionsNameKnayf[i].Name">
-                                                                    </div>
-                                                                    <div class="col-md-8">
-                                                                        <div class="card-body">
+                                                    <select class="form-select" id="@d-Options-@i" style="margin-bottom: 10px;" onchange="OptionsSelect(@d,'Halb',event.target.id,event.target.value,@valueCount,'@ViewBag.HalbOptionsName[i].Name',@i,@d)">
 
-                                                                            <div class="card-text">
-                                                                                @Html.Raw(@ViewBag.optionsNameKnayf[i].Description)
+                                                        @for (int j = 0; j < ViewBag.HalbOptionsValueCount[i]; j++)
+                                                        {
+
+                                                            <option id="@valueCount">@ViewBag.HalbOptionsValue[valueCount]</option>
+
+                                                            valueCount++;
+                                                        }
+                                                    </select>
+
+                                                    <input type="hidden" id="Option-@d + @i" />
+                                                    <input type="hidden" id="d-@d + @i" />
+
+                                                    <div class="modal fade" id="HalbOptionsDescriptions-@i" tabindex="-1">
+                                                        <div class="modal-dialog modal-xl">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h1 class="modal-title">@ViewBag.HalbOptionsName[i].Name</h1>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+
+                                                                    <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                                                                        <div class="row g-0">
+                                                                            <div class="col-md-4">
+                                                                                <img src="@("/compression/"+@ViewBag.HalbOptionsName[i].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@ViewBag.HalbOptionsName[i].Name">
+                                                                            </div>
+                                                                            <div class="col-md-8">
+                                                                                <div class="card-body">
+
+                                                                                    <div class="card-text">
+                                                                                        @Html.Raw(@ViewBag.HalbOptionsName[i].Description)
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
+                                                    </div>
+
+                                                }
+                                                <input type="hidden" name="HalbOption" id="OptionAll-@d" />
+                                            }
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="modal fade" id="ModalHalb-@d" tabindex="-1">
+                                <div class="modal-dialog modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h1 class="modal-title">@ViewBag.Halb[halb].Name</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                        </div>
+                                        <div class="modal-body">
+
+                                            <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                                                <div class="row g-0">
+                                                    <div class="col-md-4">
+                                                        <img src="@("/compression/"+@ViewBag.Halb[halb].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@ViewBag.Halb[halb].Name">
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="card-body">
+
+                                                            <div class="card-text">
+                                                            @Html.Raw(ViewBag.Halb[halb].description)
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <input type="hidden" id="Option-@d + @i" />
-                                            <input type="hidden" id="d-@d + @i" />
-                                        }
-                                        <input type="hidden" name="KnayfOption" id="OptionAll-@d" />
-                                    }
-
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="modal fade" id="ModalKnyf-@d" tabindex="-1">
-                        <div class="modal-dialog modal-xl">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title">@item.Name</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                                </div>
-                                <div class="modal-body">
-
-                                    <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
-                                        <div class="row g-0">
-                                            <div class="col-md-4">
-                                                <img src="@("/compression/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@item.Name">
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="card-body">
-
-                                                    <div class="card-text">
-                                                        @Html.Raw(@item.description)
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
-                                </div>
                             </div>
-                        </div>
-                    </div>
-                    d++;
-                    elemNum++;
+
+                            elemNum++;
+                            d++;
+                            halb++;
+                        
+                    }
                 }
-
-            }
-        @if (ViewBag.HelbZ != null)
-        {
-            int elemNum = 0;
-            foreach (var item in ViewBag.HelbZ)
-            {
-                    <div id="ExelItem-@d" class="ExelItem shadow-lg  mb-5 bg-body-tertiary rounded">
-                        <input type="hidden" name="Helb" value="@item.Id" />
-
-                        <div id="productImage">
-                            <img decoding="async" data-bs-toggle="modal" alt="@item.Name" data-bs-target="#ModalHelbZ-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                            <div>
-                                @foreach (var list in ViewBag.HebelzylinderGalery)
-                                {
-                                    <img src="@("/compression/"+@list.ImageName)" alt="@list.ImageName" height="100" width="100" />
-                                }
-                            </div>
-                        </div>
-
-                    <div id="productMenuInfo">
-                        <div id="ProductNameUndCost">
-                            <div>
-                                    <h3>Türbezeichnung: @ViewBag.DorName[d]</h3>
-                                    <input style="border: none;width:250px" readonly type="text" name="HelbName" value="@item.Name" />
-                                    <input style="border: none;width:250px" type="hidden" name="NameSystem" value="@item.NameSystem" />
-                                    <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
-                                    <input id="costItems-@d" name="ProductCosted" type="hidden" value="@item.Price" />
-                            </div>
-
-                        </div>
-                        <div>
-                                <select id="type-@d" class="form-select" onchange="switchTypeSylinder(@d,event.target.value,@elemNum)">
-
-                                    @foreach (var i in ViewBag.AllType)
-                                    {
-                                        if (@i.nameType == "Hebelzylinder")
+                 if(item.ZylinderId == 3)
+                {
+                    @if (ViewBag.KnayfZelinder != null)
+                    {
+                        int elemNum = 0;
+                       
+                            <div id="ExelItem-@d" class="ExelItem shadow-lg  mb-5 bg-body-tertiary rounded">
+                            <input type="hidden" name="Knayf" value="@ViewBag.KnayfZelinder[knayf].Id" />
+                                <div id="productImage">
+                                <img decoding="async" data-bs-toggle="modal" alt="@ViewBag.KnayfZelinder[knayf].Name" data-bs-target="#ModalKnyf-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@ViewBag.KnayfZelinder[knayf].ImageName)" asp-append-version="true" width="300px" height="300px" />
+                                    <div>
+                                        @foreach (var list in ViewBag.KnaufGalery)
                                         {
-                                            <option selected>@i.nameType</option>
+                                            <img src="@("/compression/"+@list.ImageName)" height="100" width="100" />
                                         }
-                                        else
-                                        {
-                                            <option>@i.nameType</option>
-                                        }
-                                    }
+                                    </div>
+                                </div>
+                                <div id="productMenuInfo">
+                                    <div id="ProductNameUndCost">
 
-                            </select>
-                        </div>
-                            <div id="textInform">
-                                <h4>Stück</h4>
-                        </div>
-                            <div id="Size-@d" class="SizeProduct">
+                                        <div>
+                                            <h3>Türbezeichnung: @ViewBag.DorName[d]</h3>
+                                        <input style="border: none;width:250px" readonly type="text" name="KnayfName" value="@ViewBag.KnayfZelinder[knayf].Name" />
+                                            <input style="border: none;width:250px" type="hidden" name="NameSystem" value="@ViewBag.KnayfZelinder[knayf].NameSystem" />
+                                        <input id="costItems-@d" name="ProductCosted" type="hidden" value="@ViewBag.KnayfZelinder[knayf].Price" />
+                                        </div>
 
-                           <div class="btn-group " role="group" aria-label="Basic outlined example">
-                                    <button onclick="CylinderMinus(@d)" type="button" class="btn btn-success">-</button>
-                                    <input readonly class="count_input_controll" name="TurCounter" type="number" min="1" value="@ViewBag.CounterTurHebel[@elemNum]" id="countSchlusse-@d" />
-                                    <button onclick="CylinderPlus(@d)" type="button" class="btn btn-success">+</button>
-                            </div>
-                        </div>
-                            <div id="optionsItems">
-                            <h3>Weitere Optionen</h3>
-                            <div>
-                                @{
-                                   int  valueCount = 0;
-                                }
-
-                                @if (ViewBag.CountOptionsHebel > 0)
-                                {
-                                    @for (int i = 0; i < ViewBag.OptionHebelName.Count; i++)
-                                    {
-                                            <input style="margin-top: 5px;" id="OptionName" class="form-control" readonly type="text" value="@ViewBag.OptionHebelName[i]" />
-
-                                            <select class="form-select"  id="@d-Options-@i" style="margin-bottom: 10px;" onchange="OptionsSelect(@d,'Helb',event.target.id,event.target.value,@valueCount,'@ViewBag.OptionHebelName[i]',@i,@d)">
-
-                                            @for (int j = 0; j < ViewBag.CountValueHebel[i]; j++)
+                                    </div>
+                                    <div>
+                                        <select id="type-@d" class="form-select" onchange="switchTypeSylinder(@d,event.target.value,@elemNum)">
+                                            @foreach (var i in ViewBag.AllType)
                                             {
-                                               <option id="@valueCount">@ViewBag.ValueHebel[valueCount]</option>
-                                               
-                                                valueCount++;
-                                            }
-                                        </select>
-                                            <input type="hidden"   id="Option-@d + @i" />
-                                            <input type="hidden" id="d-@d + @i" />
-                                    }
-                                    <input type="hidden" name="HebelOption" id="OptionAll-@d" />
-                                } 
-                            </div>
-                        </div>
-                           
-                    </div>
-                </div>
-
-                    <div class="modal fade" id="ModalHelbZ-@d" tabindex="-1">
-                        <div class="modal-dialog modal-xl">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title">@item.Name</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                                </div>
-                                <div class="modal-body">
-
-                                    <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
-                                        <div class="row g-0">
-                                            <div class="col-md-4">
-                                                <img src="@("/compression/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@item.Name">
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="card-body">
-
-                                                    <div class="card-text">
-                                                        @Html.Raw(@item.description)
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                elemNum++;
-                    d++;
-                }
-        }
-        @if (ViewBag.Vorhanschlos != null)
-        {
-            int elemNum = 0;
-            foreach (var item in ViewBag.Vorhanschlos)
-            {
-
-                    <div id="ExelItem-@d" class="ExelItem shadow-lg  mb-5 bg-body-tertiary rounded">
-                        <input type="hidden" name="Vorhan" value="@item.Id" />
-                    <div id="productImage">
-                            <img decoding="async" data-bs-toggle="modal" alt="@item.Name" data-bs-target="#ModalVorhanschlos-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("/compression/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                            <div>
-                                @foreach (var list in ViewBag.VorhanGalery)
-                                {
-                                    <img src="@("/compression/"+@list.ImageName)" alt="@list.ImageName" height="100" width="100" />
-                                }
-                            </div>
-                        </div>
-                    <div id="productMenuInfo">
-                        <div id="ProductNameUndCost">
-                            <div>
-                                    <h3>Türbezeichnung: @ViewBag.DorName[d]</h3>
-                                    <input style="border: none;width:250px" readonly type="text" name="VorhanName" value="@item.Name" />
-                                    <input style="border: none;width:250px" type="hidden" name="NameSystem" value="@item.NameSystem" />
-                                    <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
-                                    <input id="costItems-@d" name="ProductCosted" type="hidden" value="@item.Price" />
-                            </div>
-
-                        </div>
-                        <div>
-                          <select id="type-@d" class="form-select" onchange="switchTypeSylinder(@d,event.target.value,@elemNum)">
-                              
-                                    @foreach (var i in ViewBag.AllType)
-                                    {
-                                        if (@i.nameType == "Vorhangschloss")
-                                        {
-                                            <option selected>@i.nameType</option>
-                                        }
-                                        else
-                                        {
-                                            <option>@i.nameType</option>
-                                        }
-                                    }
-
-                            </select>
-                        </div>
-                        <div id="textInform">
-                                <h4>Zylinderlänge</h4>
-                                <h4>Stück</h4>
-                        </div>
-                            <div id="Size-@d" class="SizeProduct">
-                            <div>
-                                    <select class="form-select" name="VorhanAussen" id="Aussen" onchange="VorhanSchlus(@d,event.target.selectedIndex)">
-                                    <option style="display:none" selected>@ViewBag.VorhanOrderAussen[elemNum]</option>
-                                    @for (int i = 0; i < ViewBag.VorhanSize.Count; i++)
-                                    {
-                                      <option id="OptionA">@ViewBag.VorhanSize[i]</option>
-                                    }
-                                </select>
-                                    <input type="hidden" id="Aussen-@d" />
-                            </div>
-                                <div class="btn-group count_control_Aussen" role="group" aria-label="Basic outlined example">
-                                    <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
-                                    <input name="TurCounter" readonly class="count_input_controll" type="number" min="1" id="countSchlusse-@d" value="@ViewBag.CounterTurVorhan[@elemNum]" />
-                                    <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
-                            </div>
-
-                        </div>
-                            <div id="optionsItems">
-                            <h3>Weitere Optionen</h3>
-                            <div>
-                                @{
-                                  int valueCount = 0;
-                                }
-
-                                @if (ViewBag.VorhanschlossCount > 0)
-                                {
-
-                                    @for (int i = 0; i < ViewBag.VorhanschlossOptionCount; i++)
-                                    {
-
-                                            <input type="text" style="margin-top: 5px;" id="OptionName" class="form-control" readonly value="@ViewBag.VorhanschlossOptionName[i]" />
-
-                                            <select style="margin-bottom: 10px;"  class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Vorhan',event.target.id,event.target.value,@valueCount,'@ViewBag.VorhanschlossOptionName[i]',@i,@d)">
-
-                                            @for (int j = 0; j < ViewBag.VorhanOptionCount[i]; j++)
-                                            {
-          
-                                              <option id="@valueCount">@ViewBag.VorhanValue[valueCount]</option>
-
-                                                valueCount++;
-                                            }
-
-                                        </select>
-
-                                            <input type="hidden" name="VorhnaOption" id="Option-@d + @i" />
-                                            <input type="hidden" id="d-@d + @i" />
-                                    }
-                                        <input type="hidden" name="VorhnaOption" id="OptionAll-@d" />
-                                }
-                            </div> 
-                        </div>
-                           
-                    </div>
-                </div>
-
-                    <div class="modal fade" id="ModalVorhanschlos-@d" tabindex="-1">
-                        <div class="modal-dialog modal-xl">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title">@item.Name</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                                </div>
-                                <div class="modal-body">
-
-                                    <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
-                                        <div class="row g-0">
-                                            <div class="col-md-4">
-                                                <img src="@("/compression/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@item.Name">
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="card-body">
-
-                                                    <div class="card-text">
-                                                        @Html.Raw(@item.description)
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                elemNum++;
-                    d++;
-                }
-        }
-        @if (ViewBag.Aussenzylinder != null)
-        {
-            int elemNum = 0;
-
-            foreach (var item in ViewBag.Aussenzylinder)
-            {
-
-                    <div id="ExelItem-@d" class="ExelItem shadow-lg  mb-5 bg-body-tertiary rounded">
-                        <input type="hidden" name="Aussen" value="@item.Id" />
-                        <div id="productImage">
-                            <img decoding="async" data-bs-toggle="modal" alt="@item.Name" data-bs-target="#ModalAussenzylinder-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                            <div>
-                                @foreach (var list in ViewBag.VorhanGalery)
-                                {
-                                    <img src="@("/compression/"+@list.ImageName)" alt="@list.ImageName" height="100" width="100" />
-                                }
-                            </div>
-                        </div>
-                        <div id="productMenuInfo">
-                            <div id="ProductNameUndCost">
-
-                                <div>
-                                    <h3>Türbezeichnung: @ViewBag.DorName[d]</h3>
-                                    <input style="border: none;width:250px" readonly type="text" name="AussenName" value="@item.Name" />
-                                    <input style="border: none;width:250px" type="hidden" name="NameSystem" value="@item.NameSystem" />
-                                    <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
-                                    <input id="costItems-@d" name="ProductCosted" type="hidden" value="@item.Price" />
-                                </div>
-
-                            </div>
-
-                            <div>
-                                <select id="type-@d" class="form-select" onchange="switchTypeSylinder(@d,event.target.value,@elemNum)">
-
-                                    @foreach (var i in ViewBag.AllType)
-                                    {
-                                        if (@i.nameType == "Aussenzylinder")
-                                        {
-                                            <option selected>@i.nameType</option>
-                                        }
-                                        else
-                                        {
-                                            <option>@i.nameType</option>
-                                        }
-                                    }
-                                </select>
-                            </div>
-                            <div id="textInform">
-                                <h4>Stück</h4>
-                            </div>
-                            <div id="Size-@d" class="SizeProduct">
-                                <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
-                                    <input readonly class="count_input_controll" name="TurCounter" type="number" min="1" value="@ViewBag.CounterTurAussen[@elemNum]" id="countSchlusse-@d" />
-                                <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
-                              </div>
-                            </div>
-
-                            <div id="optionsItems">
-                                <h3>Weitere Optionen</h3>
-                                <div>
-                                    @{
-                                      int   valueCount = 0;
-                                    }
-                                    @if (ViewBag.AussenCountOption > 0)
-                                    {
-                                        @for (int i = 0; i < ViewBag.AussenName.Count; i++)
-                                        {
-                                            <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.AussenName[i]" />
-
-                                            <select style="margin-bottom: 10px;" class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Aussen',event.target.id,event.target.value,@valueCount,'@ViewBag.AussenName[i]',@i,@d)">
-
-                                                @for (int j = 0; j < ViewBag.AussenValue[i]; j++)
+                                                if (@i.nameType == "Knaufzylinder")
                                                 {
-                                                    <option id="@valueCount">@ViewBag.AussenValue[valueCount]</option>
-
-                                                    valueCount++;
+                                                    <option selected>@i.nameType</option>
                                                 }
+                                                else
+                                                {
+                                                    <option>@i.nameType</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                    <div id="textInform">
+                                        <h4>Zylinderlänge</h4>
+                                        <h4>Stück</h4>
+                                    </div>
 
-                                            </select>
-                                            <input type="hidden" id="d-@d + @i" />
-                                            <input type="hidden" id="Option-@d + @i" />
+                                    <div id="Size-@d" class="SizeProduct">
+                                        <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                            <div>
+                                                <h6>außen</h6>
+                                            <input style="border: none;" id="compName" type="hidden" value="@ViewBag.KnayfZelinder[knayf].companyName" />
+                                            <select class="form-select" name="KnayfAussen" id="Aussen" onchange="selectParamAussen(@d,'Knaufzylinder',event.target.selectedIndex,event.target.value,@ViewBag.KnayfZelinder[knayf].Id)">
 
-                                        }
-                                        <input type="hidden" name="AussenOption" id="OptionAll-@d" />
-                                    }
+                                                    @for (int i = 0; i < ViewBag.KnayfZelinderAussen.Count; i++)
+                                                    {
+                                                        if (ViewBag.KAussen[elemNum] == ViewBag.KnayfZelinderAussen[i])
+                                                        {
+                                                            <option id="OptionA" selected>@ViewBag.KnayfZelinderAussen[i]</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option id="OptionA">@ViewBag.KnayfZelinderAussen[i]</option>
+                                                        }
+                                                    }
+                                                </select>
+                                                <input type="hidden" id="Aussen-@d" />
+                                            </div>
+                                            <div>
+                                                <h6>innen</h6>
+                                            <select class="form-select" name="KnayfIntern" id="Intern" onchange="selectParamIntern(@d,'Knaufzylinder',event.target.selectedIndex,event.target.value,@ViewBag.KnayfZelinder[knayf].Id)">
+
+                                                    @for (int i = 0; i < ViewBag.KnayfZelinderIntern.Count; i++)
+                                                    {
+                                                        if (ViewBag.KInter[elemNum] == ViewBag.KnayfZelinderIntern[i])
+                                                        {
+                                                            <option id="OptionI" selected>@ViewBag.KnayfZelinderIntern[i]</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option id="OptionI">@ViewBag.KnayfZelinderIntern[i]</option>
+                                                        }
+                                                    }
+
+                                                </select>
+                                                <input type="hidden" id="Innen-@d" />
+                                            </div>
+                                        </div>
+                                        <div class="btn-group count_control align-items-end" role="group" aria-label="Basic outlined example">
+                                            <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
+                                            <input readonly class="count_input_controll" id="countSchlusse-@d" type="number" min="1" value="@ViewBag.CounterTurKnayf[@elemNum]" name="TurCounter" />
+                                            <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
+                                        </div>
+                                    </div>
+                                    <div id="optionsItems">
+                                        <h3>Weitere Optionen</h3>
+                                        <div>
+                                            @{
+                                                int valueCount = 0;
+                                            }
+                                            @if (ViewBag.countOptionsQueryKnayf > 0)
+                                            {
+                                                @for (int i = 0; i < ViewBag.optionsNameKnayf.Count; i++)
+                                                {
+
+                                                    <div class="input-group">
+                                                        <div class="input-group-text" id="btnGroupAddon">
+                                                            <img data-bs-toggle="modal" data-bs-target="#ModalKnyfOptions-@i" id="hilfeOptionsIcon" alt="@ViewBag.optionsNameKnayf[i].Name" src="@("/compression/question.webp")" height="20" width="20" />
+                                                        </div>
+                                                        <input type="text" class="form-control" id="OptionName" value="@ViewBag.optionsNameKnayf[i].Name" readonly aria-label="Пример группы ввода" aria-describedby="btnGroupAddon">
+                                                    </div>
+
+                                                    <select style="margin-bottom: 10px;" class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Knayf',event.target.id,event.target.value,@valueCount,'@ViewBag.optionsNameKnayf[i].Name',@i,@d)">
+
+                                                        @for (int j = 0; j < ViewBag.countOptionsListKnayf[i]; j++)
+                                                        {
+                                                            <option id="@valueCount">@ViewBag.optionsValueKnayf[valueCount]</option>
+
+                                                            valueCount++;
+                                                        }
+
+                                                    </select>
+
+                                                    <div class="modal fade" id="ModalKnyfOptions-@i" tabindex="-1">
+                                                        <div class="modal-dialog modal-xl">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h1 class="modal-title">@ViewBag.optionsNameKnayf[i].Name</h1>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+
+                                                                    <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                                                                        <div class="row g-0">
+                                                                            <div class="col-md-4">
+                                                                                <img src="@("/compression/"+@ViewBag.optionsNameKnayf[i].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@ViewBag.optionsNameKnayf[i].Name">
+                                                                            </div>
+                                                                            <div class="col-md-8">
+                                                                                <div class="card-body">
+
+                                                                                    <div class="card-text">
+                                                                                        @Html.Raw(@ViewBag.optionsNameKnayf[i].Description)
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <input type="hidden" id="Option-@d + @i" />
+                                                    <input type="hidden" id="d-@d + @i" />
+                                                }
+                                                <input type="hidden" name="KnayfOption" id="OptionAll-@d" />
+                                            }
+
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
-                        </div>
-                </div>
-                    <div class="modal fade" id="ModalAussenzylinder-@d" tabindex="-1">
-                        <div class="modal-dialog modal-xl">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title">@item.Name</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                                </div>
-                                <div class="modal-body">
+                            <div class="modal fade" id="ModalKnyf-@d" tabindex="-1">
+                                <div class="modal-dialog modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h1 class="modal-title">@ViewBag.KnayfZelinder[knayf].Name</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                        </div>
+                                        <div class="modal-body">
 
-                                    <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
-                                        <div class="row g-0">
-                                            <div class="col-md-4">
-                                                <img src="@("/compression/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@item.Name">
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="card-body">
+                                            <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                                                <div class="row g-0">
+                                                    <div class="col-md-4">
+                                                    <img src="@("/compression/"+@ViewBag.KnayfZelinder[knayf].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@ViewBag.KnayfZelinder[knayf].Name">
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="card-body">
 
-                                                    <div class="card-text">
-                                                        @Html.Raw(@item.description)
+                                                            <div class="card-text">
+                                                            @Html.Raw(@ViewBag.KnayfZelinder[knayf].description)
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
+                            </div>
+
+                            d++;
+                            elemNum++;
+                            knayf++;
+                        
+
+                    }
+                }
+                if(item.ZylinderId == 4)
+                {
+                    @if (ViewBag.HelbZ != null)
+                    {
+                        int elemNum = 0;
+                       
+                            <div id="ExelItem-@d" class="ExelItem shadow-lg  mb-5 bg-body-tertiary rounded">
+                            <input type="hidden" name="Helb" value="@ViewBag.HelbZ[hebel].Id" />
+
+                                <div id="productImage">
+                                <img decoding="async" data-bs-toggle="modal" alt="@ViewBag.HelbZ[hebel].Name" data-bs-target="#ModalHelbZ-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@ViewBag.HelbZ[hebel].ImageName)" asp-append-version="true" width="300px" height="300px" />
+                                    <div>
+                                        @foreach (var list in ViewBag.HebelzylinderGalery)
+                                        {
+                                            <img src="@("/compression/"+@list.ImageName)" alt="@list.ImageName" height="100" width="100" />
+                                        }
+                                    </div>
+                                </div>
+
+                                <div id="productMenuInfo">
+                                    <div id="ProductNameUndCost">
+                                        <div>
+                                            <h3>Türbezeichnung: @ViewBag.DorName[d]</h3>
+                                            <input style="border: none;width:250px" readonly type="text" name="HelbName" value="@ViewBag.HelbZ[hebel].Name" />
+                                            <input style="border: none;width:250px" type="hidden" name="NameSystem" value="@ViewBag.HelbZ[hebel].NameSystem" />
+                                            <input style="border: none;" id="compName" type="hidden" value="@ViewBag.HelbZ[hebel].companyName" />
+                                        <input id="costItems-@d" name="ProductCosted" type="hidden" value="@ViewBag.HelbZ[hebel].Price" />
+                                        </div>
+
+                                    </div>
+                                    <div>
+                                        <select id="type-@d" class="form-select" onchange="switchTypeSylinder(@d,event.target.value,@elemNum)">
+
+                                            @foreach (var i in ViewBag.AllType)
+                                            {
+                                                if (@i.nameType == "Hebelzylinder")
+                                                {
+                                                    <option selected>@i.nameType</option>
+                                                }
+                                                else
+                                                {
+                                                    <option>@i.nameType</option>
+                                                }
+                                            }
+
+                                        </select>
+                                    </div>
+                                    <div id="textInform">
+                                        <h4>Stück</h4>
+                                    </div>
+                                    <div id="Size-@d" class="SizeProduct">
+
+                                        <div class="btn-group " role="group" aria-label="Basic outlined example">
+                                            <button onclick="CylinderMinus(@d)" type="button" class="btn btn-success">-</button>
+                                            <input readonly class="count_input_controll" name="TurCounter" type="number" min="1" value="@ViewBag.CounterTurHebel[@elemNum]" id="countSchlusse-@d" />
+                                            <button onclick="CylinderPlus(@d)" type="button" class="btn btn-success">+</button>
+                                        </div>
+                                    </div>
+                                    <div id="optionsItems">
+                                        <h3>Weitere Optionen</h3>
+                                        <div>
+                                            @{
+                                                int valueCount = 0;
+                                            }
+
+                                            @if (ViewBag.CountOptionsHebel > 0)
+                                            {
+                                                @for (int i = 0; i < ViewBag.OptionHebelName.Count; i++)
+                                                {
+                                                    <input style="margin-top: 5px;" id="OptionName" class="form-control" readonly type="text" value="@ViewBag.OptionHebelName[i]" />
+
+                                                    <select class="form-select" id="@d-Options-@i" style="margin-bottom: 10px;" onchange="OptionsSelect(@d,'Helb',event.target.id,event.target.value,@valueCount,'@ViewBag.OptionHebelName[i]',@i,@d)">
+
+                                                        @for (int j = 0; j < ViewBag.CountValueHebel[i]; j++)
+                                                        {
+                                                            <option id="@valueCount">@ViewBag.ValueHebel[valueCount]</option>
+
+                                                            valueCount++;
+                                                        }
+                                                    </select>
+                                                    <input type="hidden" id="Option-@d + @i" />
+                                                    <input type="hidden" id="d-@d + @i" />
+                                                }
+                                                <input type="hidden" name="HebelOption" id="OptionAll-@d" />
+                                            }
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                elemNum++;
-                    d++;
+
+                            <div class="modal fade" id="ModalHelbZ-@d" tabindex="-1">
+                                <div class="modal-dialog modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title">@ViewBag.HelbZ[hebel].Name</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                        </div>
+                                        <div class="modal-body">
+
+                                            <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                                                <div class="row g-0">
+                                                    <div class="col-md-4">
+                                                    <img src="@("/compression/"+@ViewBag.HelbZ[hebel].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@ViewBag.HelbZ[hebel].Name">
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="card-body">
+
+                                                            <div class="card-text">
+                                                            @Html.Raw(@ViewBag.HelbZ[hebel].description)
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            elemNum++;
+                            d++;
+                            hebel++;
+                        
+                    }
                 }
-        }
+                 if(item.ZylinderId == 5)
+                {
+                    @if (ViewBag.Vorhanschlos != null)
+                    {
+                        int elemNum = 0;
+                      
+                            <div id="ExelItem-@d" class="ExelItem shadow-lg  mb-5 bg-body-tertiary rounded">
+                            <input type="hidden" name="Vorhan" value="@ViewBag.Vorhanschlos[vorhan].Id" />
+                                <div id="productImage">
+                                <img decoding="async" data-bs-toggle="modal" alt="@ViewBag.Vorhanschlos[vorhan].Name" data-bs-target="#ModalVorhanschlos-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("/compression/"+@ViewBag.Vorhanschlos[vorhan].ImageName)" asp-append-version="true" width="300px" height="300px" />
+                                    <div>
+                                        @foreach (var list in ViewBag.VorhanGalery)
+                                        {
+                                            <img src="@("/compression/"+@list.ImageName)" alt="@list.ImageName" height="100" width="100" />
+                                        }
+                                    </div>
+                                </div>
+                                <div id="productMenuInfo">
+                                    <div id="ProductNameUndCost">
+                                        <div>
+                                            <h3>Türbezeichnung: @ViewBag.DorName[d]</h3>
+                                        <input style="border: none;width:250px" readonly type="text" name="VorhanName" value="@ViewBag.Vorhanschlos[vorhan].Name" />
+                                            <input style="border: none;width:250px" type="hidden" name="NameSystem" value="@ViewBag.Vorhanschlos[vorhan].NameSystem" />
+                                            <input style="border: none;" id="compName" type="hidden" value="@ViewBag.Vorhanschlos[vorhan].companyName" />
+                                            <input id="costItems-@d" name="ProductCosted" type="hidden" value="@ViewBag.Vorhanschlos[vorhan].Price" />
+                                        </div>
+
+                                    </div>
+                                    <div>
+                                        <select id="type-@d" class="form-select" onchange="switchTypeSylinder(@d,event.target.value,@elemNum)">
+
+                                            @foreach (var i in ViewBag.AllType)
+                                            {
+                                                if (@i.nameType == "Vorhangschloss")
+                                                {
+                                                    <option selected>@i.nameType</option>
+                                                }
+                                                else
+                                                {
+                                                    <option>@i.nameType</option>
+                                                }
+                                            }
+
+                                        </select>
+                                    </div>
+                                    <div id="textInform">
+                                        <h4>Zylinderlänge</h4>
+                                        <h4>Stück</h4>
+                                    </div>
+                                    <div id="Size-@d" class="SizeProduct">
+                                        <div>
+                                            <select class="form-select" name="VorhanAussen" id="Aussen" onchange="VorhanSchlus(@d,event.target.selectedIndex)">
+                                                <option style="display:none" selected>@ViewBag.VorhanOrderAussen[elemNum]</option>
+                                                @for (int i = 0; i < ViewBag.VorhanSize.Count; i++)
+                                                {
+                                                    <option id="OptionA">@ViewBag.VorhanSize[i]</option>
+                                                }
+                                            </select>
+                                            <input type="hidden" id="Aussen-@d" />
+                                        </div>
+                                        <div class="btn-group count_control_Aussen" role="group" aria-label="Basic outlined example">
+                                            <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
+                                            <input name="TurCounter" readonly class="count_input_controll" type="number" min="1" id="countSchlusse-@d" value="@ViewBag.CounterTurVorhan[@elemNum]" />
+                                            <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
+                                        </div>
+
+                                    </div>
+                                    <div id="optionsItems">
+                                        <h3>Weitere Optionen</h3>
+                                        <div>
+                                            @{
+                                                int valueCount = 0;
+                                            }
+
+                                            @if (ViewBag.VorhanschlossCount > 0)
+                                            {
+
+                                                @for (int i = 0; i < ViewBag.VorhanschlossOptionCount; i++)
+                                                {
+
+                                                    <input type="text" style="margin-top: 5px;" id="OptionName" class="form-control" readonly value="@ViewBag.VorhanschlossOptionName[i]" />
+
+                                                    <select style="margin-bottom: 10px;" class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Vorhan',event.target.id,event.target.value,@valueCount,'@ViewBag.VorhanschlossOptionName[i]',@i,@d)">
+
+                                                        @for (int j = 0; j < ViewBag.VorhanOptionCount[i]; j++)
+                                                        {
+
+                                                            <option id="@valueCount">@ViewBag.VorhanValue[valueCount]</option>
+
+                                                            valueCount++;
+                                                        }
+
+                                                    </select>
+
+                                                    <input type="hidden" name="VorhnaOption" id="Option-@d + @i" />
+                                                    <input type="hidden" id="d-@d + @i" />
+                                                }
+                                                <input type="hidden" name="VorhnaOption" id="OptionAll-@d" />
+                                            }
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="ModalVorhanschlos-@d" tabindex="-1">
+                                <div class="modal-dialog modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h1 class="modal-title">@ViewBag.Vorhanschlos[vorhan].Name</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                        </div>
+                                        <div class="modal-body">
+
+                                            <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                                                <div class="row g-0">
+                                                    <div class="col-md-4">
+                                                    <img src="@("/compression/"+@ViewBag.Vorhanschlos[vorhan].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@ViewBag.Vorhanschlos[vorhan].Name">
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="card-body">
+
+                                                            <div class="card-text">
+                                                                @Html.Raw(@ViewBag.Vorhanschlos[vorhan].description)
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            elemNum++;
+                            d++;
+                            vorhan++;                      
+                    }
+                }
+                if (item.ZylinderId == 6)
+                {
+                    @if (ViewBag.Aussenzylinder != null)
+                    {
+                        int elemNum = 0;
+
+                            <div id="ExelItem-@d" class="ExelItem shadow-lg  mb-5 bg-body-tertiary rounded">
+                            <input type="hidden" name="Aussen" value="@ViewBag.Aussenzylinder[ausse].Id" />
+                                <div id="productImage">
+                                <img decoding="async" data-bs-toggle="modal" alt="@ViewBag.Aussenzylinder[ausse].Name" data-bs-target="#ModalAussenzylinder-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@ViewBag.Aussenzylinder[ausse].ImageName)" asp-append-version="true" width="300px" height="300px" />
+                                    <div>
+                                        @foreach (var list in ViewBag.VorhanGalery)
+                                        {
+                                            <img src="@("/compression/"+@list.ImageName)" alt="@list.ImageName" height="100" width="100" />
+                                        }
+                                    </div>
+                                </div>
+                                <div id="productMenuInfo">
+                                    <div id="ProductNameUndCost">
+
+                                        <div>
+                                            <h3>Türbezeichnung: @ViewBag.DorName[d]</h3>
+                                        <input style="border: none;width:250px" readonly type="text" name="AussenName" value="@ViewBag.Aussenzylinder[ausse].Name" />
+                                        <input style="border: none;width:250px" type="hidden" name="NameSystem" value="@ViewBag.Aussenzylinder[ausse].NameSystem" />
+                                            <input style="border: none;" id="compName" type="hidden" value="@ViewBag.Aussenzylinder[ausse].companyName" />
+                                            <input id="costItems-@d" name="ProductCosted" type="hidden" value="@ViewBag.Aussenzylinder[ausse].Price" />
+                                        </div>
+
+                                    </div>
+
+                                    <div>
+                                        <select id="type-@d" class="form-select" onchange="switchTypeSylinder(@d,event.target.value,@elemNum)">
+
+                                            @foreach (var i in ViewBag.AllType)
+                                            {
+                                                if (@i.nameType == "Aussenzylinder")
+                                                {
+                                                    <option selected>@i.nameType</option>
+                                                }
+                                                else
+                                                {
+                                                    <option>@i.nameType</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                    <div id="textInform">
+                                        <h4>Stück</h4>
+                                    </div>
+                                    <div id="Size-@d" class="SizeProduct">
+                                        <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                            <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
+                                            <input readonly class="count_input_controll" name="TurCounter" type="number" min="1" value="@ViewBag.CounterTurAussen[@elemNum]" id="countSchlusse-@d" />
+                                            <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
+                                        </div>
+                                    </div>
+
+                                    <div id="optionsItems">
+                                        <h3>Weitere Optionen</h3>
+                                        <div>
+                                            @{
+                                                int valueCount = 0;
+                                            }
+                                            @if (ViewBag.AussenCountOption > 0)
+                                            {
+                                                @for (int i = 0; i < ViewBag.AussenName.Count; i++)
+                                                {
+                                                    <input class="form-control" id="OptionName" style="margin-top: 5px;" readonly type="text" value="@ViewBag.AussenName[i]" />
+
+                                                    <select style="margin-bottom: 10px;" class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Aussen',event.target.id,event.target.value,@valueCount,'@ViewBag.AussenName[i]',@i,@d)">
+
+                                                        @for (int j = 0; j < ViewBag.AussenValue[i]; j++)
+                                                        {
+                                                            <option id="@valueCount">@ViewBag.AussenValue[valueCount]</option>
+
+                                                            valueCount++;
+                                                        }
+
+                                                    </select>
+                                                    <input type="hidden" id="d-@d + @i" />
+                                                    <input type="hidden" id="Option-@d + @i" />
+
+                                                }
+                                                <input type="hidden" name="AussenOption" id="OptionAll-@d" />
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="ModalAussenzylinder-@d" tabindex="-1">
+                                <div class="modal-dialog modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h1 class="modal-title">@ViewBag.Aussenzylinder[ausse].Name</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                        </div>
+                                        <div class="modal-body">
+
+                                            <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                                                <div class="row g-0">
+                                                    <div class="col-md-4">
+                                                    <img src="@("/compression/"+@ViewBag.Aussenzylinder[ausse].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@ViewBag.Aussenzylinder[ausse].Name">
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="card-body">
+
+                                                            <div class="card-text">
+                                                                @Html.Raw(@ViewBag.Aussenzylinder[ausse].description)
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            elemNum++;
+                            d++;
+                            ausse++;
+                    }
+                }
+               
+            }
+  
         <div id="FinisherAnderes">
             <input type="button"  onclick="goBack()" class="btn btn-danger" value="ANDERES SYSTEM WÄHLEN" />
         </div>
