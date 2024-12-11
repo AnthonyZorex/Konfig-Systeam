@@ -5201,7 +5201,6 @@ namespace schliessanlagen_konfigurator.Controllers
                 db.SaveChanges();
             }
 
-
             if (UploadGalleryImages != null && UploadGalleryImages.Count > 0)
             {
                 foreach (var image in UploadGalleryImages)
@@ -5359,6 +5358,17 @@ namespace schliessanlagen_konfigurator.Controllers
              
             var DoppelKleinIten = DoppeltemSize.SelectMany(x=>x.Doppel_Innen_klein).ToList();
 
+            foreach (var list in DoppeltemSize)
+            {
+                if (list.Doppel_Innen_klein.Count() > 0)
+                {
+                    SizeAus.Remove(Convert.ToInt32(list.aussen));
+                    SizeInen.Remove(Convert.ToInt32(list.Intern));
+                    costSizeAussen.Remove(list.costSizeAussen);
+                    costSizeIntern.Remove(list.costSizeIntern);
+                }    
+            }
+
             foreach (var list in DoppelKleinIten)
             {
                 db.Doppel_Innen_klein.Remove(list);
@@ -5366,7 +5376,7 @@ namespace schliessanlagen_konfigurator.Controllers
             db.SaveChanges();
 
             foreach (var list in DoppeltemSize)
-            {
+            {              
                 db.Aussen_Innen.Remove(list);
             }
             db.SaveChanges();
@@ -6569,8 +6579,7 @@ namespace schliessanlagen_konfigurator.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveProfil_Knaufzylinder(Profil_Knaufzylinder profil_Knayf,List<int> SizeAus, List<int> SizeInen, List<string> Options,List<string> ImageNameOption, List<IFormFile> postedFile,
         List<string> Descriptions, List<string> valueNGF, List<float> costNGF, List<int> inputCounter, List<float> costSizeAussen, List<float> costSizeIntern, List<IFormFile> UploadGalleryImages, List<string> GalleryImages,
-        List<float> internDoppelKlein, List<float> priesDoppelKlein, List<float> ausKlein, List<float> ausKleinPreis, List<int> KleinZiseCount,
-        List<float> aussen_priesDoppelKlein, List<float> aussenDoppelKlein, List<float> innenKleinPreis, List<float> innenKlein, List<int> KleinZiseCountInter)
+        List<float> internDoppelKlein, List<float> priesDoppelKlein, List<float> ausKlein, List<float> ausKleinPreis, List<int> KleinZiseCount)
         {
             var Items = db.Profil_Knaufzylinder.Find(profil_Knayf.Id);
             Items.schliessanlagenId = profil_Knayf.schliessanlagenId;
@@ -6770,6 +6779,17 @@ namespace schliessanlagen_konfigurator.Controllers
             var DoppeltemSize = db.Aussen_Innen_Knauf.Include(x => x.Aussen_Innen_Knauf_klein).Where(x => x.Profil_KnaufzylinderId == profil_Knayf.Id).ToList();
 
             var DoppelKleinIten = DoppeltemSize.SelectMany(x => x.Aussen_Innen_Knauf_klein).ToList();
+
+            foreach (var list in DoppeltemSize)
+            {
+                if (list.Aussen_Innen_Knauf_klein.Count() > 0)
+                {
+                    SizeAus.Remove(Convert.ToInt32(list.aussen));
+                    SizeInen.Remove(Convert.ToInt32(list.Intern));
+                    costSizeAussen.Remove(list.costSizeAussen);
+                    costSizeIntern.Remove(list.costSizeIntern);
+                }
+            }
 
             foreach (var list in DoppelKleinIten)
             {

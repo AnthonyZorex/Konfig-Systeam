@@ -48,14 +48,11 @@ function minusOptionsValue(id) {
     counter.value = x;
 }
 
-let countKleinBlock = 1;
-
-
 function newKlein() {
 
     let Aussen_innen_klein = document.getElementById("Aussen_innen_klein");
 
-    countKleinBlock++;
+    let countKleinBlock = document.querySelectorAll("#kleinGrose").length+1;
 
     let block = ` <div id="kleinGrose" class="kleinZise-${countKleinBlock}">
 
