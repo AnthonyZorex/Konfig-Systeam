@@ -6,6 +6,7 @@
     int f = -1;
     int r = -1;
     int galeryCheker = 0;
+    int countSize = 0;
 }
 
 @if (User.IsInRole("admin"))
@@ -117,14 +118,16 @@
 
 
                 <hr />
-                <h1>Aussen <input id="addAussen_Innen" class="btn btn-success" type="button" value="+" /><input id="addAussen_Innen_remove" class="btn btn-danger" type="button" value="-" /></h1>
+                <h1>Aussen <input id="addAussen_Innen" class="btn btn-success" type="button" value="+" /></h1>
                 <div id="Aussen_Innen_ProfilDopel">
 
                     <div id="AussenProfilDopel">
                         @foreach (var list in @ViewBag.Size)
                         {
+                            <input id="addAussen_Innen_remove" onclick="AussenInnenDelet(@countSize)" data-id="@countSize" class="btn btn-danger" type="button" value="-" />
                             <input class="form-control" name="Size" id="aus" value="@list.aussen" />
                             <input class="form-control" name="costSizeAussen" type="number" step="0.01" id="ausCost" value="@list.costAussen" />
+                            countSize++;
                         }
                     </div>
                 </div>

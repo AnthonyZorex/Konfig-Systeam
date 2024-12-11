@@ -528,12 +528,42 @@ let valueNGF = document.getElementById('valueNGF');
 let productOptions = document.getElementById('productOptions');
 let addOptions = document.getElementById('addOptions');
 
+
+function AussenInnenDelet(id) {
+    let x = document.querySelectorAll('#inter');
+    let d = document.querySelectorAll('#aus');
+    let costAussen = document.querySelectorAll('#ausCost');
+    let costInter = document.querySelectorAll('#interCost');
+    let minus = document.querySelectorAll('#addAussen_Innen_remove');
+
+    let index = Array.from(minus).findIndex(element => element.dataset.id === `${id}`);
+
+    if (index !== -1)
+    {
+        docAussen.removeChild(costAussen[index]);
+        docAussen.removeChild(minus[index]);
+        docAussen.removeChild(d[index]);
+
+        docInnen.removeChild(x[index]);
+        docInnen.removeChild(costInter[index]);
+
+        console.log(`Элемент с data-id="${id}" найден. Его индекс: ${index}`);
+    } else
+    {
+        console.log(`Элемент с data-id="${id}" не найден.`);
+    }
+
+}
+
+
 if (plusAussen_Innen != null)
 {
     plusAussen_Innen.addEventListener('click', () => {
 
         if (docAussen != null)
         {
+            let minus = document.querySelectorAll('#addAussen_Innen_remove');
+
             let d = document.createElement('input');
             d.setAttribute('name', 'SizeAus');
             d.setAttribute('placeholder', 'Aussen');
@@ -546,6 +576,10 @@ if (plusAussen_Innen != null)
             minusButten.setAttribute('type', 'button');
             minusButten.id = 'addAussen_Innen_remove';
             minusButten.value = "-";
+            minusButten.dataset.id = minus.length;
+            minusButten.addEventListener("click", () => AussenInnenDelet(minus.length));
+
+
 
             let costAussen = document.createElement('input');
             costAussen.setAttribute('name', 'costSizeAussen');
@@ -557,7 +591,6 @@ if (plusAussen_Innen != null)
             costAussen.required = true;
             docAussen.append(minusButten,d, costAussen);
         }
-
 
         if (docInnen != null)
         {
@@ -583,50 +616,8 @@ if (plusAussen_Innen != null)
 
     });
 }
-function AussenInnenDelet(id)
-{
-    let d = document.querySelectorAll('#aus');
-
-    let costAussen = document.querySelectorAll('#ausCost');
-
-    let x = document.querySelectorAll('#inter');
-    let costInter = document.querySelectorAll('#interCost');
-
-    let minus = document.querySelectorAll('#addAussen_Innen_remove');
-
-    docAussen.removeChild(costAussen[id].dataset.index = id);
-    docAussen.removeChild(minus[id]);
-    docAussen.removeChild(d[id]);
-
-    docInnen.removeChild(x[id]);
-    docInnen.removeChild(costInter[id]);
-}
 
 
-//if (removeAussen_Innen != null)
-//{
-//    removeAussen_Innen.addEventListener('click', (event) => {
-
-//        let d = document.querySelectorAll('#aus');
-//        const index = event.target.dataset.index;
-
-//        let costAussen = document.querySelectorAll('#ausCost');
-
-//        let x = document.querySelectorAll('#inter');
-//        let costInter = document.querySelectorAll('#interCost');
-
-//        let minus = document.querySelectorAll('#addAussen_Innen_remove');
-
-
-
-//        docAussen.removeChild(costAussen[index]);
-//        docAussen.removeChild(minus[index]);
-//        docAussen.removeChild(d[index]);
-
-//        docInnen.removeChild(x[index]);
-//        docInnen.removeChild(costInter[index]);
-//    });
-//}
 document.addEventListener("DOMContentLoaded", function () {
     const container = document.getElementById('productOptions');
     const createBlockBtn = document.getElementById('createBlockBtn');

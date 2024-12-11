@@ -26,7 +26,7 @@
                        
                         <div>
                             <h4>
-                                Schließsystem
+                                @orderList[z].ProjektName
                             </h4>
                         </div>
                         <div id="orderCostHeader">
@@ -39,16 +39,15 @@
                         <img src="@("/compression/Schliarticle.webp")" alt="Schliarticle" data-bs-toggle="modal" data-bs-target="#myModal-@z" height="150" width="150" />
                         <h4>@orderList[z].ProductName</h4>
                         <div id="costedInfo">
-                            <h4 id="cost-@z">@orderList[z].OrderSum €</h4>
+                            <h4 id="cost-@z">@orderList[z].OrderSum.ToString("C2", System.Globalization.CultureInfo.CurrentCulture)</h4>
                         </div>
                     </div>
 
-
                     <div class="modal fade" id="myModal-@z" tabindex="-1">
-                        <div class="modal-dialog modal-xl">
+                        <div class="modal-dialog modal-xl">   
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                    <h1 class="modal-title">@orderList[z].ProductName</h1>
+                                    <h2 class="modal-title">@orderList[z].ProjektName</h2>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                                     </div>
                                     <div class="modal-body">
@@ -56,20 +55,16 @@
                                     {
                                         <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                             <div class="row g-0">
-                                                <div class="col-md-4">
-                                                    <img src="@($"/compression/{imageList[ProudctItemCounter]}")" class="img-fluid rounded-start" alt="@orderItem[ProudctItemCounter].Name">
-                                                </div>
+                                             
                                                 <div class="col-md-8">
                                                     <div class="card-body">
-                                                        <h4 class="card-title">Name: @orderItem[ProudctItemCounter].Name</h4>
-                                                        <div class="card-text">
-                                                            @Html.Raw(descriptions[ProudctItemCounter])
-
+                                                        <h6 class="card-title">Name: @orderItem[ProudctItemCounter].Name</h6>
+                                                        <div class="card-text">   
                                                             <br/>
-                                                            <h4>aussen: @orderItem[ProudctItemCounter].Aussen</h4>
-                                                            <h4>innen: @orderItem[ProudctItemCounter].Intern</h4>
-                                                            <h4>Option - @orderItem[ProudctItemCounter].Option</h4>
-                                                            <input value="Preis: @orderItem[ProudctItemCounter].Price,00 €" style="color:red" />
+                                                            <h6>aussen: @orderItem[ProudctItemCounter].Aussen</h6>
+                                                             <h6>innen: @orderItem[ProudctItemCounter].Intern</h6>
+                                                             <h6>Option - @orderItem[ProudctItemCounter].Option</h6>
+                                                            <input value="Preis: @orderItem[ProudctItemCounter].Price" />
                                                         </div>
                                                     </div>
                                                 </div>
