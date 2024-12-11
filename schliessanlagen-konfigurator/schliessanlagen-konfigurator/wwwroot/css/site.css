@@ -2944,14 +2944,16 @@ body::-webkit-scrollbar-thumb:hover {
     }
 
     #AussenProfilDopel {
-        grid-template-columns: 140px 140px;
+        grid-template-columns: repeat(3,1fr);
         display: grid;
         margin-right: 20px;
+        gap:10px;
     }
 
     #InnenProfilDopel {
-        grid-template-columns: 140px 140px;
+        grid-template-columns: repeat(2,1fr);
         display: grid;
+        gap: 10px;
     }
 
     #valueNGF {

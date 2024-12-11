@@ -20,6 +20,8 @@
 
     AllPrice.value = (currentAllPriceValue + currentCostItemValue).toFixed(2).replace(".", ",") + " €";
 
+    costItems.value = currentCostItemValue * value;
+
     procent();
 }
 function CylinderMinus(n) {
@@ -28,15 +30,21 @@ function CylinderMinus(n) {
     let costItems = document.getElementById("costItems-" + n);
 
     if (CountValue > 1) {
+       
+        let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim() );
+
+        // Получаем значение стоимости текущего товара (costItems), заменяем запятую на точку
+        let currentCostItemValue = parseFloat(costItems.value.replace(",", ".").trim() / CountValue);
+
+        costItems.value = currentAllPriceValue;
+
+        let updatedPrice = currentAllPriceValue - currentCostItemValue;
+
+        costItems.value = currentCostItemValue;
+
         CountValue--;
         counter.value = CountValue;
 
-        let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
-
-        // Получаем значение стоимости текущего товара (costItems), заменяем запятую на точку
-        let currentCostItemValue = parseFloat(costItems.value.replace(",", ".").trim());
-
-        let updatedPrice = currentAllPriceValue - currentCostItemValue;
 
         AllPrice.value = updatedPrice.toFixed(2).replace(".", ",") + " €";
      

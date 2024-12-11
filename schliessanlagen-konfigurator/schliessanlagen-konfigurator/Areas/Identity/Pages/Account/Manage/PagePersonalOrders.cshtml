@@ -421,7 +421,7 @@
 
                                                     <div style="display: flex">
                                                         <input type="radio" id="dhl-@z" onchange="changeSend(@z)" checked name="DhlSend" value="DHL">
-                                                        <input type="text" readonly style="border: none;outline:none" value="0" id="CostGram-@z" /> <br>
+                                                        <input type="text" readonly style="border: none;outline:none" name="Versand" value="0" id="CostGram-@z" /> <br>
                                                     </div>
                                                       
                                                     <h6>
@@ -497,6 +497,7 @@
                                                                     <h6 class="table-cell" style="font-weight: bold;">Schlüssel</h6>
                                                                     <h6 class="table-cell" id="counterKey-@z">@orderList[z].KeyCount</h6>
                                                                     <h6 class="table-cell" id="E-Preis-@z"></h6>
+                                                                    <input type="hidden" id="E-priceSchlüsselValue-@z" name="E_PreisSchlüssel" />
                                                                     <h6 class="table-cell end" id="PreisProduct-@z">@formattedResultKeyI</h6>
                                                                     <input type="hidden"  id="preis_schluessel-@z" name="PreisKey" />
                                                                     <input type="hidden" id="PreisProductBruttoSchlussel-@z" value="@orderList[z].KeyCost" />
@@ -516,9 +517,11 @@
 
                                                                             <h6 class="table-cell" style="font-weight: bold;">@orderItem[ProudctItemCounter].Name</h6>
                                                                             <h6 class="table-cell" id="E-priceProductCount-@z">@orderItem[ProudctItemCounter].Count</h6>
-                                                                            <h6 class="table-cell" id="E-priceProduct-@z"></h6>
-                                                                            <h6 class="table-cell end" id="PreisProduct-@z">Preis: @formattedResultItem</h6>
-                                                                            
+                                                                            <h6 class="table-cell" id="E-priceProduct-@z" ></h6>
+                                                                             <input type="hidden" id="E-priceProductValue-@z" name="E_PreisProduct"/>
+
+                                                                            <h6 class="table-cell end" id="PreisProduct-@z">@formattedResultItem</h6>
+                                                                             
                                                                               
                                                                                 <h6 class="table-cell">ZylinderlängeA (Außenlänge): @orderItem[ProudctItemCounter].Aussen</h6>
                                                                                 <h6 class="table-cell"></h6>
@@ -556,8 +559,7 @@
                                                                             optionenSchritt++;
                                                                         }
 
-
-                                                            <input type="hidden" id="preis_product-@z" name="PreisProduct" />
+                                                            <input type="hidden" id="preis_product-@z" name="PreisProduct" />                                                           
                                                             <input type="hidden" id="PreisProductBrutto-@z" value="@orderItem[ProudctItemCounter].Price" />
                                                             <input type="hidden" id="PreisProductNetto-@z" value="@resultItem" />
 
@@ -565,6 +567,7 @@
                                                         </div>
 
                                                             countOption++;
+                            
                                                             UserOrderId = @orderList[z].Id;
                                                             ProudctItemCounter++;
                                                         }
@@ -575,20 +578,21 @@
                                                     <h6 class="table-cell">Nettowert:</h6>
                                                      <h6 class="table-cell"></h6>
                                                     <h6 class="table-cell"></h6>
-                                                    <h6 class="table-cell" name="NettoSumOrder" style="text-align: end;">@formattedResultKey</h6>
+                                                    <h6 class="table-cell" style="text-align: end;">@formattedResultKey</h6>
+                                                    <input name="NettoSumOrder" type="hidden" value="@formattedResultKey"/>
 
-                                                    <h6 id="procent-@z" class="table-cell" name="procent">Steuer:</h6>
+                                                    <h6 id="procent-@z" class="table-cell" >Steuer:</h6>
+                                                    <input name="procent" type="hidden" value="0" id="Name_procent-@z"/>
                                                     <h6 class="table-cell"></h6>
                                                     <h6 class="table-cell"></h6>
                                                     <h6 class="table-cell" style="text-align: end;" id="aldProcent-@z">0</h6>
-                                                    <input name="Steuer" class="table-cell" type="hidden" value="0" id="aldProcent-@z" /> 
+                                                    <input name="Steuer" type="hidden" value="0" id="aldProcentInput-@z" /> 
 
                                                     <h6 class="table-cell">Versand:</h6>
                                                     <h6 class="table-cell"></h6>
                                                     <h6 class="table-cell"></h6>
                                                     <h6 class="table-cell" style="text-align: end;" id="CostGram-@z">0</h6>
-                                                     <input name="Versand" class="table-cell" type="hidden" value="0" id="CostGram-@z" /> 
-
+                                                 
                                                     <h6 class="table-cell">Gesamtsumme inkl. MwSt:</h6>
                                                     <h6 class="table-cell"></h6>
                                                     <h6 class="table-cell"></h6>
@@ -599,9 +603,9 @@
                                       
                                                 </div>
 
-                                            
+                                
                                             </div>
-                                            <div id="blockSchrite" style="display: grid;justify-content: center;" class="shadow-lg  mb-5 bg-body-tertiary rounded">
+                                            <div id="blockSchrite" style="display: grid;justify-content: center;gap:10px" class="shadow-lg  mb-5 bg-body-tertiary rounded">
 
                                                
 

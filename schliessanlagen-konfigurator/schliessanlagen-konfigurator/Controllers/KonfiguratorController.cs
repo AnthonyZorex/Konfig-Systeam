@@ -664,6 +664,8 @@ namespace schliessanlagen_konfigurator.Controllers
 
                 foreach (var listItem in ItemsInfo)
                 {
+                    //string input = listItem.Option;
+                    //string result = input.Replace(", ", ",\n");
                     var model = new
                     {
                         ProductName = list.ProductName,
@@ -672,6 +674,7 @@ namespace schliessanlagen_konfigurator.Controllers
                         ZylinderlängeB = listItem.Intern,
                         Options = listItem.Option,
                         Count = listItem.Count,
+                        E_Price = listItem.E_Price,
                         Price = listItem.Price
                     };
                     FullOrder.Add(model);
@@ -4958,7 +4961,6 @@ namespace schliessanlagen_konfigurator.Controllers
             SchopAlarm();
 
             var key =  db.Orders.Where(x => x.userKey == param2).Distinct().ToList();
-
 
             var DopelOrderlist = new List<Profil_Doppelzylinder>();
 

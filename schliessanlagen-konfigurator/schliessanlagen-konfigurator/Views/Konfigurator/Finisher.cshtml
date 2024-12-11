@@ -9,6 +9,7 @@
     int d = 0;
 
     string url="";
+
 }
 
 <style>
@@ -136,6 +137,7 @@
         </h4>
     </div>
     <div>
+
         @if (ViewBag.Dopelzylinder != null)
         {
             int elemNum = 0;
@@ -339,207 +341,7 @@
                 d++;
             }
         }
-        @if (ViewBag.KnayfZelinder != null)
-        {
-            int elemNum = 0;
-            foreach (var item in ViewBag.KnayfZelinder)
-            {
-                   <div id="ExelItem-@d" class="ExelItem shadow-lg  mb-5 bg-body-tertiary rounded">
-                        <input type="hidden" name="Knayf" value="@item.Id" />
-                    <div id="productImage">
-                            <img decoding="async" data-bs-toggle="modal" alt="@item.Name" data-bs-target="#ModalKnyf-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
-                            <div>
-                                @foreach (var list in ViewBag.KnaufGalery)
-                                {
-                                    <img src="@("/compression/"+@list.ImageName)" height="100" width="100" />
-                                }
-                            </div>
-                        </div>
-                    <div id="productMenuInfo">
-                        <div id="ProductNameUndCost">
-
-                            <div>
-                                    <h3>Türbezeichnung: @ViewBag.DorName[d]</h3>
-                                    <input style="border: none;width:250px" readonly type="text" name="KnayfName" value="@item.Name" />
-                                    <input style="border: none;width:250px" type="hidden" name="NameSystem" value="@item.NameSystem" />
-                                    <input id="costItems-@d" name="ProductCosted" type="hidden" value="@item.Price" />
-                            </div>
-
-                        </div>
-                        <div>
-                                <select id="type-@d" class="form-select" onchange="switchTypeSylinder(@d,event.target.value,@elemNum)">
-                                    @foreach (var i in ViewBag.AllType)
-                                    {
-                                        if (@i.nameType == "Knaufzylinder")
-                                        {
-                                            <option selected>@i.nameType</option>
-                                        }
-                                        else
-                                        {
-                                            <option>@i.nameType</option>
-                                        }
-                                    }
-                            </select>
-                        </div>
-                            <div id="textInform">
-                                <h4>Zylinderlänge</h4>
-                                <h4>Stück</h4>
-                        </div>
-
-                            <div id="Size-@d" class="SizeProduct">
-                            <div class="btn-group" role="group" aria-label="Basic outlined example">
-                            <div>
-                                <h6>außen</h6>
-                                    <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
-                                    <select class="form-select" name="KnayfAussen" id="Aussen" onchange="selectParamAussen(@d,'Knaufzylinder',event.target.selectedIndex,event.target.value,@item.Id)">
-                                   
-                                    @for (int i = 0; i < ViewBag.KnayfZelinderAussen.Count; i++)
-                                    {
-                                                if (ViewBag.KAussen[elemNum] == ViewBag.KnayfZelinderAussen[i])
-                                                {
-                                                    <option id="OptionA" selected>@ViewBag.KnayfZelinderAussen[i]</option>
-                                                }
-                                                else
-                                                {
-                                                    <option id="OptionA">@ViewBag.KnayfZelinderAussen[i]</option>
-                                                }           
-                                    }
-                                </select>
-                                    <input type="hidden" id="Aussen-@d" />
-                            </div>
-                            <div>
-                                <h6>innen</h6>
-                                   <select class="form-select" name="KnayfIntern" id="Intern" onchange="selectParamIntern(@d,'Knaufzylinder',event.target.selectedIndex,event.target.value,@item.Id)">
-                                    
-                                    @for (int i = 0; i < ViewBag.KnayfZelinderIntern.Count; i++)
-                                    {
-                                        if (ViewBag.KInter[elemNum] == ViewBag.KnayfZelinderIntern[i])
-                                        {
-                                                    <option id="OptionI" selected>@ViewBag.KnayfZelinderIntern[i]</option>
-                                        }
-                                        else{
-                                           <option id="OptionI">@ViewBag.KnayfZelinderIntern[i]</option>  
-                                        }     
-                                    }
-
-                                </select>
-                                 <input type="hidden" id="Innen-@d" />
-                            </div>
-                             </div>
-                                <div class="btn-group count_control align-items-end" role="group" aria-label="Basic outlined example">
-                                    <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
-                                    <input readonly class="count_input_controll" id="countSchlusse-@d" type="number" min="1" value="@ViewBag.CounterTurKnayf[@elemNum]" name="TurCounter" />
-                                    <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
-                            </div>
-                            </div>
-                            <div id="optionsItems">
-                            <h3>Weitere Optionen</h3>
-                            <div>
-                                @{
-                                    int valueCount = 0;
-                                }
-                                @if (ViewBag.countOptionsQueryKnayf > 0)
-                                {
-                                    @for (int i = 0; i < ViewBag.optionsNameKnayf.Count; i++)
-                                    {
-
-                                            <div class="input-group">
-                                                <div class="input-group-text" id="btnGroupAddon">
-                                                    <img data-bs-toggle="modal" data-bs-target="#ModalKnyfOptions-@i" id="hilfeOptionsIcon" alt="@ViewBag.optionsNameKnayf[i].Name" src="@("/compression/question.webp")" height="20" width="20" />
-                                                    </div>
-                                                <input type="text" class="form-control" id="OptionName" value="@ViewBag.optionsNameKnayf[i].Name" readonly aria-label="Пример группы ввода" aria-describedby="btnGroupAddon">
-                                            </div>
-
-                                            <select style="margin-bottom: 10px;" class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Knayf',event.target.id,event.target.value,@valueCount,'@ViewBag.optionsNameKnayf[i].Name',@i,@d)">
-
-                                            @for (int j = 0; j < ViewBag.countOptionsListKnayf[i]; j++)
-                                            {
-                                                <option id="@valueCount">@ViewBag.optionsValueKnayf[valueCount]</option>
-                                                
-                                                valueCount++;
-                                            }
-
-                                        </select>
-
-                                            <div class="modal fade" id="ModalKnyfOptions-@i" tabindex="-1">
-                                                <div class="modal-dialog modal-xl">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h1 class="modal-title">@ViewBag.optionsNameKnayf[i].Name</h1>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-
-                                                            <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
-                                                                <div class="row g-0">
-                                                                    <div class="col-md-4">
-                                                                        <img src="@("/compression/"+@ViewBag.optionsNameKnayf[i].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@ViewBag.optionsNameKnayf[i].Name">
-                                                                    </div>
-                                                                    <div class="col-md-8">
-                                                                        <div class="card-body">
-
-                                                                            <div class="card-text">
-                                                                                @Html.Raw(@ViewBag.optionsNameKnayf[i].Description)
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <input type="hidden"  id="Option-@d + @i" />
-                                            <input type="hidden" id="d-@d + @i" />
-                                    }
-                                        <input type="hidden" name="KnayfOption" id="OptionAll-@d" />
-                                } 
-
-                            </div>
-                        </div>
-                           
-                    </div>
-                </div>
-                    <div class="modal fade" id="ModalKnyf-@d" tabindex="-1">
-                        <div class="modal-dialog modal-xl">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title">@item.Name</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                                </div>
-                                <div class="modal-body">
-
-                                    <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
-                                        <div class="row g-0">
-                                            <div class="col-md-4">
-                                                <img src="@("/compression/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@item.Name">
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="card-body">
-
-                                                    <div class="card-text">
-                                                        @Html.Raw(@item.description)
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    d++;
-                elemNum++;
-            }
-           
-        }
+        
         @if (ViewBag.Halb != null)
         {
             int elemNum = 0;
@@ -730,6 +532,208 @@
                 d++;
             }
         }
+            @if (ViewBag.KnayfZelinder != null)
+            {
+                int elemNum = 0;
+                foreach (var item in ViewBag.KnayfZelinder)
+                {
+                    <div id="ExelItem-@d" class="ExelItem shadow-lg  mb-5 bg-body-tertiary rounded">
+                        <input type="hidden" name="Knayf" value="@item.Id" />
+                        <div id="productImage">
+                            <img decoding="async" data-bs-toggle="modal" alt="@item.Name" data-bs-target="#ModalKnyf-@d" style="border: 2px solid rgba(237,237,237,0.5);" src="@("~/compression/"+@item.ImageName)" asp-append-version="true" width="300px" height="300px" />
+                            <div>
+                                @foreach (var list in ViewBag.KnaufGalery)
+                                {
+                                    <img src="@("/compression/"+@list.ImageName)" height="100" width="100" />
+                                }
+                            </div>
+                        </div>
+                        <div id="productMenuInfo">
+                            <div id="ProductNameUndCost">
+
+                                <div>
+                                    <h3>Türbezeichnung: @ViewBag.DorName[d]</h3>
+                                    <input style="border: none;width:250px" readonly type="text" name="KnayfName" value="@item.Name" />
+                                    <input style="border: none;width:250px" type="hidden" name="NameSystem" value="@item.NameSystem" />
+                                    <input id="costItems-@d" name="ProductCosted" type="hidden" value="@item.Price" />
+                                </div>
+
+                            </div>
+                            <div>
+                                <select id="type-@d" class="form-select" onchange="switchTypeSylinder(@d,event.target.value,@elemNum)">
+                                    @foreach (var i in ViewBag.AllType)
+                                    {
+                                        if (@i.nameType == "Knaufzylinder")
+                                        {
+                                            <option selected>@i.nameType</option>
+                                        }
+                                        else
+                                        {
+                                            <option>@i.nameType</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div id="textInform">
+                                <h4>Zylinderlänge</h4>
+                                <h4>Stück</h4>
+                            </div>
+
+                            <div id="Size-@d" class="SizeProduct">
+                                <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                    <div>
+                                        <h6>außen</h6>
+                                        <input style="border: none;" id="compName" type="hidden" value="@item.companyName" />
+                                        <select class="form-select" name="KnayfAussen" id="Aussen" onchange="selectParamAussen(@d,'Knaufzylinder',event.target.selectedIndex,event.target.value,@item.Id)">
+
+                                            @for (int i = 0; i < ViewBag.KnayfZelinderAussen.Count; i++)
+                                            {
+                                                if (ViewBag.KAussen[elemNum] == ViewBag.KnayfZelinderAussen[i])
+                                                {
+                                                    <option id="OptionA" selected>@ViewBag.KnayfZelinderAussen[i]</option>
+                                                }
+                                                else
+                                                {
+                                                    <option id="OptionA">@ViewBag.KnayfZelinderAussen[i]</option>
+                                                }
+                                            }
+                                        </select>
+                                        <input type="hidden" id="Aussen-@d" />
+                                    </div>
+                                    <div>
+                                        <h6>innen</h6>
+                                        <select class="form-select" name="KnayfIntern" id="Intern" onchange="selectParamIntern(@d,'Knaufzylinder',event.target.selectedIndex,event.target.value,@item.Id)">
+
+                                            @for (int i = 0; i < ViewBag.KnayfZelinderIntern.Count; i++)
+                                            {
+                                                if (ViewBag.KInter[elemNum] == ViewBag.KnayfZelinderIntern[i])
+                                                {
+                                                    <option id="OptionI" selected>@ViewBag.KnayfZelinderIntern[i]</option>
+                                                }
+                                                else
+                                                {
+                                                    <option id="OptionI">@ViewBag.KnayfZelinderIntern[i]</option>
+                                                }
+                                            }
+
+                                        </select>
+                                        <input type="hidden" id="Innen-@d" />
+                                    </div>
+                                </div>
+                                <div class="btn-group count_control align-items-end" role="group" aria-label="Basic outlined example">
+                                    <button type="button" onclick="CylinderMinus(@d)" class="btn btn-success">-</button>
+                                    <input readonly class="count_input_controll" id="countSchlusse-@d" type="number" min="1" value="@ViewBag.CounterTurKnayf[@elemNum]" name="TurCounter" />
+                                    <button type="button" onclick="CylinderPlus(@d)" class="btn btn-success">+</button>
+                                </div>
+                            </div>
+                            <div id="optionsItems">
+                                <h3>Weitere Optionen</h3>
+                                <div>
+                                    @{
+                                        int valueCount = 0;
+                                    }
+                                    @if (ViewBag.countOptionsQueryKnayf > 0)
+                                    {
+                                        @for (int i = 0; i < ViewBag.optionsNameKnayf.Count; i++)
+                                        {
+
+                                            <div class="input-group">
+                                                <div class="input-group-text" id="btnGroupAddon">
+                                                    <img data-bs-toggle="modal" data-bs-target="#ModalKnyfOptions-@i" id="hilfeOptionsIcon" alt="@ViewBag.optionsNameKnayf[i].Name" src="@("/compression/question.webp")" height="20" width="20" />
+                                                </div>
+                                                <input type="text" class="form-control" id="OptionName" value="@ViewBag.optionsNameKnayf[i].Name" readonly aria-label="Пример группы ввода" aria-describedby="btnGroupAddon">
+                                            </div>
+
+                                            <select style="margin-bottom: 10px;" class="form-select" id="@d-Options-@i" onchange="OptionsSelect(@d,'Knayf',event.target.id,event.target.value,@valueCount,'@ViewBag.optionsNameKnayf[i].Name',@i,@d)">
+
+                                                @for (int j = 0; j < ViewBag.countOptionsListKnayf[i]; j++)
+                                                {
+                                                    <option id="@valueCount">@ViewBag.optionsValueKnayf[valueCount]</option>
+
+                                                    valueCount++;
+                                                }
+
+                                            </select>
+
+                                            <div class="modal fade" id="ModalKnyfOptions-@i" tabindex="-1">
+                                                <div class="modal-dialog modal-xl">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title">@ViewBag.optionsNameKnayf[i].Name</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+
+                                                            <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                                                                <div class="row g-0">
+                                                                    <div class="col-md-4">
+                                                                        <img src="@("/compression/"+@ViewBag.optionsNameKnayf[i].ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@ViewBag.optionsNameKnayf[i].Name">
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <div class="card-body">
+
+                                                                            <div class="card-text">
+                                                                                @Html.Raw(@ViewBag.optionsNameKnayf[i].Description)
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <input type="hidden" id="Option-@d + @i" />
+                                            <input type="hidden" id="d-@d + @i" />
+                                        }
+                                        <input type="hidden" name="KnayfOption" id="OptionAll-@d" />
+                                    }
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal fade" id="ModalKnyf-@d" tabindex="-1">
+                        <div class="modal-dialog modal-xl">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title">@item.Name</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
+                                        <div class="row g-0">
+                                            <div class="col-md-4">
+                                                <img src="@("/compression/"+@item.ImageName)" height="300" width="300" class="img-fluid rounded-start" alt="@item.Name">
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body">
+
+                                                    <div class="card-text">
+                                                        @Html.Raw(@item.description)
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    d++;
+                    elemNum++;
+                }
+
+            }
         @if (ViewBag.HelbZ != null)
         {
             int elemNum = 0;

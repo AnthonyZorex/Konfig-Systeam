@@ -28,14 +28,14 @@
 
         let Rechnungsadresse = `${Info.RechnungVorname + " " + Info.RechnungNachname}
                ${Info.RechnungStrasse},
-               ${Info.RechnungZip} ${Info.RechnungSendStadt} , ${Info.RechnungLand} `;
+                       ${Info.RechnungZip} ${Info.RechnungStadt} , ${Info.RechnungLand} `;
 
         let Lieferadresse = "";
         if (Info.Rehnung == "on") 
         {
             Lieferadresse = `${Info.RechnungVorname + " " + Info.RechnungNachname}
                             ${Info.RechnungStrasse},
-                            ${Info.RechnungZip} ${Info.RechnungSendStadt} , ${Info.RechnungLand} `;
+                            ${Info.RechnungZip} ${Info.RechnungStadt} , ${Info.RechnungLand} `;
 
             Email = Info.RechnungAdresse;
         }
@@ -70,10 +70,10 @@
                 text: item.Count, style: 'bodyrs'
             },
             {
-                text: item.Price.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' }), style: 'bodyrs'
+                text: item.E_Price.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' }), style: 'bodyrs'
             },
             {
-                text: (item.Price * item.Count).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' }), style: 'bodyrs'
+                text: (item.Price).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' }), style: 'bodyrs'
             }
         ]);
 

@@ -443,7 +443,6 @@ allAussen.forEach((item) => {
         }
     });
 
-
     item.addEventListener('change', (event) => {
         selectedInputs.forEach((x) => {
             x.value = event.target.value;
@@ -482,7 +481,6 @@ allInnen.forEach((item) => {
         }
     });
 
-
     item.addEventListener('change', (event) => {
         selectedInputs.forEach((x) => {
             x.value = event.target.value;
@@ -501,7 +499,6 @@ InternCost.forEach((item) => {
         })
     });
 
-
     item.addEventListener('change', (event) => {
 
         selectedInputs.forEach((x) => {
@@ -511,8 +508,6 @@ InternCost.forEach((item) => {
     });
 
 });
-
-
 
 window.addEventListener('load', function () {
     const blocks = document.querySelectorAll('.input-block');
@@ -546,6 +541,12 @@ if (plusAussen_Innen != null)
             d.id = 'aus';
             d.required = true;
 
+            let minusButten = document.createElement('input');        
+            minusButten.setAttribute('class', 'btn btn-danger');     
+            minusButten.setAttribute('type', 'button');
+            minusButten.id = 'addAussen_Innen_remove';
+            minusButten.value = "-";
+
             let costAussen = document.createElement('input');
             costAussen.setAttribute('name', 'costSizeAussen');
             costAussen.setAttribute('placeholder', 'costAussen');
@@ -554,7 +555,7 @@ if (plusAussen_Innen != null)
             costAussen.setAttribute('type', 'number');
             costAussen.id = 'ausCost';
             costAussen.required = true;
-            docAussen.append(d, costAussen);
+            docAussen.append(minusButten,d, costAussen);
         }
 
 
@@ -582,26 +583,50 @@ if (plusAussen_Innen != null)
 
     });
 }
-
-
-if (removeAussen_Innen != null)
+function AussenInnenDelet(id)
 {
-    removeAussen_Innen.addEventListener('click', () => {
+    let d = document.querySelectorAll('#aus');
 
-        let d = document.querySelectorAll('#aus');
+    let costAussen = document.querySelectorAll('#ausCost');
 
-        let costAussen = document.querySelectorAll('#ausCost');
+    let x = document.querySelectorAll('#inter');
+    let costInter = document.querySelectorAll('#interCost');
 
-        let x = document.querySelectorAll('#inter');
-        let costInter = document.querySelectorAll('#interCost');
+    let minus = document.querySelectorAll('#addAussen_Innen_remove');
 
-        docAussen.removeChild(costAussen[costAussen.length - 1]);
-        docAussen.removeChild(d[d.length - 1]);
+    docAussen.removeChild(costAussen[id].dataset.index = id);
+    docAussen.removeChild(minus[id]);
+    docAussen.removeChild(d[id]);
 
-        docInnen.removeChild(x[x.length - 1]);
-        docInnen.removeChild(costInter[costInter.length - 1]);
-    });
+    docInnen.removeChild(x[id]);
+    docInnen.removeChild(costInter[id]);
 }
+
+
+//if (removeAussen_Innen != null)
+//{
+//    removeAussen_Innen.addEventListener('click', (event) => {
+
+//        let d = document.querySelectorAll('#aus');
+//        const index = event.target.dataset.index;
+
+//        let costAussen = document.querySelectorAll('#ausCost');
+
+//        let x = document.querySelectorAll('#inter');
+//        let costInter = document.querySelectorAll('#interCost');
+
+//        let minus = document.querySelectorAll('#addAussen_Innen_remove');
+
+
+
+//        docAussen.removeChild(costAussen[index]);
+//        docAussen.removeChild(minus[index]);
+//        docAussen.removeChild(d[index]);
+
+//        docInnen.removeChild(x[index]);
+//        docInnen.removeChild(costInter[index]);
+//    });
+//}
 document.addEventListener("DOMContentLoaded", function () {
     const container = document.getElementById('productOptions');
     const createBlockBtn = document.getElementById('createBlockBtn');

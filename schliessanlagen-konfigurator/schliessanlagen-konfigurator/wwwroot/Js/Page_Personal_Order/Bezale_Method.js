@@ -29,6 +29,8 @@ function ProcentMwst(value, BlockItem,country)
     let modalItem = document.getElementById("myModal-" + BlockItem);
    
     let procent = document.getElementById("procent-" + BlockItem);
+    let NameProcent = document.getElementById("Name_procent-" + BlockItem);
+
     let mvstr = cost[0].innerHTML.replace("€", "");
     let Gram = document.getElementById("gramWert-" + BlockItem);
 
@@ -40,7 +42,10 @@ function ProcentMwst(value, BlockItem,country)
     let bruttoCostValue = new Big(bruttoCost.trim().replace(",", ".").replace("€", "").replace(/\s/g, ''));
 
     let proc = document.querySelectorAll("#aldProcent-" + BlockItem);
-    let pr = new Big(proc[1].value.replace("€", "").replace("&nbsp;","").replace(",", ".").trim());
+
+    let procInput = document.querySelectorAll("#aldProcentInput-" + BlockItem);
+
+    let pr = new Big(procInput[0].value.replace("€", "").replace("&nbsp;","").replace(",", ".").trim());
 
     let costProcent;
     let Prodct = document.querySelectorAll("#cardProductPrice-" + BlockItem);
@@ -51,7 +56,7 @@ function ProcentMwst(value, BlockItem,country)
 
     let ProductEprice = Array.from(Prodct).map(product => product.querySelector("#E-priceProduct-" + BlockItem));
     let countProductEprice = Array.from(Prodct).map(product => product.querySelector("#E-priceProductCount-" + BlockItem));
-
+    let ProductEpriceValue = Array.from(Prodct).map(product => product.querySelector("#E-priceProductValue-" + BlockItem));
 
     preis_schluessel = document.getElementById("preis_schluessel-" + BlockItem);
 
@@ -59,6 +64,10 @@ function ProcentMwst(value, BlockItem,country)
 
     let schlüssel = document.querySelectorAll("#schlüssel-" + BlockItem);
     let ePrice = Array.from(schlüssel).map(product => product.querySelector("#E-Preis-" + BlockItem));
+    let ePriceSchlüssel = Array.from(schlüssel).map(product => product.querySelector("#E-priceSchlüsselValue-" + BlockItem));
+
+
+
     let countschlüssel = Array.from(schlüssel).map(product => product.querySelector("#counterKey-" + BlockItem));
 
     let schlüsselPrice = Array.from(schlüssel).map(product => product.querySelector("#PreisProduct-" + BlockItem));
@@ -120,7 +129,7 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €";
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice, ProductEpriceValue, ePriceSchlüssel);
                     break;
                 }
 
@@ -162,7 +171,7 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €";
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice, ProductEpriceValue, ePriceSchlüssel);
                     break;
                 }
 
@@ -205,7 +214,7 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €";
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice, ProductEpriceValue, ePriceSchlüssel);
                     break;
                 }
 
@@ -249,7 +258,7 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €";
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice, ProductEpriceValue, ePriceSchlüssel);
                     break;
                 }
             case "CZ":
@@ -295,7 +304,7 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice, ProductEpriceValue, ePriceSchlüssel);
                     break;
                 }
             case "DE":
@@ -342,7 +351,7 @@ function ProcentMwst(value, BlockItem,country)
                         costGramValue = new Big(0);
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice, ProductEpriceValue, ePriceSchlüssel);
                     break;
                 }
             case "DK":
@@ -384,7 +393,7 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice, ProductEpriceValue, ePriceSchlüssel);
                     break;
                 }
 
@@ -428,7 +437,7 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice, ProductEpriceValue, ePriceSchlüssel);
                     break;
                 }
 
@@ -472,7 +481,7 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice, ProductEpriceValue, ePriceSchlüssel);
 
                     break;
                 }
@@ -516,7 +525,7 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice, ProductEpriceValue, ePriceSchlüssel);
                     break;
                 }
             case "FR":
@@ -561,7 +570,7 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice, ProductEpriceValue, ePriceSchlüssel);
                     break;
                 }
             case "GR":
@@ -604,7 +613,7 @@ function ProcentMwst(value, BlockItem,country)
                     } else {
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice, ProductEpriceValue, ePriceSchlüssel);
                     break;
                 }
             case "HR":
@@ -648,7 +657,7 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice, ProductEpriceValue, ePriceSchlüssel);
 
                     break;
                 }
@@ -693,7 +702,7 @@ function ProcentMwst(value, BlockItem,country)
                     } else {
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice, ProductEpriceValue, ePriceSchlüssel);
                     break;
                 }
             case "IE":
@@ -737,7 +746,7 @@ function ProcentMwst(value, BlockItem,country)
                     } else {
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice, ProductEpriceValue, ePriceSchlüssel);
                     break;
 
                 }
@@ -781,7 +790,7 @@ function ProcentMwst(value, BlockItem,country)
                     } else {
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice, ProductEpriceValue, ePriceSchlüssel);
                     break;
 
                 }
@@ -826,7 +835,7 @@ function ProcentMwst(value, BlockItem,country)
                     } else {
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice, ProductEpriceValue, ePriceSchlüssel);
                     break;
 
                 }
@@ -870,7 +879,7 @@ function ProcentMwst(value, BlockItem,country)
                     } else {
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice, ProductEpriceValue, ePriceSchlüssel);
                     break;
 
                 }
@@ -914,7 +923,7 @@ function ProcentMwst(value, BlockItem,country)
                     } else {
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice, ProductEpriceValue, ePriceSchlüssel);
                     break;
 
                 }
@@ -960,7 +969,7 @@ function ProcentMwst(value, BlockItem,country)
                     } else {
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice, ProductEpriceValue, ePriceSchlüssel);
                     break;
 
                 }
@@ -1004,7 +1013,7 @@ function ProcentMwst(value, BlockItem,country)
                     } else {
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice, ProductEpriceValue, ePriceSchlüssel);
                     break;
 
                 }
@@ -1049,7 +1058,7 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice, ProductEpriceValue, ePriceSchlüssel);
 
                     break;
 
@@ -1095,7 +1104,7 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice, ProductEpriceValue, ePriceSchlüssel);
 
                     break;
                 }
@@ -1143,7 +1152,7 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice, ProductEpriceValue, ePriceSchlüssel);
 
                     break;
                 }
@@ -1189,7 +1198,7 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €"; 
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice, ProductEpriceValue, ePriceSchlüssel);
 
                     break;
                 }
@@ -1234,7 +1243,7 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €";
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice, ProductEpriceValue, ePriceSchlüssel);
 
                     break;
                 }
@@ -1278,7 +1287,7 @@ function ProcentMwst(value, BlockItem,country)
                         CostGram[BlockItem].value = "0 €"; // Форматируем нулевое значение
                     }
 
-                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice);
+                    mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice, ProductEpriceValue, ePriceSchlüssel);
                     break;
                 }
             default:
@@ -2837,7 +2846,15 @@ function ProcentMwst(value, BlockItem,country)
             currency: 'EUR'
         });
     });
-    
+
+    NameProcent.value = procent.innerHTML;
+
+    procInput.forEach((item) => {
+        item.value = parseFloat(costProcent).toLocaleString('de-DE', {
+            style: 'currency',
+            currency: 'EUR'
+        });
+    });
 
     let ALLSUM = new Big(Sum).plus(costProcent).plus(costGramValue);
 
@@ -2845,6 +2862,10 @@ function ProcentMwst(value, BlockItem,country)
 
     CostGram.forEach((item) => {
         item.innerHTML = parseFloat(CostGram[BlockItem].value).toLocaleString('de-DE', {
+            style: 'currency',
+            currency: 'EUR'
+        });
+        item.value = parseFloat(CostGram[BlockItem].value).toLocaleString('de-DE', {
             style: 'currency',
             currency: 'EUR'
         });
@@ -2871,7 +2892,7 @@ function ProcentMwst(value, BlockItem,country)
     changePrice(ALLSUM);
 }
 
-function mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice)
+function mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNetto, PreisProductNettoSchlussel, SchlusselProcent, countschlüssel, ePrice, ProductEprice, countProductEprice, ProductEpriceValue, ePriceSchlüssel)
 {
    
 
@@ -2894,17 +2915,20 @@ function mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNett
         {
             let einSchlüssel = newPrice.toFixed(2) / Number(countProductEprice[i].innerText);
 
-            ProductEprice[i].textContent = parseFloat(einSchlüssel.toFixed(2)).toLocaleString('de-DE', {
+            ProductEprice[i].innerHTML = parseFloat(einSchlüssel.toFixed(2)).toLocaleString('de-DE', {
                 style: 'currency',
                 currency: 'EUR'
             });
+            ProductEpriceValue[i].value = parseFloat(einSchlüssel.toFixed(2));
         }
         else {
 
-            ProductEprice[i].textContent = parseFloat(newPrice.toFixed(2)).toLocaleString('de-DE', {
+            ProductEprice[i].innerHTML = parseFloat(newPrice.toFixed(2)).toLocaleString('de-DE', {
                 style: 'currency',
                 currency: 'EUR'
             });
+
+            ProductEpriceValue[i].value = parseFloat(newPrice.toFixed(2));
         }
 
     }
@@ -2927,17 +2951,19 @@ function mvc(cardProductPrice, schlüsselPrice, ProductProcent, PreisProductNett
         {
             let einSchlüssel = newPrice.toFixed(2) / Number(countschlüssel[0].innerText);
 
-            ePrice[0].innerHTML = parseFloat(einSchlüssel.toFixed(2)).toLocaleString('de-DE', {
+            ePrice[i].innerHTML = parseFloat(einSchlüssel.toFixed(2)).toLocaleString('de-DE', {
                 style: 'currency',
                 currency: 'EUR'
             });
+            ePriceSchlüssel[i].value = parseFloat(einSchlüssel.toFixed(2));
         }
         else {
 
-            ePrice[0].innerHTML = parseFloat(newPrice.toFixed(2)).toLocaleString('de-DE', {
+            ePrice[i].innerHTML = parseFloat(newPrice.toFixed(2)).toLocaleString('de-DE', {
                 style: 'currency',
                 currency: 'EUR'
             }); 
+            ePriceSchlüssel[i].value = parseFloat(newPrice.toFixed(2));
         }
 
     }

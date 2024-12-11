@@ -392,7 +392,7 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
                             images.Add(Aussen.ImageName);
                             descriptions.Add(Aussen.description);
 
-                            var isOption = db.Aussen_Rund_options.Where(x => x.Aussenzylinder_RundzylinderId == Vorhan.Id).ToList();
+                            var isOption = db.Aussen_Rund_options.Where(x => x.Aussenzylinder_RundzylinderId == Aussen.Id).ToList();
 
                             var input = list.Option;
 
@@ -464,7 +464,7 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
         public async Task<IActionResult> OnPost(string SendVorname, string SendNachname, string SendFirma, string userKey, List<string> PreisProduct, string PreisKey,
         string SendVat,string SendStrasse, string SendZip, string SendStadt, string SendLand, string SendTelefon,string NettoSumOrder, List<int>  OptionCount,
         string DhlSend,string Pay,string Steuer, string Versand, string OrderSum,string Rehnung, string RechnungAdresse,string RechnungVorname,
-        string RechnungNachname, string RechnungFirma, string RechnungVat, string RechnungStrasse, string RechnungZip,
+        string RechnungNachname, string RechnungFirma, string RechnungVat, string RechnungStrasse, string RechnungZip,List<float> E_PreisProduct, List<float> E_PreisSchlüssel,
         string RechnungStadt, string RechnungLand, string RechnungTelefon, string userName,string procent,bool aufRechnung)
         {
             var userOrder = db.UserOrdersShop.Where(x => x.UserId == userKey).ToList();
@@ -486,6 +486,8 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
                     var product = ProductList[i];
 
                     product.Price = float.Parse(PreisProduct[i].Replace(".", ","));
+                    product.E_Price = E_PreisProduct[i];
+
                     db.ProductSysteam.Update(product);
                     db.SaveChanges();
                 }
