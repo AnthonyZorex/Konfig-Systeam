@@ -465,16 +465,42 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
         string SendVat,string SendStrasse, string SendZip, string SendStadt, string SendLand, string SendTelefon,string NettoSumOrder, List<int>  OptionCount,
         string DhlSend,string Pay,string Steuer, string Versand, string OrderSum,string Rehnung, string RechnungAdresse,string RechnungVorname,
         string RechnungNachname, string RechnungFirma, string RechnungVat, string RechnungStrasse, string RechnungZip,List<float> E_PreisProduct, List<float> E_PreisSchlüssel,
-        string RechnungStadt, string RechnungLand, string RechnungTelefon, string userName,string procent,bool aufRechnung)
+        string RechnungStadt, string RechnungLand, string RechnungTelefon, string userName,string procent,bool aufRechnung,string SendAdresse)
         {
             var userOrder = db.UserOrdersShop.Where(x => x.UserId == userKey).ToList();
 
             userOrder.Last().KeyCost = float.Parse(PreisKey.Replace(".",","));
+            userOrder.Last().NettoPrice = NettoSumOrder;
+            userOrder.Last().Steur = procent;
+            userOrder.Last().SteurPrice = Steuer;
+            userOrder.Last().VersandPrice = Versand;
+            userOrder.Last().Rehnung_Vorname = RechnungVorname;
+            userOrder.Last().Rehnung_Nachname = RechnungNachname;
+            userOrder.Last().Rehnung_Firma = RechnungFirma;
+            userOrder.Last().Rehnung_Ust_Idnr = RechnungVat;
+            userOrder.Last().Rehnung_Strasse = RechnungStrasse;
+            userOrder.Last().Rehnung_Postleitzahl = RechnungZip;
+            userOrder.Last().Rehnung_Stadt = RechnungStadt;
+            userOrder.Last().Rehnung_Land = RechnungLand;
+            userOrder.Last().Rehnung_TelefonNumber = RechnungTelefon;
+            userOrder.Last().Rehnung_E_Mail = RechnungAdresse;
 
-            // Обновляем заказ
+            userOrder.Last().Liefer_Vorname = SendVorname ?? RechnungVorname;
+            userOrder.Last().Liefer_Nachname = SendNachname ?? RechnungNachname;
+            userOrder.Last().Liefer_Firma = SendFirma ?? RechnungFirma;
+            userOrder.Last().Liefer_Ust_Idnr = SendVat ?? RechnungVat;
+            userOrder.Last().Liefer_Strasse = SendStrasse ?? RechnungStrasse;
+            userOrder.Last().Liefer_Postleitzahl = SendZip ?? RechnungZip;
+            userOrder.Last().Liefer_Stadt = SendStadt ?? RechnungStadt;
+            userOrder.Last().Liefer_Land = SendLand ?? RechnungLand;
+            userOrder.Last().Liefer_TelefonNumber = SendTelefon ?? RechnungTelefon;
+            userOrder.Last().Liefer_E_Mail = SendAdresse ?? RechnungAdresse;
+
+            userOrder.Last().E_PriceKey = Convert.ToString(E_PreisSchlüssel[0].ToString("C"));
+
             db.UserOrdersShop.Update(userOrder.Last());
             db.SaveChanges();
-            // Получаем список продуктов для данного заказа
+   
             var ProductList = db.ProductSysteam.Where(x => x.UserOrdersShopId == userOrder.Last().Id).ToList();
 
             // Убедитесь, что PreisProduct имеет нужное количество элементов

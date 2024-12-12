@@ -42,6 +42,7 @@ namespace schliessanlagen_konfigurator.Models.Users
         public string ProductName { get; set; }
         public int? KeyCount { get; set; }
         public float? KeyCost { get; set; }
+        public string? E_PriceKey { get; set; }
         public string UserOrderKey { get; set; }
         public DateTime? createData { get; set; }
         public string? Lieferzeit { get; set; }
@@ -49,9 +50,36 @@ namespace schliessanlagen_konfigurator.Models.Users
         public int? GuestId { get; set; }
         public Guest Guest { get; set; }
         public User User { get; set; }
+        public string? Steur { get; set; }
+        public string? SteurPrice { get; set; }
+        public string? NettoPrice { get; set; }
+        public string? VersandPrice { get; set; }
         public string? OrderStatus { get; set; }
         public DateTime? BezalenDate { get; set; }
         public string? ShippingStatus { get; set; }
+
+        public string? Rehnung_E_Mail { get; set; }
+        public string? Rehnung_Vorname { get; set; }
+        public string? Rehnung_Nachname { get; set; }
+        public string? Rehnung_Firma { get; set; }
+        public string? Rehnung_Ust_Idnr { get; set; }
+        public string? Rehnung_Strasse { get; set; }
+        public string? Rehnung_Postleitzahl { get; set; }
+        public string? Rehnung_Stadt { get; set; }
+        public string? Rehnung_Land { get; set; }
+        public string? Rehnung_TelefonNumber { get; set; }
+
+        public string? Liefer_E_Mail { get; set; }
+        public string? Liefer_Vorname { get; set; }
+        public string? Liefer_Nachname { get; set; }
+        public string? Liefer_Firma { get; set; }
+        public string? Liefer_Ust_Idnr { get; set; }
+        public string? Liefer_Strasse { get; set; }
+        public string? Liefer_Postleitzahl { get; set; }
+        public string? Liefer_Stadt { get; set; }
+        public string? Liefer_Land { get; set; }
+        public string? Liefer_TelefonNumber { get; set; }
+
         public int? count { get; set; }
         public ICollection<ProductSysteam> ProductSysteam { get; set; }
         public ICollection<Rehnungs> Rehnungs { get; set; }

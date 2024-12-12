@@ -51,25 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b65a3567-1314-47ab-b678-00bcb9eca5b2",
+                            Id = "7f51a224-e575-4cdd-ac8d-2093d598d477",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "226c1ac4-a1c6-4b15-b433-033d4d24591f",
+                            Id = "2798f924-adb0-486a-93cc-e693c1a94c65",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "d1342d6a-452b-4b00-897c-5e5bb63f7e8e",
+                            Id = "55b96a25-1301-49a9-9f91-a01a6f416080",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "f39c6279-ab98-4a04-9415-aaa03ef10cbf",
+                            Id = "dbbdc703-2e89-42cf-9329-60b9a3cff47f",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -1495,6 +1495,9 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Property<DateTime?>("BezalenDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("E_PriceKey")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<float?>("Gramm")
                         .HasColumnType("real");
 
@@ -1507,7 +1510,40 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Property<int?>("KeyCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("Liefer_E_Mail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Liefer_Firma")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Liefer_Land")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Liefer_Nachname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Liefer_Postleitzahl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Liefer_Stadt")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Liefer_Strasse")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Liefer_TelefonNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Liefer_Ust_Idnr")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Liefer_Vorname")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Lieferzeit")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NettoPrice")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OrderStatus")
@@ -1523,7 +1559,43 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.Property<string>("ProjektName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Rehnung_E_Mail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Rehnung_Firma")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Rehnung_Land")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Rehnung_Nachname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Rehnung_Postleitzahl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Rehnung_Stadt")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Rehnung_Strasse")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Rehnung_TelefonNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Rehnung_Ust_Idnr")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Rehnung_Vorname")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ShippingStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Steur")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SteurPrice")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
@@ -1531,6 +1603,9 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     b.Property<string>("UserOrderKey")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VersandPrice")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("count")

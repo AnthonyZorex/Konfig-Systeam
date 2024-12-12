@@ -14,7 +14,32 @@
     var countProduct = (List<int>)ViewData["CounterProduct"];
     var descriptions = (List<string>)ViewData["Descriptions"];
 }
+<style>
+    #siwk-button-container {
+        border: 1px solid red; /* Для визуализации границы контейнера */
+        padding: 10px;
+        margin: 10px;
+    }
 
+    .table-row {
+        padding-right: 10px;
+        padding-left: 10px;
+        grid-template-columns: repeat(4, 1fr);
+        display: grid;
+        border: 1px solid rgba(0, 0, 0, .125);
+        margin-bottom: 2px;
+        margin-top: 2px;
+    }
+
+    .table-cell {
+        flex: 1;
+        margin: 1px;
+    }
+
+    .end {
+        margin-left: auto;
+    }
+</style>
 <h3>@ViewData["Title"]</h3>
 <div class="row" style="overflow-y: auto;">
     <div>
@@ -51,7 +76,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                                     </div>
                                     <div class="modal-body">
-                                    @for (int s = 0; s < countProduct[z]; s++)
+                                 @*    @for (int s = 0; s < countProduct[z]; s++)
                                     {
                                         <div class="card shadow-lg mb-4 bg-body-tertiary rounded">
                                             <div class="row g-0">
@@ -63,8 +88,8 @@
                                                             <br/>
                                                             <h6>aussen: @orderItem[ProudctItemCounter].Aussen</h6>
                                                              <h6>innen: @orderItem[ProudctItemCounter].Intern</h6>
-                                                             <h6>Option - @orderItem[ProudctItemCounter].Option</h6>
-                                                            <input value="Preis: @orderItem[ProudctItemCounter].Price" />
+                                                             <h6>Option: @orderItem[ProudctItemCounter].Option</h6>
+                                                            <h6>Price: @orderItem[ProudctItemCounter].Price"</h6>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -74,10 +99,106 @@
                                       
                                         UserOrderId = @orderList[z].Id;
                                         ProudctItemCounter++;
-                                    }
-                       
-                                    <h5>Zahlungsstatus: @orderList[z].OrderStatus</h5>               
-                                    <h5>Lieferstatus: @orderList[z].ShippingStatus</h5>
+                                    } *@
+                                    <div class="bg-body-tertiary rounded ">
+
+                                        <div class="table-row">
+                                            <h6 class="table-cell">Produkt</h6>
+                                            <h6 class="table-cell">Menge</h6>
+                                            <h6 class="table-cell">E-Preis</h6>
+                                            <h6 class="table-cell end">Summe</h6>
+                                        </div>
+
+
+                                        <div class="table-row" id="schlüssel-@z">
+                                            <h6 class="table-cell" style="font-weight: bold;">Schlüssel</h6>
+                                            <h6 class="table-cell" id="counterKey-@z">@orderList[z].KeyCount</h6>
+                                            <h6 class="table-cell" id="E-Preis-@z">@orderList[z].E_PriceKey</h6>
+                                            <h6 class="table-cell end" id="PreisProduct-@z">@orderList[z].KeyCost</h6>
+                                      
+                                        </div>
+
+
+                                        @for (int s = 0; s < countProduct[z]; s++)
+                                        {
+
+
+                                            <div class="card-text table-row" id="cardProductPrice-@z">
+
+                                                <h6 class="table-cell" style="font-weight: bold;">@orderItem[ProudctItemCounter].Name</h6>
+                                                <h6 class="table-cell" id="E-priceProductCount-@z">@orderItem[ProudctItemCounter].Count</h6>
+                                                <h6 class="table-cell" id="E-priceProduct-@z">@orderItem[ProudctItemCounter].E_Price</h6>
+                                                <h6 class="table-cell end" id="PreisProduct-@z">@orderItem[ProudctItemCounter].Price</h6>
+
+                                                <h6 class="table-cell">ZylinderlängeA (Außenlänge): @orderItem[ProudctItemCounter].Aussen</h6>
+                                                <h6 class="table-cell"></h6>
+                                                <h6 class="table-cell"></h6>
+                                                <h6 class="table-cell" id="Zise-@z"></h6>
+
+                                                <h6 class="table-cell">ZylinderlängeB (Innenlänge): @orderItem[ProudctItemCounter].Intern</h6>
+                                                <h6 class="table-cell"></h6>
+                                                <h6 class="table-cell"></h6>
+                                                <h6 class="table-cell" id="Zise-@z"></h6>
+
+
+                                               @*  @if (CounterOptionen[countOption] > 0)
+                                                {
+                                                    <input type="hidden" name="OptionCount" value="@CounterOptionen[countOption]" />
+
+                                                    @for (int r = 0; r < CounterOptionen[countOption]; r++)
+                                                    {
+                                                        decimal costProcentOptionen = Math.Round(Convert.ToDecimal(@Optionen[optionenSchritt].Item2) * 0.19m, 2);
+
+                                                        decimal resultOptionen = Math.Round(Convert.ToDecimal(@Optionen[optionenSchritt].Item2) - costProcentOptionen, 2);
+
+                                                        string formattedResultOptionen = resultOptionen.ToString("C");
+
+                                                        <h6 class="table-cell" name="OptionsValue">@Optionen[optionenSchritt].Item1</h6>
+                                                        <h6 class="table-cell"></h6>
+                                                        <h6 class="table-cell"></h6>
+                                                        <h6 class="table-cell"></h6>
+
+                                                        optionenSchritt++;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    optionenSchritt++;
+                                                } *@
+
+                                            </div>
+
+                                           @*  countOption++; *@
+
+                                            UserOrderId = @orderList[z].Id;
+                                            ProudctItemCounter++;
+                                        }
+                                        <div class="table-row" id="payblock-@z">
+
+                                            <h6 class="table-cell">Nettowert:</h6>
+                                            <h6 class="table-cell"></h6>
+                                            <h6 class="table-cell"></h6>
+                                            <h6 class="table-cell" style="text-align: end;">@orderList[z].NettoPrice</h6>
+
+                                            <h6 id="procent-@z" class="table-cell">@orderList[z].Steur</h6>
+                                            <h6 class="table-cell"></h6>
+                                            <h6 class="table-cell"></h6>
+                                            <h6 class="table-cell" style="text-align: end;" id="aldProcent-@z">@orderList[z].SteurPrice</h6>
+                                          
+                                            <h6 class="table-cell">Versand:</h6>
+                                            <h6 class="table-cell"></h6>
+                                            <h6 class="table-cell"></h6>
+                                            <h6 class="table-cell" style="text-align: end;" id="CostGram-@z">@orderList[z].VersandPrice</h6>
+
+                                            <h6 class="table-cell">Gesamtsumme inkl. MwSt:</h6>
+                                            <h6 class="table-cell"></h6>
+                                            <h6 class="table-cell"></h6>
+                                            <h6 class="table-cell" style="text-align: end" id="costedI-@z"> @orderList[z].OrderSum.ToString("C")</h6>
+
+                                        </div>
+                                    </div>
+                                    <h6>Zahlungsstatus: @orderList[z].OrderStatus</h6>
+                                    <h6>Lieferstatus: @orderList[z].ShippingStatus</h6>
                                     </div>
                                     <div class="modal-footer">
                                     <button type="button" class="btn danger" data-bs-dismiss="modal">Schließen</button>
