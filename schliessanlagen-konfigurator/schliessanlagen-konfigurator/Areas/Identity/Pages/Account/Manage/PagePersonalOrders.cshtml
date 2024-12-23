@@ -63,6 +63,7 @@
                                 <h4>Preis</h4>
                             </div>
                         </div>
+
                         @{
                             // Вычисляем 19% от суммы
                             decimal KeyCost = Math.Round(Convert.ToDecimal(@orderList[z].OrderSum) * 0.19m, 2);
@@ -421,7 +422,7 @@
 
                                                     <div style="display: flex">
                                                         <input type="radio" id="dhl-@z" onchange="changeSend(@z)" checked name="DhlSend" value="DHL">
-                                                        <input type="text" readonly style="border: none;outline:none" name="Versand" value="0" id="CostGram-@z" /> <br>
+                                                        <input type="text" readonly style="border: none;outline:none" value="0" id="CostGram-@z" /> <br>
                                                     </div>
                                                       
                                                     <h6>
@@ -590,8 +591,9 @@
                                                     <h6 class="table-cell">Versand:</h6>
                                                     <h6 class="table-cell"></h6>
                                                     <h6 class="table-cell"></h6>
-                                                    <h6 class="table-cell" style="text-align: end;" id="CostGram-@z">0</h6>
-                                                 
+                                                    <h6 class="table-cell" style="text-align: end;"  id="CostGram-@z">0</h6>
+                                                    <input type="hidden" name="Versand" id="Versand-@z"  />
+
                                                     <h6 class="table-cell">Gesamtsumme inkl. MwSt:</h6>
                                                     <h6 class="table-cell"></h6>
                                                     <h6 class="table-cell"></h6>
@@ -750,6 +752,8 @@
 
         let allItemCost = [];
 
+        let priceVersend = document.getElementById("Versand-" + BlockItem);
+
         cost.forEach((item) => {
             allItemCost.push(item.value.replace("€", "").replace(",", ".").trim());
         });
@@ -762,13 +766,15 @@
                 cost[i].value = allItemCost[i].toLocaleString('de-DE', {style: 'currency',currency: 'EUR'});
                 cost[i].innerHTML = allItemCost[i].toLocaleString('de-DE', { style: 'currency', currency: 'EUR' });
                 changePrice(allItemCost[i]);
-
+              
             }
 
             versend.forEach((items) => {
                 items.value = sendCost.value;
                 items.innerHTML = sendCost.value;
+                priceVersend.value = sendCost.value;
             })
+                
         }
         else 
         {
@@ -781,8 +787,9 @@
             }
             versend[1].value = Plase.value;
             versend[1].innerHTML = Plase.value;
-            
+            priceVersend.value = Plase.value;
         }
+        
     }
 
     function OpenModalInfo(id,IdOrder) 

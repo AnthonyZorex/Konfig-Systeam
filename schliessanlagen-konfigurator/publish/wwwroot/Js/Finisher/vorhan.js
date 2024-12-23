@@ -18,13 +18,13 @@
     let currentCostItemValue = parseFloat(costItems.value.replace(",", ".").trim());
 
     currentAllPriceValue -= (VorhanSizeCost[oldAussen.value] * Number(countSchluss.value));
-    currentCostItemValue -= VorhanSizeCost[oldAussen.value];
+    currentCostItemValue -= (VorhanSizeCost[oldAussen.value] * Number(countSchluss.value));
 
     // Обновляем значение oldAussen
     oldAussen.value = SelectItemId;
 
     // Добавляем стоимость для нового SelectItemId
-    currentCostItemValue += VorhanSizeCost[SelectItemId];
+    currentCostItemValue += (VorhanSizeCost[SelectItemId] * Number(countSchluss.value));
     currentAllPriceValue += (VorhanSizeCost[SelectItemId] * Number(countSchluss.value));
 
     // Округляем до двух знаков после запятой и форматируем

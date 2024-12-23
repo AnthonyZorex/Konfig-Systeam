@@ -31,7 +31,7 @@ function selectParamIntern(idBlock, type, selectId, value, id)
                 let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
                 let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
                 let currentPriceDoppelInternCost = parseFloat(priceDoppelInternCost[i]);
-                costItems.value = (currentCostItemsValue - currentPriceDoppelInternCost).toFixed(2);
+                costItems.value = (currentCostItemsValue - (currentPriceDoppelInternCost * Number(countSchluss.value))).toFixed(2);
 
                 // Учитываем количество и обновляем AllPrice
                 let newAllPrice = currentAllPriceValue - (currentPriceDoppelInternCost * Number(countSchluss.value));
@@ -111,7 +111,7 @@ function selectParamIntern(idBlock, type, selectId, value, id)
             let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
             let currentPriceDoppelInternCost = parseFloat(priceDoppelInternCost[s]);
 
-            costItems.value = (currentCostItemsValue + currentPriceDoppelInternCost);
+            costItems.value = (currentCostItemsValue + (currentPriceDoppelInternCost * Number(countSchluss.value)));
             AllPrice.value = (currentAllPriceValue + (currentPriceDoppelInternCost * Number(countSchluss.value)))
                 .toFixed(2)
                 .replace(".", ",") + " €";
@@ -125,7 +125,7 @@ function selectParamIntern(idBlock, type, selectId, value, id)
             let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
             let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
             let currentPriceKnayfIntern = parseFloat(priceKnayfInternCost[i]);
-            costItems.value = (currentCostItemsValue - currentPriceKnayfIntern).toFixed(2);
+            costItems.value = (currentCostItemsValue - (currentPriceKnayfIntern * Number(countSchluss.value))).toFixed(2);
 
             // Обновляем AllPrice
             let newAllPrice = currentAllPriceValue - (currentPriceKnayfIntern * Number(countSchluss.value));
@@ -201,7 +201,7 @@ function selectParamIntern(idBlock, type, selectId, value, id)
             let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
             let currentKnayfInternCostValue = parseFloat(priceKnayfInternCost[s]);
 
-            costItems.value = (currentCostItemsValue + currentKnayfInternCostValue);
+            costItems.value = (currentCostItemsValue + (currentKnayfInternCostValue * Number(countSchluss.value)));
             AllPrice.value = (currentAllPriceValue + (currentKnayfInternCostValue * Number(countSchluss.value)))
                 .toFixed(2)
                 .replace(".", ",") + " €";

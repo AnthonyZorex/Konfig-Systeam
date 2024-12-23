@@ -40,13 +40,13 @@
             let currentPriceDoppelIntern = parseFloat(priceDoppelAussenCost[i].toString().replace(",", ".").trim());
 
             // Вычитаем цену из priceDoppelInternCost из costItems
-            let newCostItems = currentCostItemsValue - currentPriceDoppelIntern;
+            let newCostItems = currentCostItemsValue - (currentPriceDoppelIntern * Number(countSchluss.value));
 
             // Обновляем AllPrice, вычитая цену умноженную на количество
             let newAllPrice = currentAllPriceValue - (currentPriceDoppelIntern * Number(countSchluss.value));
 
             // Форматируем значения для отображения
-            costItems.value = newCostItems; // Оставляем два знака после запятой и добавляем символ €
+            costItems.value = newCostItems ; // Оставляем два знака после запятой и добавляем символ €
             AllPrice.value = newAllPrice.toFixed(2).replace(".", ",") + " €";
         }
 
@@ -117,7 +117,7 @@
                             let currentPriceDoppelIntern = parseFloat(oldPrise[i].toString().replace(",", ".").trim());
 
                             // Вычитаем цену из priceDoppelInternCost из costItems
-                            let newCostItems = currentCostItemsValue - currentPriceDoppelIntern;
+                            let newCostItems = currentCostItemsValue - (currentPriceDoppelIntern * Number(countSchluss.value));
 
                             // Обновляем AllPrice, вычитая цену умноженную на количество
                             let newAllPrice = currentAllPriceValue - (currentPriceDoppelIntern * Number(countSchluss.value));
@@ -156,7 +156,7 @@
             let currentPriceDoppelAussen = parseFloat(priceDoppelAussenCost[s].toString().replace(",", ".").trim());
 
             // Добавляем цену из priceDoppelAussenCost к costItems
-            let newCostItems = currentCostItemsValue + currentPriceDoppelAussen;
+            let newCostItems = currentCostItemsValue + (currentPriceDoppelAussen * Number(countSchluss.value));
 
             // Обновляем AllPrice, добавляя цену умноженную на количество
             let newAllPrice = currentAllPriceValue + (currentPriceDoppelAussen * Number(countSchluss.value));
@@ -183,7 +183,7 @@
             let currentPriceDoppelAussen = parseFloat(halbAussenCost[i].toString().replace(",", ".").trim());
 
             // Добавляем цену из priceDoppelAussenCost к costItems
-            let newCostItems = currentCostItemsValue - currentPriceDoppelAussen;
+            let newCostItems = currentCostItemsValue - (currentPriceDoppelAussen * Number(countSchluss.value));
 
             // Обновляем AllPrice, добавляя цену умноженную на количество
             let newAllPrice = currentAllPriceValue - (currentPriceDoppelAussen * Number(countSchluss.value));
@@ -198,7 +198,7 @@
             let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
             let currentHalbAussenCost = parseFloat(halbAussenCost[s].toString().replace(",", ".").trim());
 
-            costItems.value = (currentCostItemsValue + currentHalbAussenCost);
+            costItems.value = currentCostItemsValue + (currentHalbAussenCost * Number(countSchluss.value));
 
             // Учитываем количество и выполняем расчеты для AllPrice
             let newAllPrice = currentAllPriceValue + (currentHalbAussenCost * Number(countSchluss.value));
@@ -223,7 +223,7 @@
             let currentPriceKnayfAussenCost = parseFloat(priceKnayfAussenCost[i].toString().replace(",", ".").trim());
 
             // Вычитаем цену из costItems
-            let newCostItems = currentCostItemsValue - currentPriceKnayfAussenCost;
+            let newCostItems = currentCostItemsValue - (currentPriceKnayfAussenCost * Number(countSchluss.value));
 
             // Обновляем AllPrice, вычитая цену, умноженную на количество
             let newAllPrice = currentAllPriceValue - (currentPriceKnayfAussenCost * Number(countSchluss.value));
@@ -290,7 +290,7 @@
                             let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
                             let currentPriceKnayfInternCost = parseFloat(priceKnayfInternCost[i].toString().replace(",", ".").trim());
 
-                            costItems.value = (currentCostItemsValue - currentPriceKnayfInternCost).toFixed(2);
+                            costItems.value = (currentCostItemsValue - (currentPriceKnayfInternCost * Number(countSchluss.value))).toFixed(2);
 
                             // Учитываем количество и выполняем расчеты для AllPrice
                             let newAllPrice = currentAllPriceValue - (currentPriceKnayfInternCost * Number(countSchluss.value));
@@ -319,7 +319,7 @@
             let currentCostItemsValue = parseFloat(costItems.value.replace("€", "").replace(",", ".").trim());
             let currentAllPriceValue = parseFloat(AllPrice.value.replace("€", "").replace(",", ".").trim());
             let currentPriceKnayfAussenCost = parseFloat(priceKnayfAussenCost[s].toString().replace(",", ".").trim());
-            costItems.value = (currentCostItemsValue + currentPriceKnayfAussenCost).toFixed(2);
+            costItems.value = (currentCostItemsValue + (currentPriceKnayfAussenCost * Number(countSchluss.value))).toFixed(2);
 
             // Учитываем количество и выполняем расчеты для AllPrice
             let newAllPrice = currentAllPriceValue + (currentPriceKnayfAussenCost * Number(countSchluss.value));

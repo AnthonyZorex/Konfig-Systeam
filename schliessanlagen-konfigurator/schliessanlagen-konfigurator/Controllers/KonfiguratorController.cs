@@ -5273,12 +5273,12 @@ namespace schliessanlagen_konfigurator.Controllers
                                 description = OrderList.Last().description,
                                 companyName = OrderList.Last().companyName,
                                 NameSystem = OrderList.Last().NameSystem,
-                                Price = OrderList.Last().Price,
+                                Price = OrderList.Last().Price * counter[doppel].Value,
                                 ImageFile = OrderList.Last().ImageFile,
                                 ImageName = OrderList.Last().ImageName,
                                 schliessanlagenId = OrderList.Last().schliessanlagenId
                             };
-                            SumcostedDopSylinder += (OrderList.Last().Price * counter[doppel].Value) - OrderList.Last().Price;
+                            //SumcostedDopSylinder += (OrderList.Last().Price * counter[doppel].Value) - OrderList.Last().Price;
                             DopelOrderlist.Add(dopel);
                         }
                         else
@@ -5312,12 +5312,12 @@ namespace schliessanlagen_konfigurator.Controllers
                                 description = KnaufZelinder.Last().description,
                                 companyName = KnaufZelinder.Last().companyName,
                                 NameSystem = KnaufZelinder.Last().NameSystem,
-                                Price = KnaufZelinder.Last().Price,
+                                Price = KnaufZelinder.Last().Price * counter[knayfC].Value,
                                 ImageFile = KnaufZelinder.Last().ImageFile,
                                 ImageName = KnaufZelinder.Last().ImageName,
                                 schliessanlagenId = KnaufZelinder.Last().schliessanlagenId
                             };
-                            SumcostedDopSylinder += (KnaufZelinder.Last().Price * counter[knayfC].Value) - KnaufZelinder.Last().Price;
+                            //SumcostedDopSylinder += (KnaufZelinder.Last().Price * counter[knayfC].Value) - KnaufZelinder.Last().Price;
                             KnayfOrderlist.Add(knayf);
                         }
                         else
@@ -5350,12 +5350,12 @@ namespace schliessanlagen_konfigurator.Controllers
                                 description = SelectHalbzylinder.Last().description,
                                 companyName = SelectHalbzylinder.Last().companyName,
                                 NameSystem = SelectHalbzylinder.Last().NameSystem,
-                                Price = SelectHalbzylinder.Last().Price,
+                                Price = SelectHalbzylinder.Last().Price * counter[halbC].Value,
                                 ImageFile = SelectHalbzylinder.Last().ImageFile,
                                 ImageName = SelectHalbzylinder.Last().ImageName,
                                 schliessanlagenId = SelectHalbzylinder.Last().schliessanlagenId
                             };
-                            SumcostedDopSylinder += (SelectHalbzylinder.Last().Price * counter[halbC].Value) - SelectHalbzylinder.Last().Price;
+                            //SumcostedDopSylinder += (SelectHalbzylinder.Last().Price * counter[halbC].Value) - SelectHalbzylinder.Last().Price;
                             Halbzylinder.Add(HalbNew);
                         }
                         else
@@ -5389,12 +5389,12 @@ namespace schliessanlagen_konfigurator.Controllers
                                 description = HebelZylinder.Last().description,
                                 companyName = HebelZylinder.Last().companyName,
                                 NameSystem = HebelZylinder.Last().NameSystem,
-                                Price = HebelZylinder.Last().Price,
+                                Price = HebelZylinder.Last().Price * counter[hebelC].Value,
                                 ImageFile = HebelZylinder.Last().ImageFile,
                                 ImageName = HebelZylinder.Last().ImageName,
                                 schliessanlagenId = HebelZylinder.Last().schliessanlagenId
                             };
-                            SumcostedDopSylinder += (HebelZylinder.Last().Price * counter[hebelC].Value) - HebelZylinder.Last().Price;
+                            //SumcostedDopSylinder += (HebelZylinder.Last().Price * counter[hebelC].Value) - HebelZylinder.Last().Price;
                             HelbZ.Add(HebelNew);
                         }
                         else
@@ -5427,13 +5427,13 @@ namespace schliessanlagen_konfigurator.Controllers
                                 description = SelectVorhanschlos.Last().description,
                                 companyName = SelectVorhanschlos.Last().companyName,
                                 NameSystem = SelectVorhanschlos.Last().NameSystem,
-                                Price = SelectVorhanschlos.Last().Price,
+                                Price = SelectVorhanschlos.Last().Price * counter[vorhanC].Value,
                                 ImageFile = SelectVorhanschlos.Last().ImageFile,
                                 ImageName = SelectVorhanschlos.Last().ImageName,
                                 schliessanlagenId = SelectVorhanschlos.Last().schliessanlagenId
                             };
-                            float sum = SelectVorhanschlos.Last().Price * counter[vorhanC].Value;
-                            SumcostedDopSylinder += sum - SelectVorhanschlos.Last().Price;
+                            //float sum = SelectVorhanschlos.Last().Price * counter[vorhanC].Value;
+                            //SumcostedDopSylinder += sum - SelectVorhanschlos.Last().Price;
                             Vorhanschlos.Add(vorhan);
                         }
                         else
@@ -5467,12 +5467,12 @@ namespace schliessanlagen_konfigurator.Controllers
                                 description = SelectAussenzylinder.Last().description,
                                 companyName = SelectAussenzylinder.Last().companyName,
                                 NameSystem = SelectAussenzylinder.Last().NameSystem,
-                                Price = SelectAussenzylinder.Last().Price,
+                                Price = SelectAussenzylinder.Last().Price * counter[aussenC].Value,
                                 ImageFile = SelectAussenzylinder.Last().ImageFile,
                                 ImageName = SelectAussenzylinder.Last().ImageName,
                                 schliessanlagenId = SelectAussenzylinder.Last().schliessanlagenId
                             };
-                            SumcostedDopSylinder += (SelectAussenzylinder.Last().Price * counter[aussenC].Value) - SelectAussenzylinder.Last().Price;
+                            //SumcostedDopSylinder += (SelectAussenzylinder.Last().Price * counter[aussenC].Value) - SelectAussenzylinder.Last().Price;
                             Aussenzylinder.Add(aussen);
                         }
                         else
@@ -5665,8 +5665,11 @@ namespace schliessanlagen_konfigurator.Controllers
             var countZylinder = countDoppel.Distinct().ToList();
 
             var countKnayfZylinder = countKnayf.Distinct().ToList();
+            var countHalbZylinder = countHalb.Distinct().ToList();
 
             var CountAussenKnayf = 0;
+
+            var CountAussenHebel = 0;
 
             int dpCount = 0;
             int knayfCount = 0;
@@ -5821,18 +5824,48 @@ namespace schliessanlagen_konfigurator.Controllers
                     {
                         if (aus < order.aussen)
                         {
-                            var costAussen = SizeHalbzylinder.FirstOrDefault(x => x.aussen == aus).costAussen;
-                            nÍtem.Price = nÍtem.Price + costAussen;
+                            if (countHalbZylinder.Count() > CountAussenHebel)
+                            {
+                                for (int c = 0; c < countHalbZylinder[CountAussenHebel]; c++)
+                                {
+                                    var costAussen = SizeHalbzylinder.FirstOrDefault(x => x.aussen == aus).costAussen;
+                                    nÍtem.Price = nÍtem.Price + costAussen;
+                                }
+                            }
+                           
+                            else
+                            {
+
+                                var costAussen = SizeHalbzylinder.FirstOrDefault(x => x.aussen == aus).costAussen;
+                                nÍtem.Price = nÍtem.Price + costAussen;
+                                aussen = aus;
+                                break;
+                            }
                         }
                         else
                         {
-                            var costAussen = SizeHalbzylinder.FirstOrDefault(x => x.aussen == aus).costAussen;
-                            nÍtem.Price = nÍtem.Price + costAussen;
-                            aussen = aus;
+                            if (countHalbZylinder.Count() > CountAussenHebel)
+                            {
+                                for (int c = 0; c < countHalbZylinder[CountAussenHebel]; c++)
+                                {
+                                    var costAussen = SizeHalbzylinder.FirstOrDefault(x => x.aussen == aus).costAussen;
+                                    nÍtem.Price = nÍtem.Price + costAussen;
+                                }
+                            }
+
+                            else
+                            {
+
+                                var costAussen = SizeHalbzylinder.FirstOrDefault(x => x.aussen == aus).costAussen;
+                                nÍtem.Price = nÍtem.Price + costAussen;
+                                aussen = aus;  
+                            }
                             break;
                         }
+
                     }
                     Halbzylinder[HalbCount]= nÍtem;
+                    CountAussenHebel++;
                     HalbCount++;
                 }
                 if (order.ZylinderId == 3)
@@ -6854,7 +6887,7 @@ namespace schliessanlagen_konfigurator.Controllers
 
             var SumCost = DopelOrderlist.Select(x => x.Price).Sum() + KnayfOrderlist.Select(x => x.Price).Sum() + Halbzylinder.Select(x => x.Price).Sum() +
                 HelbZ.Select(x => x.Price).Sum() + Vorhanschlos.Select(x => x.Price).Sum() + Aussenzylinder.Select(x => x.Price).Sum() + DoppelAussenCost
-                + KhaufAussenCost + halbAussenCost + SumcostedDopSylinder + costKey;
+                + KhaufAussenCost + halbAussenCost /*+ SumcostedDopSylinder*/ + costKey;
 
             var SumCostProduct = DopelOrderlist.Select(x => x.Price).Sum() + KnayfOrderlist.Select(x => x.Price).Sum() + Halbzylinder.Select(x => x.Price).Sum() +
                 HelbZ.Select(x => x.Price).Sum() + Vorhanschlos.Select(x => x.Price).Sum() + Aussenzylinder.Select(x => x.Price).Sum() + costKey;

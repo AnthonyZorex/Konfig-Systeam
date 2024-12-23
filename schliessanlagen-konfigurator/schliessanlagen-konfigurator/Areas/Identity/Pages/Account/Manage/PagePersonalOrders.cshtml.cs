@@ -519,6 +519,14 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
                 }
             }
 
+            if (Versand == "0,00 €")
+            {
+                SendStrasse = "Brunnenstraße 8";
+                SendZip = "10119";
+                SendStadt = "Berlin";
+                SendLand = "DE";
+            }
+            
             var model = new
             {
                 SendVorname = SendVorname,
@@ -549,7 +557,8 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
                 RechnungZip = RechnungZip,
                 RechnungStadt = RechnungStadt,
                 RechnungLand = RechnungLand,
-                RechnungTelefon = RechnungTelefon,
+                RechnungTelefon = RechnungTelefon
+
             };
 
             var JsonObject = JsonConvert.SerializeObject(model, Formatting.Indented);

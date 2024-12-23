@@ -561,12 +561,24 @@
       "PackagePath": "staticwebassets\\Orders\\SchlüsselDiscount21612122024 OrderFile.xlsx"
     },
     {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\SchlüsselDiscount261113122024 OrderFile.xlsx",
+      "PackagePath": "staticwebassets\\Orders\\SchlüsselDiscount261113122024 OrderFile.xlsx"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Orders\\SchlüsselDiscount321323122024 OrderFile.xlsx",
+      "PackagePath": "staticwebassets\\Orders\\SchlüsselDiscount321323122024 OrderFile.xlsx"
+    },
+    {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Rehnung\\SK2346.pdf",
       "PackagePath": "staticwebassets\\Rehnung\\SK2346.pdf"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Rehnung\\SK2347.pdf",
       "PackagePath": "staticwebassets\\Rehnung\\SK2347.pdf"
+    },
+    {
+      "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\Rehnung\\SK2348.pdf",
+      "PackagePath": "staticwebassets\\Rehnung\\SK2348.pdf"
     },
     {
       "Id": "D:\\Konfig-Systeam\\schliessanlagen-konfigurator\\schliessanlagen-konfigurator\\wwwroot\\compression\\4ks-Hebelzylinder-MB23g.webp",
