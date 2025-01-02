@@ -69,10 +69,10 @@
     <input type="hidden" name="user" value="@Model.userKey" />
     <div id="FinisherPage">
   
-    <h3>Schlüssel konfigurieren</h3>
-        <h4 id="keyInform">
+    <h4>Schlüssel konfigurieren</h4>
+        <h6 id="keyInform">
             Sie können sehen, welcher Schlüssel welches Schloss öffnet, und die erforderliche Anzahl an Schlüsseln auswählen.
-        </h4>
+        </h6>
 
     <div>
  
@@ -106,7 +106,7 @@
                         </div>
 
                         <div id="optionsItems" class="mb-5">
-                            <h3>Der Schlüssel öffnet:</h3>
+                            <h4>Der Schlüssel öffnet:</h4>
                             <div>
                                 @{
                                     int valueCount = 0;
@@ -138,10 +138,10 @@
         <div id="FinisherAnderes">   
             <a id="editPlanLink" class="btn btn-danger" href="#">SCHLIESSPLAN BEARBEITEN</a>
         </div>
-        <h3>Türen konfigurieren</h3>
-        <h4 id="infoTuren">
+        <h4>Türen konfigurieren</h4>
+        <h6 id="infoTuren">
                 Unten sind die Schlösser mit Angaben zu deren Größen, Optionen und Mengen aufgeführt.
-        </h4>
+        </h6>
     </div>
     <div>
 
@@ -167,7 +167,7 @@
                                 <div id="productMenuInfo">
                                     <div id="ProductNameUndCost">
                                         <div>
-                                            <h3>Türbezeichnung: @ViewBag.DorName[d]</h3>
+                                            <h4>Türbezeichnung: @ViewBag.DorName[d]</h4>
                                         <input style="border: none;width:250px" readonly type="text" name="DopelName" value="@ViewBag.Dopelzylinder[doppel].Name" />
                                             <input style="border: none;width:250px" type="hidden" name="NameSystem" value="@ViewBag.Dopelzylinder[doppel].NameSystem" />
 
@@ -249,7 +249,7 @@
                                     </div>
 
                                     <div id="optionsItems">
-                                        <h3>Weitere Optionen</h3>
+                                        <h4>Weitere Optionen</h4>
                                         <div>
                                             @{
                                                 int valueCount = 0;
@@ -435,7 +435,7 @@
 
                                     </div>
                                     <div id="optionsItems">
-                                        <h3>Weitere Optionen</h3>
+                                        <h4>Weitere Optionen</h4>
                                         <div>
                                             @{
                                                 int valueCount = 0;
@@ -641,7 +641,7 @@
                                         </div>
                                     </div>
                                     <div id="optionsItems">
-                                        <h3>Weitere Optionen</h3>
+                                        <h4>Weitere Optionen</h4>
                                         <div>
                                             @{
                                                 int valueCount = 0;
@@ -810,7 +810,7 @@
                                         </div>
                                     </div>
                                     <div id="optionsItems">
-                                        <h3>Weitere Optionen</h3>
+                                        <h4>Weitere Optionen</h4>
                                         <div>
                                             @{
                                                 int valueCount = 0;
@@ -948,7 +948,7 @@
 
                                     </div>
                                     <div id="optionsItems">
-                                        <h3>Weitere Optionen</h3>
+                                        <h4>Weitere Optionen</h4>
                                         <div>
                                             @{
                                                 int valueCount = 0;
@@ -1079,7 +1079,7 @@
                                     </div>
 
                                     <div id="optionsItems">
-                                        <h3>Weitere Optionen</h3>
+                                        <h4>Weitere Optionen</h4>
                                         <div>
                                             @{
                                                 int valueCount = 0;

@@ -18,7 +18,6 @@ namespace schliessanlagen_konfigurator.Models.Users
         public string? Rechnun_Straße { get; set; } = "";
         public string? Rechnun_Postleitzahl { get; set; } = "";
         public string? Rechnun_Stadt { get; set; } = "";
-
         public string? Liefer_Land { get; set; } = "";
         public string? Liefer_Straße { get; set; } = "";
         public string? Liefer_Postleitzahl { get; set; } = "";
@@ -57,7 +56,7 @@ namespace schliessanlagen_konfigurator.Models.Users
         public string? OrderStatus { get; set; }
         public DateTime? BezalenDate { get; set; }
         public string? ShippingStatus { get; set; }
-
+        public int? UniKeyCount { get; set; } = 0;
         public string? Rehnung_E_Mail { get; set; }
         public string? Rehnung_Vorname { get; set; }
         public string? Rehnung_Nachname { get; set; }

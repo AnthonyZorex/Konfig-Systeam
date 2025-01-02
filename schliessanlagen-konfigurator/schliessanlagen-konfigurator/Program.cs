@@ -78,10 +78,10 @@ builder.Services.AddResponseCompression(options =>
             "image/png",
             "image/webp",
             "application/atom+xml",
-            "application/rss+xml" 
+            "application/rss+xml"
         });
     options.Providers.Add<BrotliCompressionProvider>();
-    options.Providers.Add<GzipCompressionProvider>();
+    //options.Providers.Add<GzipCompressionProvider>();
 });
 
 builder.Services.ConfigureApplicationCookie(options =>

@@ -51,25 +51,25 @@ namespace schliessanlagen_konfigurator.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "7f51a224-e575-4cdd-ac8d-2093d598d477",
+                            Id = "2f13d679-0ed3-4ccd-aa5d-d26eede8300e",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "2798f924-adb0-486a-93cc-e693c1a94c65",
+                            Id = "c93fa075-bcf3-4352-b51b-1b0b2ae5ef69",
                             Name = "client",
                             NormalizedName = "client"
                         },
                         new
                         {
-                            Id = "55b96a25-1301-49a9-9f91-a01a6f416080",
+                            Id = "59e24f8f-b4e6-4aeb-9c0b-5c39e46370fa",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "dbbdc703-2e89-42cf-9329-60b9a3cff47f",
+                            Id = "9e2ebd8f-76da-4a29-9d28-f6457ea8be6c",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -1597,6 +1597,9 @@ namespace schliessanlagen_konfigurator.Migrations
 
                     b.Property<string>("SteurPrice")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UniKeyCount")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");

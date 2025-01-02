@@ -14,6 +14,8 @@
 
     var KeyInfo = (List<isOpen_value>)ViewData["KeyInfo"];
 
+    var KeyListPrice= (List<float>)ViewData["KeyPrice"];
+
     var Optionen = (List<(string, float)>)ViewData["Options"];
     var CounterOptionen = (List<int>)ViewData["CountOptions"];
     var optionenSchritt = 0;
@@ -477,20 +479,13 @@
                                                 </div>
 
 
-                                            @{
-                                                decimal costProcentKey = Math.Round(Convert.ToDecimal(orderList[z].KeyCost) * 0.19m, 2);
-
-                                                decimal resultKeyItem = Math.Round(Convert.ToDecimal(orderList[z].KeyCost) - costProcentKey, 2);
-
-                                                string formattedResultKeyI = resultKeyItem.ToString("C");
-                                             
-                                            }
+                                        
 
                                             <div id="blockSchrite" class="shadow-lg mb-5 bg-body-tertiary rounded">
 
                                                 <div class="bg-body-tertiary rounded ">
                                                    
-                                                    <div class="table-row" >
+                                                    <div class="table-row" >    
                                                         <h6 class="table-cell">Produkt</h6>
                                                         <h6 class="table-cell">Menge</h6>
                                                         <h6 class="table-cell">E-Preis</h6>
@@ -498,15 +493,27 @@
                                                     </div>
 
                                                                 <div class="table-row" id="schlüssel-@z">
-                                                        <h6 class="table-cell" style="font-weight: bold;">@KeyInfo[z].NameKey</h6>
-                                                                    <h6 class="table-cell" id="counterKey-@z">@orderList[z].KeyCount</h6>
-                                                                    <h6 class="table-cell" id="E-Preis-@z"></h6>
-                                                                    <input type="hidden" id="E-priceSchlüsselValue-@z" name="E_PreisSchlüssel" />
-                                                                    <h6 class="table-cell end" id="PreisProduct-@z">@formattedResultKeyI</h6>
-                                                                    <input type="hidden"  id="preis_schluessel-@z" name="PreisKey" />
-                                                                    <input type="hidden" id="PreisProductBruttoSchlussel-@z" value="@orderList[z].KeyCost" />
-                                                                    <input type="hidden" id="PreisProductNettoSchlussel-@z" value="@resultKeyItem" />
-                                                                </div>
+
+                                                                    @for (int g = 0;g<orderList[z].UniKeyCount;g++)
+                                                                    {
+                                                                        decimal costProcentKey = Math.Round(Convert.ToDecimal(KeyListPrice[z]) * 0.19m, 2);
+
+                                                                        decimal resultKeyItem = Math.Round(Convert.ToDecimal(KeyListPrice[z]) - costProcentKey, 2);
+
+                                                                        string formattedResultKeyI = resultKeyItem.ToString("C");
+
+                                                                        <h6 class="table-cell" style="font-weight: bold;">@KeyInfo[g].NameKey</h6>
+                                                                        <h6 class="table-cell" id="counterKey-@z">@KeyInfo[g].CountKey</h6>
+                                                                        <h6 class="table-cell" id="E-Preis-@z"></h6>
+                                                                        <input type="hidden" id="E-priceSchlüsselValue-@z" name="E_PreisSchlüssel" />
+                                                                        <h6 class="table-cell end" id="PreisProduct-@z">@formattedResultKeyI</h6>
+                                                                        <input type="hidden"  id="preis_schluessel-@z" name="PreisKey" />
+                                                                        <input type="hidden" id="PreisProductBruttoSchlussel-@z" value="@orderList[z].KeyCost" />
+                                                                        <input type="hidden" id="PreisProductNettoSchlussel-@z" value="@resultKeyItem" />
+                                                               
+                                                                    }
+                                                    </div>
+                                                               
 
 
                                                         @for (int s = 0; s < countProduct[z]; s++)

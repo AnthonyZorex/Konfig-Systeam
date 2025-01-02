@@ -127,9 +127,17 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
 
                 var itemList = new List<string>();
 
+                var ListKeyPrice = new List<float>();
+
                 for (int f = 0; f < ListItem.Count(); f++)
                 {
                     var ProductList = db.ProductSysteam.Where(x => x.UserOrdersShopId == ListItem[f].Id).Distinct().ToList();
+
+                    var System = db.SysteamPriceKey.FirstOrDefault(x => x.NameSysteam.Contains(ListItem[f].ProductName));
+
+                    var KeyPrice = System.Price;
+
+                    ListKeyPrice.Add(KeyPrice);
 
                     foreach (var list in ProductList)
                     {
@@ -478,7 +486,38 @@ namespace schliessanlagen_konfigurator.Areas.Identity.Pages.Account.Manage
                     gramm = new List<float>();
                 }
 
-                ViewData["KeyInfo"] = KeyList.DistinctBy(x=>x.isOpen_OrderId).ToList();
+                var isOpenKey = new List<isOpen_value>();
+
+                var z = KeyList.GroupBy(x => x.isOpen_OrderId).ToList();
+
+                var UniKeyList = new List<int>();
+
+                foreach(var list in z) 
+                {
+                    int Unikey = 0;
+                    var DistinctKeyList = list.DistinctBy(x => x.NameKey).ToList();
+
+                    foreach (var order in DistinctKeyList)
+                    {
+                        isOpenKey.Add(order);
+                        Unikey++;
+                    }
+                    UniKeyList.Add(Unikey);
+                }
+
+                int counter = 0;
+
+                foreach(var list in ListItem)
+                {
+                    list.UniKeyCount = UniKeyList[counter];
+                    db.UserOrdersShop.Update(list);
+                    db.SaveChanges();
+                    counter++;
+                }
+
+                ViewData["KeyInfo"] = isOpenKey;
+
+                ViewData["KeyPrice"] = ListKeyPrice;
 
                 ViewData["Options"] = allOptionList.ToList();
                 ViewData["CountOptions"] = CounterOption;
